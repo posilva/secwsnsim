@@ -1,0 +1,41 @@
+\subsection{Ataques à organização da rede e descoberta de nós} \label{sect:subsec_ataq_org_rede}
+A fase de organização da rede e descoberta de nós é mais vincada em    
+protocolos do tipo \textit{table-driven}[REF] uma vez que estes desencadeiam a
+criação de tabelas de encaminhamento que se deverá manter actualizada durante a execução da
+rede. No entanto em protocolos do tipo on-demand[REF] também se verifica a
+existencia desta fase mas repete-se em cada inicio de comunicação ou de
+transmissão. Assim sendo, um ataque do tipo de introdução de informação de
+encaminhamento falsa, acaba por ter impacto na construção da rede e na
+descoberta dos nós. A falsificação de informação de encaminhamento permite criar
+entradas incorrectas nas tabelas de encaminhamento, podendo também fazer com que
+estas fiquem lotadas, isto em protocolos que possuem este mecanismo. No caso dos
+protocolos on-demand o impacto é menos efectivo uma vez que o atacante terá de
+estar sempre a injectar informação errada a cada inicio de transmissão, mas
+ainda assim pode provocar danos na rede. 
+
+    Outro ataque efectivo nesta fase é o \textit{rushing attack} [REF]que é
+definido pela
+exploração por parte do atacante de uma janela de oportunidade para responder a
+um pedido de caminho para um destino. Esta operação é desencadeada quando um
+protocolo aceita a primeira resposta que recebe (exemplo do AODV[REF]),
+calculando isto o atacante é sempre um candidato a ser o próximo encaminhador,
+uma vez que não respeita temporizadores nem condições de resposta.
+    Por fim, pode-se ainda tipificar ataques encetados por flooding de mensagens
+quer estas sejam  HELLO, para os protocolos que usam este mecanismo para que os
+nós se anunciem aos seus vizinhos, quer sejam mensagens do tipo route-request
+(RREQ) para iniciar a descoberta de caminhos. O primeiro permite que um atacante
+com maior capacidade de comunicação se anuncie a todos os nós como seu vizinho
+(atacante laptop-class[REF]) e por isso toda a informação possa fluir através
+dele. O segundo, permite explorar as limitações energéticas[REF] da rede levando
+os nós legítimos da rede a estarem continuamente a responder e fazer as
+operações inerentes à descoberta de um caminho.
+    Para mitigar ataques de HELLO flooding\cite{Karlof1999} pode-se simplesmente
+implementar um
+mecanismo de acknolege aos pacotes de HELLO. Assim, caso esteja a decorrer um
+ataque com uma capacidade comunicação abrangente de toda a rede, a resposta não
+será possivel porque os nós mais distanciados não possuiram capacidade de
+alcançar o atacante, anulando por isso o anuncio de vizinhança.Outra forma é a
+possivel que cada mensagem de HELLO obriga a autenticação da origem numa
+entidade central que ao detectar que um nó se está a autenticar com esta
+mensagem em vários nós então devem ser tomadas medidas para precaver um ataque
+desta natureza.

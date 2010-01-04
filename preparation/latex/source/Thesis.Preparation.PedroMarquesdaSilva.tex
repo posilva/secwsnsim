@@ -1,0 +1,119 @@
+%% Template para dissertao/tese na classe thesisdifctunl  
+%%  EM  DESENVOLVIMENTO - Dezembro de 2007
+%%
+%% Carrega a classe thesisdifctunlpt
+%% Opes: 
+%% * Idiomas
+%%           pt   - portugus 
+%%           en   - ingls
+%% * Tipo de texto
+%%           lei  - licenciatura
+%%           premei - preparao de dissertao
+%%           mei  - mestrado
+%%           prop - proposta de doutoramento
+%%           prephd - preparao de tese
+%%           phd  - doutoramento
+%%   * Tipo de impresso
+%%            print
+%%    * Pginas
+%%           oneside - para impresso em face nica
+%%           twoside - para impresso em frente e verso
+\documentclass[pt, premei, twoside, print]{thesisdifctunl}
+
+%% Prembulo:
+%% coloque aqui o seu prembulo LaTeX, i.e., declarao de pacotes,
+%% (re)definies de macros, medidas, etc.
+\usepackage{multirow}
+\setcounter{tocdepth}{4}
+%% Identificao:
+% Universidade
+\university{Universidade Nova de Lisboa}
+% Endereo (cidade).
+\address{Lisboa}
+% Faculdade
+\faculty{Faculdade de Ciências e Tecnologia}
+% Departamento 
+\department{Departamento de Informática}
+% Curso
+\program{Mestrado em Engenharia Informática}
+% rea cientfica
+\majorfield{Engenharia Informática}
+% Ttulo da dissertao/tese
+\title{Secure and reliable routing for dependable wireless sensor networks}
+
+% Data 
+\date{1º Semestre de 2009/10 \\ \smallskip
+5 de Fevereiro de 2010}
+
+% Autor
+\author{Pedro Miguel Oliveira Marques da Silva(aluno n 26649)}
+
+% Orientador(a)
+% Opo: [f] - para orientador do sexo feminino
+\adviser[f]{Prof. Doutor Henrique João Lopes Domingos}
+
+% Co-orientador(a)
+%\coadviser{Prof. Doutor nome do co-orientador}
+
+%% Inicio do documento
+\begin{document}
+\onehalfspacing
+%% Parte pr-textual
+\frontmatter
+
+% Folha de rosto. Comente para ocultar
+\frontpage
+
+% Pgina de apresentao. Comente para ocultar
+\presentationpage
+
+% Agradecimentos. Se preferir, crie um ficheiro  parte e inclua com \include{}
+%\acknowledgements
+% O texto ...
+
+% Resumo em Portugus
+% Se preferir, crie um ficheiro  parte e inclua com \include{}
+\include{resumopt}
+% Resumo em Ingls
+% Se preferir, crie um ficheiro  parte e inclua com \include{}
+\include{resumoen}
+% ndice. 
+\tableofcontents
+% Lista de figuras. Comente para ocultar
+\listoffigures
+% Lista de tabelas. Comente para ocultar
+\listoftables
+%% O contedo principal
+\mainmatter
+
+%  aconselhvel ter um captulo por ficheiro :
+% "capitulo1.tex", "capitulo2.tex", ... "capituloN.tex" e depois
+% inclu-los com:
+\include{capitulo1}
+\include{capitulo2}
+\include{capitulo3}
+\include{capitulo4}
+
+% ...
+% \include{capituloN}
+
+%% Parte ps-texto principal
+\backmatter
+
+% Apndices. Comente se no houver apndices
+\appendix
+
+%  aconselhvel ter um apndice por ficheiro
+% "apendice1.tex", "apendice.tex", ... "apendiceM.tex" e depois
+% inclu-los com:
+% \include{apendice1}
+% \include{apendice2}
+% ...
+% \include{apendiceM}
+
+% Bibliografia. Deve utilizar o BibTeX a partir de um arquivo, ex: "mybib.bib".
+\bibliographystyle{plain}
+\bibliography{mybib}
+
+%% Fim do documento
+\end{document}

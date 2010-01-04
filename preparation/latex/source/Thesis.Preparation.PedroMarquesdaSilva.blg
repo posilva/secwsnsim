@@ -1,0 +1,100 @@
+This is BibTeX, Version 0.99c (Web2C 7.5.6)
+The top-level auxiliary file: Thesis.Preparation.PedroMarquesdaSilva.aux
+A level-1 auxiliary file: resumopt.aux
+A level-1 auxiliary file: resumoen.aux
+A level-1 auxiliary file: capitulo1.aux
+A level-1 auxiliary file: capitulo2.aux
+White space in argument---line 52 of file capitulo2.aux
+ : \citation{XEMICS
+ :                  XE1205}
+I'm skipping whatever remains of this command
+A level-1 auxiliary file: capitulo3.aux
+A level-1 auxiliary file: capitulo4.aux
+The style file: plain.bst
+Database file #1: mybib.bib
+Warning--I didn't find a database entry for "LIVROARCH_WSN"
+Warning--I didn't find a database entry for "SNMuseum"
+Warning--I didn't find a database entry for "ietf_802154"
+Warning--I didn't find a database entry for "REF_CHANG_all"
+Warning--I didn't find a database entry for "INSENS_REF"
+Warning--I didn't find a database entry for "Doceur"
+Warning--I didn't find a database entry for "TINYSEC"
+Warning--I didn't find a database entry for "MINISEC"
+Warning--I didn't find a database entry for "REF"
+Warning--I didn't find a database entry for "TRANSPORT_LAYER_WSN"
+Warning--I didn't find a database entry for "SMP_REF"
+Warning--I didn't find a database entry for "TADAP_REF"
+Warning--I didn't find a database entry for "LESOP_REF"
+Warning--I didn't find a database entry for "MODELO_SENSOR"
+Warning--I didn't find a database entry for "MICA"
+Warning--I didn't find a database entry for "CrossbowSite"
+Warning--I didn't find a database entry for "Holger_Karl_protocols_andarchs_wsn"
+Warning--I didn't find a database entry for "atmel"
+Warning--I didn't find a database entry for "TIMSP430"
+Warning--I didn't find a database entry for "CHIPCON2420"
+Warning--I didn't find a database entry for "tinyos"
+Warning--I didn't find a database entry for "Contiki"
+Warning--I didn't find a database entry for "nanork"
+Warning--I didn't find a database entry for "SECURITY_IN_WSN_PERRIG"
+Warning--I didn't find a database entry for "Stall2005"
+Warning--I didn't find a database entry for "RFC2828"
+Warning--I didn't find a database entry for "NS2"
+Warning--I didn't find a database entry for "802_15_4"
+Warning--I didn't find a database entry for "JAVA_SUN"
+Warning--I didn't find a database entry for "MATALAB_REF"
+Warning--I didn't find a database entry for "vanderbilt"
+Warning--I didn't find a database entry for "JSIM"
+Warning--I didn't find a database entry for "SENSE"
+Warning--I didn't find a database entry for "IEEE802.15.4"
+Warning--I didn't find a database entry for "SHOX_REF"
+Warning--I didn't find a database entry for "SITE_DE_COMPARACAO_DE_SIM"
+Warning--empty journal in Douceur2002
+Warning--empty booktitle in Karlof2004
+Warning--empty booktitle in Luk2007d
+Warning--empty booktitle in Parno2005
+Warning--empty journal in Perriga
+Warning--empty year in Perriga
+Warning--empty year in Shia
+Warning--empty publisher in Stallings2005
+You've used 16 entries,
+            2118 wiz_defined-function locations,
+            675 strings with 7237 characters,
+and the built_in function-call counts, 5662 in all, are:
+= -- 567
+> -- 251
+< -- 5
++ -- 99
+- -- 82
+* -- 390
+:= -- 906
+add.period$ -- 48
+call.type$ -- 16
+change.case$ -- 87
+chr.to.int$ -- 0
+cite$ -- 24
+duplicate$ -- 219
+empty$ -- 444
+format.name$ -- 82
+if$ -- 1198
+int.to.chr$ -- 0
+int.to.str$ -- 16
+missing$ -- 16
+newline$ -- 80
+num.names$ -- 32
+pop$ -- 116
+preamble$ -- 1
+purify$ -- 73
+quote$ -- 0
+skip$ -- 168
+stack$ -- 0
+substring$ -- 373
+swap$ -- 53
+text.length$ -- 5
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 60
+warning$ -- 8
+while$ -- 59
+width$ -- 18
+write$ -- 166
+(There was 1 error message)

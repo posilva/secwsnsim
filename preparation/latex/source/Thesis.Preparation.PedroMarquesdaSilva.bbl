@@ -1,0 +1,88 @@
+\begin{thebibliography}{10}
+
+\bibitem{Akyildiz2002}
+I.~F. Akyildiz, W.~Su, Y.~Sankarasubramaniam, and E.~Cayirci.
+\newblock {Wireless sensor networks: a survey}.
+\newblock {\em Computer Networks}, 38(4):393--422, March 2002.
+
+\bibitem{Corson1999}
+S~Corson and J~Macker.
+\newblock {Mobile Ad hoc Networking (MANET): Routing Protocol Performance
+  Issues and Evaluation Considerations}, January 1999.
+
+\bibitem{Dolev1983}
+D.~Dolev and A.~Yao.
+\newblock {On the security of public key protocols}.
+\newblock {\em Information Theory, IEEE Transactions on}, 29(2):198--208, 1983.
+
+\bibitem{Douceur2002}
+John Douceur and Judith~S Donath.
+\newblock {The Sybil Attack}.
+\newblock pages 251----260, 2002.
+
+\bibitem{eschenauer_key-management_2002}
+Laurent Eschenauer and Virgil~D. Gligor.
+\newblock A key-management scheme for distributed sensor networks.
+\newblock In {\em Proceedings of the 9th {ACM} conference on Computer and
+  communications security}, pages 41--47, Washington, {DC,} {USA}, 2002. {ACM}.
+
+\bibitem{ITU-T1991}
+ITU-T.
+\newblock {Recommendation X.800: Security Architecture for Open Systems for
+  CCITT Applications}, 1991.
+
+\bibitem{Iyer2005}
+Y.G. Iyer, S.~Gandham, and S.~Venkatesan.
+\newblock {\em {STCP: a generic transport layer protocol for wireless sensor
+  networks}}.
+\newblock IEEE, 2005.
+
+\bibitem{Karlof2003}
+Chris Karlof and David Wagner.
+\newblock {Secure routing in wireless sensor networks: attacks and
+  countermeasures}.
+\newblock {\em Ad Hoc Networks}, 1(2-3):293--315, September 2003.
+
+\bibitem{Karlof2004}
+Chris Karlof, David Wagner, and Naveen Sastry.
+\newblock {TinySec: a link layer security architecture for wireless sensor
+  networks}.
+\newblock pages 162--175, Baltimore, MD, USA, 2004. ACM.
+
+\bibitem{Luk2007d}
+Mark Luk, Adrian Perrig, Ghita Mezzour, and Virgil Gligor.
+\newblock {MiniSec: a secure sensor network communication architecture}.
+\newblock pages 479--488, Cambridge, Massachusetts, USA, 2007. ACM.
+
+\bibitem{Parno2005}
+B.~Parno, A.~Perrig, and V.~Gligor.
+\newblock {Distributed detection of node replication attacks in sensor
+  networks}.
+\newblock pages 49--63, 2005.
+
+\bibitem{Perriga}
+Adrian Perrig and Haowen Chan.
+\newblock {Security and Privacy in Sensor Networks}.
+
+\bibitem{Shia}
+E~Shi and A~Perrig.
+\newblock {Designing secure sensor networks}.
+\newblock {\em IEEE Wireless Communication Magazine}, 11(6):38--43.
+
+\bibitem{Stallings2005}
+William Stallings.
+\newblock {\em {Cryptography and Network Security (4th Edition)}}.
+\newblock 2005.
+
+\bibitem{Xiao2006}
+Yang Xiao, Hsiao-Hwa Chen, Bo~Sun, Ruhai Wang, and Sakshi Sethi.
+\newblock {MAC security and security overhead analysis in the IEEE 802.15.4
+  wireless sensor networks}.
+\newblock {\em EURASIP J. Wirel. Commun. Netw.}, 2006(2):81--81, 2006.
+
+\bibitem{Yick2008}
+Jennifer Yick, Biswanath Mukherjee, and Dipak Ghosal.
+\newblock {Wireless sensor network survey}.
+\newblock {\em Computer Networks}, 52(12):2292--2330, August 2008.
+
+\end{thebibliography}

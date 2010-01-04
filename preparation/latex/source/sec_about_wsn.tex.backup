@@ -1,0 +1,121 @@
+\subsection{Caracterização de RSSF}\label{sect:subsec_caracterizacao_wsn}
+
+As redes de sensores sem fios são um caso especial de redes móveis
+\textit{ad-hoc}(\textit{MANET})\cite{Corson1999}. Têm surgido com um papel
+importante no campo da computação móvel e ubíqua. São constituídas
+por pequenos dispositivos (que vão das dezenas aos milhares de sensores),
+que podem ser distribuídos, autonomamente, em determinado local, com vista a
+desempenharem
+funções de monitorização de fenómenos físicos, como por exemplo, temperatura,
+humidade, detecção de presença. Estes dispositivos de baixa potência, também
+denominados sensores inteligentes(\textit{Smart
+Sensors})\cite{Yick2008}, são constituídos por um ou mais
+sensores, por processador, por memória, por bateria e por um mecanismo de
+comunicação por rádio-frequência (norma 802.15.4 \cite{ietf_802154}).\\
+
+%As RSSF tm vindo a ocupar um vasto espao no campo da investigação, nas
+%cincias computacionais, dado que a sua utilizao se vem tornando mais comum,
+%em especial em monitorizao de propriedades fsicas do meio ambiente, de
+%equipamentos, medies cientficas e em outros campos das cincias e da
+%industria. 
+No entanto, dadas as características de
+auto-organização/configuração, encaminhamento \textit{multi-hop}, baixo custo,
+miniaturização e versatilidade de implementação (devido  no necessidade de
+infraestrutura adicional de comunicação entre nós)\cite{Yick2008}, o seu uso
+tem-se estendido a outros campos, nomeadamente os do domínio militar, segurança
+e medicina.[\textbf{FALTA UMA REFERENCIA PARA AS aplicações}] Ao contrário do
+que acontece com as redes convencionais, as RSSF apresentam limitações de
+energia, alcance de comunicação, processamento, armazenamento e 
+memória. Assim, todo o processamento e comunicação tem sempre em conta estas
+condicionantes, já que qualquer tarefa desempenhada penaliza o consumo de
+energia, com especial relevo para a comunicação, que consome muito mais energia
+do que o processamento. Com isto, a investigação centrada nas RSSF tem vindo a
+introduzir novos conceitos, a criar ou melhorar protocolos, a construir
+aplicações e a desenvolver novos algoritmos, com vista a ir ao encontro dos
+limites impostos pelas restrições das RSSF. \\
+
+% Esta aproximao forou a necessidade de atender a outros pressupostos que,
+% intrinsecamente, se tornam de relevante importncia, nomeadamente os que
+% respeitam  segurana, ou seja, confidencialidade, autenticidade, integridade 
+% e fiabilidade dos dados que circulam na rede, bem como o no comprometimento 
+%  dos dispositivos da rede (por exemplo por exausto do consumo de energia).
+% Tendo em mente estes requisitos, os estudos tm-se orientado para algumas
+% caractersticas que os protocolos de encaminhamento seguro devero possuir, 
+% com vista a garantir estas propriedades de segurana.
+\subsubsection{Componentes}
+As RSSF so constituídas, essencialmente, por pequenos dispositivos que
+desempenham funções diferentes na rede. O \textit{hardware} implementado  de
+pequena dimenso e com caractersticas muito especficas para a tipologia de
+aplicações s quais se aplica. Os \textit{motes}(denominao dada aos ns de
+rede de uma RSSF) diferem uns dos outros consoante a
+sua função na rede, genéricamente poderão desempenhar dois papeis: nó genérico
+gerador de informação(\textit{source-nodes}) ou nó base ou de sincronizao
+(n colector de dados da rede ou de execuo de comandos
+de pesquisa)[\textbf{REFERENCIA}].
+Outro tipo de componente tambm presente so os ns de interligao ou
+\textit{gateways} que permitem ligar as RSSF a outras redes ou a outras
+infraestruturas que, com maior capacidade de armazenamento e processamento,
+permitem efectuar anlise de dados coligidos.  Por fim, e no menos importantes,
+existem ainda os ns de desenvolvimento e teste de protocolos, que possuem
+ligações a computadores (ligao rede \textit{ethernet}, RS232), podendo ainda
+funcionar como interligao para \textit{gateways} [\textbf{REFERENCIA}] 
+
+\subsubsection{Aplicações}
+Tendo em conta as caractersticas das RSSF, muitas foram as
+aplicações encontradas para a utilizao/explorao desta arquitectura
+distrbuida. O carcter autnomo destas redes oferece um sem nmero de
+vantagens que propicia a sua utilizao em locais remotos e sem necessidade de
+manuteno. Sendo assim, as aplicações podero ser divididas nas seguintes
+classes de funções:
+\begin{itemize}
+ \item \textbf{Detecção de alvos/objectos(\textit{Target Tracking}):} Detecção
+de movimento (trajectória/presença) em àreas vigiadas (em teatros operacionais
+militares, na vigilância de infraestruturas);
+ \item \textbf{Monitorização de fenómenos naturais:} Detecção de eventos ou
+anomalias ambientais (agricultura, poluição, \textit{habitats} naturais),
+controlo de fenómenos naturais (sismos, vulcões);
+ \item \textbf{Recolha de dados:} controlo de
+indicadores físicos de pessoas e animais (recurso a sensores especiais)
+normalmente associados a aplicações da medicina
+\end{itemize}
+\subsubsection{Desafios  investigação}
+
+As RSSF são uma tecnologia emergente e os avanços na
+miniaturizao e diminuição do consumo energético estão a contribuir para que
+os requisitos possam ser ainda mais ambiciosos, reduzindo algumas das limitações existentes. Neste momento os maiores desafios que
+se apresentam para a implementao das RSSF, e que deixam em ebulição os
+projectos de investigação neste domínio, são os seguintes: problemática do
+consumo de energia, fiabilidade das redes, segurança (integridade,
+autenticidade e confidencialidade) e por fim ainda ligado com a segurança a
+resistência a novos modelos de adversário.
+
+Em especial refere-se, concretamente alguns dos desafios propostos no âmbito da segurança de RSSF:
+\begin{description}
+	\item[Certificação de código (\textit{Code Attestation} ):] Considerando que
+o código executado por um nó malicioso é diferente do código executado por nó
+legitimo, a detecção destas diferenças será uma das possibilidades para a
+identificação de intrusos numa RSSF. Várias técnicas poderão ser usadas para
+verificar o código de cada sensor umas baseadas em \textit{hardware} ou em
+\textit{software} \cite{Shia}. A primeira tem que ser garantido por uma novo
+conceito de plataforma computacional de confiança (\textit{New Trusted
+Computing Base}) neste momento a ser desenvolvido por dois consórcios Trusted
+Computing Group (TCG)[REF] e Next-Generation Secure Computing Base
+(NGTCB)[REF]. A segunda técnica, relacionada com \textit{software} existe muito
+pouca investigação que neste momento mereça realce. 
+\item[Detecção de comportamentos incorrectos e detecção de revogação de
+nós\cite{Shia}:] Tendo em conta os danos causados por um nó que se encontre
+comprometido é necessário desenvolver metodos para o excluir da rede. Um dos
+sistemas de revogação é o de votação distribuída\cite{REF_CHANG_all}
+\end{description}. Neste campo ainda se encontra algum trabalho para
+desenvolver, por exemplo, um nó pode alterar o seu comportamento para poder
+fazer passar os nós legitimos por nós maliciosos
+
+Ainda paralelo a estes desafios, as redes de sensores têm vindo a agitar os
+meios académicos para a criação de modelos e plataformas de simulação
+permitindo testar os protocolos, aplicações e tecnologias de sensores sem a
+necessidade de efectuar investimento em instalações em ambiente real, 
+ficando assim adiadas para fases mais maduras do desenvolvimento das tecnologias.\\
+
+
+
+ 

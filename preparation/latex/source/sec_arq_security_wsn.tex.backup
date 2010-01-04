@@ -1,0 +1,87 @@
+\subsection{Arquitectura de Serviços de Segurança em
+RSSF} \label{sect:subsec_arq_security_wsn}
+
+Muitas vezes considera-se que num sistema seguro, a segurança é um
+único componente da arquitectura do sistema\cite{SECURITY_IN_WSN_PERRIG}.
+Todavia, esta visão é redutora, pois, para se conseguir um sistema seguro, é
+necessário que a segurança esteja integrada em cada um dos componentes, se
+assim não se verificar cada componente pode corresponder a uma ameaça a partir
+da qual se pode desencadear um ataque. \\
+
+Os desafios propostos pelas RSSF são específicos da própria tecnologia, assim
+sendo os mecanismos tradicionais de segurança podem não ser suficientes. Com
+isto surgem tecnologias que visam corresponder aos requisitos de segurança das
+RSSF. Assim, nesta secção pretende-se apresentar uma visão sobre os requisitos
+de segurança de uma RSSF e como estes são atendidos usando alguns serviços de
+segurança mais populares.
+
+\subsubsection{Requisitos de segurança de uma RSSF}
+Embora se apresente os requisitos de segurança de uma RSSF, estes requisitos
+podem variar consoante as especificidades da aplicação que a rede visa
+suportar. Por exemplos se se tratar de uma aplicação de monitorização de saúde
+uma pessoa, o óbvio é proteger a privacidade da pessoa, mas se se tratar de uma
+aplicação de monitorização de dados ambientais este requisito pode ser
+relaxado.\\
+De seguida apresentam-se, de forma genérica, os principais requisitos de
+segurança de uma RSSF:
+\begin{description}
+
+ \item[Autenticação]
+ Considerando que as RSSF usam um meio de comunicação partilhado, é necessário
+recorrer à autenticação para garantir a detecção de mensagens alteradas ou
+injectadas no sistema com o intuito de obter acesso a alguma operação ou
+informação que é restrita a utilizadores não
+autorizados\cite{SECURITY_IN_WSN_PERRIG}. No que respeita a autenticação o
+requisito pode ter dois sentidos: autenticação da origem das mensagens
+(garantindo que a mensagem é gerada por quem se apresenta como sendo a origem)
+e autenticação dos dados (garantindo que os dados recebidos são exactamente os
+enviados). Note-se que a implementação de criptografia assimétrica pode
+contribuir para a garantia desta propriedade, mas ainda existe muito esforço a
+desenvolver neste campo dadas as limitações das RSSF e as exigências
+computacionais e energéticas destes mecanismos.
+
+ \item[Confidencialidade]
+ Sendo a RSSF uma infraestrutura baseada fundamentalmente na disseminação de
+dados recolhidos apartir de sensores que se encontram distribuidos em ambiente
+não controlado e , normalmente, de fácil acesso,  pode ser necessário garantir a
+confidencialidade dos dados que circulam na rede. Assim, o uso de mecanismos de
+criptografia é o mais usado para protecção de dados em comunicação
+ponto-a-ponto. O uso de criptografia por si só pode não ser suficiente, uma vez
+que um ataque pode fazer análise dos dados que circulam na rede (fazendo uma
+análise de padrões) e com este conhecimento violar as chaves que servem de base
+ao mecanismo. Desta forma, a utilização de algoritmos de encriptação fiaveis
+(ex:AES, ECC) para garantir um determinado nível de segurança, para isso existe
+a necessidade de partilhar chaves de sessão por todos os \textit{end-points} e
+como tal deve-se recorrer a esquemas de distribuição de chaves.
+
+ \item[Disponibilidade]
+Para que consiga atingir um bom nível de disponibilidade é necessário garantir
+que uma RSSF funcione normalmente durante todo o seu tempo de implementação. Os
+ataques de negação de serviço (Denial of Service - DoS) são os mais frequentes
+para atingir a disponibilidade de uma rede. Para além de mecanismos que evitem
+a negação de serviço, é preciso garantir que a forma de degradação da rede ( na
+presença de um ataque ) seja controlada e que a degradação vá sendo tão grande
+quanto maior sejam o número de nós afectados.
+
+ \item[Integridade]
+
+
+
+ \end{description}
+
+
+\subsubsection{Serviços de Segurança}
+
+\begin{description}
+\item[TinySec\cite{Karlof2004}]
+
+\item[MiniSec\cite{Luk2007d}]
+
+\item[Sistemas de distríbuição de chaves\cite{eschenauer_key-management_2002}]
+
+\end{description}
+
+
+
+
+
