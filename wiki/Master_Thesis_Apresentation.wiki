@@ -1,5 +1,3 @@
-#summary One-sentence summary of this page.
-
 = Secure and reliable routing for dependable wireless sensor networks =
 
 The wireless and mobile networks features a dissimilar set of characteristics and constraints compared to traditional fixed networks. The different dimensions of these characteristics/constraints and dependability isues strongly influence the reliability and security of the routing system, which is often regarded as the network-layer glue to support different applications. Routing dependability is the property associated to the trustworthiness of a routing system such that reliance can justifiably be placed on the consistency of behavior and performance of the routing service delivered.
