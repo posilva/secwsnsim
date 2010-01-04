@@ -1,0 +1,36 @@
+\subsection{Modelo de Intrusão em RSSF}\label{sect:subsec_intrusao}
+Considerando o estudo de segurança numa RSSF, e dada a sua exposição
+natural, nomeadamente a física, colocando cada sensor ao alcance de um qualquer
+adversário, torna relevante a consideração de novos modelos de ataque.
+Considerando que cada rede pode ser constituída por milhares de sensores, cada
+um deles é um ponto de ataque, na impossibilidade de se proteger ou monitorizar
+todos os sensores instalados\cite{Perriga}. Assim
+as RSSF vêm-se sujeitas a um modelo de adversário que difere das redes com/sem
+fios convencionais. Um adversário pode estar perto da rede e ter acesso aos
+sensores e com isto ``roubar'' um ou parte dos sensores da rede com vista a
+explorar os segredos ou material criptográfico usados para a comunicação.
+Podemos então tipificar estes ataques como sendo por intrusão. 
+    Este tipo de ataques podem ser definidos por ataques desde o nível
+MAC\cite{Xiao2006} até ao nível de intrusão física  em que um actor externo,
+tendo acesso a um ou más sensores legítimos, descobre os segredos criptográficos
+permitindo-lhe replicar\cite{Parno2005} os segredos para sensores maliciosos,
+que depois de introduzidos podem agir de forma coordenada comprometendo a rede.
+Conseguida a intrusão, o atacante pode induzir nos sensores legítimos
+comportamentos incorrectos baseados na informação falsa introduzida pelos
+sensores maliciosos, influenciando o processo de encaminhamento (denominados de
+ataques ao encaminhamento).  Note-se, por exemplo, que estes ataques têm
+características que os tornam difíceis de identificar quando instalados numa
+rede,  uma vez que o carácter autónomo das RSSF, torna difícil distinguir um
+comportamento errado de uma falha. Um sensor malicioso pode respeitar o
+protocolo da rede, no entanto podem actuar de forma incorrecta levando a rede a
+criar topologias especificas para o ataque (por exemplo, criando partições) ou
+fazendo, por exemplo, toda a informação passar pelos nós maliciosos, suprimindo
+ou violando a informação. No que se refere aos ataques direccionados ao
+encaminhamento, por serem parte do objectivo do estudo deste trabalho,
+encontram-se definidos na próxima secção e são essencialmente instanciados pela
+participação colaborativa ou isolada de nós introduzidos  com o intuito de
+afectar o normal funcionamento da rede.
+
+\subsubsection{Modelo bizantino: adversários bizantinos}
+
+\subsubsection{Novos modelos de adversário - soluções probabilisticas}
