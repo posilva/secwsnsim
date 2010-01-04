@@ -23,10 +23,6 @@ exemplo,  temperatura, luz ou movimento consoante as necessidades da aplicação.
 banda de comunicação e energia limitada. Conhecidas estas limitações, os
 sensores têm de ser distribuídos em grande número como forma de aumentar a
 redundância.
-
-
-
-
 \section{Descrição e contexto (ou descrição do problema)} \label{sect:descricao}
 \section{Solução apresentada (ou âmbito do trabalho)} \label{sect:solucao}
 \section{Principais contribuições previstas} \label{sect:contribuicoes}
@@ -35,4 +31,4 @@ redundância.
 por exemplo, um estilo de apresentação por itens, com uma pequena descrição de um 
 parágrafo associado a cada item.
 
- 
+
