@@ -370,7 +370,7 @@ grau de \@degree\ em \@majorfield.}
     \if\@showcoadviser1{\quotefont\@coadvisertitle:}&\@coadviser\\\fi
     \end{tabular}
     \end{center}
-    \vskip2\baselineskip
+    \vskip 1.0cm
     \quotefonti %
     \@presentationtext
     \end{minipage}
@@ -417,7 +417,7 @@ grau de \@degree\ em \@majorfield.}
 \def\resumo{%
   \gdef\@keywordsname{\keywordsnamePT}
   \chapter*{\resumoname}
-   \rule{\textwidth}{0.2mm} ~\\ ~\\
+   \rule{\textwidth}{0.2mm} ~\\
   }
 
 
@@ -428,7 +428,7 @@ grau de \@degree\ em \@majorfield.}
 \def\abstract{%
   \gdef\@keywordsname{\keywordsnameEN}
   \chapter*{\abstrname}
-  \rule{\textwidth}{0.2mm} ~\\ ~\\
+  \rule{\textwidth}{0.2mm} ~\\ 
    }
 
   
