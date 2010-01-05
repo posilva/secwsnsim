@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1 beta2
-lastDocument=source/sec_ambientes_de_simulacao.tex
+lastDocument=source/resumopt.tex
 masterDocument=
 name=Thesis.Preparation
 pkg_extIsRegExp=false
@@ -21,7 +21,7 @@ archive=true
 column=0
 encoding=ISO-8859-1
 highlight=LaTeX
-line=26
+line=49
 open=true
 order=0
 
@@ -99,12 +99,12 @@ order=-1
 
 [item:source/resumopt.tex]
 archive=true
-column=0
-encoding=
-highlight=
-line=0
-open=false
-order=-1
+column=48
+encoding=ISO-8859-1
+highlight=LaTeX
+line=15
+open=true
+order=3
 
 [item:source/sec_about_wsn.tex]
 archive=true
