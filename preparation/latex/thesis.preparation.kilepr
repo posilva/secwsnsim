@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1 beta2
-lastDocument=source/resumopt.tex
+lastDocument=source/capitulo1.tex
 masterDocument=
 name=Thesis.Preparation
 pkg_extIsRegExp=false
@@ -21,7 +21,7 @@ archive=true
 column=0
 encoding=ISO-8859-1
 highlight=LaTeX
-line=49
+line=118
 open=true
 order=0
 
@@ -36,21 +36,21 @@ order=1
 
 [item:source/capitulo1.tex]
 archive=true
-column=0
-encoding=
-highlight=
-line=0
-open=false
-order=-1
+column=21
+encoding=ISO-8859-1
+highlight=LaTeX
+line=25
+open=true
+order=5
 
 [item:source/capitulo2.tex]
 archive=true
 column=0
-encoding=
-highlight=
-line=0
-open=false
-order=-1
+encoding=ISO-8859-1
+highlight=LaTeX
+line=9
+open=true
+order=4
 
 [item:source/capitulo3.tex]
 archive=true
@@ -109,11 +109,11 @@ order=3
 [item:source/sec_about_wsn.tex]
 archive=true
 column=0
-encoding=
-highlight=
-line=0
-open=false
-order=-1
+encoding=ISO-8859-1
+highlight=LaTeX
+line=1
+open=true
+order=6
 
 [item:source/sec_ambientes_de_simulacao.tex]
 archive=true
@@ -127,11 +127,11 @@ order=2
 [item:source/sec_arq_security_wsn.tex]
 archive=true
 column=0
-encoding=
-highlight=
-line=0
-open=false
-order=-1
+encoding=ISO-8859-1
+highlight=LaTeX
+line=96
+open=true
+order=7
 
 [item:source/sec_arq_software_wsn.tex]
 archive=true
@@ -144,19 +144,19 @@ order=-1
 
 [item:source/sec_aspectos_aberto_avaliacao_experimental.tex]
 archive=true
-column=0
-encoding=
-highlight=
+column=73
+encoding=ISO-8859-1
+highlight=LaTeX
 line=0
 open=false
 order=-1
 
 [item:source/sec_ataq_org_rede.tex]
 archive=true
-column=0
-encoding=
-highlight=
-line=0
+column=63
+encoding=ISO-8859-1
+highlight=LaTeX
+line=6
 open=false
 order=-1
 
@@ -181,18 +181,18 @@ order=-1
 [item:source/sec_intrusao.tex]
 archive=true
 column=0
-encoding=
-highlight=
+encoding=ISO-8859-1
+highlight=LaTeX
 line=0
 open=false
 order=-1
 
 [item:source/sec_modadversario_ataques_contramedidas.tex]
 archive=true
-column=6357096
-encoding=
-highlight=
-line=0
+column=17
+encoding=ISO-8859-1
+highlight=LaTeX
+line=20
 open=false
 order=-1
 
@@ -216,12 +216,12 @@ order=-1
 
 [item:source/sec_secure_wsn_design.tex]
 archive=true
-column=7864421
-encoding=
-highlight=
-line=0
-open=false
-order=-1
+column=21
+encoding=ISO-8859-1
+highlight=LaTeX
+line=7
+open=true
+order=8
 
 [item:source/sumario_mod_ad_svc_sec.tex]
 archive=true
