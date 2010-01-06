@@ -1,0 +1,8 @@
+\subsection{Tipos de Ataques a RSSF}\label{sect:subsec_tipos_ataques}
+A segurança num sistema deve ser vista como um todo. Em cada um dos componentes
+é necessário analisar as vulnerabilidades e qual a ameaça face a qualquer ti
+\subsubsection{Ataques ao nível fisico}
+
+\subsubsection{Ataques ao nível rede}
+
+\subsubsection{Ataques ao nível aplicação}
