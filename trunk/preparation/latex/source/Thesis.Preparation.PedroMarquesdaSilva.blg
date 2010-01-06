@@ -36,6 +36,7 @@ Warning--I didn't find a database entry for "tinyos"
 Warning--I didn't find a database entry for "Contiki"
 Warning--I didn't find a database entry for "nanork"
 Warning--I didn't find a database entry for "SECURITY_IN_WSN_PERRIG"
+Warning--I didn't find a database entry for "SPINS"
 Warning--I didn't find a database entry for "Stall2005"
 Warning--I didn't find a database entry for "RFC2828"
 Warning--I didn't find a database entry for "NS2"
@@ -58,7 +59,7 @@ Warning--empty year in Shia
 Warning--empty publisher in Stallings2005
 You've used 16 entries,
             2118 wiz_defined-function locations,
-            675 strings with 7237 characters,
+            677 strings with 7247 characters,
 and the built_in function-call counts, 5662 in all, are:
 = -- 567
 > -- 251
