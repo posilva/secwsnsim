@@ -23,12 +23,24 @@ exemplo,  temperatura, luz ou movimento consoante as necessidades da aplicação.
 banda de comunicação e energia limitada. Conhecidas estas limitações, os
 sensores têm de ser distribuídos em grande número como forma de aumentar a
 redundância.
+
+
+
+
 \section{Descrição e contexto (ou descrição do problema)} \label{sect:descricao}
-\section{Solução apresentada (ou âmbito do trabalho)} \label{sect:solucao}
-\section{Principais contribuições previstas} \label{sect:contribuicoes}
-
- As principais contribuições previstas devem poder ser descritas em não mais do que uma página, podendo adoptar-se, 
-por exemplo, um estilo de apresentação por itens, com uma pequena descrição de um 
-parágrafo associado a cada item.
-
-
+A segurança nas RSSF é uma problema \textit{de
+facto}, com impacto na sua aplicação em sistemas críticos. Apesar da evolução
+do desenvolvimento de \textit{hardware}, dos nós sensores, indicar que se
+pretende alcançar dispositivos de muito baixo custo, com menos constragimentos
+e mais capacidades, a investigação e desenvolvimento necessita de ferramentas
+que permitam testar novos algoritmos, protocolos, topologias sem que se tenha
+de instalar uma rede com sensores reais. A aplicação real de sensores, na
+investigação tem constragimento de ordem orçamental, que limita a dimensão das
+redes criadas e que não permite a repetição de experiências , variando apenas
+algumas condições predefinidas. Para suprir estas limitações surge a
+necessidade de criar sistemas de simulação de RSSF. O que se tem vindo a
+verificar é que, para cada problema cria-se uma ferramenta que permita
+testar/avaliar o problema especifico. No entanto, existem determinados modelos
+que são transversais a qualquer protocolo de encaminhamento que se queira
+avaliar, por exemplo: consumo de energia, taxa de cobertura, fiabilidade,
+escalabilidade. \\

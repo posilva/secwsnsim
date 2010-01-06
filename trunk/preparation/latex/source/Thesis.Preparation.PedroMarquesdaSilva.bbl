@@ -64,11 +64,6 @@ B.~Parno, A.~Perrig, and V.~Gligor.
 Adrian Perrig and Haowen Chan.
 \newblock {Security and Privacy in Sensor Networks}.
 
-\bibitem{Shia}
-E~Shi and A~Perrig.
-\newblock {Designing secure sensor networks}.
-\newblock {\em IEEE Wireless Communication Magazine}, 11(6):38--43.
-
 \bibitem{Stallings2005}
 William Stallings.
 \newblock {\em {Cryptography and Network Security (4th Edition)}}.
