@@ -1,14 +1,13 @@
 \subsection{Arquitectura de Serviços de Segurança em
 RSSF} \label{sect:subsec_arq_security_wsn}
-
 Muitas vezes considera-se que num sistema seguro, a segurança é um
 único componente da arquitectura do sistema\cite{SECURITY_IN_WSN_PERRIG}.
 Todavia, esta visão é redutora, pois, para se conseguir um sistema seguro, é
 necessário que a segurança esteja integrada em cada um dos componentes, se
 assim não se verificar cada componente pode corresponder a uma ameaça a partir
 da qual se pode desencadear um ataque. \\
-
-Os desafios propostos pelas RSSF são específicos da própria tecnologia, assim
+\paragraph*{} Os desafios propostos pelas RSSF são específicos da própria
+tecnologia, assim
 sendo os mecanismos tradicionais de segurança podem não ser suficientes. Com
 isto surgem tecnologias que visam corresponder aos requisitos de segurança das
 RSSF. Assim, nesta secção pretende-se apresentar uma visão sobre os requisitos
@@ -92,36 +91,42 @@ TinySec é uma arquitectura de segurança para protecção ao nível de ligação de
 dados em RSSF. O objectivo principal, para o qual foi desenhado, é providenciar
 um nível adequado de segurança com o minimo consumo de recursos. Os serviços de
 segurança  disponibilizados são:
+
 \begin{description}
- \item[Autenticação de Dados] Com a utilização de \textit{Message Authentication
+ \item \textbf{Autenticação de Dados}: Com a utilização de \textit{Message
+Authentication
 Codes}(MAC), no caso CBC-MAC\footnote{Cipher Block Chaining - Message
-Authentication Code (CBC-MAC)), para se adaptar às RSSF o MAC tem um
+Authentication Code (CBC-MAC))}, para se adaptar às RSSF o MAC tem um
 comprimeito de 4 bytes ao contrário dos 8 ou 16 habituais.
- \item[Confidencialidade] A encriptação é implementada com o recurso ao mesmo
+ \item \textbf{Confidencialidade}: A encriptação é implementada com o recurso
+ao mesmo
 CBC-MAC, uma vez que neste mecanismo as propriedades de segurança estão
 determinadas pelo comprimento do MAC os autores afirmam que para uma RSSF é
 suficiente uma vez que um atacante teria de efectuar $2^{31}$ tentativas, que
-demorariam cerca de 20 meses a realizar com um canal de 19.5Kbs.
+demorariam cerca de 20 meses a realizar com um canal de
+19.5Kbs.
+\end{description}
+
+ 
 A frescura das mensagens não foi endereçado nesta arquitectura uma vez que os
 autores indicaram como demasiado exigente em termos de recursos o que
 contrariaria o objectivo inicial da arquitectura.
   
- \end{description} 
-\item[MiniSec\cite{Luk2007d}]
+ \item[MiniSec\cite{Luk2007d}]
 
 \item[SPINS\cite{SPINS}]
-É um conjunto de protocolos de segurança. è constituído por dois componentes
+É um conjunto de protocolos de segurança, constituído por dois componentes
 principais SNEP\footnote{Secure Network Encryption Protocol} \cite{SNEP} e
-\muTESLA \cite{MICROTESLA}. O primeiro, fornece serviços de autenticação e
+${\mu}$TESLA \cite{MICROTESLA}. O primeiro, fornece serviços de autenticação e
 confidencialidade entre dois pontos de comunicação, encriptando as mensagens e
 protegendo-as com um MAC. O SNEP gera diferentes chaves, de encriptação, que 
 derivam de uma chave mestra partilhada entre os dois nós, ainda é incluido um
 contador nas mensagens para garantir a frescura. A encriptação é realizada com
-o modo CTR\footnote{\textit{Counter Mode}} e a autenticação com CBC-MAC.
-
-
-O segundo, é um serviço de autenticação de
-\textit{broadcast}. 
+o modo CTR\footnote{\textit{Counter Mode}} e a autenticação com CBC-MAC. O
+segundo componente,o ${\mu}$TESLA,  é um serviço de autenticação de
+\textit{broadcast}, que evita a utilização de mecanismos, mais exigentes, de
+criptografia assimétrica, recorrendo a critografia simétrica, autenticando as
+mensagens com um MAC,  
 
 \item[Sistemas de distríbuição de chaves\cite{eschenauer_key-management_2002}]
 Confidencialidade e autenticação são aspectos críticos das redes de sensores
