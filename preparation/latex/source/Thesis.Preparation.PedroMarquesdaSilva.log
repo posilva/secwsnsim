@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2010.1.4)  5 JAN 2010 11:59
+This is pdfTeX, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2010.1.4)  6 JAN 2010 12:23
 entering extended mode
 **Thesis.Preparation.PedroMarquesdaSilva.tex
 (./Thesis.Preparation.PedroMarquesdaSilva.tex
@@ -346,15 +346,27 @@ LaTeX Font Info:    Try loading font information for T1+ptm on input line 59.
 
 (/usr/share/texmf/tex/latex/psnfss/t1ptm.fd
 File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
-) (./logounl.tex
-<logounl.jpg, id=1, 97.36375pt x 97.36375pt>
+)
+(/usr/share/texmf/tex/context/base/supp-pdf.tex
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count112
+\scratchdimen=\dimen118
+\scratchbox=\box28
+\nofMPsegments=\count113
+\nofMParguments=\count114
+\everyMPshowfont=\toks28
+\MPscratchCnt=\count115
+\MPscratchDim=\dimen119
+\MPnumerator=\count116
+\everyMPtoPDFconversion=\toks29
+) (./logounl.tex <logounl.jpg, id=1, 97.36375pt x 97.36375pt>
 File: logounl.jpg Graphic file (type jpg)
- <use logounl.jpg>)
+
+<use logounl.jpg>)
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <17.28> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 65.
 LaTeX Font Info:    Try loading font information for TS1+ptm on input line 65.
-
-(/usr/share/texmf/tex/latex/psnfss/ts1ptm.fd
+ (/usr/share/texmf/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
 LaTeX Font Info:    Try loading font information for OT1+ztmcm on input line 65
@@ -473,14 +485,7 @@ LaTeX Warning: Citation `LIVROARCH_WSN' on page xi undefined on input line 4.
 
 ] [12
 
-] (./Thesis.Preparation.PedroMarquesdaSilva.lot
-
-LaTeX Warning: Citation `SNMuseum' on page xiii undefined on input line 4.
-
-
-LaTeX Warning: Citation `SNMuseum' on page xiii undefined on input line 5.
-
-)
+] (./Thesis.Preparation.PedroMarquesdaSilva.lot)
 \tf@lot=\write5
 \openout5 = `Thesis.Preparation.PedroMarquesdaSilva.lot'.
 
@@ -489,7 +494,8 @@ LaTeX Warning: Citation `SNMuseum' on page xiii undefined on input line 5.
 ]
 \openout2 = `capitulo1.aux'.
 
- (./capitulo1.tex
+
+(./capitulo1.tex
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <20.74> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 1.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
@@ -504,8 +510,8 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
 
 
 
-]
-(./sec_secure_wsn_design.tex (./sec_about_wsn.tex
+] (./sec_secure_wsn_design.tex
+(./sec_about_wsn.tex
 
 LaTeX Warning: Citation `ietf_802154' on page 3 undefined on input line 14.
 
@@ -526,66 +532,39 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <12> not available
 (Font)              Font shape `T1/ptm/b/it' tried instead on input line 71.
 
-[4]
-
-LaTeX Warning: Citation `REF_CHANG_all' on page 5 undefined on input line 108.
-
-
-Overfull \hbox (19.8154pt too wide) in paragraph at lines 106--109
-[]\T1/ptm/m/n/12 Tendo em conta
- []
-
-
-LaTeX Warning: Citation `INSENS_REF' on page 5 undefined on input line 112.
-
-[5]
-
-LaTeX Warning: Citation `Doceur' on page 6 undefined on input line 117.
-
-
-LaTeX Warning: Citation `TINYSEC' on page 6 undefined on input line 122.
-
-
-LaTeX Warning: Citation `MINISEC' on page 6 undefined on input line 122.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 128--133
-
- []
-
-) (./sec_arq_software_wsn.tex
+[4]) (./sec_arq_software_wsn.tex
 Overfull \hbox (1.61493pt too wide) in paragraph at lines 13--21
 \T1/ptm/m/n/12 Uma ar-qui-tec-tura para a a pi-lha de pro-to-co-los em RSSF foi
  pro-posta por [[]], esta pi-lha apresenta-
  []
 
-[6]
+[5]
 
-LaTeX Warning: Citation `REF' on page 7 undefined on input line 48.
+LaTeX Warning: Citation `REF' on page 6 undefined on input line 48.
 
 
-LaTeX Warning: Citation `TRANSPORT_LAYER_WSN' on page 7 undefined on input line
+LaTeX Warning: Citation `TRANSPORT_LAYER_WSN' on page 6 undefined on input line
  54.
 
-[7]
 
-LaTeX Warning: Citation `SMP_REF' on page 8 undefined on input line 67.
-
-
-LaTeX Warning: Citation `TADAP_REF' on page 8 undefined on input line 68.
+LaTeX Warning: Citation `SMP_REF' on page 6 undefined on input line 67.
 
 
-LaTeX Warning: Citation `LESOP_REF' on page 8 undefined on input line 73.
+LaTeX Warning: Citation `TADAP_REF' on page 6 undefined on input line 68.
+
+
+LaTeX Warning: Citation `LESOP_REF' on page 6 undefined on input line 73.
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 80--91
 
  []
 
+[6]
 
-LaTeX Warning: Citation `MODELO_SENSOR' on page 8 undefined on input line 96.
+LaTeX Warning: Citation `MODELO_SENSOR' on page 7 undefined on input line 96.
 
-(./pic_sensornode.tex <SENSOR_NODE.png, id=73, 305.14pt x 240.9pt>
+(./pic_sensornode.tex <SENSOR_NODE.png, id=70, 305.14pt x 240.9pt>
 File: SENSOR_NODE.png Graphic file (type png)
 
 <use SENSOR_NODE.png>
@@ -593,113 +572,70 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10.95> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 6.
 
 
-LaTeX Warning: Citation `LIVROARCH_WSN' on page 8 undefined on input line 6.
+LaTeX Warning: Citation `LIVROARCH_WSN' on page 7 undefined on input line 6.
 
-[8])
+)) (./sec_arq_security_wsn.tex [7 <./SENSOR_NODE.png (PNG copy)>]
 
-LaTeX Warning: Citation `MICA' on page 9 undefined on input line 118.
-
-
-LaTeX Warning: Citation `CrossbowSite' on page 9 undefined on input line 118.
-
-
-LaTeX Warning: Citation `SNMuseum' on page 9 undefined on input line 134.
-
-
-LaTeX Warning: Citation `SNMuseum' on page 9 undefined on input line 155.
-
-
-LaTeX Warning: Citation `Holger_Karl_protocols_andarchs_wsn' on page 9 undefine
-d on input line 159.
-
-
-LaTeX Warning: Citation `atmel' on page 9 undefined on input line 170.
-
-
-LaTeX Warning: Citation `TIMSP430' on page 9 undefined on input line 170.
-
-
-Underfull \vbox (badness 1990) has occurred while \output is active []
-
- [9 <./SENSOR_NODE.png (PNG copy)>]
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 185.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 185.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 185.
-
-
-LaTeX Warning: Citation `XEMICS XE1205' on page 10 undefined on input line 196.
-
-
-
-LaTeX Warning: Citation `CHIPCON2420' on page 10 undefined on input line 197.
-
-[10]
-
-LaTeX Warning: Citation `tinyos' on page 11 undefined on input line 207.
-
-
-LaTeX Warning: Citation `Contiki' on page 11 undefined on input line 216.
-
-
-LaTeX Warning: Citation `nanork' on page 11 undefined on input line 224.
-
-[11]
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 242.
-LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <8> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 243.
-LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <8> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 244.
-) (./sec_arq_security_wsn.tex
-
-LaTeX Warning: Citation `SECURITY_IN_WSN_PERRIG' on page 12 undefined on input 
-line 5.
+LaTeX Warning: Citation `SECURITY_IN_WSN_PERRIG' on page 8 undefined on input l
+ine 5.
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 4--10
 
  []
 
-[12]
 
-LaTeX Warning: Citation `SECURITY_IN_WSN_PERRIG' on page 13 undefined on input 
-line 34.
+LaTeX Warning: Citation `SECURITY_IN_WSN_PERRIG' on page 8 undefined on input l
+ine 34.
 
-[13])) (./sec_modadversario_servicos_seg.tex (./sec_dolev_yao.tex
+[8]
 
-LaTeX Warning: Citation `Stall2005' on page 14 undefined on input line 8.
+LaTeX Warning: Citation `SPINS' on page 9 undefined on input line 82.
+
+[9])) (./sec_modadversario_servicos_seg.tex (./sec_dolev_yao.tex
+
+LaTeX Warning: Citation `Stall2005' on page 10 undefined on input line 8.
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 2--14
 
  []
 
-[14]
 
-LaTeX Warning: Citation `Stall2005' on page 15 undefined on input line 21.
+Underfull \vbox (badness 7256) has occurred while \output is active []
+
+ [10]
+
+LaTeX Warning: Citation `Stall2005' on page 11 undefined on input line 21.
 
 
-LaTeX Warning: Citation `RFC2828' on page 15 undefined on input line 25.
+LaTeX Warning: Citation `RFC2828' on page 11 undefined on input line 25.
 
 
-LaTeX Warning: Citation `Stall2005' on page 15 undefined on input line 33.
+LaTeX Warning: Citation `Stall2005' on page 11 undefined on input line 33.
 
 ) (./sec_intrusao.tex
 Underfull \hbox (badness 10000) in paragraph at lines 15--1
 
  []
 
-
-Underfull \vbox (badness 4995) has occurred while \output is active []
-
- [15])
-(./tipificacao_de_ataques.tex) (./sumario_mod_ad_svc_sec.tex)
+[11]) (./tipificacao_de_ataques.tex
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [16])
+ [12]
+
+LaTeX Warning: Citation `REF' on page 13 undefined on input line 25.
+
+
+LaTeX Warning: Citation `REF' on page 13 undefined on input line 25.
+
+
+LaTeX Warning: Citation `Newsome2004' on page 13 undefined on input line 34.
+
+
+LaTeX Warning: Citation `KAVITHA' on page 13 undefined on input line 39.
+
+[13]) (./sumario_mod_ad_svc_sec.tex))
 (./sec_modadversario_ataques_contramedidas.tex
 Overfull \hbox (9.51198pt too wide) in paragraph at lines 2--2
 []\T1/ptm/b/n/14.4 Modelo de Ad-ver-sá-rio, Ata-ques ao En-ca-mi-nha-mento e Co
@@ -711,11 +647,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 4--11
 
  []
 
-
-Underfull \vbox (badness 1789) has occurred while \output is active []
-
- [17])
-(./sec_protocolos_encaminhamento.tex)
+[14]) (./sec_protocolos_encaminhamento.tex)
 (./sec_aspectos_aberto_avaliacao_experimental.tex)
 (./sec_ambientes_de_simulacao.tex
 Underfull \hbox (badness 10000) in paragraph at lines 2--12
@@ -723,39 +655,45 @@ Underfull \hbox (badness 10000) in paragraph at lines 2--12
  []
 
 
-LaTeX Warning: Citation `NS2' on page 18 undefined on input line 17.
+LaTeX Warning: Citation `NS2' on page 15 undefined on input line 17.
 
 
-LaTeX Warning: Citation `802_15_4' on page 18 undefined on input line 20.
+LaTeX Warning: Citation `802_15_4' on page 15 undefined on input line 20.
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 13--24
 
  []
 
-[18]
+[15]
 Underfull \hbox (badness 10000) in paragraph at lines 25--30
 
  []
 
 
-LaTeX Warning: Citation `JAVA_SUN' on page 19 undefined on input line 37.
+LaTeX Warning: Citation `JAVA_SUN' on page 16 undefined on input line 37.
+
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 64.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 64.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 64.
+
+LaTeX Warning: Citation `MATALAB_REF' on page 16 undefined on input line 64.
 
 
-LaTeX Warning: Citation `MATALAB_REF' on page 19 undefined on input line 64.
+LaTeX Warning: Citation `vanderbilt' on page 16 undefined on input line 65.
+
+[16]
+
+LaTeX Warning: Citation `JSIM' on page 17 undefined on input line 84.
 
 
-LaTeX Warning: Citation `vanderbilt' on page 19 undefined on input line 65.
-
-[19]
-
-LaTeX Warning: Citation `JSIM' on page 20 undefined on input line 84.
+LaTeX Warning: Citation `SENSE' on page 17 undefined on input line 86.
 
 
-LaTeX Warning: Citation `SENSE' on page 20 undefined on input line 86.
-
-
-LaTeX Warning: Citation `IEEE802.15.4' on page 20 undefined on input line 106.
+LaTeX Warning: Citation `IEEE802.15.4' on page 17 undefined on input line 106.
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 97--107
@@ -765,40 +703,40 @@ Underfull \hbox (badness 10000) in paragraph at lines 97--107
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [20]
+ [17]
 
-LaTeX Warning: Citation `SHOX_REF' on page 21 undefined on input line 120.
+LaTeX Warning: Citation `SHOX_REF' on page 18 undefined on input line 120.
 
-[21]
+[18]
 
-LaTeX Warning: Citation `SITE_DE_COMPARACAO_DE_SIM' on page 22 undefined on inp
+LaTeX Warning: Citation `SITE_DE_COMPARACAO_DE_SIM' on page 19 undefined on inp
 ut line 145.
 
 ) (./sec_dicussao_resumo.tex
 Underfull \vbox (badness 4995) has occurred while \output is active []
 
- [22]))
-[23]
+ [19]))
+[20]
 \openout2 = `capitulo3.aux'.
 
- (./capitulo3.tex [24
+ (./capitulo3.tex) [21
 
-
-
-]) [25]
-\openout2 = `capitulo4.aux'.
-
- (./capitulo4.tex [26
-
-
-
-]) [27] [28
 
 
 ]
-(./Thesis.Preparation.PedroMarquesdaSilva.bbl [29
+\openout2 = `capitulo4.aux'.
 
-]) [30]
+ (./capitulo4.tex [22
+
+
+
+]) [23] [24
+
+
+]
+(./Thesis.Preparation.PedroMarquesdaSilva.bbl [25
+
+]) [26]
 (./Thesis.Preparation.PedroMarquesdaSilva.aux (./resumopt.aux) (./resumoen.aux)
 (./capitulo1.aux) (./capitulo2.aux) (./capitulo3.aux) (./capitulo4.aux))
 
@@ -809,21 +747,21 @@ LaTeX Warning: There were undefined references.
 (\end occurred when \if on line 68 was incomplete)
 (\end occurred when \if on line 65 was incomplete) 
 Here is how much of TeX's memory you used:
- 3469 strings out of 94086
- 43366 string characters out of 1167701
- 91848 words of memory out of 3500000
- 6549 multiletter control sequences out of 10000+50000
- 92410 words of font info for 141 fonts, out of 1200000 for 2000
+ 3720 strings out of 94086
+ 46724 string characters out of 1167701
+ 95616 words of memory out of 3500000
+ 6807 multiletter control sequences out of 10000+50000
+ 72711 words of font info for 118 fonts, out of 1200000 for 2000
  645 hyphenation exceptions out of 8191
- 34i,10n,26p,258b,346s stack positions out of 5000i,500n,6000p,200000b,5000s
+ 34i,9n,26p,257b,333s stack positions out of 5000i,500n,6000p,200000b,5000s
 {/usr/share/texmf/fonts/enc/d
 vips/base/8r.enc}</usr/share/texmf/fonts/type1/urw/times/utmb8a.pfb></usr/share
 /texmf/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texmf/fonts/type1/urw/time
 s/utmr8a.pfb></usr/share/texmf/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Thesis.Preparation.PedroMarquesdaSilva.pdf (44 pages, 154501 
+Output written on Thesis.Preparation.PedroMarquesdaSilva.pdf (40 pages, 143831 
 bytes).
 PDF statistics:
- 164 PDF objects out of 1000 (max. 8388607)
+ 151 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 131072)
  11 words of extra memory for PDF output out of 10000 (max. 10000000)
 
