@@ -95,7 +95,7 @@ segurança  disponibilizados são:
 \begin{description}
  \item[Autenticação de Dados] Com a utilização de \textit{Message Authentication
 Codes}(MAC), no caso CBC-MAC\footnote{Cipher Block Chaining - Message
-Authentication Code (CBC-MAC)), para se adaptar às RSSF o MAC tem um
+Authentication Code (CBC-MAC))}, para se adaptar às RSSF o MAC tem um
 comprimeito de 4 bytes ao contrário dos 8 ou 16 habituais.
  \item[Confidencialidade] A encriptação é implementada com o recurso ao mesmo
 CBC-MAC, uma vez que neste mecanismo as propriedades de segurança estão
@@ -110,15 +110,15 @@ contrariaria o objectivo inicial da arquitectura.
 \item[MiniSec\cite{Luk2007d}]
 
 \item[SPINS\cite{SPINS}]
-É um conjunto de protocolos de segurança. è constituído por dois componentes
+É um conjunto de protocolos de segurança, constituído por dois componentes
 principais SNEP\footnote{Secure Network Encryption Protocol} \cite{SNEP} e
-\muTESLA \cite{MICROTESLA}. O primeiro, fornece serviços de autenticação e
+${\mu}$TESLA \cite{MICROTESLA}. O primeiro, fornece serviços de autenticação e
 confidencialidade entre dois pontos de comunicação, encriptando as mensagens e
 protegendo-as com um MAC. O SNEP gera diferentes chaves, de encriptação, que 
 derivam de uma chave mestra partilhada entre os dois nós, ainda é incluido um
 contador nas mensagens para garantir a frescura. A encriptação é realizada com
 o modo CTR\footnote{\textit{Counter Mode}} e a autenticação com CBC-MAC. O
-segundo componente,o \muTESLA,  é um serviço de autenticação de
+segundo componente,o ${\mu}$TESLA,  é um serviço de autenticação de
 \textit{broadcast}, que evita a utilização de mecanismos, mais exigentes, de
 criptografia assimétrica, recorrendo a critografia simétrica, autenticando as
 mensagens com um MAC,  

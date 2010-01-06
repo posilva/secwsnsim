@@ -1,15 +1,17 @@
-This is pdfTeX, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2010.1.4)  6 JAN 2010 12:23
+This is pdfTeXk, Version 3.1415926-1.40.9 (Web2C 7.5.7) (format=pdflatex 2009.10.24)  6 JAN 2010 21:39
 entering extended mode
+ %&-line parsing enabled.
 **Thesis.Preparation.PedroMarquesdaSilva.tex
 (./Thesis.Preparation.PedroMarquesdaSilva.tex
 LaTeX2e <2005/12/01>
-Babel <v3.8h> and hyphenation patterns for english, usenglishmax, dumylang, noh
-yphenation, basque, bulgarian, coptic, welsh, czech, slovak, german, ngerman, d
-anish, esperanto, spanish, catalan, galician, estonian, finnish, french, greek,
- monogreek, ancientgreek, croatian, hungarian, interlingua, ibycus, indonesian,
- icelandic, italian, latin, mongolian, dutch, norsk, polish, portuguese, romani
-an, russian, slovenian, uppersorbian, serbian, swedish, turkish, ukenglish, ukr
-ainian, loaded.
+Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
+yphenation, german-x-2008-06-18, ngerman-x-2008-06-18, ancientgreek, ibycus, ar
+abic, basque, bulgarian, catalan, pinyin, coptic, croatian, czech, danish, dutc
+h, esperanto, estonian, farsi, finnish, french, galician, german, ngerman, mono
+greek, greek, hungarian, icelandic, indonesian, interlingua, irish, italian, la
+tin, mongolian, mongolian2a, bokmal, nynorsk, polish, portuguese, romanian, rus
+sian, sanskrit, serbian, slovak, slovenian, spanish, swedish, turkish, ukenglis
+h, ukrainian, uppersorbian, welsh, loaded.
 (./thesisdifctunl.cls
 Document Class: thesisdifctunl 2007/12/30
 (/usr/share/texmf/tex/latex/base/book.cls
@@ -111,20 +113,20 @@ Package: amsthm 2004/08/06 v2.20
 \dth@everypar=\toks24
 )
 (/usr/share/texmf/tex/generic/babel/babel.sty
-Package: babel 2005/11/23 v3.8h The Babel package
+Package: babel 2008/07/06 v3.8l The Babel package
 
 (/usr/share/texmf/tex/generic/babel/portuges.ldf
-Language: portuges 2005/03/31 v1.2p Portuguese support from the babel system
+Language: portuges 2008/03/18 v1.2q Portuguese support from the babel system
 
 (/usr/share/texmf/tex/generic/babel/babel.def
-File: babel.def 2005/11/23 v3.8h Babel common definitions
+File: babel.def 2008/07/06 v3.8l Babel common definitions
 \babel@savecnt=\count100
 \U@D=\dimen112
 )
 Package babel Info: Making " an active character on input line 145.
 )
 (/usr/share/texmf/tex/generic/babel/portuges.ldf
-Language: portuges 2005/03/31 v1.2p Portuguese support from the babel system
+Language: portuges 2008/03/18 v1.2q Portuguese support from the babel system
 ))
 (/usr/share/texmf/tex/latex/setspace/setspace.sty
 Package: setspace 2000/12/01 6.7 Contributed and Supported LaTeX2e package
@@ -226,7 +228,7 @@ Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 326.
 )
 (/usr/share/texmf/tex/latex/ltxmisc/url.sty
 \Urlmuskip=\muskip11
-Package: url 2005/06/27  ver 3.2  Verb mode for urls, etc.
+Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
 )
 (/usr/share/texmf/tex/latex/tools/xspace.sty
 Package: xspace 2006/05/08 v1.12 Space after command names (DPC,MH)
@@ -302,7 +304,7 @@ File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
 Package graphics Info: Driver file: pdftex.def on input line 90.
 
 (/usr/share/texmf/tex/latex/pdftex-def/pdftex.def
-File: pdftex.def 2007/01/08 v0.04d Graphics/color for pdfTeX
+File: pdftex.def 2008/07/16 v0.04k Graphics/color for pdfTeX
 \Gread@gobject=\count104
 ))
 \Gin@req@height=\dimen115
@@ -500,17 +502,13 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <20.74> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 1.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 5.
-) [1
+ [1
 
 
-]
+]) [2]
 \openout2 = `capitulo2.aux'.
 
- (./capitulo2.tex [2
-
-
-
-] (./sec_secure_wsn_design.tex
+ (./capitulo2.tex (./sec_secure_wsn_design.tex
 (./sec_about_wsn.tex
 
 LaTeX Warning: Citation `ietf_802154' on page 3 undefined on input line 14.
@@ -528,7 +526,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 21--36
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [3]
+ [3
+
+
+
+]
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <12> not available
 (Font)              Font shape `T1/ptm/b/it' tried instead on input line 71.
 
@@ -592,50 +594,52 @@ ine 34.
 
 LaTeX Warning: Citation `SPINS' on page 9 undefined on input line 82.
 
-[9])) (./sec_modadversario_servicos_seg.tex (./sec_dolev_yao.tex
+[9]
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 98.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 98.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 98.
 
-LaTeX Warning: Citation `Stall2005' on page 10 undefined on input line 8.
+
+LaTeX Warning: Citation `SPINS' on page 10 undefined on input line 112.
+
+
+LaTeX Warning: Citation `SNEP' on page 10 undefined on input line 114.
+
+
+LaTeX Warning: Citation `MICROTESLA' on page 10 undefined on input line 115.
+
+[10])) (./sec_modadversario_servicos_seg.tex (./sec_dolev_yao.tex
+
+LaTeX Warning: Citation `Stall2005' on page 11 undefined on input line 8.
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 2--14
 
  []
 
+[11]
 
-Underfull \vbox (badness 7256) has occurred while \output is active []
-
- [10]
-
-LaTeX Warning: Citation `Stall2005' on page 11 undefined on input line 21.
+LaTeX Warning: Citation `Stall2005' on page 12 undefined on input line 21.
 
 
-LaTeX Warning: Citation `RFC2828' on page 11 undefined on input line 25.
+LaTeX Warning: Citation `RFC2828' on page 12 undefined on input line 25.
 
 
-LaTeX Warning: Citation `Stall2005' on page 11 undefined on input line 33.
+LaTeX Warning: Citation `Stall2005' on page 12 undefined on input line 33.
 
 ) (./sec_intrusao.tex
 Underfull \hbox (badness 10000) in paragraph at lines 15--1
 
  []
 
-[11]) (./tipificacao_de_ataques.tex
-Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [12]
+Underfull \vbox (badness 4995) has occurred while \output is active []
 
-LaTeX Warning: Citation `REF' on page 13 undefined on input line 25.
-
-
-LaTeX Warning: Citation `REF' on page 13 undefined on input line 25.
-
-
-LaTeX Warning: Citation `Newsome2004' on page 13 undefined on input line 34.
-
-
-LaTeX Warning: Citation `KAVITHA' on page 13 undefined on input line 39.
-
-[13]) (./sumario_mod_ad_svc_sec.tex))
+ [12])
+(./tipificacao_de_ataques.tex) (./sumario_mod_ad_svc_sec.tex))
 (./sec_modadversario_ataques_contramedidas.tex
 Overfull \hbox (9.51198pt too wide) in paragraph at lines 2--2
 []\T1/ptm/b/n/14.4 Modelo de Ad-ver-sá-rio, Ata-ques ao En-ca-mi-nha-mento e Co
@@ -647,7 +651,20 @@ Underfull \hbox (badness 10000) in paragraph at lines 4--11
 
  []
 
-[14]) (./sec_protocolos_encaminhamento.tex)
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [13]
+(./sec_ataq_org_rede.tex
+
+LaTeX Warning: Citation `Karlof1999' on page 14 undefined on input line 32.
+
+) (./sec_ataq_estabelecimento_rotas.tex
+Underfull \vbox (badness 1077) has occurred while \output is active []
+
+ [14])
+(./sec_ataq_manutencao_rotas.tex) (./sec_ataq_reorganizacao_rede.tex))
+(./sec_protocolos_encaminhamento.tex)
 (./sec_aspectos_aberto_avaliacao_experimental.tex)
 (./sec_ambientes_de_simulacao.tex
 Underfull \hbox (badness 10000) in paragraph at lines 2--12
@@ -655,45 +672,43 @@ Underfull \hbox (badness 10000) in paragraph at lines 2--12
  []
 
 
-LaTeX Warning: Citation `NS2' on page 15 undefined on input line 17.
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [15]
+
+LaTeX Warning: Citation `NS2' on page 16 undefined on input line 17.
 
 
-LaTeX Warning: Citation `802_15_4' on page 15 undefined on input line 20.
+LaTeX Warning: Citation `802_15_4' on page 16 undefined on input line 20.
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 13--24
 
  []
 
-[15]
+[16]
 Underfull \hbox (badness 10000) in paragraph at lines 25--30
 
  []
 
 
-LaTeX Warning: Citation `JAVA_SUN' on page 16 undefined on input line 37.
-
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 64.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 64.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 64.
-
-LaTeX Warning: Citation `MATALAB_REF' on page 16 undefined on input line 64.
+LaTeX Warning: Citation `JAVA_SUN' on page 17 undefined on input line 37.
 
 
-LaTeX Warning: Citation `vanderbilt' on page 16 undefined on input line 65.
-
-[16]
-
-LaTeX Warning: Citation `JSIM' on page 17 undefined on input line 84.
+LaTeX Warning: Citation `MATALAB_REF' on page 17 undefined on input line 64.
 
 
-LaTeX Warning: Citation `SENSE' on page 17 undefined on input line 86.
+LaTeX Warning: Citation `vanderbilt' on page 17 undefined on input line 65.
+
+[17]
+
+LaTeX Warning: Citation `JSIM' on page 18 undefined on input line 84.
 
 
-LaTeX Warning: Citation `IEEE802.15.4' on page 17 undefined on input line 106.
+LaTeX Warning: Citation `SENSE' on page 18 undefined on input line 86.
+
+
+LaTeX Warning: Citation `IEEE802.15.4' on page 18 undefined on input line 106.
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 97--107
@@ -703,40 +718,40 @@ Underfull \hbox (badness 10000) in paragraph at lines 97--107
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [17]
+ [18]
 
-LaTeX Warning: Citation `SHOX_REF' on page 18 undefined on input line 120.
+LaTeX Warning: Citation `SHOX_REF' on page 19 undefined on input line 120.
 
-[18]
+[19]
 
-LaTeX Warning: Citation `SITE_DE_COMPARACAO_DE_SIM' on page 19 undefined on inp
+LaTeX Warning: Citation `SITE_DE_COMPARACAO_DE_SIM' on page 20 undefined on inp
 ut line 145.
 
 ) (./sec_dicussao_resumo.tex
 Underfull \vbox (badness 4995) has occurred while \output is active []
 
- [19]))
-[20]
+ [20]))
+[21]
 \openout2 = `capitulo3.aux'.
 
- (./capitulo3.tex) [21
+ (./capitulo3.tex [22
 
 
 
-]
+]) [23]
 \openout2 = `capitulo4.aux'.
 
- (./capitulo4.tex [22
+ (./capitulo4.tex [24
 
 
 
-]) [23] [24
+]) [25] [26
 
 
 ]
-(./Thesis.Preparation.PedroMarquesdaSilva.bbl [25
+(./Thesis.Preparation.PedroMarquesdaSilva.bbl [27
 
-]) [26]
+]) [28]
 (./Thesis.Preparation.PedroMarquesdaSilva.aux (./resumopt.aux) (./resumoen.aux)
 (./capitulo1.aux) (./capitulo2.aux) (./capitulo3.aux) (./capitulo4.aux))
 
@@ -747,21 +762,22 @@ LaTeX Warning: There were undefined references.
 (\end occurred when \if on line 68 was incomplete)
 (\end occurred when \if on line 65 was incomplete) 
 Here is how much of TeX's memory you used:
- 3720 strings out of 94086
- 46724 string characters out of 1167701
- 95616 words of memory out of 3500000
- 6807 multiletter control sequences out of 10000+50000
- 72711 words of font info for 118 fonts, out of 1200000 for 2000
- 645 hyphenation exceptions out of 8191
- 34i,9n,26p,257b,333s stack positions out of 5000i,500n,6000p,200000b,5000s
+ 3775 strings out of 493886
+ 47700 string characters out of 1155248
+ 97855 words of memory out of 3500000
+ 6832 multiletter control sequences out of 10000+50000
+ 77547 words of font info for 126 fonts, out of 3000000 for 5000
+ 714 hyphenation exceptions out of 8191
+ 34i,9n,26p,257b,333s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texmf/fonts/enc/d
-vips/base/8r.enc}</usr/share/texmf/fonts/type1/urw/times/utmb8a.pfb></usr/share
-/texmf/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texmf/fonts/type1/urw/time
-s/utmr8a.pfb></usr/share/texmf/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Thesis.Preparation.PedroMarquesdaSilva.pdf (40 pages, 143831 
+vips/base/8r.enc}</usr/share/texmf/fonts/type1/urw/symbol/usyr.pfb></usr/share/
+texmf/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf/fonts/type1/urw/times/
+utmbi8a.pfb></usr/share/texmf/fonts/type1/urw/times/utmr8a.pfb></usr/share/texm
+f/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Thesis.Preparation.PedroMarquesdaSilva.pdf (42 pages, 150547 
 bytes).
 PDF statistics:
- 151 PDF objects out of 1000 (max. 8388607)
+ 161 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 131072)
  11 words of extra memory for PDF output out of 10000 (max. 10000000)
 
