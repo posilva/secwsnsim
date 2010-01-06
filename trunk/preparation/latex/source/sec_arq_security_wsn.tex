@@ -64,8 +64,22 @@ presença de um ataque ) seja controlada e que a degradação vá sendo tão grande
 quanto maior sejam o número de nós afectados.
 
  \item[Integridade]
-
-
+In communication, data integrity ensures the receiver that the received
+data is not altered in transit by an adversary. In SPINS,
+we achieve data integrity through data authentication, which is a
+stronger property.
+\item[Frescura] 
+Given that all sensor networks stream some forms of time varying
+measurements, it is not enough to guarantee confidentiality and
+authentication; we also must ensure each message is fresh. Informally,
+data freshness implies that the data is recent, and it ensures
+that no adversary replayed old messages. We identify two types of
+freshness: weak freshness, which provides partial message ordering,
+but carries no delay information, and strong freshness, which
+provides a total order on a request-response pair, and allows for
+delay estimation. Weak freshness is required by sensor measurements,
+while strong freshness is useful for time synchronization
+within the network.\cite{SPINS}
 
  \end{description}
 
@@ -76,6 +90,8 @@ quanto maior sejam o número de nós afectados.
 \item[TinySec\cite{Karlof2004}]
 
 \item[MiniSec\cite{Luk2007d}]
+
+\item[SPINS\cite{Luk2007d}]
 
 \item[Sistemas de distríbuição de chaves\cite{eschenauer_key-management_2002}]
 Confidencialidade e autenticação são aspectos críticos das redes de sensores

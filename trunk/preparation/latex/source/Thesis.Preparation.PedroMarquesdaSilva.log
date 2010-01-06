@@ -1,0 +1,829 @@
+This is pdfTeX, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2010.1.4)  5 JAN 2010 11:59
+entering extended mode
+**Thesis.Preparation.PedroMarquesdaSilva.tex
+(./Thesis.Preparation.PedroMarquesdaSilva.tex
+LaTeX2e <2005/12/01>
+Babel <v3.8h> and hyphenation patterns for english, usenglishmax, dumylang, noh
+yphenation, basque, bulgarian, coptic, welsh, czech, slovak, german, ngerman, d
+anish, esperanto, spanish, catalan, galician, estonian, finnish, french, greek,
+ monogreek, ancientgreek, croatian, hungarian, interlingua, ibycus, indonesian,
+ icelandic, italian, latin, mongolian, dutch, norsk, polish, portuguese, romani
+an, russian, slovenian, uppersorbian, serbian, swedish, turkish, ukenglish, ukr
+ainian, loaded.
+(./thesisdifctunl.cls
+Document Class: thesisdifctunl 2007/12/30
+(/usr/share/texmf/tex/latex/base/book.cls
+Document Class: book 2005/09/16 v1.4f Standard LaTeX document class
+(/usr/share/texmf/tex/latex/base/bk12.clo
+File: bk12.clo 2005/09/16 v1.4f Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@chapter=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/usr/share/texmf/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2000/07/18 v2.13 AMS math features
+\@mathmargin=\skip43
+
+For additional information on amsmath, use the `?' option.
+(/usr/share/texmf/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01
+
+(/usr/share/texmf/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0
+\@emptytoks=\toks14
+\ex@=\dimen103
+))
+(/usr/share/texmf/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d
+\pmbraise@=\dimen104
+)
+(/usr/share/texmf/tex/latex/amsmath/amsopn.sty
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count88
+LaTeX Info: Redefining \frac on input line 211.
+\uproot@=\count89
+\leftroot@=\count90
+LaTeX Info: Redefining \overline on input line 307.
+\classnum@=\count91
+\DOTSCASE@=\count92
+LaTeX Info: Redefining \ldots on input line 379.
+LaTeX Info: Redefining \dots on input line 382.
+LaTeX Info: Redefining \cdots on input line 467.
+\Mathstrutbox@=\box26
+\strutbox@=\box27
+\big@size=\dimen105
+LaTeX Font Info:    Redeclaring font encoding OML on input line 567.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 568.
+\macc@depth=\count93
+\c@MaxMatrixCols=\count94
+\dotsspace@=\muskip10
+\c@parentequation=\count95
+\dspbrk@lvl=\count96
+\tag@help=\toks15
+\row@=\count97
+\column@=\count98
+\maxfields@=\count99
+\andhelp@=\toks16
+\eqnshift@=\dimen106
+\alignsep@=\dimen107
+\tagshift@=\dimen108
+\tagwidth@=\dimen109
+\totwidth@=\dimen110
+\lineht@=\dimen111
+\@envbody=\toks17
+\multlinegap=\skip44
+\multlinetaggap=\skip45
+\mathdisplay@stack=\toks18
+LaTeX Info: Redefining \[ on input line 2666.
+LaTeX Info: Redefining \] on input line 2667.
+)
+(/usr/share/texmf/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2001/10/25 v2.2f
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 132.
+)
+(/usr/share/texmf/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2002/01/22 v2.2d
+)
+(/usr/share/texmf/tex/latex/amscls/amsthm.sty
+Package: amsthm 2004/08/06 v2.20
+\thm@style=\toks19
+\thm@bodyfont=\toks20
+\thm@headfont=\toks21
+\thm@notefont=\toks22
+\thm@headpunct=\toks23
+\thm@preskip=\skip46
+\thm@postskip=\skip47
+\thm@headsep=\skip48
+\dth@everypar=\toks24
+)
+(/usr/share/texmf/tex/generic/babel/babel.sty
+Package: babel 2005/11/23 v3.8h The Babel package
+
+(/usr/share/texmf/tex/generic/babel/portuges.ldf
+Language: portuges 2005/03/31 v1.2p Portuguese support from the babel system
+
+(/usr/share/texmf/tex/generic/babel/babel.def
+File: babel.def 2005/11/23 v3.8h Babel common definitions
+\babel@savecnt=\count100
+\U@D=\dimen112
+)
+Package babel Info: Making " an active character on input line 145.
+)
+(/usr/share/texmf/tex/generic/babel/portuges.ldf
+Language: portuges 2005/03/31 v1.2p Portuguese support from the babel system
+))
+(/usr/share/texmf/tex/latex/setspace/setspace.sty
+Package: setspace 2000/12/01 6.7 Contributed and Supported LaTeX2e package
+
+Package: `setspace' 6.7 <2000/12/01>
+) (/usr/share/texmf/tex/latex/tools/calc.sty
+Package: calc 2005/08/06 v4.2 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count101
+\calc@Bcount=\count102
+\calc@Adimen=\dimen113
+\calc@Bdimen=\dimen114
+\calc@Askip=\skip49
+\calc@Bskip=\skip50
+LaTeX Info: Redefining \setlength on input line 75.
+LaTeX Info: Redefining \addtolength on input line 76.
+\calc@Ccount=\count103
+\calc@Cskip=\skip51
+)
+(/usr/share/texmf/tex/latex/base/ifthen.sty
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(/usr/share/texmf/tex/latex/base/inputenc.sty
+Package: inputenc 2006/05/05 v1.1b Input encoding file
+\inpenc@prehook=\toks25
+\inpenc@posthook=\toks26
+
+(/usr/share/texmf/tex/latex/base/latin1.def
+File: latin1.def 2006/05/05 v1.1b Input encoding file
+))
+(/usr/share/texmf/tex/latex/textcase/textcase.sty
+Package: textcase 2004/10/07 v0.07 Text only upper/lower case changing (DPC)
+)
+(/usr/share/texmf/tex/latex/base/textcomp.sty
+Package: textcomp 2005/09/27 v1.99g Standard LaTeX package
+Package textcomp Info: Sub-encoding information:
+(textcomp)               5 = only ISO-Adobe without \textcurrency
+(textcomp)               4 = 5 + \texteuro
+(textcomp)               3 = 4 + \textohm
+(textcomp)               2 = 3 + \textestimated + \textcurrency
+(textcomp)               1 = TS1 - \textcircled - \t
+(textcomp)               0 = TS1 (full)
+(textcomp)             Font families with sub-encoding setting implement
+(textcomp)             only a restricted character set as indicated.
+(textcomp)             Family '?' is the default used for unknown fonts.
+(textcomp)             See the documentation for details.
+Package textcomp Info: Setting ? sub-encoding to TS1/1 on input line 71.
+
+(/usr/share/texmf/tex/latex/base/ts1enc.def
+File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
+)
+LaTeX Info: Redefining \oldstylenums on input line 266.
+Package textcomp Info: Setting cmr sub-encoding to TS1/0 on input line 281.
+Package textcomp Info: Setting cmss sub-encoding to TS1/0 on input line 282.
+Package textcomp Info: Setting cmtt sub-encoding to TS1/0 on input line 283.
+Package textcomp Info: Setting cmvtt sub-encoding to TS1/0 on input line 284.
+Package textcomp Info: Setting cmbr sub-encoding to TS1/0 on input line 285.
+Package textcomp Info: Setting cmtl sub-encoding to TS1/0 on input line 286.
+Package textcomp Info: Setting ccr sub-encoding to TS1/0 on input line 287.
+Package textcomp Info: Setting ptm sub-encoding to TS1/4 on input line 288.
+Package textcomp Info: Setting pcr sub-encoding to TS1/4 on input line 289.
+Package textcomp Info: Setting phv sub-encoding to TS1/4 on input line 290.
+Package textcomp Info: Setting ppl sub-encoding to TS1/3 on input line 291.
+Package textcomp Info: Setting pag sub-encoding to TS1/4 on input line 292.
+Package textcomp Info: Setting pbk sub-encoding to TS1/4 on input line 293.
+Package textcomp Info: Setting pnc sub-encoding to TS1/4 on input line 294.
+Package textcomp Info: Setting pzc sub-encoding to TS1/4 on input line 295.
+Package textcomp Info: Setting bch sub-encoding to TS1/4 on input line 296.
+Package textcomp Info: Setting put sub-encoding to TS1/5 on input line 297.
+Package textcomp Info: Setting uag sub-encoding to TS1/5 on input line 298.
+Package textcomp Info: Setting ugq sub-encoding to TS1/5 on input line 299.
+Package textcomp Info: Setting ul8 sub-encoding to TS1/4 on input line 300.
+Package textcomp Info: Setting ul9 sub-encoding to TS1/4 on input line 301.
+Package textcomp Info: Setting augie sub-encoding to TS1/5 on input line 302.
+Package textcomp Info: Setting dayrom sub-encoding to TS1/3 on input line 303.
+Package textcomp Info: Setting dayroms sub-encoding to TS1/3 on input line 304.
+
+Package textcomp Info: Setting pxr sub-encoding to TS1/0 on input line 305.
+Package textcomp Info: Setting pxss sub-encoding to TS1/0 on input line 306.
+Package textcomp Info: Setting pxtt sub-encoding to TS1/0 on input line 307.
+Package textcomp Info: Setting txr sub-encoding to TS1/0 on input line 308.
+Package textcomp Info: Setting txss sub-encoding to TS1/0 on input line 309.
+Package textcomp Info: Setting txtt sub-encoding to TS1/0 on input line 310.
+Package textcomp Info: Setting futs sub-encoding to TS1/4 on input line 311.
+Package textcomp Info: Setting futx sub-encoding to TS1/4 on input line 312.
+Package textcomp Info: Setting futj sub-encoding to TS1/4 on input line 313.
+Package textcomp Info: Setting hlh sub-encoding to TS1/3 on input line 314.
+Package textcomp Info: Setting hls sub-encoding to TS1/3 on input line 315.
+Package textcomp Info: Setting hlst sub-encoding to TS1/3 on input line 316.
+Package textcomp Info: Setting hlct sub-encoding to TS1/5 on input line 317.
+Package textcomp Info: Setting hlx sub-encoding to TS1/5 on input line 318.
+Package textcomp Info: Setting hlce sub-encoding to TS1/5 on input line 319.
+Package textcomp Info: Setting hlcn sub-encoding to TS1/5 on input line 320.
+Package textcomp Info: Setting hlcw sub-encoding to TS1/5 on input line 321.
+Package textcomp Info: Setting hlcf sub-encoding to TS1/5 on input line 322.
+Package textcomp Info: Setting pplx sub-encoding to TS1/3 on input line 323.
+Package textcomp Info: Setting pplj sub-encoding to TS1/3 on input line 324.
+Package textcomp Info: Setting ptmx sub-encoding to TS1/4 on input line 325.
+Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 326.
+)
+(/usr/share/texmf/tex/latex/ltxmisc/url.sty
+\Urlmuskip=\muskip11
+Package: url 2005/06/27  ver 3.2  Verb mode for urls, etc.
+)
+(/usr/share/texmf/tex/latex/tools/xspace.sty
+Package: xspace 2006/05/08 v1.12 Space after command names (DPC,MH)
+)
+(/usr/share/texmf/tex/latex/base/fontenc.sty
+Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
+
+(/usr/share/texmf/tex/latex/base/t1enc.def
+File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
+))
+(/usr/share/texmf/tex/latex/psnfss/mathptmx.sty
+Package: mathptmx 2005/04/12 PSNFSS-v9.2a Times w/ Math, improved (SPQR, WaS) 
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 28.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/ztmcm/m/n on input line 28.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ztmcm/m/n on input line 28.
+LaTeX Font Info:    Redeclaring symbol font `letters' on input line 29.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/ztmcm/m/it on input line 29.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/ztmcm/m/it on input line 29.
+LaTeX Font Info:    Redeclaring symbol font `symbols' on input line 30.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> OMS/ztmcm/m/n on input line 30.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> OMS/ztmcm/m/n on input line 30.
+LaTeX Font Info:    Redeclaring symbol font `largesymbols' on input line 31.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/ztmcm/m/n on input line 31.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/ztmcm/m/n on input line 31.
+\symbold=\mathgroup6
+\symitalic=\mathgroup7
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 34.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 34.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 34.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 35.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/ptm/m/it on input line 35.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/ptm/m/it on input line 35.
+LaTeX Info: Redefining \hbar on input line 50.
+)
+(/usr/share/texmf/tex/latex/psnfss/helvet.sty
+Package: helvet 2005/04/12 PSNFSS-v9.2a (WaS) 
+
+(/usr/share/texmf/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks27
+))
+(/usr/share/texmf/tex/latex/psnfss/courier.sty
+Package: courier 2005/04/12 PSNFSS-v9.2a (WaS) 
+)
+(/usr/share/texmf/tex/latex/psnfss/times.sty
+Package: times 2005/04/12 PSNFSS-v9.2a (SPQR) 
+)
+(/usr/share/texmf/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf/tex/latex/graphics/graphics.sty
+Package: graphics 2006/02/20 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/usr/lib/texmf/tex/latex/config/graphics.cfg
+File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
+)
+Package graphics Info: Driver file: pdftex.def on input line 90.
+
+(/usr/share/texmf/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2007/01/08 v0.04d Graphics/color for pdfTeX
+\Gread@gobject=\count104
+))
+\Gin@req@height=\dimen115
+\Gin@req@width=\dimen116
+)
+\c@Def=\count105
+\c@Axi=\count106
+\c@Conj=\count107
+\c@Lem=\count108
+\c@Theo=\count109
+\c@Prop=\count110
+\c@Cor=\count111
+)
+(/usr/share/texmf/tex/latex/multirow/multirow.sty
+\bigstrutjot=\dimen117
+)
+(./Thesis.Preparation.PedroMarquesdaSilva.aux (./resumopt.aux) (./resumoen.aux)
+(./capitulo1.aux) (./capitulo2.aux) (./capitulo3.aux) (./capitulo4.aux))
+\openout1 = `Thesis.Preparation.PedroMarquesdaSilva.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 59.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 59.
+
+(/usr/share/texmf/tex/latex/base/ts1cmr.fd
+File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Try loading font information for T1+ptm on input line 59.
+
+(/usr/share/texmf/tex/latex/psnfss/t1ptm.fd
+File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
+) (./logounl.tex
+<logounl.jpg, id=1, 97.36375pt x 97.36375pt>
+File: logounl.jpg Graphic file (type jpg)
+ <use logounl.jpg>)
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <17.28> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 65.
+LaTeX Font Info:    Try loading font information for TS1+ptm on input line 65.
+
+(/usr/share/texmf/tex/latex/psnfss/ts1ptm.fd
+File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
+)
+LaTeX Font Info:    Try loading font information for OT1+ztmcm on input line 65
+.
+
+(/usr/share/texmf/tex/latex/psnfss/ot1ztmcm.fd
+File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
+)
+LaTeX Font Info:    Try loading font information for OML+ztmcm on input line 65
+.
+
+(/usr/share/texmf/tex/latex/psnfss/omlztmcm.fd
+File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
+)
+LaTeX Font Info:    Try loading font information for OMS+ztmcm on input line 65
+.
+
+(/usr/share/texmf/tex/latex/psnfss/omsztmcm.fd
+File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
+)
+LaTeX Font Info:    Try loading font information for OMX+ztmcm on input line 65
+.
+
+(/usr/share/texmf/tex/latex/psnfss/omxztmcm.fd
+File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
+)
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 65.
+
+(/usr/share/texmf/tex/latex/psnfss/ot1ptm.fd
+File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
+)
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 65.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 65.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 65.
+ [1
+
+
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./logounl.jpg>] [2
+
+] (./logounl.tex
+File: logounl.jpg Graphic file (type jpg)
+ <use logounl.jpg>)
+Overfull \hbox (63.34967pt too wide) in paragraph at lines 68--68
+ [] 
+ []
+
+[3]
+\openout2 = `resumopt.aux'.
+
+ (./resumopt.tex [4
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 1--15
+
+ []
+
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 31.
+
+Overfull \hbox (4.35155pt too wide) in paragraph at lines 31--37
+\T1/ptm/b/n/12 Palavras-chave:  \T1/ptm/m/n/12 Re-des de sen-so-res sem fios,Pr
+otocolos de en-ca-mi-nha-mento se-gu-ros,Simulação
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 31--37
+
+ []
+
+) [5]
+\openout2 = `resumoen.aux'.
+
+ (./resumoen.tex [6
+
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 1--6
+
+ []
+
+)
+Underfull \hbox (badness 10000) in paragraph at lines 10--79
+
+ []
+
+[7] [8
+
+
+] (./Thesis.Preparation.PedroMarquesdaSilva.toc
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 3.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 3.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 3.
+ [9])
+\tf@toc=\write3
+\openout3 = `Thesis.Preparation.PedroMarquesdaSilva.toc'.
+
+ [10]
+(./Thesis.Preparation.PedroMarquesdaSilva.lof
+
+LaTeX Warning: Citation `LIVROARCH_WSN' on page xi undefined on input line 4.
+
+)
+\tf@lof=\write4
+\openout4 = `Thesis.Preparation.PedroMarquesdaSilva.lof'.
+
+ [11
+
+] [12
+
+] (./Thesis.Preparation.PedroMarquesdaSilva.lot
+
+LaTeX Warning: Citation `SNMuseum' on page xiii undefined on input line 4.
+
+
+LaTeX Warning: Citation `SNMuseum' on page xiii undefined on input line 5.
+
+)
+\tf@lot=\write5
+\openout5 = `Thesis.Preparation.PedroMarquesdaSilva.lot'.
+
+ [13] [14
+
+]
+\openout2 = `capitulo1.aux'.
+
+ (./capitulo1.tex
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <20.74> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 1.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 5.
+) [1
+
+
+]
+\openout2 = `capitulo2.aux'.
+
+ (./capitulo2.tex [2
+
+
+
+]
+(./sec_secure_wsn_design.tex (./sec_about_wsn.tex
+
+LaTeX Warning: Citation `ietf_802154' on page 3 undefined on input line 14.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3--15
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 21--36
+
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [3]
+LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <12> not available
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 71.
+
+[4]
+
+LaTeX Warning: Citation `REF_CHANG_all' on page 5 undefined on input line 108.
+
+
+Overfull \hbox (19.8154pt too wide) in paragraph at lines 106--109
+[]\T1/ptm/m/n/12 Tendo em conta
+ []
+
+
+LaTeX Warning: Citation `INSENS_REF' on page 5 undefined on input line 112.
+
+[5]
+
+LaTeX Warning: Citation `Doceur' on page 6 undefined on input line 117.
+
+
+LaTeX Warning: Citation `TINYSEC' on page 6 undefined on input line 122.
+
+
+LaTeX Warning: Citation `MINISEC' on page 6 undefined on input line 122.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 128--133
+
+ []
+
+) (./sec_arq_software_wsn.tex
+Overfull \hbox (1.61493pt too wide) in paragraph at lines 13--21
+\T1/ptm/m/n/12 Uma ar-qui-tec-tura para a a pi-lha de pro-to-co-los em RSSF foi
+ pro-posta por [[]], esta pi-lha apresenta-
+ []
+
+[6]
+
+LaTeX Warning: Citation `REF' on page 7 undefined on input line 48.
+
+
+LaTeX Warning: Citation `TRANSPORT_LAYER_WSN' on page 7 undefined on input line
+ 54.
+
+[7]
+
+LaTeX Warning: Citation `SMP_REF' on page 8 undefined on input line 67.
+
+
+LaTeX Warning: Citation `TADAP_REF' on page 8 undefined on input line 68.
+
+
+LaTeX Warning: Citation `LESOP_REF' on page 8 undefined on input line 73.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 80--91
+
+ []
+
+
+LaTeX Warning: Citation `MODELO_SENSOR' on page 8 undefined on input line 96.
+
+(./pic_sensornode.tex <SENSOR_NODE.png, id=73, 305.14pt x 240.9pt>
+File: SENSOR_NODE.png Graphic file (type png)
+
+<use SENSOR_NODE.png>
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10.95> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 6.
+
+
+LaTeX Warning: Citation `LIVROARCH_WSN' on page 8 undefined on input line 6.
+
+[8])
+
+LaTeX Warning: Citation `MICA' on page 9 undefined on input line 118.
+
+
+LaTeX Warning: Citation `CrossbowSite' on page 9 undefined on input line 118.
+
+
+LaTeX Warning: Citation `SNMuseum' on page 9 undefined on input line 134.
+
+
+LaTeX Warning: Citation `SNMuseum' on page 9 undefined on input line 155.
+
+
+LaTeX Warning: Citation `Holger_Karl_protocols_andarchs_wsn' on page 9 undefine
+d on input line 159.
+
+
+LaTeX Warning: Citation `atmel' on page 9 undefined on input line 170.
+
+
+LaTeX Warning: Citation `TIMSP430' on page 9 undefined on input line 170.
+
+
+Underfull \vbox (badness 1990) has occurred while \output is active []
+
+ [9 <./SENSOR_NODE.png (PNG copy)>]
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 185.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 185.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 185.
+
+
+LaTeX Warning: Citation `XEMICS XE1205' on page 10 undefined on input line 196.
+
+
+
+LaTeX Warning: Citation `CHIPCON2420' on page 10 undefined on input line 197.
+
+[10]
+
+LaTeX Warning: Citation `tinyos' on page 11 undefined on input line 207.
+
+
+LaTeX Warning: Citation `Contiki' on page 11 undefined on input line 216.
+
+
+LaTeX Warning: Citation `nanork' on page 11 undefined on input line 224.
+
+[11]
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 242.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <8> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 243.
+LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <8> not available
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 244.
+) (./sec_arq_security_wsn.tex
+
+LaTeX Warning: Citation `SECURITY_IN_WSN_PERRIG' on page 12 undefined on input 
+line 5.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4--10
+
+ []
+
+[12]
+
+LaTeX Warning: Citation `SECURITY_IN_WSN_PERRIG' on page 13 undefined on input 
+line 34.
+
+[13])) (./sec_modadversario_servicos_seg.tex (./sec_dolev_yao.tex
+
+LaTeX Warning: Citation `Stall2005' on page 14 undefined on input line 8.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2--14
+
+ []
+
+[14]
+
+LaTeX Warning: Citation `Stall2005' on page 15 undefined on input line 21.
+
+
+LaTeX Warning: Citation `RFC2828' on page 15 undefined on input line 25.
+
+
+LaTeX Warning: Citation `Stall2005' on page 15 undefined on input line 33.
+
+) (./sec_intrusao.tex
+Underfull \hbox (badness 10000) in paragraph at lines 15--1
+
+ []
+
+
+Underfull \vbox (badness 4995) has occurred while \output is active []
+
+ [15])
+(./tipificacao_de_ataques.tex) (./sumario_mod_ad_svc_sec.tex)
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [16])
+(./sec_modadversario_ataques_contramedidas.tex
+Overfull \hbox (9.51198pt too wide) in paragraph at lines 2--2
+[]\T1/ptm/b/n/14.4 Modelo de Ad-ver-sá-rio, Ata-ques ao En-ca-mi-nha-mento e Co
+ntra-medidas 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4--11
+
+ []
+
+
+Underfull \vbox (badness 1789) has occurred while \output is active []
+
+ [17])
+(./sec_protocolos_encaminhamento.tex)
+(./sec_aspectos_aberto_avaliacao_experimental.tex)
+(./sec_ambientes_de_simulacao.tex
+Underfull \hbox (badness 10000) in paragraph at lines 2--12
+
+ []
+
+
+LaTeX Warning: Citation `NS2' on page 18 undefined on input line 17.
+
+
+LaTeX Warning: Citation `802_15_4' on page 18 undefined on input line 20.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--24
+
+ []
+
+[18]
+Underfull \hbox (badness 10000) in paragraph at lines 25--30
+
+ []
+
+
+LaTeX Warning: Citation `JAVA_SUN' on page 19 undefined on input line 37.
+
+
+LaTeX Warning: Citation `MATALAB_REF' on page 19 undefined on input line 64.
+
+
+LaTeX Warning: Citation `vanderbilt' on page 19 undefined on input line 65.
+
+[19]
+
+LaTeX Warning: Citation `JSIM' on page 20 undefined on input line 84.
+
+
+LaTeX Warning: Citation `SENSE' on page 20 undefined on input line 86.
+
+
+LaTeX Warning: Citation `IEEE802.15.4' on page 20 undefined on input line 106.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 97--107
+
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [20]
+
+LaTeX Warning: Citation `SHOX_REF' on page 21 undefined on input line 120.
+
+[21]
+
+LaTeX Warning: Citation `SITE_DE_COMPARACAO_DE_SIM' on page 22 undefined on inp
+ut line 145.
+
+) (./sec_dicussao_resumo.tex
+Underfull \vbox (badness 4995) has occurred while \output is active []
+
+ [22]))
+[23]
+\openout2 = `capitulo3.aux'.
+
+ (./capitulo3.tex [24
+
+
+
+]) [25]
+\openout2 = `capitulo4.aux'.
+
+ (./capitulo4.tex [26
+
+
+
+]) [27] [28
+
+
+]
+(./Thesis.Preparation.PedroMarquesdaSilva.bbl [29
+
+]) [30]
+(./Thesis.Preparation.PedroMarquesdaSilva.aux (./resumopt.aux) (./resumoen.aux)
+(./capitulo1.aux) (./capitulo2.aux) (./capitulo3.aux) (./capitulo4.aux))
+
+LaTeX Warning: There were undefined references.
+
+ )
+(\end occurred when \if on line 68 was incomplete)
+(\end occurred when \if on line 68 was incomplete)
+(\end occurred when \if on line 65 was incomplete) 
+Here is how much of TeX's memory you used:
+ 3469 strings out of 94086
+ 43366 string characters out of 1167701
+ 91848 words of memory out of 3500000
+ 6549 multiletter control sequences out of 10000+50000
+ 92410 words of font info for 141 fonts, out of 1200000 for 2000
+ 645 hyphenation exceptions out of 8191
+ 34i,10n,26p,258b,346s stack positions out of 5000i,500n,6000p,200000b,5000s
+{/usr/share/texmf/fonts/enc/d
+vips/base/8r.enc}</usr/share/texmf/fonts/type1/urw/times/utmb8a.pfb></usr/share
+/texmf/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texmf/fonts/type1/urw/time
+s/utmr8a.pfb></usr/share/texmf/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Thesis.Preparation.PedroMarquesdaSilva.pdf (44 pages, 154501 
+bytes).
+PDF statistics:
+ 164 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 131072)
+ 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+
