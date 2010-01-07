@@ -36,10 +36,10 @@ order=1
 
 [item:source/capitulo1.tex]
 archive=true
-column=21
+column=72
 encoding=ISO-8859-1
 highlight=LaTeX
-line=25
+line=22
 open=true
 order=5
 
