@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1 beta2
-lastDocument=source/capitulo1.tex
+lastDocument=source/sec_arq_security_wsn.tex
 masterDocument=
 name=Thesis.Preparation
 pkg_extIsRegExp=false
@@ -126,10 +126,10 @@ order=2
 
 [item:source/sec_arq_security_wsn.tex]
 archive=true
-column=0
+column=10
 encoding=ISO-8859-1
 highlight=LaTeX
-line=96
+line=139
 open=true
 order=7
 
