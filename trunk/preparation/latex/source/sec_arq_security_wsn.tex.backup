@@ -90,24 +90,17 @@ within the network.\cite{SPINS}
 TinySec é uma arquitectura de segurança para protecção ao nível de ligação de
 dados em RSSF. O objectivo principal, para o qual foi desenhado, é providenciar
 um nível adequado de segurança com o minimo consumo de recursos. Os serviços de
-segurança  disponibilizados são:
-
-\begin{description}
- \item \textbf{Autenticação de Dados}: Com a utilização de \textit{Message
-Authentication
-Codes}(MAC), no caso CBC-MAC\footnote{Cipher Block Chaining - Message
-Authentication Code (CBC-MAC))}, para se adaptar às RSSF o MAC tem um
+segurança  disponibilizados são: autenticação de dados (com a utilização de
+\textit{Message Authentication Codes}(MAC), no caso CBC-MAC\footnote{Cipher
+Block Chaining - Message Authentication Code (CBC-MAC))}) e confidencialidade 
+(a encriptação é implementada com o recursotambém ao CBC-MAC).
+ Para se adaptar às RSSF o MAC tem um
 comprimeito de 4 bytes ao contrário dos 8 ou 16 habituais.
- \item \textbf{Confidencialidade}: A encriptação é implementada com o recurso
-ao mesmo
-CBC-MAC, uma vez que neste mecanismo as propriedades de segurança estão
+ Uma vez que neste mecanismo as propriedades de segurança estão
 determinadas pelo comprimento do MAC os autores afirmam que para uma RSSF é
 suficiente uma vez que um atacante teria de efectuar $2^{31}$ tentativas, que
 demorariam cerca de 20 meses a realizar com um canal de
 19.5Kbs.
-\end{description}
-
- 
 A frescura das mensagens não foi endereçado nesta arquitectura uma vez que os
 autores indicaram como demasiado exigente em termos de recursos o que
 contrariaria o objectivo inicial da arquitectura.
@@ -141,6 +134,10 @@ level authentication services are available to authorized
 parties when needed. These services should not limit
 the availability of a network and should not create
 single points of failure.
+
+\item[IEEE 802.15.4\cite{falta}]
+
+\item[Zigbee\cite{falta}]
 
 \end{description}
 
