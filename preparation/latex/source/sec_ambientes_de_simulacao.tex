@@ -1,4 +1,4 @@
-\section{ Ambientes de Simulação}
+\section{Ambientes de Simulação}
 Algumas das limitações existentes nas plataformas das RSSF, devem-se ao facto
 de se pretender manter os sensores com um preço o mais baixo possível. Apesar
 de cada sensor por si não representar um investimento avultado quando se escala
@@ -29,7 +29,7 @@ seguidamente, com vista à avaliação de um ambiente que se mostre adequado para a
 utilização no trabalho de dissertação.\\
 
 
-\subsection{ Critérios de Selecção}
+\subsection{Critérios de Selecção}
 O número de ferramentas de simulação para RSF, tem vindo a aumentar, no entanto
 pretende-se analisar ferramentas que possuam as seguintes propriedades: 
 \begin{description}
@@ -54,10 +54,7 @@ entendimento de cada uma das arquitecturas das ferramentas. No caso do JProwler,
 a simplicidade  e a documentação do código é suficiente para ser considerado
 como adequado tendo em conta este critério.
 \end{description}
-
-
 \subsection{Prowler/JProwler}
-
 Esta ferramenta resulta de uma conversão de um simulador de eventos
 discretos\footnote{Fila global onde são inseridos todos os eventos da rede e
 que são tratados sequencialmente ou por prioridade, dependendo da
@@ -70,6 +67,7 @@ nós podendo chegar aos 5000 ( ainda que o número possa ser maior, por razões de
 performance é o valor máximo aconselhado) usando diversas
 topologias(dinâmicas) nas quais se podem implementar os mais diversos
 algoritmos. \\
+
 O JProwler modela os aspectos mais importantes de todos os níveis do modelo de
 comunicação e de aplicação. A natureza não-deterministica da propagação rádio
 é caracterizada por um modelo de rádio probabilistico usando um modelo simples
@@ -78,7 +76,6 @@ Este ferramenta vem com uma janela de visualização da topologia RSSF. Para o
 desenvolvimento de aplicações ou protocolos são disponibilizadas classes base
 que se podem estender. Estão presentes dois modelos de rádio: um de Gauss para
 topologias estáticas e outro de reighXXX para topologias móveis.
-
 \subsection{ J-Sim}
 J-Sim (anteriormente conhecido como JavaSim) é um ambiente de simulação baseado
 em componentes \cite{JSIM}, implementado em Java. Não foi desenvolvido
@@ -99,11 +96,11 @@ uma rede existente, desenhada, não ideal são simuladas com o objectivo
 de desempenho, previsão de impacte de modificações por forma optimizar decisões
 referentes à tecnologia} leve e distríbuida,
 desenvolvida em Java, utilizada para o desenvolvimento \textit{software } para
-RSSF. O emulador suporta motes (Squawk,Sentilla Point) e
+RSSF. O emulador suporta motes (Squawk, Sentilla Point) e
 plataformas (Java cards, SunSpot ) baseados em Java. Devide a arquitectura em
 três camadas bem definidas por interfaces: Aplicação, Encaminhamento e Ligação
 de Dados e Física. Sendo um emulador, os nós reais podem ser baseado na norma
-de comunicação IEEE802.15.4\cite{IEEE802.15.4} (ex:MICAz, JMotes, Tmote Sky). \\
+de comunicação IEEE802.15.4\cite{IEEE802.15.4} (ex:MICAz, JMotes, Tmote Sky).
 
 Trata-se de um emulador de RSSF, disponível com um interface gráfico para
 configuração que permite executar o código em motes baseados em Java. Pode ser
@@ -136,7 +133,6 @@ O facto do modelo de propagação de sinal ser baseado na norma IEEE802.11, torna
 dificil a adaptação às condições das RSSF, no entanto a modularidade do sistema
 permite o desenvolvimento de uma camada IEEE802.15.4 para se aproximar da norma
 mais recente de comunicação das RSSF.
-
 \subsection{Discussão}
 A necessidade de recorrer a ambientes de simulação para desenvolvimento de
 tecnologias de RSSF é uma realidade difícil de contornar dadas as
@@ -170,5 +166,3 @@ com modelos do \textit{Mica2} pode ser estendido a incorporar módulos de gestão
 de energia e de análise gráfica de comportamentos ou eventos que sirvam de
 indicadores como por exemplo: energia consumida, fiabilidade, tempo de vida da
 rede e cobertura.
-
-

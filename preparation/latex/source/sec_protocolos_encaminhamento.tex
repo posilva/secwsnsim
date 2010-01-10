@@ -13,7 +13,7 @@ em algoritmos que efectuam pesquisas lançadas a partir de nós de sincronização(e
 Diffusion\cite{DirectDifusion}). Por fim, os protocolos hierárquicos, cuja concepção é baseada na
 construção de grupos de nós, normalmente definidos como \textit{clusters}(ex:
 LEACH\cite{leachprotocol}), que funcionam no principio de agregação de dados do grupo e
-transferência para nós base.\\
+transferência para nós base.
 
 Para além destas classificações podemos ainda considerar algoritmos
 quanto ao momento em que estes computam a informação relativa ao caminho entre a origem e o destino
@@ -23,14 +23,13 @@ durante o funcionamento são trocadas mensagens por forma a manter-se as tabelas 
 actualizadas em todos os nós da rede. No entanto, esta troca de mensagens pode ser prejudicial para
 as RSSF pois implica um maior uso da comunicação, logo maior dispêndio de energia, apesar disto, se
 a rede for estática e as alterações não forem frequentes,  pode ser menos penalizador. No caso dos
-protocolos considerados
-\textit{on-demand}, ou seja, a pedido, como o próprio nome indica, as rotas são estabelecidas quando
-é necessário desempenhar a função de encaminhamento de mensagens. Apesar de representar alguma
-sobrecarga no algoritmo, pode ser compensador em redes mais móveis e com eventos espaçados. Estas
-são algumas das características consideradas no desenho de algoritmos de encaminhamento em
-RSSF. No entanto, se se tratar de utilização em ambientes criticos é necessário que se
-considere as propriedades de segurança. Alguns destes protocolos não foram concebidos
-inicialmente com estas propriedades como preocupação.\\
+protocolos considerados \textit{on-demand}, ou seja, a pedido, como o próprio nome indica, as rotas
+são estabelecidas quando é necessário desempenhar a função de encaminhamento de mensagens. Apesar de
+representar alguma sobrecarga no algoritmo, pode ser compensador em redes mais móveis e com eventos
+espaçados. Estas são algumas das características consideradas no desenho de algoritmos de
+encaminhamento em RSSF. No entanto, se se tratar de utilização em ambientes criticos é necessário
+que se considere as propriedades de segurança. Alguns destes protocolos não foram concebidos
+inicialmente com estas propriedades como preocupação.
 
 Muitos dos protocolos de encaminhamento para RSSF não foram desde logo concebidos tendo em conta
 o factor de segurança\cite{Karlof2003}, antes, pretendiam adaptar-se ao ambiente das aplicações e às
@@ -44,7 +43,6 @@ encaminhamento seguro em RSSF, que se pretende que cubram todo o espectro  da te
 trabalho e que apresentem no seu todo os mecanismos de segurança que se pretende estudar, ainda que
 cada um per si possa apresentar lacunas quando sujeitos a determinados ataques característicos das
 RSSF.
-
 \subsection{\textit{Secure Implicit Geographic Forwarding }(SIGF)}
 Conhecida a inexistência de mecanismos de segurança em alguns dos algoritmos de encaminhamento de
 RSSF, uma das possibilidades vislumbradas por determinados autores foi a realização de melhoramentos
@@ -63,19 +61,19 @@ segurança, a executar em ambientes críticos.
 Ao instalar uma aplicação, baseada no protocolo IGF, sobre uma infrastrutura de um RSSF o
 ambiente estará definido por coordenadas que permitam a cada nó saber exactamente a sua localização
 em cada momento. Ao agregar componentes de encaminhamento e MAC\footnote{\textit{Medium Access
-Control}}  num único protocolo \textit{Network/MAC} é
-possível\cite{IGF}, no momento de envio do pacote, determinar qual o melhor próximo vizinho
-(definido no protocolo como candidato). O protocolo inicia com a origem a enviar uma mensagem do
-tipo \textit{Open Request To Send} (ORTS) para a vizinhança (esta mensagem contém a localização e o
-destino). Cada nó que se encontre no sextante válido (correspondente a um ângulo de 60º centrado na
-origem), determinado por cada nó com base na sua localização, inicia um temporizador de CTS
-(\textit{Clear To Send}) inversamente proporcional com determinados parâmetros (distância à origem,
-energia existente, e distância perpendicular ao destino), favorecendo os nós com melhores condições
-a responderem com CTS. Ao expirar o temporizador, é respondida uma mensagem de CTS, sendo emitida
-uma mensagem do tipo DATA apartir da origem, após a recepção do CTS. Como este protocolo não mantém
-estado, resiste a mudanças de topologia da rede, o facto de escolher em cada envio o nó seguinte
-constitui um mecanismo de tolerância a falhas e  mesmo em caso de ataque os danos ficam confinados à
-vizinhança de cada nó comprometido.
+Control}}  num único protocolo \textit{Network/MAC} é possível\cite{IGF}, no momento de envio do
+pacote, determinar qual o melhor próximo vizinho (definido no protocolo como candidato). O protocolo
+inicia com a origem a enviar uma mensagem do tipo \textit{Open Request To Send} (ORTS) para a
+vizinhança (esta mensagem contém a localização e o destino). Cada nó que se encontre no sextante
+válido (correspondente a um ângulo de 60º centrado na origem), determinado por cada nó com base na
+sua localização, inicia um temporizador de CTS (\textit{Clear To Send}) inversamente proporcional
+com determinados parâmetros (distância à origem, energia existente, e distância perpendicular ao
+destino), favorecendo os nós com melhores condições a responderem com CTS. Ao expirar o
+temporizador, é respondida uma mensagem de CTS, sendo emitida uma mensagem do tipo DATA apartir da
+origem, após a recepção do CTS. Como este protocolo não mantém estado, resiste a mudanças de
+topologia da rede, o facto de escolher em cada envio o nó seguinte constitui um mecanismo de
+tolerância a falhas e  mesmo em caso de ataque os danos ficam confinados à vizinhança de cada nó
+comprometido.
 \item[Especificação do protocolo SIGF]
 Com a introdução de mecanismos de segurança é natural a introdução de sobrecarga num protocolo,
 principalmente quando se trata da extensão de um já existente. No entanto, o
@@ -84,6 +82,7 @@ entrega das mensagens mesmo durante um ataque. Uma das novidades deste protocolo
 configurável e como tal se adaptar os mecanismos de segurança ao grau de ameaça. O protocolo tem
 três extensões ao protocolo IGF que permitem evoluir gradualmente de um protocolo sem estado para um
 protocolo, tradicional, com manutenção de estado, e com isto mais pesado e exigente em recursos.
+
 Considerando a primeira extensão e portanto a mais simples e menos exigente em recursos, o SIGF-0
 continua a não manter o estado e a ter um caracter não deterministico no entanto não sucumbe a
 ataques do tipo \textit{rushing}\cite{Rushing_attacks_perrig} por não emitir logo para o primeiro

@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1 beta2
-lastDocument=source/sec_ataq_org_rede.tex
+lastDocument=source/sumario_mod_ad_svc_sec.tex
 masterDocument=
 name=Thesis.Preparation
 pkg_extIsRegExp=false
@@ -22,7 +22,7 @@ column=0
 encoding=ISO-8859-1
 highlight=LaTeX
 line=118
-open=true
+open=false
 order=0
 
 [item:source/ataques_wsn.tex]
@@ -30,8 +30,8 @@ archive=true
 column=0
 encoding=ISO-8859-1
 highlight=LaTeX
-line=0
-open=true
+line=27
+open=false
 order=1
 
 [item:source/capitulo1.tex]
@@ -50,7 +50,7 @@ encoding=ISO-8859-1
 highlight=LaTeX
 line=9
 open=true
-order=4
+order=6
 
 [item:source/capitulo3.tex]
 archive=true
@@ -79,23 +79,32 @@ line=0
 open=false
 order=-1
 
-[item:source/pic_sensornode.tex]
+[item:source/mybib.bib]
 archive=true
-column=0
-encoding=
-highlight=
-line=0
+column=18
+encoding=ISO-8859-1
+highlight=BibTeX
+line=1104
 open=false
 order=-1
 
+[item:source/pic_sensornode.tex]
+archive=true
+column=24
+encoding=UTF-8
+highlight=LaTeX
+line=3
+open=true
+order=10
+
 [item:source/resumoen.tex]
 archive=true
-column=7602296
-encoding=
-highlight=
+column=9
+encoding=ISO-8859-1
+highlight=LaTeX
 line=0
-open=false
-order=-1
+open=true
+order=13
 
 [item:source/resumopt.tex]
 archive=true
@@ -103,7 +112,7 @@ column=48
 encoding=ISO-8859-1
 highlight=LaTeX
 line=15
-open=true
+open=false
 order=3
 
 [item:source/sec_about_wsn.tex]
@@ -113,34 +122,34 @@ encoding=ISO-8859-1
 highlight=LaTeX
 line=5
 open=true
-order=5
+order=8
 
 [item:source/sec_ambientes_de_simulacao.tex]
 archive=true
-column=36
+column=17
 encoding=ISO-8859-1
 highlight=LaTeX
-line=137
+line=131
 open=true
-order=2
+order=5
 
 [item:source/sec_arq_security_wsn.tex]
 archive=true
-column=0
+column=71
 encoding=ISO-8859-1
 highlight=LaTeX
-line=132
+line=122
 open=true
-order=6
+order=14
 
 [item:source/sec_arq_software_wsn.tex]
 archive=true
-column=0
-encoding=
-highlight=
-line=0
-open=false
-order=-1
+column=31
+encoding=ISO-8859-1
+highlight=LaTeX
+line=11
+open=true
+order=9
 
 [item:source/sec_aspectos_aberto_avaliacao_experimental.tex]
 archive=true
@@ -153,30 +162,30 @@ order=-1
 
 [item:source/sec_ataq_estabelecimento_rotas.tex]
 archive=true
-column=47
+column=15
 encoding=ISO-8859-1
 highlight=LaTeX
-line=0
-open=false
-order=-1
+line=47
+open=true
+order=1
 
 [item:source/sec_ataq_manutencao_rotas.tex]
 archive=true
-column=0
+column=22
 encoding=ISO-8859-1
 highlight=LaTeX
-line=0
-open=false
-order=-1
+line=15
+open=true
+order=0
 
 [item:source/sec_ataq_org_rede.tex]
 archive=true
-column=61
+column=22
 encoding=ISO-8859-1
 highlight=LaTeX
-line=5
+line=32
 open=true
-order=8
+order=2
 
 [item:source/sec_ataq_reorganizacao_rede.tex]
 archive=true
@@ -184,62 +193,62 @@ column=45
 encoding=ISO-8859-1
 highlight=LaTeX
 line=0
-open=false
-order=-1
+open=true
+order=3
 
 [item:source/sec_dicussao_resumo.tex]
 archive=true
 column=0
-encoding=
-highlight=
+encoding=ISO-8859-1
+highlight=LaTeX
 line=0
-open=false
-order=-1
+open=true
+order=4
 
 [item:source/sec_dolev_yao.tex]
 archive=true
-column=0
-encoding=
-highlight=
-line=0
-open=false
-order=-1
+column=39
+encoding=ISO-8859-1
+highlight=LaTeX
+line=36
+open=true
+order=11
 
 [item:source/sec_intrusao.tex]
 archive=true
-column=0
+column=10
 encoding=ISO-8859-1
 highlight=LaTeX
-line=0
-open=false
-order=-1
+line=26
+open=true
+order=15
 
 [item:source/sec_modadversario_ataques_contramedidas.tex]
 archive=true
-column=17
+column=3
 encoding=ISO-8859-1
 highlight=LaTeX
-line=20
+line=22
 open=false
 order=-1
 
 [item:source/sec_modadversario_servicos_seg.tex]
 archive=true
-column=7864421
-encoding=
-highlight=
+column=43
+encoding=ISO-8859-1
+highlight=LaTeX
 line=0
-open=false
-order=-1
+open=true
+order=7
 
 [item:source/sec_protocolos_encaminhamento.tex]
 archive=true
-column=0
-encoding=
-highlight=
+column=8
+encoding=ISO-8859-1
+highlight=LaTeX
 line=0
-open=false
-order=-1
+open=true
+order=12
 
 [item:source/sec_secure_wsn_design.tex]
 archive=true
@@ -247,17 +256,17 @@ column=21
 encoding=ISO-8859-1
 highlight=LaTeX
 line=7
-open=true
+open=false
 order=7
 
 [item:source/sumario_mod_ad_svc_sec.tex]
 archive=true
-column=7864421
-encoding=
-highlight=
-line=0
-open=false
-order=-1
+column=26
+encoding=ISO-8859-1
+highlight=LaTeX
+line=21
+open=true
+order=16
 
 [item:source/tipificacao_de_ataques.tex]
 archive=true
