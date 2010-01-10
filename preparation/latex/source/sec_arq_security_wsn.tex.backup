@@ -52,7 +52,6 @@ ao mecanismo. Desta forma, a utilização de algoritmos de encriptação fiaveis
 (ex:AES, ECC) para garantir um determinado nível de segurança, para isso existe
 a necessidade de partilhar chaves de sessão por todos os \textit{end-points} e
 como tal deve-se recorrer a esquemas de distribuição de chaves.
-
  \item[Disponibilidade]
 Para que consiga atingir um bom nível de disponibilidade é necessário garantir
 que uma RSSF funcione normalmente durante todo o seu tempo de implementação. Os
@@ -61,13 +60,18 @@ para atingir a disponibilidade de uma rede. Para além de mecanismos que evitem
 a negação de serviço, é preciso garantir que a forma de degradação da rede ( na
 presença de um ataque ) seja controlada e que a degradação vá sendo tão grande
 quanto maior sejam o número de nós afectados.
-
  \item[Integridade]
-In communication, data integrity ensures the receiver that the received
-data is not altered in transit by an adversary. In SPINS,
-we achieve data integrity through data authentication, which is a
-stronger property.
+Durante a comunicação a integridade garante que os dados recebidos pelo nó
+receptor não foram alterados por um adversário durante a transmissão. Em alguns
+casos esta propriedade é garantida juntamente com a autenticação, usando
+mecanismos que permitam verificar ambos apenas com um mecanismo, poupando assim
+recursos, que são escassos nas RSSF. Por exemplo, o uso de HMAC's é vulgar uma
+vez que a chave é usada para autenticar a origem da mensagens e para garantir a
+integridade da mensagem, ou seja se a mensagem for alterada a origem não poderá
+ser correctamente verificada, pelo que a mensagem acaba por ser
+ignorada.\cite{SPINS}
 \item[Frescura] 
+
 Given that all sensor networks stream some forms of time varying
 measurements, it is not enough to guarantee confidentiality and
 authentication; we also must ensure each message is fresh. Informally,
@@ -127,17 +131,13 @@ com o objectivo de prevenir que um adversário compromenta a segurança de um
 sistema. Devido à natureza \textit{ad-hoc} das redes, a comunicação
 intermitente e os recursos limitados, os mecanismos de
 gestão de chaves e autenticação de grupo tornam-se dificil de alcançar.
-Alguns esquemas para distribuição e gestão de chaves 
-Key management
-services must ensure that confidentiality and group-
-level authentication services are available to authorized
-parties when needed. These services should not limit
-the availability of a network and should not create
-single points of failure.
+Alguns esquemas para distribuição e gestão de chaves tem vindo a ser
+desenvovidos pela investigação com vista a compreender as especificidades das
+RSSF.
 
 \item[IEEE 802.15.4\cite{falta}]
 
-\item[Zigbee\cite{falta}]
+\item[ZigBee\cite{falta}]
 
 \end{description}
 

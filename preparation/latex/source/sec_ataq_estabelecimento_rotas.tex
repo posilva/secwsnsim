@@ -1,2 +1,55 @@
-\subsection{Ataques à estabelecimento de rotas}
-\label{sect:subsec_ataq_est_rotas}
+\subsection{Ataques ao estabelecimento de rotas} \label{sect:subsec_ataq_est_rotas}
+\begin{description}
+ \item[\textit{HELLO Flooding }]
+
+
+ \item[Ataque \textit{Sinkhole}]
+Nas RSSF um dos modos de comunicação é de um-para-muitos(\textit{one-to-many}) e este tipo
+comunicação, e por consequência qualquer protocolo que use este modo, apresenta alguma
+vulnerabilidades a ataques do tipo \textit{sinkhole}[On the Intruder Detection for Sinkhole Attack
+in Wireless Sensor Networks]. Este ataque corresponde a um atacante informar os nós vizinhos de
+dados errados de encaminhamento anunciando-se como um nó que tem boa comunicação com o nó sink,
+tornando-se assim um ponto de passagem de informação podendo alterar ou encaminha-la de forma
+selectiva para outros caminhos.
+ \item[Ataque \textit{Wormhole}]
+    Neste tipo de ataque, apresentado por Perrig et al [PERRIG Wormhole Attacks in Wireless
+Networks] a colaboração de dois nós maliciosos (normalmente a muitos hops de distância), quer sejam
+nós de laptop-class[WAGNER] ou sensor-class[WAGNER] , contribuem para uma maior efectividade da
+acção de ataque. Assim, os atacantes estabelecem uma ligação (ou túnel, normalmente de melhor
+qualidade - maior largura de banda) para comunicarem entre si. Um nó malicioso captura pacotes ou
+partes de pacotes e envia-os pela ligação privada para o outro atacante para outro extremo da rede.
+Este ataque é particularmente eficaz em redes ad-hoc e redes baseadas em localização e sendo estas
+compremetidas, não conseguiram estabelecer caminhos maiores do que dois hops causando interrupções
+nas comunicações[PERRIG\_ASURVEY\_OF\_SECURE\_WIRELESS\_AD\_HOC\_ROUTING].
+Este ataque transforma o caminho os atacantes em nós muito solicitados, pois apresentam-se aos
+outros nós participantes como tendo melhor ligação e a menos distância do destino. [WAP Wormhole
+Attack Prevention Algorithm in Mobile Ad Hoc Networks]
+
+    Alguns autores apresentam mecanismos como o utilização de packet leash [Packet leash PERRIG]
+como forma de mitigar este ataque, de forma breve, preconizam que existe dois tipos de condições
+para se aceitar os pacotes vindos de uma origem: baseado na localização e no tempo. Assim, o
+primeiro permite um nó receptor, conhecendo a localização da origem, saber se um pacote que
+atravessou a rede por um wormhole calculando a distancia entre os dois pontos. No segundo caso,
+baseia-se essencialmente no tempo de transmissão do pacote, exigindo então a sincronização de
+relógios, se for muito rápido a chegar ao destino, este nó assume que se está perante um ataque de
+wormhole.
+\item[Ataque \textit{Sybil}]
+    Este ataque foi definido como um ataque que permitia atingir os mecanismos de redundância
+em armazenamento distribuído em ambientes de ponto-a-ponto (peer-to-peer)[doceur]. Outra definição
+que surge, agora associada às RSSF, é a que o define como ``um dispositivo malicioso que
+ilegitimamente assume múltiplas entidades''[REF\_PERIG]. Com estas definições e devido à sua
+taxonomia é um ataque bastante efectivo contra protocolos de encaminhamento [WAGNER]. Em particular
+dos protocolos que adoptam múltiplos caminhos, observa-se então, que um nó ao assumir várias
+identidades possibilita que na realidade os dados possam estar a passar por um mesmo nó malicioso.
+\end{description}
+\subsubsection*{Contramedidas}
+
+Para mitigar ataques de HELLO flooding\cite{Karlof1999} pode-se simplesmente
+implementar um mecanismo de resposta (\textit{aknowlege}) aos pacotes de HELLO.
+Assim, caso esteja a decorrer um ataque usando um potência de comunicação
+abrangente de toda a rede, a resposta não será possível porque os nós mais
+distanciados não possuiram capacidade de alcançar o atacante, anulando por isso
+o anuncio de vizinhança.Outra forma é a que cada mensagem de HELLO
+obriga a autenticação da origem numa entidade central que ao detectar que um nó
+se está a autenticar com esta mensagem em vários nós então devem ser tomadas
+medidas para precaver um ataque desta natureza.

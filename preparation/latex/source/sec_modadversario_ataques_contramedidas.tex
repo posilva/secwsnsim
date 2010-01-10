@@ -4,12 +4,11 @@ Contra-medidas} \label{sect:sec_mod_adversario_ataq_contramedidas}
 São vários os ataques que se pode direccionar contra a pilha da arquitectura de
 uma RSSF. Cada uma das camadas da pilha tem vulnerabilidades próprias das
 funções que desempenha. No escopo deste trabalho o foco é a segurança ao nível
-dos protocolos de encaminhamento, representada pela camada de transporte, daí
+dos protocolos de encaminhamento, representada pela camada de rede, daí
 nesta secção se apresentar com algum detalhe as fases tradicionais de um
 protocolo de encaminhamento em MANETs\cite{Corson1999} e em particular em
 RSSF.\\
-
-    Os protocolo de encaminhamento em redes de sensores, de uma forma geral
+Os protocolo de encaminhamento em redes de sensores, de uma forma geral
 dividem-se em três fases: descoberta dos caminhos, selecção dos caminhos,
 manutenção da comunicação pelos caminhos seleccionados. Importa neste momento
 realçar o facto de que os ataques a um algoritmo de encaminhamento normalmente
@@ -17,9 +16,8 @@ exploraram as vulnerabilidades de cada uma destas fases de forma especifica.
 Daí, em seguida se proceder à associação dos ataques específicos que se podem
 desencadear em cada fase e como estes podem ser mitigados aplicando determinados
 mecanismos de segurança como contra-medidas.
-
 \input{sec_ataq_org_rede}
 \input{sec_ataq_estabelecimento_rotas}
 \input{sec_ataq_manutencao_rotas}
 \input{sec_ataq_reorganizacao_rede}
- 
+\input{tabela_ataques_contramedidas}
