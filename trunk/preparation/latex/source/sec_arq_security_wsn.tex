@@ -6,8 +6,7 @@ Todavia, esta visão é redutora, pois, para se conseguir um sistema seguro, é
 necessário que a segurança esteja integrada em cada um dos componentes, se
 assim não se verificar cada componente pode corresponder a uma ameaça a partir
 da qual se pode desencadear um ataque. \\
-\paragraph*{} Os desafios propostos pelas RSSF são específicos da própria
-tecnologia, assim
+Os desafios propostos pelas RSSF são específicos da própria tecnologia, assim
 sendo os mecanismos tradicionais de segurança podem não ser suficientes. Com
 isto surgem tecnologias que visam corresponder aos requisitos de segurança das
 RSSF. Assim, nesta secção pretende-se apresentar uma visão sobre os requisitos
@@ -23,8 +22,7 @@ aplicação de monitorização de dados ambientais este requisito pode ser
 relaxado.\\
 De seguida apresentam-se, de forma genérica, os principais requisitos de
 segurança de uma RSSF:
-\begin{description}
-
+\begin{description}\addtolength{\itemsep}{-.50\baselineskip}
  \item[Autenticação]
  Considerando que as RSSF usam um meio de comunicação partilhado, é necessário
 recorrer à autenticação para garantir a detecção de mensagens alteradas ou
@@ -38,7 +36,6 @@ enviados). Note-se que a implementação de criptografia assimétrica pode
 contribuir para a garantia desta propriedade, mas ainda existe muito esforço a
 desenvolver neste campo dadas as limitações das RSSF e as exigências
 computacionais e energéticas destes mecanismos.
-
  \item[Confidencialidade]
  Sendo a RSSF uma infraestrutura baseada fundamentalmente na disseminação de
 dados recolhidos apartir de sensores que se encontram distribuidos em ambiente
@@ -69,7 +66,7 @@ recursos, que são escassos nas RSSF. Por exemplo, o uso de HMAC's é vulgar uma
 vez que a chave é usada para autenticar a origem da mensagens e para garantir a
 integridade da mensagem, ou seja se a mensagem for alterada a origem não poderá
 ser correctamente verificada, pelo que a mensagem acaba por ser
-ignorada.\cite{SPINS}
+ignorada\cite{SPINS}.
 \item[Frescura]
 A frescura dos dados de uma mensagem implica que estes sejam recentes
 garantindo que esta mensagem não é antiga e não foi reenviada por um qualquer
@@ -80,7 +77,7 @@ comunicação permitindo a estimação do atraso, usada para a sincronização de
 tempo).
  \end{description}
 \subsubsection{Serviços de Segurança}
-\begin{description}
+\begin{description}\addtolength{\itemsep}{-0.5\baselineskip}
 \item[TinySec\cite{Karlof2004}]
 TinySec é uma arquitectura de segurança para protecção ao nível de ligação de
 dados em RSSF. O objectivo principal, para o qual foi desenhado, é providenciar
@@ -89,13 +86,10 @@ segurança  disponibilizados são: autenticação de dados (com a utilização de
 \textit{Message Authentication Codes}(MAC), no caso CBC-MAC\footnote{Cipher
 Block Chaining - Message Authentication Code (CBC-MAC))}) e confidencialidade 
 (a encriptação é implementada com o recursotambém ao CBC-MAC).
- Para se adaptar às RSSF o MAC tem um
-comprimeito de 4 bytes ao contrário dos 8 ou 16 habituais.
- Uma vez que neste mecanismo as propriedades de segurança estão
-determinadas pelo comprimento do MAC os autores afirmam que para uma RSSF é
-suficiente uma vez que um atacante teria de efectuar $2^{31}$ tentativas, que
-demorariam cerca de 20 meses a realizar com um canal de
-19.5Kbs.
+ Para se adaptar às RSSF o MAC tem um comprimeito de 4 bytes ao contrário dos 8 ou 16 habituais.
+ Uma vez que neste mecanismo as propriedades de segurança estão determinadas pelo comprimento do MAC
+os autores afirmam que para uma RSSF é suficiente uma vez que um atacante teria de efectuar $2^{31}$
+tentativas, que demorariam cerca de 20 meses a realizar com um canal de 19.5Kbs.
 Note-se que a frescura das mensagens não foi endereçado nesta arquitectura uma
 vez que os autores consideram como demasiado exigente em termos de recursos o
 que contrariaria o objectivo inicial da arquitectura.
@@ -119,8 +113,7 @@ o modo CTR\footnote{\textit{Counter Mode}} e a autenticação com CBC-MAC. O
 segundo componente,o ${\mu}$TESLA,  é um serviço de autenticação de
 \textit{broadcast}, que evita a utilização de mecanismos, mais exigentes, de
 criptografia assimétrica, recorrendo a critografia simétrica, autenticando as
-mensagens com um MAC,  
-
+mensagens com um MAC,
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \item[Sistemas de distríbuição de chaves\cite{eschenauer_key-management_2002}]
 Confidencialidade e autenticação são aspectos críticos das redes de sensores

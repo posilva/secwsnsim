@@ -8,7 +8,6 @@ normalmente atribuídas à camada de transporte). Assim, é fundamental perceber
 qual a pilha de protocolos que as RSSFimplementam, bem como perceber quais os
 sistemas que compõem um sensor genérico para de seguida apresentar algumas
 implementações de sensores.
-
 \subsubsection{Pilha de Protocolos de uma RSSF }
 Uma arquitectura para a a pilha de protocolos em RSSF foi proposta por
 \cite{Akyildiz2002}, esta pilha apresenta-se representada por cinco camadas:
@@ -18,12 +17,11 @@ três planos, que devem ser atendidos por cada uma das camadas, de forma a
 lidarem de forma optima com a energia, mobilidade e recursos partilhados, e
 estes são os seguintes: plano de gestão de tarefas , plano de gestão
 de energia e plano de gestão de mobilidade. 
-\begin{description}
+\begin{description}\addtolength{\itemsep}{-0.5\baselineskip}
  \item[Camada Física] Esta camada é responsável por selecção de frequência,
 detecção de sinal e modulação, podendo ainda desempenhar algumas tarefas de
 encriptação. A minimização do consumo de energia é uma prioridade, as restantes
-tarefas assemelham-se às restantes redes sem fios. \cite{Akyildiz2002}. 
-
+tarefas assemelham-se às restantes redes sem fios. \cite{Akyildiz2002}.
  \item[Camada de Ligação de Dados] Das tarefas associadas a esta camada
 destacam-se as seguintes: multiplexação de dados, acesso ao meio, detecção de
 erros e detecção de frames. Uma RSSF tem um protocolo de MAC especifico de modo
@@ -31,8 +29,7 @@ a atender o consumo de energia e os protocolos centrados nos dados. Assim sendo
 e porque os ambientes de operação têm ruído e os sensores podem ser móveis, o
 protocolo de acesso ao meio (MAC) tem que lidar com os constragimentos de
 energia por forma a minimizar colisões a quando do \textit{broadcast} com os
-vizinhos\cite{Akyildiz2002}. 
-
+vizinhos\cite{Akyildiz2002}.
  \item[Camada de Rede] Sendo a energia um tema transversal a toda a pilha esta
 camada deve endereçar esta preocupação também. No entanto, o facto das RSSF
 serem essencialmente centradas nos dados, sensíveis à localização e com
@@ -46,19 +43,16 @@ duplicação de mensagens e a total ignorância dos recursos da rede, nomeadamente
 os energéticos, pois se um evento é detectado por mais que um sensor essa
 informaçaõ vai enundar em duplicado pela rede. Um dos protocolos que minimiza o
 impacto da inundação é o SPINS\cite{REF}, negociando e adaptando-se aos
-recursos existentes. 
-
+recursos existentes.
  \item[Camada de Transporte] Nas redes convencionais a camada de transporte
 está responsável pela transmissão numa base ponto a ponto. Assim, uma das
 tarefas importantes a apontar é a de gestão da congestão de tráfego na rede,
 gestão da fiabilidade da comunicação\cite{TRANSPORT_LAYER_WSN}\cite{Iyer2005}.
-
 %Esta camada surge com maior relevo quando importa a
 %uma infraestrutura de RSSF comunicar com uma rede exterior. No entanto algumas
 %das tarefas que podem ser desempenhadas por esta camada acabam por ser
 %desempenhadas pela camada de aplicação, já que normalmente dizem respeito
 %a qualidade de serviço ou certeza de entrega de  pacotes no destino.
-
  \item[Camada de aplicação] Várias são as aplicações ou protocolos
 desenvolvidos para a camada aplicação normalmente estão associadas às
 capacidades sensoriais das plataformas, que naturalmente estão relacionadas com
@@ -75,7 +69,6 @@ camadas de rede e transporte não são consideradas por forma a simplificar a
 pilha de protocolos em \textit{motes}. Esta é uma das capacidades destas redes,
 que corresponde ao facto de adequar de forma especifica a infraestrutura às
 necessidades de determinada aplicação.
-
 \subsubsection{Modelo da plataforma genérica de uma RSSF - \textit{Mote}}
 À semelhança do que acontece com as redes convencionais, existem nós de
 computação interligados por uma infraestrutura de comunicação. No caso da RSSF,
@@ -87,7 +80,7 @@ outros nós por forma a que alcance o destino; 3) Nó de sincronização ou nó de
 agregação, embora estas duas caracterizações não correspondam à mesma tarefa
 por si só, a um nível mais macro, corresponde igualmente a colecção de dados da
 rede oriundos da detecção de eventos, por forma a faze-la seguir agregada para
-outro destino (interno ou externo à rede ). \\
+outro destino (interno ou externo à rede ).
 
 Desta forma interessa perceber qual o modelo inerente a estas pequenas
 plataformas de rede que apesar das características limitadoras da sua execução

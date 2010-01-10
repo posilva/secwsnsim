@@ -1,31 +1,37 @@
 \subsection{Ataques ao estabelecimento de rotas} \label{sect:subsec_ataq_est_rotas}
 \begin{description}
  \item[\textit{HELLO Flooding }]
-
-
+Este ataque foi identificado primeiramente por \cite{Karlof2003}  sendo
+definido como um ataque que explora alguns protocolos  que se fazem anunciar
+aos seus vizinhos pela emissão de mensagens de \textit{HELLO}, informando-os da sua proximidade e
+presença.
+Os protocolos que assentam em localização podem ser vulneráveis a este ataque,
+uma vez que com um dispositivo do tipo \textit{laptop-class}\cite{Karlof2003}, usando um alcance
+rádio que cubra toda a rede, pode-se anunciar a todos os nós como vizinho forçando a
+informação fluir através dele.
  \item[Ataque \textit{Sinkhole}]
 Nas RSSF um dos modos de comunicação é de um-para-muitos(\textit{one-to-many}) e este tipo
 comunicação, e por consequência qualquer protocolo que use este modo, apresenta alguma
-vulnerabilidades a ataques do tipo \textit{sinkhole}[On the Intruder Detection for Sinkhole Attack
-in Wireless Sensor Networks]. Este ataque corresponde a um atacante informar os nós vizinhos de
-dados errados de encaminhamento anunciando-se como um nó que tem boa comunicação com o nó sink,
-tornando-se assim um ponto de passagem de informação podendo alterar ou encaminha-la de forma
-selectiva para outros caminhos.
+vulnerabilidades a ataques do tipo \textit{sinkhole}\cite{Sinkhole_attack}. Este ataque corresponde
+a um atacante informar os nós vizinhos de dados errados de encaminhamento anunciando-se como um nó
+que tem boa comunicação com o nó sink, tornando-se assim um ponto de passagem de informação podendo
+alterar ou encaminha-la de forma selectiva para outros caminhos.
  \item[Ataque \textit{Wormhole}]
-    Neste tipo de ataque, apresentado por Perrig et al [PERRIG Wormhole Attacks in Wireless
-Networks] a colaboração de dois nós maliciosos (normalmente a muitos hops de distância), quer sejam
-nós de laptop-class[WAGNER] ou sensor-class[WAGNER] , contribuem para uma maior efectividade da
-acção de ataque. Assim, os atacantes estabelecem uma ligação (ou túnel, normalmente de melhor
-qualidade - maior largura de banda) para comunicarem entre si. Um nó malicioso captura pacotes ou
-partes de pacotes e envia-os pela ligação privada para o outro atacante para outro extremo da rede.
+Neste tipo de ataque, apresentado por Perrig et al \cite{Wormhole_perrig} a colaboração de dois nós
+maliciosos (normalmente a muitos hops de distância), quer sejam
+nós de \textit{laptop-class}\cite{Karlof2003} ou \textit{sensor-class}\cite{Karlof2003} , contribuem
+para uma maior efectividade da acção de ataque. Assim, os atacantes estabelecem uma ligação (ou
+túnel, normalmente de melhor qualidade - maior largura de banda) para comunicarem entre si. Um nó
+malicioso captura pacotes ou partes de pacotes e envia-os pela ligação privada para o outro atacante
+para outro extremo da rede.
 Este ataque é particularmente eficaz em redes ad-hoc e redes baseadas em localização e sendo estas
 compremetidas, não conseguiram estabelecer caminhos maiores do que dois hops causando interrupções
-nas comunicações[PERRIG\_ASURVEY\_OF\_SECURE\_WIRELESS\_AD\_HOC\_ROUTING].
+nas comunicações\cite{perrig_survey_ad_hoc}.
 Este ataque transforma o caminho os atacantes em nós muito solicitados, pois apresentam-se aos
-outros nós participantes como tendo melhor ligação e a menos distância do destino. [WAP Wormhole
-Attack Prevention Algorithm in Mobile Ad Hoc Networks]
-
-    Alguns autores apresentam mecanismos como o utilização de packet leash [Packet leash PERRIG]
+outros nós participantes como tendo melhor ligação e a menos distância do destino.
+\cite{WAP_Wormhole}
+ Alguns autores apresentam mecanismos como o utilização de \textit{packet leashes}
+\cite{packet_leashes_perrig}
 como forma de mitigar este ataque, de forma breve, preconizam que existe dois tipos de condições
 para se aceitar os pacotes vindos de uma origem: baseado na localização e no tempo. Assim, o
 primeiro permite um nó receptor, conhecendo a localização da origem, saber se um pacote que
@@ -35,15 +41,15 @@ relógios, se for muito rápido a chegar ao destino, este nó assume que se está pe
 wormhole.
 \item[Ataque \textit{Sybil}]
     Este ataque foi definido como um ataque que permitia atingir os mecanismos de redundância
-em armazenamento distribuído em ambientes de ponto-a-ponto (peer-to-peer)[doceur]. Outra definição
-que surge, agora associada às RSSF, é a que o define como ``um dispositivo malicioso que
-ilegitimamente assume múltiplas entidades''[REF\_PERIG]. Com estas definições e devido à sua
-taxonomia é um ataque bastante efectivo contra protocolos de encaminhamento [WAGNER]. Em particular
-dos protocolos que adoptam múltiplos caminhos, observa-se então, que um nó ao assumir várias
-identidades possibilita que na realidade os dados possam estar a passar por um mesmo nó malicioso.
+em armazenamento distribuído em ambientes de ponto-a-ponto (peer-to-peer)\cite{Douceur2002}. Outra
+definição que surge, agora associada às RSSF, é a que o define como ``um dispositivo malicioso que
+ilegitimamente assume múltiplas entidades''\cite{sybil_perrig}. Com estas definições e devido à sua
+taxonomia é um ataque bastante efectivo contra protocolos de encaminhamento\cite{Karlof2003}. Em
+particular dos protocolos que adoptam múltiplos caminhos, observa-se então, que um nó ao assumir
+várias identidades possibilita que na realidade os dados possam estar a passar por um mesmo nó
+malicioso.
 \end{description}
-\subsubsection*{Contramedidas}
-
+\subsubsection{Contra-medidas}
 Para mitigar ataques de HELLO flooding\cite{Karlof1999} pode-se simplesmente
 implementar um mecanismo de resposta (\textit{aknowlege}) aos pacotes de HELLO.
 Assim, caso esteja a decorrer um ataque usando um potência de comunicação

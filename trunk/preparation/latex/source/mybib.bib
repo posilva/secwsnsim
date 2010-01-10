@@ -985,3 +985,154 @@ networks},
   url            = {http://tools.ietf.org/html/rfc3561},
   year           = 2003
 }
+@INPROCEEDINGS{Sinkhole_attack,
+title={On the Intruder Detection for Sinkhole Attack in Wireless Sensor Networks},
+author={Ngai, E.C.H. and Jiangchuan Liu and Lyu, M.R.},
+booktitle={Communications, 2006. ICC '06. IEEE International Conference on},
+year={2006},
+month={June },
+volume={8},
+number={},
+pages={3383-3389},
+abstract={In a wireless sensor network, multiple nodes would send sensor readings to a base station
+for further processing. It is well-known that such a many-to-one communication is highly vulnerable
+to the sinkhole attack, where an intruder attracts surrounding nodes with unfaithful routing
+information, and then performs selective forwarding or alters the data passing through it. A
+sinkhole attack forms a serious threat to sensor networks, particularly considering that such
+networks are often deployed in open areas and of weak computation and battery power. In this paper,
+we present a novel algorithm for detecting the intruder in a sinkhole attack. The algorithm first
+finds a list of suspected nodes, and then effectively identifies the intruder in the list through a
+network flow graph. The algorithm is also robust to deal with cooperative malicious nodes that
+attempt to hide the real intruder. We have evaluated the performance of the proposed algorithm
+through both numerical analysis and simulations, which confirmed the effectiveness and accuracy of
+the algorithm. Our results also suggest that its communication and computation overheads are
+reasonably low for wireless sensor networks.},
+doi={10.1109/ICC.2006.255595},
+ISSN={8164-9547}, }
+@ARTICLE{Wormhole_perrig ,
+title={Wormhole attacks in wireless networks},
+author={Yih-Chun Hu and Perrig, A. and Johnson, D.B.},
+journal={Selected Areas in Communications, IEEE Journal on},
+year={2006},
+month={Feb.},
+volume={24},
+number={2},
+pages={ 370-380},
+abstract={ As mobile ad hoc network applications are deployed, security emerges as a central
+requirement. In this paper, we introduce the wormhole attack, a severe attack in ad hoc networks
+that is particularly challenging to defend against. The wormhole attack is possible even if the
+attacker has not compromised any hosts, and even if all communication provides authenticity and
+confidentiality. In the wormhole attack, an attacker records packets (or bits) at one location in
+the network, tunnels them (possibly selectively) to another location, and retransmits them there
+into the network. The wormhole attack can form a serious threat in wireless networks, especially
+against many ad hoc network routing protocols and location-based wireless security systems. For
+example, most existing ad hoc network routing protocols, without some mechanism to defend against
+the wormhole attack, would be unable to find routes longer than one or two hops, severely disrupting
+communication. We present a general mechanism, called packet leashes, for detecting and, thus
+defending against wormhole attacks, and we present a specific protocol, called TIK, that implements
+leashes. We also discuss topology-based wormhole detection, and show that it is impossible for these
+approaches to detect some wormhole topologies.},
+keywords={ ad hoc networks, mobile radio, routing protocols, telecommunication network topology,
+telecommunication security, wireless LAN LAN, TIK routing protocol, location-based wireless security
+system, mobile ad hoc network, packet leash, topology-based wormhole detection, wireless local area
+network, wormhole attack},
+doi={10.1109/JSAC.2005.861394},
+ISSN={0733-8716}, }
+@ARTICLE{perrig_survey_ad_hoc,
+title={A survey of secure wireless ad hoc routing},
+author={Yih-Chun, Hu. and Perrig, A.},
+journal={Security \& Privacy, IEEE},
+year={2004},
+month={May-June },
+volume={2},
+number={3},
+pages={28-39},
+abstract={Ad hoc networks use mobile nodes to enable communication outside wireless transmission
+range. Attacks on ad hoc network routing protocols disrupt network performance and reliability. The
+article reviews attacks on ad hoc networks and discusses current approaches for establishing
+cryptographic keys in ad hoc networks. We describe the state of research in secure ad hoc routing
+protocols and its research challenges.},
+keywords={ad hoc networks, cryptography, mobile computing, routing protocols, security of
+dataattacks, cryptographic keys, mobile nodes, multihop network, network performance, network
+reliability, routing protocols, secure wireless ad hoc routing},
+doi={10.1109/MSP.2004.1},
+ISSN={1540-7993}, }
+@INPROCEEDINGS{WAP_Wormhole,
+title={WAP: Wormhole Attack Prevention Algorithm in Mobile Ad Hoc Networks},
+author={Sun Choi and Doo-young Kim and Do-hyeon Lee and Jae-il Jung},
+booktitle={Sensor Networks, Ubiquitous and Trustworthy Computing, 2008. SUTC '08. IEEE International
+Conference on},
+year={2008},
+month={June},
+volume={},
+number={},
+pages={343-348},
+abstract={In wireless ad hoc networks, nodes compromise to forward packets for each other to
+communicate beyond their transmission range. Therefore, networks are vulnerable to wormhole attacks
+launched through compromised nodes because malicious nodes can easily participate in the networks.
+In wormhole attacks, one malicious node tunnels packets from its location to the other malicious
+node. Such wormhole attacks result in a false route with fewer. If source node chooses this fake
+route, malicious nodes have the option of delivering the packets or dropping them. It is difficult
+to detect wormhole attacks because malicious nodes impersonate legitimate nodes. Previous algorithms
+detecting a wormhole require special hardware or tight time synchronization. In this paper, we
+develop an effective method called wormhole attack prevention (WAP) without using specialized
+hardware. The WAP not only detects the fake route but also adopts preventive measures against action
+wormhole nodes from reappearing during the route discovery phase. Simulation results show that
+wormholes can be detected and isolated within the route discovery phase.},
+keywords={ad hoc networks, mobile radio, telecommunication network routingWAP, malicious node,
+mobile ad hoc networks, packets, route discovery phase, time synchronization, wormhole attack
+prevention algorithm},
+doi={10.1109/SUTC.2008.49},
+ISSN={}, }
+@INPROCEEDINGS{packet_leashes_perrig,
+title={Packet leashes: a defense against wormhole attacks in wireless networks},
+author={Hu, Y.-C. and Perrig, A. and Johnson, D.B.},
+booktitle={INFOCOM 2003. Twenty-Second Annual Joint Conference of the IEEE Computer and
+Communications. IEEE Societies},
+year={2003},
+month={March-3 April},
+volume={3},
+number={},
+pages={ 1976-1986 vol.3},
+abstract={ As mobile ad hoc network applications are deployed, security emerges as a central
+requirement. In this paper, we introduce the wormhole attack, a severe attack in ad hoc networks
+that is particularly challenging to defend against. The wormhole attack is possible even if the
+attacker has not compromised any hosts, and even if all communication provides authenticity and
+confidentiality. In the wormhole attack, an attacker records packets (or bits) at one location in
+the network, tunnels them (possibly selectively) to another location, and retransmits them there
+into the network. The wormhole attack can form a serious threat in wireless networks, especially
+against many ad hoc network routing protocols and location-based wireless security systems. For
+example, most existing ad hoc network routing protocols, without some mechanism to defend against
+the wormhole attack, would be unable to find routes longer than one or two hops, severely disrupting
+communication. We present a new, general mechanism, called packet leashes, for detecting and thus
+defending against wormhole attacks, and we present a specific protocol, called TIK, that implements
+leashes.},
+keywords={ ad hoc networks, mobile radio, routing protocols, telecommunication security TIK
+protocol, location-based wireless security systems, mobile ad hoc network, packet leashes, routing
+protocols, wireless networks, wormhole attacks},
+doi={},
+ISSN={0743-166X}, }
+@INPROCEEDINGS{sybil_perrig,
+title={The Sybil attack in sensor networks: analysis \& defenses},
+author={Newsome, J. and Shi, E. and Song, D. and Perrig, A.},
+booktitle={Information Processing in Sensor Networks, 2004. IPSN 2004. Third International Symposium
+on},
+year={2004},
+month={April},
+volume={},
+number={},
+pages={ 259-268},
+abstract={ Security is important for many sensor network applications. A particularly harmful attack
+against sensor and ad hoc networks is known as the Sybil attack based on J.R. Douceur (2002), where
+a node illegitimately claims multiple identities. This paper systematically analyzes the threat
+posed by the Sybil attack to wireless sensor networks. We demonstrate that the attack can be
+exceedingly detrimental to many important functions of the sensor network such as routing, resource
+allocation, misbehavior detection, etc. We establish a classification of different types of the
+Sybil attack, which enables us to better understand the threats posed by each type, and better
+design countermeasures against each type. We then propose several novel techniques to defend against
+the Sybil attack, and analyze their effectiveness quantitatively.},
+keywords={ security of data, telecommunication security, wireless sensor networks Sybil attack, ad
+hoc networks, misbehavior detection, multiple identities, resource allocation, routing, security,
+wireless sensor networks},
+doi={10.1109/IPSN.2004.1307346},
+ISSN={ }, }
