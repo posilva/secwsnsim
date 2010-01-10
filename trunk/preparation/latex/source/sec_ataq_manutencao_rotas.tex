@@ -1,2 +1,16 @@
-\subsection{Ataques à manutenção de rotas}
-\label{sect:subsec_ataq_manut_rotas}
+\subsection{Ataques à manutenção de rotas} \label{sect:subsec_ataq_manut_rotas}
+\begin{description}
+ \item[Ataque \textit{Blackhole}]
+    Entende-se por um ataque do tipo blackhole [Hongmei Deng; Wei Li; Agrawal, D.P., ``Routing
+security in wireless ad hoc networks,'' Communications Magazine, IEEE , vol.40, no.10, pp. 70-75,
+Oct 2002] um ataque desencadeado por um nó malicioso que intercepta os pacotes dirigidos ao local
+que pretende atacar e informa a origem como sendo um caminho de melhor qualidade. Assim, força todo
+o tráfego, dirigido ao destino, alvo do ataque,  a circular através dele. Por exemplo protocolo AODV
+[AODV REF] tratando-se de um protocolo on-demand permite que, na fase de descoberta de uma rota,
+qualquer nó, que possua um caminho (suficiente recente), responda a uma mensagem de RREQ. Com isto,
+este algoritmo de encaminhamento fica pode ficar sujeito a um ataque de blackhole, pois um nó
+intermediário, malicioso, pode responder com um caminho melhor apesar de não ter sequer caminho para
+o destino originando assim um ``buraco negro'', desta forma interrompe o processo de comunicação.
+ \item[Ataque \textit{Spam}]
+ \end{description}
+\subsubsection*{Contramedidas}

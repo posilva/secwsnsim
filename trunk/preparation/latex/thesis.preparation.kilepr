@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1 beta2
-lastDocument=source/sec_arq_security_wsn.tex
+lastDocument=source/sec_ataq_org_rede.tex
 masterDocument=
 name=Thesis.Preparation
 pkg_extIsRegExp=false
@@ -36,11 +36,11 @@ order=1
 
 [item:source/capitulo1.tex]
 archive=true
-column=72
+column=44
 encoding=ISO-8859-1
 highlight=LaTeX
-line=22
-open=true
+line=7
+open=false
 order=5
 
 [item:source/capitulo2.tex]
@@ -108,12 +108,12 @@ order=3
 
 [item:source/sec_about_wsn.tex]
 archive=true
-column=0
+column=12
 encoding=ISO-8859-1
 highlight=LaTeX
-line=1
+line=5
 open=true
-order=6
+order=5
 
 [item:source/sec_ambientes_de_simulacao.tex]
 archive=true
@@ -126,12 +126,12 @@ order=2
 
 [item:source/sec_arq_security_wsn.tex]
 archive=true
-column=10
+column=0
 encoding=ISO-8859-1
 highlight=LaTeX
-line=139
+line=132
 open=true
-order=7
+order=6
 
 [item:source/sec_arq_software_wsn.tex]
 archive=true
@@ -144,7 +144,25 @@ order=-1
 
 [item:source/sec_aspectos_aberto_avaliacao_experimental.tex]
 archive=true
-column=73
+column=39
+encoding=ISO-8859-1
+highlight=LaTeX
+line=0
+open=false
+order=-1
+
+[item:source/sec_ataq_estabelecimento_rotas.tex]
+archive=true
+column=47
+encoding=ISO-8859-1
+highlight=LaTeX
+line=0
+open=false
+order=-1
+
+[item:source/sec_ataq_manutencao_rotas.tex]
+archive=true
+column=0
 encoding=ISO-8859-1
 highlight=LaTeX
 line=0
@@ -153,10 +171,19 @@ order=-1
 
 [item:source/sec_ataq_org_rede.tex]
 archive=true
-column=63
+column=61
 encoding=ISO-8859-1
 highlight=LaTeX
-line=6
+line=5
+open=true
+order=8
+
+[item:source/sec_ataq_reorganizacao_rede.tex]
+archive=true
+column=45
+encoding=ISO-8859-1
+highlight=LaTeX
+line=0
 open=false
 order=-1
 
@@ -221,7 +248,7 @@ encoding=ISO-8859-1
 highlight=LaTeX
 line=7
 open=true
-order=8
+order=7
 
 [item:source/sumario_mod_ad_svc_sec.tex]
 archive=true

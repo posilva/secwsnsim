@@ -1,10 +1,105 @@
 \section{ Estudo de Protocolos de Encaminhamento Seguro para RSSF}
+Como ponto introdutório da
+discussão e apresentação de algoritmos de encaminhamento em RSSF,
+começa-se por identificar algumas tipologias destes algoritmos . As definições das tipologias
+normalmente estão relacionadas com a natureza destas redes e ao mesmo tempo outras  foram herdadas
+das redes \textit{ad-hoc}.
+\subsection{Caracterização dos protocolos de encaminhamento em RSSF}
+Podem-se estabelecer três classes  de protocolos\cite{Akkaya2005}: os baseados na localização,
+os centrados nos dados e os hierárquicos. Os protocolos baseados na localização usam esta informação
+para tomarem as melhores decisões para alcançar os destinos(ex: IGF\cite{igf_protocol}).Os centrados
+nos dados, ou seja, os que exploram a redundância e a semântica dos dados, normalmente são baseados
+em algoritmos que efectuam pesquisas lançadas a partir de nós de sincronização(ex: Directed
+Diffusion\cite{DirectDifusion}). Por fim, os protocolos hierárquicos, cuja concepção é baseada na
+construção de grupos de nós, normalmente definidos como \textit{clusters}(ex:
+LEACH\cite{leachprotocol}), que funcionam no principio de agregação de dados do grupo e
+transferência para nós base.\\
+
+Para além destas classificações podemos ainda considerar algoritmos
+quanto ao momento em que estes computam a informação relativa ao caminho entre a origem e o destino
+\cite{al-karaki_routing_2004}. Pode-se considerar os
+protocolos \textit{table-driven} ou \textit{on-demand}.  Os primeiros referem-se a protocolos em que
+durante o funcionamento são trocadas mensagens por forma a manter-se as tabelas de encaminhamento
+actualizadas em todos os nós da rede. No entanto, esta troca de mensagens pode ser prejudicial para
+as RSSF pois implica um maior uso da comunicação, logo maior dispêndio de energia, apesar disto, se
+a rede for estática e as alterações não forem frequentes,  pode ser menos penalizador. No caso dos
+protocolos considerados
+\textit{on-demand}, ou seja, a pedido, como o próprio nome indica, as rotas são estabelecidas quando
+é necessário desempenhar a função de encaminhamento de mensagens. Apesar de representar alguma
+sobrecarga no algoritmo, pode ser compensador em redes mais móveis e com eventos espaçados. Estas
+são algumas das características consideradas no desenho de algoritmos de encaminhamento em
+RSSF. No entanto, se se tratar de utilização em ambientes criticos é necessário que se
+considere as propriedades de segurança. Alguns destes protocolos não foram concebidos
+inicialmente com estas propriedades como preocupação.\\
+
+Muitos dos protocolos de encaminhamento para RSSF não foram desde logo concebidos tendo em conta
+o factor de segurança\cite{Karlof2003}, antes, pretendiam adaptar-se ao ambiente das aplicações e às
+características e capacidades das RSSF. As restrições impostas pelos sensores nomeadamente em termos
+de energia e alcance das comunicações sempre centraram a atenção no desenho de protocolos para estas
+redes. No entanto, quando se pretende estender a sua utilização para outros domínios, cuja segurança
+se apresenta como um atributo indispensável, estas preocupações ainda se agudizam mais, uma vez que
+os mecanismos de segurança implicam directamente um aumento da computação, tendo repercussões na
+autonomia, já de si limitada, dos sensores. Nesta secção apresentam-se alguns protocolos de
+encaminhamento seguro em RSSF, que se pretende que cubram todo o espectro  da temática deste
+trabalho e que apresentem no seu todo os mecanismos de segurança que se pretende estudar, ainda que
+cada um per si possa apresentar lacunas quando sujeitos a determinados ataques característicos das
+RSSF.
 
 \subsection{\textit{Secure Implicit Geographic Forwarding }(SIGF)}
-
-\subsection{\textit{Secure Sensor Network Routing: Clean-Slate}}
-
+Conhecida a inexistência de mecanismos de segurança em alguns dos algoritmos de encaminhamento de
+RSSF, uma das possibilidades vislumbradas por determinados autores foi a realização de melhoramentos
+em algoritmos existentes implementando mecanismos de segurança, um destes casos foi o algoritmo de
+encaminhamento \textit{Implicit Geographic Forwording} (IGF)\cite{IGF}, baseado na
+localização (cada nó conhece as suas coordenadas de localização no ambiente). Este algoritmo não
+mantém o estado ao longo do seu funcionamento, este facto faz com que funcione sem que seja
+necessário conhecimento do topologia da rede ou a presença de outros nós, logo, poderemos também
+classifica-lo também como um protocolo \textit{on-demand}. O protocolo IGF, devido ao seu carácter
+não determinístico de encaminhamento, pois é decidido no momento da transmissão o próximo vizinho
+para quem encaminhar a mensagem, já representa uma mais valia para a segurança perante determinados
+ataques, mas, não é de forma alguma suficiente para manter uma aplicação, com requisitos de
+segurança, a executar em ambientes críticos.
+\begin{description}
+ \item[Funcionamento do protocolo IGF]
+Ao instalar uma aplicação, baseada no protocolo IGF, sobre uma infrastrutura de um RSSF o
+ambiente estará definido por coordenadas que permitam a cada nó saber exactamente a sua localização
+em cada momento. Ao agregar componentes de encaminhamento e MAC\footnote{\textit{Medium Access
+Control}}  num único protocolo \textit{Network/MAC} é
+possível\cite{IGF}, no momento de envio do pacote, determinar qual o melhor próximo vizinho
+(definido no protocolo como candidato). O protocolo inicia com a origem a enviar uma mensagem do
+tipo \textit{Open Request To Send} (ORTS) para a vizinhança (esta mensagem contém a localização e o
+destino). Cada nó que se encontre no sextante válido (correspondente a um ângulo de 60º centrado na
+origem), determinado por cada nó com base na sua localização, inicia um temporizador de CTS
+(\textit{Clear To Send}) inversamente proporcional com determinados parâmetros (distância à origem,
+energia existente, e distância perpendicular ao destino), favorecendo os nós com melhores condições
+a responderem com CTS. Ao expirar o temporizador, é respondida uma mensagem de CTS, sendo emitida
+uma mensagem do tipo DATA apartir da origem, após a recepção do CTS. Como este protocolo não mantém
+estado, resiste a mudanças de topologia da rede, o facto de escolher em cada envio o nó seguinte
+constitui um mecanismo de tolerância a falhas e  mesmo em caso de ataque os danos ficam confinados à
+vizinhança de cada nó comprometido.
+\item[Especificação do protocolo SIGF]
+Com a introdução de mecanismos de segurança é natural a introdução de sobrecarga num protocolo,
+principalmente quando se trata da extensão de um já existente. No entanto, o
+protocolo SIGF\cite{SIGF2006} não pretende manter um bom desempenho e uma elevada taxa de sucessi de
+entrega das mensagens mesmo durante um ataque. Uma das novidades deste protocolo é o facto de ser
+configurável e como tal se adaptar os mecanismos de segurança ao grau de ameaça. O protocolo tem
+três extensões ao protocolo IGF que permitem evoluir gradualmente de um protocolo sem estado para um
+protocolo, tradicional, com manutenção de estado, e com isto mais pesado e exigente em recursos.
+Considerando a primeira extensão e portanto a mais simples e menos exigente em recursos, o SIGF-0
+continua a não manter o estado e a ter um caracter não deterministico no entanto não sucumbe a
+ataques do tipo \textit{rushing}\cite{Rushing_attacks_perrig} por não emitir logo para o primeiro
+CTS mas sim manter um conjunto de possíveis candidatos
+para o próximo nó. A extensão intermédia, SIGF-1 já mantém estado, mas ao nível local, podendo com
+isto constituir listas de reputação dos seus vizinhos por forma a escolher melhor o próximo nó. Por
+fim, e tratando-se já de um protocolo mais robusto, mas mais exigente,  o SIGF-2 partilha o estado
+com os seus vizinhos permitindo  usar mecanismos criptográficos,  fornecendo propriedades de
+integridade, autenticidade, confidencialidade e frescura. Este ultimo protocolo, ainda assim, herda
+as propriedades de configuração de cada um dos seus protocolos antecessores SIGF-0 e SIGF-1.
+\item[Mecanismos de Segurança  e Resistência a ataques]
+ \end{description}
 \subsection{\textit{ INtrusion-tolerant routing protocol for wireless
 SEnsor NetworkS }(INSENS)}
+
+\subsection{\textit{Secure Sensor Network Routing: Clean-Slate approach}}
+
 
 \subsection{Discussão}

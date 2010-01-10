@@ -370,7 +370,7 @@ grau de \@degree\ em \@majorfield.}
     \if\@showcoadviser1{\quotefont\@coadvisertitle:}&\@coadviser\\\fi
     \end{tabular}
     \end{center}
-    \vskip 1.0cm
+    \vskip 0.5cm
     \quotefonti %
     \@presentationtext
     \end{minipage}

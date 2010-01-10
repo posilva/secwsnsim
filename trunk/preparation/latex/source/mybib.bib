@@ -850,3 +850,138 @@ communications security},
 networks},
     pages = {41--47}
 }
+
+@article{igf_protocol,
+    title = {{IGF:} A {State-Free} Robust Communication Protocol for Wireless  Sensor Networks},
+    shorttitle = {{IGF}},
+    url = {http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.12.8336},
+    abstract = {Wireless Sensor Networks {(WSNs)} are being designed to solve a gamut of interesting
+real-world problems. Limitations on available energy and bandwidth, message loss, high rates of node
+failure, and communication restrictions pose challenging requirements for these systems. Beyond
+these inherent limitations, both the possibility of node mobility and energy conserving protocols
+that power down nodes introduce additional complexity to routing protocols that depend on up to date
+routing or neighborhood tables. Such state-based protocols suffer excessive delay or message loss,
+as system dynamics require expensive upkeep of these tables. Utilizing characteristics of high node
+density and location awareness, we introduce {IGF,} a location-aware routing protocol that is robust
+and works without knowledge of the existence of neighboring nodes (state-free). We compare our work
+against established routing protocols to demonstrate the efficacy of our solution when nodes are
+mobile or periodically sleep to conserve energy. We show that {IGF} far outperforms these protocols,
+in some cases delivering close to 100\% of the packets transmitted while alternate solutions fail to
+even find a path between a source and destination. Specifically, we show that our protocol
+demonstrates a vast improvement over prior work using metrics of delivery ratio, control overhead,
+and end-to-end delay.},
+    author = {M. Blum and Tian He and Sang Son and John A Stankovic}
+}
+@article{DirectDifusion,
+ author = {Intanagonwiwat, Chalermek and Govindan, Ramesh and Estrin, Deborah and Heidemann, John
+and Silva, Fabio},
+ title = {Directed diffusion for wireless sensor networking},
+ journal = {IEEE/ACM Trans. Netw.},
+ volume = {11},
+ number = {1},
+ year = {2003},
+ issn = {1063-6692},
+ pages = {2--16},
+ doi = {http://dx.doi.org/10.1109/TNET.2002.808417},
+ publisher = {IEEE Press},
+ address = {Piscataway, NJ, USA},
+ }
+@Article{leachprotocol,
+  Author         = {Wendi Rabiner Heinzelman and Anantha Chandrakasan and
+                   Hari Balakrishnan},
+  Title          = {Energy-Efficient Communication Protocol for Wireless
+                   Microsensor Networks},
+  Journal        = {Hawaii International Conference on System Sciences},
+  Volume         = {8},
+  Pages          = {8020},
+  address        = {Los Alamitos, CA, USA},
+  doi            = {http://doi.ieeecomputersociety.org/10.1109/HICSS.2000.926982},
+  issn           = {1530-1605},
+  publisher      = {IEEE Computer Society},
+  year           = 2000
+}
+@article{al-karaki_routing_2004,
+    title = {Routing techniques in wireless sensor networks: a survey},
+    volume = {11},
+    issn = {1536-1284},
+    shorttitle = {Routing techniques in wireless sensor networks},
+    abstract = {Wireless sensor networks consist of small nodes with sensing, computation, and
+wireless communications capabilities. Many routing, power management, and data dissemination
+protocols have been specifically designed for {WSNs} where energy awareness is an essential design
+issue. Routing protocols in {WSNs} might differ depending on the application and network
+architecture. In this article we present a survey of state-of-the-art routing techniques in {WSNs.}
+We first outline the design challenges for routing protocols in {WSNs} followed by a comprehensive
+survey of routing techniques. Overall, the routing techniques are classified into three categories
+based on the underlying network structure: flit, hierarchical, and location-based routing.
+Furthermore, these protocols can be classified into multipath-based, query-based, negotiation-based,
+{QoS-based,} and coherent-based depending on the protocol operation. We study the design trade-offs
+between energy and communication overhead savings in every routing paradigm. We also highlight the
+advantages and performance issues of each routing technique. The article concludes with possible
+future research areas.},
+    number = {6},
+    journal = {Wireless Communications, {IEEE}},
+    author = {{J.N.} {Al-Karaki} and {A.E.} Kamal},
+    year = {2004},
+    keywords = {coherent-based protocol, flit routing, hierarchical routing, location-based routing,
+multipath-based protocol, negotiation-based protocol, network structure, {QoS-based} protocol,
+quality of service, query-based protocol, routing protocol, routing protocols, routing technique,
+wireless sensor network, Wireless Sensor Networks},
+    pages = {6--28}
+}
+
+@inproceedings{SIGF2006,
+    address = {Alexandria, Virginia, {USA}},
+    title = {{SIGF:} a family of configurable, secure routing protocols for wireless sensor
+networks},
+    isbn = {1-59593-554-1},
+    shorttitle = {{SIGF}},
+    url =
+{http://portal.acm.org/citation.cfm?id=1180345.1180351&coll=GUIDE&dl=GUIDE&CFID=69525973&CFTOKEN=452
+33743},
+    doi = {10.1145/1180345.1180351},
+    abstract = {As sensor networks are deployed in adversarial environments and used for critical
+applications such as battlefield surveillance and medical monitoring, security weaknesses become a
+big concern. The severe resource constraints of {WSNs} give rise to the need for resource bound
+security {solutions.In} this paper we present {SIGF} {(Secure} Implicit Geographic Forwarding), a
+configurable secure routing protocol family for wireless sensor networks that provides "good enough"
+security and high performance. By avoiding or limiting shared state, the protocols prevent many
+common attacks against routing, and contain others to the local {neighborhood.SIGF} makes explicit
+the tradeoff between security provided and state which must be stored and maintained. It comprises
+three protocols, each forming a basis for the next: {SIGF-0} keeps no state, but provides
+probabilistic defenses; {SIGF-1} uses local history and reputation to protect against certain
+attacks; and {SIGF-2} uses neighborhood-shared state to provide stronger security {guarantees.Our}
+performance evaluation shows that {SIGF} achieves high packet delivery ratios with low overhead and
+end-to-end delay. We evaluate the security of {SIGF} protocols under various security attacks and
+show that it effectively contains the damage from compromised nodes and defends against black hole,
+selective forwarding, Sybil, and some denial of service attacks.},
+    booktitle = {Proceedings of the fourth {ACM} workshop on Security of ad hoc and sensor
+networks},
+    publisher = {{ACM}},
+    author = {Anthony D. Wood and Lei Fang and John A. Stankovic and Tian He},
+    year = {2006},
+    keywords = {secure routing, wireless sensor network},
+    pages = {35--48}
+}
+@inproceedings{Rushing_attacks_perrig,
+ author = {Hu, Yih-Chun and Perrig, Adrian and Johnson, David B.},
+ title = {Rushing attacks and defense in wireless ad hoc network routing protocols},
+ booktitle = {WiSe '03: Proceedings of the 2nd ACM workshop on Wireless security},
+ year = {2003},
+ isbn = {1-58113-769-9},
+ pages = {30--40},
+ location = {San Diego, CA, USA},
+ doi = {http://doi.acm.org/10.1145/941311.941317},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ }
+@TechReport{RFC-AODV,
+  Author         = {Perkins, C. and Royer, E. and Das, S.},
+  Title          = {RFC 3561 Ad hoc On-Demand Distance Vector (AODV)
+                   Routing},
+  citeulike-article-id = {1840161},
+  citeulike-linkout-0 = {http://tools.ietf.org/html/rfc3561},
+  posted-at      = {2007-10-30 12:25:24},
+  priority       = {0},
+  url            = {http://tools.ietf.org/html/rfc3561},
+  year           = 2003
+}
