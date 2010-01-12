@@ -8,7 +8,7 @@ introduzidos novos protocolos de encaminhamento, novas aplicações, novos
 algoritmos e tecnologias de segurança. Como se trata de redes com tempo de vida
 limitado, devido ao fornecimento de energia ser limitado, o uso real de
 sensores apresenta-se como uma forma pouco eficiente para o desenvolvimento de
-novas tecnologias ou melhoramento das existentes.\\
+novas tecnologias ou melhoramento das existentes.
 
 Os ambientes de simulação de redes de sensores surgem como uma necessidade
 inevitável, para o rápido teste e desenvolvimento das redes de sensores e
@@ -20,19 +20,18 @@ restantes redes, nomeadamente o modelo de comunicação, que tem avançado para a
 norma 802.15.4\cite{802_15_4}, bem como a necessidade de monitorizar eficiência
 energética de cada tecnologia. Outra propriedade importante destes ambientes é a
 capacidade de rápidamente repetir experiências com determinadas variáveis
-configuraveis em cada ambiente (ex. nº de nós, modelo de rádio)\\
+configuraveis em cada ambiente (ex. nº de nós, modelo de rádio)
 
 O que se pretende nesta secção é a apresentar diversos ambientes de
 simulação, mais comuns, e que suportem simular sistema de RSSF (em especial
 TinyOS). Correspondem a critérios de selecção especificos e enumerados
 seguidamente, com vista à avaliação de um ambiente que se mostre adequado para a
-utilização no trabalho de dissertação.\\
-
+utilização no trabalho de dissertação.
 
 \subsection{Critérios de Selecção}
 O número de ferramentas de simulação para RSF, tem vindo a aumentar, no entanto
 pretende-se analisar ferramentas que possuam as seguintes propriedades: 
-\begin{description}
+\begin{description}\addtolength{\itemsep}{-.50\baselineskip}
  \item[Portabilidade da Linguagem] Devido às caracteristicas da linguagem de
 programação Java\cite{JAVA_SUN}, inerente ao seu ambiente de execução e à
 consequente portabilidade para diversas plataformas e a programação
@@ -66,7 +65,7 @@ deterministica de comunicação entre motes). Permite a simulação com diversos
 nós podendo chegar aos 5000 ( ainda que o número possa ser maior, por razões de
 performance é o valor máximo aconselhado) usando diversas
 topologias(dinâmicas) nas quais se podem implementar os mais diversos
-algoritmos. \\
+algoritmos. 
 
 O JProwler modela os aspectos mais importantes de todos os níveis do modelo de
 comunicação e de aplicação. A natureza não-deterministica da propagação rádio
@@ -124,7 +123,7 @@ pacotes,modelos de mobilidade e energia). Uma das vantagens é a existência de
 classes abstractas para reimplementação de novos modelos de cada um dos
 componentes faciltando a programação de novos protocolos ou
 novas funcionalidades. A comunicação entre componentes é feita por intermédio
-de eventos, ou seja não existe acesso de um componente a outro. \\
+de eventos, ou seja não existe acesso de um componente a outro.
 Deve-se destacar o interface gráfico, que permite operar todas funcionalidades
 da ferramenta sem a necessidade de editar directamente os ficheiros de XML.
 Para além disso é ainda possível visualizar e extrair dados gráficos das
