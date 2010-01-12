@@ -56,7 +56,7 @@ não determinístico de encaminhamento, pois é decidido no momento da transmissão 
 para quem encaminhar a mensagem, já representa uma mais valia para a segurança perante determinados
 ataques, mas, não é de forma alguma suficiente para manter uma aplicação, com requisitos de
 segurança, a executar em ambientes críticos.
-\begin{description}
+\begin{description}\addtolength{\itemsep}{-.50\baselineskip}
  \item[Funcionamento do protocolo IGF]
 Ao instalar uma aplicação, baseada no protocolo IGF, sobre uma infrastrutura de um RSSF o
 ambiente estará definido por coordenadas que permitam a cada nó saber exactamente a sua localização
@@ -97,6 +97,30 @@ as propriedades de configuração de cada um dos seus protocolos antecessores SIGF
  \end{description}
 \subsection{\textit{ INtrusion-tolerant routing protocol for wireless
 SEnsor NetworkS }(INSENS)}
+Este protocolo \cite{INSENS} foi concebido com o objectivo de ser aplicado em RSSF tolerantes a
+intrusões. Para cumprir com este objectivo, foram identificados dois tipos de ataques: ataques de
+negação de serviço que inundam a rede de pacotes e ataques ao encaminhamento, originados por
+introdução de informação falsa de encaminhamento. O protocolo assenta na existência de uma estação
+base que partilha chaves assimétricas com cada um dos nós da rede. Este mecanismo permite que em
+caso de um atacante comprometer um nó da rede não terá acesso a mais chaves seguras da rede,
+permitindo isolar, de alguma forma o ataque.
+\begin{description}\addtolength{\itemsep}{-.50\baselineskip}
+ \item[Funcionamento do protocolo]
+A implementação de redundância no encaminhamento permite que a rede sobreviva a atacantes não
+detectados. Desta forma, a introdução de multiplos caminhos independentes entre origem e destino
+faz com que, ainda que existam atacantes na rede, caso exista pelo menos um destes caminhos sem
+atacantes as mensagens cheguem ao destino sem estarem comprometidas.
+
+O papel fundamental do protocolo, em termos de encaminhamento seguro, é desempenhado pela estação
+base. Uma das vantagens apontadas pelos autores é a redução das computações nos nós da
+rede(ex: geração de chaves, tabelas de encaminhamento), cuja limitações de energia e processamento
+são as conhecidas. Assim, a formação das tabelas de encaminhamento estão divididas em três fases:
+pedido de rotas (\textit{route request}), recolha de dados de encaminhamento e propagação de rotas.
+ A primeira fase, corresponde ao envio por parte da estação base de uma mensagen destinada a todos
+os nós da rede por forma a obter dados sobre as vizinhanças. Cada nó então, numa segunda fase,
+responde com a sua vizinhança  para estação base. Por fim, esta informação é tratada por forma a
+elaborar as tabelas de encaminhamento, sendo depois propagadas para cada nó.
+\end{description}
 
 \subsection{\textit{Secure Sensor Network Routing: Clean-Slate approach}}
 
