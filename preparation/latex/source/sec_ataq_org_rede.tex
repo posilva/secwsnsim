@@ -5,7 +5,7 @@ que estes desencadeiam a criação de tabelas de encaminhamento que se deverão
 manter actualizadas durante a execução da rede. No entanto em protocolos do tipo
 \textit{on-demand}\cite{al-karaki_routing_2004} também se verifica a existência desta fase mas
 repete-se em cada início de comunicação ou de transmissão.
-\begin{description}
+\begin{description}\addtolength{\itemsep}{-.50\baselineskip}
  \item[Falsificação de Informação de Encaminhamento]
 Um ataque do tipo de introdução de informação de encaminhamento
 falsa, acaba por ter impacto na construção da rede e na descoberta dos nós. Permite criar entradas
@@ -22,14 +22,22 @@ Esta operação é desencadeada quando um protocolo aceita a primeira resposta que
 recebe (exemplo do AODV\cite{RFC-AODV}), calculando isto o atacante é sempre um
 candidato a ser o próximo encaminhador, uma vez que não respeita temporizadores
 nem condições de resposta.
-
 \item[\textit{Route Request (RREQ) Flooding Attacks}]
 Por fim, pode-se ainda tipificar ataques encetados por \textit{flooding} de mensagens do tipo
 route-request (RREQ), usadas para iniciar a descoberta de caminhos. Permite ao atacante
 explorar as limitações energéticas da rede, levando os nós legítimos a responder 
-continuamente e fazer as operações inerentes à descoberta de um
-caminho.
+continuamente e fazer as operações inerentes à descoberta de um caminho.
  \end{description}
 \subsubsection{Contra-medidas}
-No que se refere à informação falsa de encaminhamento a autenticação é o meio mais usado, uma vez
-que desta forma se poderá certificar se a informação tem uma fonte legitima. 
+A aplicação de mecanismos de autenticação no protocolo de encaminhamento faz com que ataques de
+falsificação de informação e inundação de mensagens RREQ  seja minimizados. Os nós da rede podem
+partilhar chaves assimétricas como forma de autenticar as mensagens de dados e controlo de
+encaminhamento (RREQ e RREP), desta forma o atacante como não possui a chaves necessárias para a
+comunicação não poderá participar.
+Para fazer face a ataques de \textit{rushing} alguns autores \cite{Rushing_attacks_perrig}
+apresentam dois mecanismos de defesa: reenvio aleatório de RREQ ()\textit{randomized RREQ
+forwarding}) e detecção segura (\textit{secure detection}). No primeiro mecanismo, cada nó guarda um
+conjunto de mensagens  RREQ escolhendo depois aleatóriamente um para reenviar. Ainda assim, uma
+mensagem RREQ maliciosa pode ser seleccionada, daí existir o segundo mecanismo, que proporciona a
+troca de mensagens autenticadas entre dois nós garantindo que as mensagens pertencem a nós
+legitimos.  
