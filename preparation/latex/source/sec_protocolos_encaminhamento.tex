@@ -7,7 +7,7 @@ das redes \textit{ad-hoc}.
 \subsection{Caracterização dos protocolos de encaminhamento em RSSF}
 Podem-se estabelecer três classes  de protocolos\cite{Akkaya2005}: os baseados na localização,
 os centrados nos dados e os hierárquicos. Os protocolos baseados na localização usam esta informação
-para tomarem as melhores decisões para alcançar os destinos(ex: IGF\cite{igf_protocol}).Os centrados
+para tomarem as melhores decisões para alcançar os destinos(ex: IGF\cite{IGF}).Os centrados
 nos dados, ou seja, os que exploram a redundância e a semântica dos dados, normalmente são baseados
 em algoritmos que efectuam pesquisas lançadas a partir de nós de sincronização(ex: Directed
 Diffusion\cite{DirectDifusion}). Por fim, os protocolos hierárquicos, cuja concepção é baseada na
@@ -74,13 +74,14 @@ origem, após a recepção do CTS. Como este protocolo não mantém estado, resiste a
 topologia da rede, o facto de escolher em cada envio o nó seguinte constitui um mecanismo de
 tolerância a falhas e  mesmo em caso de ataque os danos ficam confinados à vizinhança de cada nó
 comprometido.
-\item[Especificação do protocolo SIGF]
+\item[Especificação do protocolo SIGF\cite{SIGF}]
 Com a introdução de mecanismos de segurança é natural a introdução de sobrecarga num protocolo,
 principalmente quando se trata da extensão de um já existente. No entanto, o
-protocolo SIGF\cite{SIGF2006} não pretende manter um bom desempenho e uma elevada taxa de sucessi de
+protocolo SIGF\cite{SIGF} não pretende manter um bom desempenho e uma elevada taxa de sucessi de
 entrega das mensagens mesmo durante um ataque. Uma das novidades deste protocolo é o facto de ser
 configurável e como tal se adaptar os mecanismos de segurança ao grau de ameaça. O protocolo tem
-três extensões ao protocolo IGF que permitem evoluir gradualmente de um protocolo sem estado para um
+três extensões ao protocolo IGF\cite{IGF}que permitem evoluir gradualmente de um protocolo sem
+estado para um
 protocolo, tradicional, com manutenção de estado, e com isto mais pesado e exigente em recursos.
 
 Considerando a primeira extensão e portanto a mais simples e menos exigente em recursos, o SIGF-0
@@ -123,6 +124,7 @@ elaborar as tabelas de encaminhamento, sendo depois propagadas para cada nó.
 \end{description}
 
 \subsection{\textit{Secure Sensor Network Routing: Clean-Slate approach}}
+\cite{clean_slate}
 
 
 \subsection{Discussão}
