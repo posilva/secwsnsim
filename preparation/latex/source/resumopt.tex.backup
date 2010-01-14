@@ -1,51 +1,37 @@
 \resumo
-
 As redes de sensores são uma tecnologia emergente no domínio da monitorização
-de forma autónoma de ambientes fisicos. São formadas por pequenos dispositivos
-que se auto-organizam por modo a cobrirem uma área geográfica. Esta autonomia e
-auto-organização põe alguns desafios relacionados com os aspectos de segurança
-nomeadamente no que concerne com o encaminhamento de dados. Assim, o trabalho a
-realizar, no âmbito da dissertação de mestrado, cuja preparação se apresenta com
-este relatório, pretende contribuir para a criação de um modelo sistémico para o
-estudo de protocolos de encaminhamento seguro em redes de sensores sem fios
-(RSSF). \\
-A definição do modelo de adversário é o passo inicial para o
-enquadramento das tipologias de ataque que se pretende avaliar. Aliado ao modelo
-formal de Dolev-Yao, orientado para os ataques ao meio de comunicação, o estudo
-de novos modelos de adversário, relacionados com a intrusão ou captura de nós,
-quer sejam bizantinos ou probabilisticos são discutidos e apresentados dentro do
-âmbito deste trabalho.\\
-Como forma de complementar a contribuição deste trabalho, pretende-se
-modelar um ambiente de simulação que permita avaliar, no quadro de ataques
-definido, as caracteristicas dos protocolos de encaminhamento em RSSF em
-máteria de segurança e resistência a ataques. 
+, de forma autónoma, de ambientes fisicos. São formadas por pequenos
+dispositivos que se auto-organizam por modo a cobrirem uma área geográfica. Esta
+autonomia e auto-organização apresenta alguns desafios relacionados com os
+aspectos de segurança, nomeadamente, no que concerne com o encaminhamento de
+dados. Assim, o trabalho a realizar pretende contribuir para a criação
+de um modelo sistémico para o estudo de protocolos de encaminhamento seguro em
+redes de sensores sem fios (RSSF). A definição do modelo de adversário é o passo
+inicial para o enquadramento das tipologias de ataque que se pretende avaliar.
+Aliado ao modelo formal de Dolev-Yao, orientado para os ataques ao meio de
+comunicação, o estudo de novos modelos de adversário, relacionados com a
+intrusão e captura de nós é pertinente e apresentado dentro do âmbito deste trabalho.
 
-Com vista a tornar as RSSF resistentes às
-tipologias de ataques preconizadas no modelo de adversário, têm vindo a ser
-desenvolvidos diversos algoritmos de encaminhamento seguro. Pretende-se estudar
-alguns destes algoritmos, representantes do estado da arte neste domínio,
-estabelecendo uma matriz de medidas de resistência ao modelo de adversário. Os
-algoritmos alvo deste estudo são o SIGF, Clean-slate e INSENS, entendendo que no
-seu todo cobrem todas tipologias de ataque em análise, no entanto cada um tem
-lacunas no seu desenho quando direccionados alguns destes ataques.\\
+Com vista a tornar as RSSF resistentes a algumas tipologias de ataques
+preconizadas no modelo de adversário, têm vindo a ser desenvolvidos diversos
+algoritmos de encaminhamento seguros. Pretende-se estudar alguns destes
+algoritmos, representantes do estado da arte neste domínio, estabelecendo uma
+matriz de medidas de resistência ao modelo de adversário, que permita então avaliar a efectividade
+destes .
 
-Não se pretende que o resultado deste estudo fique apenas pela concepção
-teórica, mas antes, comporte uma vertente prática em que a recolha de resultados
-permita contribuir para a determinação de um metodologia de estudo de algoritmos
-de encaminhamento seguro. Neste domínio, é necessário recorrer a ambientes de
-simulação de RSSF. Como contributo, proceder-se-à à avaliação de algumas
-implementações destes ambientes, determinando o que melhor se adeque ao
-estabelecimento de uma metodologia sistémica para o estudo destes algoritmos.
-Procedendo-se a um processo de reengenharia num dos ambientes de simulação por
-forma a estabelecer os interfaces necessários que visem facilitar o seu uso e a
-obtenção de resultados tendo por base o modelo de adversário estabelecido neste
-trabalho.
+Com contributo principal deste trabalho destaca-se a concepção de um ambiente de simulação
+inovador, uma vez que se pretende implementar funcionalidades não encontradas nos sistemas de
+simulação existentes para as RSSF. Este sistema proporcionará a possibilidade de desenhar e avaliar
+algoritmos de encaminhamento, concebidos para serem seguros, quando sujeito a ataques definidos no
+modelo de adversário. Este avaliação estará centrada fundamentalmente na análise propriedades como o
+consumo de energia, fiabilidade, latência, correcção dos dados e correcção do comportamento do
+potocolo.
 % Palavras-chave do resumo em Português
 \begin{keywords}
 Redes de sensores sem fios,Protocolos de encaminhamento seguros,Simulação
 de redes de sensores, Ataque por intrusão
 \end{keywords}
 % to add an extra black line
-~\\ ~\\  \rule{\textwidth}{0.2mm}
+~\\ ~\\\rule{\textwidth}{0.2mm}
 
 
