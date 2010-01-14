@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1 beta2
-lastDocument=source/sec_ataq_estabelecimento_rotas.tex
+lastDocument=source/capitulo1.tex
 masterDocument=
 name=Thesis.Preparation
 pkg_extIsRegExp=false
@@ -18,12 +18,12 @@ QuickBuild=
 
 [item:source/Thesis.Preparation.PedroMarquesdaSilva.tex]
 archive=true
-column=0
+column=1
 encoding=ISO-8859-1
 highlight=LaTeX
-line=118
-open=false
-order=0
+line=102
+open=true
+order=11
 
 [item:source/ataques_wsn.tex]
 archive=true
@@ -36,10 +36,10 @@ order=1
 
 [item:source/capitulo1.tex]
 archive=true
-column=70
+column=26
 encoding=ISO-8859-1
 highlight=LaTeX
-line=15
+line=46
 open=true
 order=1
 
@@ -108,19 +108,19 @@ order=13
 
 [item:source/resumopt.tex]
 archive=true
-column=48
+column=20
 encoding=ISO-8859-1
 highlight=LaTeX
-line=15
-open=false
-order=3
+line=6
+open=true
+order=10
 
 [item:source/sec_about_wsn.tex]
 archive=true
-column=43
+column=0
 encoding=ISO-8859-1
 highlight=LaTeX
-line=32
+line=38
 open=true
 order=2
 
