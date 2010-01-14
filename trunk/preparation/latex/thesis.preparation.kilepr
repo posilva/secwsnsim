@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1 beta2
-lastDocument=source/capitulo1.tex
+lastDocument=source/mybib.bib
 masterDocument=
 name=Thesis.Preparation
 pkg_extIsRegExp=false
@@ -18,12 +18,12 @@ QuickBuild=
 
 [item:source/Thesis.Preparation.PedroMarquesdaSilva.tex]
 archive=true
-column=1
+column=15
 encoding=ISO-8859-1
 highlight=LaTeX
-line=102
-open=true
-order=11
+line=84
+open=false
+order=2
 
 [item:source/ataques_wsn.tex]
 archive=true
@@ -36,10 +36,10 @@ order=1
 
 [item:source/capitulo1.tex]
 archive=true
-column=26
+column=95
 encoding=ISO-8859-1
 highlight=LaTeX
-line=46
+line=162
 open=true
 order=1
 
@@ -81,21 +81,30 @@ order=-1
 
 [item:source/mybib.bib]
 archive=true
-column=16
+column=15
 encoding=ISO-8859-1
 highlight=BibTeX
-line=976
+line=1257
 open=true
-order=8
+order=2
 
 [item:source/pic_sensornode.tex]
 archive=true
-column=24
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=3
+line=0
 open=false
 order=10
+
+[item:source/pic_stack.tex]
+archive=true
+column=12
+encoding=ISO-8859-1
+highlight=LaTeX
+line=6
+open=false
+order=-1
 
 [item:source/resumoen.tex]
 archive=true
@@ -112,7 +121,7 @@ column=20
 encoding=ISO-8859-1
 highlight=LaTeX
 line=6
-open=true
+open=false
 order=10
 
 [item:source/sec_about_wsn.tex]
@@ -121,7 +130,7 @@ column=0
 encoding=ISO-8859-1
 highlight=LaTeX
 line=38
-open=true
+open=false
 order=2
 
 [item:source/sec_ambientes_de_simulacao.tex]
@@ -130,7 +139,7 @@ column=17
 encoding=ISO-8859-1
 highlight=LaTeX
 line=166
-open=true
+open=false
 order=6
 
 [item:source/sec_arq_security_wsn.tex]
@@ -162,10 +171,10 @@ order=-1
 
 [item:source/sec_ataq_estabelecimento_rotas.tex]
 archive=true
-column=6
+column=61
 encoding=ISO-8859-1
 highlight=LaTeX
-line=67
+line=36
 open=true
 order=4
 
@@ -175,7 +184,7 @@ column=42
 encoding=ISO-8859-1
 highlight=LaTeX
 line=12
-open=true
+open=false
 order=5
 
 [item:source/sec_ataq_org_rede.tex]
@@ -193,7 +202,7 @@ column=45
 encoding=ISO-8859-1
 highlight=LaTeX
 line=0
-open=true
+open=false
 order=7
 
 [item:source/sec_dicussao_resumo.tex]
@@ -220,7 +229,7 @@ column=43
 encoding=ISO-8859-1
 highlight=LaTeX
 line=35
-open=true
+open=false
 order=9
 
 [item:source/sec_modadversario_ataques_contramedidas.tex]
@@ -243,12 +252,12 @@ order=7
 
 [item:source/sec_protocolos_encaminhamento.tex]
 archive=true
-column=8
+column=17
 encoding=ISO-8859-1
 highlight=LaTeX
-line=0
-open=false
-order=12
+line=126
+open=true
+order=5
 
 [item:source/sec_secure_wsn_design.tex]
 archive=true
