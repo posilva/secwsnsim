@@ -86,13 +86,15 @@ segurança  disponibilizados são: autenticação de dados (com a utilização de
 \textit{Message Authentication Codes}(MAC), no caso CBC-MAC\footnote{Cipher
 Block Chaining - Message Authentication Code (CBC-MAC))}) e confidencialidade 
 (a encriptação é implementada com o recursotambém ao CBC-MAC).
- Para se adaptar às RSSF o MAC tem um comprimeito de 4 bytes ao contrário dos 8 ou 16 habituais.
- Uma vez que neste mecanismo as propriedades de segurança estão determinadas pelo comprimento do MAC
-os autores afirmam que para uma RSSF é suficiente uma vez que um atacante teria de efectuar $2^{31}$
-tentativas, que demorariam cerca de 20 meses a realizar com um canal de 19.5Kbs.
-Note-se que a frescura das mensagens não foi endereçado nesta arquitectura uma
-vez que os autores consideram como demasiado exigente em termos de recursos o
-que contrariaria o objectivo inicial da arquitectura.
+ %Para se adaptar às RSSF o MAC tem um comprimeito de 4 bytes ao contrário dos 8 ou 16 habituais.
+% Uma vez que neste mecanismo as propriedades de segurança estão determinadas pelo comprimento do
+%MAC
+%os autores afirmam que para uma RSSF é suficiente uma vez que um atacante teria de efectuar
+%$2^{31}$
+%tentativas, que demorariam cerca de 20 meses a realizar com um canal de 19.5Kbs.
+Note-se que a frescura das mensagens não foi endereçada nesta arquitectura, uma
+vez que os autores consideram como demasiado exigente em termos de recursos, o
+que contrariaria o objectivo principal da arquitectura.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  \item[MiniSec\cite{Luk2007d}]
 Minisec é uma camada de rede concebida para possuir o melhor dos dois mundos: baixo consumo de
@@ -115,17 +117,41 @@ segundo componente,o ${\mu}$TESLA,  é um serviço de autenticação de
 criptografia assimétrica, recorrendo a critografia simétrica, autenticando as
 mensagens com um MAC,
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\item[Sistemas de distríbuição de chaves\cite{eschenauer_key-management_2002}]
-Confidencialidade e autenticação são aspectos críticos das redes de sensores
-com o objectivo de prevenir que um adversário compromenta a segurança de um
-sistema. Devido à natureza \textit{ad-hoc} das redes, a comunicação
-intermitente e os recursos limitados, os mecanismos de
-gestão de chaves e autenticação de grupo tornam-se dificil de alcançar.
-Alguns esquemas para distribuição e gestão de chaves tem vindo a ser
-desenvovidos pela investigação com vista a compreender as especificidades das
-RSSF.
-
+%\item[Sistemas de distríbuição de chaves\cite{eschenauer_key-management_2002}]
+%Confidencialidade e autenticação são aspectos críticos das redes de sensores
+%com o objectivo de prevenir que um adversário compromenta a segurança de um
+%sistema. Devido à natureza \textit{ad-hoc} das redes, a comunicação
+%intermitente e os recursos limitados, os mecanismos de
+%gestão de chaves e autenticação de grupo tornam-se dificil de alcançar.
+%Alguns esquemas para distribuição e gestão de chaves tem vindo a ser
+%desenvovidos pela investigação com vista a compreender as especificidades dasRSSF.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\item[ZigBee\cite{falta}]
+\item[Norma IEEE802.15.4\cite{ietf_802154}]
+Esta norma define a especificação da camada física e de controlo de acesso ao meio das redes
+pessoais de baixa potência ()\textit{Low Rate Personal Area Networks}). Foca-se essencialmente na
+comunicação de baixa potência entre dispositivos relativamente próximos, sem a necessidade de uma
+infrastrutura de suporte, explorando o  mínimo de consumo de energia. É a norma que já se encontra
+implementada em algumas plataformas das RSSF. (ex: XXX, XXX).
+No que se refere a segurança\cite{zigbee_802154}, esta norma, especifica alguns serviços que
+acabam por representar uma primeira linha de protecção contra ataques à infraestrutura. Estes
+mecanimos são os seguintes: i) Cada dispositivo mantem uma lista de controlo de acesso (ACL) com os
+dispositivos confiáveis com o intuito de filtrar comunicações não autorizadas; ii) Encriptação de
+dados, com a partilha de uma chave entre os intervenientes na comunicação, guardada juntamente com
+cada entrada da lista de ACL's; iii) Serviço de integridade de cada \textit{frame}, adiciona a cada
+frame uma \textit{Message Integrity Code} (MIC)\cite{MIC}; iv) Mecanismo de frescura de mensagens
+(\textit{Sequential Freshness}), utilizando o contador de frames e o contador de chaves para
+garantir a frescura das mensagens evitando ataques do tipo \textit{replaying} (reenvio).
 
+\item[ZigBee\cite{zigbee_802154, zigbee}]
+Com a especificação da norma 802.15.4 orientada para as duas camadas mais baixas da pilha de
+protocolos das RSSF (física e MAC) surge a norma ZigBee que pretende definir as especificações para
+a camada de rede e aplicação. Esta norma é implementada em plataformas de RSSF, com as
+caracteristicas inerentes (baixo custo, baixo consumo e baixa potência).
+Já incorpora alguns serviços de segurança, nomeadamente: i) Frescura, mantendo contadores
+associados a cada chave de sessão, que são reiniciados em cada mudança de chave; ii) Integridade,
+com opções de integridade de mensagens que vão desde os 0 aos 128 bits de verificação de
+integridade de mensagens; ii)Autenticação, ao nível de rede é garantida com a utilização de uma
+chave de autenticação, ao nível de ligação são usadas chaves entre os dois pontos de comunicação;
+iv) Confidencialidade, usa o algoritmo AES\footnote{\textit{Advenced Encryption System
+algorithm}}\cite{AES} com 128 bits.
 \end{description}

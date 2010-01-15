@@ -1,4 +1,4 @@
-\section{ Ambientes de Simulação}
+\section{Ambientes de Simulação}
 Algumas das limitações existentes nas plataformas das RSSF, devem-se ao facto
 de se pretender manter os sensores com um preço o mais baixo possível. Apesar
 de cada sensor por si não representar um investimento avultado quando se escala
@@ -8,7 +8,7 @@ introduzidos novos protocolos de encaminhamento, novas aplicações, novos
 algoritmos e tecnologias de segurança. Como se trata de redes com tempo de vida
 limitado, devido ao fornecimento de energia ser limitado, o uso real de
 sensores apresenta-se como uma forma pouco eficiente para o desenvolvimento de
-novas tecnologias ou melhoramento das existentes.\\
+novas tecnologias ou melhoramento das existentes.
 
 Os ambientes de simulação de redes de sensores surgem como uma necessidade
 inevitável, para o rápido teste e desenvolvimento das redes de sensores e
@@ -20,44 +20,48 @@ restantes redes, nomeadamente o modelo de comunicação, que tem avançado para a
 norma 802.15.4\cite{802_15_4}, bem como a necessidade de monitorizar eficiência
 energética de cada tecnologia. Outra propriedade importante destes ambientes é a
 capacidade de rápidamente repetir experiências com determinadas variáveis
-configuraveis em cada ambiente (ex. nº de nós, modelo de rádio)\\
+configuraveis em cada ambiente (ex. nº de nós, modelo de rádio)
 
 O que se pretende nesta secção é a apresentar diversos ambientes de
 simulação, mais comuns, e que suportem simular sistema de RSSF (em especial
 TinyOS). Correspondem a critérios de selecção especificos e enumerados
 seguidamente, com vista à avaliação de um ambiente que se mostre adequado para a
-utilização no trabalho de dissertação.\\
+utilização no trabalho de dissertação.
 
+\subsection{Critérios de Selecção}
 
-\subsection{ Critérios de Selecção}
 O número de ferramentas de simulação para RSF, tem vindo a aumentar, no entanto
 pretende-se analisar ferramentas que possuam as seguintes propriedades: 
-\begin{description}
+\subsubsection{Relacionados com Engenharia de
+Software}
+\begin{description}\addtolength{\itemsep}{-.50\baselineskip}
  \item[Portabilidade da Linguagem] Devido às caracteristicas da linguagem de
 programação Java\cite{JAVA_SUN}, inerente ao seu ambiente de execução e à
 consequente portabilidade para diversas plataformas e a programação
-orientada  a objectos (reutilização) foram seleccionadas ferramentas apenas
-desenvolvidas nesta linguagem, ainda que algumas possam apresentar linguagem
-complementares para modelação de aplicaçãos (JSim com o JTcl).
+orientada  a objectos (reutilização) foram seleccionadas ambientes apenas
+desenvolvidos nesta linguagem.
 \item[Código Aberto e Livre] Esta propriedade permite que se contorne
 obstáculos inerentes a licenciamento de \textit{software}, bem como 
 possibilita a análise e aproveitamento de todas as funcionalidades existentes,
 permitindo introduzir algumas melhorias ou alterações especificas.
 \item[Modularidade e extensibilidade] Tendo em conta que os ambientes não
-possuem todos as mesmas caracterisiticas e funcionalidades, e considerando que
-a utilização  na componente experimental da dissertação poderá introduzir novos
+possuem todos as mesmas caracterisiticas e funcionalidades e, considerando que
+a componente experimental da dissertação irá introduzir novos
 mecanismos ou funcionalidades, o principio da modularidade e
 fácil extensibilidade facilitará o desenrolar do trabalho.
 \item[Documentação] Sabendo que algumas das plataformas não se encontram muito
 bem documentadas este critério será importante como ponto de partida para o
-entendimento de cada uma das arquitecturas das ferramentas. No caso do JProwler,
-a simplicidade  e a documentação do código é suficiente para ser considerado
-como adequado tendo em conta este critério.
+entendimento de cada uma das arquitecturas das ferramentas.
 \end{description}
-
-
+\subsubsection{Relacionados com as RSSF}
+\begin{description}
+\item[Modelo de Colisões/Comunicação Rádio] 
+\item[Modelo de Gestão de Energia]
+\item[Capacidade de Emulação]
+\item[Modelo de Mobilidade]
+\item[Interface de Visualização]
+\item[Modelo de Gestão de Topologia] \end{description}
 \subsection{Prowler/JProwler}
-
 Esta ferramenta resulta de uma conversão de um simulador de eventos
 discretos\footnote{Fila global onde são inseridos todos os eventos da rede e
 que são tratados sequencialmente ou por prioridade, dependendo da
@@ -69,7 +73,8 @@ deterministica de comunicação entre motes). Permite a simulação com diversos
 nós podendo chegar aos 5000 ( ainda que o número possa ser maior, por razões de
 performance é o valor máximo aconselhado) usando diversas
 topologias(dinâmicas) nas quais se podem implementar os mais diversos
-algoritmos. \\
+algoritmos. 
+
 O JProwler modela os aspectos mais importantes de todos os níveis do modelo de
 comunicação e de aplicação. A natureza não-deterministica da propagação rádio
 é caracterizada por um modelo de rádio probabilistico usando um modelo simples
@@ -78,7 +83,6 @@ Este ferramenta vem com uma janela de visualização da topologia RSSF. Para o
 desenvolvimento de aplicações ou protocolos são disponibilizadas classes base
 que se podem estender. Estão presentes dois modelos de rádio: um de Gauss para
 topologias estáticas e outro de reighXXX para topologias móveis.
-
 \subsection{ J-Sim}
 J-Sim (anteriormente conhecido como JavaSim) é um ambiente de simulação baseado
 em componentes \cite{JSIM}, implementado em Java. Não foi desenvolvido
@@ -99,11 +103,11 @@ uma rede existente, desenhada, não ideal são simuladas com o objectivo
 de desempenho, previsão de impacte de modificações por forma optimizar decisões
 referentes à tecnologia} leve e distríbuida,
 desenvolvida em Java, utilizada para o desenvolvimento \textit{software } para
-RSSF. O emulador suporta motes (Squawk,Sentilla Point) e
+RSSF. O emulador suporta motes (Squawk, Sentilla Point) e
 plataformas (Java cards, SunSpot ) baseados em Java. Devide a arquitectura em
 três camadas bem definidas por interfaces: Aplicação, Encaminhamento e Ligação
 de Dados e Física. Sendo um emulador, os nós reais podem ser baseado na norma
-de comunicação IEEE802.15.4\cite{IEEE802.15.4} (ex:MICAz, JMotes, Tmote Sky). \\
+de comunicação IEEE802.15.4\cite{IEEE802.15.4} (ex:MICAz, JMotes, Tmote Sky).
 
 Trata-se de um emulador de RSSF, disponível com um interface gráfico para
 configuração que permite executar o código em motes baseados em Java. Pode ser
@@ -120,8 +124,22 @@ Trata-se de um simulador de redes sem fios, implementado em
 Java\cite{SHOX_REF}. A ideia principal desta ferramenta é a de proporcionar, uma
 forma fácil e intuitiva, a implementação e desenho de protocolos de rede,
 modelos de mobilidade, modelos de propagação de sinal ou de tráfego de rede.
-Tal como outros simuladores incorpora um simulador de eventos discretos 
-
+Tal como outros simuladores incorpora um simulador de eventos discretos, que
+faz a gestão de todos os eventos da rede. Todos os conceitos conhecidos no
+dominio das redes sem fios são modelados neste simulador (modelo OSI,
+pacotes,modelos de mobilidade e energia). Uma das vantagens é a existência de
+classes abstractas para reimplementação de novos modelos de cada um dos
+componentes faciltando a programação de novos protocolos ou
+novas funcionalidades. A comunicação entre componentes é feita por intermédio
+de eventos, ou seja não existe acesso de um componente a outro.
+Deve-se destacar o interface gráfico, que permite operar todas funcionalidades
+da ferramenta sem a necessidade de editar directamente os ficheiros de XML.
+Para além disso é ainda possível visualizar e extrair dados gráficos das
+simulação e da topologia de rede. 
+O facto do modelo de propagação de sinal ser baseado na norma IEEE802.11, torna
+dificil a adaptação às condições das RSSF, no entanto a modularidade do sistema
+permite o desenvolvimento de uma camada IEEE802.15.4 para se aproximar da norma
+mais recente de comunicação das RSSF.
 \subsection{Discussão}
 A necessidade de recorrer a ambientes de simulação para desenvolvimento de
 tecnologias de RSSF é uma realidade difícil de contornar dadas as
@@ -154,6 +172,4 @@ de encaminhamento seguro, uma vez que tem um comportamento baseado no TinyOS e
 com modelos do \textit{Mica2} pode ser estendido a incorporar módulos de gestão
 de energia e de análise gráfica de comportamentos ou eventos que sirvam de
 indicadores como por exemplo: energia consumida, fiabilidade, tempo de vida da
-rede e cobertura.
-
-
+rede e cobertura

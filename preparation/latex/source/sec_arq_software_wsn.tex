@@ -5,9 +5,34 @@ contrário de outras arquitecturas de redes, estão organizadas em menos camadas,
 fundindo algumas funções desempenhada por camadas inferiores para outras
 superiores ( ex: a camada de aplicação pode desempenhar algumas funções da
 normalmente atribuídas à camada de transporte). Assim, é fundamental perceber
-qual a pilha de protocolos que as RSSFimplementam, bem como perceber quais os
+qual a pilha de protocolos que as RSSF implementam, bem como perceber quais os
 sistemas que compõem um sensor genérico para de seguida apresentar algumas
 implementações de sensores.
+\subsubsection{Modelo da plataforma genérica de uma RSSF - \textit{Mote}}
+À semelhança do que acontece com as redes convencionais, existem nós de
+computação interligados por uma infraestrutura de comunicação. No caso da RSSF,
+esta infraestrutura corresponde a comunicação \textit{multi-hop} em que cada nó
+da rede (\textit{mote}) pode desempenhar pelo menos três papeis: 1) Nó gerador
+de dados, pela captação da eventos associados às especificidades dos sensores
+possuídos; 2) Nó encaminhador, que recebe dados de outros nós e os passa a
+outros nós por forma a que alcance o destino; 3) Nó de sincronização ou nó de
+agregação, embora estas duas caracterizações não correspondam à mesma tarefa
+por si só, a um nível mais macro, corresponde igualmente a colecção de dados da
+rede oriundos da detecção de eventos, por forma a faze-la seguir agregada para
+outro destino (interno ou externo à rede ).
+
+Desta forma interessa perceber qual o modelo inerente a estas pequenas
+plataformas de rede que apesar das características limitadoras da sua execução
+conseguem executar uma complexidade de aplicações tendo em conta sempre as
+limitações impostas pela arquitectura. Na figura seguinte apresent-se um
+modelo \cite{ MODELO_SENSOR} que ilustra os diversos componentes que concorrem
+para a efectividade de serviço de um \textit{mote} numa RSSF.
+\input{pic_sensornode}
+Como se pode observar pela figura, da qual se pode generalizar o modelo de uma
+plataforma genérica de RSSF, os sistemas que estão presentes são os seguintes:
+i) Sistema de processamento;ii) Sistema de energia; iii) Sistema de
+comunicação; iv) Sistema sensorial; v) Sistema de memória.
+
 \subsubsection{Pilha de Protocolos de uma RSSF }
 Uma arquitectura para a a pilha de protocolos em RSSF foi proposta por
 \cite{Akyildiz2002}, esta pilha apresenta-se representada por cinco camadas:
@@ -69,32 +94,4 @@ camadas de rede e transporte não são consideradas por forma a simplificar a
 pilha de protocolos em \textit{motes}. Esta é uma das capacidades destas redes,
 que corresponde ao facto de adequar de forma especifica a infraestrutura às
 necessidades de determinada aplicação.
-\subsubsection{Modelo da plataforma genérica de uma RSSF - \textit{Mote}}
-À semelhança do que acontece com as redes convencionais, existem nós de
-computação interligados por uma infraestrutura de comunicação. No caso da RSSF,
-esta infraestrutura corresponde a comunicação \textit{multi-hop} em que cada nó
-da rede (\textit{mote}) pode desempenhar pelo menos três papeis: 1) Nó gerador
-de dados, pela captação da eventos associados às especificidades dos sensores
-possuídos; 2) Nó encaminhador, que recebe dados de outros nós e os passa a
-outros nós por forma a que alcance o destino; 3) Nó de sincronização ou nó de
-agregação, embora estas duas caracterizações não correspondam à mesma tarefa
-por si só, a um nível mais macro, corresponde igualmente a colecção de dados da
-rede oriundos da detecção de eventos, por forma a faze-la seguir agregada para
-outro destino (interno ou externo à rede ).
-
-Desta forma interessa perceber qual o modelo inerente a estas pequenas
-plataformas de rede que apesar das características limitadoras da sua execução
-conseguem executar uma complexidade de aplicações tendo em conta sempre as
-limitações impostas pela arquitectura. Na figura seguinte apresent-se um
-modelo \cite{ MODELO_SENSOR} que ilustra os diversos componentes que concorrem
-para a efectividade de serviço de um \textit{mote} numa RSSF.
-\input{pic_sensornode}
-Como se pode observar pela figura, da qual se pode generalizar o modelo de uma
-plataforma genérica de RSSF, os sistemas que estão presentes são os seguintes: 
-i) Sistema de processamento;ii) Sistema de energia; iii) Sistema de
-comunicação; iv) Sistema sensorial; v) Sistema de memória. Assim, importa
-perceber com mais algum detalhe alguns destes sistemas e não menos importante
-algumas caracterisiticas de sistemas operativos para estas plataformas
-existentes na actualidade bem como conhecer genéricamente algumas
-implementações usadas no desenho de RSSF.
 %\input{sistemas_plataforma}
