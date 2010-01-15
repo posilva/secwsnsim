@@ -6,8 +6,7 @@ Todavia, esta visão é redutora, pois, para se conseguir um sistema seguro, é
 necessário que a segurança esteja integrada em cada um dos componentes, se
 assim não se verificar cada componente pode corresponder a uma ameaça a partir
 da qual se pode desencadear um ataque. \\
-\paragraph*{} Os desafios propostos pelas RSSF são específicos da própria
-tecnologia, assim
+Os desafios propostos pelas RSSF são específicos da própria tecnologia, assim
 sendo os mecanismos tradicionais de segurança podem não ser suficientes. Com
 isto surgem tecnologias que visam corresponder aos requisitos de segurança das
 RSSF. Assim, nesta secção pretende-se apresentar uma visão sobre os requisitos
@@ -23,8 +22,7 @@ aplicação de monitorização de dados ambientais este requisito pode ser
 relaxado.\\
 De seguida apresentam-se, de forma genérica, os principais requisitos de
 segurança de uma RSSF:
-\begin{description}
-
+\begin{description}\addtolength{\itemsep}{-.50\baselineskip}
  \item[Autenticação]
  Considerando que as RSSF usam um meio de comunicação partilhado, é necessário
 recorrer à autenticação para garantir a detecção de mensagens alteradas ou
@@ -38,7 +36,6 @@ enviados). Note-se que a implementação de criptografia assimétrica pode
 contribuir para a garantia desta propriedade, mas ainda existe muito esforço a
 desenvolver neste campo dadas as limitações das RSSF e as exigências
 computacionais e energéticas destes mecanismos.
-
  \item[Confidencialidade]
  Sendo a RSSF uma infraestrutura baseada fundamentalmente na disseminação de
 dados recolhidos apartir de sensores que se encontram distribuidos em ambiente
@@ -69,27 +66,18 @@ recursos, que são escassos nas RSSF. Por exemplo, o uso de HMAC's é vulgar uma
 vez que a chave é usada para autenticar a origem da mensagens e para garantir a
 integridade da mensagem, ou seja se a mensagem for alterada a origem não poderá
 ser correctamente verificada, pelo que a mensagem acaba por ser
-ignorada.\cite{SPINS}
-\item[Frescura] 
-
-Given that all sensor networks stream some forms of time varying
-measurements, it is not enough to guarantee confidentiality and
-authentication; we also must ensure each message is fresh. Informally,
-data freshness implies that the data is recent, and it ensures
-that no adversary replayed old messages. We identify two types of
-freshness: weak freshness, which provides partial message ordering,
-but carries no delay information, and strong freshness, which
-provides a total order on a request-response pair, and allows for
-delay estimation. Weak freshness is required by sensor measurements,
-while strong freshness is useful for time synchronization
-within the network.\cite{SPINS}
-
+ignorada\cite{SPINS}.
+\item[Frescura]
+A frescura dos dados de uma mensagem implica que estes sejam recentes
+garantindo que esta mensagem não é antiga e não foi reenviada por um qualquer
+adversário. \cite{SPINS} Podem-se considerar dois tipos de frescura: frescura
+fraca (garantindo ordem parcial e sem informação do desvio de tempo, usada para
+ as medições dos sensores) e frescura forte (garante ordem total em cada
+comunicação permitindo a estimação do atraso, usada para a sincronização de
+tempo).
  \end{description}
-
-
 \subsubsection{Serviços de Segurança}
-
-\begin{description}
+\begin{description}\addtolength{\itemsep}{-0.5\baselineskip}
 \item[TinySec\cite{Karlof2004}]
 TinySec é uma arquitectura de segurança para protecção ao nível de ligação de
 dados em RSSF. O objectivo principal, para o qual foi desenhado, é providenciar
@@ -98,19 +86,21 @@ segurança  disponibilizados são: autenticação de dados (com a utilização de
 \textit{Message Authentication Codes}(MAC), no caso CBC-MAC\footnote{Cipher
 Block Chaining - Message Authentication Code (CBC-MAC))}) e confidencialidade 
 (a encriptação é implementada com o recursotambém ao CBC-MAC).
- Para se adaptar às RSSF o MAC tem um
-comprimeito de 4 bytes ao contrário dos 8 ou 16 habituais.
- Uma vez que neste mecanismo as propriedades de segurança estão
-determinadas pelo comprimento do MAC os autores afirmam que para uma RSSF é
-suficiente uma vez que um atacante teria de efectuar $2^{31}$ tentativas, que
-demorariam cerca de 20 meses a realizar com um canal de
-19.5Kbs.
-A frescura das mensagens não foi endereçado nesta arquitectura uma vez que os
-autores indicaram como demasiado exigente em termos de recursos o que
-contrariaria o objectivo inicial da arquitectura.
-  
+ Para se adaptar às RSSF o MAC tem um comprimeito de 4 bytes ao contrário dos 8 ou 16 habituais.
+ Uma vez que neste mecanismo as propriedades de segurança estão determinadas pelo comprimento do MAC
+os autores afirmam que para uma RSSF é suficiente uma vez que um atacante teria de efectuar $2^{31}$
+tentativas, que demorariam cerca de 20 meses a realizar com um canal de 19.5Kbs.
+Note-se que a frescura das mensagens não foi endereçado nesta arquitectura uma
+vez que os autores consideram como demasiado exigente em termos de recursos o
+que contrariaria o objectivo inicial da arquitectura.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  \item[MiniSec\cite{Luk2007d}]
-
+Minisec é uma camada de rede concebida para possuir o melhor dos dois mundos: baixo consumo de
+energia e alta segurança. Esta arquitectura tem dois modos de operação: uma baseado para
+comunicação \textit{unicast} (MINISEC-U) e outro para \textit{broadcast} (MINISEC-B). Sendo que a
+segunda não necessita de manter o estado por cada emissor por forma a proteger o reenvio escalando
+para grandes redes.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \item[SPINS\cite{SPINS}]
 É um conjunto de protocolos de segurança, constituído por dois componentes
 principais SNEP\footnote{Secure Network Encryption Protocol} \cite{SNEP} e
@@ -123,25 +113,35 @@ o modo CTR\footnote{\textit{Counter Mode}} e a autenticação com CBC-MAC. O
 segundo componente,o ${\mu}$TESLA,  é um serviço de autenticação de
 \textit{broadcast}, que evita a utilização de mecanismos, mais exigentes, de
 criptografia assimétrica, recorrendo a critografia simétrica, autenticando as
-mensagens com um MAC,  
+mensagens com um MAC,
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\item[Sistemas de distríbuição de chaves\cite{eschenauer_key-management_2002}]
+%Confidencialidade e autenticação são aspectos críticos das redes de sensores
+%com o objectivo de prevenir que um adversário compromenta a segurança de um
+%sistema. Devido à natureza \textit{ad-hoc} das redes, a comunicação
+%intermitente e os recursos limitados, os mecanismos de
+%gestão de chaves e autenticação de grupo tornam-se dificil de alcançar.
+%Alguns esquemas para distribuição e gestão de chaves tem vindo a ser
+%desenvovidos pela investigação com vista a compreender as especificidades dasRSSF.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item[Norma IEEE802.15.4\cite{ietf_802154}]
+Esta norma define a especificação da camada física e de controlo de acesso ao meio das redes
+pessoais de baixa potência ()\textit{Low Rate Personal Area Networks}). Foca-se essencialmente na
+comunicação de baixa potência entre dispositivos relativamente próximos, sem a necessidade de uma
+infrastrutura de suporte, explorando o  mínimo de consumo de energia. É a norma que já se encontra
+implementada em algumas plataformas das RSSF. (ex: XXX, XXX).
+No que se refere a segurança\cite{zigbee_802154}, esta norma, especifica alguns mecanismos que
+acabam por representar uma primeira linha de protecção contra ataques à infraestrutura. Estes
+mecanimos são os seguintes: i) Cada dispositivo mantem uma lista de controlo de acesso (ACL) com os
+dispositivos confiáveis com o intuito de filtrar comunicações não autorizadas; ii) Encriptação de
+dados, com a partilha de uma chave entre os intervenientes na comunicação, guardada juntamente com
+cada entrada da lista de ACL's; iii) Serviço de integridade de cada \textit{frame}, adiciona a cada
+frame uma \textit{Message Integrity Code} (MIC)\cite{MIC}; iv) Mecanismo de frescura de mensagens
+(\textit{Sequential Freshness}), utilizando o contador de frames e o contador de chaves para
+garantir a frescura das mensagens evitando ataques do tipo \textit{replaying} (reenvio).
 
-\item[Sistemas de distríbuição de chaves\cite{eschenauer_key-management_2002}]
-Confidencialidade e autenticação são aspectos críticos das redes de sensores
-com o objectivo de prevenir que um adversário compromenta a segurança de um
-sistema. Devido à natureza \textit{ad-hoc} das redes, a comunicação
-intermitente e os recursos limitados, os mecanismos de
-gestão de chaves e autenticação de grupo tornam-se dificil de alcançar.
-Alguns esquemas para distribuição e gestão de chaves tem vindo a ser
-desenvovidos pela investigação com vista a compreender as especificidades das
-RSSF.
-
-\item[IEEE 802.15.4\cite{falta}]
-
-\item[ZigBee\cite{falta}]
-
+\item[ZigBee\cite{zigbee_802154}]
+Com a especificação da norma 802.15.4 orientada para as duas camadas mais baixas da pilha de
+protocolos das RSSF (física e MAC) surge a norma ZigBee que pretende definir as especificações para
+a camada de rede e aplicação.
 \end{description}
-
-
-
-
-

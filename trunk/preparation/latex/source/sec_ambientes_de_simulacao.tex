@@ -17,7 +17,7 @@ ambientes existentes foram adaptados de outros já existentes para
 redes sem fios ou \textit{ad-hoc}, como é o caso do NS2\cite{NS2} ou
 J-Sim\cite{}.As RSSF têm caracteristicas especificas que diferem das
 restantes redes, nomeadamente o modelo de comunicação, que tem avançado para a
-norma 802.15.4\cite{802_15_4}, bem como a necessidade de monitorizar eficiência
+norma 802.15.4\cite{ietf_802154}, bem como a necessidade de monitorizar eficiência
 energética de cada tecnologia. Outra propriedade importante destes ambientes é a
 capacidade de rápidamente repetir experiências com determinadas variáveis
 configuraveis em cada ambiente (ex. nº de nós, modelo de rádio)
@@ -29,29 +29,51 @@ seguidamente, com vista à avaliação de um ambiente que se mostre adequado para a
 utilização no trabalho de dissertação.
 
 \subsection{Critérios de Selecção}
+
 O número de ferramentas de simulação para RSF, tem vindo a aumentar, no entanto
 pretende-se analisar ferramentas que possuam as seguintes propriedades: 
+\subsubsection{Relacionados com Engenharia de
+Software}
 \begin{description}\addtolength{\itemsep}{-.50\baselineskip}
  \item[Portabilidade da Linguagem] Devido às caracteristicas da linguagem de
 programação Java\cite{JAVA_SUN}, inerente ao seu ambiente de execução e à
 consequente portabilidade para diversas plataformas e a programação
-orientada  a objectos (reutilização) foram seleccionadas ferramentas apenas
-desenvolvidas nesta linguagem, ainda que algumas possam apresentar linguagem
-complementares para modelação de aplicaçãos (JSim com o JTcl).
+orientada  a objectos (reutilização) foram seleccionadas ambientes apenas
+desenvolvidos nesta linguagem.
 \item[Código Aberto e Livre] Esta propriedade permite que se contorne
 obstáculos inerentes a licenciamento de \textit{software}, bem como 
 possibilita a análise e aproveitamento de todas as funcionalidades existentes,
 permitindo introduzir algumas melhorias ou alterações especificas.
 \item[Modularidade e extensibilidade] Tendo em conta que os ambientes não
-possuem todos as mesmas caracterisiticas e funcionalidades, e considerando que
-a utilização  na componente experimental da dissertação poderá introduzir novos
+possuem todos as mesmas caracterisiticas e funcionalidades e, considerando que
+a componente experimental da dissertação irá introduzir novos
 mecanismos ou funcionalidades, o principio da modularidade e
 fácil extensibilidade facilitará o desenrolar do trabalho.
 \item[Documentação] Sabendo que algumas das plataformas não se encontram muito
 bem documentadas este critério será importante como ponto de partida para o
-entendimento de cada uma das arquitecturas das ferramentas. No caso do JProwler,
-a simplicidade  e a documentação do código é suficiente para ser considerado
-como adequado tendo em conta este critério.
+entendimento de cada uma das arquitecturas das ferramentas.
+\end{description}
+\subsubsection{Relacionados com as RSSF}
+\begin{description}\addtolength{\itemsep}{-0.5\baselineskip}
+\item[Modelo de Colisões/Comunicação Rádio] Este modelo é fundamental que se encontre modelado num
+sistema de simulação. Por ser um componente base das RSSF e possuir caracteristicas próprias
+relacionadas com a simulação da camada de acesso ao meio e ligação de dados que possuem
+caracteristicas própria inerentes aos protocolos implementados (B-MAC,S-MAC);
+\item[Modelo de Gestão de Energia] A energia é uma das caracteristicas mais importantes a avaliar
+numa RSSF, uma vez que se trata de um recurso limitado e que impõe limitações no desenho de
+protocolos de encaminhamento;
+\item[Capacidade de Emulação] Alguns simuladores possuem uma capacidade extra que lhes permite
+emular o comportamento de um sensor real tal como ele é especificado. Permitindo fazer o
+carregamento de código, sem recurso a recompilação, directamente para o \textit{mote};
+\item[Modelo de Mobilidade] Ainda que as RSSF sejam maioritariamente instaladas com características
+estáticas ou de pouca mobilidade, a existência de um modelo de mobilidade possibilita avaliar os
+comportamentos dos protocolos mediante este factor;
+\item[Interface de Visualização] Para um melhor controlo da simulação é importante o ambiente de
+simulação possua uma interface de visualização por forma a perceber os comportamentos dos
+protocolos.
+\item[Modelo de Gestão de Topologia] Também um factor de que pode influênciar o comportamento de
+um protocolo de encaminhamento, é relevante a existência deste modelo como forma de avaliar os
+protocolos desenhados.
 \end{description}
 \subsection{Prowler/JProwler}
 Esta ferramenta resulta de uma conversão de um simulador de eventos
@@ -164,4 +186,4 @@ de encaminhamento seguro, uma vez que tem um comportamento baseado no TinyOS e
 com modelos do \textit{Mica2} pode ser estendido a incorporar módulos de gestão
 de energia e de análise gráfica de comportamentos ou eventos que sirvam de
 indicadores como por exemplo: energia consumida, fiabilidade, tempo de vida da
-rede e cobertura.
+rede e cobertura
