@@ -1,4 +1,5 @@
 [General]
+
 def_graphic_ext=
 img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
