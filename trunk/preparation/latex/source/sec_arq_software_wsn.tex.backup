@@ -32,39 +32,38 @@ Como se pode observar pela figura, da qual se pode generalizar o modelo de uma
 plataforma genérica de RSSF, os sistemas que estão presentes são os seguintes:
 i) Sistema de processamento;ii) Sistema de energia; iii) Sistema de
 comunicação; iv) Sistema sensorial; v) Sistema de memória.
+\subsubsection{Arquitectura de \textit{Software} }
 
 \subsubsection{Pilha de Protocolos de uma RSSF }
 Uma arquitectura para a a pilha de protocolos em RSSF foi proposta por
-\cite{Akyildiz2002}, esta pilha apresenta-se representada por cinco camadas: i) Camada Física, é
-responsável por selecção de frequência, detecção de sinal e modulação tendo a minimização do consumo
-de energia como uma prioridade; ii) Camada de Ligação de Dados,  das tarefas associadas a esta
-camada destacam-se as seguintes: multiplexação de dados, acesso ao meio, detecção de
-erros/colisões e detecção de frames. Uma RSSF pode ter um protocolo de MAC específico(ex:
-B-MAC\cite{BMAC}, S-MAC \cite{SMAC}) de modo a gerir o consumo de energia consoante aos protocolos
-das camadas superiores; iii) Camada de Rede, sendo a energia um tema transversal a toda a pilha esta
-camada deve endereçar esta preocupação também. No entanto, o facto das RSSF
-serem essencialmente centradas nos dados, sensíveis à localização e com
-endereçamento baseado em atributos faz com que estes assuntos sejam também
-atendidos por esta camada\cite{Akyildiz2002}. Repare-se que, se a camada de
-ligação de dados se preocupa com a comunicação entre dois quaisquer nós, a
-camada de rede deve decidir quais os nós a escolher. Um dos sistemas de
-encaminhamento mais simples é o baseado na inundação (\textit{flooding}), no
-entanto, apesar da simplicidade não tem alguns problemas como por exemplo: a
-duplicação de mensagens e a total ignorância dos recursos da rede, nomeadamente
-os energéticos, pois se um evento é detectado por mais que um sensor essa
-informaçaõ vai enundar em duplicado pela rede. Um dos protocolos que minimiza o
-impacto da inundação é o SPINS\cite{REF}, negociando e adaptando-se aos
-recursos existentes; iv) Camada de Transporte, nas redes convencionais é responsável pela  gestão da
-congestão de tráfego na rede, gestão da fiabilidade da comunicação. Nas RSSF normalmente aparece,
-muitas vezes, integrada com  a camada aplicação;v) Camada de aplicação, várias são as aplicações
-desenvolvidas para esta camada, normalmente, estão associadas às capacidades sensoriais das
-plataformas, que naturalmente estão relacionadas com o fim para o qual se instala/desenha a RSSF.
+\cite{Akyildiz2002}, esta pilha apresenta-se representada por cinco camadas:
+\paragraph*{Camada Física.}É responsável por selecção de frequência, detecção de sinal e modulação
+tendo a minimização do consumo de energia como uma prioridade;
+\paragraph*{Camada de Ligação de Dados.} Das tarefas associadas a estacamada destacam-se as
+seguintes: multiplexação de dados, acesso ao meio, detecção de erros/colisões e detecção de frames.
+Uma RSSF pode ter um protocolo de MAC específico(ex: B-MAC\cite{BMAC}, S-MAC \cite{SMAC}) de modo
+agerir o consumo de energia consoante aos protocolos das camadas superiores;
+\paragraph*{ Camada de Rede.} sendo a energia um tema transversal a toda a pilha,
+esta camada deve endereçar esta preocupação também, tem como tarefa primária decidir quais os nós a
+escolher para o encaminhamento das mensagens. Um dos sistemas de encaminhamento mais simples é o
+baseado na inundação (\textit{flooding}), no entanto, apesar da simplicidade não tem alguns
+problemas como por exemplo: a duplicação de mensagens e a total ignorância dos recursos da rede,
+nomeadamente os energéticos. Um dos protocolos que minimiza o impacto da inundação é o
+SPINS\cite{REF}, negociando e adaptando-se aos recursos existentes;
+\paragraph*{Camada de Transporte.} Nas redes convencionais é responsável pela  gestão da congestão
+de tráfego na rede, gestão da fiabilidade da comunicação. Nas RSSF normalmente aparece, muitas
+vezes, integrada com  a camada aplicação
+\paragraph*{Camada de Aplicação.} Várias são as aplicações desenvolvidas para esta camada,
+normalmente, estão associadas às capacidades sensoriais das plataformas, que naturalmente estão
+relacionadas com o fim para o qual se instala/desenha a RSSF.
 
-Tendo em conta as características das RSSF, toda a pilha é acompanhada transversalmente por
-três planos, que devem ser atendidos por cada uma das camadas, de forma a
-lidarem de forma optima com a energia, mobilidade e recursos partilhados, e
-estes são os seguintes: plano de gestão de tarefas , plano de gestão
-de energia e plano de gestão de mobilidade. 
+INTRODUZIR AQUI A IMAGEM DA PILHA E DOS SERVIÇOS
+
+%Tendo em conta as características das RSSF, toda a pilha é acompanhada transversalmente por
+%três planos, que devem ser atendidos por cada uma das camadas, de forma a
+%lidarem de forma optima com a energia, mobilidade e recursos partilhados, e
+%estes são os seguintes: plano de gestão de tarefas , plano de gestão
+%de energia e plano de gestão de mobilidade. 
 %Esta camada surge com maior relevo quando importa a
 %uma infraestrutura de RSSF comunicar com uma rede exterior. No entanto algumas
 %das tarefas que podem ser desempenhadas por esta camada acabam por ser
