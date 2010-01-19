@@ -1,0 +1,26 @@
+\subsection{Constragimentos à Implementação de Segurança Impostos pelas RSSF }
+A unidade básica de uma RSSF é o nó sensor (\textit{mote}). As suas dimensões reduzidas, resultantes
+da evolução da miniaturização dos componentes electrónicos, não permitem que seja dotado de grande
+capacidade de operação.
+Estas capacidades limitadas impõem constragimentos à implementação de segurança nestas redes.Estão
+relacionados fundamentalmente com:
+\begin{description}\addtolength{\itemsep}{-0.5\baselineskip}
+\item[Energia]
+Os sensores, tipicamente têm energia limitada. Este facto obriga a que os
+mecanismos de segurança procurem não provocar aumento do tamanho das mensagens, ou evitem o uso de
+mensagens de controlo que correspondem a um custo acrescido de comunicação e logo de consumo de
+energia.
+\item[Memória] Os protocolos de segurança, não devem depender da necessidade de grandes
+quantidades de memória, uma vez que esta nos sensores é bastante reduzida.
+\item[Alcance de comunicação] As limitações no alcance das comunicações estão limitadas quer
+tecnicamente quer pela necessidade de consumir o mínimo de energia.
+\item[Escalabilidade] O número de sensores numa rede podem ser bastante elevado, pelo que um
+qualquer mecanismo de segurança deve conseguir lidar com esta capacidade de escalabilidade.
+\item[Auto-organização] A distribuição dos sensores pode ser feita de forma não
+organizada, por exemplo, por via aérea. Com isto é necessário que não sejam impostas dificuldades,
+pelos protocolos, à capacidade de auto organização, já que o acesso físico aos sensores pode ser
+díficil.
+\item[Tolerância a falhas] Considerando que os sensores são propicios a falhar, quer por
+violação da sua integridade, quer por exaustão da energia, os protocolos de segurança devem
+incorporar mecanismos de tolerância a falhas.
+\end{description}

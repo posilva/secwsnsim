@@ -12,14 +12,12 @@ isto surgem tecnologias que visam corresponder aos requisitos de segurança das
 RSSF. Assim, nesta secção pretende-se apresentar uma visão sobre os requisitos
 de segurança de uma RSSF e como estes são atendidos usando alguns serviços de
 segurança mais populares.
-
 \subsubsection{Requisitos de segurança de uma RSSF}
 Embora se apresente os requisitos de segurança de uma RSSF, estes requisitos
 podem variar consoante as especificidades da aplicação que a rede visa
 suportar. Por exemplos se se tratar de uma aplicação de monitorização de saúde
 uma pessoa, o óbvio é proteger a privacidade da pessoa, mas se se tratar de uma
-aplicação de monitorização de dados ambientais este requisito pode ser
-relaxado.\\
+aplicação de monitorização de dados ambientais este requisito pode ser relaxado.\\
 De seguida apresentam-se, de forma genérica, os principais requisitos de
 segurança de uma RSSF:
 \begin{description}\addtolength{\itemsep}{-.50\baselineskip}
@@ -38,22 +36,20 @@ desenvolver neste campo dadas as limitações das RSSF e as exigências
 computacionais e energéticas destes mecanismos.
  \item[Confidencialidade]
  Sendo a RSSF uma infraestrutura baseada fundamentalmente na disseminação de
-dados recolhidos apartir de sensores que se encontram distribuidos em ambiente
+dados recolhidos a partir de sensores que se encontram distribuidos em ambiente
 não controlado e , normalmente, de fácil acesso,  pode ser necessário garantir a
 confidencialidade dos dados que circulam na rede. Assim, o uso de mecanismos de
-criptografia é o mais usado para protecção de dados em comunicação
-ponto-a-ponto. O uso de criptografia por si só pode não ser suficiente, uma vez
-que um ataque pode fazer análise dos dados que circulam na rede (fazendo uma
-análise de padrões) e com este conhecimento violar as chaves que servem de base
-ao mecanismo. Desta forma, a utilização de algoritmos de encriptação fiaveis
-(ex:AES, ECC) para garantir um determinado nível de segurança, para isso existe
-a necessidade de partilhar chaves de sessão por todos os \textit{end-points} e
-como tal deve-se recorrer a esquemas de distribuição de chaves.
+criptografia é o mais indicado para este tipo de protecção.Desta forma, é necessária a utilização
+de algoritmos de encriptação fiáveis (ex:AES\footnote{\textit{Advenced Encryption System
+algorithm}}\cite{AES}, ECC\cite{ECC}) para garantir um determinado
+nível de segurança, para isso existe a necessidade de partilhar chaves de sessão por todos
+os \textit{end-points} e como tal deve-se recorrer a esquemas de distribuição de
+chaves\cite{DIST_Keys}.
  \item[Disponibilidade]
-Para que consiga atingir um bom nível de disponibilidade é necessário garantir
+Para que se consiga atingir um bom nível de disponibilidade é necessário garantir
 que uma RSSF funcione normalmente durante todo o seu tempo de implementação. Os
-ataques de negação de serviço (Denial of Service - DoS) são os mais frequentes
-para atingir a disponibilidade de uma rede. Para além de mecanismos que evitem
+ataques de negação de serviço (Denial of Service - DoS)\cite{DOS} são os mais frequentes
+para diminuir a disponibilidade de uma rede. Para além de mecanismos que evitem
 a negação de serviço, é preciso garantir que a forma de degradação da rede ( na
 presença de um ataque ) seja controlada e que a degradação vá sendo tão grande
 quanto maior sejam o número de nós afectados.
@@ -62,14 +58,12 @@ Durante a comunicação a integridade garante que os dados recebidos pelo nó
 receptor não foram alterados por um adversário durante a transmissão. Em alguns
 casos esta propriedade é garantida juntamente com a autenticação, usando
 mecanismos que permitam verificar ambos apenas com um mecanismo, poupando assim
-recursos, que são escassos nas RSSF. Por exemplo, o uso de HMAC's é vulgar uma
+recursos, que são escassos nas RSSF. Por exemplo, o uso de HMAC's\cite{HMAC} é vulgar uma
 vez que a chave é usada para autenticar a origem da mensagens e para garantir a
-integridade da mensagem, ou seja se a mensagem for alterada a origem não poderá
-ser correctamente verificada, pelo que a mensagem acaba por ser
-ignorada\cite{SPINS}.
+integridade da mensagem.\cite{SPINS}.
 \item[Frescura]
 A frescura dos dados de uma mensagem implica que estes sejam recentes
-garantindo que esta mensagem não é antiga e não foi reenviada por um qualquer
+garantindo que a mensagem não é antiga e não foi reenviada por um qualquer
 adversário. \cite{SPINS} Podem-se considerar dois tipos de frescura: frescura
 fraca (garantindo ordem parcial e sem informação do desvio de tempo, usada para
  as medições dos sensores) e frescura forte (garante ordem total em cada
@@ -152,6 +146,5 @@ associados a cada chave de sessão, que são reiniciados em cada mudança de chave;
 com opções de integridade de mensagens que vão desde os 0 aos 128 bits de verificação de
 integridade de mensagens; ii)Autenticação, ao nível de rede é garantida com a utilização de uma
 chave de autenticação, ao nível de ligação são usadas chaves entre os dois pontos de comunicação;
-iv) Confidencialidade, usa o algoritmo AES\footnote{\textit{Advenced Encryption System
-algorithm}}\cite{AES} com 128 bits.
+iv) Confidencialidade, usa o algoritmo AES\cite{AES} com 128 bits.
 \end{description}

@@ -1,13 +1,4 @@
-\subsection{Arquitectura de uma RSSF}
-\label{sect:subsec_arq_sofware_wsn}
-As redes de sensores têm uma arquitectura considerada minimalista porque, ao
-contrário de outras arquitecturas de redes, estão organizadas em menos camadas,
-fundindo algumas funções desempenhada por camadas inferiores para outras
-superiores ( ex: a camada de aplicação pode desempenhar algumas funções da
-normalmente atribuídas à camada de transporte). Assim, é fundamental perceber
-qual a pilha de protocolos que as RSSF implementam, bem como perceber quais os
-sistemas que compõem um sensor genérico para de seguida apresentar algumas
-implementações de sensores.
+\subsection{Arquitectura de uma RSSF}\label{sect:subsec_arq_sofware_wsn}
 \subsubsection{Modelo da plataforma genérica de uma RSSF - \textit{Mote}}
 À semelhança do que acontece com as redes convencionais, existem nós de
 computação interligados por uma infraestrutura de comunicação. No caso da RSSF,
@@ -24,41 +15,79 @@ outro destino (interno ou externo à rede ).
 Desta forma interessa perceber qual o modelo inerente a estas pequenas
 plataformas de rede que apesar das características limitadoras da sua execução
 conseguem executar uma complexidade de aplicações tendo em conta sempre as
-limitações impostas pela arquitectura. Na figura seguinte apresent-se um
-modelo \cite{ MODELO_SENSOR} que ilustra os diversos componentes que concorrem
+limitações impostas pela arquitectura. Na figura seguinte apresenta-se um
+modelo \cite{ livro_wsn_arch} que ilustra os diversos componentes que concorrem
 para a efectividade de serviço de um \textit{mote} numa RSSF.
 \input{pic_sensornode}
-Como se pode observar pela figura, da qual se pode generalizar o modelo de uma
+\\Como se pode observar pela figura, da qual se pode generalizar o modelo de uma
 plataforma genérica de RSSF, os sistemas que estão presentes são os seguintes:
 i) Sistema de processamento;ii) Sistema de energia; iii) Sistema de
 comunicação; iv) Sistema sensorial; v) Sistema de memória.
 \subsubsection{Arquitectura de \textit{Software} }
+Uma das visões estruturais da uma RSSF é a representada pelas camadas de \textit{software}
+correspondente a um conjunto de serviços independentes,  que fornecem um nível de abstração para as
+camadas adjacentes por forma a contribuirem de forma integrada para o funcionamento do nó sensor.
+\input{pic_stack_services}
+\\A componente de \textit{hardware} corresponde aos sensores existentes no mercado
+\cite{MICA2,TELOSB} para as mais diferentes aplicações. No que se refere a sistemas operativos
+existem vários disponiveis, dos quais se destacam os seguintes:
+\begin{description}\addtolength{\itemsep}{-.50\baselineskip}
+ \item[TinyOS\cite{tinyos}] Sistema operativo livre e de código aberto,
+desenvolvido pela Universidade da California, Berkeley e implementado em nesC
+(uma extensão da linguagem C) muito optimizado para as limitações de memória
+existentes nas RSSF.O modelo de execução orientado por eventos, possibilita uma maior precisão na
+gestão de energia, ainda assim tem grande flexibilidade no escalonamento dos
+eventos, de natureza imprevista, gerados pelo ambiente real.
+ \item[Contiki\cite{Contiki}] Sistema operativo livre e de código aberto,
+implementado em C, e tal como o TinyOS é orientado por eventos. As aplicações
+podem ser carregadas e descarregadas em tempo de execução. Os processos deste
+SO usam \textit{threads} leves, denominadas por \textit{protothreads} que
+proporcionam um estilo de programação  \textit{threadlike}. Uma das inovações é a
+possibilidade de,  com este SO, se ter um modelo \textit{multithreading} por processo, bem como um
+mecanismo de comunicação entre processos usando mensagens.
+ \item[Nano-RK\cite{nanork}] Sistema operativo desenvolvido na universidade de
+Carnegie Mellon, o seu \textit{kernel} é baseado em execução em tempo real com
+\textit{multithreading } preemptivo. Assim é possivel ao \textit{kernel} controlar que processos têm
+acesso ao CPU, à rede e aos sensores.
+ \end{description}
+A camada de comunicação é a que é responsável por gerir o acesso ao meio, devido à modularidade
+desta arquitectura, pode integrar diferentes mecanismos especificos e adequados à aplicação
+(B-MAC\cite{BMAC}, S-MAC\cite{BMAC},Zigbee\cite{Zigbee}). No que respeita à camada de
+encaminhamento seguro é a camada onde a segurança é implmentada por forma a garantir as
+propriedades de segurança adequadas ao meio de operação. Esta é a camada onde se centra o estudo
+que se apresenta. Ainda que a camada de comunicação possa incorporar mecanismos de segurança
+(ex:ZigBee\cite{Zigbee}) , esta camada deve implementar serviços de segurança que permitam garantir
+os requisitos das aplicações. Por fim temos a camada de aplicação que corresponde às aplicações que
+servem como gestão dos eventos detectados no meio ambiente.Esta visão estratificada tem a vantagem
+de permitir a implementação de segurança em cada um dos serviços que no seu todo contribuirão para
+um sistema mais seguro.
+
 
 \subsubsection{Pilha de Protocolos de uma RSSF }
 Uma arquitectura para a a pilha de protocolos em RSSF foi proposta por
 \cite{Akyildiz2002}, esta pilha apresenta-se representada por cinco camadas:
-\paragraph*{Camada Física.}É responsável por selecção de frequência, detecção de sinal e modulação
+\begin{description}\addtolength{\itemsep}{-0.5\baselineskip} 
+\item[Camada Física]É responsável por selecção de frequência, detecção de sinal e modulação
 tendo a minimização do consumo de energia como uma prioridade;
-\paragraph*{Camada de Ligação de Dados.} Das tarefas associadas a estacamada destacam-se as
+\item[Camada de Ligação de Dados] Das tarefas associadas a estacamada destacam-se as
 seguintes: multiplexação de dados, acesso ao meio, detecção de erros/colisões e detecção de frames.
-Uma RSSF pode ter um protocolo de MAC específico(ex: B-MAC\cite{BMAC}, S-MAC \cite{SMAC}) de modo
-agerir o consumo de energia consoante aos protocolos das camadas superiores;
-\paragraph*{ Camada de Rede.} sendo a energia um tema transversal a toda a pilha,
+Uma RSSF pode ter um protocolo de MAC específico(ex: B-MAC\cite{BMAC}, S-MAC \cite{SMAC}) de
+modo a gerir o consumo de energia consoante aos protocolos das camadas superiores;
+\item[Camada de Rede] sendo a energia um tema transversal a toda a pilha,
 esta camada deve endereçar esta preocupação também, tem como tarefa primária decidir quais os nós a
 escolher para o encaminhamento das mensagens. Um dos sistemas de encaminhamento mais simples é o
 baseado na inundação (\textit{flooding}), no entanto, apesar da simplicidade não tem alguns
 problemas como por exemplo: a duplicação de mensagens e a total ignorância dos recursos da rede,
 nomeadamente os energéticos. Um dos protocolos que minimiza o impacto da inundação é o
 SPINS\cite{REF}, negociando e adaptando-se aos recursos existentes;
-\paragraph*{Camada de Transporte.} Nas redes convencionais é responsável pela  gestão da congestão
+\item[Camada de Transporte] Nas redes convencionais é responsável pela  gestão da congestão
 de tráfego na rede, gestão da fiabilidade da comunicação. Nas RSSF normalmente aparece, muitas
 vezes, integrada com  a camada aplicação
-\paragraph*{Camada de Aplicação.} Várias são as aplicações desenvolvidas para esta camada,
+\item[Camada de Aplicação] Várias são as aplicações desenvolvidas para esta camada,
 normalmente, estão associadas às capacidades sensoriais das plataformas, que naturalmente estão
 relacionadas com o fim para o qual se instala/desenha a RSSF.
-
-INTRODUZIR AQUI A IMAGEM DA PILHA E DOS SERVIÇOS
-
+\end{description}
+\input{pic_stack_protocols}
 %Tendo em conta as características das RSSF, toda a pilha é acompanhada transversalmente por
 %três planos, que devem ser atendidos por cada uma das camadas, de forma a
 %lidarem de forma optima com a energia, mobilidade e recursos partilhados, e

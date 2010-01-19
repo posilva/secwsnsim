@@ -1,11 +1,10 @@
 [General]
-
 def_graphic_ext=
 img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1 beta2
-lastDocument=source/sec_arq_software_wsn.tex
+lastDocument=source/capitulo3.tex
 masterDocument=
 name=Thesis.Preparation
 pkg_extIsRegExp=false
@@ -42,7 +41,7 @@ encoding=ISO-8859-1
 highlight=LaTeX
 line=45
 open=false
-order=1
+order=8
 
 [item:source/capitulo2.tex]
 archive=true
@@ -55,12 +54,12 @@ order=6
 
 [item:source/capitulo3.tex]
 archive=true
-column=7602296
-encoding=
-highlight=
-line=0
-open=false
-order=-1
+column=69
+encoding=ISO-8859-1
+highlight=LaTeX
+line=145
+open=true
+order=7
 
 [item:source/capitulo4.tex]
 archive=true
@@ -82,12 +81,12 @@ order=-1
 
 [item:source/mybib.bib]
 archive=true
-column=2
+column=63
 encoding=ISO-8859-1
 highlight=BibTeX
-line=1362
-open=false
-order=2
+line=1351
+open=true
+order=4
 
 [item:source/pic_sensornode.tex]
 archive=true
@@ -98,12 +97,30 @@ line=0
 open=false
 order=10
 
+[item:source/pic_sim_arch.tex]
+archive=true
+column=55
+encoding=ISO-8859-1
+highlight=LaTeX
+line=3
+open=false
+order=9
+
 [item:source/pic_stack.tex]
 archive=true
 column=12
 encoding=ISO-8859-1
 highlight=LaTeX
 line=6
+open=false
+order=-1
+
+[item:source/pic_stack_services.tex]
+archive=true
+column=18
+encoding=ISO-8859-1
+highlight=LaTeX
+line=0
 open=false
 order=-1
 
@@ -136,21 +153,21 @@ order=2
 
 [item:source/sec_ambientes_de_simulacao.tex]
 archive=true
-column=60
+column=0
 encoding=ISO-8859-1
 highlight=LaTeX
-line=56
+line=57
 open=false
 order=9
 
 [item:source/sec_arq_security_wsn.tex]
 archive=true
-column=38
+column=56
 encoding=ISO-8859-1
 highlight=LaTeX
-line=96
-open=false
-order=0
+line=131
+open=true
+order=3
 
 [item:source/sec_arq_software_wsn.tex]
 archive=true
@@ -208,12 +225,12 @@ order=7
 
 [item:source/sec_dicussao_resumo.tex]
 archive=true
-column=0
+column=31
 encoding=ISO-8859-1
 highlight=LaTeX
-line=0
-open=false
-order=4
+line=5
+open=true
+order=6
 
 [item:source/sec_dolev_yao.tex]
 archive=true
@@ -275,8 +292,8 @@ column=26
 encoding=ISO-8859-1
 highlight=LaTeX
 line=21
-open=false
-order=16
+open=true
+order=5
 
 [item:source/tipificacao_de_ataques.tex]
 archive=true
