@@ -1,2 +1,151 @@
-\chapter{Abordagem à fase de elaboração da dissertação}
-\label{cap:elaboração}
+\chapter{Abordagem à fase de elaboração da dissertação}\label{cap:elaboração}
+Tendo sido abordadas as temáticas fundamentais relacionadas com a problemática da segurança numa
+RSSF, importa então, definir uma estratégia para a concepção de uma plataforma que vise a análise e
+avaliação de protocolos de encaminhamento, principalmente os concebidos com preocupações de
+segurança. A inexistência de uma ferramenta de simulação orientada para desenvolvimento fácil e
+intuitivo de protocolos de encaminhamento em RSSF, e, que por sua vez, incorpore a facilidade de
+extrair dados que definam as suas propriedades de segurança e que meçam o impacto 
+que estes têm sobre a rede, é um desafio ambicioso de ser alcançado, e portanto, o objectivo da
+futura dissertação. 
+Neste capítulo pretende-se apresentar, de forma preliminar, os modelos que se pretendem conceber
+para suportar a arquitectura da plataforma de simulação, bem como indicar as caracteristicas que
+estes podem possuir com vista a avaliar alguns protocolos de encaminhamento já apresentados durante
+este relatório.
+\section{Avaliação de ambientes de simulação existentes e a sua incorporação}
+Dentro do âmbito da elaboração da dissertação, não cabe o desenvolvimento de um motor de simulação
+de RSSF, nomeadamente no que se refere a modelos de base destas redes, como por exemplo, o modelo
+de comunicação, o gerador de eventos discretos ou mesmo o modelo das plataformas de sensores. Tendo
+isto em vista, e fruto da avaliação dos ambientes existentes e dos modelos que incorporam,
+pretende-se escolher um motor de simulação base. Deve comportar já estes modelos permitindo a sua
+estensão por forma a suportar as funcionalidades que se julguem importantes para o objectivo da
+dissertação.
+
+A fase de elaboração da dissertação deverá contar, inicialmente, com a escolha deste
+simulador base. Esta escolha, deverá ter em atenção alguns critérios enunciados na secção de
+ambientes de simulação deste relatório. Para além disto, será necessário atender que, apesar de um
+destes sistemas satisfazer um maior número de critérios, não implica directamente a sua seleccção
+para a plataforma final. Uma vez que se pretende incorporar alguns mecanismos orientados para a
+avaliação de questões de segurança, mecanismos estes que não existem em nenhumas dos ambientes
+observados, a simplicidade de implementação e a facilidade de estensão da arquitectura deve ter um
+peso grande, para que a complexidade da plataforma não afecte a prossecução dos objectivos da
+dissertação. Pois, caso não seja realizada com cuidado, poder-se-ia perder muito mais tempo a
+embeber os conceitos no modelo existente comparadando com o seu desenvolvimento de raiz.
+
+\section{Apresentação preliminar da arquitectura da plataforma de simulação}
+Para a plataforma que se pretende implementar a visão mais simples de a representar é sobre a forma
+de uma pilha de serviços, como se pode ver na \figurename\ \ref{fig:sim_arch}, cujos principais
+serviços são: i) Mecanismo de Geração de Topologias; ii) Mecanismo de Gestão de
+Consumo de Energia; iii) Mecanismo de Injecção de Faltas/Ataques ao Encaminhamento; iv) Mecanismo de
+Configuração; v) Mecanismo de Visualização e Controlo de Simulação.
+\input{pic_sim_arch}
+Para além dos mecanismos já referidos, poderá surgir no final uma API que facilite a modelação de
+protocolos de encaminhamento, resultante da implementação dos protocolos referidos, assim que sejam
+identificados interfaces, comportamentos, modelos ou propriedades que possam ser
+generalizados de forma transversal a qualquer algoritmo. Desta forma, será dado mais um
+contributo com vista a facilitar o estudo e desenvolvimento de protocolos de encaminhamento seguros.
+Nas seguintes secções apresentam-se algumas caracteristicas de cada um dos componentes da
+arquitectura da plataforma de simulação.
+\subsection{Implementação do Mecanismo de Configuração}
+Por forma a dotar a plataforma de maior flexibilidade, a existência de um componente gestor de
+configurações é de relevante importância. Este componente é trasversal a toda 
+plataforma pois cada parte terá especificidades próprias que se pretende que sejam geridas por este
+componente. Para que as parametrizações possam ser persistentes e portáveis adoptar-se-à a
+tecnologia XML para definição dos ficheiros de configuração da plataforma. As principais
+funcionalidades que se prevêm existir neste componente de gestão de configurações, vão desde as
+configurações dos parâmetros do simulador base, passando por qualquer outro dos mecanismos da
+plataforma e são indicados a seguir:
+\begin{description}\descvspace
+ \item[Simulador Base ] Controlo dos parâmetros de tempo de execução da simulação, parâmetros do
+sensor, parâmetros de comunicação e modelo de colisões;
+\item[Carregamento Dinâmico]  Será possivel indicar quais as classes, representantes dos diversos
+modelos da simulação, que devem ser incluídas na plataforma surgindo como opções para selecção (ex:
+acrescentar novos modelos de topologias, de energia, de ataques ou falhas);
+\item[Simulação] Os dados que caracterizam uma determinada simulação podem ser definidos e
+guardados para uso posterior (ex: classes de protocolo de encaminhamento, número de nós, topologia
+da rede, modelo de energia ou caracteristicas dos sensores) .
+\end{description}
+\subsection{Implementação do Mecanismo de Geração de Topologias}
+As implementações das RSSF, normalmente, são caracterizadas por diferentes formas de distribuição
+dos nós sensores. Estas distribuições podem ser essencialmente distinguidas em dois modelos:
+aleatório e estruturado. Assim, para que se consiga acrescentar mais um grau de liberdade às
+caracteristicas que se pretende observar na análise de um protocolo de encaminhamento, será
+fornecido um componente cuja função é gerar topologias na rede. Pois sabe-se que a
+topologia da rede pode influenciar o comportamento de um protocolo. Pretende que este
+componente, possibilite a criação, posterior, de novas topologia (específicas para determinada
+simulação), fazendo uso do mecanismo de carregamento dinâmico e de configuração. A seguir
+apresentam-se as topologias que se pretendem implementar:
+\begin{description}\descvspace
+ \item[Aleatória] Topologia que permite simular, por exemplo, o lançamento aéreo de sensores sobre
+um campo.
+\item[Estruturada] Este tipo de topologia ainda se poderá subdividir em dois modelos:
+\begin{description}\descvspace
+ \item[Topologia em Grelha] Disposição dos sensoresformando uma grelha sobre o campo que se pretende
+monitorizar, a distância entre os sensores poderá ser parametrizada ou automática.
+ \item[Distribuição Manual] Com esta forma de topologia, indica-se ao sistema que a distribuição
+dos nós será feita de forma totalmente manual sem qualquer tipo de automatismo. Note-se que apesar
+de inicialmente a topologia poder ser automática, qualquer nó sensor pode posteriormente ser
+alterado de forma manual.
+ \end{description}
+ \end{description}
+Com a possibilidade de gerar topologias de forma automática é possivel, também, estabelecerem-se
+padrões de comportamento dos algoritmos, permitindo comparar ou determinar quais condições das
+topologias que mais se adequam a um protocolo de encaminhamento.
+\subsection{Implementação do Mecanismo de Gestão de Consumo de Energia}
+As caracteristicas fundamentais que se deverão implementar neste componente são: a 
+definição de uma API para o desenvolvimento de novos modelos consoante as necessidades
+da simulação; a possibilidade de introduzir parametros relacionados com o consumo por parte dos
+sensores. Associadas a este componente estarão um conjunto de funcionalidades que permitirão a
+recolha de informação em tempo real dos consumos da rede, quer no seu total, quer individualmente,
+em cada sensor. Desta forma, este é um dos componentes de maior importância, uma vez que um dos
+indicadores que se pretende observar na análise de protocolos de encaminhamento é o impacto sobre o
+tempo útil de operação da rede quer em condições de funcionamento normais, quer perante ataques
+efectivos, tempo este que está dependente do consumo de enerfia.
+\subsection{Implementação do Mecanismo de Injecção de Falhas / Ataques ao Encaminhamento }
+Sendo o tema central da futura dissertação o estudo de protocolos de encaminhamento seguros em
+RSSF, este componente é o de maior importância nesta plataforma e por diferentes ordens de razões:
+i) Não existe nenhum sistema de simulação que permita a indução de ataques de forma simples e
+intuitiva, consubstanciado-se num contributo para a inovação; ii) Deverá ser suficientemente
+flexivel para se adaptar à lógica de cada algoritmo; iii) Poderá permitir a mutação de código em
+tempo de execução da simulação, por forma a alterar comportamentos do protocolo; iv) Idealmente
+deverá permitir a acrescentar mais modelos de ataques, dos já tipificados neste relatório ou outros
+que venham a ser desenvolvidos.As funcionalidades que se prevêm implementar são as seguintes:
+\begin{description}\descvspace
+ \item[Tipologia de Ataques] Será necessário definir interfaces que permitam a rápida implementação
+de ataques, bem como um mecanismo que permita reutilizar ataques em algoritmos diferentes. O ponto
+de partida será derivado da implementação dos algoritmos de encaminhamento que venham a ser
+desenvolvidos na dissertação, estes servirão para identificar padrões nas implementações dos ataques
+às RSSF.
+ \item[Mutação de código] Esta funcionalidade deverá permitir que durante a execução da simulação
+se seleccione um nó por forma a alterar parte do código de execução, induzindo comportamentos que
+se possam assemelhar a comportamentos de nós sensores maliciosos. O desenho desta funcionalidade
+será um grande desafio já que terá de incorporar um mecanismo de edição, compilação e substituição
+de código em \textit{runtime}.
+ \end{description}
+\subsection{Implementação do Mecanismo de Visualização e Controlo de Simulação }
+Como não poderia deixar de ser existe a necessidade de dotar a plataforma de um ambiente de
+operação. Como tal, é necessário implementar um componente correspondente à visualização gráfica de
+toda a simulação, bem como a possibilidade de controlar parâmetros de execução. Pretende-se
+desenvolver um ambiente gráfico integrado que incorpore as seguintes funcionalidades:
+\begin{description}\descvspace
+\item[Configuração da Plataforma] Esta funcionalidade dará suporte ao componente de configuração,
+permitindo predefinir propriedades da plataforma, como por exemplo: carregamento de classes de
+modelos de simuação(ex: sensores, energia, topologias)
+\item[Configuração da Simulação] Será possivel preparar um simulação para ser executada e guardar
+os parâmetros da rede, bem como os dos nós, desta forma é possível repetir com diferentes
+protocolos ou mesmo executar diversas vezes a mesma experiência.
+\item[Visualização da Rede] Para acompanhar a execução da simulação o ambiente será dotado de uma
+vista aérea da rede, representando os nós e os estados, bem como as rotas de comunicação. Será
+acompanhada de uma solução \textit{point-and-click} para obtenção de informações referentes aos
+componentes. A funcionalidade de \textit{drag-and-drop} estará presente como forma de gerir a
+topologia da rede e a introdução de ataques.
+\item[Visualização de Resultados] A obtenção de resultados da simulação é de relevante importância
+pois só assim se podem extrair as conclusões que um trabalho de engenharia pressupõe. Assim,
+existirá uma funcionalidade de visualização de gráficos, de alguns indicadores da rede, em tempo
+real, relacionados com a rede no geral e com sensores, indicados, em particular.
+ \end{description}
+\section{Implementação de Protocolos de Encaminhamento Seguro em RSSF}
+\subsection{Fase de desenho dos algoritmos baseado nas especificações}
+\subsection{Fase de avaliação dos algoritmos}
+
+\section{Avaliação da Solução}
+

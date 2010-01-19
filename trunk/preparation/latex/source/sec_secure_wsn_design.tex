@@ -1,11 +1,23 @@
-\section{Desenho e Implementação de RSSF Seguras }
-\label{sect:sec_secure_wsn_design}
-Sendo o tema central do trabalho proposto o estudo das propriedades de
-segurança nestas redes, importa, em primeiro lugar, perceber, de forma
-consistente, a sua arquitectura de protocolos. Em segundo lugar, é necessário
-entender quais os serviços de segurança disponibilizados, por forma a
-poder adequar-se às aplicações para as quais são criadas
-e desenhadas as RSSF.
+\section{Desenho e Implementação de RSSF Seguras }\label{sect:sec_secure_wsn_design}
+Com o aparecimento das redes sem fios surge também um novo desafio relacionado com as questões de
+segurança dos dados que circulam na rede, tendo em conta  o meio de comunicação que é aberto 
+e de fácil acesso. No entanto, a emergência das RSSF ainda levanta maiores desafios
+relacionados com esta problemática. Considerando que as RSSF são um sub-conjunto das redes
+\textit{ad-hoc} (ANET). Veja-se portanto algumas diferenças entre estas duas
+tipologias\cite{VER}:  i) O número de nós nas RSSF pode ser muito maior que os existentes
+numa ANET; ii) Os nós sensores são distríbuidos de forma densa (próximos uns dos outros); iii) Os
+sensores são mais propícios a falhas; iv) A topologia de uma RSSF pode mudar de forma muito mais
+frequente; v) Os sensores usam um modo de comunicação baseado em \textit{broadcast} seguindo um
+modelo multi-hop entre pontos, enquanto as ANET são orientadas ponto a ponto; vi) Os sensores são
+limitados em energia, capacidade de armazenamento, memória, processamento e comunicação.
+
+Tendo estas características em mente, as  diferenças encontradas correspondem a uma
+dificuldade acrescida para manter as propriedades de segurança desejadas durante a operação de
+uma RSSF. Assim, nesta secção, importa entender quais as limitações, qual a arquitectura de
+software e de segurança, das RSSF,  por forma a que possam resistir a determinados ataques,
+que em geral se caracterizam como ataques ao meio de comunicação e ataques por intrusão e
+captura.
+\input{sec_redes_sensores_operacao}
 \input{sec_arq_software_wsn}
 \input{sec_modadversario_servicos_seg}
 \input{sec_arq_security_wsn}

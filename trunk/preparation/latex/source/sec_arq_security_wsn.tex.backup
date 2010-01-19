@@ -12,14 +12,12 @@ isto surgem tecnologias que visam corresponder aos requisitos de segurança das
 RSSF. Assim, nesta secção pretende-se apresentar uma visão sobre os requisitos
 de segurança de uma RSSF e como estes são atendidos usando alguns serviços de
 segurança mais populares.
-
 \subsubsection{Requisitos de segurança de uma RSSF}
 Embora se apresente os requisitos de segurança de uma RSSF, estes requisitos
 podem variar consoante as especificidades da aplicação que a rede visa
 suportar. Por exemplos se se tratar de uma aplicação de monitorização de saúde
 uma pessoa, o óbvio é proteger a privacidade da pessoa, mas se se tratar de uma
-aplicação de monitorização de dados ambientais este requisito pode ser
-relaxado.\\
+aplicação de monitorização de dados ambientais este requisito pode ser relaxado.\\
 De seguida apresentam-se, de forma genérica, os principais requisitos de
 segurança de uma RSSF:
 \begin{description}\addtolength{\itemsep}{-.50\baselineskip}
@@ -38,17 +36,14 @@ desenvolver neste campo dadas as limitações das RSSF e as exigências
 computacionais e energéticas destes mecanismos.
  \item[Confidencialidade]
  Sendo a RSSF uma infraestrutura baseada fundamentalmente na disseminação de
-dados recolhidos apartir de sensores que se encontram distribuidos em ambiente
+dados recolhidos a partir de sensores que se encontram distribuidos em ambiente
 não controlado e , normalmente, de fácil acesso,  pode ser necessário garantir a
 confidencialidade dos dados que circulam na rede. Assim, o uso de mecanismos de
-criptografia é o mais usado para protecção de dados em comunicação
-ponto-a-ponto. O uso de criptografia por si só pode não ser suficiente, uma vez
-que um ataque pode fazer análise dos dados que circulam na rede (fazendo uma
-análise de padrões) e com este conhecimento violar as chaves que servem de base
-ao mecanismo. Desta forma, a utilização de algoritmos de encriptação fiaveis
-(ex:AES, ECC) para garantir um determinado nível de segurança, para isso existe
-a necessidade de partilhar chaves de sessão por todos os \textit{end-points} e
-como tal deve-se recorrer a esquemas de distribuição de chaves.
+criptografia é o mais indicado para este tipo de protecção.Desta forma, é necessária a utilização
+de algoritmos de encriptação fiáveis (ex:AES\cite{AES}, ECC\cite{ECC}) para garantir um determinado
+nível de segurança, para isso existe a necessidade de partilhar chaves de sessão por todos
+os \textit{end-points} e como tal deve-se recorrer a esquemas de distribuição de
+chaves\cite{DIST_Keys}.
  \item[Disponibilidade]
 Para que consiga atingir um bom nível de disponibilidade é necessário garantir
 que uma RSSF funcione normalmente durante todo o seu tempo de implementação. Os
@@ -86,13 +81,15 @@ segurança  disponibilizados são: autenticação de dados (com a utilização de
 \textit{Message Authentication Codes}(MAC), no caso CBC-MAC\footnote{Cipher
 Block Chaining - Message Authentication Code (CBC-MAC))}) e confidencialidade 
 (a encriptação é implementada com o recursotambém ao CBC-MAC).
- Para se adaptar às RSSF o MAC tem um comprimeito de 4 bytes ao contrário dos 8 ou 16 habituais.
- Uma vez que neste mecanismo as propriedades de segurança estão determinadas pelo comprimento do MAC
-os autores afirmam que para uma RSSF é suficiente uma vez que um atacante teria de efectuar $2^{31}$
-tentativas, que demorariam cerca de 20 meses a realizar com um canal de 19.5Kbs.
-Note-se que a frescura das mensagens não foi endereçado nesta arquitectura uma
-vez que os autores consideram como demasiado exigente em termos de recursos o
-que contrariaria o objectivo inicial da arquitectura.
+ %Para se adaptar às RSSF o MAC tem um comprimeito de 4 bytes ao contrário dos 8 ou 16 habituais.
+% Uma vez que neste mecanismo as propriedades de segurança estão determinadas pelo comprimento do
+%MAC
+%os autores afirmam que para uma RSSF é suficiente uma vez que um atacante teria de efectuar
+%$2^{31}$
+%tentativas, que demorariam cerca de 20 meses a realizar com um canal de 19.5Kbs.
+Note-se que a frescura das mensagens não foi endereçada nesta arquitectura, uma
+vez que os autores consideram como demasiado exigente em termos de recursos, o
+que contrariaria o objectivo principal da arquitectura.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  \item[MiniSec\cite{Luk2007d}]
 Minisec é uma camada de rede concebida para possuir o melhor dos dois mundos: baixo consumo de
@@ -130,7 +127,7 @@ pessoais de baixa potência ()\textit{Low Rate Personal Area Networks}). Foca-se 
 comunicação de baixa potência entre dispositivos relativamente próximos, sem a necessidade de uma
 infrastrutura de suporte, explorando o  mínimo de consumo de energia. É a norma que já se encontra
 implementada em algumas plataformas das RSSF. (ex: XXX, XXX).
-No que se refere a segurança\cite{zigbee_802154}, esta norma, especifica alguns mecanismos que
+No que se refere a segurança\cite{zigbee_802154}, esta norma, especifica alguns serviços que
 acabam por representar uma primeira linha de protecção contra ataques à infraestrutura. Estes
 mecanimos são os seguintes: i) Cada dispositivo mantem uma lista de controlo de acesso (ACL) com os
 dispositivos confiáveis com o intuito de filtrar comunicações não autorizadas; ii) Encriptação de
@@ -140,8 +137,16 @@ frame uma \textit{Message Integrity Code} (MIC)\cite{MIC}; iv) Mecanismo de fres
 (\textit{Sequential Freshness}), utilizando o contador de frames e o contador de chaves para
 garantir a frescura das mensagens evitando ataques do tipo \textit{replaying} (reenvio).
 
-\item[ZigBee\cite{zigbee_802154}]
+\item[ZigBee\cite{zigbee_802154, zigbee}]
 Com a especificação da norma 802.15.4 orientada para as duas camadas mais baixas da pilha de
 protocolos das RSSF (física e MAC) surge a norma ZigBee que pretende definir as especificações para
-a camada de rede e aplicação.
+a camada de rede e aplicação. Esta norma é implementada em plataformas de RSSF, com as
+caracteristicas inerentes (baixo custo, baixo consumo e baixa potência).
+Já incorpora alguns serviços de segurança, nomeadamente: i) Frescura, mantendo contadores
+associados a cada chave de sessão, que são reiniciados em cada mudança de chave; ii) Integridade,
+com opções de integridade de mensagens que vão desde os 0 aos 128 bits de verificação de
+integridade de mensagens; ii)Autenticação, ao nível de rede é garantida com a utilização de uma
+chave de autenticação, ao nível de ligação são usadas chaves entre os dois pontos de comunicação;
+iv) Confidencialidade, usa o algoritmo AES\footnote{\textit{Advenced Encryption System
+algorithm}}\cite{AES} com 128 bits.
 \end{description}
