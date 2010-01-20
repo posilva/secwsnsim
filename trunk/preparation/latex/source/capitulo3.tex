@@ -133,19 +133,86 @@ modelos de simuação(ex: sensores, energia, topologias)
 \item[Configuração da Simulação] Será possivel preparar um simulação para ser executada e guardar
 os parâmetros da rede, bem como os dos nós, desta forma é possível repetir com diferentes
 protocolos ou mesmo executar diversas vezes a mesma experiência.
-\item[Visualização da Rede] Para acompanhar a execução da simulação o ambiente será dotado de uma
-vista aérea da rede, representando os nós e os estados, bem como as rotas de comunicação. Será
-acompanhada de uma solução \textit{point-and-click} para obtenção de informações referentes aos
-componentes. A funcionalidade de \textit{drag-and-drop} estará presente como forma de gerir a
-topologia da rede e a introdução de ataques.
+\item[Visualização da Rede] Para acompanhar a execução da simulação a existirá uma
+ferramenta de visualização da rede (vista aérea ), representando os nós e os estados, bem
+como as rotas de comunicação. Será acompanhada de uma solução \textit{point-and-click} para obtenção
+de informações referentes aos componentes. A funcionalidade de \textit{drag-and-drop} estará
+presente como forma de gerir a topologia da rede e a introdução de ataques. Pretende-se ainda
+desenhar uma forma de declarar a mudança de estados do sensor permitindo a sua identificação.
 \item[Visualização de Resultados] A obtenção de resultados da simulação é de relevante importância
 pois só assim se podem extrair as conclusões que um trabalho de engenharia pressupõe. Assim,
 existirá uma funcionalidade de visualização de gráficos, de alguns indicadores da rede, em tempo
 real, relacionados com a rede no geral e com sensores, indicados, em particular.
  \end{description}
-\section{Implementação de Protocolos de Encaminhamento Seguro em RSSF}
-\subsection{Fase de desenho dos algoritmos baseado nas especificações}
-\subsection{Fase de avaliação dos algoritmos}
-
 \section{Avaliação da Solução}
+Uma vez que a contribuição efectiva para a componente de investigação de
+protocolos de encaminhamento seguros em RSSF, será obtida com a concepção de uma plataforma de
+simulação que suporte o estudo e a análise desta problemática, importa sujeitá-la a uma avaliação
+primária que permita comprovar a sua utilidade e/ou identificar eventuais lacunas neste domínio.
+Assim, tendo esta avaliação em vista pretende-se contribuir com o estudo dos protocolos de
+encaminhamento seguro referidos e estudados neste relatório. Para isso, definem-se duas fases
+complementares na elaboração da tese, uma que compreende a implementação de um ou dois protocolos,
+seguidos da fase de experimentação usando as funcionalidades da plataforma. No final, será possível
+salientar as características de cada protocolo implementado analisadas à luz desta plataforma. 
+\subsection{Implementação de Protocolos de Encaminhamento Seguro em RSSF}
+\subsubsection{Fase de desenho dos algoritmos baseado nas especificações}
+Uma vez que a concepção da plataforma constituí a maior contribuição e por isso ocupará a maior
+parte do trabalho na fase de implementação, procurar-se-à, implementar um ou dois dos
+algorimos estudados neste relatório. Esta indefinição, quanto ao número deve-se ao facto que se
+pretender ter uma visão realista da dimensão do problema e não apontar desde já metas demasiado
+ambiciosas que não, no fim e por razões de operacionalização, não se permitam alcançar.  Os
+algoritmos a implementar neste momento ainda não se encontram definidos mas será, de certa forma,
+indiferente, pois terá que ser possível implementar qualquer um deles dentro do ambiente oferecido
+pela plataforma. Desta forma, será possível explorar as funcionalidades da plataforma e
+e ao mesmo tempo  contribuir para o aprofundamento do conhecimento dos algoritmos apresentados,
+nomeadamente no que se refere às suas propriedades de segurança face ao enunciado pelos autores.
 
+No inicio desta fase, será necessário reaprofundar o funcionamento de cada algoritmo a implementar,
+conhecer e identificar cada mecanismo especificado de modo a que se possa, dentro do possível,
+generalizar operações ou interfaces a serem posteriormente reutilizadas noutros algoritmos. Assim,
+sendo esta fase exigirá uma aprendizagem/conhecimento profundo de cada algoritmo contribuíndo também
+para a especialização neste domínio permitindo então desenvolver um espirito crítico fundamentado
+nesta matéria.
+\subsubsection{Fase de avaliação dos algoritmos}
+Recorrendo às ferramentas disponibilizadas pela plataforma deverá ser possível no final da
+implementação sistematizar as simulações por forma a extrair resultados, que por si só, caracterizem
+os algoritmos em matéria de segurança e a sua correcção em determinados parâmetros que
+se julgam ser fundamentais no estudo de protocolos de encaminhamento. Alguns dos quais, se indicam a
+seguir acompanhados de uma breve caracterização:
+\begin{description}\descvspace
+\item[Correcção do Protocolo] Pretende-se numa primeira fase avaliar se o protocolo está a
+funcionar correctamente, quer em condições normais, quer em condições de ataque. Garantindo-se
+assim que a implementação do algoritmo foi correcta perante a especificação. No entanto, o
+funcionamento correcto do algoritmo não chega para a avaliação do mesmo, pois pode funcionar
+correctamente perante determinados ataques mas, por exemplo, a energia da rede se esgotar
+rápidamente ou a latência ser demasiado elevada para determinadas aplicações.
+\item[Análise do Consumo de Energia] Este parâmetro é fundamental de ser observado, uma vez que
+esta é uma das limitações das RSSF com maior impacto na sua operacionalização. Uma vez que é na
+energia que se reflectem os comportamentos errados do protocolo(ex: ataques por \textit{DoS}, HELLO
+\textit{flooding},RREQ \textit{flooding}) face a ataques à rede.
+ \item[Fiabilidade/Entrega de Mensagens] Pretende-se avaliar se as mensagens que são geradas pelos
+eventos da rede chegam ao destino, este parâmetro carece de avaliação
+principalmente perante ataques de \textit{replaying} ou do tipo \textit{blackhole} em que podem
+nunca chegar por estarem a ser descartadas por um nó malicioso;
+\item[Correcção dos Eventos] Pretende-se que a semântica dos eventos detectados também seja mantida
+ao longo do percurso entre a origem e o destino, uma vez que verificar somente a entrega das
+mensagens não garante que estas sejam realmente uteis para aplicação suportada.
+\item[Latência] Dependendo das aplicações para as quais se pretende implementar uma RSSF, e em
+particular, as relacionadas com a \textit{tracking} de alvos num terreno, as características de
+``tempo real'' são importantes, uma vez que se a latência for muito elevada a informação do evento
+a uma estação base pode não permitir, em tempo útil, intervir junto do alvo.
+ \end{description}
+\subsection{Contribuição para o estudo de algoritmos de encaminhamento em RSSF}
+Depois de concluída a análise dos algoritmos implementados, e mesmo durante a fase de
+aprofundamento do funcionamento, poderão surgir algumas questões pertinentes acerca de propriedades
+que se dizem serem garantidas por determinado algoritmo, e que, mediante a sua simulação nesta
+plataforma, não se verifiquem. Com este facto, será possível sugerir/propor algum mecanismo que
+mitigue determinado comportamento incorrecto, ou alguma melhoria ao algoritmo, constituíndo-se assim
+mais um contributo para o protocolo em si, bem como para a problemática da segurança nas RSSF.
+\subsection{Avalições futuras}
+Uma das formas de avaliação que se pretende sujeitar posteriormente, que poderá dar origem a alguma
+publicação científica, será a disponibilização da plataforma para a comunidade académica como forma
+de obter algum tipo de \textit{feedback} acerca da sua usabilidade e mesmo utilidade científica. Só
+assim se poderá no futuro dizer que a contribuição foi efectivamente conseguida na sua utilidade,
+principalmente se se traduzir no desenvolvimento rápido de um qualquer algoritmo de encaminhamento
+e a obtenção de resultados crediveis que auxiliem o avanço desta àrea científica.

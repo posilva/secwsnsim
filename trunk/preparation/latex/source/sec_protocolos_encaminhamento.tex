@@ -74,7 +74,7 @@ origem, após a recepção do CTS. Como este protocolo não mantém estado, resiste a
 topologia da rede, o facto de escolher em cada envio o nó seguinte constitui um mecanismo de
 tolerância a falhas e  mesmo em caso de ataque os danos ficam confinados à vizinhança de cada nó
 comprometido.
-\item[Especificação do protocolo SIGF\cite{SIGF}]
+\item[Funcionamento do protocolo SIGF\cite{SIGF}]
 Com a introdução de mecanismos de segurança é natural a introdução de sobrecarga num protocolo,
 principalmente quando se trata da extensão de um já existente. No entanto, o
 protocolo SIGF\cite{SIGF} não pretende manter um bom desempenho e uma elevada taxa de sucessi de
@@ -94,7 +94,6 @@ fim, e tratando-se já de um protocolo mais robusto, mas mais exigente,  o SIGF-2
 com os seus vizinhos permitindo  usar mecanismos criptográficos,  fornecendo propriedades de
 integridade, autenticidade, confidencialidade e frescura. Este ultimo protocolo, ainda assim, herda
 as propriedades de configuração de cada um dos seus protocolos antecessores SIGF-0 e SIGF-1.
-\item[Mecanismos de Segurança  e Resistência a ataques]
  \end{description}
 \subsection{\textit{ INtrusion-tolerant routing protocol for wireless
 SEnsor NetworkS }(INSENS)}
@@ -105,8 +104,7 @@ introdução de informação falsa de encaminhamento. O protocolo assenta na existên
 base que partilha chaves assimétricas com cada um dos nós da rede. Este mecanismo permite que em
 caso de um atacante comprometer um nó da rede não terá acesso a mais chaves seguras da rede,
 permitindo isolar, de alguma forma o ataque.
-\begin{description}\addtolength{\itemsep}{-.50\baselineskip}
- \item[Funcionamento do protocolo]
+
 A implementação de redundância no encaminhamento permite que a rede sobreviva a atacantes não
 detectados. Desta forma, a introdução de multiplos caminhos independentes entre origem e destino
 faz com que, ainda que existam atacantes na rede, caso exista pelo menos um destes caminhos sem
@@ -117,11 +115,12 @@ base. Uma das vantagens apontadas pelos autores é a redução das computações nos 
 rede(ex: geração de chaves, tabelas de encaminhamento), cuja limitações de energia e processamento
 são as conhecidas. Assim, a formação das tabelas de encaminhamento estão divididas em três fases:
 pedido de rotas (\textit{route request}), recolha de dados de encaminhamento e propagação de rotas.
- A primeira fase, corresponde ao envio por parte da estação base de uma mensagen destinada a todos
+A primeira fase, corresponde ao envio por parte da estação base de uma mensagen destinada a todos
 os nós da rede por forma a obter dados sobre as vizinhanças. Cada nó então, numa segunda fase,
 responde com a sua vizinhança  para estação base. Por fim, esta informação é tratada por forma a
-elaborar as tabelas de encaminhamento, sendo depois propagadas para cada nó.
-\end{description}
+elaborar as tabelas de encaminhamento, sendo depois propagadas para cada nó. Completadas estas fases
+prossegue-se com o encaminhamento dos dados baseando-se nas tabelas construídas e recebidas a partir
+da estação base.
 
 \subsection{\textit{Secure Sensor Network Routing: Clean-Slate approach}}
 \cite{clean_slate}

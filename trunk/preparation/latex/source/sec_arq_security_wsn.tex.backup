@@ -17,8 +17,8 @@ Embora se apresente os requisitos de segurança de uma RSSF, estes requisitos
 podem variar consoante as especificidades da aplicação que a rede visa
 suportar. Por exemplos se se tratar de uma aplicação de monitorização de saúde
 uma pessoa, o óbvio é proteger a privacidade da pessoa, mas se se tratar de uma
-aplicação de monitorização de dados ambientais este requisito pode ser relaxado.\\
-De seguida apresentam-se, de forma genérica, os principais requisitos de
+aplicação de monitorização de dados ambientais este requisito pode ser relaxado.De seguida
+apresentam-se, de forma genérica, os principais requisitos de
 segurança de uma RSSF:
 \begin{description}\addtolength{\itemsep}{-.50\baselineskip}
  \item[Autenticação]
@@ -26,29 +26,24 @@ segurança de uma RSSF:
 recorrer à autenticação para garantir a detecção de mensagens alteradas ou
 injectadas no sistema com o intuito de obter acesso a alguma operação ou
 informação que é restrita a utilizadores não
-autorizados\cite{SECURITY_IN_WSN_PERRIG}. No que respeita a autenticação o
-requisito pode ter dois sentidos: autenticação da origem das mensagens
-(garantindo que a mensagem é gerada por quem se apresenta como sendo a origem)
-e autenticação dos dados (garantindo que os dados recebidos são exactamente os
-enviados). Note-se que a implementação de criptografia assimétrica pode
-contribuir para a garantia desta propriedade, mas ainda existe muito esforço a
-desenvolver neste campo dadas as limitações das RSSF e as exigências
-computacionais e energéticas destes mecanismos.
+autorizados\cite{SECURITY_IN_WSN_PERRIG}.Note-se que a implementação de criptografia assimétrica
+contribui para a garantia desta propriedade, mas ainda existe muito esforço a desenvolver neste
+campo dadas as limitações das RSSF e as exigências computacionais e energéticas destes mecanismos.
  \item[Confidencialidade]
- Sendo a RSSF uma infraestrutura baseada fundamentalmente na disseminação de
-dados recolhidos a partir de sensores que se encontram distribuidos em ambiente
-não controlado e , normalmente, de fácil acesso,  pode ser necessário garantir a
-confidencialidade dos dados que circulam na rede. Assim, o uso de mecanismos de
-criptografia é o mais indicado para este tipo de protecção.Desta forma, é necessária a utilização
-de algoritmos de encriptação fiáveis (ex:AES\cite{AES}, ECC\cite{ECC}) para garantir um determinado
-nível de segurança, para isso existe a necessidade de partilhar chaves de sessão por todos
-os \textit{end-points} e como tal deve-se recorrer a esquemas de distribuição de
+ Sendo a RSSF uma infraestrutura baseada fundamentalmente na disseminação de dados recolhidos a
+partir de sensores que se encontram distribuidos em ambiente não controlado e, normalmente, de
+fácil acesso,  é necessário garantir a confidencialidade dos dados que circulam na rede.
+Assim, o uso de mecanismos de criptografia é o mais indicado para este tipo de protecção.Desta
+forma, é necessária a utilização de algoritmos de encriptação fiáveis (ex:
+AES\footnote{\textit{Advenced Encryption System algorithm}}\cite{AES}, ECC\cite{ECC}) para garantir
+um determinado nível de segurança, para isso existe a necessidade de partilhar chaves de sessão por
+todos os \textit{end-points} e como tal deve-se recorrer a esquemas de distribuição de
 chaves\cite{DIST_Keys}.
  \item[Disponibilidade]
-Para que consiga atingir um bom nível de disponibilidade é necessário garantir
+Para que se consiga atingir um bom nível de disponibilidade é necessário garantir
 que uma RSSF funcione normalmente durante todo o seu tempo de implementação. Os
-ataques de negação de serviço (Denial of Service - DoS) são os mais frequentes
-para atingir a disponibilidade de uma rede. Para além de mecanismos que evitem
+ataques de negação de serviço (Denial of Service - DoS)\cite{DOS} são os mais frequentes
+para diminuir a disponibilidade de uma rede. Para além de mecanismos que evitem
 a negação de serviço, é preciso garantir que a forma de degradação da rede ( na
 presença de um ataque ) seja controlada e que a degradação vá sendo tão grande
 quanto maior sejam o número de nós afectados.
@@ -57,14 +52,12 @@ Durante a comunicação a integridade garante que os dados recebidos pelo nó
 receptor não foram alterados por um adversário durante a transmissão. Em alguns
 casos esta propriedade é garantida juntamente com a autenticação, usando
 mecanismos que permitam verificar ambos apenas com um mecanismo, poupando assim
-recursos, que são escassos nas RSSF. Por exemplo, o uso de HMAC's é vulgar uma
+recursos, que são escassos nas RSSF. Por exemplo, o uso de HMAC's\cite{HMAC} é vulgar uma
 vez que a chave é usada para autenticar a origem da mensagens e para garantir a
-integridade da mensagem, ou seja se a mensagem for alterada a origem não poderá
-ser correctamente verificada, pelo que a mensagem acaba por ser
-ignorada\cite{SPINS}.
+integridade da mensagem.\cite{SPINS}.
 \item[Frescura]
 A frescura dos dados de uma mensagem implica que estes sejam recentes
-garantindo que esta mensagem não é antiga e não foi reenviada por um qualquer
+garantindo que a mensagem não é antiga e não foi reenviada por um qualquer
 adversário. \cite{SPINS} Podem-se considerar dois tipos de frescura: frescura
 fraca (garantindo ordem parcial e sem informação do desvio de tempo, usada para
  as medições dos sensores) e frescura forte (garante ordem total em cada
@@ -87,9 +80,9 @@ Block Chaining - Message Authentication Code (CBC-MAC))}) e confidencialidade
 %os autores afirmam que para uma RSSF é suficiente uma vez que um atacante teria de efectuar
 %$2^{31}$
 %tentativas, que demorariam cerca de 20 meses a realizar com um canal de 19.5Kbs.
-Note-se que a frescura das mensagens não foi endereçada nesta arquitectura, uma
-vez que os autores consideram como demasiado exigente em termos de recursos, o
-que contrariaria o objectivo principal da arquitectura.
+Note-se que a frescura das mensagens não foi endereçada nesta arquitectura (ficando vulnerável a
+ataques de \textit{replaying}), uma vez que os autores consideram como demasiado exigente em termos
+de recursos, o que contrariaria o objectivo principal da arquitectura.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  \item[MiniSec\cite{Luk2007d}]
 Minisec é uma camada de rede concebida para possuir o melhor dos dois mundos: baixo consumo de
@@ -147,6 +140,5 @@ associados a cada chave de sessão, que são reiniciados em cada mudança de chave;
 com opções de integridade de mensagens que vão desde os 0 aos 128 bits de verificação de
 integridade de mensagens; ii)Autenticação, ao nível de rede é garantida com a utilização de uma
 chave de autenticação, ao nível de ligação são usadas chaves entre os dois pontos de comunicação;
-iv) Confidencialidade, usa o algoritmo AES\footnote{\textit{Advenced Encryption System
-algorithm}}\cite{AES} com 128 bits.
+iv) Confidencialidade, usa o algoritmo AES\cite{AES} com 128 bits.
 \end{description}
