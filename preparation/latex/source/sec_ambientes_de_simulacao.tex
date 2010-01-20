@@ -2,7 +2,7 @@
 Algumas das limitações existentes nas plataformas das RSSF, devem-se ao facto
 de se pretender manter os sensores com um preço o mais baixo possível. Apesar
 de cada sensor por si não representar um investimento avultado quando se escala
-uma rede de 10 sensores para os milhares de dispositivos este valor pode
+uma rede de dez sensores para os milhares de dispositivos este valor pode
 representar valores bastante elevados. No campo da investigação estão a ser
 introduzidos novos protocolos de encaminhamento, novas aplicações, novos
 algoritmos e tecnologias de segurança. Como se trata de redes com tempo de vida
@@ -159,36 +159,4 @@ O facto do modelo de propagação de sinal ser baseado na norma IEEE802.11, torna
 dificil a adaptação às condições das RSSF, no entanto a modularidade do sistema
 permite o desenvolvimento de uma camada IEEE802.15.4 para se aproximar da norma
 mais recente de comunicação das RSSF.
-\subsection{Discussão}
-A necessidade de recorrer a ambientes de simulação para desenvolvimento de
-tecnologias de RSSF é uma realidade difícil de contornar dadas as
-características das RSSF e a necessidade de estudar todas as suas
-caracteristicas. O que se tem vindo a observar é que, apesar das multiplicidade
-de simuladores existentes\cite{SITE_DE_COMPARACAO_DE_SIM}, todos os ambientes
-foram criados ou adaptados com caracteristicas muito ligadas para o fim a que se
-proponham testar ou avaliar nas RSSF. Analisando algumas destas ferramentas
-nota-se que não existe uma suficiente genérica e fléxivel que permita avaliar
-todos os aspectos de uma RSSF. No caso do Freemote, embora especificamente
-desenvolvida para as RSSF, não incorpora modelos importantes como é o caso da
-energia, factor altamente restritivo nestas redes, e que, devido ao impacto que
-tem em cada componente, merece ser modelado e dado alguma atenção. Ainda neste
-simulador notem-se as carências ao nível do modelo rádio.
-
-Uma das caracteristicas dos simuladores estudados, exceptuando o Freemote, é o
-facto de serem orientados para redes sem fios em geral ou redes
-\textit{ad-hoc}. Devido às diferenças que existem entre estas redes e as RSSF
-torna-se difícil a avaliação devida de protocolos ou aplicações. No entanto é
-de realçar que o ShoX se apresenta como uma plataforma com bastantes modelos de
-redes \textit{ad-hoc}, alguns dos quais aplicados a RSSF, nomeadamente o modelo
-de consumo de energia e o modelo de rádio(ainda que a norma implementada seja
-IEEE802.11). Quanto à plataforma J-Sim esta tem de ser usada juntamente com um
-componente de RSSF e requer a implementação dos modelos numa linguagem de
-\textit{script } que implica: a aprendizagem de uma nova linguagem e o
-\textit{overhead} de se ligar duas linguagens, que podem penalizar o desempenho
-da simulação. Por fim, a simplicidade do JProwler pode servir de ponto de
-partida para a elaboração de um simulador para teste e avaliação de protocolos
-de encaminhamento seguro, uma vez que tem um comportamento baseado no TinyOS e
-com modelos do \textit{Mica2} pode ser estendido a incorporar módulos de gestão
-de energia e de análise gráfica de comportamentos ou eventos que sirvam de
-indicadores como por exemplo: energia consumida, fiabilidade, tempo de vida da
-rede e cobertura
+%\input{discussao_ambientes_simulacao}
