@@ -20,14 +20,14 @@ Fases do Protocolo & Ataque & Contramedidas\\ \hline\hline
 \multirow{4}{*}{Organização e Descoberta da Rede}
  & Falsificação de informação de Routing & Autenticação\\\cline{2-3}
  & Ataques de \textit{Rushing} & Encaminhamento aleatório de RREQ e autenticação \\ \cline{2-3}
- & Ataques de RREQ \textit{flooding} & Autenticação\\ \hline
 \multirow{4}{*}{Estabelecimento de Rotas}
  & HELLO flooding & Autenticação com confirmação(\textit{acknowledge})\\\cline{2-3}
  & Ataques \textit{Sinkhole} & Autenticação \\\cline{2-3}
  & Ataques \textit{Wormhole} & \textit{Packet leaches}\\\cline{2-3}
  & Ataques \textit{Sybil} & Distribuição aleatória de chaves, testes aos canais de rádio \\
  \hline
-\multirow{1}{*}{Manutenção de Rotas} & Ataques de \textit{Backhole}& Autenticação \\
+\multirow{1}{*}{Manutenção de Rotas} & Ataques de \textit{Backhole}& Definição de temporizadores e
+mecanismos de confirmação (ACK) autenticados\\
 \hline
 \end{tabular} \label{tab:tabela_ataques_contramedidas}
 \caption{Tabela de Ataques \textit{vs} Contramedidas}\label{tab:ataques_vs_contramedidas}
@@ -42,24 +42,26 @@ em que estes se podem desencadear.
 \begin{table}[H]
 \centering
 \begin{scriptsize}
-\begin{tabular}{c|c|ccccccc}\cline{2-9}
+\begin{tabular}{c|c|cccccc}\cline{2-8}
 % use packages: color,colortbl
-\mc{1}{c}{\textbf{ }} & \mc{8}{|c|}{\textbf{Ataques ao Encaminhamento}}\\\cline{1-9}
+\mc{1}{c}{\textbf{ }} & \mc{7}{|c|}{\textbf{Ataques ao Encaminhamento}}\\\cline{1-8}
 %\rowcolor{tcA}
 \mc{1}{|c|}{\textbf{Protocolos}} & \mc{1}{|c}{\textbf{Informação Falsa}} &
-\mc{1}{|c|}{\textbf{\textit{Rushing}}} & \mc{1}{c|}{\textbf{RREQ flooding}} &
+\mc{1}{|c|}{\textbf{\textit{Rushing}}}&
 \mc{1}{c|}{\textbf{HELLO flooding}} & \mc{1}{c|}{\textbf{\textit{Sinkhole}}} &
 \mc{1}{c|}{\textbf{\textit{Wormhole}}} & \mc{1}{c|}{\textbf{\textit{Sybil}}}&
 \mc{1}{c|}{\textbf{\textit{Blackhole}}}\\\hline
-\mc{1}{|c|}{SIGF} & X & \mc{1}{c|}{X} & \mc{1}{c|}{X} & \mc{1}{c|}{X} & \mc{1}{c|}{X} &
-\mc{1}{c|}{X} & \mc{1}{c|}{X} & \mc{1}{c|}{X}\\\hline
+
+
+\mc{1}{|c|}{SIGF} & X & \mc{1}{c|}{} & \mc{1}{c|}{\checkmark} & \mc{1}{c|}{} &
+\mc{1}{c|}{} &\mc{1}{c|}{} & \mc{1}{c|}{} \\\hline
 \mc{1}{|c|}{INSENS} & X & \mc{1}{c|}{X} & \mc{1}{c|}{X} & \mc{1}{c|}{X} & \mc{1}{c|}{X} &
-\mc{1}{c|}{X} & \mc{1}{c|}{X} & \mc{1}{c|}{X}\\\hline
-\mc{1}{|c|}{Clean-Slate} & X & \mc{1}{c|}{X} & \mc{1}{c|}{X} & \mc{1}{c|}{X} & \mc{1}{c|}{X} &
-\mc{1}{c|}{X} & \mc{1}{c|}{X} & \mc{1}{c|}{X}\\\hline
+\mc{1}{c|}{X} & \mc{1}{c|}{X} \\\hline
+\mc{1}{|c|}{Clean-Slate} & X & \mc{1}{c|}{X} & \mc{1}{c|}{X} & \mc{1}{c|}{X} & \mc{1}{c|}{X}
+& \mc{1}{c|}{X} & \mc{1}{c|}{X} \\\hline
 \end{tabular}
 \caption{Tabela de Protocolos de Encaminhamento \textit{vs} Ataques
-}\label{tab:ataques_vs_contramedidas}
+}\label{tab:ataques_vs_protocolos}
 \end{scriptsize}
 \end{table}
 }%

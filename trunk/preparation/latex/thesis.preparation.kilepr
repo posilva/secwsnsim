@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1 beta2
-lastDocument=source/sec_dicussao_resumo.tex
+lastDocument=source/Thesis.Preparation.PedroMarquesdaSilva.tex
 masterDocument=
 name=Thesis.Preparation
 pkg_extIsRegExp=false
@@ -18,12 +18,12 @@ QuickBuild=
 
 [item:source/Thesis.Preparation.PedroMarquesdaSilva.tex]
 archive=true
-column=1
+column=17
 encoding=ISO-8859-1
 highlight=LaTeX
-line=35
+line=77
 open=true
-order=1
+order=0
 
 [item:source/ataques_wsn.tex]
 archive=true
@@ -234,11 +234,11 @@ order=7
 
 [item:source/sec_dicussao_resumo.tex]
 archive=true
-column=15
+column=9
 encoding=ISO-8859-1
 highlight=LaTeX
 line=109
-open=true
+open=false
 order=0
 
 [item:source/sec_dolev_yao.tex]
