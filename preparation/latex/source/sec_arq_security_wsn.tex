@@ -1,7 +1,7 @@
 \subsection{Arquitectura de Serviços de Segurança em
 RSSF} \label{sect:subsec_arq_security_wsn}
 Muitas vezes considera-se que num sistema seguro, a segurança é um
-único componente da arquitectura do sistema\cite{SECURITY_IN_WSN_PERRIG}.
+único componente da arquitectura do sistema\cite{sec_in_wsn_perrig}.
 Todavia, esta visão é redutora, pois, para se conseguir um sistema seguro, é
 necessário que a segurança esteja integrada em cada um dos componentes, se
 assim não se verificar cada componente pode corresponder a uma ameaça a partir
@@ -19,14 +19,14 @@ suportar. Por exemplos se se tratar de uma aplicação de monitorização de saúde
 uma pessoa, o óbvio é proteger a privacidade da pessoa, mas se se tratar de uma
 aplicação de monitorização de dados ambientais este requisito pode ser relaxado.De seguida
 apresentam-se, de forma genérica, os principais requisitos de
-segurança de uma RSSF:
-\begin{description}\addtolength{\itemsep}{-.50\baselineskip}
+segurança de uma RSSF\cite{sec_in_wsn_perrig}:
+\begin{description}\descvspace
  \item[Autenticação]
  Considerando que as RSSF usam um meio de comunicação partilhado, é necessário
 recorrer à autenticação para garantir a detecção de mensagens alteradas ou
 injectadas no sistema com o intuito de obter acesso a alguma operação ou
 informação que é restrita a utilizadores não
-autorizados\cite{SECURITY_IN_WSN_PERRIG}.Note-se que a implementação de criptografia assimétrica
+autorizados\cite{sec_in_wsn_perrig}.Note-se que a implementação de criptografia assimétrica
 contribui para a garantia desta propriedade, mas ainda existe muito esforço a desenvolver neste
 campo dadas as limitações das RSSF e as exigências computacionais e energéticas destes mecanismos.
  \item[Confidencialidade]
@@ -35,7 +35,8 @@ partir de sensores que se encontram distribuidos em ambiente não controlado e, n
 fácil acesso,  é necessário garantir a confidencialidade dos dados que circulam na rede.
 Assim, o uso de mecanismos de criptografia é o mais indicado para este tipo de protecção.Desta
 forma, é necessária a utilização de algoritmos de encriptação fiáveis (ex:
-AES\footnote{\textit{Advenced Encryption System algorithm}}\cite{AES}, ECC\cite{ECC}) para garantir
+AES\footnote{\textit{Advenced Encryption System algorithm}}\cite{Stallings2005},
+ECC\cite{Stallings2005}) para garantir
 um determinado nível de segurança, para isso existe a necessidade de partilhar chaves de sessão por
 todos os \textit{end-points} e como tal deve-se recorrer a esquemas de distribuição de
 chaves\cite{DIST_Keys}.
@@ -52,13 +53,13 @@ Durante a comunicação a integridade garante que os dados recebidos pelo nó
 receptor não foram alterados por um adversário durante a transmissão. Em alguns
 casos esta propriedade é garantida juntamente com a autenticação, usando
 mecanismos que permitam verificar ambos apenas com um mecanismo, poupando assim
-recursos, que são escassos nas RSSF. Por exemplo, o uso de HMAC's\cite{HMAC} é vulgar uma
+recursos, que são escassos nas RSSF. Por exemplo, o uso de HMAC's\cite{Stallings2005} é vulgar uma
 vez que a chave é usada para autenticar a origem da mensagens e para garantir a
 integridade da mensagem.\cite{SPINS}.
 \item[Frescura]
 A frescura dos dados de uma mensagem implica que estes sejam recentes
 garantindo que a mensagem não é antiga e não foi reenviada por um qualquer
-adversário. \cite{SPINS} Podem-se considerar dois tipos de frescura: frescura
+adversário. \cite{SPINS,Luk2007d} Podem-se considerar dois tipos de frescura: frescura
 fraca (garantindo ordem parcial e sem informação do desvio de tempo, usada para
  as medições dos sensores) e frescura forte (garante ordem total em cada
 comunicação permitindo a estimação do atraso, usada para a sincronização de
@@ -71,7 +72,7 @@ TinySec é uma arquitectura de segurança para protecção ao nível de ligação de
 dados em RSSF. O objectivo principal, para o qual foi desenhado, é providenciar
 um nível adequado de segurança com o minimo consumo de recursos. Os serviços de
 segurança  disponibilizados são: autenticação de dados (com a utilização de
-\textit{Message Authentication Codes}(MAC), no caso CBC-MAC\footnote{Cipher
+\textit{Message Authentication Codes}(MAC)\cite{Stallings2005}, no caso CBC-MAC\footnote{Cipher
 Block Chaining - Message Authentication Code (CBC-MAC))}) e confidencialidade 
 (a encriptação é implementada com o recursotambém ao CBC-MAC).
  %Para se adaptar às RSSF o MAC tem um comprimeito de 4 bytes ao contrário dos 8 ou 16 habituais.
@@ -87,7 +88,8 @@ de recursos, o que contrariaria o objectivo principal da arquitectura.
  \item[MiniSec\cite{Luk2007d}]
 Minisec é uma camada de rede concebida para possuir o melhor dos dois mundos: baixo consumo de
 energia, melhor que o TinySec, e alta segurança. Uma das caracteristicas principais, que o tornam
-mais eficiente, é o uso do modo \textit{offset codebook} (OCB)\cite{STAL}  para encriptação de
+mais eficiente, é o uso do modo \textit{offset codebook} (OCB)\cite{Stallings2005}  para encriptação
+de
 blocos. O que permite numa única passagem autenticar e encriptar os dados, sem com isso aumentar o
 tamanho da mensagem em claro, o que contribui para um menor consumo de energia.
 
@@ -98,8 +100,8 @@ para grandes redes.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \item[SPINS\cite{SPINS}]
 É um conjunto de protocolos de segurança, constituído por dois componentes
-principais SNEP\footnote{Secure Network Encryption Protocol} \cite{SNEP} e
-${\mu}$TESLA \cite{MICROTESLA}. O primeiro, fornece serviços de autenticação e
+principais SNEP\footnote{Secure Network Encryption Protocol} \cite{SPINS} e
+${\mu}$TESLA \cite{SPINS}. O primeiro, fornece serviços de autenticação e
 confidencialidade entre dois pontos de comunicação, encriptando as mensagens e
 protegendo-as com um MAC. O SNEP gera diferentes chaves, de encriptação, que 
 derivam de uma chave mestra partilhada entre os dois nós, ainda é incluido um
@@ -124,18 +126,19 @@ Esta norma define a especificação da camada física e de controlo de acesso ao me
 pessoais de baixa potência ()\textit{Low Rate Personal Area Networks}). Foca-se essencialmente na
 comunicação de baixa potência entre dispositivos relativamente próximos, sem a necessidade de uma
 infrastrutura de suporte, explorando o  mínimo de consumo de energia. É a norma que já se encontra
-implementada em algumas plataformas das RSSF. (ex: XXX, XXX).
+implementada em algumas plataformas das RSSF. (ex: Micaz\cite{micaz}).
 No que se refere a segurança\cite{zigbee_802154}, esta norma, especifica alguns serviços que
 acabam por representar uma primeira linha de protecção contra ataques à infraestrutura. Estes
 mecanimos são os seguintes: i) Cada dispositivo mantem uma lista de controlo de acesso (ACL) com os
 dispositivos confiáveis com o intuito de filtrar comunicações não autorizadas; ii) Encriptação de
 dados, com a partilha de uma chave entre os intervenientes na comunicação, guardada juntamente com
 cada entrada da lista de ACL's; iii) Serviço de integridade de cada \textit{frame}, adiciona a cada
-frame uma \textit{Message Integrity Code} (MIC)\cite{MIC}; iv) Mecanismo de frescura de mensagens
+frame uma \textit{Message Integrity Code} (MIC)\cite{Stallings2005}; iv) Mecanismo de frescura de
+mensagens
 (\textit{Sequential Freshness}), utilizando o contador de frames e o contador de chaves para
 garantir a frescura das mensagens evitando ataques do tipo \textit{replaying} (reenvio).
 
-\item[ZigBee\cite{zigbee_802154, zigbee}]
+\item[ZigBee\cite{zigbee_802154,zigbee}]
 Com a especificação da norma 802.15.4 orientada para as duas camadas mais baixas da pilha de
 protocolos das RSSF (física e MAC) surge a norma ZigBee que pretende definir as especificações para
 a camada de rede e aplicação. Esta norma é implementada em plataformas de RSSF, com as
@@ -145,7 +148,7 @@ associados a cada chave de sessão, que são reiniciados em cada mudança de chave;
 com opções de integridade de mensagens que vão desde os 0 aos 128 bits de verificação de
 integridade de mensagens; ii)Autenticação, ao nível de rede é garantida com a utilização de uma
 chave de autenticação, ao nível de ligação são usadas chaves entre os dois pontos de comunicação;
-iv) Confidencialidade, usa o algoritmo AES\cite{AES} com 128 bits.
+iv) Confidencialidade, usa o algoritmo AES\cite{Stallings2005} com 128 bits.
 
 Esta arquitectura utiliza o conceito de "trusted center" para gestão da segurança na rede, este
 papel é desempenhado pelo denominado coordenador de rede ZigBee. Esta entidade é acreditada por

@@ -7,7 +7,7 @@ das redes \textit{ad-hoc}.
 \subsection{Caracterização dos protocolos de encaminhamento em RSSF}
 Podem-se estabelecer três classes  de protocolos\cite{Akkaya2005}: os baseados na localização,
 os centrados nos dados e os hierárquicos. Os protocolos baseados na localização usam esta informação
-para tomarem as melhores decisões para alcançar os destinos(ex: IGF\cite{IGF}).Os centrados
+para tomarem as melhores decisões para alcançar os destinos(ex: IGF\cite{igf_protocol}).Os centrados
 nos dados, ou seja, os que exploram a redundância e a semântica dos dados, normalmente são baseados
 em algoritmos que efectuam pesquisas lançadas a partir de nós de sincronização(ex: Directed
 Diffusion\cite{DirectDifusion}). Por fim, os protocolos hierárquicos, cuja concepção é baseada na
@@ -47,7 +47,7 @@ RSSF.
 Conhecida a inexistência de mecanismos de segurança em alguns dos algoritmos de encaminhamento de
 RSSF, uma das possibilidades vislumbradas por determinados autores foi a realização de melhoramentos
 em algoritmos existentes implementando mecanismos de segurança, um destes casos foi o algoritmo de
-encaminhamento \textit{Implicit Geographic Forwording} (IGF)\cite{IGF}, baseado na
+encaminhamento \textit{Implicit Geographic Forwording} (IGF)\cite{igf_protocol}, baseado na
 localização (cada nó conhece as suas coordenadas de localização no ambiente). Este algoritmo não
 mantém o estado ao longo do seu funcionamento, este facto faz com que funcione sem que seja
 necessário conhecimento do topologia da rede ou a presença de outros nós, logo, poderemos também
@@ -61,7 +61,8 @@ segurança, a executar em ambientes críticos.
 Ao instalar uma aplicação, baseada no protocolo IGF, sobre uma infrastrutura de um RSSF o
 ambiente estará definido por coordenadas que permitam a cada nó saber exactamente a sua localização
 em cada momento. Ao agregar componentes de encaminhamento e MAC\footnote{\textit{Medium Access
-Control}}  num único protocolo \textit{Network/MAC} é possível\cite{IGF}, no momento de envio do
+Control}}  num único protocolo \textit{Network/MAC} é possível\cite{igf_protocol}, no momento de
+envio do
 pacote, determinar qual o melhor próximo vizinho (definido no protocolo como candidato). O protocolo
 inicia com a origem a enviar uma mensagem do tipo \textit{Open Request To Send} (ORTS) para a
 vizinhança (esta mensagem contém a localização e o destino). Cada nó que se encontre no sextante
@@ -80,7 +81,8 @@ principalmente quando se trata da extensão de um já existente. No entanto, o
 protocolo SIGF\cite{SIGF} não pretende manter um bom desempenho e uma elevada taxa de sucessi de
 entrega das mensagens mesmo durante um ataque. Uma das novidades deste protocolo é o facto de ser
 configurável e como tal se adaptar os mecanismos de segurança ao grau de ameaça. O protocolo tem
-três extensões ao protocolo IGF\cite{IGF}que permitem evoluir gradualmente de um protocolo sem
+três extensões ao protocolo IGF\cite{igf_protocol}que permitem evoluir gradualmente de um protocolo
+sem
 estado para um
 protocolo, tradicional, com manutenção de estado, e com isto mais pesado e exigente em recursos.
 
@@ -123,7 +125,42 @@ prossegue-se com o encaminhamento dos dados baseando-se nas tabelas construídas 
 da estação base.
 
 \subsection{\textit{Secure Sensor Network Routing: Clean-Slate approach}}
-\cite{clean_slate}
+O ponto de partida para o algoritmo Clean-Slate\cite{clean_slate}foi a concepção de um algoritmo
+de uso generalizado, concebido desde de inicio, de forma sistemática , com mecanismos de segurança.
+Este algoritmo visa a resistência mesmo durante o presença de um ataque (ataque activo). Partindo do
+princípio que existem três conceitos a abordar no desenho de protocolos de encaminhamento seguro:
+prevenção, resiliência e detecção/recuperação, este algoritmo implementa-os desde ínicio, ao
+contrário do que acontece com alguns protocolos que apenas implementam um destes prícipios.
+\begin{description}
+\item[Funcionamento do Protocolo]
+Cada sensor da rede  recebe um identificador único e um certificado, assinado por uma entidade de
+certificação da rede (AR), a chave publica desta entidade, e um conjunto de valores (desafios)
+baseados numa função de dispersão de um sentido (\textit{one way hash function}), que poderão ser
+autenticados com a chave publica da AR.
+Também neste protocolo, se pode identificar três fases de operação: organização da rede,
+estabelecimento dos caminhos  e manutenção das rotas.
+O protocolo começa por estabelecer tabelas de encaminhamento e endereços dinâmicos (de tamanho
+variável) para cada um dos nós da rede, usando um algoritmo recursivo de agrupamento, procedendo de
+forma deterministica perante determinada topologia. Os grupos são formados de forma recursiva e
+hierárquica de forma a se fundirem até que a rede forme apenas um único grupo, em cada fusão é
+acrescentado à esquerda um bit (0/1) que permitirá distinguir cada endereço de um nó. Considera-se
+que dentro de um mesmo grupo a comunicação é feita por \textit{broadcast} fiável
 
+Este algoritmo incorpora mecanismos de detecção de comportamentos incorrectos dos nós, por exemplo,
+nós que pretendam assumir multiplas identidades. Este mecanismo é desencadeado após a formação dos
+grupos, cada nó anuncia o seu endereço para os vizinhos, o que permite aplicar um algortimo de
+detecção de replicação de nós\cite{perrig_replicacao}. Outro mecanismo que permite detectar má
+formação dos grupos é as \textit{Group Desviation Trees}, baseado em tabelas de dispersão
+que providenciam autenticação ao nível das folhas e da àrvore em si.
 
-\subsection{Discussão}
+Durante a fase de manutenção das rotas e encaminhamento, o algoritmo incorpora operações que lhe
+permite detectar saida e entrada de nós, bastando para isso que um nó ao detectar a saída de outro
+nó, procuro junto de uns dos vizinhos um novo nó que lhe permita alcaçar o grupo fornecido pelo nó
+ausente. O sistema baseia-se em épocas, que são intervalos de tempo, ao fim dos quais o
+algoritmo de agrupamento se re-executa por forma a incluir novos nós. Por fim no que respeita a
+encaminhamento este é feito por multi-rotas, fazendo com que o protocolo contorne àreas atacadas da
+rede, simplesmente pela propagação da informação dos grupos vizinhos, mantendo
+assim vários caminhos possíveis para outros grupos próximos. Os nós maliciosos são retirados do
+algoritmo usando uma técnica denominada por Honeybee, que corresponde a que um nó que detecte ou nó
+malicioso inunde a rede com um pacote que indica aos outros nós que retirem o atacante das tabelas.
+\end{description}
