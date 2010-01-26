@@ -5,13 +5,34 @@
 \newblock
   {http://www.btnode.ethz.ch/Documentation/BTnodeRev3HardwareReference}.
 
+\bibitem{contiki}
+The contiki operating system - home.
+\newblock http://www.sics.se/contiki/.
+
 \bibitem{mica2_datasheet}
 {Mica2 Datasheet}.
 \newblock {http://www.xbow.com/Products/productdetails.aspx?sid=174}.
 
+\bibitem{micaz}
+{MicaZ Product Details}.
+\newblock {http://www.xbow.com/Products/productdetails.aspx?sid=164}.
+
+\bibitem{nanork}
+{Nano-RK:} a wireless sensor networking {Real-Time} operating system.
+\newblock http://www.nanork.org/.
+
 \bibitem{sunspotworld}
 {SunSPOTWorld} - documentation.
 \newblock http://sunspotworld.com/docs/index.html.
+
+\bibitem{tinyos}
+{TinyOS} community forum {\textbar}{\textbar} an open-source {OS} for the
+  networked sensor regime.
+\newblock http://www.tinyos.net/.
+
+\bibitem{zigbee}
+{ZigBee} alliance.
+\newblock {http://www.zigbee.org/Default.aspx}.
 
 \bibitem{ietf_802154}
 {IEEE Standard for Information Technology - Telecommunications and information
@@ -34,6 +55,12 @@ I.~F. Akyildiz, W.~Su, Y.~Sankarasubramaniam, and E.~Cayirci.
 \newblock Routing techniques in wireless sensor networks: a survey.
 \newblock {\em Wireless Communications, {IEEE}}, 11(6):6--28, 2004.
 
+\bibitem{blackhole_adhoc}
+Mohammad Al-Shurman, Seong-Moo Yoo, and Seungjin Park.
+\newblock Black hole attack in mobile ad hoc networks.
+\newblock In {\em ACM-SE 42: Proceedings of the 42nd annual Southeast regional
+  conference}, pages 96--97, New York, NY, USA, 2004. ACM.
+
 \bibitem{zigbee_802154}
 Paolo Baronti, Prashant Pillai, Vince~W.C. Chook, Stefano Chessa, Alberto
   Gotta, and Y.~Fun Hu.
@@ -45,6 +72,18 @@ Paolo Baronti, Prashant Pillai, Vince~W.C. Chook, Stefano Chessa, Alberto
 M.~Blum, Tian He, Sang Son, and John~A Stankovic.
 \newblock {IGF:} a {State-Free} robust communication protocol for wireless
   sensor networks.
+
+\bibitem{falhas_bizantinas}
+Miguel Castro and Barbara Liskov.
+\newblock Practical byzantine fault tolerance.
+\newblock In {\em OSDI '99: Proceedings of the third symposium on Operating
+  systems design and implementation}, pages 173--186, Berkeley, CA, USA, 1999.
+  USENIX Association.
+
+\bibitem{falhas_bizantinas_proactiverec}
+Miguel Castro and Barbara Liskov.
+\newblock Practical byzantine fault tolerance and proactive recovery.
+\newblock {\em ACM Trans. Comput. Syst.}, 20(4):398--461, 2002.
 
 \bibitem{WAP_Wormhole}
 Sun Choi, Doo young Kim, Do~hyeon Lee, and Jae il~Jung.
@@ -126,6 +165,12 @@ ITU-T.
 \newblock {Recommendation X.800: Security Architecture for Open Systems for
   CCITT Applications}, 1991.
 
+\bibitem{DSR}
+David~B. Johnson and David~A. Maltz.
+\newblock Dynamic source routing in ad hoc wireless networks.
+\newblock In {\em Mobile Computing}, pages 153--181. Kluwer Academic
+  Publishers, 1996.
+
 \bibitem{livro_wsn_arch}
 Holger Karl and Andreas Willig.
 \newblock {\em Protocols and Architectures for Wireless Sensor Networks}.
@@ -167,6 +212,12 @@ A.~Mpitziopoulos, D.~Gavalas, G.~Pantziou, and C.~Konstantopoulos.
 \newblock Defending wireless sensor networks from jamming attacks.
 \newblock In {\em Personal, Indoor and Mobile Radio Communications, 2007. PIMRC
   2007. IEEE 18th International Symposium on}, pages 1--5, Sept. 2007.
+
+\bibitem{Sec_WSN_Vulnerabilities}
+Wireless Networks.
+\newblock {Security Vulnerabilities In Wireless Sensor Networks: A Survey}.
+\newblock {\em Journal of Information Assurance and Security},
+  5(2010):031--044, 2009.
 
 \bibitem{sybil_perrig}
 J.~Newsome, E.~Shi, D.~Song, and A.~Perrig.
@@ -213,12 +264,26 @@ C.E. Perkins and E.M. Royer.
 Adrian Perrig and Haowen Chan.
 \newblock {Security and Privacy in Sensor Networks}.
 
+\bibitem{sec_in_wsn_perrig}
+Adrian Perrig, John Stankovic, and David Wagner.
+\newblock Security in wireless sensor networks.
+\newblock {\em Commun. ACM}, 47(6):53--57, 2004.
+
+\bibitem{SPINS}
+Adrian Perrig, Robert Szewczyk, Victor Wen, David Culler, and J.~D. Tygar.
+\newblock Spins: Security protocols for sensor networks.
+\newblock In {\em Wireless Networks}, pages 189--199, 2001.
+
 \bibitem{BMAC}
 Joseph Polastre, Jason Hill, and David Culler.
 \newblock Versatile low power media access for wireless sensor networks.
 \newblock In {\em SenSys '04: Proceedings of the 2nd international conference
   on Embedded networked sensor systems}, pages 95--107, New York, NY, USA,
   2004. ACM.
+
+\bibitem{IETF2828}
+RFC2828.
+\newblock {Internet Security Glossary}, 2000.
 
 \bibitem{perrig_design_sec_sensor}
 E.~Shi and A.~Perrig.
@@ -239,6 +304,12 @@ Andrew~S. Tanenbaum and Maarten~Van Steen.
 Hua-Wen Tsai, Chih-Ping Chu, and Tzung-Shi Chen.
 \newblock Mobile object tracking in wireless sensor networks.
 \newblock {\em Comput. Commun.}, 30(8):1811--1825, 2007.
+
+\bibitem{Survey_wsn_Sec_issues}
+Yong Wang, G.~Attebury, and B.~Ramamurthy.
+\newblock A survey of security issues in wireless sensor networks.
+\newblock {\em Communications Surveys \& Tutorials, IEEE}, 8(2):2--23, Quarter
+  2006.
 
 \bibitem{MEMS}
 B.A. Warneke and K.S.J. Pister.
@@ -274,5 +345,11 @@ Jennifer Yick, Biswanath Mukherjee, and Dipak Ghosal.
 Hu. Yih-Chun and A.~Perrig.
 \newblock A survey of secure wireless ad hoc routing.
 \newblock {\em Security \& Privacy, IEEE}, 2(3):28--39, May-June 2004.
+
+\bibitem{Attaks_defenses_sec_in_wsn}
+W.~You-Chiun and Y~Tseng.
+\newblock Attacks and defenses of routing mechanisms in ad hoc and sensor
+  networks.
+\newblock In {\em Security in Sensor Networks}.
 
 \end{thebibliography}
