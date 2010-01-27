@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<project name="SecSensorSim" company="Mestrado em Engenharia Inform&#xE1;tica FCT-UNL" manager="Pedro Marques da Silva" phase="" project-start="20100222T000000Z" mrproject-version="2" calendar="1">
+  <properties/>
+  <phases>
+    <phase name="An&#xE1;lise"/>
+    <phase name="Desenvolvimento"/>
+    <phase name="Prova de Conceito"/>
+    <phase name="Avalia&#xE7;&#xE3;o"/>
+    <phase name="Relat&#xF3;rio"/>
+  </phases>
+  <calendars>
+    <day-types>
+      <day-type id="0" name="Working" description="A default working day"/>
+      <day-type id="1" name="Nonworking" description="A default non working day"/>
+      <day-type id="2" name="Use base" description="Use day from base calendar"/>
+    </day-types>
+    <calendar id="1" name="Default">
+      <default-week mon="0" tue="0" wed="0" thu="0" fri="0" sat="0" sun="1"/>
+      <overridden-day-types>
+        <overridden-day-type id="0">
+          <interval start="0800" end="1200"/>
+          <interval start="1300" end="1700"/>
+          <interval start="2000" end="2359"/>
+        </overridden-day-type>
+      </overridden-day-types>
+      <days/>
+    </calendar>
+  </calendars>
+  <tasks>
+    <task id="1" name="Elabora&#xE7;&#xE3;o do Projecto" note="" work="7343929" duration="5572572" start="20100222T000000Z" end="20100721T235820Z" work-start="20100222T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-duration">
+      <task id="2" name="An&#xE1;lise" note="" work="1943955" start="20100222T000000Z" end="20100310T235820Z" work-start="20100222T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <task id="3" name="Refinamento da Bibliografia" note="" work="647985" start="20100222T000000Z" end="20100310T235820Z" work-start="20100222T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
+        <task id="4" name="Avalia&#xE7;&#xE3;o/Estudo das Plataformas de Simula&#xE7;&#xE3;o" note="" work="647985" start="20100222T000000Z" end="20100310T235820Z" work-start="20100222T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+          <predecessors>
+            <predecessor id="1" predecessor-id="3" type="SS"/>
+          </predecessors>
+        </task>
+        <task id="5" name="Desenho da Plataforma" note="" work="647985" start="20100222T000000Z" end="20100310T235820Z" work-start="20100222T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+          <predecessors>
+            <predecessor id="1" predecessor-id="4" type="SS"/>
+          </predecessors>
+        </task>
+      </task>
+      <task id="6" name="Desenvolvimento" note="" work="1857557" start="20100305T000000Z" end="20100423T235820Z" work-start="20100305T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <task id="7" name="Integra&#xE7;&#xE3;o do Simulador Base" note="" work="215995" start="20100305T000000Z" end="20100310T235820Z" work-start="20100305T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+          <constraint type="start-no-earlier-than" time="20100305T000000Z"/>
+        </task>
+        <task id="8" name="M&#xF3;dulo de Configura&#xE7;&#xE3;o" note="" work="215995" start="20100310T235820Z" end="20100316T235820Z" work-start="20100310T235820Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+          <predecessors>
+            <predecessor id="1" predecessor-id="7" type="FS"/>
+          </predecessors>
+        </task>
+        <task id="9" name="M&#xF3;dulo de Gest&#xE3;o de Topologias" note="" work="215995" start="20100316T235820Z" end="20100322T235820Z" work-start="20100316T235820Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+          <predecessors>
+            <predecessor id="1" predecessor-id="8" type="FS"/>
+          </predecessors>
+        </task>
+        <task id="10" name="M&#xF3;dulo de Gest&#xE3;o de Energia" note="" work="345592" start="20100322T235820Z" end="20100331T235820Z" work-start="20100322T235820Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+          <predecessors>
+            <predecessor id="1" predecessor-id="9" type="FS"/>
+          </predecessors>
+        </task>
+        <task id="11" name="M&#xF3;dulo de Visualiza&#xE7;&#xE3;o" note="" work="431990" start="20100331T235820Z" end="20100412T235820Z" work-start="20100331T235820Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+          <predecessors>
+            <predecessor id="1" predecessor-id="10" type="FS"/>
+          </predecessors>
+        </task>
+        <task id="12" name="M&#xF3;dulo de Injec&#xE7;&#xE3;o de Ataques" note="" work="431990" start="20100412T235820Z" end="20100423T235820Z" work-start="20100412T235820Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+          <predecessors>
+            <predecessor id="1" predecessor-id="11" type="FS"/>
+          </predecessors>
+        </task>
+      </task>
+      <task id="13" name="Prova de Conceito" note="" work="1295970" start="20100423T235820Z" end="20100528T235820Z" work-start="20100423T235820Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <task id="14" name="Estudo Detalhado de Implementa&#xE7;&#xE3;o de Protocolos" note="" work="215995" start="20100423T235820Z" end="20100429T235820Z" work-start="20100423T235820Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+          <predecessors>
+            <predecessor id="1" predecessor-id="12" type="FS"/>
+          </predecessors>
+        </task>
+        <task id="15" name="Implementa&#xE7;&#xE3;o de Clean-Slate" note="" work="431990" start="20100429T235820Z" end="20100511T235820Z" work-start="20100429T235820Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+          <predecessors>
+            <predecessor id="1" predecessor-id="14" type="FS"/>
+          </predecessors>
+        </task>
+        <task id="16" name="Implementa&#xE7;&#xE3;o de INSENS" note="" work="431990" start="20100511T235820Z" end="20100522T235820Z" work-start="20100511T235820Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+          <predecessors>
+            <predecessor id="1" predecessor-id="15" type="FS"/>
+          </predecessors>
+        </task>
+        <task id="17" name="Implementa&#xE7;&#xE3;o de Ataques aos Protocolos" note="" work="215995" start="20100522T235820Z" end="20100528T235820Z" work-start="20100522T235820Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+          <predecessors>
+            <predecessor id="1" predecessor-id="16" type="FS"/>
+          </predecessors>
+        </task>
+      </task>
+      <task id="18" name="Avalia&#xE7;&#xE3;o" note="" work="302492" start="20100528T235820Z" end="20100602T235820Z" work-start="20100528T235820Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <task id="19" name="Defini&#xE7;&#xE3;o de matriz de avalia&#xE7;&#xE3;o" note="" work="43298" start="20100528T235820Z" end="20100529T235820Z" work-start="20100528T235820Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+          <predecessors>
+            <predecessor id="1" predecessor-id="17" type="FS"/>
+          </predecessors>
+        </task>
+        <task id="20" name="Repeti&#xE7;&#xE3;o de experi&#xEA;ncias/simula&#xE7;&#xF5;es" note="" work="129597" start="20100529T235820Z" end="20100602T235820Z" work-start="20100529T235820Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+          <predecessors>
+            <predecessor id="1" predecessor-id="19" type="FS"/>
+          </predecessors>
+        </task>
+        <task id="21" name="Recolha e An&#xE1;lise de Resultados" note="" work="129597" start="20100529T235820Z" end="20100602T235820Z" work-start="20100529T235820Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+          <predecessors>
+            <predecessor id="1" predecessor-id="20" type="SS"/>
+          </predecessors>
+        </task>
+      </task>
+      <task id="22" name="Relat&#xF3;rio" note="" work="1943955" start="20100530T235820Z" end="20100721T235820Z" work-start="20100531T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <task id="23" name="Escrita do Relat&#xF3;rio" note="dsadasdas&#10;Tue 26 Jan 2010, 15:11&#10;" work="1943955" start="20100530T235820Z" end="20100721T235820Z" work-start="20100531T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+          <predecessors>
+            <predecessor id="1" predecessor-id="21" type="SS" lag="86400"/>
+          </predecessors>
+        </task>
+      </task>
+    </task>
+  </tasks>
+  <resource-groups/>
+  <resources>
+    <resource id="1" name="Pedro Marques da Silva" short-name="PMS" type="1" units="0" email="" note="" std-rate="0"/>
+  </resources>
+  <allocations/>
+</project>

@@ -1,2 +1,39 @@
 \chapter[Plano de trabalho]{Plano de Elaboração da Tese}
 \label{cap:plano}
+A elaboração da tese realizar-se-à durante o 2º semestre de 2009/2010, iniciando a 22 de Fevereiro
+de 2010. O plano apresentado estabelece cinco grandes actividades: análise, desenvolvimento,
+prova de conceito, avaliação e relatório, como se apresenta na \figurename{\ref{fig:gantt}}.
+\input{pic_gantt}
+Apresenta-se em seguida uma breve descrição de cada uma das actividades.
+\begin{description}
+\item[Análise]
+Esta actividade corresponde à revisão de bibliografia complementar, como forma de aprofundar o
+estudo de problemática, avaliação do simulador base como preconizado na secção
+\ref{sec:elab_aval_amb_sim}. Inícia-se também o desenho da plataforma, consistindo numa visão mais
+técnica da solução, com a definição formal de algoritmos, interfaces e o modelo de interacção
+dos componentes da plataforma. Esta última tarefa permitirá iníciar a fase de desenvolvimento de
+forma mais sólida.
+\item[Desenvolvimento]
+Esta actividade corresponde à concepção e implementação da arquitectura da plataforma como
+apresentada na secção \ref{sec:apresent_arch}, em que cada um dos componentes corresponderá às
+seguintes tarefas: Integração do Simulador Base, Módulo de Configuração (secção
+\ref{sec:impl_conf}), Módulo de Gestão de Topologias (\ref{sec:impl_topo}), Módulo de Gestão de
+Energia (secção \ref{sec:impl_energia}), Módulo de Visualização (secção \ref{sec:impl_visual}) e
+Módulo de Injecção de Ataques (secção \ref{sec:impl_ataques}).
+\item[Prova de Conceito]
+Esta actividade corresponde à implementação dos algoritmos de encaminhamento seguro propostos (ver
+secção \ref{sec:impl_protocolos}):  INSENS e Clean-Slate, que deverá ser precedida de um estudo mais
+aprofundado das particularidades de cada um. Consequentemente, cada protocolo será sujeito a um
+modelo de ataques que permitirão avaliar os comportamentos como forma de os mapear nas
+contribuições esperadas para esta dissertação.
+\item[Avaliação]
+Esta actividade preconiza a avaliação dos protocolos implementados usando as ferramentas da
+plataforma como referido na secção \ref{sec:aval_protocolos}. No entanto, esta avaliação permitirá,
+também, retirar conclusões acerca da usabilidade da plataforma (secção \ref{sec:aval_solucao}) e o
+grau de sucesso dos objectivos pretendidos que passam pela capacidade de estudo de
+protocolos de encaminhamento em RSSF em geral, e em particular, os com preocupações de segurança.
+\item[Relatório]
+Esta actividade corrresponde à escrita da dissertação que poderá decorrer em paralelo com a
+avaliação e eventualmente com a prova de conceito. Que culminará com a entrega da dissertação até à
+data limite.   
+\end{description}
