@@ -17,10 +17,6 @@ The contiki operating system - home.
 {MicaZ Product Details}.
 \newblock {http://www.xbow.com/Products/productdetails.aspx?sid=164}.
 
-\bibitem{nanork}
-{Nano-RK:} a wireless sensor networking {Real-Time} operating system.
-\newblock http://www.nanork.org/.
-
 \bibitem{sunspotworld}
 {SunSPOTWorld} - documentation.
 \newblock http://sunspotworld.com/docs/index.html.
@@ -147,6 +143,11 @@ Yih-Chun Hu, A.~Perrig, and D.B. Johnson.
 \newblock {\em Selected Areas in Communications, IEEE Journal on},
   24(2):370--380, Feb. 2006.
 
+\bibitem{Hu2004}
+Yih-Chun Hu and Adrian Perrig.
+\newblock {A Survey of Secure Wireless Ad Hoc Routing}.
+\newblock {\em IEEE Security and Privacy}, 2(3), 2004.
+
 \bibitem{Rushing_attacks_perrig}
 Yih-Chun Hu, Adrian Perrig, and David~B. Johnson.
 \newblock Rushing attacks and defense in wireless ad hoc network routing
@@ -170,11 +171,6 @@ David~B. Johnson and David~A. Maltz.
 \newblock Dynamic source routing in ad hoc wireless networks.
 \newblock In {\em Mobile Computing}, pages 153--181. Kluwer Academic
   Publishers, 1996.
-
-\bibitem{livro_wsn_arch}
-Holger Karl and Andreas Willig.
-\newblock {\em Protocols and Architectures for Wireless Sensor Networks}.
-\newblock John Wiley \& Sons, 2005.
 
 \bibitem{Karlof2003}
 Chris Karlof and David Wagner.
@@ -207,18 +203,6 @@ Aleksandar Milenkovi\'{c}, Chris Otto, and Emil Jovanov.
   an implementation.
 \newblock {\em Comput. Commun.}, 29(13-14):2521--2533, 2006.
 
-\bibitem{jamming}
-A.~Mpitziopoulos, D.~Gavalas, G.~Pantziou, and C.~Konstantopoulos.
-\newblock Defending wireless sensor networks from jamming attacks.
-\newblock In {\em Personal, Indoor and Mobile Radio Communications, 2007. PIMRC
-  2007. IEEE 18th International Symposium on}, pages 1--5, Sept. 2007.
-
-\bibitem{Sec_WSN_Vulnerabilities}
-Wireless Networks.
-\newblock {Security Vulnerabilities In Wireless Sensor Networks: A Survey}.
-\newblock {\em Journal of Information Assurance and Security},
-  5(2010):031--044, 2009.
-
 \bibitem{sybil_perrig}
 J.~Newsome, E.~Shi, D.~Song, and A.~Perrig.
 \newblock The sybil attack in sensor networks: analysis \& defenses.
@@ -231,12 +215,6 @@ E.C.H. Ngai, Jiangchuan Liu, and M.R. Lyu.
   networks.
 \newblock In {\em Communications, 2006. ICC '06. IEEE International Conference
   on}, volume~8, pages 3383--3389, June 2006.
-
-\bibitem{distributed_detection_replication}
-B.~Parno, A.~Perrig, and V.~Gligor.
-\newblock Distributed detection of node replication attacks in sensor networks.
-\newblock In {\em Security and Privacy, 2005 IEEE Symposium on}, pages 49--63,
-  May 2005.
 
 \bibitem{Parno2005}
 B.~Parno, A.~Perrig, and V.~Gligor.
