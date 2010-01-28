@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1 beta2
-lastDocument=source/Thesis.Preparation.PedroMarquesdaSilva.tex
+lastDocument=source/capitulo1.tex
 masterDocument=
 name=Thesis.Preparation
 pkg_extIsRegExp=false
@@ -36,12 +36,12 @@ order=1
 
 [item:source/capitulo1.tex]
 archive=true
-column=0
+column=48
 encoding=ISO-8859-1
 highlight=LaTeX
-line=116
-open=false
-order=8
+line=170
+open=true
+order=3
 
 [item:source/capitulo2.tex]
 archive=true

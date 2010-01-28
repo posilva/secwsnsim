@@ -1,199 +1,141 @@
 \chapter{Introdução} \label{cap:introducao}
 \onehalfspacing
 \section{Introdução geral} \label{sect:introducao}
-% 3 parágrafos por cada um do resumo
-Os recentes avanços no fabrico de \textit{hardware} de pequena dimensão \cite{MEMS} com capacidades
-para desepenhar tarefas específicas e a diminuição do tamanho dos dispositivos de comunicação
-sem fios, fez surgir, nos últimos anos, um novo campo da investigação, as redes de sensores sem
-fios (RSSF).  Uma rede de sensores é um conjunto de pequenos dispositivos de computação de
-baixa potência distribuídos num determinado ambiente, de forma autonoma\footnote{ Sem a necessidade
-de monitorização ou vigilância por parte de uma entidade externa} e auto-organizada, com a função de
-recolher sensorialmente (ou monitorizar) fenómenos\footnote{ Entidades ou características do
-interesse do observador} físicos. Um ambiente de execução pode ser um qualquer espaço onde uma RSSF
-possa ser instalada por exemplo: uma casa, um terreno de combate ou o próprio corpo humano.
+Recentemente, tem-se observado avanços na concepção e fabrico de sistemas computacionais
+programáveis baseados em hardware de pequena dimensão\cite{MEMS} com capacidades para desepenhar
+tarefas específicas. Estes avanços permitiram integrar, nesses sistemas, processadores
+miniaturizados, memória, dispositivos de processamento de sinal e de conversão analógica-digital
+associada ao sensoriamento de diferentes fenómenos físicos (através de diversos tipos de sensores) e
+capacidades de comunicação sem fios por rádio frequência (baseados em normas como
+802.15.4\cite{ietf_802154,zigbee_802154} e Zigbee\cite{zigbee_802154})). A
+possibilidade de construção destes dispositivos (que se designam mais simplesmente por nós sensores)
+fez surgir, nos últimos anos, um novo campo da investigação conhecido pela área das redes de
+sensores sem fios (RSSF). 
 
-A componente básica e fundamental de uma rede de sensores é o nó sensor
-(\textit{mote})\cite{mica2_datasheet, btnodes,sunspotworld}. Este pode conter diversos sensores
-para monitorizar, por exemplo,  temperatura, luz ou movimento consoante as necessidades da
-aplicação. É caracterizado por ser pequeno, ter pouco poder de computação, ter baixa largura de
-banda de comunicação e ter energia limitada. Conhecidas estas limitações, os
-sensores têm de ser distribuídos em grande número como forma de aumentar a
-redundância, formando redes de larga escala que podem ir até aos milhares de nós.
+Uma rede de sensores é formada por um conjunto de pequenos dispositivos com as características
+anteriores, distribuídos numa certa área geográfica, que podem funcionar de forma autónoma ou sem
+supervisão humana e que, com maior ou menor densidade, permitem monitorizar diferentes fenómenos
+físicos associados ao meio ambiente envolvente. Possuem características de
+auto-organização, podendo ser formadas por um menor ou maior número de sensores e permitindo cobrir
+desde pequenas a vastas áreas de monitorização. Um ambiente de instalação de uma rede de sensores
+sem fios tanto pode ser um edifício, uma instalação industrial, uma área de combate, uma vasta zona
+de monitorização de um habitat natural, um veículo, como o próprio corpo
+humano\cite{apps_tracking,app_monitor,app_health,Akyildiz2002}.
 
-Sendo o \textit{hardware}  de pequena dimensão e com características muito específicas
-para a tipologia de aplicações às quais se aplica, os \textit{motes}, diferem uns dos outros
-consoante a sua função na rede e poderão desempenhar, fundamentalmente, dois papeis: nó genérico
-gerador de informação (\textit{source-nodes}) e nó base ou de sincronização (nó colector de dados da
-rede ou de execução de comandos de pesquisa)[\textbf{REFERENCIA}]. Outro papel, que pode ser
-desempenhado, numa RSSF é o de nós de interligação ou \textit{gateways}. Estes permitem ligar as
-RSSF a outras redes ou a outras infraestruturas que, com maior capacidade de armazenamento e
-processamento, permitem efectuar análise de dados coligidos. Por fim, e não menos importantes,
-existem ainda os nós de desenvolvimento, que possuem ligações a computadores (ex: ligação  de rede
-\textit{ethernet}, RS232), podendo ainda funcionar, também, como nó \textit{gateway}.
-[\textbf{REFERENCIA}]
-Assim, verifica-se que apesar das limitações existentes, inerentes às caracteristicas do hardware e
-da sua aplicabilidade, os sensores, ao contrário do que acontece em redes convencionais, não se
-encarregam somente de processar informação, mas possuem tarefas fundamentais no encaminhamento da
-informação. Estas particularidades, existentes também nas redes \textit{ad-hoc}, tornado-se num
-desafio ainda maior nas RSSF, uma vez que as suas características e limitações expõe algumas
-vulnerabilidades ao seu funcionamento.
+A componente básica e fundamental de uma rede de sensores é pois o nó sensor (também designado por
+\textit{mote})\cite{mica2_datasheet, btnodes,sunspotworld,micaz}. Cada um destes nós é visto como um
+substrato computorizado que pode possuir diversos sensores para monitorizar, por exemplo,
+temperatura, luz, movimento e outros fenómenos físicos, consoante as necessidades das aplicações.
+Sendo um dispositivo miniaturizado e concebido para possuir um baixo custo de produção, apresenta um
+poder de computação limitado, baixa largura de banda de comunicação, curto alcance de comunicação
+rádio e energia autónoma limitada\cite{Yick2008}. Numa rede de sensores a energia pode constituir um
+recurso finito. Pois, em certos ambientes de instalação pode não ser possível, ou viável, realizar
+operações que exijam intervenção ou supervisão humana, por exemplo, para o carregamento ou
+substituição de baterias. Conhecidas estas limitações, para se poderem atingir distribuições de
+grande cobertura geográfica, os sensores têm de ser distribuídos em grande número, podendo-se
+também, por esse meio, aumentar a redundância dos nós que assim formam redes de larga escala que
+chegam a atingir milhares de nós.
 
+Sendo o hardware de pequena dimensão e com características muito específicas para a tipologia de
+aplicações às quais se aplica, os \textit{motes}, diferem uns dos outros consoante a sua função na
+rede e poderão desempenhar, fundamentalmente, dois papeis: nó genérico gerador de informação
+(source-nodes) e nó base ou de sincronização (nó colector de dados da rede ou de execução de
+comandos de pesquisa)\textbf{[REFERENCIA]}. Numa RSSF os nós podem também actuar como nós de
+interligação (ou de encaminhamento e processamento intermédio através da rede) ou gateways (que
+permitem ligar o ambiente da rede de sensores a outras redes e sub-sistemas externos). Assim, uma
+RSSF pode ser concebida de forma a ser interligada a outras infraestruturas computacionais que, com
+maior capacidade de armazenamento e processamento, permitem efectuar análise de dados coligidos. Na
+tecnologia actual existem ainda nós de desenvolvimento, que possuem ligações a computadores (ex:
+ligação de rede ethernet, RS232 ou USB), permitindo o desenvolvimento e carregamento expedito de
+código desenvolvido em estações de desenvolvimento. Os sensores dotados de ligações Ethernet, RS-232
+ou USB podem ainda funcionar como nós de tipo gateway, permitindo num cenário concreto ligar a rede
+de sensores a aplicações executando em sistemas de computadores usuais [REFERENCIA].
 \subsection{Caracterização de RSSF}\label{sect:subsec_caracterizacao_wsn}
-As redes de sensores sem fios são um caso especial de redes \textit{ad-hoc} que exibem
-características especificas que podem ser diferenciadas\cite{REDES_AD_VS_WSN}. As RSSF têm
-particular interesse, dada a sua adequação a aplicações de larga escala, uma vez que a participação
-de milhares de nós faz emergir algumas problemáticas inerentes a aplicações distribuídas
-\cite{Coulouris_sd4ed} e aos seus mecanismos de gestão, como tolerância a falhas,
-escalabilidade e segurança. Os nós sensores são dispositivos de baixa potência, também
-denominados sensores inteligentes(\textit{Smart Sensors})\cite{Yick2008}, são constituídos por um ou
-mais sensores, por processador, por memória, por bateria e por um mecanismo de comunicação por
-rádio-frequência baseados em normas (802.15.4 \cite{ietf_802154,zigbee_802154} e
-Zigbee\cite{zigbee_802154}) com base de
-comunicação orientada para protocolos de acesso ao meio e de ligação de dados (\textit{MAC/Data
-Link}) que podem apresentar características mais ou menos específicas (ex:
-B-MAC\cite{BMAC,mac_protocols}, S-MAC\cite{SMAC,mac_protocols}).
-
-No entanto, dadas as características de auto-organização/configuração, encaminhamento
-\textit{multi-hop}, baixo custo, miniaturização e versatilidade de implementação (devido  à não
-necessidade de infraestrutura adicional de comunicação entre nós)\cite{Yick2008}, o seu uso
-tem-se estendido a outros campos, nomeadamente os do domínio militar, segurança e
-medicina\cite{Akyildiz2002}. Consciente das limitações impostas
-pelas RSSF, todo o processamento e comunicação tem-nas sempre, já que qualquer tarefa desempenhada
-penaliza o consumo de energia (especial relevo para a comunicação, que consome muito mais
-energia do que o processamento). Com isto, a investigação centrada nas RSSF tem vindo a
-introduzir novos conceitos, a criar ou melhorar protocolos, a construir aplicações e a desenvolver
-novos algoritmos, com vista a ir ao encontro dos limites impostos pelas restrições das RSSF,
-traduzindo-se numa maior eficácia e na melhoria da sua utilização em inúmeras aplicações.
+As redes de sensores sem fios podem ser abordadas como um caso especial de redes \textit{ad-hoc},
+embora exibam características especificas que podem ser mais ou menos 
+diferenciadas\cite{REDES_AD_VS_WSN}. As RSSF para aplicações de larga escala fazem emergir algumas
+problemáticas inerentes a aplicações distribuídas, com especificidades e desafios próprios
+\cite{Coulouris_sd4ed}, nomeadamente ao nível dos mecanismos de gestão, da organização topológica
+autónoma, das necessidades de sistemas de encaminhamento \textit{multi-hop}, de requisitos de
+tolerância a falhas, de requisitos de escalabilidade ou de necessidade de serviços de segurança.
 \subsection{Aplicações}
-Muitas foram as aplicações encontradas para a utilização/exploração desta arquitectura
-distribuída de larga escala\cite{Yick2008}. O carácter autónomo destas redes oferece um sem número
-de vantagens que propicia a sua utilização em locais remotos e sem necessidade de
-manutenção. Sendo assim, as aplicações poderão, genéricamente, ser divididas nas seguintes
-classes de funções:
+Muitas foram as aplicações encontradas na investigação ou na utilização emergente de redes de
+sensores com diferentes requisites de escala\cite{Yick2008}. O carácter autónomo destas redes
+oferece um sem número de vantagens que propicia a sua utilização em locais remotos de acessibilidade
+difícil e onde não é possível a sua manutenção e supervisão. De entre as aplicações das RSSF, podem
+destacar-se as seguintes: 
 \begin{description}\addtolength{\itemsep}{-.50\baselineskip}
- \item \textbf{Detecção de alvos/objectos(\textit{Target Tracking}):} \cite{apps_tracking} Detecção
-de movimento (trajectória/presença) em àreas vigiadas (em teatros operacionais militares, na
-vigilância de infraestruturas);
- \item \textbf{Monitorização de fenómenos naturais:} \cite{app_monitor}Detecção de eventos ou
-anomalias ambientais (agricultura, poluição, \textit{habitats} naturais),
-controlo de fenómenos naturais (sismos, vulcões);
- \item \textbf{Recolha de dados:} \cite{app_health}controlo de
-indicadores físicos de pessoas e animais (recurso a sensores especiais)
-normalmente associados a aplicações da medicina
+ \item \textbf{Detecção de alvos/objectos(\textit{Target Tracking}):} \cite{apps_tracking}
+associadas à detecção de movimento (trajectória/presença) em àreas vigiadas (como por exemplo, em
+teatros operacionais militares ou na vigilância e monitorização de recursos ou infraestruturas);
+ \item \textbf{Monitorização de fenómenos naturais:} \cite{app_monitor}associadas à detecção de
+eventos ou anomalias ambientais (com aplicações na agricultura, monitorização de poluição ou
+monitorização de  habitats naturais), bem como de vigilância ou controlo de fenómenos naturais
+(sismos, actividade de vulcões, etc); 
+ \item \textbf{Recolha de dados:} \cite{app_health} associadas ao controlo de indicadores físicos ou
+biomédicos de pessoas ou de animais (com recurso a sensores especiais associados a aplicações da
+medicina) ou como ambientes de monitorização de operação de infra-estruturas críticas (pontes,
+edifícios, sistema electro-mecânicos ou equipamentos de instalações fabris).
 \end{description}
 \section{Segurança em RSSF} \label{sect:descricao}
-% Esta aproximao forou a necessidade de atender a outros pressupostos que,
-% intrinsecamente, se tornam de relevante importncia, nomeadamente os que
-% respeitam  segurana, ou seja, confidencialidade, autenticidade, integridade
-% e fiabilidade dos dados que circulam na rede, bem como o no comprometimento
-%  dos dispositivos da rede (por exemplo por exausto do consumo de energia).
-% Tendo em mente estes requisitos, os estudos tm-se orientado para algumas
-% caractersticas que os protocolos de encaminhamento seguro devero possuir,
-% com vista a garantir estas propriedades de segurana.
-A segurança nas RSSF é uma problema \textit{de facto}, com impacto na sua aplicação em sistemas
-críticos. Como tal, deve ser pensada em toda a abrangência do sistema e tendo em atenção as
-particularidades específicas da tecnologia inerente e dos ambientes onde são implementadas.
-Assim, importa, antes de mais, analisar a plataforma genérica de uma RSSF, sobre o ponto de vista
-da sua pilha de protocolos, uma vez que cada uma das camadas representa um pontencial ponto
-vulnerável a  ataques. Neste momento não se pretende ser muito exaustivo na explanação das
-propriedades das camadas, visto que será alvo de descrição mais detalhada no decorrer deste
-trabalho. 
+A segurança nas RSSF é uma problema de facto, quando se perspective a sua aplicação em sistemas
+críticos. A segurança deve ser pensada em tempo de concepção\cite{Perriga}, tendo em vista a
+abrangência do
+sistema e tendo em atenção as particularidades específicas da tecnologia inerente e dos ambientes
+onde são implementadas. Importa analisar as hipóteses de desencadeamento de ataques a estas redes (a
+partir de hipóteses de modelos de adversário que devem ser considerados em cada caso) bem como as
+repercussões das potenciais tipologias de ataques a uma plataforma genérica de uma RSSF, de modo a
+reduzir as suas vulnerabilidades e de modo a antecipar o impacto desses ataques na operação da rede.
+Esta análise deve ser feita tendo em conta a pilha de protocolos e de serviços associados ao
+\textit{software} que executa em cada nó, uma vez que cada uma das camadas de serviços e protocolos
+pode ser vulnerável a esses ataques. 
 
-Uma plataforma genérica possuí uma pilha de protocolos mais simplista, comparada com a pilha de
-protocolos perconizada no modelo OSI\cite{sd_tanenbaum}, uma vez que as limitações impostas
-pelas
-dimensões e as capacidades de operação não permitem uma arquitectura mais ambiciosa. As camadas de
-operação de um nó sensor são essencialmente cinco\cite{Akyildiz2002}: camada física, camada de
-ligação de dados, camada de rede, camada de transporte e camada de aplicação. No que respeita à
-camada física um dos ataques mais efectivo é o \textit{jamming}\footnote{Transmissão de dados com o
-intuíto de confundir e introduzir ruído na comunicação}\cite{jamming}, que pode ser mitigando
-usando mecanismos de salto de frequência. Ao nível da ligação de dados, sendo esta uma camada
-responsável pelo estabelecimento das comunicações ponto a ponto, verifica-se que ataques do tipo de
-exaustão ou de introdução de colisões são também bastante efectivos e podem ser combatidos com
-limitação das taxas de emissão e uma boa política de resolução de colisões. Ao nível transporte os
-ataques dirigidos por comportamentos de inundação aumenta o congestionamento da rede, no entanto
-esta camada não se encontra muito presente na pilha uma vez que as operações que por ela poderiam
-ser realizadas acabam por o ser na camada de aplicação.
-\input{pic_stack}
-No entanto a camada, na qual se pretende centrar a atenção, dentro do âmbito deste trabalho, é a
-camada de rede, responsável pelo encaminhamento dos dados numa RSSF. Nesta camada, as tipologias de
-ataques são essencialmente relacionadas com o meio de comunicação e com a intrusão. No primeiro
-tipo, os ataques verificados são os de introdução de informação de encaminhamento falsa,
-\textit{wormhole}\cite{packet_leashes_perrig}, \textit{sybil}\cite{Douceur2002,sybil_perrig} e HELLO
-\textit{flooding}\cite{Karlof2003} e
-outros que serão mais detalhadamente apresentados à frente. No segundo caso e porque as RSSF
-têm características especiais (autonomia, auto-organização e localização remota) que as tornam
-susceptiveis a uma nova tipologia de ataques, tem-se os ataques por intrusão e captura de nós,
-materializados pelo ataque fisico ao sensor, que possibilita a usurpação de material criptográfico,
-bem como a replicação de nós maliciosos\cite{distributed_detection_replication} que podem induzir
-comportamentos
-incorrectos, quer no protocolo, quer na aplicação.
+Na abordagem de uma plataforma usual e genérica para um nó de uma RSSF, verifica-se que, em geral,
+cada nó apresenta uma pilha de protocolos e serviço muito simplista ou minimalista, por comparação
+com uma pilha associada a uma rede de computadores usual (ex., TCP/IP ou pilha
+OSI\cite{sd_tanenbaum}. As limitações impostas pelas dimensões e as capacidades de operação não
+permitem uma arquitectura muito ambiciosa e, por outro lado, as RSSF possuem geralmente uma vocação
+orientada para aplicações específicas, que condicionam os serviços que devem ser suportados na
+pilha. As camadas de operação de um nó sensor são essencialmente cinco\cite{Akyildiz2002}: camada
+física, camada de ligação de dados, camada de rede, camada de transporte e camada de aplicação,
+embora na maior parte dos casos, a camada de transporte de dados e a funcionalidade inerente à
+camada de rede sejam concebidas e já estejam de facto associadas ao suporte da aplicação. Na
+investigação, verifica-se ainda que a própria camada de ligação de dados (nível MAC e protocolos
+data-link) tenham sido estudados e propostos em diferentes variantes que podem ter vantagens
+particulares dados os requisitos de operação das aplicações\cite{BMAC,SMAC,mac_protocols}.
 
-Perante este cenário de novas ameaças, alguns autores têm vindo a desenhar algoritmos com vista a
-minimizar o impacto destes ataques na operação das RSSF. Estes algoritmos, efectivados com a
-especificação de protocolos de encaminhamento, com o intuíto de garantir algumas propriedades de
-segurança\cite{perrig_design_sec_sensor} (ex: confidencialidade, integridade, autenticação,
-frescura) tem vindo a surgir na literatura. Importa, portanto, salientar os que irão ser alvo de
-estudo neste trabalho e que de uma forma geral correspondem ao estado da arte em matéria de
-segurança e de encaminhamento seguro em RSSF: \textit{Secure Implicit Geographic
-Forwarding}(SIGF)\cite{SIGF},
-INtrusion-tolerant routing protocol for wireless SEnsor NetworkS (INSENS)\cite{INSENS} e
-\textit{Secure Sensor Network Routing}(\textit{Clean-Slate})\cite{CLEAN_SLATE}. A selecção destes
-protocolos deve-se
-também ao facto de poderem ser enquadrados em diferentes classes  de protocolos de encaminhamento
-(ex: hierárquicos, baseados em localização, \textit{on-demand}\cite{al-karaki_routing_2004},
-\textit{table-driven}\cite{al-karaki_routing_2004}), bem como o facto de terem diferentes mecanismos
-para
-fazer face aos ataques e, na generalidade, não protegerem contra todas as tipologias de ataques. O
-protocolo SIGF caracteriza-se por ser um protocolo inspirado num já existente, o
-IGF\cite{igf_protocol},
-incorporando neste, mecanismos de segurança. Por se tratar de um protocolo
-\textit{on-demand}\cite{al-karaki_routing_2004}\footnote{Em que as rotas são definadas a quando da
-comunicação}
-e configurável, consegue estabelecer medidas de segurança adaptadas às necessidades da aplicação
-perante um ataque. Distingue-se do protocolo INSENS\cite{INSENS} porque este último é, em
-especial, orientado para a resiliência a ataques por intrusão, não descuidando os ataques ao meio
-de comunicação. É baseado na construção de tabelas de encaminhamento, portanto da classe
-\textit{table-driven}\footnote{Algoritmos que se baseiam numa tabela de encaminhamento que é mantida
-através da troca de mensagens de controlo por forma a manter a sua consistência em todos os nós da
-rede}\cite{al-karaki_routing_2004}, para além disto, deposita num nó base ou de sincronização um
-papel importante na criação e certificação das tabelas de encaminhamento, o que lhe permite
-implementar um sistema de multi-caminhos que o torna tolerante a intrusões. Por fim, o protocolo
-\textit{Clean-Slate}\footnote{Esta designação deve-se ao facto do protocolo não ter um nome
-especifico mas, partir de uma abordagem de raiz para a garantia de segurança }\cite{clean-slate} que
-procura abordar os conceitos principais para o desenho protocolos de encaminhamento seguro:
-prevenção, detecção/recuperação e resiliência. Assim, este protocolo pretende conseguir  alta
-segurança, com alta disponibilidade, isto sem recorrer a \textit{hardware} adicional e com o mínimo
-consumo de recursos.
-
-Actualmente têm surgido muitos protocolos de encaminhamento para RSSF. Todavia, não conseguem
-endereçar todas as tipologias de ataques, assumindo, cada um, o compromisso de resistir a
-determinados ataques e garantir algumas propriedades de segurança tendo em vista a sua
-utilização em aplicações especificas. Dia após dia, com a generalização do uso das
-RSSF, com o baixo custo, com o carácter autonomo e a não necessidade de infraestrutura de
-comunicação, o estudo de protocolos de encaminhamento seguro por forma a avaliar os comportamentos
-das RSSF perante ataques e como estes influenciam a energia, fiabilidade e latência da rede.
-
-Apesar do baixo custo do \textit{hardware} a sua utilização em fases de investigação e desenho de
-protocolos torna-se impracticável, uma vez que dificilmente se consegue manter as mesmas condições
-de simulação. Considerando também, que o tempo útil de vida da rede é limitado, a utilização de
-sensores reais põe entraves relativos com os custos, já que os nós teriam de ser substituídos
-regularmente. Para suprir estas limitações surge a necessidade de conceber sistemas de simulação de
-RSSF. O que se tem vindo a verificar é que, para cada problema cria-se uma ferramenta que permita
-testar/avaliar o problema especifico. No entanto, existem determinados modelos que são transversais
-a qualquer protocolo de encaminhamento que se queira avaliar, por exemplo: consumo de energia, taxa
-de cobertura, fiabilidade, escalabilidade. No domínio do estudo da segurança em RSSF, não existe uma
-plataforma que permita modelar protocolos de encaminhamento seguro enformados pelos ataques mais
-comuns dirigidos a estas redes, de forma simples, em que só se esteja centrado no desenho do
-protocolo, permitindo a introdução de ataques de forma controlada. Aliada a esta necessidade, surge
-também a necessidade de obter medições e resultados referentes a condições de execução das redes,
-que permitam afinar os protocolos mediante os resultados obtidos e a repetição de experiências nas
-mesmas condições.
-
+Alguns autores\cite{SIGF,INSENS,clean_slate} têm vindo a desenhar algoritmos com vista a minimizar o
+impacto dos ataques ao encaminhamento, durante a operação das RSSF. Estes algoritmos, pretendem
+garantir algumas propriedades de segurança \cite{perrig_design_sec_sensor} (ex: confidencialidade,
+integridade, autenticação,frescura). Com este facto, tendo em conta que um único protocolo, pode
+não endereçar todas as tipologias de ataques, surge a necessidade de efectuar um estudo sistemático
+das suas características. Este estudo, normalmente é realizado com recurso a modelos matemáticos,
+análises teóricas ou experiências de pequena dimensão, que apenas permitem extrapolar medidas de
+resistências a ataques, ou outras características, nomeadamente as relacionadas com a performance,
+escala ou energia, medições estas que podem ser pouco representativas.
 \section{Objectivos e contribuições previstas para a dissertação)} \label{sect:solucao}
+Uma das vertentes do estudo da segurança em RSSF tem a ver com a possibilidade de se poderem
+efectivar ataques ao nível rede, na visão de estruturação de uma pilha de suporte de serviços de
+software. Diferentes tipologias de ataques \cite{Karlof2003,Hu2004,Perriga} exigem
+diferentes tipos de contra-medidas, que normalmente são combinadas em mecanismos de segurança
+inerentes à proposta de sistemas de encaminhamento seguro apropriados às características e operação
+das RSSF\cite{SPINS,Luk2007d,Karlof2004}. 
+
 Conhecidas que estão as dificuldades existentes no estudo de protocolos de encaminhamento seguro,
-nomeadamente no que se refere à existência de um sistema de simulação de RSSF de larga escala,
-apresenta-se como desafio pertinente de se ver ultrapassado. Um sistema que suprima estas
+estes permanecem como um dos aspectos em aberto e de desafio à concepção de RSSF que operem em
+condições de segurança. Este desafio é tanto mais relevante quanto a análise de segurança pode
+envolver a avaliação de diferentes modelos e hipóteses de adversário\cite{Dolev1983,Parno2005},e com
+implicações em diferentes tipologias de ataques \cite{Attaks_defenses_sec_in_wsn,Karlof2003} que nem
+sempre são estudados de forma sistemática e comparativa na abordagem de diferentes protocolos de
+encaminhamento seguro que vão sendo propostos. Por outro lado, existe uma dificuldade adicional em
+poder conjugar-se o estudo das contra-medidas de segurança de um protocolo de encaminhamento.  e a
+sua avaliação experimental face a uma implementação do protocolo  de cada protocolo de forma
+complementar a uma avaliação experimental que o impacto de diferentes tipologias de ataques podem
+nomeadamente para cenários de grande escala, torna-se particularmente importante que se desenvolvam
+sistemas de simulação\cite{NS2,JSIM,SENSESHOX_REF} de RSSF que permitam similar diferentes hipóteses
+de ataque e antecipar o impacto desses ataques não apenas no comportamento dos protocolos de
+encaminahmento mas, complementarmente, no impacto que podem ter sobre a própria implementação rede,
+nomeadamente no que se refere, à energia, à fiabilidade ou à latência. Um sistema que suprima estas
 dificuldades, contribui para um mais rápido desenvolvimento e uma afinação mais cuidada de
 determinados parâmetros dos protocolos com vista a garantir as propriedades de segurança desejadas
 para o ambiente de operação das RSSF.
@@ -202,9 +144,9 @@ No âmbito do trabalho que se pretende desenvolver na elaboração da dissertação, 
 este relatório, pretende-se conceber e desenvolver um sistema de simulação inovador, e pelo que
 consta inexistente de forma integrada, que permita o estudo sistemático de protocolos de
 encaminhamento, desenhados com o intuito de providenciar mecanismos de segurança, que possua em
-particular as seguintes funcionalidades:
+particular as seguintes funcionalidades: 
 \begin{itemize}
- \item Interface de visualização e configuração da rede, nomeadamente, com informações dos
+\item Interface de visualização e configuração da rede, nomeadamente, com informações dos
 parâmetros de simulação e informação detalhada de cada nó, bem como o estado energético e o grau de
 ameaça a que está sujeito.
 \item Implementação de um modelo de energia que permita extrair consumos em diferentes momentos de

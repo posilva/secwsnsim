@@ -1,136 +1,108 @@
 \subsection{Arquitectura de Serviços de Segurança em
 RSSF} \label{sect:subsec_arq_security_wsn}
-Muitas vezes considera-se que num sistema seguro, a segurança é um
-único componente da arquitectura do sistema\cite{SECURITY_IN_WSN_PERRIG}.
-Todavia, esta visão é redutora, pois, para se conseguir um sistema seguro, é
-necessário que a segurança esteja integrada em cada um dos componentes, se
-assim não se verificar cada componente pode corresponder a uma ameaça a partir
-da qual se pode desencadear um ataque. \\
-Os desafios propostos pelas RSSF são específicos da própria tecnologia, assim
-sendo os mecanismos tradicionais de segurança podem não ser suficientes. Com
-isto surgem tecnologias que visam corresponder aos requisitos de segurança das
-RSSF. Assim, nesta secção pretende-se apresentar uma visão sobre os requisitos
-de segurança de uma RSSF e como estes são atendidos usando alguns serviços de
-segurança mais populares.
+Alguma vezes considera-se que num sistema seguro, a segurança se trata de um
+único componente da arquitectura do sistema\cite{sec_in_wsn_perrig}.
+Todavia, esta visão é redutora, pois, é necessário que a segurança esteja integrada em cada um dos
+componentes, caso contrário cada componente pode corresponder a uma vulnerabilidade, a partir
+da qual se pode desencadear um ataque. Assim, nesta secção pretende-se apresentar uma visão sobre os
+requisitos de segurança de uma RSSF e como estes são atendidos usando alguns serviços de
+segurança mais representativos.
 \subsubsection{Requisitos de segurança de uma RSSF}
-Embora se apresente os requisitos de segurança de uma RSSF, estes requisitos
-podem variar consoante as especificidades da aplicação que a rede visa
-suportar. Por exemplos se se tratar de uma aplicação de monitorização de saúde
-uma pessoa, o óbvio é proteger a privacidade da pessoa, mas se se tratar de uma
-aplicação de monitorização de dados ambientais este requisito pode ser relaxado.De seguida
-apresentam-se, de forma genérica, os principais requisitos de
-segurança de uma RSSF:
-\begin{description}\addtolength{\itemsep}{-.50\baselineskip}
+Os requisitos de segurança de uma RSSF podem variar consoante as especificidades da aplicação que a
+rede visa suportar. De seguida apresentam-se, de forma genérica, os principais requisitos de
+segurança de uma RSSF\cite{sec_in_wsn_perrig}:
+\begin{description}\descvspace
  \item[Autenticação]
- Considerando que as RSSF usam um meio de comunicação partilhado, é necessário
-recorrer à autenticação para garantir a detecção de mensagens alteradas ou
-injectadas no sistema com o intuito de obter acesso a alguma operação ou
-informação que é restrita a utilizadores não
-autorizados\cite{SECURITY_IN_WSN_PERRIG}.Note-se que a implementação de criptografia assimétrica
+Devido ao meio de comunicação ser partilhado, é necessário recorrer à autenticação para garantir a
+detecção de mensagens alteradas ou injectadas no sistema por participantes não
+ autorizados\cite{sec_in_wsn_perrig}. Note-se que a implementação de criptografia assimétrica
 contribui para a garantia desta propriedade, mas ainda existe muito esforço a desenvolver neste
-campo dadas as limitações das RSSF e as exigências computacionais e energéticas destes mecanismos.
+campo dadas as limitações das RSSF e as exigências computacionais e energéticas destes
+mecanismos.\cite{D1,d2,d3}
  \item[Confidencialidade]
- Sendo a RSSF uma infraestrutura baseada fundamentalmente na disseminação de dados recolhidos a
+Sendo a RSSF uma infraestrutura baseada fundamentalmente na disseminação de dados recolhidos a
 partir de sensores que se encontram distribuidos em ambiente não controlado e, normalmente, de
 fácil acesso,  é necessário garantir a confidencialidade dos dados que circulam na rede.
 Assim, o uso de mecanismos de criptografia é o mais indicado para este tipo de protecção.Desta
 forma, é necessária a utilização de algoritmos de encriptação fiáveis (ex:
-AES\footnote{\textit{Advenced Encryption System algorithm}}\cite{AES}, ECC\cite{ECC}) para garantir
+AES\footnote{\textit{Advenced Encryption System algorithm}}\cite{Stallings2005},
+ECC\cite{Stallings2005}) para garantir
 um determinado nível de segurança, para isso existe a necessidade de partilhar chaves de sessão por
 todos os \textit{end-points} e como tal deve-se recorrer a esquemas de distribuição de
 chaves\cite{DIST_Keys}.
  \item[Disponibilidade]
-Para que se consiga atingir um bom nível de disponibilidade é necessário garantir
-que uma RSSF funcione normalmente durante todo o seu tempo de implementação. Os
-ataques de negação de serviço (Denial of Service - DoS)\cite{DOS} são os mais frequentes
-para diminuir a disponibilidade de uma rede. Para além de mecanismos que evitem
-a negação de serviço, é preciso garantir que a forma de degradação da rede ( na
-presença de um ataque ) seja controlada e que a degradação vá sendo tão grande
-quanto maior sejam o número de nós afectados.
+Entende-se por disponibilidade de uma rede, a garantia de que esta funciona efectivamente
+durante o seu tempo de operação. Os ataques por negação de serviço (Denial of Service -
+DoS)\cite{DOS} são os mais frequentes para diminuir a disponibilidade de uma rede. Então, para além
+de mecanismos que evitem a negação de serviço, é necessário garantir que a degradação da
+rede (ex: na presença de um ataque ) seja controlada e que vá sendo proporcional ao número de nós
+comprometidos.\cite{D1,d2,d3}
  \item[Integridade]
-Durante a comunicação a integridade garante que os dados recebidos pelo nó
-receptor não foram alterados por um adversário durante a transmissão. Em alguns
-casos esta propriedade é garantida juntamente com a autenticação, usando
-mecanismos que permitam verificar ambos apenas com um mecanismo, poupando assim
-recursos, que são escassos nas RSSF. Por exemplo, o uso de HMAC's\cite{HMAC} é vulgar uma
-vez que a chave é usada para autenticar a origem da mensagens e para garantir a
-integridade da mensagem.\cite{SPINS}.
+A integridade garante que os dados recebidos por um nó não foram alterados, por um
+adversário, durante a transmissão. Em alguns casos esta propriedade é garantida juntamente com a
+autenticação, usando mecanismos que permitam garantir ambos numa só operação. Por exemplo, o uso de
+CMAC's\cite{Stallings2005} é vulgar uma vez que permite autenticar (uso de critografia simétrica)
+a mensagem e para garantir a integridade da mensagem.\cite{SPINS}.
 \item[Frescura]
-A frescura dos dados de uma mensagem implica que estes sejam recentes
-garantindo que a mensagem não é antiga e não foi reenviada por um qualquer
-adversário. \cite{SPINS} Podem-se considerar dois tipos de frescura: frescura
-fraca (garantindo ordem parcial e sem informação do desvio de tempo, usada para
- as medições dos sensores) e frescura forte (garante ordem total em cada
-comunicação permitindo a estimação do atraso, usada para a sincronização de
-tempo).
+A frescura de uma mensagem implica que estes sejam recentes, garantindo que esta não é antiga
+e não foi reenviada por um qualquer adversário. \cite{SPINS,Luk2007d} Podem-se considerar dois tipos
+de frescura: frescura fraca (garantindo ordem parcial e sem informação do desvio de tempo, usada
+para as medições dos sensores) e frescura forte (garante ordem total em cada
+comunicação permitindo estimar o atraso, usada para a sincronização de tempo).
  \end{description}
 \subsubsection{Serviços de Segurança}
+Alguns serviços de segurança têm vindo a ser fornecidos para as RSSF, com vista a garantir a
+segurança ao nível da comunicação (ex: criptografia, assinaturas, \textit{digests}) estes serviços
+permitem que o arquitecto de sistemas se centre apenas em outros tipos de problemáticas mais
+especificos com o comportamento dos protocolos face ataques.
 \begin{description}\addtolength{\itemsep}{-0.5\baselineskip}
 \item[TinySec\cite{Karlof2004}]
 TinySec é uma arquitectura de segurança para protecção ao nível de ligação de
 dados em RSSF. O objectivo principal, para o qual foi desenhado, é providenciar
-um nível adequado de segurança com o minimo consumo de recursos. Os serviços de
+um nível adequado de segurança com o mínimo consumo de recursos. Os serviços de
 segurança  disponibilizados são: autenticação de dados (com a utilização de
-\textit{Message Authentication Codes}(MAC), no caso CBC-MAC\footnote{Cipher
-Block Chaining - Message Authentication Code (CBC-MAC))}) e confidencialidade 
-(a encriptação é implementada com o recursotambém ao CBC-MAC).
- %Para se adaptar às RSSF o MAC tem um comprimeito de 4 bytes ao contrário dos 8 ou 16 habituais.
-% Uma vez que neste mecanismo as propriedades de segurança estão determinadas pelo comprimento do
-%MAC
-%os autores afirmam que para uma RSSF é suficiente uma vez que um atacante teria de efectuar
-%$2^{31}$
-%tentativas, que demorariam cerca de 20 meses a realizar com um canal de 19.5Kbs.
-Note-se que a frescura das mensagens não foi endereçada nesta arquitectura (ficando vulnerável a
-ataques de \textit{replaying}), uma vez que os autores consideram como demasiado exigente em termos
-de recursos, o que contrariaria o objectivo principal da arquitectura.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- \item[MiniSec\cite{Luk2007d}]
-Minisec é uma camada de rede concebida para possuir o melhor dos dois mundos: baixo consumo de
-energia e alta segurança. Esta arquitectura tem dois modos de operação: uma baseado para
-comunicação \textit{unicast} (MINISEC-U) e outro para \textit{broadcast} (MINISEC-B). Sendo que a
-segunda não necessita de manter o estado por cada emissor por forma a proteger o reenvio escalando
-para grandes redes.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textit{Message Authentication Codes}(MAC)\cite{Stallings2005}, no caso CBC-MAC\footnote{Cipher
+Block Chaining - Message Authentication Code (CBC-MAC))}) e confidencialidade (CBC-MAC).
+Não implementa nenhum mecanismo que garanta a frescura das mensagens, tornando-o vulnerável a
+ataques de \textit{replaying}).
+\item[MiniSec\cite{Luk2007d}]
+Minisec é uma camada de rede concebida para possuir baixo consumo de energia, melhor que o TinySec,
+e alta segurança. Uma das caracteristicas principais, que a tornam mais eficiente, é o uso do modo
+\textit{offset codebook} (OCB)\cite{Stallings2005}  para encriptação de blocos. O que permite numa
+única passagem autenticar e encriptar os dados, sem com isso aumentar o tamanho da mensagem em
+claro, contribuindo para um menor consumo de energia. Esta arquitectura tem dois modos de operação:
+uma baseado paracomunicação \textit{unicast} (MINISEC-U) e outro para \textit{broadcast}
+(MINISEC-B). Sendo que a segunda não necessita de manter o estado (sincronização de contadores) por
+cada emissor por forma a proteger o reenvio escalando para grandes redes.
 \item[SPINS\cite{SPINS}]
-É um conjunto de protocolos de segurança, constituído por dois componentes
-principais SNEP\footnote{Secure Network Encryption Protocol} \cite{SNEP} e
-${\mu}$TESLA \cite{MICROTESLA}. O primeiro, fornece serviços de autenticação e
-confidencialidade entre dois pontos de comunicação, encriptando as mensagens e
-protegendo-as com um MAC. O SNEP gera diferentes chaves, de encriptação, que 
-derivam de uma chave mestra partilhada entre os dois nós, ainda é incluido um
-contador nas mensagens para garantir a frescura. A encriptação é realizada com
-o modo CTR\footnote{\textit{Counter Mode}} e a autenticação com CBC-MAC. O
-segundo componente,o ${\mu}$TESLA,  é um serviço de autenticação de
-\textit{broadcast}, que evita a utilização de mecanismos, mais exigentes, de
-criptografia assimétrica, recorrendo a critografia simétrica, autenticando as
-mensagens com um MAC,
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\item[Sistemas de distríbuição de chaves\cite{eschenauer_key-management_2002}]
-%Confidencialidade e autenticação são aspectos críticos das redes de sensores
-%com o objectivo de prevenir que um adversário compromenta a segurança de um
-%sistema. Devido à natureza \textit{ad-hoc} das redes, a comunicação
-%intermitente e os recursos limitados, os mecanismos de
-%gestão de chaves e autenticação de grupo tornam-se dificil de alcançar.
-%Alguns esquemas para distribuição e gestão de chaves tem vindo a ser
-%desenvovidos pela investigação com vista a compreender as especificidades dasRSSF.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Conjunto de protocolos de segurança, constituído por dois componentes
+principais SNEP\footnote{Secure Network Encryption Protocol} \cite{SPINS} e
+${\mu}$TESLA \cite{SPINS}. O primeiro, fornece serviços de autenticação e
+confidencialidade entre dois pontos de comunicação, encriptando as mensagens (com
+o modo CTR\footnote{\textit{Counter Mode}}) e protegendo-as com um MAC (autenticação com CBC-MAC). O
+SNEP gera diferentes chaves, de encriptação, que derivam de uma chave mestra partilhada entre os
+dois nós, com umcontador de mensagens para garantir a frescura. O segundo componente,o
+${\mu}$TESLA, é um serviço de autenticação de \textit{broadcast}, que evita a utilização de
+mecanismos, mais exigentes, de criptografia assimétrica, recorrendo a critografia simétrica,
+autenticando as mensagens com um MAC,
 \item[Norma IEEE802.15.4\cite{ietf_802154}]
 Esta norma define a especificação da camada física e de controlo de acesso ao meio das redes
-pessoais de baixa potência ()\textit{Low Rate Personal Area Networks}). Foca-se essencialmente na
-comunicação de baixa potência entre dispositivos relativamente próximos, sem a necessidade de uma
-infrastrutura de suporte, explorando o  mínimo de consumo de energia. É a norma que já se encontra
-implementada em algumas plataformas das RSSF. (ex: XXX, XXX).
+pessoais de baixa potência (\textit{LRPAN}\footnote{Low Rate Personal Area Networks}). Foca-se
+essencialmente na comunicação entre dispositivos relativamente próximos, sem a
+necessidade de uma infrastrutura de suporte, explorando o mínimo de consumo de energia. É a norma
+que já se encontra implementada em algumas plataformas das RSSF. (ex: Micaz\cite{micaz}).
 No que se refere a segurança\cite{zigbee_802154}, esta norma, especifica alguns serviços que
 acabam por representar uma primeira linha de protecção contra ataques à infraestrutura. Estes
 mecanimos são os seguintes: i) Cada dispositivo mantem uma lista de controlo de acesso (ACL) com os
 dispositivos confiáveis com o intuito de filtrar comunicações não autorizadas; ii) Encriptação de
 dados, com a partilha de uma chave entre os intervenientes na comunicação, guardada juntamente com
 cada entrada da lista de ACL's; iii) Serviço de integridade de cada \textit{frame}, adiciona a cada
-frame uma \textit{Message Integrity Code} (MIC)\cite{MIC}; iv) Mecanismo de frescura de mensagens
+frame uma \textit{Message Integrity Code} (MIC)\cite{Stallings2005}; iv) Mecanismo de frescura de
+mensagens
 (\textit{Sequential Freshness}), utilizando o contador de frames e o contador de chaves para
 garantir a frescura das mensagens evitando ataques do tipo \textit{replaying} (reenvio).
 
-\item[ZigBee\cite{zigbee_802154, zigbee}]
+\item[ZigBee\cite{zigbee_802154,zigbee}]
 Com a especificação da norma 802.15.4 orientada para as duas camadas mais baixas da pilha de
 protocolos das RSSF (física e MAC) surge a norma ZigBee que pretende definir as especificações para
 a camada de rede e aplicação. Esta norma é implementada em plataformas de RSSF, com as
@@ -140,5 +112,11 @@ associados a cada chave de sessão, que são reiniciados em cada mudança de chave;
 com opções de integridade de mensagens que vão desde os 0 aos 128 bits de verificação de
 integridade de mensagens; ii)Autenticação, ao nível de rede é garantida com a utilização de uma
 chave de autenticação, ao nível de ligação são usadas chaves entre os dois pontos de comunicação;
-iv) Confidencialidade, usa o algoritmo AES\cite{AES} com 128 bits.
+iv) Confidencialidade, usa o algoritmo AES\cite{Stallings2005} com 128 bits.
+
+Esta arquitectura utiliza o conceito de "trusted center" para gestão da segurança na rede, este
+papel é desempenhado pelo denominado coordenador de rede ZigBee. Esta entidade é acreditada por
+todos os nós da rede e pode desempenhar três funções: i) Autenticação de nós que pretendem
+participar na rede; ii) Manutenção e distribuição de chaves; iii) Providenciar segurança
+ponto-a-ponto entre nós da rede.
 \end{description}
