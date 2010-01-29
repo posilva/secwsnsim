@@ -10,105 +10,12 @@ relacionado como forma de enquadrá-lo como base teórica da dissertação.
 
 Em primeiro lugar pode-se apresentar os ataques que foram estudados e apresentá-los, de forma
 estruturada, relacionando-os com as contra-medidas para os mitigar.
-%tabela de ataques e contra-medidas
-\begin{table}[H]
- \centering
-\begin{scriptsize}
-\begin{tabular}[t]{l|l|p{4cm}}
-\hline
-Fases do Protocolo & Ataque & Contramedidas\\ \hline\hline
-\multirow{4}{*}{Organização e Descoberta da Rede}
- & Falsificação de informação de Routing & Autenticação\\\cline{2-3}
- & Ataques de \textit{Rushing} & Encaminhamento aleatório de RREQ e autenticação \\ \cline{2-3}
-\multirow{4}{*}{Estabelecimento de Rotas}
- & HELLO flooding & Autenticação com confirmação(\textit{acknowledge})\\\cline{2-3}
- & Ataques \textit{Sinkhole} & Autenticação \\\cline{2-3}
- & Ataques \textit{Wormhole} & \textit{Packet leaches}\\\cline{2-3}
- & Ataques \textit{Sybil} & Distribuição aleatória de chaves, testes aos canais de rádio \\
- \hline
-\multirow{1}{*}{Manutenção de Rotas} & Ataques de \textit{Backhole}& Definição de temporizadores e
-mecanismos de confirmação (ACK) autenticados\\
-\hline
-\end{tabular} \label{tab:tabela_ataques_contramedidas}
-\caption{Tabela de Ataques \textit{vs} Contramedidas}\label{tab:ataques_vs_contramedidas}
-\end{scriptsize}
-\end{table}
-
+\input{tab_ataques_contramedidas}
 No ponto de vista dos protocolos estudados cabe relacionar as capacidades de cada um para fazer
 face a ataques definidos no modelo de adversário e tipificados nas diferentes fases dos protocolos
 em que estes se podem desencadear.
-%tabela de ataques e protocolos de encaminhamento
-{%
-\begin{table}[H]
-\centering
-\begin{scriptsize}
-\begin{tabular}{c|c|cccccc}\cline{2-8}
-% use packages: color,colortbl
-\mc{1}{c}{\textbf{ }} & \mc{7}{|c|}{\textbf{Ataques ao Encaminhamento}}\\\cline{1-8}
-%\rowcolor{tcA}
-\mc{1}{|c|}{\textbf{Protocolos}} & \mc{1}{|c}{\textbf{Informação Falsa}} &
-\mc{1}{|c|}{\textbf{\textit{Rushing}}}&
-\mc{1}{c|}{\textbf{HELLO flooding}} & \mc{1}{c|}{\textbf{\textit{Sinkhole}}} &
-\mc{1}{c|}{\textbf{\textit{Wormhole}}} & \mc{1}{c|}{\textbf{\textit{Sybil}}}&
-\mc{1}{c|}{\textbf{\textit{Blackhole}}}\\\hline
-
-
-\mc{1}{|c|}{SIGF} & X & \mc{1}{c|}{} & \mc{1}{c|}{\checkmark} & \mc{1}{c|}{} &
-\mc{1}{c|}{} &\mc{1}{c|}{} & \mc{1}{c|}{} \\\hline
-\mc{1}{|c|}{INSENS} & X & \mc{1}{c|}{X} & \mc{1}{c|}{X} & \mc{1}{c|}{X} & \mc{1}{c|}{X} &
-\mc{1}{c|}{X} & \mc{1}{c|}{X} \\\hline
-\mc{1}{|c|}{Clean-Slate} & X & \mc{1}{c|}{X} & \mc{1}{c|}{X} & \mc{1}{c|}{X} & \mc{1}{c|}{X}
-& \mc{1}{c|}{X} & \mc{1}{c|}{X} \\\hline
-\end{tabular}
-\caption{Tabela de Protocolos de Encaminhamento \textit{vs} Ataques
-}\label{tab:ataques_vs_protocolos}
-\end{scriptsize}
-\end{table}
-}%
+\input{tab_protocolos_ataques}
 Por fim e sendo a análise dos ambientes de simulação um dos focos do trabalho relacionado
 poder-se-á avaliar de forma comparativa os ambientes seleccionados para estudo comparandos com os
 critérios pensados como adequados para a avaliação.
-{%
-\newcommand{\mcc}{\mc{1}{c|}}
-\begin{table}[H]
-\centering
-\begin{scriptsize}
-\begin{tabular}{|c||l||p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{2cm}|  }
-% use packages: color,colortbl
-\cline{3-7}
-\mc{1}{c}{}&\mc{1}{c}{}  & \mc{5}{|c|}{\textbf{Ambientes de Simulação}}\\\hline
-\mc{2}{|c|}{\textbf{Critérios}} &\mcc{\textbf{Prowler/JProwler}} &\mcc{\textbf{J-Sim}} &
-\mcc{\textbf{Freemote}} & \mcc{\textbf{ShoX}} & \mcc{\textbf{Nova Plataforma}}\\\hline\hline
-\multirow{4}{*}{\begin{footnotesize}\begin{sideways}\textbf{\textit{Software}}\end{sideways}
-\end{footnotesize}}
-& \textbf{Portabilidade da linguagem} & \mcc{Java}& \mcc{Java} & \mcc{Java} &  \mcc{Java}&
-\mcc{Java}\\\cline{2-7}
-& {\textbf{Código Livre Aberto}} & \mcc{Sim}& \mcc{Sim}& \mcc{Sim}&\mcc{Sim}& \mcc{Sim}\\\cline{2-7}
-& {\textbf{Modularidade e extensabilidade}} & \mcc{Sim}& \mcc{Sim, com recurso a JTcl }&\mcc{Sim}&
-\mcc{Sim}& \mcc{Sim}\\\cline{2-7}
-& {\textbf{Documentação}} & Apenas comentários no código& Papers e On-line &
-\mcc{Pouca}&\mcc{Pouca}& \- \\\hline\hline
-\multirow{7}{*}{\begin{footnotesize} \begin{sideways} \textbf{Propriedades das
-RSSF\   \   \   \   \   \   \   \   \   }\end{sideways}\end{footnotesize}}
-& {\textbf{Escalabilidade}} & Aprox. 5000 nós & Documentado na ordem dos milhares& Documentado na
-ordem dos milhares&Foram testados 100 nós sem sucesso & Na ordem dos milhares \\\cline{2-7}
-& {\textbf{Colisões/Comunicação}} & Sim, modelo B-MAC & Sim, mas 802.11& Sim, mas muito
-simples &Sim, mas 802.11&\mcc{Sim} \\\cline{2-7}
-& {\textbf{Gestão de Energia}} & \mcc{Não} & \mcc{Não}& \mcc{Não}&\mcc{Sim}& \mcc{Sim}\\\cline{2-7}
-& {\textbf{Emulação}} &\mcc{Não} & \mcc{Não}&Sim, para plataformas Java
-\textit{Based}&\mcc{Não}&\mcc{Não}\\\cline{2-7}
-& {\textbf{Mobilidade}} &Sim, mas rudimentar & \mcc{Sim}&
-\mcc{Sim}&\mcc{Sim}&\mcc{Não}\\\cline{2-7}
-& {\textbf{Visualização}} & Sim, mas só de visualização da topologia & Existem ferramentas
-auxiliares& \mcc{Sim}&Sim, mas não em tempo real. Apenas depois de executar a simulação &\mcc{Sim}
-\\\cline{2-7}
-& {\textbf{Topologia}} & Não existe de raiz, pode ser modelado & Não existe de raiz, pode ser
-modelado& Não existe de raiz, pode ser modelado&Existem alguns de raiz, podendo ser estendido&
-Existirão de raiz alguns modelos, permitindo a adição de mais\\\hline
-\end{tabular}
-\caption{Tabela de Critérios de Avaliação \textit{vs} Ambientes de
-Simulação
-}\label{tab:Criterios_vs_ambientes}
-\end{scriptsize}
-\end{table}
-}%
+\input{tab_simuladores_criterios}

@@ -1,49 +1,43 @@
 \section{ Estudo de Protocolos de Encaminhamento Seguro para RSSF}
-Como ponto introdutório da
-discussão e apresentação de algoritmos de encaminhamento em RSSF,
-começa-se por identificar algumas tipologias destes algoritmos . As definições das tipologias
-normalmente estão relacionadas com a natureza destas redes e ao mesmo tempo outras  foram herdadas
-das redes \textit{ad-hoc}.
+Como ponto introdutório da discussão e apresentação de algoritmos de encaminhamento em RSSF,
+importa identificar algumas tipologias ou classes destes algoritmos.
 \subsection{Caracterização dos protocolos de encaminhamento em RSSF}
-Podem-se estabelecer três classes  de protocolos\cite{Akkaya2005}: os baseados na localização,
+Podem-se estabelecer três classes de protocolos\cite{Akkaya2005}: os baseados na localização,
 os centrados nos dados e os hierárquicos. Os protocolos baseados na localização usam esta informação
-para tomarem as melhores decisões para alcançar os destinos(ex: IGF\cite{igf_protocol}).Os centrados
-nos dados, ou seja, os que exploram a redundância e a semântica dos dados, normalmente são baseados
-em algoritmos que efectuam pesquisas lançadas a partir de nós de sincronização(ex: Directed
-Diffusion\cite{DirectDifusion}). Por fim, os protocolos hierárquicos, cuja concepção é baseada na
-construção de grupos de nós, normalmente definidos como \textit{clusters}(ex:
+para tomarem as melhores decisões para alcançar os destinos(ex: IGF\cite{igf_protocol}). Os
+centrados nos dados, ou seja, os que exploram a redundância e a semântica dos dados, normalmente são
+baseados em algoritmos que efectuam pesquisas lançadas a partir de nós de sincronização (ex:
+Directed Diffusion\cite{DirectDifusion}). Por fim, os protocolos hierárquicos, cuja concepção é
+baseada na construção de grupos de nós, normalmente definidos como \textit{clusters}(ex:
 LEACH\cite{leachprotocol}), que funcionam no principio de agregação de dados do grupo e
-transferência para nós base.
+transferência da informação para os nós base.
 
-Para além destas classificações podemos ainda considerar algoritmos
-quanto ao momento em que estes computam a informação relativa ao caminho entre a origem e o destino
-\cite{al-karaki_routing_2004}. Pode-se considerar os
-protocolos \textit{table-driven} ou \textit{on-demand}.  Os primeiros referem-se a protocolos em que
-durante o funcionamento são trocadas mensagens por forma a manter-se as tabelas de encaminhamento
-actualizadas em todos os nós da rede. No entanto, esta troca de mensagens pode ser prejudicial para
-as RSSF pois implica um maior uso da comunicação, logo maior dispêndio de energia, apesar disto, se
-a rede for estática e as alterações não forem frequentes,  pode ser menos penalizador. No caso dos
-protocolos considerados \textit{on-demand}, ou seja, a pedido, como o próprio nome indica, as rotas
-são estabelecidas quando é necessário desempenhar a função de encaminhamento de mensagens. Apesar de
-representar alguma sobrecarga no algoritmo, pode ser compensador em redes mais móveis e com eventos
-espaçados. Estas são algumas das características consideradas no desenho de algoritmos de
-encaminhamento em RSSF. No entanto, se se tratar de utilização em ambientes criticos é necessário
-que se considere as propriedades de segurança. Alguns destes protocolos não foram concebidos
-inicialmente com estas propriedades como preocupação.
+Para além destas classificações podemos ainda considerar algoritmos quanto ao momento em que são
+determinadas as  rotas de encaminhamento de dados\cite{al-karaki_routing_2004}. Assim, consideram-se
+os protocolos como \textit{table-driven} ou \textit{on-demand}.  Os primeiros referem-se a
+protocolos que mantêm as tabelas de encaminhamento trocando mensagens de controlo durante a sua
+operação. Assim, observa-se um maior consumo de energia devido à regular troca de mensagens. No
+segundo caso, nos protocolos \textit{on-demand}, as rotas são determinadas em cada envio de
+mensagem. Apesar de representar alguma sobrecarga, em cada envio, acaba por compensar em redes mais
+móveis e com eventos mais espaçados. 
+
+\subsection{Protocolos de encaminhamento seguro em RSSF}
 
 Muitos dos protocolos de encaminhamento para RSSF não foram desde logo concebidos tendo em conta
-o factor de segurança\cite{Karlof2003}, antes, pretendiam adaptar-se ao ambiente das aplicações e às
-características e capacidades das RSSF. As restrições impostas pelos sensores nomeadamente em termos
-de energia e alcance das comunicações sempre centraram a atenção no desenho de protocolos para estas
-redes. No entanto, quando se pretende estender a sua utilização para outros domínios, cuja segurança
-se apresenta como um atributo indispensável, estas preocupações ainda se agudizam mais, uma vez que
-os mecanismos de segurança implicam directamente um aumento da computação, tendo repercussões na
-autonomia, já de si limitada, dos sensores. Nesta secção apresentam-se alguns protocolos de
-encaminhamento seguro em RSSF, que se pretende que cubram todo o espectro  da temática deste
-trabalho e que apresentem no seu todo os mecanismos de segurança que se pretende estudar, ainda que
-cada um per si possa apresentar lacunas quando sujeitos a determinados ataques característicos das
-RSSF.
-\subsection{\textit{Secure Implicit Geographic Forwarding }(SIGF)}
+o factor da segurança\cite{Karlof2003,al-karaki_routing_2004}, antes, pretendiam adaptar-se ao
+ambiente das aplicações e às
+características e capacidades das RSSF. As restrições impostas pelos sensores sempre centraram a
+atenção no desenho destes protocolos. No entanto, quando se pretende estender a sua utilização para
+outros domínios, cuja segurança é indispensável, estas preocupações aumentam, uma vez que
+os mecanismos de segurança implicam directamente um aumento da computação e pode implicar um
+aumento no custo da comunicação, reflectindo-se na autonomia dos sensores. 
+
+
+Nesta secção apresentam-se alguns protocolos de encaminhamento seguro em RSSF. Pretende-se que
+cubram todo o espectro da temática deste trabalho e que apresentem no seu todo os mecanismos de
+segurança que se pretende estudar. 
+
+\subsubsection{\textit{Secure Implicit Geographic Forwarding }(SIGF)}
 Conhecida a inexistência de mecanismos de segurança em alguns dos algoritmos de encaminhamento de
 RSSF, uma das possibilidades vislumbradas por determinados autores foi a realização de melhoramentos
 em algoritmos existentes implementando mecanismos de segurança, um destes casos foi o algoritmo de
@@ -97,7 +91,7 @@ com os seus vizinhos permitindo  usar mecanismos criptográficos,  fornecendo pro
 integridade, autenticidade, confidencialidade e frescura. Este ultimo protocolo, ainda assim, herda
 as propriedades de configuração de cada um dos seus protocolos antecessores SIGF-0 e SIGF-1.
  \end{description}
-\subsection{\textit{ INtrusion-tolerant routing protocol for wireless
+\subsubsection{\textit{ INtrusion-tolerant routing protocol for wireless
 SEnsor NetworkS }(INSENS)}
 Este protocolo \cite{INSENS} foi concebido com o objectivo de ser aplicado em RSSF tolerantes a
 intrusões. Para cumprir com este objectivo, foram identificados dois tipos de ataques: ataques de
@@ -124,14 +118,14 @@ elaborar as tabelas de encaminhamento, sendo depois propagadas para cada nó. Com
 prossegue-se com o encaminhamento dos dados baseando-se nas tabelas construídas e recebidas a partir
 da estação base.
 
-\subsection{\textit{Secure Sensor Network Routing: Clean-Slate approach}}
+\subsubsection{\textit{Secure Sensor Network Routing: Clean-Slate approach}}
 O ponto de partida para o algoritmo Clean-Slate\cite{clean_slate}foi a concepção de um algoritmo
 de uso generalizado, concebido desde de inicio, de forma sistemática , com mecanismos de segurança.
 Este algoritmo visa a resistência mesmo durante o presença de um ataque (ataque activo). Partindo do
 princípio que existem três conceitos a abordar no desenho de protocolos de encaminhamento seguro:
 prevenção, resiliência e detecção/recuperação, este algoritmo implementa-os desde ínicio, ao
 contrário do que acontece com alguns protocolos que apenas implementam um destes prícipios.
-\begin{description}
+arno2005\begin{description}
 \item[Funcionamento do Protocolo]
 Cada sensor da rede  recebe um identificador único e um certificado, assinado por uma entidade de
 certificação da rede (AR), a chave publica desta entidade, e um conjunto de valores (desafios)
@@ -149,7 +143,7 @@ que dentro de um mesmo grupo a comunicação é feita por \textit{broadcast} fiável
 Este algoritmo incorpora mecanismos de detecção de comportamentos incorrectos dos nós, por exemplo,
 nós que pretendam assumir multiplas identidades. Este mecanismo é desencadeado após a formação dos
 grupos, cada nó anuncia o seu endereço para os vizinhos, o que permite aplicar um algortimo de
-detecção de replicação de nós\cite{perrig_replicacao}. Outro mecanismo que permite detectar má
+detecção de replicação de nós\cite{Parno2005}. Outro mecanismo que permite detectar má
 formação dos grupos é as \textit{Group Desviation Trees}, baseado em tabelas de dispersão
 que providenciam autenticação ao nível das folhas e da àrvore em si.
 

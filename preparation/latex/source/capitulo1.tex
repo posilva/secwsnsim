@@ -40,7 +40,7 @@ Sendo o hardware de pequena dimensão e com características muito específicas par
 aplicações às quais se aplica, os \textit{motes}, diferem uns dos outros consoante a sua função na
 rede e poderão desempenhar, fundamentalmente, dois papeis: nó genérico gerador de informação
 (source-nodes) e nó base ou de sincronização (nó colector de dados da rede ou de execução de
-comandos de pesquisa)\textbf{[REFERENCIA]}. Numa RSSF os nós podem também actuar como nós de
+comandos de pesquisa). Numa RSSF os nós podem também actuar como nós de
 interligação (ou de encaminhamento e processamento intermédio através da rede) ou gateways (que
 permitem ligar o ambiente da rede de sensores a outras redes e sub-sistemas externos). Assim, uma
 RSSF pode ser concebida de forma a ser interligada a outras infraestruturas computacionais que, com
@@ -49,21 +49,22 @@ tecnologia actual existem ainda nós de desenvolvimento, que possuem ligações a c
 ligação de rede ethernet, RS232 ou USB), permitindo o desenvolvimento e carregamento expedito de
 código desenvolvido em estações de desenvolvimento. Os sensores dotados de ligações Ethernet, RS-232
 ou USB podem ainda funcionar como nós de tipo gateway, permitindo num cenário concreto ligar a rede
-de sensores a aplicações executando em sistemas de computadores usuais [REFERENCIA].
+de sensores a aplicações executando em sistemas de computadores usuais\cite{gateways}.
 \subsection{Caracterização de RSSF}\label{sect:subsec_caracterizacao_wsn}
 As redes de sensores sem fios podem ser abordadas como um caso especial de redes \textit{ad-hoc},
 embora exibam características especificas que podem ser mais ou menos 
-diferenciadas\cite{REDES_AD_VS_WSN}. As RSSF para aplicações de larga escala fazem emergir algumas
+diferenciadas\cite{Corson1999}. As RSSF para aplicações de larga escala fazem emergir algumas
 problemáticas inerentes a aplicações distribuídas, com especificidades e desafios próprios
 \cite{Coulouris_sd4ed}, nomeadamente ao nível dos mecanismos de gestão, da organização topológica
 autónoma, das necessidades de sistemas de encaminhamento \textit{multi-hop}, de requisitos de
 tolerância a falhas, de requisitos de escalabilidade ou de necessidade de serviços de segurança.
 \subsection{Aplicações}
-Muitas foram as aplicações encontradas na investigação ou na utilização emergente de redes de
-sensores com diferentes requisites de escala\cite{Yick2008}. O carácter autónomo destas redes
-oferece um sem número de vantagens que propicia a sua utilização em locais remotos de acessibilidade
-difícil e onde não é possível a sua manutenção e supervisão. De entre as aplicações das RSSF, podem
-destacar-se as seguintes: 
+Muitas foram as aplicações\cite{Akyildiz2002,Kuorilehto2005} encontradas na investigação ou na
+utilização emergente
+de redes desensores com diferentes requisitos de escala\cite{Yick2008}. O carácter autónomo destas
+redes oferece um sem número de vantagens que propicia a sua utilização em locais remotos de
+acessibilidade difícil e onde não é possível a sua manutenção e supervisão. De entre as aplicações
+das RSSF, podem destacar-se as seguintes: 
 \begin{description}\addtolength{\itemsep}{-.50\baselineskip}
  \item \textbf{Detecção de alvos/objectos(\textit{Target Tracking}):} \cite{apps_tracking}
 associadas à detecção de movimento (trajectória/presença) em àreas vigiadas (como por exemplo, em
@@ -78,7 +79,8 @@ medicina) ou como ambientes de monitorização de operação de infra-estruturas crí
 edifícios, sistema electro-mecânicos ou equipamentos de instalações fabris).
 \end{description}
 \section{Segurança em RSSF} \label{sect:descricao}
-A segurança nas RSSF é uma problema de facto, quando se perspective a sua aplicação em sistemas
+A segurança nas RSSF é uma problema \textit{de facto}, quando se perspective a sua aplicação em
+sistemas
 críticos. A segurança deve ser pensada em tempo de concepção\cite{Perriga}, tendo em vista a
 abrangência do sistema e tendo em atenção as particularidades específicas da tecnologia inerente e
 dos ambientes onde são implementadas. Importa analisar as hipóteses de desencadeamento de ataques a
@@ -121,7 +123,8 @@ diferentes tipos de contra-medidas, que normalmente são combinadas em mecanismos
 inerentes à proposta de sistemas de encaminhamento seguro apropriados às características e operação
 das RSSF\cite{SPINS,Luk2007d,Karlof2004}. 
 
-Conhecidas que estão as dificuldades existentes no estudo de protocolos de encaminhamento seguro,
+Conhecidas que estão as dificuldades existentes no estudo de protocolos de encaminhamento
+seguro\cite{Karlof2003,Sec_WSN_Vulnerabilities},
 estes permanecem como um dos aspectos em aberto e de desafio à concepção de RSSF que operem em
 condições de segurança. Este desafio é tanto mais relevante quanto a análise de segurança pode
 envolver a avaliação de diferentes modelos e hipóteses de adversário\cite{Dolev1983,Parno2005}, e
@@ -132,7 +135,8 @@ poder conjugar-se o estudo das contra-medidas de segurança de um protocolo de en
 avaliação experimental face a uma implementação. Assim, para cada protocolo e de forma
 complementar a uma avaliação experimental, interessa medir o impacto que diferentes tipologias de
 ataques podem ter, nomeadamente, para cenários de grande escala. Portanto, é particularmente
-importante que se desenvolvam sistemas de simulação\cite{NS2,JSIM,SENSESHOX_REF} de RSSF que
+importante que se desenvolvam sistemas de simulação\cite{ns2,jsim,SENSE,shox,jprowler,freemote} de
+RSSF que
 permitam simular diferentes hipóteses de ataque e antecipar o seu impacto, não apenas
 no comportamento dos protocolos de encaminhamento mas, complementarmente, no impacto que podem ter
 sobre a própria rede, nomeadamente no que se refere, à energia, à fiabilidade ou à
@@ -140,17 +144,16 @@ latência, durante a operação. Um sistema que suprima estas dificuldades, contrib
 rápido desenvolvimento e uma afinação mais cuidada de determinados parâmetros dos protocolos com
 vista a garantir as propriedades de segurança desejadas para o ambiente de operação das RSSF.
 
-No âmbito do trabalho que se pretende desenvolver na elaboração da dissertação, ao qual se refere
-este relatório, pretende-se conceber e desenvolver um sistema de simulação inovador, e pelo que
-consta inexistente de forma integrada, que permita o estudo sistemático de protocolos de
-encaminhamento, desenhados com o intuito de providenciar mecanismos de segurança, que possua em
-particular as seguintes funcionalidades: 
+No âmbito do trabalho que se pretende desenvolver na elaboração da dissertação, ao qual se
+refere este relatório, pretende-se conceber e desenvolver um sistema de simulação inovador que
+permita o estudo sistemático de protocolos de encaminhamento, desenhados com o intuito de
+providenciar mecanismos de segurança, que possua em particular as seguintes funcionalidades: 
 \begin{itemize}
 \item Interface de visualização e configuração da rede, nomeadamente, com informações dos
 parâmetros de simulação e informação detalhada de cada nó, bem como o estado energético e o grau de
 ameaça a que está sujeito;
 \item Implementação de um modelo de energia que permita extrair consumos em diferentes momentos de
-operação: operação normal e perante determinado ataque;
+operação: operação normal e operação perante determinado ataque;
 \item Motor de geração de topologias, sabendo que as topologias da rede podem ter influência no seu
 comportamento, introduz-se esta funcionalidade como forma de distribuir os nós de
 diversas formas na área de monitorização: distribuição aleatória, distribuição em grelha,
@@ -164,8 +167,22 @@ a extracção de medições referentes a propriedades importantes como consumos de e
 fiabilidade, correcção do protocolo e correcção dos eventos, diponibilizando-os de forma gráfica.
 \end{itemize}
 \section{Principais contribuições e a sua avaliação} \label{sect:contribuicoes}
-% deverei falar na possibilidade de medir determinados parametros indicados na introdução
-% deverei falar na avaliação que, com a prova de conceito poder-se-à analisar comparativamente
-% dois algoritmos conhecidos e já documentados e recorrentemente analisados e estudados
-% representando assim mais uma contribuição, que permitirá comparar com as constatações
-% conhecidas nomeadamente pelos próprios autores
+As principais contribuições resultantes da elaboração da dissertação são em especial duas:
+Concepção de uma plataforma de simulação para protocolos de encaminhamento seguro em RSSF e a prova
+de conceito, com a implementação de dois protocolos usando a plataforma concebida. No caso da
+primeira contribuição, pretende-se, com a implementação das funcionalidades anteriormente descritas,
+possibilitar a avaliação sistemática de algoritmos de encaminhamento. Esta avaliação permitirá a
+análise de propriedades tão importantes como: o consumo de energia, a fiabilidade da rede, latência
+das comunicações, correcção dos dados e a correcção do protocolo. Propriedades estas, que
+normalmente, são extrapoladas da implementação experimental em pequena escala ou da adopção de
+modelos matemáticos , que devido a variaveis externas, próprias do ambiente de operação, podem se
+afastar bastante dos resultados reais. 
+
+A segunda contribuição, decorre da primeira e consiste na implementação de dois algoritmos de
+encaminhamento seguro. Funcionando como prova de conceito, pretende aferir a usabilidade da
+plataforma, para o fim que foi concebida mas, pretende também, fazer um estudo comparativo entre os
+algoritmos implementados, pela observação das propriedades já referidas. Permitindo assim
+desenvolver uma análise crítica em relação a trabalhos publicados relacionados  com estes
+algoritmos. Contribui ainda, com o estabelecimento de uma base de comparação, para futuras
+avaliações, de outros protocolos emergentes, no que se refere ao impacto que os mecanismos de
+segurança, têm sobre as propriedades mencionadas.

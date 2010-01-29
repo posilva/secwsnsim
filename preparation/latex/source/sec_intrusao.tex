@@ -1,46 +1,35 @@
 \subsubsection{Modelo de Intrusão em RSSF}\label{sect:subsec_intrusao}
-Considerando o estudo de segurança numa RSSF, e dada a sua exposição
-natural, nomeadamente a física, colocando cada sensor ao alcance de um qualquer
-adversário, torna relevante a consideração de novos modelos de ataque.
-Considerando que cada rede pode ser constituída por milhares de sensores, cada
-um deles é um ponto de ataque, na impossibilidade de se proteger ou monitorizar
-todos os sensores instalados\cite{Perriga}. Assim
-as RSSF vêm-se sujeitas a um modelo de adversário que difere das redes com/sem
-fios convencionais. Um adversário pode estar perto da rede e ter acesso aos
-sensores e com isto ``roubar'' um ou parte dos sensores da rede com vista a
-explorar os segredos ou material criptográfico usados para a comunicação.
-Podemos então tipificar estes ataques como sendo por intrusão. 
+Considerando o estudo de segurança numa RSSF, e dada a sua exposição natural, nomeadamente a física,
+colocando cada sensor ao alcance de um adversário, torna relevante a consideração de novos modelos
+de ataque. Considerando que cada rede pode ser constituída por milhares de sensores, cada
+um destes sensores é um ponto de ataque\cite{Perriga}. Assim, as RSSF vêm-se sujeitas a um modelo de
+adversário que difere das redes com/sem fios convencionais. Pode-se então tipificar estes ataques
+como sendo por intrusão e por captura. 
+
 Este tipo de ataques podem ser definidos por ataques desde o nível
-MAC\cite{Xiao2006} até ao nível de intrusão física  em que um actor externo,
-tendo acesso a um ou más sensores legítimos, descobre os segredos criptográficos
-permitindo-lhe replicar\cite{Parno2005} os segredos para sensores maliciosos,
-que depois de introduzidos podem agir de forma coordenada comprometendo a rede.
+MAC\cite{Xiao2006} até ao nível de intrusão física, em que um actor externo,
+captura um ou mais sensores legítimos, descobre os segredos criptográficos. Este
+facto permite-lhe replicar\cite{Parno2005} os segredos para sensores maliciosos, 
+introduzido-os na rede de modo a que, agindo coordenadamente, possam comprometer a rede.
 Conseguida a intrusão, o atacante pode induzir nos sensores legítimos
 comportamentos incorrectos baseados na informação falsa introduzida pelos
-sensores maliciosos, influenciando o processo de encaminhamento (denominados de
-ataques ao encaminhamento).  Note-se, por exemplo, que estes ataques têm
-características que os tornam difíceis de identificar quando instalados numa
-rede,  uma vez que o carácter autónomo das RSSF, torna difícil distinguir um
-comportamento errado de uma falha. Um sensor malicioso pode respeitar o
-protocolo da rede, no entanto podem actuar de forma incorrecta levando a rede a
-criar topologias especificas para o ataque (por exemplo, criando partições) ou
-fazendo, por exemplo, toda a informação passar pelos nós maliciosos, suprimindo
-ou violando a informação. No que se refere aos ataques direccionados ao
-encaminhamento, por serem parte do objectivo do estudo deste trabalho,
-encontram-se definidos na próxima secção e são essencialmente instanciados pela
-participação colaborativa ou isolada de nós introduzidos  com o intuito de
-afectar o normal funcionamento da rede.
+sensores maliciosos, influenciando o processo de encaminhamento (desencadeando ataques ao
+encaminhamento).  Estes ataques, são de difícil detecção, uma vez que o carácter autónomo
+das RSSF, pode não permitir distinguir um comportamento errado de uma falha. Com a intrusão,  um
+sensor malicioso embora respeite o protocolo da rede, pode actuar de forma incorrecta
+levando a rede a criar topologias especificas para determinado ataque ou forçando, toda a
+informação a passar por nós maliciosos, que podem suprimir ou violar a informação. 
 \paragraph{Modelo bizantino: adversários bizantinos}
 O modelo de ataques por intrusão tem algumas parecenças com as denominadas falhas
-bizantinas\cite{falhas_bizantinas,falhas_bizantinas_proactiverec}, são caracterizadas pela falhas
-arbitrárias para as quais um sistema não está, à partida, preparada para lidar e que se pode
-traduzir em comportamentos inesperados do sistema. Transpondo esta realidade para as RSSF, é dificil
-detectar a introdução de nós maliciosos, autonomos ou replicados a partir de um de um nó que ficou
-comprometido. No entanto alguns autores \cite{Parno2005,falhas_bizantinas_proactiverec} têm-se
+bizantinas\cite{falhas_bizantinas}, que são caracterizadas como 
+falhas arbitrárias para as quais um sistema não está, à partida, preparado para lidar e que se pode
+traduzir em comportamentos inesperados. Transpondo esta realidade para as
+RSSF\cite{Fault_Intrusion_Tolerant_Techniques}, é dificil
+detectar a introdução de nós maliciosos, autónomos ou replicados a partir de um nó que foi	
+comprometido. No entanto alguns autores \cite{Parno2005,falhas_bizantinas} têm-se
 debruçado sobre esta problemática a fim de dotarem os
 algoritmos de mecanismos que permitam detectar a replicação de nós maliciosos numa RSSF.
 Para se lidar com os ataques com comportamentos bizantinos, implementam-se mecanismos
-probabilisticos que ainda que não possam mitigar o ataque por completo aumentam a resiliência e
-acabam por transformar um ataque num mal menor, definindo até onde pode ser comprometida a rede, ou
-seja qual o número de nós que poderão estar comprometidos mas que apesar disso a rede continua a
-garantir a fiabilidade necessária para a operação.
+probabilisticos que, ainda que não possam mitigar o ataque por completo, aumentam a resiliência e
+acabam por transformar um ataque num mal menor, definindo até onde pode ser comprometida a rede por
+forma a garantir a fiabilidade necessária para a operação.

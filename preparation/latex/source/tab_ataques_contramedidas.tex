@@ -1,0 +1,23 @@
+%tabela de ataques e contra-medidas
+\begin{table}[H]
+ \centering
+\begin{scriptsize}
+\begin{tabular}[t]{l|l|p{4cm}}
+\hline
+Fases do Protocolo & Ataque & Contramedidas\\ \hline\hline
+\multirow{4}{*}{Organização e Descoberta da Rede}
+ & Falsificação de informação de Routing & Autenticação\\\cline{2-3}
+ & Ataques de \textit{Rushing} & Encaminhamento aleatório de RREQ e autenticação \\ \cline{2-3}
+\multirow{4}{*}{Estabelecimento de Rotas}
+ & HELLO flooding & Autenticação com confirmação(\textit{acknowledge})\\\cline{2-3}
+ & Ataques \textit{Sinkhole} & Autenticação \\\cline{2-3}
+ & Ataques \textit{Wormhole} & \textit{Packet leaches}\\\cline{2-3}
+ & Ataques \textit{Sybil} & Distribuição aleatória de chaves, testes aos canais de rádio \\
+ \hline
+\multirow{1}{*}{Manutenção de Rotas} & Ataques de \textit{Backhole}& Definição de temporizadores e
+mecanismos de confirmação (ACK) autenticados\\
+\hline
+\end{tabular} \label{tab:tabela_ataques_contramedidas}
+\caption{Tabela de Ataques \textit{vs} Contramedidas}\label{tab:ataques_vs_contramedidas}
+\end{scriptsize}
+\end{table}
