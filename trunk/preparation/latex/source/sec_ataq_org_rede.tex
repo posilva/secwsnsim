@@ -3,20 +3,18 @@ Após a descoberdos nós vizinhos é necessário recolher informação para a construç
 de encaminhamento, isto nos protocolos do tipo \textit{table-driven}\cite{al-karaki_routing_2004}.
 No entanto, em protocolos do tipo \textit{on-demand}\cite{al-karaki_routing_2004} esta fase é
 desencadeada em cada início de transmissão.
-\begin{description}\descvspace
- \item[Falsificação de Informação de Encaminhamento]
+\paragraph*{\textbf{Falsificação de Informação de Encaminhamento}}
 Este ataque tem impacto na formação da rede e na descoberta dos nós. Induz a criação de entradas
 incorrectas nas tabelas de encaminhamento, podendo também fazer com que estas fiquem lotadas e
 inválidas. Nos protocolos \textit{on-demand}, o impacto pode ser menor, uma vez que obriga o 
 atacante a injectar informação errada a cada ciclo de transmissão.
- \item[\textit{Rushing Attacks}]
+\paragraph*{\textbf{\textit{Rushing Attacks}}}
 Outro ataque nesta fase é o \textit{rushing attack}\cite{Rushing_attacks_perrig} que é definido pela
 exploração, por parte do atacante, de uma janela de oportunidade para responder a um pedido de
 caminho para um destino. Este ataque é efectivo quando o protocolo permite aceitar a primeira
 resposta que recebe (ex: AODV\cite{Perkins1999}). Explorando isto, o atacante é sempre um
 candidato a ser o próximo encaminhador, uma vez que não respeita temporizadores nem condições de
 resposta, podendo influenciar as rotas.
-\end{description}
 \subsubsection{Contra-medidas}
 A aplicação de mecanismos de autenticação no protocolo de encaminhamento faz com que ataques de
 falsificação de informação seja minimizados. Os nós da rede podem partilhar chaves simétricas como
