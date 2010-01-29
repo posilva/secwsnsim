@@ -18,7 +18,7 @@ detecção de mensagens alteradas ou injectadas no sistema por participantes não
  autorizados\cite{sec_in_wsn_perrig}. Note-se que a implementação de criptografia assimétrica
 contribui para a garantia desta propriedade, mas ainda existe muito esforço a desenvolver neste
 campo dadas as limitações das RSSF e as exigências computacionais e energéticas destes
-mecanismos.\cite{D1,d2,d3}
+mecanismos.
  \item[Confidencialidade]
 Sendo a RSSF uma infraestrutura baseada fundamentalmente na disseminação de dados recolhidos a
 partir de sensores que se encontram distribuidos em ambiente não controlado e, normalmente, de
@@ -29,14 +29,14 @@ AES\footnote{\textit{Advenced Encryption System algorithm}}\cite{Stallings2005},
 ECC\cite{Stallings2005}) para garantir
 um determinado nível de segurança, para isso existe a necessidade de partilhar chaves de sessão por
 todos os \textit{end-points} e como tal deve-se recorrer a esquemas de distribuição de
-chaves\cite{DIST_Keys}.
+chaves\cite{eschenauer2002}.
  \item[Disponibilidade]
 Entende-se por disponibilidade de uma rede, a garantia de que esta funciona efectivamente
 durante o seu tempo de operação. Os ataques por negação de serviço (Denial of Service -
-DoS)\cite{DOS} são os mais frequentes para diminuir a disponibilidade de uma rede. Então, para além
-de mecanismos que evitem a negação de serviço, é necessário garantir que a degradação da
+DoS)\cite{Hu2005} são os mais frequentes para diminuir a disponibilidade de uma rede. Então, para
+além de mecanismos que evitem a negação de serviço, é necessário garantir que a degradação da
 rede (ex: na presença de um ataque ) seja controlada e que vá sendo proporcional ao número de nós
-comprometidos.\cite{D1,d2,d3}
+comprometidos.
  \item[Integridade]
 A integridade garante que os dados recebidos por um nó não foram alterados, por um
 adversário, durante a transmissão. Em alguns casos esta propriedade é garantida juntamente com a
@@ -83,9 +83,9 @@ confidencialidade entre dois pontos de comunicação, encriptando as mensagens (co
 o modo CTR\footnote{\textit{Counter Mode}}) e protegendo-as com um MAC (autenticação com CBC-MAC). O
 SNEP gera diferentes chaves, de encriptação, que derivam de uma chave mestra partilhada entre os
 dois nós, com umcontador de mensagens para garantir a frescura. O segundo componente,o
-${\mu}$TESLA, é um serviço de autenticação de \textit{broadcast}, que evita a utilização de
-mecanismos, mais exigentes, de criptografia assimétrica, recorrendo a critografia simétrica,
-autenticando as mensagens com um MAC,
+${\mu}$TESLA\cite{Luk2006}, é um serviço de autenticação de \textit{broadcast}, que evita a
+utilização de mecanismos, mais exigentes, de criptografia assimétrica, recorrendo a critografia
+simétrica, autenticando as mensagens com um MAC, 
 \item[Norma IEEE802.15.4\cite{ietf_802154}]
 Esta norma define a especificação da camada física e de controlo de acesso ao meio das redes
 pessoais de baixa potência (\textit{LRPAN}\footnote{Low Rate Personal Area Networks}). Foca-se

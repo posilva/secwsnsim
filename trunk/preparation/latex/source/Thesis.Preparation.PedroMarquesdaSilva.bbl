@@ -9,6 +9,26 @@
 The contiki operating system - home.
 \newblock http://www.sics.se/contiki/.
 
+\bibitem{gateways}
+Gateways - crossbow technology.
+\newblock {http://www.xbow.com/Products/productdetails.aspx?sid=159}.
+
+\bibitem{freemote}
+Home {\textbar} freemote emulator {\textbar} assembla.
+\newblock http://www.assembla.com/wiki/show/freemote.
+
+\bibitem{jsim}
+Home {(J-Sim} official).
+\newblock http://sites.google.com/site/jsimofficial/.
+
+\bibitem{jprowler}
+{ISIS} - {JProwler}.
+\newblock http://w3.isis.vanderbilt.edu/projects/nest/jprowler/.
+
+\bibitem{prowler}
+{ISIS} - prowler.
+\newblock {http://w3.isis.vanderbilt.edu/projects/nest/Prowler/index.html}.
+
 \bibitem{mica2_datasheet}
 {Mica2 Datasheet}.
 \newblock {http://www.xbow.com/Products/productdetails.aspx?sid=174}.
@@ -16,6 +36,18 @@ The contiki operating system - home.
 \bibitem{micaz}
 {MicaZ Product Details}.
 \newblock {http://www.xbow.com/Products/productdetails.aspx?sid=164}.
+
+\bibitem{ns2}
+The network simulator - ns-2.
+\newblock http://www.isi.edu/nsnam/ns/.
+
+\bibitem{SENSE}
+{SENSE-3.0:} sensor network simulator and emulator.
+\newblock http://www.ita.cs.rpi.edu/sense/index.html.
+
+\bibitem{shox}
+{ShoX} project page.
+\newblock http://shox.sourceforge.net/.
 
 \bibitem{sunspotworld}
 {SunSPOTWorld} - documentation.
@@ -76,17 +108,6 @@ Miguel Castro and Barbara Liskov.
   systems design and implementation}, pages 173--186, Berkeley, CA, USA, 1999.
   USENIX Association.
 
-\bibitem{falhas_bizantinas_proactiverec}
-Miguel Castro and Barbara Liskov.
-\newblock Practical byzantine fault tolerance and proactive recovery.
-\newblock {\em ACM Trans. Comput. Syst.}, 20(4):398--461, 2002.
-
-\bibitem{WAP_Wormhole}
-Sun Choi, Doo young Kim, Do~hyeon Lee, and Jae il~Jung.
-\newblock Wap: Wormhole attack prevention algorithm in mobile ad hoc networks.
-\newblock In {\em Sensor Networks, Ubiquitous and Trustworthy Computing, 2008.
-  SUTC '08. IEEE International Conference on}, pages 343--348, June 2008.
-
 \bibitem{Corson1999}
 S~Corson and J~Macker.
 \newblock {Mobile Ad hoc Networking (MANET): Routing Protocol Performance
@@ -117,6 +138,12 @@ John Douceur and Judith~S Donath.
 \newblock {The Sybil Attack}.
 \newblock pages 251----260, 2002.
 
+\bibitem{eschenauer2002}
+Laurent Eschenauer and Virgil~D. Gligor.
+\newblock A key-management scheme for distributed sensor networks.
+\newblock In {\em Proceedings of the 9th {ACM} conference on Computer and
+  communications security}, pages 41--47, Washington, {DC,} {USA}, 2002. {ACM}.
+
 \bibitem{leachprotocol}
 Wendi~Rabiner Heinzelman, Anantha Chandrakasan, and Hari Balakrishnan.
 \newblock Energy-efficient communication protocol for wireless microsensor
@@ -128,6 +155,11 @@ Wendi~Rabiner Heinzelman, Anantha Chandrakasan, and Hari Balakrishnan.
 {Hongmei Deng}, {Wei Li}, and D.P. Agrawal.
 \newblock {Routing security in wireless ad hoc networks}.
 \newblock {\em Communications Magazine, IEEE}, 40(10):70--75, 2002.
+
+\bibitem{Hu2005}
+Fei Hu and Neeraj~K. Sharma.
+\newblock {Security considerations in ad hoc sensor networks}.
+\newblock {\em Ad Hoc Networks}, 3(1):69--89, January 2005.
 
 \bibitem{packet_leashes_perrig}
 Y.-C. Hu, A.~Perrig, and D.B. Johnson.
@@ -184,10 +216,36 @@ Chris Karlof, David Wagner, and Naveen Sastry.
   networks}.
 \newblock pages 162--175, Baltimore, MD, USA, 2004. ACM.
 
+\bibitem{Kuorilehto2005}
+Mauri Kuorilehto, Marko H\"{a}nnik\"{a}inen, and Timo~D.
+  H\"{a}m\"{a}l\"{a}inen.
+\newblock {A survey of application distribution in wireless sensor networks}.
+\newblock {\em EURASIP Journal on Wireless Communications and Networking},
+  2005(5), 2005.
+
+\bibitem{simulators}
+Johannes Lessmann, Peter Janacik, Lazar Lachev, and Dalimir Orfanus.
+\newblock Comparative study of wireless network simulators.
+\newblock In {\em ICN '08: Proceedings of the Seventh International Conference
+  on Networking}, pages 517--523, Washington, DC, USA, 2008. IEEE Computer
+  Society.
+
 \bibitem{Luk2007d}
 Mark Luk, Adrian Perrig, Ghita Mezzour, and Virgil Gligor.
 \newblock {MiniSec: a secure sensor network communication architecture}.
 \newblock pages 479--488, Cambridge, Massachusetts, USA, 2007. ACM.
+
+\bibitem{Luk2006}
+Mark Luk, Adrian Perrig, and Bram Whillock.
+\newblock {Seven cardinal properties of sensor network broadcast
+  authentication}.
+\newblock pages 147--156, Alexandria, Virginia, USA, 2006. ACM.
+
+\bibitem{Fault_Intrusion_Tolerant_Techniques}
+Ruiping Ma, Liudong Xing, and H.E. Michel.
+\newblock Fault-intrusion tolerant techniques in wireless sensor networks.
+\newblock In {\em Dependable, Autonomic and Secure Computing, 2nd IEEE
+  International Symposium on}, pages 85--94, 29 2006-Oct. 1 2006.
 
 \bibitem{app_monitor}
 Alan Mainwaring, David Culler, Joseph Polastre, Robert Szewczyk, and John
@@ -203,6 +261,12 @@ Aleksandar Milenkovi\'{c}, Chris Otto, and Emil Jovanov.
   an implementation.
 \newblock {\em Comput. Commun.}, 29(13-14):2521--2533, 2006.
 
+\bibitem{Sec_WSN_Vulnerabilities}
+Wireless Networks.
+\newblock {Security Vulnerabilities In Wireless Sensor Networks: A Survey}.
+\newblock {\em Journal of Information Assurance and Security},
+  5(2010):031--044, 2009.
+
 \bibitem{sybil_perrig}
 J.~Newsome, E.~Shi, D.~Song, and A.~Perrig.
 \newblock The sybil attack in sensor networks: analysis \& defenses.
@@ -216,6 +280,12 @@ E.C.H. Ngai, Jiangchuan Liu, and M.R. Lyu.
 \newblock In {\em Communications, 2006. ICC '06. IEEE International Conference
   on}, volume~8, pages 3383--3389, June 2006.
 
+\bibitem{park_simulating_2001}
+Sung Park, Andreas Savvides, and Mani~B. Srivastava.
+\newblock Simulating networks of wireless sensors.
+\newblock In {\em Proceedings of the 33nd conference on Winter simulation},
+  pages 1330--1338, Arlington, Virginia, 2001. {IEEE} Computer Society.
+
 \bibitem{Parno2005}
 B.~Parno, A.~Perrig, and V.~Gligor.
 \newblock {Distributed detection of node replication attacks in sensor
@@ -227,11 +297,6 @@ Bryan Parno, Mark Luk, Evan Gaustad, and Adrian Perrig.
 \newblock Secure sensor network routing: a clean-slate approach.
 \newblock In {\em CoNEXT '06: Proceedings of the 2006 ACM CoNEXT conference},
   pages 1--13, New York, NY, USA, 2006. ACM.
-
-\bibitem{RFC-AODV}
-C.~Perkins, E.~Royer, and S.~Das.
-\newblock Rfc 3561 ad hoc on-demand distance vector (aodv) routing.
-\newblock Technical report, 2003.
 
 \bibitem{Perkins1999}
 C.E. Perkins and E.M. Royer.

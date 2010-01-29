@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1 beta2
-lastDocument=source/capitulo1.tex
+lastDocument=source/sec_ambientes_de_simulacao.tex
 masterDocument=
 name=Thesis.Preparation
 pkg_extIsRegExp=false
@@ -18,12 +18,12 @@ QuickBuild=
 
 [item:source/Thesis.Preparation.PedroMarquesdaSilva.tex]
 archive=true
-column=17
+column=21
 encoding=ISO-8859-1
 highlight=LaTeX
-line=100
-open=true
-order=2
+line=34
+open=false
+order=0
 
 [item:source/ataques_wsn.tex]
 archive=true
@@ -36,29 +36,29 @@ order=1
 
 [item:source/capitulo1.tex]
 archive=true
-column=48
+column=12
 encoding=ISO-8859-1
 highlight=LaTeX
-line=170
-open=true
-order=3
+line=126
+open=false
+order=1
 
 [item:source/capitulo2.tex]
 archive=true
-column=29
+column=27
 encoding=ISO-8859-1
 highlight=LaTeX
-line=8
+line=9
 open=false
 order=1
 
 [item:source/capitulo3.tex]
 archive=true
-column=34
+column=15
 encoding=ISO-8859-1
 highlight=LaTeX
-line=2
-open=true
+line=68
+open=false
 order=1
 
 [item:source/capitulo4.tex]
@@ -67,21 +67,21 @@ column=56
 encoding=ISO-8859-15
 highlight=LaTeX
 line=0
-open=true
+open=false
 order=0
 
 [item:source/logounl.tex]
 archive=true
 column=0
-encoding=
-highlight=
+encoding=UTF-8
+highlight=LaTeX
 line=0
 open=false
 order=-1
 
 [item:source/mybib.bib]
 archive=true
-column=63
+column=37
 encoding=ISO-8859-1
 highlight=BibTeX
 line=1351
@@ -153,28 +153,28 @@ order=2
 
 [item:source/sec_about_wsn.tex]
 archive=true
-column=0
+column=27
 encoding=ISO-8859-1
 highlight=LaTeX
-line=38
+line=28
 open=false
 order=2
 
 [item:source/sec_ambientes_de_simulacao.tex]
 archive=true
-column=0
+column=15
 encoding=ISO-8859-1
 highlight=LaTeX
-line=57
-open=false
-order=3
+line=156
+open=true
+order=0
 
 [item:source/sec_arq_security_wsn.tex]
 archive=true
-column=56
+column=0
 encoding=ISO-8859-1
 highlight=LaTeX
-line=131
+line=0
 open=false
 order=3
 
@@ -198,28 +198,28 @@ order=-1
 
 [item:source/sec_ataq_estabelecimento_rotas.tex]
 archive=true
-column=61
+column=2
 encoding=ISO-8859-1
 highlight=LaTeX
-line=36
+line=78
 open=false
 order=2
 
 [item:source/sec_ataq_manutencao_rotas.tex]
 archive=true
-column=42
+column=93
 encoding=ISO-8859-1
 highlight=LaTeX
-line=12
+line=21
 open=false
 order=5
 
 [item:source/sec_ataq_org_rede.tex]
 archive=true
-column=12
+column=4
 encoding=ISO-8859-1
 highlight=LaTeX
-line=42
+line=31
 open=false
 order=1
 
@@ -234,10 +234,10 @@ order=7
 
 [item:source/sec_dicussao_resumo.tex]
 archive=true
-column=9
+column=0
 encoding=ISO-8859-1
 highlight=LaTeX
-line=109
+line=12
 open=false
 order=0
 
@@ -261,10 +261,10 @@ order=9
 
 [item:source/sec_modadversario_ataques_contramedidas.tex]
 archive=true
-column=3
+column=7
 encoding=ISO-8859-1
 highlight=LaTeX
-line=22
+line=13
 open=false
 order=2
 
@@ -282,33 +282,6 @@ archive=true
 column=0
 encoding=ISO-8859-1
 highlight=LaTeX
-line=127
-open=false
-order=8
-
-[item:source/sec_secure_wsn_design.tex]
-archive=true
-column=27
-encoding=ISO-8859-1
-highlight=LaTeX
-line=8
-open=false
-order=0
-
-[item:source/sumario_mod_ad_svc_sec.tex]
-archive=true
-column=26
-encoding=ISO-8859-1
-highlight=LaTeX
-line=21
-open=false
-order=5
-
-[item:source/tipificacao_de_ataques.tex]
-archive=true
-column=0
-encoding=ISO-8859-1
-highlight=LaTeX
 line=0
 open=false
-order=-1
+order=0

@@ -15,4 +15,27 @@ apresentando as contramedidas que permitem mitigá-los.
 \input{sec_ataq_estabelecimento_rotas}
 \input{sec_ataq_manutencao_rotas}
 %\input{sec_ataq_reorganizacao_rede}
-\input{tabela_ataques_contramedidas}
+\subsection{Ataques por Intrusão/Replicação}
+Alguns dos ataques tipificados anteriormente podem ser desencadeados a partir de nós
+maliciosos\cite{Sinkhole_attack} introduzidos na rede de forma incorrecta e posteriormente
+replicados. Os ataques por replicação\cite{Parno2005} são particularmente efectivos em sistemas 
+do tipo de votação, ou cuja a operação da rede dependa de mecanismos de eleição. Pode-se então
+dizer que, mitigar os ataques por intrusão permite que, à partida, se possam reduzir algumas
+condições para a indução de outros ataques.
+\subsubsection{Contra-medidas}
+Apresentam-se algumas contra-medidas para ataques por intrusão, algumas das quais têm sido
+incorporadas em protocolos de encaminhamento:
+\begin{description}\descvspace
+\item[Autenticação central] Uma primeira forma de defesa contra replicação é a autenticação dos
+nós baseados nos seus identificadores por parte de uma estação central, permitindo detectar
+inconsistências.
+ \item[Múltiplas Rotas] A existência de diversos caminhos para entregar uma mensagem no destino,
+faz com que se possa aliar a tolerância a falhas à resistência a intrusões. Assim, a mensagem seja
+interceptada por um intrusor existe alta probabilidade de esta alcançar o destino por outro dos
+caminhos enviados\cite{INSENS}.
+\item[Detecção de replicação] Perrig \textit{et} Parno em \cite{Parno2005} apresentam mecanismos de
+detecção distribuída de replicações um de caractér aleatório \textit{Randomized Multicast} e o
+outro, denominado por \textit{Line-Selected Multicast}, que se serve carácter multi-hop da rede
+parae a detecção de nós duplicados. No protocolo \textit{Clean-Slate}\cite{clean_slate} é
+implementado um mecanismo de detecção baseado na construção de uma árvore.
+ \end{description} 

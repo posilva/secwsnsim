@@ -28,7 +28,7 @@ serviços são: i) Mecanismo de Geração de Topologias; ii) Mecanismo de Gestão de
 Consumo de Energia; iii) Mecanismo de Injecção de Faltas/Ataques ao Encaminhamento; iv) Mecanismo de
 Configuração; v) Mecanismo de Visualização e Controlo de Simulação.
 \input{pic_sim_arch}
-\subsubsection{Implementação do Mecanismo de Configuração}\label{sec:impl_conf}
+\subsubsection{Mecanismo de Configuração}\label{sec:impl_conf}
 Para dotar a plataforma de maior flexibilidade, a existência de um componente gestor de
 configurações revela-se importante. Este componente, é transversal a toda 
 plataforma. Pois, cada parte terá especificidades próprias que serão geridas por
@@ -37,7 +37,7 @@ tecnologia XML para definição dos ficheiros de configuração da plataforma. As pr
 funcionalidades que se prevêem existir vão desde as configurações dos parâmetros do simulador base,
 até à configuração de cada uma das simulações, que se pretende estudar, como forma de possibilitar a
 repetição de experiências nas mesmas condições.
-\subsubsection{Implementação do Mecanismo de Geração de Topologias}\label{sec:impl_topo}
+\subsubsection{Mecanismo de Geração de Topologias}\label{sec:impl_topo}
 As RSSF, normalmente, são caracterizadas por diferentes formas de distribuição
 dos nós sensores. Estas distribuições podem ser essencialmente divididas em dois modelos:
 aleatório e estruturado. Assim, para que se consiga acrescentar mais um grau de liberdade às
@@ -46,7 +46,7 @@ fornecido um componente cuja função é gerar topologias na rede. Pois, sabe-se qu
 topologia da rede pode influenciar o comportamento de um protocolo. Pretende-se que este
 componente, possibilite a extensão para novas topologias (específicas para determinada
 simulação).
-\subsubsection{Implementação do Mecanismo de Gestão de Consumo de Energia}\label{sec:impl_energia}
+\subsubsection{Mecanismo de Gestão de Consumo de Energia}\label{sec:impl_energia}
 As características fundamentais que se deverão implementar neste componente são: a 
 definição de uma API para o desenvolvimento de novos modelos consoante as necessidades
 da simulação; a possibilidade de introduzir parâmetros relacionados com o consumo por parte dos
@@ -56,7 +56,7 @@ em cada sensor. Desta forma, este é um dos componentes de maior importância, uma
 indicadores que se pretende observar na análise de protocolos de encaminhamento, é o impacto sobre o
 tempo útil de operação da rede, quer em condições de funcionamento normais, quer em condições
 de ataque efectivo, tempo este que está dependente da energia.
-\subsubsection{Implementação do Mecanismo de Injecção de Falhas / Ataques ao Encaminhamento
+\subsubsection{Mecanismo de Injecção de Falhas / Ataques ao Encaminhamento
 }\label{sec:impl_ataques}
 Sendo o tema central da futura dissertação o estudo de protocolos de encaminhamento seguros em
 RSSF, este componente é o de maior importância nesta plataforma e por diferentes ordens de razões:
@@ -66,7 +66,7 @@ flexível para se adaptar à lógica de cada algoritmo; iii) Poderá permitir a muta
 tempo de execução da simulação, por forma a alterar comportamentos do protocolo; iv) Idealmente
 deverá permitir a acrescentar mais modelos de ataques, dos já tipificados neste relatório ou outros
 que venham a ser desenvolvidos.
-\subsubsection{Implementação do Mecanismo de Visualização e Controlo de Simulação
+\subsubsection{Mecanismo de Visualização e Controlo de Simulação
 }\label{sec:impl_visual}
 Como não poderia deixar de ser existe a necessidade de dotar a plataforma de um ambiente de
 operação. Como tal, é necessário implementar um componente correspondente à visualização gráfica de

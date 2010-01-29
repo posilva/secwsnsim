@@ -2,43 +2,38 @@
 Algumas das limitações existentes nas plataformas das RSSF, devem-se ao facto
 de se pretender manter os sensores com um preço o mais baixo possível. Apesar
 de cada sensor por si não representar um investimento avultado quando se escala
-uma rede de dez sensores para os milhares de dispositivos este valor pode
-representar valores bastante elevados. No campo da investigação estão a ser
+uma rede para os milhares de dispositivos pode representar valores bastante elevados. No campo da
+investigação estão a ser
 introduzidos novos protocolos de encaminhamento, novas aplicações, novos
 algoritmos e tecnologias de segurança. Como se trata de redes com tempo de vida
-limitado, devido ao fornecimento de energia ser limitado, o uso real de
-sensores apresenta-se como uma forma pouco eficiente para o desenvolvimento de
-novas tecnologias ou melhoramento das existentes.
+limitado, o uso real de sensores apresenta-se como uma forma pouco eficiente para o desenvolvimento
+de novas tecnologias ou melhoramento das existentes.
 
 Os ambientes de simulação de redes de sensores surgem como uma necessidade
 inevitável, para o rápido teste e desenvolvimento das redes de sensores e
-todas as tecnologias associadas, antes destas se implementarem. Alguns dos
-ambientes existentes foram adaptados de outros já existentes para
-redes sem fios ou \textit{ad-hoc}, como é o caso do NS2\cite{NS2} ou
-J-Sim\cite{}.As RSSF têm caracteristicas especificas que diferem das
-restantes redes, nomeadamente o modelo de comunicação, que tem avançado para a
-norma 802.15.4\cite{ietf_802154}, bem como a necessidade de monitorizar eficiência
-energética de cada tecnologia. Outra propriedade importante destes ambientes é a
-capacidade de rápidamente repetir experiências com determinadas variáveis
-configuraveis em cada ambiente (ex. nº de nós, modelo de rádio)
+todas as tecnologias associadas, antes destas se
+implementarem\cite{park_simulating_2001,simulators}. Alguns dos
+ambientes conhecidos foram adaptados de outros já existentes, como é o caso do NS2\cite{ns2} ou
+J-Sim\cite{jsim}. Uma propriedade importante destes ambientes é a
+capacidade de rápidamente repetir experiências nas mesmas condições recorrendo a parâmetros 
+configuráveis (ex. nº de nós, modelo de rádio)
 
-O que se pretende nesta secção é a apresentar diversos ambientes de
-simulação, mais comuns, e que suportem simular sistema de RSSF (em especial
-TinyOS). Correspondem a critérios de selecção especificos e enumerados
-seguidamente, com vista à avaliação de um ambiente que se mostre adequado para a
-utilização no trabalho de dissertação.
+Nesta secção apresentam-se diversos ambientes de simulação, mais comuns, e que permitam simular
+sistema de RSSF. Foram seleccionados, em premeiro lugar, seguindo os critérios relacionados com 
+engenharia de \textit{software}. Seguidamente, com vista à avaliação de um ambiente que se mostre
+adequado para a utilização no trabalho de dissertação, foram estabelecidos critérios relacionados
+com as RSSF.
 
 \subsection{Critérios de Selecção}
-
 O número de ferramentas de simulação para RSF, tem vindo a aumentar, no entanto
 pretende-se analisar ferramentas que possuam as seguintes propriedades: 
 \subsubsection{Relacionados com Engenharia de
 Software}
-\begin{description}\addtolength{\itemsep}{-.50\baselineskip}
+\begin{description}\descvspace
  \item[Portabilidade da Linguagem] Devido às caracteristicas da linguagem de
-programação Java\cite{JAVA_SUN}, inerente ao seu ambiente de execução e à
+programação Java, inerente ao seu ambiente de execução, à
 consequente portabilidade para diversas plataformas e a programação
-orientada  a objectos (reutilização) foram seleccionadas ambientes apenas
+orientada a objectos ( permitindo reutilização). Assim, foram seleccionadas apenas ambientes
 desenvolvidos nesta linguagem.
 \item[Código Aberto e Livre] Esta propriedade permite que se contorne
 obstáculos inerentes a licenciamento de \textit{software}, bem como 
@@ -49,46 +44,47 @@ possuem todos as mesmas caracterisiticas e funcionalidades e, considerando que
 a componente experimental da dissertação irá introduzir novos
 mecanismos ou funcionalidades, o principio da modularidade e
 fácil extensibilidade facilitará o desenrolar do trabalho.
-\item[Documentação] Sabendo que algumas das plataformas não se encontram muito
-bem documentadas este critério será importante como ponto de partida para o
-entendimento de cada uma das arquitecturas das ferramentas.
+\item[Documentação] Alguns ambientes podem não se encontrar bem documentados. Este critério será
+importante como ponto de partida para o aprofundamento do conhecimento de cada uma das
+arquitecturas destas ferramentas.
 \end{description}
 \subsubsection{Relacionados com as RSSF}
-\begin{description}\addtolength{\itemsep}{-0.5\baselineskip}
+\begin{description}\descvspace
 \item[Escalabilidade da Rede] Uma das características mais importantes das RSSF é o conceito de
 escala, que se deve ao facto de estas compreenderem, normalmente, um grande número de sensores
 distríbuidos por uma vasta àrea. Assim, é importante que o ambiente de simulação possa suportar a
 simulação com milhares de nós, uma vez que o factor escala é um das propriedades que se querem ver
-análisadas no estudo dos protocolos de encaminhamento;
-\item[Modelo de Colisões/Comunicação Rádio] Este modelo é fundamental que se encontre modelado num
-sistema de simulação. Por ser um componente base das RSSF e possuir caracteristicas próprias
-relacionadas com a simulação da camada de acesso ao meio e ligação de dados que possuem
-caracteristicas própria inerentes aos protocolos implementados (B-MAC,S-MAC);
-\item[Modelo de Gestão de Energia] A energia é uma das caracteristicas mais importantes a avaliar
-numa RSSF, uma vez que se trata de um recurso limitado e que impõe limitações no desenho de
-protocolos de encaminhamento;
-\item[Capacidade de Emulação] Alguns simuladores possuem uma capacidade extra que lhes permite
-emular o comportamento de um sensor real tal como ele é especificado. Permitindo fazer o
-carregamento de código, sem recurso a recompilação, directamente para o \textit{mote};
+analisadas no trabalho a desenvolver;
+\item[Modelo de Colisões/Comunicação Rádio] Este modelo é fundamental que se encontre modelado no
+sistema de simulação. Por ser um componente base das RSSF e possuir características 
+relacionadas com a simulação da camada de acesso ao meio e ligação de dados. Estas possuem
+espeficidades inerentes aos protocolos implementados (ex: B-MAC, S-MAC)\cite{BMAC,SMAC};
+\item[Modelo de Gestão de Energia] A existência de um modelo de energia permitirá adaptar a
+funcionalidade com vista à integração na plataforma final, visto se tratar de uma das propriedades
+que se deseja permitir estudar.
+\item[Capacidade de Emulação] Alguns simuladores possuem a capacidade de emular 
+um sensor real, permitindo efectuar o carregamento de código directamente para o \textit{mote}, sem
+recurso a recompilação;
 \item[Modelo de Mobilidade] Ainda que as RSSF sejam maioritariamente instaladas com características
-estáticas ou de pouca mobilidade, a existência de um modelo de mobilidade possibilita avaliar os
-comportamentos dos protocolos mediante este factor;
-\item[Interface de Visualização] Para um melhor controlo da simulação é importante o ambiente de
-simulação possua uma interface de visualização por forma a perceber os comportamentos dos
-protocolos.
-\item[Modelo de Gestão de Topologia] Também um factor de que pode influênciar o comportamento de
-um protocolo de encaminhamento, é relevante a existência deste modelo como forma de avaliar os
-protocolos desenhados.
+estáticas ou de pouca mobilidade, a existência de um modelo de mobilidade poderá possibilitar
+a avaliação dos comportamentos dos protocolos mediante esta propriedade;
+\item[Interface de Visualização] É importante que o ambiente de
+simulação possua uma interface de visualização, o que permite uma mais fácil percepção dos
+comportamentos dos protocolos (ex: topologia, cobertura), bem como o controlo da simulação e
+extracção de resultados.
+\item[Modelo de Gestão de Topologia] Um factor que pode influênciar o comportamento de
+um protocolo de encaminhamento, é a topologia. Como tal, é relevante a existência deste modelo por
+forma a avaliar os protocolos desenhados perante diferentes topologias.
 \end{description}
 \subsection{Prowler/JProwler}
-Esta ferramenta resulta de uma conversão de um simulador de eventos
+\cite{jprowler}Esta ferramenta resulta da conversão de um simulador de eventos
 discretos\footnote{Fila global onde são inseridos todos os eventos da rede e
 que são tratados sequencialmente ou por prioridade, dependendo da
-implementação}, implementado em MATLAB\cite{MATALAB_REF}, pela universidade de
-Vanderbilt\cite{vanderbilt}, para a linguagem Java. Este simulador pode ser
+implementação} Prowler\cite{prowler}, implementado em MATLAB, pela Universidade de
+Vanderbilt, para a linguagem Java. Este simulador pode ser
 configurado para simular de forma deterministica (permitindo a repetição de
 experiências) ou probabilistica ( adequado para simular a forma não
-deterministica de comunicação entre motes). Permite a simulação com diversos
+deterministica de comunicação entre \textit{motes}). Permite a simulação com diversos
 nós podendo chegar aos 5000 ( ainda que o número possa ser maior, por razões de
 performance é o valor máximo aconselhado) usando diversas
 topologias(dinâmicas) nas quais se podem implementar os mais diversos
@@ -101,10 +97,10 @@ mas preciso para descrever a operação da camada MAC.
 Este ferramenta vem com uma janela de visualização da topologia RSSF. Para o
 desenvolvimento de aplicações ou protocolos são disponibilizadas classes base
 que se podem estender. Estão presentes dois modelos de rádio: um de Gauss para
-topologias estáticas e outro de reighXXX para topologias móveis.
-\subsection{ J-Sim}
+topologias estáticas e outro de  para topologias móveis.
+\subsection{J-Sim}
 J-Sim (anteriormente conhecido como JavaSim) é um ambiente de simulação baseado
-em componentes \cite{JSIM}, implementado em Java. Não foi desenvolvido
+em componentes \cite{jsim}, implementado em Java. Não foi desenvolvido
 inicialmente com vista a sua utilização em RSSF como é o caso do ambiente
 SENSE\cite{SENSE}, mas o objectivo para o desenvolvimento foi o mesmo:
 extensibilidade. Este ambiente é amplamente usado e implementa um modelo de rede
@@ -116,8 +112,8 @@ de transporte ao nível aplicação). Para além deste problema, J-Sim é um
 importante ambiente de simulação dada a natureza fracamente acupolada dos seus
 componetens que permite o rápido desenvolvimento e prototipagem rápida  de
 aplicações.
-\subsection{ Freemote}
-Fremote é uma ferramenta de emulação \footnote{Técnica onde as propriedades de
+\subsection{Freemote}
+Fremote é uma ferramenta de emulação \cite{freemote} \footnote{Técnica onde as propriedades de
 uma rede existente, desenhada, não ideal são simuladas com o objectivo
 de desempenho, previsão de impacte de modificações por forma optimizar decisões
 referentes à tecnologia} leve e distríbuida,
@@ -126,13 +122,13 @@ RSSF. O emulador suporta motes (Squawk, Sentilla Point) e
 plataformas (Java cards, SunSpot ) baseados em Java. Devide a arquitectura em
 três camadas bem definidas por interfaces: Aplicação, Encaminhamento e Ligação
 de Dados e Física. Sendo um emulador, os nós reais podem ser baseado na norma
-de comunicação IEEE802.15.4\cite{IEEE802.15.4} (ex:MICAz, JMotes, Tmote Sky).
+de comunicação IEEE802.15.4\cite{ietf_802154} (ex:MICAz\cite{micaz}).
 
 Trata-se de um emulador de RSSF, disponível com um interface gráfico para
 configuração que permite executar o código em motes baseados em Java. Pode ser
 usado para o desenvolvimento de algoritms para RSSF, uma vez que suporta
 experiências de grande escala ( até cerca de 10.000 nós) incluindo a integração
-com nós reais baseados em Java e na norma IEEE802.15.4. Os principais pontos
+com nós reais baseados em Java e na norma IEEE802.15.4\cite{ietf_802154}. Os principais pontos
 negativos são: 1)  o modelo de propagação rádio é muito simples uma vez que não
 considera obstáculos entre os  nós. 2) existe um modelo de comunicação
 realistico limitado a emulação simples e a plataformas especificas (JMote). 3)
@@ -140,7 +136,7 @@ Não é orientada para a análise de performance, característica pode ser
 importante no desenvolvimento de algoritmos para RSSF.
 \subsection{ShoX}
 Trata-se de um simulador de redes sem fios, implementado em
-Java\cite{SHOX_REF}. A ideia principal desta ferramenta é a de proporcionar, uma
+Java\cite{shox}. A ideia principal desta ferramenta é a de proporcionar, uma
 forma fácil e intuitiva, a implementação e desenho de protocolos de rede,
 modelos de mobilidade, modelos de propagação de sinal ou de tráfego de rede.
 Tal como outros simuladores incorpora um simulador de eventos discretos, que
@@ -159,4 +155,3 @@ O facto do modelo de propagação de sinal ser baseado na norma IEEE802.11, torna
 dificil a adaptação às condições das RSSF, no entanto a modularidade do sistema
 permite o desenvolvimento de uma camada IEEE802.15.4 para se aproximar da norma
 mais recente de comunicação das RSSF.
-%\input{discussao_ambientes_simulacao}

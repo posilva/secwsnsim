@@ -1,38 +1,33 @@
 \subsection{Ataques à organização da rede e descoberta de nós} \label{sect:subsec_ataq_org_rede}
-Apesar desta fase estar presente em todos os protocolos de encaminhamento é
-mais vincada em protocolos do tipo \textit{table-driven}\cite{al-karaki_routing_2004} uma vez
-que estes desencadeiam a criação de tabelas de encaminhamento que se deverão
-manter actualizadas durante a execução da rede. No entanto em protocolos do tipo
-\textit{on-demand}\cite{al-karaki_routing_2004} também se verifica a existência desta fase mas
-repete-se em cada início de comunicação ou de transmissão.
+Após a descoberdos nós vizinhos é necessário recolher informação para a construção das tabelas
+de encaminhamento, isto nos protocolos do tipo \textit{table-driven}\cite{al-karaki_routing_2004}.
+No entanto, em protocolos do tipo \textit{on-demand}\cite{al-karaki_routing_2004} esta fase é
+desencadeada em cada início de transmissão.
 \begin{description}\descvspace
  \item[Falsificação de Informação de Encaminhamento]
-Um ataque do tipo de introdução de informação de encaminhamento
-falsa, tem impacto na construção da rede e na descoberta dos nós. Permite criar entradas
-incorrectas nas tabelas de encaminhamento, podendo também fazer com que estas fiquem
-lotadas e inválidas. No caso dos protocolos
-\textit{on-demand}, o impacto é menos efectivo, uma vez que o atacante terá de
-estar sempre a injectar informação errada a cada início de transmissão, mas
-ainda assim pode provocar danos na rede.
+Este ataque tem impacto na formação da rede e na descoberta dos nós. Induz a criação de entradas
+incorrectas nas tabelas de encaminhamento, podendo também fazer com que estas fiquem lotadas e
+inválidas. Nos protocolos \textit{on-demand}, o impacto pode ser menor, uma vez que obriga o 
+atacante a injectar informação errada a cada ciclo de transmissão.
  \item[\textit{Rushing Attacks}]
 Outro ataque nesta fase é o \textit{rushing attack}\cite{Rushing_attacks_perrig} que é definido pela
-exploração por parte
-do atacante de uma janela de oportunidade para responder a um pedido de caminho para um destino.
-Esta operação é desencadeada quando um protocolo aceita a primeira resposta que
-recebe (exemplo do AODV\cite{RFC-AODV}), calculando isto o atacante é sempre um
-candidato a ser o próximo encaminhador, uma vez que não respeita temporizadores
-nem condições de resposta.
+exploração, por parte do atacante, de uma janela de oportunidade para responder a um pedido de
+caminho para um destino. Este ataque é efectivo quando o protocolo permite aceitar a primeira
+resposta que recebe (ex: AODV\cite{Perkins1999}). Explorando isto, o atacante é sempre um
+candidato a ser o próximo encaminhador, uma vez que não respeita temporizadores nem condições de
+resposta, podendo influenciar as rotas.
 \end{description}
 \subsubsection{Contra-medidas}
 A aplicação de mecanismos de autenticação no protocolo de encaminhamento faz com que ataques de
-falsificação de informação e inundação de mensagens RREQ  seja minimizados. Os nós da rede podem
-partilhar chaves assimétricas como forma de autenticar as mensagens de dados e controlo de
-encaminhamento (RREQ e RREP), desta forma o atacante como não possui a chaves necessárias para a
-comunicação não poderá participar no protocolo.
-Para fazer face a ataques de \textit{rushing} alguns autores \cite{Rushing_attacks_perrig}
+falsificação de informação seja minimizados. Os nós da rede podem partilhar chaves simétricas como
+forma de autenticar as mensagens de dados e controlo do encaminhamento (RREQ e RREP). Desta forma, o
+atacante como não possui a chaves necessárias para a comunicação, não poderá participar no
+protocolo.
+
+Para fazer face a ataques de \textit{rushing}, alguns autores \cite{Rushing_attacks_perrig}
 apresentam dois mecanismos de defesa: reenvio aleatório de RREQ ()\textit{randomized RREQ
 forwarding}) e detecção segura (\textit{secure detection}). No primeiro mecanismo, cada nó guarda um
-conjunto de mensagens  RREQ escolhendo depois aleatóriamente um para reenviar. Ainda assim, uma
-mensagem RREQ maliciosa pode ser seleccionada, daí existir o segundo mecanismo, que proporciona a
+conjunto de mensagens RREQ escolhendo depois aleatóriamente um para reenviar. Ainda assim, pode ser
+seleccionada uma mensagem RREQ maliciosa, daí a existência do segundo mecanismo, que proporciona a
 troca de mensagens autenticadas entre dois nós garantindo que as mensagens pertencem a nós
-legitimos.  
+legítimos. 
