@@ -36,11 +36,11 @@ order=1
 
 [item:source/capitulo1.tex]
 archive=true
-column=12
+column=95
 encoding=ISO-8859-1
 highlight=LaTeX
-line=126
-open=false
+line=137
+open=true
 order=1
 
 [item:source/capitulo2.tex]
@@ -81,10 +81,10 @@ order=-1
 
 [item:source/mybib.bib]
 archive=true
-column=37
-encoding=ISO-8859-1
+column=18
+encoding=ISO-8859-15
 highlight=BibTeX
-line=1351
+line=1196
 open=false
 order=4
 
@@ -162,19 +162,19 @@ order=2
 
 [item:source/sec_ambientes_de_simulacao.tex]
 archive=true
-column=15
+column=52
 encoding=ISO-8859-1
 highlight=LaTeX
-line=156
+line=138
 open=true
-order=0
+order=2
 
 [item:source/sec_arq_security_wsn.tex]
 archive=true
-column=0
+column=12
 encoding=ISO-8859-1
 highlight=LaTeX
-line=0
+line=85
 open=false
 order=3
 
@@ -198,10 +198,10 @@ order=-1
 
 [item:source/sec_ataq_estabelecimento_rotas.tex]
 archive=true
-column=2
+column=75
 encoding=ISO-8859-1
 highlight=LaTeX
-line=78
+line=35
 open=false
 order=2
 
@@ -279,9 +279,9 @@ order=7
 
 [item:source/sec_protocolos_encaminhamento.tex]
 archive=true
-column=0
+column=93
 encoding=ISO-8859-1
 highlight=LaTeX
-line=0
-open=false
+line=136
+open=true
 order=0

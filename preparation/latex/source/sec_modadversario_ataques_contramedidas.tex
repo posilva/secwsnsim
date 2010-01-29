@@ -25,17 +25,16 @@ condições para a indução de outros ataques.
 \subsubsection{Contra-medidas}
 Apresentam-se algumas contra-medidas para ataques por intrusão, algumas das quais têm sido
 incorporadas em protocolos de encaminhamento:
-\begin{description}\descvspace
-\item[Autenticação central] Uma primeira forma de defesa contra replicação é a autenticação dos
-nós baseados nos seus identificadores por parte de uma estação central, permitindo detectar
-inconsistências.
- \item[Múltiplas Rotas] A existência de diversos caminhos para entregar uma mensagem no destino,
-faz com que se possa aliar a tolerância a falhas à resistência a intrusões. Assim, a mensagem seja
-interceptada por um intrusor existe alta probabilidade de esta alcançar o destino por outro dos
-caminhos enviados\cite{INSENS}.
-\item[Detecção de replicação] Perrig \textit{et} Parno em \cite{Parno2005} apresentam mecanismos de
-detecção distribuída de replicações um de caractér aleatório \textit{Randomized Multicast} e o
-outro, denominado por \textit{Line-Selected Multicast}, que se serve carácter multi-hop da rede
-parae a detecção de nós duplicados. No protocolo \textit{Clean-Slate}\cite{clean_slate} é
-implementado um mecanismo de detecção baseado na construção de uma árvore.
- \end{description} 
+\paragraph*{\textbf{Autenticação central}} Uma primeira forma de defesa contra replicação é a
+autenticação dos nós, usando os seus identificadores, realizada numa estação central, permitindo
+detectar inconsistências ou duplicações.
+\paragraph*{\textbf{Múltiplas Rotas}} A existência de diversos caminhos para entregar uma mensagem
+no destino, faz com que se possa aliar a tolerância a falhas à resistência a intrusões. Assim, se a
+mensagem for interceptada por um intrusor, alta probabilidade desta alcançar o
+destino usando outro dos caminhos de envio\cite{INSENS}.
+\paragraph*{\textbf{Detecção de replicação}} Perrig \textit{et} Parno em \cite{Parno2005} apresentam
+mecanismos de detecção distribuída de replicações. Um dos mecanismos é de carácter aleatório
+\textit{Randomized Multicast} e outro, denominado por \textit{Line-Selected Multicast}, que se
+serve do modelo de comunicação multi-\textit{hop} da rede para detecção de nós duplicados. Outro
+exemplo, é a criação de estruturas auxiliares (ex: àrvores binárias) como acontece no protocolo 
+\textit{Clean-Slate}\cite{clean_slate}.

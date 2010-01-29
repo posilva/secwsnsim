@@ -1,13 +1,12 @@
 \subsection{Ataques ao estabelecimento de rotas} \label{sect:subsec_ataq_est_rotas}
-\begin{description}\addtolength{\itemsep}{-.50\baselineskip}
- \item[\textit{HELLO Flooding }]
+\paragraph*{\textbf{\textit{HELLO Flooding }}}
 Este ataque explora os protocolos que fazem anunciar a sua próximidade, aos vizinhos, emitindo
 mensagens de \textit{HELLO}, \cite{Survey_wsn_Sec_issues,Karlof2003}.
 Os protocolos baseados na localização podem ser vulneráveis a este ataque, uma vez que, com um
 dispositivo do tipo \textit{laptop-class}\cite{Karlof2003}, que possua um alcance rádio
 suficientemente potente para cubrir toda a rede, permite anunciar-se a todos os nós como vizinho,
 forçando a informação fluir através dele.
- \item[Ataque \textit{Sinkhole}]
+\paragraph*{\textbf{Ataque \textit{Sinkhole}}}
 Nas RSSF um dos modos de comunicação é de um-para-muitos(\textit{one-to-many}). Este tipo
 comunicação apresenta algumas vulnerabilidades a ataques do tipo
 \textit{sinkhole}\cite{Sinkhole_attack}. Assim, um atacante informa os nós vizinhos, anunciando-se
@@ -19,21 +18,20 @@ podendo, então, alterar ou encaminhar, de forma selectiva,  a informação. Os pro
 \textit{table-driven} são vulneráveis a estes ataques, enquanto os protocolos baseados em
 localização não o são, devido às suas rotas serem
 \textit{on-demand}.\cite{Karlof2003,Survey_wsn_Sec_issues,Attaks_defenses_sec_in_wsn}
- \item[Ataque \textit{Wormhole}]
+\paragraph*{\textbf{Ataque \textit{Wormhole}}}
 Neste tipo de ataque, apresentado por Perrig et al \cite{Wormhole_perrig} a colaboração de dois nós
 maliciosos (normalmente a muitos \textit{hops} de distância), colaboram para a
 realizaçãoefectividade do ataque. Assim, os atacantes estabelecem uma ligação (ou
 túnel, normalmente de melhor qualidade ou maior largura de banda) para comunicarem entre si.
 Permitindo a um nó malicioso capturar pacotes ou partes de pacotes e enviá-los pela ligação privada
-para o outro atacante no outro extremo da rede.
-
-Este ataque é particularmente eficaz em redes \textit{ad-hoc} e redes baseadas em localização. Sendo
-estas compremetidas, não conseguiram estabelecer caminhos maiores do que dois hops, causando
-interrupções nas comunicações\cite{perrig_survey_ad_hoc,Survey_wsn_Sec_issues}.
+para o outro atacante no outro extremo da rede. Este ataque é particularmente eficaz em redes
+\textit{ad-hoc} e redes baseadas em localização. Sendo estas compremetidas, não conseguiram
+estabelecer caminhos maiores do que dois hops, causando interrupções
+nas comunicações\cite{perrig_survey_ad_hoc,Survey_wsn_Sec_issues}.
 Para além disso, este ataque transforma os atacantes em nós muito solicitados, pois
 apresentam-se aos outros nós participantes como tendo uma melhor ligação e estar a menor
 distância do destino.
-\item[Ataque \textit{Sybil}]
+\paragraph*{\textbf{Ataque \textit{Sybil}}}
 Este ataque foi definido como um ataque que permitia atingir os mecanismos de redundância
 em armazenamento distribuído em ambientes de ponto-a-ponto\cite{Douceur2002}. Outra
 definição que surge, agora associada às RSSF, é a que o define como ``um dispositivo malicioso que
@@ -42,7 +40,6 @@ taxonomia, é um ataque bastante efectivo contra protocolos de encaminhamento\cit
 particular, os protocolos que adoptam múltiplos caminhos. Um nó ao assumir múltiplas identidades
 oculta o facto dos dados estarem a passar por um único nó
 malicioso\cite{Survey_wsn_Sec_issues,Attaks_defenses_sec_in_wsn}.
-\end{description}
 \subsubsection{Contra-medidas}
 Uma das formas de prevenir um ataque HELLO flooding\cite{Karlof2003} é a implementação de
 mecanismos de respostas(\textit{acknowlege}) a anúncios HELLO. Desta forma, caso o atacante esteja a

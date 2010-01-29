@@ -78,12 +78,12 @@ cada emissor por forma a proteger o reenvio escalando para grandes redes.
 \item[SPINS\cite{SPINS}]
 Conjunto de protocolos de segurança, constituído por dois componentes
 principais SNEP\footnote{Secure Network Encryption Protocol} \cite{SPINS} e
-${\mu}$TESLA \cite{SPINS}. O primeiro, fornece serviços de autenticação e
+${\mu}$TESLA \cite{SPINS,Luk2006}. O primeiro, fornece serviços de autenticação e
 confidencialidade entre dois pontos de comunicação, encriptando as mensagens (com
 o modo CTR\footnote{\textit{Counter Mode}}) e protegendo-as com um MAC (autenticação com CBC-MAC). O
 SNEP gera diferentes chaves, de encriptação, que derivam de uma chave mestra partilhada entre os
 dois nós, com umcontador de mensagens para garantir a frescura. O segundo componente,o
-${\mu}$TESLA\cite{Luk2006}, é um serviço de autenticação de \textit{broadcast}, que evita a
+${\mu}$TESLA\cite{SPINS,Luk2006}, é um serviço de autenticação de \textit{broadcast}, que evita a
 utilização de mecanismos, mais exigentes, de criptografia assimétrica, recorrendo a critografia
 simétrica, autenticando as mensagens com um MAC, 
 \item[Norma IEEE802.15.4\cite{ietf_802154}]

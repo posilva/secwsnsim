@@ -1,6 +1,5 @@
 \subsection{Ataques à manutenção de rotas} \label{sect:subsec_ataq_manut_rotas}
-\begin{description}\addtolength{\itemsep}{-.50\baselineskip}
- \item[Ataque \textit{Blackhole}]
+\paragraph*{\textbf{Ataque \textit{Blackhole}}}
 No ataque \textit{blackhole}\cite{HongmeiDeng2002} o atacante intercepta os pacotes destinados ao
 nó/área que pretende comprometer, informando a origem que este se trata de um caminho de melhor
 qualidade. Assim, força todo o tráfego, dirigido ao destino alvo do ataque,  a circular através
@@ -10,7 +9,6 @@ uma mensagem de RREQ. Com isto, este algoritmo de encaminhamento pode ficar suje
 de \textit{blackhole}, pois um nó malicioso intermédio, pode responder com um caminho melhor,
 apesar de não ter sequer caminho para o destino, originando um ``buraco negro'', interrompendo o
 processo de comunicação\cite{Survey_wsn_Sec_issues,Attaks_defenses_sec_in_wsn}.
-\end{description}
 \subsubsection{Contra-medidas}
 Para mitigar os ataques de \textit{blackhole} existem várias propostas
 \cite{blackhole_adhoc,Attaks_defenses_sec_in_wsn,HongmeiDeng2002} das quais se destacam as
