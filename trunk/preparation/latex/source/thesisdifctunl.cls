@@ -324,10 +324,10 @@ grau de \@degree\ em \@majorfield.}
   \@university
   \if\@showfaculty1\\\@faculty\fi
   \if\@showdepartment1\\\@department\fi
-  \vskip 2.5cm
+  \vskip 2.0cm
   \@texttype \vskip\baselineskip \@program
-  \vskip 2.5cm
-  \begin{minipage}{100mm}
+  \vskip 2.0cm
+  \begin{minipage}{160mm}
     \begin{center}
       {\Large\bfseries\@title}
       \vskip 1cm
@@ -336,7 +336,8 @@ grau de \@degree\ em \@majorfield.}
   \end{minipage}\\
   \vfill
  % \@address\\
-  \@date
+  \smallskip
+	\@date
   \end{center}
 }
 
@@ -355,9 +356,9 @@ grau de \@degree\ em \@majorfield.}
   \@university
   \if\@showfaculty1\\\@faculty\fi
   \if\@showdepartment1\\\@department\fi
-  \vskip 2.5cm
+  \vskip 2.0cm
   \@texttype
-  \vskip 1.5cm
+  \vskip 2.0cm
    {\Large\bfseries\@title}
   \vskip 1cm
   \@author
@@ -377,6 +378,7 @@ grau de \@degree\ em \@majorfield.}
   %\end{flushright}
   \vfill
   %\@address\\
+	\smallskip
   \@date
   \end{center}
 }

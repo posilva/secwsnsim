@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1 beta2
-lastDocument=source/sec_ambientes_de_simulacao.tex
+lastDocument=source/sec_dicussao_resumo.tex
 masterDocument=
 name=Thesis.Preparation
 pkg_extIsRegExp=false
@@ -18,11 +18,11 @@ QuickBuild=
 
 [item:source/Thesis.Preparation.PedroMarquesdaSilva.tex]
 archive=true
-column=21
+column=6
 encoding=ISO-8859-1
 highlight=LaTeX
-line=34
-open=false
+line=53
+open=true
 order=0
 
 [item:source/ataques_wsn.tex]
@@ -37,10 +37,10 @@ order=1
 [item:source/capitulo1.tex]
 archive=true
 column=95
-encoding=ISO-8859-1
+encoding=ISO-8859-15
 highlight=LaTeX
 line=137
-open=true
+open=false
 order=1
 
 [item:source/capitulo2.tex]
@@ -135,10 +135,10 @@ order=4
 
 [item:source/resumoen.tex]
 archive=true
-column=16
+column=68
 encoding=ISO-8859-1
 highlight=LaTeX
-line=20
+line=25
 open=false
 order=5
 
@@ -147,7 +147,7 @@ archive=true
 column=20
 encoding=ISO-8859-1
 highlight=LaTeX
-line=6
+line=29
 open=false
 order=2
 
@@ -162,11 +162,11 @@ order=2
 
 [item:source/sec_ambientes_de_simulacao.tex]
 archive=true
-column=52
-encoding=ISO-8859-1
+column=71
+encoding=ISO-8859-15
 highlight=LaTeX
-line=138
-open=true
+line=124
+open=false
 order=2
 
 [item:source/sec_arq_security_wsn.tex]
@@ -234,12 +234,12 @@ order=7
 
 [item:source/sec_dicussao_resumo.tex]
 archive=true
-column=0
+column=42
 encoding=ISO-8859-1
 highlight=LaTeX
-line=12
-open=false
-order=0
+line=87
+open=true
+order=1
 
 [item:source/sec_dolev_yao.tex]
 archive=true
@@ -280,8 +280,35 @@ order=7
 [item:source/sec_protocolos_encaminhamento.tex]
 archive=true
 column=93
-encoding=ISO-8859-1
+encoding=ISO-8859-15
 highlight=LaTeX
 line=136
-open=true
+open=false
 order=0
+
+[item:source/tab_ataques_contramedidas.tex]
+archive=true
+column=9
+encoding=ISO-8859-15
+highlight=LaTeX
+line=41
+open=false
+order=1
+
+[item:source/tab_protocolos_ataques.tex]
+archive=true
+column=77
+encoding=ISO-8859-15
+highlight=LaTeX
+line=14
+open=false
+order=2
+
+[item:source/tab_simuladores_criterios.tex]
+archive=true
+column=34
+encoding=ISO-8859-15
+highlight=LaTeX
+line=40
+open=false
+order=-1
