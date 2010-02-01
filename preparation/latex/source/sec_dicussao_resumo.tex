@@ -1,3 +1,4 @@
+\newpage
 \section{ Discussão e Resumo do Trabalho Relacionado}
 As redes de sensores sem fios representam um enorme desafio para a investigação de sistemas e
 protocolos de segurança. As características que as tornam numa mais valia, para a operação em
@@ -5,17 +6,83 @@ ambientes remotos, apresentam-se como sendo as suas maiores vulnerabilidades em 
 segurança. Este paradoxo é contornado com mecanismos de segurança inovadores e que se distinguem
 dos existentes nas redes convencionais. Assim, passada em revista as diversas dimensões que se
 pretende abarcar na futura dissertação:  protocolos de encaminhamento seguro em RSSF e
-plataformas de simulação de RSSF, importa neste momento apresentar uma visão critica do trabalho
-relacionado como forma de enquadrá-lo como base teórica da dissertação.
+plataformas de simulação de RSSF, importa neste momento apresentar uma visão crítica do trabalho
+relacionado por forma a enquadrá-lo como base teórica da dissertação.
 
-Em primeiro lugar pode-se apresentar os ataques que foram estudados e apresentá-los, de forma
-estruturada, relacionando-os com as contra-medidas para os mitigar.
+Na \tablename{ \ref{tab:tabela_ataques_contramedidas}} apresenta-se uma visão estruturada
+das contra-medidas que permitem mitigar ou diminuir o impacto dos ataques nas RSSF. O uso de
+criptografia simétrica é predominante, uma vez que representa uma forma de garantir propriedades
+como: confidencialidade, autenticidade e integridade. O uso de funções de dispersão de um sentido
+permite verificar integridade e, aliada ao uso de ``desafios''\footnote{Números sequenciais cuja
+sequência depende da aplicação de uma função $f^n(x)=C$, $n$ vezes por forma a obter $C$
+(\textit{challenge})}, permite garantir a frescura das mensagens, a um custo computacional reduzido.
+É de salientar que as implementações destes mecanismos são optimizados para a redução dos custos
+computacionais e de comunicação.
 \input{tab_ataques_contramedidas}
-No ponto de vista dos protocolos estudados cabe relacionar as capacidades de cada um para fazer
-face a ataques definidos no modelo de adversário e tipificados nas diferentes fases dos protocolos
-em que estes se podem desencadear.
+
+Tendo em conta as contra-medidas apresentadas, cabe análisar comparativamente os
+algoritmos e a capacidade de resistir aos ataques definidos no modelo de adversário. Assim, na
+\tablename{ \ref{tab:ataques_vs_protocolos}} estão marcados com o simbolo \checkmark os ataques
+defendidos por cada protocolo estudado, sendo que os marcados com \texttimes, não defendem ou só o
+fazem em condições especiais. O protocolo SIGF distingue-se dos demais protocolos estudados em
+particular pela sua origem, extensão do IGF e por ser baseado em localização. Esta característica é
+especifica para determinadas aplicações e obriga a existência de dispositivos especializados nos
+\textit{motes}. Para além disto, é particularmente indicado para a monitorização de eventos cuja
+ocorrência é espaçada no tempo. Isto faz com que ao ser configurável permita se adaptar a
+diversos graus de ameaça minimizando sempre os custos de operação.
+
+Os protocolos Clean-Slate e INSENS, que serão usados como prova de conceito na elaboração da
+dissertação, pertencem à classe de protocolos de uso genérico, que não necessitam de conhecimento
+de localização, diminuindo a complexidade da plataforma de rede. Estes protocolos, devido às
+caracteristicas que os definem, são excelentes candidatos a serem comparados. 
+Uma das características que os distigue é a utilização da estação base como unidade central de
+encaminhamento, no INSENS, em comparação com o \textit{Clean-Slate} que tem uma abordagem
+completamente distribuída de todas as fases do protocolo. A questão que se levanta prende-se
+essencialmente com impacto no consumo energético nos nós próximos (a um \textit{hop}) da estação
+base, ainda que possam ser múltiplas, uma vez que encaminharão todo o tráfego da rede. 
 \input{tab_protocolos_ataques}
-Por fim e sendo a análise dos ambientes de simulação um dos focos do trabalho relacionado
-poder-se-á avaliar de forma comparativa os ambientes seleccionados para estudo comparandos com os
-critérios pensados como adequados para a avaliação.
+Ambos os protocolos implementam resiliência a intrusão. Uma das diferenças é que o
+\textit{Clean-Slate} tem uma acção preventiva, correspondente à detecção dos nós maliciosos
+(replicados), para além do encaminhamento multi-rota que minimiza o impacto dos intrusores que
+resistam à detecção. No caso do INSENS, apenas existe um mecanismo redundante multi-rota. 
+Observa-se que os autores do Clean-Slate efectuaram algum estudo comparativo, teórico, com o
+INSENS (por este ser anterior). A implementação destes dois algoritmos numa mesma base de simulação
+permitirá verificar se as observações realizadas vão de encontro às conclusões dos autores. Este
+estudo comparativo será de relevante importância para o estudo de outros protocolos que surjam na
+academia, relacionados com a problemática da segurança no encaminhamento de dados nas RSSF.
 \input{tab_simuladores_criterios}
+Por fim e sendo a análise de ambientes de simulação um dos focos do trabalho relacionado
+apresenta-se na \tablename{ \ref{tab:Criterios_vs_ambientes}} a sua sistematização, contrapondo os
+critérios aos ambientes estudados. Como uma primeira nota, deve-se salientar que,
+tendo em vista a concepção de uma plataforma de simulação, a observação dos critérios de
+\textit{software} para a selecção de um simulador base teve um peso bastante grande, nomeadamente
+no que se refere à capacidade de extensabilidade reflectida na simplicidade. Com efeito afigura-se
+que observando \tablename{ \ref{tab:Criterios_vs_ambientes}} a selecção do ambiente base, poderia
+recair sobre as plataforma Shox ou Freemote, uma vez que estas apresentam características que se
+aproximam mais dos objectivos da plataforma final e serviriam de uma boa \textit{baseline}. No
+entanto, depois de alguma engenharia inversa em cada um dos componentes observa-se que apesar da
+riqueza de componentes a complexidade para integração de determinadas funcionalidades, ou a
+introdução de mecanismos de controlo que permitam extrair medições se revela evidente.
+
+Perante a necessidade de seleccionar um ambiente que vise alcançar os objectivos da dissertação
+em tempo útil, esta selecção recai, preliminarmente, no simulador JProwler. Apesar de se tratar de
+um simulador simples, esta característica é uma mais valia. Uma vez que sendo composto
+por oito classes, bem documentadas, se apresenta como de mais fácil extensibilidade face à
+implementação das funcionalidades requeridas na plataforma a conceber. Cada componente de um nó
+sensor é mapeada numa classe abstracta. O modelo de comunicação é inspirado no Mote2 com a gestão
+de eventos baseada no TinyOS o que o torna, do ponto de vista da sua aproximação à realidade,
+bastante vantajoso. É certo que algumas funcionalidades têm que ser implementadas de raiz, como é o
+caso da energia (ShoX) ou gestão de topologias (ShoX), o que permitirá desenvolver modelos que
+podem ser bem integrados por forma a melhor observar as propriedades desejadas. O caso da emulação
+(Freemote) não é um requisito da plataforma logo não se afigura como uma mais valia, que mereça a
+sua selecção. Uma vez, que o Freemote acenta sobre uma interação cliente/servidor o que torna
+dificil a depuração de erros, para além do modelo de comunicação ser demasiado básico e não
+incorporar atenuações do meio ambiente. No caso do J-Sim, é realmente uma plataforma poderosa, mas
+que a sua dimensão obrigaria a um esforço adicioanal demasiado grande que poderia por em segundo
+plano os objectivos. Este também necessitaria de ver desenvolvido muitos dos módulos de raiz.
+
+Desta forma, perante a maior complexidade de algumas plataformas, o JProwler parece constituir uma
+base simples, eficiente e com capacidade de ser enriquecida por forma a fazer parte da plataforma
+de simulação. Ainda assim, fruto do estudo destes sistemas emergem os conceitos implementados em
+cada um que poderão contribuir para o resultado final, ainda que de alguma forma mais simples
+inerente a pouca complexidade do JProwler.
