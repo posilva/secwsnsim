@@ -1,0 +1,76 @@
+\subsection{Modelo de Adversário} \label{sect:sec_mod_adversario_serv_seg}
+A definição do modelo de adversário permite, desde logo, identificar as características e as 
+capacidades dos atacantes e os ataques que estes podem desencadear na rede. Nesta secção,
+caracteriza-se o modelo de adversário que enforma este trabalho.
+\subsubsection{Modelo de Dolev-Yao}\label{sect:subsec_dolev_yao}
+Um dos modelos de adversário mais conhecidos, quando se trata de análise formal de protocolos
+seguros, é o modelo de Dolev-Yao \cite{Dolev1983}. Neste modelo, é considerado que a rede está sobre
+o domínio do adversário o qual, perante este facto, pode extrair, reordenar, reenviar, alterar e apagar
+as mensagens que circulam entre quaisquer dois nós legítimos. Com esta assumpção, entende-se
+portanto, que o adversário transporta a mensagem e, com isso, adopta um ataque do tipo 
+\textit{man-in-the-middle}\cite{Stallings2005}, com comportamento incorrecto. Este funcionamento,
+entenda-se, não é comparado à intrusão mas sim à intercepção de mensagens e pode ser mitigado pela utilização de mecanismos de criptografia.
+
+As tipologias de ataque consideradas pelo modelo de adversário de Dolev-Yao
+são  instanciadas pela norma X800 \cite{ITU-T1991}, que pretende
+normalizar
+uma arquitectura de segurança para o modelo OSI\cite{sd_tanenbaum}, através de uma abordagem
+sistemática para o desenho de sistemas seguros. Esta norma considera a segurança
+sob três aspectos: ataque, mecanismo e serviço de
+segurança\cite{Stallings2005}. O
+primeiro refere-se à forma usada para comprometer um sistema, por exemplo,
+alterando ou tendo acesso não autorizado a dados desse sistema\footnote{ Na
+literatura, algumas vezes usam-se os termos "ataque" e "ameaça" para denominarem o
+mesmo efeito. No entanto, recorrendo ao RFC 2828 \cite{IETF2828}, podemos
+definir ameaça como uma potencial violação de segurança, ou seja, é apenas uma
+vulnerabilidade que pode ser explorada para desencadear um ataque. No caso do ataque, trata-se da exploração inteligente de uma ou
+mais ameaças que resultam na violação, com sucesso, de um sistema que se pretendia
+seguro}. O segundo aspecto considerado são os mecanismos de
+segurança, que se entendem como o processo que permite detectar, prevenir ou
+recuperar de um ataque à segurança (ex: encriptação, controlo de acesso,
+assinatura digital)\cite{Stallings2005}. Por fim, o terceiro aspecto define os
+serviços que, fazendo uso de um ou mais mecanismos de segurança, permitem resistir a
+ataques dirigidos a determinada fonte de informação, quer seja durante o
+processamento, quer seja durante a comunicação. Considera-se, então, que, para efeitos da futura dissertação,
+os ataques subjacentes ao modelo de Dolev-Yao são protegidos a partir do estabelecimento de uma
+camada básica de segurança, concretizada por uma das arquitecturas anteriormente referidas na Secção
+\ref{sec:servicos_basicos_de_seguranca}. 
+\subsubsection{Modelo de Intrusão em RSSF}\label{sect:subsec_intrusao}
+Considerando o estudo de segurança numa RSSF e, dada a sua exposição natural, nomeadamente a física,
+colocando cada sensor ao alcance de um adversário, torna-se relevante a consideração de novos modelos
+de adversário. Cada rede pode ser constituída por milhares de sensores e cada
+um destes sensores é um ponto de possível ataque\cite{Perriga}. Este ataque pode ser
+tipificado como sendo por intrusão ou captura. 
+
+Este tipo de ataques pode ser desencadeado desde o nível
+MAC\cite{Xiao2006} até ao nível de intrusão física. Neste último, um actor externo
+captura um ou mais sensores legítimos e descobre os segredos criptográficos. Este
+facto permite-lhe replicar\cite{Parno2005} os segredos para sensores maliciosos, 
+introduzido-os na rede de modo a que, agindo coordenadamente, possam comprometer a rede.
+Conseguida a intrusão, o atacante pode induzir, nos sensores legítimos,
+comportamentos incorrectos, baseados na informação falsa introduzida pelos
+sensores maliciosos, influenciando o processo de encaminhamento. Estes ataques são de difícil
+detecção, uma vez que o carácter autónomo das RSSF pode não permitir distinguir um comportamento
+errado de uma falha. Com a intrusão, um
+sensor malicioso, embora respeitando o protocolo da rede, pode actuar de forma incorrecta,
+levando a rede a criar topologias específicas para determinado ataque ou forçando toda a
+informação a passar por nós maliciosos, podendo estes suprimir ou violar a informação. 
+\paragraph{Modelo bizantino: adversários bizantinos}
+O modelo de ataques por intrusão tem algumas parecenças com as denominadas falhas
+bizantinas\cite{falhas_bizantinas}, que são caracterizadas como 
+falhas arbitrárias para com as quais um sistema não está, à partida, preparado para lidar e que se pode
+traduzir em comportamentos inesperados. Transpondo esta realidade para as
+RSSF\cite{Fault_Intrusion_Tolerant_Techniques}, é difícil
+detectar a introdução de nós maliciosos, autónomos ou replicados a partir de um nó que foi	
+comprometido. No entanto, alguns autores \cite{Parno2005,falhas_bizantinas} têm-se
+debruçado sobre esta problemática, a fim de dotarem os
+algoritmos de encaminhamento com mecanismos que permitam detectar a replicação de nós maliciosos
+numa RSSF.
+Para se lidar com ataques com comportamentos bizantinos, recorre-se a mecanismos
+probabilísticos que, ainda que possam não mitigar o ataque por completo, aumentam a resiliência e
+acabam por transformar um ataque num mal menor, definindo até onde pode ser comprometida a rede, por
+forma a garantir a fiabilidade necessária para o seu funcionamento.
+
+
+
+ 

@@ -25,7 +25,8 @@
 %% (re)definies de macros, medidas, etc.
 \newcommand{\descvspace}{\addtolength{\itemsep}{-.50\baselineskip}}
 \newcommand{\mc}[3]{\multicolumn{#1}{#2}{#3}}
-\usepackage{tweaklist}
+
+%\usepackage{tweaklist}
 \usepackage{setspace}
 \usepackage{multirow}
 \usepackage[table]{xcolor}
@@ -33,7 +34,19 @@
 \usepackage{color}
 \usepackage{colortbl}
 \usepackage{rotating}
+\usepackage{enumitem}
 \setcounter{tocdepth}{3}
+
+\newenvironment{descriptionNoIndent}
+{
+  \begin{description}[leftmargin=0mm,topsep=5mm]
+}
+{
+  \end{description}
+}
+
+
+
 %\setlength{\parskip}{0mm plus0mm minus0mm}
 %% Identificao:
 % Universidade
