@@ -1,3 +1,40 @@
+\subsection{Modelo de Adversário} \label{sect:sec_mod_adversario_serv_seg}
+A definição do modelo de adversário permite desde logo identificar as características e as 
+capacidades dos atacantes e os ataques que estes podem desencadear na rede. Nesta secção,
+caracteriza-se o modelo de adversário que enforma este trabalho.
+\subsubsection{Modelo de Dolev-Yao}\label{sect:subsec_dolev_yao}
+Um dos modelos de adversário mais conhecidos, quando se trata de análise formal de protocolos
+seguros, é o modelo de Dolev-Yao \cite{Dolev1983}. Neste modelo, é considerado que a rede está sobre
+o domínio do adversário que, perante este facto, pode extrair, reordenar, reenviar, alterar e apagar
+as mensagens que circulam entre quaisquer dois principais legitimos. Com esta assumpção, entende-se
+portanto, que o adversário transporta a mensagem e com isso adopta um ataque do tipo 
+\textit{man-in-the-middle}\cite{Stallings2005}, com comportamento incorrecto. Este funcionamento,
+entenda-se, não é comparado à intrusão mas sim à intercepção de mensagens e pode ser mitigado usando
+mecanismos de criptografia.
+
+As tipologias de ataque, consideradas pelo o modelo de adversário de Dolev-Yao
+são  instanciadas pela norma X800 \cite{ITU-T1991} que pretende
+normalizar
+uma arquitectura de segurança para o modelo OSI\cite{sd_tanenbaum} com uma abordagem
+sistemática para o desenho de sistemas seguros. Esta norma, considera a segurança
+sobre três aspectos: ataque, mecanismo e serviço de
+segurança\cite{Stallings2005}. O
+primeiro, refere-se à forma usada para comprometer um sistema, por exemplo,
+alterando ou tendo acesso não autorizado a dados desse sistema\footnote{ Na
+literatura, algumas vezes usam-se os temos ataque e ameaça para denominarem o
+mesmo efeito, no entanto recorrendo ao RFC 2828 \cite{IETF2828} podemos
+definir ameaça como uma potencial violação de segurança, ou seja é apenas uma
+possibilidade que pode ser usada para desencadear um ataque explorando uma
+vulnerabilidade; no caso do ataque, trata-se da exploração inteligente de uma ou
+mais ameaças que resultam na violação com sucesso de um sistema que se pretendia
+seguro}. O segundo aspecto considerado, são os mecanismos de
+segurança, que se entendem como o processo que permite detectar, prevenir ou
+recuperar de uma ataque à segurança (ex: encriptação, controlo de acesso,
+assinatura digital)\cite{Stallings2005}. Por fim, o terceiro aspecto define os
+serviços
+que, fazendo uso de um ou mais mecanismos de segurança, permitem resistir a
+ataques dirigidos a determinada fonte de informação, quer seja durante o
+processamento ou durante a comunicação.
 \subsubsection{Modelo de Intrusão em RSSF}\label{sect:subsec_intrusao}
 Considerando o estudo de segurança numa RSSF, e dada a sua exposição natural, nomeadamente a física,
 colocando cada sensor ao alcance de um adversário, torna relevante a consideração de novos modelos
@@ -33,3 +70,7 @@ Para se lidar com os ataques com comportamentos bizantinos, implementam-se mecan
 probabilisticos que, ainda que não possam mitigar o ataque por completo, aumentam a resiliência e
 acabam por transformar um ataque num mal menor, definindo até onde pode ser comprometida a rede por
 forma a garantir a fiabilidade necessária para a operação.
+
+
+
+ 
