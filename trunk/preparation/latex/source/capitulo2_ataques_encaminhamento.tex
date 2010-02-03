@@ -1,24 +1,24 @@
 \subsection{Ataques ao Encaminhamento} \label{ataques_encaminhamento}
-Apesar de existirem ataques que podem ser dirigidos a qualquer das camadas da pilha da RSSF, nesta
+Apesar de existirem ataques que podem ser dirigidos a qualquer uma das camadas da pilha da RSSF, nesta
 secção apresentam-se os ataques relacionados com a camada de rede, responsável pelo
-encaminhamento de dados. Os protocolo de encaminhamento em MANETs \cite{Corson1999} e em RSSF, de
+encaminhamento de dados. Os protocolos de encaminhamento em MANETs \cite{Corson1999} e em RSSF, de
 uma forma geral, decompõe-se em três fases: descoberta dos caminhos, selecção dos caminhos e
 manutenção da comunicação pelos caminhos seleccionados. Os ataques a um algoritmo de encaminhamento,
 normalmente, podem explorar as vulnerabilidades de cada uma destas fases de forma específica. Em
-seguida os ataques são associados à fase do protocolo em que se podem desencadear e são
+seguida, os ataques são associados à fase do protocolo em que se podem desencadear e são
 apresentadas, também, as contra-medidas que permitem mitigá-los.
 \subsection{Ataques à organização da rede e descoberta de nós} \label{sect:subsec_ataq_org_rede}
 Nos protocolos do tipo \textit{table-driven} \cite{al-karaki_routing_2004}, após a descoberta dos
 nós vizinhos é necessário recolher informação para a construção das tabelas
 de encaminhamento. No entanto, em protocolos do tipo \textit{on-demand}
-\cite{al-karaki_routing_2004} esta fase é desencadeada em cada início de transmissão. Este
+\cite{al-karaki_routing_2004}, esta fase é desencadeada em cada início de transmissão. Este
 funcionamento corresponde à organização e descoberta de nós numa RSSF.
 \begin{descriptionNoIndent}
 \item[Falsificação de Informação de Encaminhamento]
-Este ataque tem impacto na formação da rede e na descoberta dos nós. Induz a criação de entradas
+Este ataque tem impacte na formação da rede e na descoberta dos nós. Induz a criação de entradas
 incorrectas nas tabelas de encaminhamento, podendo também fazer com que estas fiquem lotadas e
-inválidas. Nos protocolos \textit{on-demand}, o impacto pode ser menor, uma vez que obriga o 
-atacante a injectar informação errada a cada ciclo de transmissão. Outro dos ataques que causa
+inválidas. Nos protocolos \textit{on-demand}, o impacte pode ser menor, uma vez que obriga o 
+atacante a injectar informação errada a cada ciclo de transmissão. Outro ataque que causa
 estes mesmos efeitos é realizado por nós atacantes que inundam a rede com pacotes do tipo
 \textit{Route Request} (RREQ), pondo em causa a disponibilidade da rede.
 \item[Rushing Attacks]
@@ -34,128 +34,122 @@ rotas.
 Os mecanismos de autenticação fazem com que ataques de falsificação de informação ou de inundação
 de RREQ sejam minimizados. Os nós da rede podem partilhar chaves simétricas (par-a-par) como forma
 de autenticar as mensagens de dados e controlo do encaminhamento (RREQ e RREP). Desta forma, o
-atacante não possuindo a chaves necessárias para a comunicação, não poderá participar no protocolo.
+atacante, não possuindo a chaves necessárias para a comunicação, não poderá participar no protocolo.
 
 Para fazer face a ataques de \textit{Rushing}, alguns autores \cite{Rushing_attacks_perrig}
 apresentam dois mecanismos de defesa: reenvio aleatório de RREQ \textit{Randomized RREQ
 Forwarding}) e detecção segura (\textit{Secure Detection}). No primeiro caso, cada nó
-intermédio guarda  um conjunto de mensagens RREQ escolhendo depois aleatóriamente um para reenviar.
+intermédio guarda  um conjunto de mensagens RREQ, escolhendo depois, aleatoriamente, um para reenviar.
 Ainda assim, pode ser seleccionada uma mensagem RREQ maliciosa, daí a existência do segundo
-mecanismo, que garante a autenticação de mensagens entre dois nós garantindo que estas pertencem a
-nós legítimos. Outros mecanismos passam pela selecção de mais do que uma resposta,
-permitindo que a mensagem seja enviada por outro caminho ou pela colecção de várias respostas
-escolhendo aleatóriamente uma para responder.
+mecanismo, que permite a autenticação de mensagens entre dois nós, garantindo que estas pertencem a
+nós legítimos. Outros mecanismos passam pela selecção de mais do que uma resposta (permitindo que a
+mensagem seja enviada por outro caminho) ou pela colecção de várias respostas (escolhendo,
+aleatoriamente, uma para responder).
 \subsection{Ataques ao estabelecimento de rotas} \label{sect:subsec_ataq_est_rotas}
 Os ataques desencadeados nesta fase aumentam a probabilidade de um atacante pertencer a uma rota.
-Estabelecida a rota através de si este pode alterar as mensagens ou agir de forma a desencadear
-ataques da fase de manutenção de rotas.
+Estabelecida a rota através de si pode alterar as mensagens ou agir de forma a desencadear ataques
+na fase de manutenção de rotas.
 \begin{descriptionNoIndent}
 \item[\textit{HELLO Flooding}]
-Este ataque explora os protocolos que fazem anunciar a sua proximidade, aos vizinhos, emitindo
+Este ataque explora os protocolos que se anunciam aos vizinhos, emitindo
 mensagens de \textit{HELLO}, \cite{Survey_wsn_Sec_issues,Karlof2003}.
 Os protocolos baseados na localização podem ser vulneráveis a este ataque, uma vez que, com um
 dispositivo do tipo \textit{laptop-class} \cite{Karlof2003}, que possua um alcance rádio
-suficientemente potente para cubrir toda a rede, permite anunciar-se a todos os nós como vizinho,
-forçando a informação fluir através dele.
+suficientemente potente para cobrir toda a rede, é possível anunciar-se a todos os nós como vizinho,
+forçando a informação a fluir através dele.
 \item[Ataque \textit{Sinkhole}]
-O objectivo do ataque \textit{sinkhole} \cite{Sinkhole_attack} é induzir os nós da rede a fazerem
-passar a informação através dele. Assim, um atacante informa os nós vizinhos, anunciando-se
-com boa comunicação com um nó \textit{sink}, tornando-se assim um ponto de passagem de
-informação. O ataque é realizado enviando pacotes de RREQ, alterando a origem e aumentando o número
-de sequência como forma de garantir que a esta informação se sobrepõe a qualquer outra, legítima, da
-rede. Em determinada altura, um atacante poderá ter, a passar por ele, um número elevado de rotas,
-podendo, então, alterar ou encaminhar, de forma selectiva,  a informação. Os protocolos
-\textit{table-driven} são vulneráveis a estes ataques, enquanto os protocolos baseados em
-localização não o são, devido às suas rotas serem
-\textit{on-demand}. \cite{Karlof2003,Survey_wsn_Sec_issues,Attaks_defenses_sec_in_wsn}
+No ataque \textit{sinkhole} \cite{Sinkhole_attack}, o atacante, induz os nós da rede a fazerem
+passar a informação por dele. Assim, anuncia-se aos nós vizinhos,  como tendo boa comunicação com o
+nó \textit{sink}, tornando-se, assim, um ponto de passagem da informação. O ataque é realizado
+enviando pacotes de RREQ, alterando a origem e aumentando o número de sequência, como forma de
+garantir que esta informação se sobrepõe a qualquer informação legítima. Assim,
+um atacante poderá participar num número elevado de rotas, podendo alterar ou encaminhar,
+de forma selectiva,  a informação. Os protocolos \textit{table-driven} são vulneráveis a estes
+ataques, enquanto os protocolos baseados em localização não o são, no caso das suas rotas serem
+estabelecidas \textit{on-demand} \cite{Karlof2003,Survey_wsn_Sec_issues,Attaks_defenses_sec_in_wsn}.
 \item[Ataque \textit{Wormhole}]
-Neste tipo de ataque, apresentado por Perrig et al \cite{Wormhole_perrig} a colaboração de dois nós
-maliciosos (normalmente a muitos \textit{hops} de distância), colaboram para a
-realização do ataque. Assim, os atacantes estabelecem uma ligação ( normalmente de melhor qualidade)
-para comunicarem entre si. Permitindo a um nó malicioso capturar pacotes ou partes de pacotes e
-enviá-los pela ligação privada para o outro atacante. Este ataque é particularmente eficaz em redes
-redes RSSF baseadas em localização que caso sejam compremetidas, não conseguirão
+Neste tipo de ataque, apresentado por Perrig \textit{et al} \cite{Wormhole_perrig}, dois nós
+maliciosos colaboram para a realização do ataque. Os atacantes estabelecem uma ligação (em geral, de
+melhor qualidade) para comunicarem entre si, permitindo a um nó malicioso capturar pacotes ou partes
+de pacotes e enviá-los pela ligação privada para o outro atacante, noutro extremo da rede. Este
+ataque é particularmente eficaz em
+redes RSSF baseadas em localização que, caso sejam comprometidas, não conseguirão
 estabelecer caminhos maiores do que dois \textit{hops}
 \cite{perrig_survey_ad_hoc,Survey_wsn_Sec_issues}.
-Para além disso, este ataque transforma os atacantes em nós muito solicitados, pois
+Para além disso, os atacantes transformam-se em nós muito solicitados, pois
 apresentam-se aos outros nós como tendo uma melhor ligação e estando a menor
 distância do destino.
 \item[Ataque \textit{Sybil}]
-Este ataque foi definido como um ataque que permitia atingir os mecanismos de redundância
+Este ataque foi definido como uma acção que permitia atingir os mecanismos de redundância
 em armazenamento distribuído em sistemas ponto-a-ponto \cite{Douceur2002}. Outra
 definição que surge, agora associada às RSSF, é a que o define como ``um dispositivo malicioso que
-ilegitimamente assume múltiplas entidades'' \cite{sybil_perrig}. Com estas definições e devido à sua
+ilegitimamente assume múltiplas entidades'' \cite{sybil_perrig}. Com estas definições e, devido à sua
 taxonomia, é um ataque bastante efectivo contra protocolos de encaminhamento \cite{Karlof2003}. Em
-particular, os protocolos que adoptam múltiplos caminhos. Um nó ao assumir múltiplas identidades
-oculta o facto dos dados estarem a passar por um único nó malicioso
+particular, os protocolos que adoptam múltiplos caminhos, o que permite que um nó assuma
+múltiplas identidades, ocultando o facto de os dados estarem a passar por um único nó malicioso
 \cite{Survey_wsn_Sec_issues,Attaks_defenses_sec_in_wsn}.
 \end{descriptionNoIndent}
 \subsubsection{Contra-medidas}
-Uma das formas de prevenir um ataque HELLO flooding \cite{Karlof2003} é a implementação de
-mecanismos de resposta(\textit{acknowlege}) a anúncios HELLO. Desta forma, caso o atacante esteja a
-usar um meio de comunicação potente, que cubra toda a rede, e este se encontre fora do alcance de
-um nó legítimo, este não considerará o anúncio como válido, por não conseguir a confirmação.  É
-possível, também,  proceder à autenticação da mensagem, certificando-a numa entidade central, que
-ao detectar que um nó se anuncia como vizinho de muitos outros nós, toma precauções,
-repudiando o nó com a emissão de uma mensagem para toda a rede \cite{Survey_wsn_Sec_issues}.
+Uma das formas de prevenir um ataque HELLO \textit{flooding }\cite{Karlof2003} é a implementação de
+mecanismos de resposta (\textit{acknowlege}) a anúncios HELLO. Desta forma, caso o meio de
+comunicação do atacante cubra toda a rede, um nó legítimo, que não o alcance e, portanto, não receba
+a  resposta, não considerará o anúncio como válido.  É possível  proceder à autenticação da
+mensagem, certificando-a numa entidade central que, ao detectar que um nó se anuncia como vizinho de
+muitos outros nós, toma precauções, repudiando o nó perante a rede \cite{Survey_wsn_Sec_issues}.
 
 Alguns autores têm vindo a desenvolver algoritmos que visam a detecção de ataques do tipo
-\textit{Sinkhole} \cite{Sinkhole_attack}, um desses mecanismos é o \textit{Sinkhole
-Intrusion Detection Sistem} (SIDS) \cite{Sinkhole_attack} orientado para a detecção destes ataques
-ao protocolo DSR \cite{DSR}. Estes sistema propõe três mecanismos para detectar um atacante: i)
-Discontinuidade de números de sequência,  tendo em conta que um atacante tentará usar números de
-sequência muito grandes, assim um nó pode identificar os que crescem rápidamente ou que não
-respeitam uma ordem crescente, considerandos um ataque; ii) Verificação de pacotes, os
-vizinhos podem certificar a origem dos pacotes enviados por um nó. Isto será dificil de
-realizar nos pacotes atacantes, uma vez que a origem é alterada. Assim, poder-se-á detectar
-que a rede está sobre ataque, se circularem muitos pacotes não certificados; iii) Número de caminhos
-a passar por um nó, cada nó pode observar a sua tabela de encaminhamento e se detectar que existem
-muitos caminhos a passar pelo mesmo nó, pode estar na presença de um ataque do tipo
-\textit{Sinkhole} e reagir a este facto \cite{Survey_wsn_Sec_issues,Attaks_defenses_sec_in_wsn}
-Outros mecanismos utilizam chaves ponto-a-ponto como forma de garantir que a informação dos pacotes
-é legitima, evitando que um atacante altere dados da mensagem (origem e número de
+\textit{Sinkhole} \cite{Sinkhole_attack}. Um desses mecanismos é o \textit{Sinkhole
+Intrusion Detection Sistem} (SIDS) \cite{Sinkhole_attack}, orientado para a detecção destes ataques
+ao protocolo DSR \cite{DSR}. Este sistema propõe três mecanismos de detecção: i)
+Descontinuidade de números de sequência (tendo em conta que um atacante tentará usar números de
+sequência muito grandes, um nó pode identificar os que crescem rapidamente ou os que não
+respeitam uma ordem crescente, considerando-os um ataque); ii) Verificação de pacotes (os
+vizinhos podem certificar a origem dos pacotes enviados por um nó. Isto será difícil de
+realizar nos pacotes atacantes, uma vez que a origem é alterada. Assim, se circularem muitos pacotes
+não certificados poder-se-á detectar que a rede está sob ataque); iii) Número de caminhos
+a passar por um nó (cada nó pode observar a sua tabela de encaminhamento e detectar que existem
+muitos caminhos a passar pelo mesmo nó, logo pode estar na presença de um ataque
+\textit{Sinkhole} \cite{Survey_wsn_Sec_issues,Attaks_defenses_sec_in_wsn}).
+A utilização de chaves ponto-a-ponto, como forma de garantir que a informação dos pacotes
+é legítima, evita que um atacante altere dados da mensagem (origem e número de
 sequência)\cite{SIGF,INSENS}.
 
 A utilização de \textit{packet leashes} \cite{packet_leashes_perrig} permite mitigar o ataque
 \textit{wormhole}. Assim, existem dois tipos de condições para se aceitar os pacotes vindos de uma
-origem: baseado na localização e notempo. O primeiro, permite que um nó receptor, conhecendo a
+origem: a localização e o tempo. A primeira permite que um nó receptor, conhecendo a
 localização da origem, saiba se um pacote atravessou a rede por um \textit{wormhole}, calculando
-a distância entre os dois pontos. No segundo caso, baseia-se essencialmente no tempo de transmissão
-do pacote, exigindo então a sincronização de relógios. Se for muito rápido a chegar ao destino, este
-nó assume que se está perante um ataque de \textit{wormhole}. A implementação de encaminhamento por
-multiplas rotas permitem fazer face ataques  \textit{wormhole}\cite{clean_slate}.
+a distância entre os dois pontos. O segundo baseia-se, essencialmente, no tempo de transmissão
+do pacote, exigindo, então, a sincronização de relógios. Se for muito rápido a chegar ao destino, este
+nó assume que está perante um ataque de \textit{wormhole}. A implementação de encaminhamento por
+múltiplas rotas permite fazer face a ataques \textit{wormhole} \cite{clean_slate}.
 
 Para o ataque \textit{sybil} em \cite{sybil_perrig,Survey_wsn_Sec_issues}, são possíveis dois
 esquemas de protecção: i) \textit{Radio resource testing} (cada vizinho só pode transmitir num
-canal, selecciona um canal para receber e enviar uma mensagem, os nós que não responderem são
-tratados como falsos); \textit{Random key distribution}(usando um modelo de \textit{key-pool} são
-atribuidas $n$ chaves de um conjunto de $m$. Se dois nós partilharem $q$ chaves então estarão em
-condições de comunicar de forma segura. Uma função de dispersão, com base no identificador do nó,
-permite gerar chaves, evitando que um nó possa conhecer uma grande parte das chaves). Alguns
-mecanismos baseiam-se na noção de reputação dos nós vizinhos permitindo detectar comportamentos
-incorrectos de atacantes \textit{sybil}\cite{SIGF} ou alternativamente estabelecem o anuncio dos
+canal, seleccionando um canal para receber e enviar uma mensagem. Os nós que não responderem são
+tratados como falsos, ao nível MAC); ii) \textit{Random key distribution}(usando um modelo de
+\textit{key-pool}, são atribuidas $n$ chaves de um conjunto de $m$. Se dois nós partilharem $q$
+chaves então estarão em condições de comunicar de forma segura. Uma função de dispersão, com base no
+identificador do nó, permite gerar chaves, evitando que um nó possa conhecer uma grande parte das
+chaves). A noção de reputação dos nós vizinhos pode também permitir detectar comportamentos
+incorrectos de atacantes \textit{sybil}\cite{SIGF} ou, alternativamente, realizar o anúncio dos
 vizinhos de forma autenticada\cite{clean_slate}.
 \subsection{Ataques à manutenção de rotas} \label{sect:subsec_ataq_manut_rotas}
 \begin{descriptionNoIndent}
 \item[Ataque \textit{Blackhole}]
-No ataque \textit{blackhole} \cite{HongmeiDeng2002} o atacante intercepta os pacotes destinados ao
-nó/área que pretende comprometer, informando a origem que este se trata de um caminho de melhor
-qualidade ou a menor distância. Assim, força todo o tráfego, dirigido ao destino alvo do ataque,  a
-circular através dele. Por exemplo, no protocolo AODV \cite{Perkins1999}, por ser \textit{on-demand}
-permite que, na fase de descoberta de uma rota, qualquer nó, que possua um caminho (suficientemente
-recente), responda a uma mensagem de RREQ. Este algoritmo de encaminhamento pode ficar
-sujeito a um ataque de \textit{blackhole}, pois um nó malicioso intermédio, pode responder com um
-caminho melhor, apesar de não ter sequer caminho para o destino, originando um ``buraco negro'',
-interrompendo o processo de comunicação \cite{Survey_wsn_Sec_issues,Attaks_defenses_sec_in_wsn}.
+No ataque \textit{blackhole} \cite{HongmeiDeng2002}, o atacante intercepta os pacotes destinados ao
+nó/área alvo de ataque, informando a origem de que se trata de um caminho de melhor qualidade ou a
+menor distância e forçando todo o tráfego, dirigido ao destino, a circular através dele. Assim, um
+nó malicioso intermédio, pode anunciar-se com um caminho melhor, apesar de não ter sequer caminho
+para o destino, originando um ``buraco negro'' e interrompendo o processo de comunicação
+\cite{Survey_wsn_Sec_issues,Attaks_defenses_sec_in_wsn}.
 \end{descriptionNoIndent}
 \subsubsection{Contra-medidas}
 Para mitigar os ataques de \textit{blackhole} existem várias propostas
- \cite{blackhole_adhoc,Attaks_defenses_sec_in_wsn,HongmeiDeng2002} das quais se destacam as
-que implementam os seguintes mecanismos: i) Confirmação do destino, é enviada uma mensagens ACK por
-cada pacote recibo pelo destino, pelo caminho inverso; iii) Definição de limites
-de tempo para receber as mensagens de ACK. por parte do destino, ou ao invés, receber mensagens de
-falha dos nós intermédios; iii) Mensagens de falha, quando num nó intermédio detecta o fim do
-temporizador de ACK, este gera uma mensagem de falha; iv) Caminho definido pela origem, ou seja, em
-cada pacote é indicado, na origem, o caminho que deve ser seguido pelo pacote até ao destino.
-Os mecanismos que não sejam na informação qualitativa do caminho também permitem resistir a estes
-ataques\cite{clean_slate}.
+ \cite{blackhole_adhoc,Attaks_defenses_sec_in_wsn,HongmeiDeng2002}, das quais se destacam as
+que implementam os seguintes mecanismos: i) Confirmação do destino, em que é enviada uma mensagem
+de ACK por cada mensagem recebida, pelo caminho inverso; iii) Definição de limites
+de tempo de recepção das mensagens de ACK ou de mensagens de
+falha; iii) Mensagens de falha, geradas quando um nó intermédio detecta o fim do
+temporizador de ACK; iv) Caminho definido pela origem, significando que, em cada pacote, é indicado,
+pela origem, o caminho seguido até ao destino. Os mecanismos que não se baseiem em informação
+qualitativa do caminho também permitem resistir a estes ataques\cite{clean_slate}.

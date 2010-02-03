@@ -1,36 +1,33 @@
 \subsection{Ataques por Intrusão/Replicação}
 Alguns dos ataques tipificados anteriormente podem ser desencadeados a partir de nós
-maliciosos \cite{Sinkhole_attack} introduzidos na rede de forma incorrecta e posteriormente
-replicados.  Os ataques por intrusão nas RSSF são tipificados pela capacidade de um
+maliciosos, \cite{Sinkhole_attack} introduzidos na rede de forma incorrecta e, posteriormente,
+replicados. Os ataques por intrusão nas RSSF são tipificados pela capacidade de um
 atacante se apropriar de material criptográfico que, durante o desenrolar do protocolo de
-encaminhameanto, lhe permita participar nas comunicações passando por um nó legítimo. Este
-ataque quando conseguido é bastante devastador para a rede, como por exemplo, quando utilizado para
+encaminhamento, lhe permita participar nas comunicações, fazendo passar-se por um nó legítimo. Este
+ataque, quando conseguido, é bastante devastador para a rede, por exemplo, quando utilizado para
 coordenar um ataque \textit{sybil}. 
 
-Os ataques por replicação \cite{Parno2005} correspondem à introdução de novos nós da rede clonados
-de nós legítimos mas que possuem comportamentos incorrectos, como seja a transmissão de informação
+Os ataques por replicação \cite{Parno2005} correspondem à introdução de novos nós na rede, clonados
+de nós legítimos, mas que possuem comportamentos incorrectos, como seja a transmissão de informação
 para outros nós atacantes, originando ataques tipificados na Secção \ref{ataques_encaminhamento}.
 Estes ataques, resultantes da replicação, são particularmente efectivos em sistemas 
-do tipo de votação, ou cuja a operação da rede dependa de mecanismos de eleição. Pode-se então
-dizer que, mitigar os ataques por intrusão permite que, à partida, se possam reduzir algumas
-condições para a indução de outros ataques.
+do tipo de votação ou cuja operação da rede dependa de mecanismos de eleição. Pode-se, então,
+dizer que, mitigar os ataques por intrusão/replicação permite que, à partida, se possam reduzir
+algumas condições para a indução de outros ataques.
 \subsubsection{Contra-medidas}
-Apresentam-se algumas contra-medidas para ataques por intrusão, algumas das quais têm sido
-incorporadas em protocolos de encaminhamento:
 \begin{descriptionNoIndent}
 \item[Autenticação central] Uma primeira forma de defesa contra replicação é a
-autenticação dos nós, usando os seus identificadores, realizada numa estação central, permitindo
-detectar inconsistências ou duplicações.
+autenticação dos nós, numa estação central, usando os seus identificadores e permitindo
+detectar inconsistências ou duplicações\cite{INSENS}.
 \item[Múltiplas Rotas] A existência de diversos caminhos para entregar uma mensagem
-no destino, faz com que se possa aliar a tolerância a falhas à resistência a intrusões. Assim, se a
-mensagem for interceptada por um intrusor, alta probabilidade desta alcançar o
-destino usando outro dos caminhos de envio \cite{INSENS}.
-\item[Detecção de replicação] Perrig \textit{et} Parno em \cite{Parno2005}
-apresentam
-mecanismos de detecção distribuída de replicações. Um dos mecanismos é de carácter aleatório
-\textit{Randomized Multicast} e outro, denominado por \textit{Line-Selected Multicast}, que se
-serve do modelo de comunicação multi-\textit{hop} da rede para detecção de nós duplicados. Outro
-exemplo, é a criação de estruturas auxiliares (ex: àrvores binárias) como acontece no protocolo 
-\textit{Clean-Slate} \cite{clean_slate}. 
+no destino faz com que se possa aliar a tolerância a falhas à resistência a intrusões. Assim, se a
+mensagem for interceptada por um intrusor, existe alta probabilidade de esta alcançar o
+destino, usando outro dos caminhos de envio \cite{INSENS}.
+\item[Detecção de replicação] Perrig e Parno em \cite{Parno2005}
+apresentam mecanismos de detecção distribuída de replicações. Um dos mecanismos é de carácter
+aleatório \textit{Randomized Multicast} e outro, denominado por \textit{Line-Selected Multicast},
+serve-se do modelo de comunicação multi-\textit{hop} da rede para detectar nós duplicados.
+Outro exemplo é o a criação de estruturas auxiliares (ex: árvores binárias), como acontece no
+protocolo \textit{Clean-Slate} \cite{clean_slate}. 
 \end{descriptionNoIndent}
 
