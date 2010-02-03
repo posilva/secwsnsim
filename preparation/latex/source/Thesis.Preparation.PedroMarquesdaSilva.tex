@@ -22,8 +22,8 @@
 
 %% Prembulo:
 %% coloque aqui o seu prembulo LaTeX, i.e., declarao de pacotes,
-%% (re)definies de macros, medidas, etc.
-\newcommand{\descvspace}{\addtolength{\itemsep}{-.50\baselineskip}}
+%% (re)definies de macros, medidas, etc. 
+\newcommand{\descvspace}{\addtolength{\itemsep}{-.5\baselineskip}}
 \newcommand{\mc}[3]{\multicolumn{#1}{#2}{#3}}
 
 %\usepackage{tweaklist}
@@ -40,6 +40,13 @@
 \newenvironment{descriptionNoIndent}
 {
   \begin{description}[leftmargin=0mm,topsep=5mm]
+}
+{
+  \end{description}
+}
+\newenvironment{descriptionNoIndent2}
+{
+  \begin{description}[leftmargin=0mm,topsep=3mm,noitemsep]
 }
 {
   \end{description}

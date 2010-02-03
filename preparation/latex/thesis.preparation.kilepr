@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1 beta2
-lastDocument=source/capitulo2_ataques_encaminhamento.tex
+lastDocument=source/capitulo2_discussao.tex
 masterDocument=
 name=Thesis.Preparation
 pkg_extIsRegExp=false
@@ -18,30 +18,21 @@ QuickBuild=
 
 [item:source/Thesis.Preparation.PedroMarquesdaSilva.tex]
 archive=true
-column=0
+column=58
 encoding=ISO-8859-15
 highlight=LaTeX
-line=146
-open=false
-order=0
-
-[item:source/ataques_wsn.tex]
-archive=true
-column=0
-encoding=ISO-8859-1
-highlight=LaTeX
-line=27
-open=false
-order=1
+line=0
+open=true
+order=2
 
 [item:source/capitulo1.tex]
 archive=true
-column=89
+column=91
 encoding=ISO-8859-15
 highlight=LaTeX
-line=92
-open=false
-order=1
+line=48
+open=true
+order=5
 
 [item:source/capitulo2.tex]
 archive=true
@@ -49,53 +40,53 @@ column=81
 encoding=ISO-8859-1
 highlight=LaTeX
 line=6
-open=true
+open=false
 order=0
 
 [item:source/capitulo2_ambientes_de_simulacao.tex]
 archive=true
-column=0
+column=21
 encoding=ISO-8859-15
 highlight=LaTeX
-line=0
+line=28
 open=true
-order=3
+order=9
 
 [item:source/capitulo2_arq_servicos_seguranca.tex]
 archive=true
-column=0
+column=49
 encoding=ISO-8859-15
 highlight=LaTeX
-line=0
+line=89
 open=true
-order=2
+order=6
 
 [item:source/capitulo2_ataques_encaminhamento.tex]
 archive=true
-column=0
+column=44
 encoding=ISO-8859-15
 highlight=LaTeX
-line=92
+line=146
 open=true
-order=5
+order=7
 
 [item:source/capitulo2_discussao.tex]
 archive=true
-column=0
+column=47
 encoding=ISO-8859-15
 highlight=LaTeX
-line=20
-open=false
-order=-1
+line=64
+open=true
+order=10
 
 [item:source/capitulo2_intrusao.tex]
 archive=true
-column=25
+column=11
 encoding=ISO-8859-15
 highlight=LaTeX
-line=34
+line=5
 open=true
-order=1
+order=8
 
 [item:source/capitulo2_modelo_adversario_ataques_contramedidas.tex]
 archive=true
@@ -103,7 +94,7 @@ column=58
 encoding=ISO-8859-15
 highlight=LaTeX
 line=0
-open=true
+open=false
 order=4
 
 [item:source/capitulo2_modelo_de_adversario.tex]
@@ -113,32 +104,32 @@ encoding=ISO-8859-15
 highlight=LaTeX
 line=0
 open=false
-order=-1
+order=3
 
 [item:source/capitulo2_protocolos.tex]
 archive=true
-column=8
+column=45
 encoding=ISO-8859-15
 highlight=LaTeX
-line=0
-open=false
-order=-1
+line=124
+open=true
+order=4
 
 [item:source/capitulo3.tex]
 archive=true
-column=15
+column=18
 encoding=ISO-8859-1
 highlight=LaTeX
-line=68
-open=false
+line=45
+open=true
 order=1
 
 [item:source/capitulo4.tex]
 archive=true
-column=56
+column=55
 encoding=ISO-8859-15
 highlight=LaTeX
-line=0
+line=39
 open=false
 order=0
 
@@ -160,6 +151,15 @@ line=1218
 open=false
 order=4
 
+[item:source/pic_gantt.tex]
+archive=true
+column=0
+encoding=ISO-8859-15
+highlight=LaTeX
+line=5
+open=false
+order=-1
+
 [item:source/pic_sensornode.tex]
 archive=true
 column=35
@@ -171,12 +171,12 @@ order=10
 
 [item:source/pic_sim_arch.tex]
 archive=true
-column=16
+column=25
 encoding=ISO-8859-1
 highlight=LaTeX
-line=0
-open=false
-order=9
+line=2
+open=true
+order=0
 
 [item:source/pic_stack.tex]
 archive=true
@@ -227,7 +227,7 @@ order=2
 archive=true
 column=0
 encoding=ISO-8859-15
-highlight=None
+highlight=LaTeX
 line=0
 open=false
 order=1
@@ -249,3 +249,12 @@ highlight=LaTeX
 line=40
 open=false
 order=-1
+
+[item:source/thesisdifctunl.cls]
+archive=true
+column=72
+encoding=ISO-8859-15
+highlight=LaTeX
+line=0
+open=true
+order=3
