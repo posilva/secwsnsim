@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1 beta2
-lastDocument=source/capitulo2_discussao.tex
+lastDocument=source/pic_sim_arch.tex
 masterDocument=
 name=Thesis.Preparation
 pkg_extIsRegExp=false
@@ -18,65 +18,65 @@ QuickBuild=
 
 [item:source/Thesis.Preparation.PedroMarquesdaSilva.tex]
 archive=true
-column=58
+column=18
 encoding=ISO-8859-15
 highlight=LaTeX
-line=0
-open=true
+line=58
+open=false
 order=2
 
 [item:source/capitulo1.tex]
 archive=true
-column=91
+column=5
 encoding=ISO-8859-15
 highlight=LaTeX
-line=48
-open=true
+line=136
+open=false
 order=5
 
 [item:source/capitulo2.tex]
 archive=true
-column=81
+column=15
 encoding=ISO-8859-1
 highlight=LaTeX
-line=6
+line=4
 open=false
 order=0
 
 [item:source/capitulo2_ambientes_de_simulacao.tex]
 archive=true
-column=21
+column=17
 encoding=ISO-8859-15
 highlight=LaTeX
-line=28
-open=true
+line=87
+open=false
 order=9
 
 [item:source/capitulo2_arq_servicos_seguranca.tex]
 archive=true
-column=49
+column=91
 encoding=ISO-8859-15
 highlight=LaTeX
-line=89
-open=true
+line=50
+open=false
 order=6
 
 [item:source/capitulo2_ataques_encaminhamento.tex]
 archive=true
-column=44
+column=64
 encoding=ISO-8859-15
 highlight=LaTeX
-line=146
-open=true
+line=154
+open=false
 order=7
 
 [item:source/capitulo2_discussao.tex]
 archive=true
-column=47
+column=15
 encoding=ISO-8859-15
 highlight=LaTeX
-line=64
-open=true
+line=85
+open=false
 order=10
 
 [item:source/capitulo2_intrusao.tex]
@@ -85,7 +85,7 @@ column=11
 encoding=ISO-8859-15
 highlight=LaTeX
 line=5
-open=true
+open=false
 order=8
 
 [item:source/capitulo2_modelo_adversario_ataques_contramedidas.tex]
@@ -99,37 +99,37 @@ order=4
 
 [item:source/capitulo2_modelo_de_adversario.tex]
 archive=true
-column=60
+column=50
 encoding=ISO-8859-15
 highlight=LaTeX
-line=0
+line=76
 open=false
 order=3
 
 [item:source/capitulo2_protocolos.tex]
 archive=true
-column=45
+column=3
 encoding=ISO-8859-15
 highlight=LaTeX
-line=124
-open=true
+line=70
+open=false
 order=4
 
 [item:source/capitulo3.tex]
 archive=true
-column=18
+column=75
 encoding=ISO-8859-1
 highlight=LaTeX
-line=45
-open=true
+line=23
+open=false
 order=1
 
 [item:source/capitulo4.tex]
 archive=true
-column=55
+column=0
 encoding=ISO-8859-15
 highlight=LaTeX
-line=39
+line=7
 open=false
 order=0
 
@@ -171,11 +171,11 @@ order=10
 
 [item:source/pic_sim_arch.tex]
 archive=true
-column=25
+column=27
 encoding=ISO-8859-1
 highlight=LaTeX
 line=2
-open=true
+open=false
 order=0
 
 [item:source/pic_stack.tex]
@@ -185,7 +185,7 @@ encoding=ISO-8859-1
 highlight=LaTeX
 line=3
 open=false
-order=-1
+order=11
 
 [item:source/pic_stack_protocols.tex]
 archive=true
@@ -198,28 +198,28 @@ order=-1
 
 [item:source/pic_stack_services.tex]
 archive=true
-column=21
+column=7
 encoding=ISO-8859-1
 highlight=LaTeX
 line=8
 open=false
-order=4
+order=12
 
 [item:source/resumoen.tex]
 archive=true
-column=68
+column=78
 encoding=ISO-8859-1
 highlight=LaTeX
-line=25
+line=9
 open=false
 order=5
 
 [item:source/resumopt.tex]
 archive=true
-column=20
+column=34
 encoding=ISO-8859-1
 highlight=LaTeX
-line=29
+line=20
 open=false
 order=2
 
@@ -243,12 +243,12 @@ order=2
 
 [item:source/tab_simuladores_criterios.tex]
 archive=true
-column=34
+column=72
 encoding=ISO-8859-15
 highlight=LaTeX
-line=40
+line=16
 open=false
-order=-1
+order=13
 
 [item:source/thesisdifctunl.cls]
 archive=true
@@ -256,5 +256,5 @@ column=72
 encoding=ISO-8859-15
 highlight=LaTeX
 line=0
-open=true
+open=false
 order=3
