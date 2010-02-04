@@ -120,9 +120,12 @@
 \gdef\@mastersdegree{Mestre}
 \gdef\@phddegree{Doutor}
 \gdef\@presentationtext{%
-Trabalho apresentado no âmbito d\if\@degreetype0 a \else o \fi
-\@program, como requisito parcial para obtenção do
-grau de \@degree\ em \@majorfield.}
+Relatório apresentado no âmbito da unidade curricular de Preparação de Dissertação, do Curso de
+Mestrado em Engenharia Informática
+%Trabalho apresentado no âmbito d\if\@degreetype0 a \else o \fi
+%\@program, como requisito parcial para obtenção do
+%grau de \@degree\ em \@majorfield.
+}
 \gdef\resumoname{Resumo}
 \gdef\abstrname{Abstract}
 \gdef\keywordsnamePT{Palavras-chave}
@@ -411,6 +414,12 @@ grau de \@degree\ em \@majorfield.}
 \def\acknowledgements{%
   \chapter*{\acknowledgementsname}}
 
+
+\def\contracapa{%
+  \gdef\@keywordsname{\keywordsnamePT}
+  \chapter*{}
+  % \rule{\textwidth}{0.2mm} ~\\
+  }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Resumo

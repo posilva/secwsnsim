@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1 beta2
-lastDocument=source/pic_sim_arch.tex
+lastDocument=source/resumopt.tex
 masterDocument=
 name=Thesis.Preparation
 pkg_extIsRegExp=false
@@ -16,14 +16,23 @@ src_extensions=.tex .ltx .latex .dtx .ins
 MakeIndex=
 QuickBuild=
 
-[item:source/Thesis.Preparation.PedroMarquesdaSilva.tex]
+[item:source/Contracapa.tex]
 archive=true
-column=18
+column=0
 encoding=ISO-8859-15
 highlight=LaTeX
-line=58
+line=0
 open=false
 order=2
+
+[item:source/Thesis.Preparation.PedroMarquesdaSilva.tex]
+archive=true
+column=0
+encoding=ISO-8859-15
+highlight=LaTeX
+line=0
+open=false
+order=0
 
 [item:source/capitulo1.tex]
 archive=true
@@ -207,21 +216,21 @@ order=12
 
 [item:source/resumoen.tex]
 archive=true
-column=78
+column=0
 encoding=ISO-8859-1
 highlight=LaTeX
-line=9
+line=0
 open=false
-order=5
+order=3
 
 [item:source/resumopt.tex]
 archive=true
-column=34
+column=93
 encoding=ISO-8859-1
 highlight=LaTeX
-line=20
-open=false
-order=2
+line=8
+open=true
+order=0
 
 [item:source/tab_ataques_contramedidas.tex]
 archive=true
@@ -252,9 +261,9 @@ order=13
 
 [item:source/thesisdifctunl.cls]
 archive=true
-column=72
+column=0
 encoding=ISO-8859-15
 highlight=LaTeX
 line=0
 open=false
-order=3
+order=1
