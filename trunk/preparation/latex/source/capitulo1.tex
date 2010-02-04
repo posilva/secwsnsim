@@ -17,7 +17,7 @@ humana. Estas redes permitem monitorizar, com maior ou menor densidade, diferent
 associados ao meio ambiente envolvente. As RSSF possuem características de auto-organização, podendo
 ser formadas por um menor ou maior número de sensores, permitindo cobrir desde pequenas a vastas
 áreas de monitorização. Um ambiente de instalação de uma rede pode ser um edifício, uma instalação
-industrial, uma área de combate, uma vasta zona de monitorização de um habitat natural, um veículo,
+industrial, uma área de combate, uma vasta zona de monitorização de um habitat natural, um veículo
 ou o próprio corpo humano \cite{apps_tracking,app_monitor,app_health,Akyildiz2002}.
 
 A componente básica e fundamental de uma rede de sensores é, pois, o nó sensor (também designado por
@@ -46,7 +46,8 @@ infraestruturas computacionais que, com maior capacidade de armazenamento e proc
 efectuar análise de dados coligidos. Na tecnologia actual existem ainda nós de desenvolvimento, que
 possuem ligações a computadores (ex: ligação de rede \textit{Ethernet}, RS-232 ou USB), permitindo o
 carregamento expedito de código desenvolvido em estações de desenvolvimento. Os
-sensores dotados de ligações Ethernet, RS-232 ou USB podem ainda funcionar como nós de tipo gateway,
+sensores dotados de ligações Ethernet, RS-232 ou USB podem ainda funcionar como nós de tipo
+\textit{gateway},
 permitindo, num cenário concreto, ligar a rede de sensores a aplicações, executando em sistemas de
 computadores usuais \cite{gateways}.
 \subsection{Caracterização de RSSF}\label{sect:subsec_caracterizacao_wsn}
@@ -77,8 +78,8 @@ medicina) ou como ambientes de monitorização de operação de infraestruturas crít
 edifícios, sistemas electromecânicos ou equipamentos de instalações fabris). 
 \end{descriptionNoIndent}
 \section{Segurança em RSSF} \label{sect:seguranca_rssf}
-A segurança nas RSSF é, \textit{de facto}, um problema , quando se perspectiva a sua utilização para
-sistemas críticos. A segurança deve ser pensada em tempo de concepção \cite{Perriga}, , tendo em
+A segurança nas RSSF é, \textit{de facto}, um problema, quando se perspectiva a sua utilização para
+sistemas críticos. A segurança deve ser pensada em tempo de concepção \cite{Perriga}, tendo em
 vista a abrangência do sistema e tendo em atenção as particularidades específicas da tecnologia
 inerente, bem como dos ambientes onde são implementadas. Importa analisar as hipóteses de
 desencadeamento de ataques a estas redes (a partir da definição de modelos de adversário) bem como
@@ -117,7 +118,7 @@ torna-se uma direcção importante de apoio a este estudo.
 \section{Objectivos e contribuições previstas para a dissertação} \label{sect:solucao}
 Uma das vertentes do estudo da segurança em RSSF tem que ver com a possibilidade de se poderem
 efectivar ataques ao nível do encaminhamento de dados (da pilha de suporte de serviços de
-\textit{software}, \figurename{ \ref{stack_serv}}). Diferentes tipologias de ataques 
+\textit{software}, \figurename{ \ref{fig:stack_serv}}). Diferentes tipologias de ataques 
 \cite{Karlof2003,Hu2004,Perriga} exigem diferentes tipos de contra-medidas. Estas, normalmente, são
 combinadas em mecanismos de segurança, consoante as propostas de sistemas de encaminhamento seguro.
 Estes são implementados tendo em conta as características e o modo de operação das RSSF
@@ -132,8 +133,8 @@ ataques \cite{Attaks_defenses_sec_in_wsn,Karlof2003}. Estas tipologias nem sempr
 forma sistemática e comparativa, na abordagem de diferentes protocolos de encaminhamento seguro que
 vão sendo propostos. Por outro lado, existe uma dificuldade adicional em poder conjugar-se o estudo
 das contra-medidas de segurança importantes com a sua avaliação experimental face à implementação.
-Para cada protocolo interessa medir o impacte que diferentes tipologias de ataques podem ter
-nomeadamente, em cenários de grande escala, o que exige a utilização de sistemas de simulação
+Para cada protocolo interessa medir o impacte que diferentes tipologias de ataques podem
+ter, nomeadamente, em cenários de grande escala, o que exige a utilização de sistemas de simulação
 \cite{ns2,jsim,SENSE,shox,jprowler,freemote} de RSSF que permitam simular diferentes hipóteses de
 ataque e antecipar o seu impacte. Este impacte deve ser analisado não apenas no que refere ao
 comportamento dos protocolos mas, complementarmente, no que refere à forma como afectam a própria

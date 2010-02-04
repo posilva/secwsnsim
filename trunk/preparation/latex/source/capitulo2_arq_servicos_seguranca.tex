@@ -22,7 +22,7 @@ garantir a confidencialidade dos dados que circulam na rede. O uso de criptograf
 indicado para este tipo de protecção, sendo adequada a selecção de algoritmos de encriptação
 fiáveis (ex: AES\footnote{\textit{Advanced Encryption System}} \cite{Stallings2005},
 ECC\footnote{\textit{Elliptic Curve Cryptography}}\cite{Stallings2005}. Com a utilização de chaves
-criptográficas, é necessária a adoptação de esquemas seguros de distribuição de chaves
+criptográficas, é necessária a adopção de esquemas seguros de distribuição de chaves
 \cite{eschenauer2002}.
  \item[Disponibilidade]
 Entende-se por disponibilidade a garantia do funcionamento de uma rede durante a totalidade do tempo
@@ -48,7 +48,7 @@ Alguns serviços de segurança têm vindo a ser desenvolvidos para as RSSF, com vis
 segurança ao nível da comunicação (ex: criptografia, assinaturas, \textit{digests}). Estes serviços
 permitem que o arquitecto de sistemas se centre noutras problemáticas relacionadas com o
 comportamento dos protocolos face a ataques, por exemplo, de intrusão. Apresentam-se de seguida
-alguns serviços mais comuns que representam as arquitecturas básicas de segurança para RSSF::
+alguns serviços mais comuns que representam as arquitecturas básicas de segurança para RSSF:
 \begin{descriptionNoIndent}
 \item[TinySec \cite{Karlof2004}]
 TinySec é uma arquitectura para protecção ao nível de ligação de dados em RSSF. O objectivo
@@ -80,14 +80,14 @@ simétrica, autenticando as mensagens com um CMAC;
 Esta norma define a especificação da camada física e de controlo de acesso ao meio das redes
 pessoais de baixa potência (\textit{LRPAN}\footnote{Low Rate Personal Area Networks}). Foca-se,
 essencialmente, na comunicação entre dispositivos relativamente próximos, sem a
-necessidade de uma infrastrutura de suporte, explorando o mínimo de consumo de energia. É uma norma
+necessidade de uma infraestrutura de suporte, explorando o mínimo de consumo de energia. É uma norma
 que já se encontra implementada em algumas plataformas das RSSF (ex: Micaz \cite{micaz}).
 Especifica alguns serviços de segurança \cite{zigbee_802154},  representando uma primeira
 linha de protecção contra ataques à infraestrutura. Estes mecanismos são os seguintes: i) Cada
 dispositivo mantém uma lista de controlo de acessos (ACL) dos dispositivos confiáveis,
 filtrando comunicações não autorizadas; ii) Encriptação de dados, partilha de uma chave
 criptográfica entre os intervenientes na comunicação; iii) Serviço de integridade de cada
-\textit{frame}, adicionando a cada frame um \textit{Message Integrity Code}
+\textit{frame}, adicionando a cada \textit{frame} um \textit{Message Integrity Code}
 (MIC) \cite{Stallings2005}; iv) Garantia de frescura de mensagens (\textit{Sequential Freshness}),
 utilizando contadores de \textit{frames} e de chaves.
 \item[ZigBee \cite{zigbee_802154,zigbee}]

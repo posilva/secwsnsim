@@ -25,15 +25,15 @@ relacionado.
 Tendo em conta as contra-medidas apresentadas, cabe analisar, comparativamente, os
 algoritmos e a capacidade de resistir aos ataques definidos no modelo de adversário. Assim, na
 \tablename{ \ref{tab:ataques_vs_protocolos}}, estão marcados com o símbolo \checkmark os ataques
-defendidos por cada protocolo estudado, sendo que os marcados com \texttimes não defendem ou só o
+defendidos por cada protocolo estudado, sendo que os marcados com \texttimes\ não defendem ou só o
 fazem em condições especiais. 
 
 O protocolo SIGF distingue-se dos demais protocolos estudados, particularmente pela sua origem (extensão
 do IGF) e por ser baseado em localização. Esta característica é específica para determinadas
 aplicações e obriga à existência de dispositivos especializados nos \textit{motes}. Para além disto,
-é particularmente indicado para a monitorização de eventos, cuja ocorrência é espaçada no tempo. Isto
-faz com que, por ser configurável, se adapte a diversos graus de ameaça, minimizando sempre os custos
-de operação.
+é particularmente indicado para a monitorização de eventos, cuja ocorrência é espaçada no tempo. Por
+ser configurável, faz com que se adapte consoante o grau de ameaça, aumentando os custos
+de operação com o aumento da ameaça.
 
 Os protocolos Clean-Slate e INSENS, que serão usados como prova de conceito na elaboração da
 dissertação, não necessitam de conhecimento de localização, diminuindo a complexidade da plataforma
@@ -79,11 +79,11 @@ implementação das funcionalidades requeridas na plataforma a conceber. Cada comp
 sensor é mapeado numa classe abstracta. O modelo de comunicação é inspirado no Mica2 com a gestão
 de eventos baseada no TinyOS \cite{tinyos}, o que o torna, do ponto de vista da sua aproximação à
 realidade, bastante vantajoso. É certo que algumas funcionalidades têm que ser implementadas de
-raiz, como é o caso da energia (existente no ShoX) ou gestão de topologias (existente no ShoX), o
-que permitirá desenvolver modelos que podem ser bem integrados de forma observar-se melhor as
-propriedades desejadas. O caso da emulação (existente no Freemote) não é um requisito mandatório da
-plataforma. Logo, a sua utilização não se apresenta como uma mais-valia, face aos aspectos menos
-positivos. O Freemote assenta sobre uma interacção cliente/servidor, o que torna
+raiz, como é o caso da energia (existente no ShoX) ou gestão de topologias (existente no ShoX e no
+Freemote), o que permitirá desenvolver modelos que podem ser bem integrados de forma observar-se
+melhor as propriedades desejadas. O caso da emulação (existente no Freemote) não é um requisito
+mandatório da plataforma. Logo, a sua utilização não se apresenta como uma mais-valia, face aos
+aspectos menos positivos. O Freemote assenta sobre uma interacção cliente/servidor, o que torna
 difícil a depuração de erros. Possui um modelo de comunicação demasiado básico, não
 incorporando atenuações do meio ambiente, o que inviabiliza a sua selecção. O J-Sim é
 realmente uma plataforma poderosa, mas a sua dimensão obrigaria a um esforço adicional,
