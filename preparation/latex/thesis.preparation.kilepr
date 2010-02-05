@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1 beta2
-lastDocument=source/resumopt.tex
+lastDocument=source/resumoen.tex
 masterDocument=
 name=Thesis.Preparation
 pkg_extIsRegExp=false
@@ -216,12 +216,12 @@ order=12
 
 [item:source/resumoen.tex]
 archive=true
-column=0
-encoding=ISO-8859-1
+column=58
+encoding=UTF-8
 highlight=LaTeX
-line=0
-open=false
-order=3
+line=26
+open=true
+order=1
 
 [item:source/resumopt.tex]
 archive=true
