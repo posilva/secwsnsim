@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1 beta2
-lastDocument=source/resumoen.tex
+lastDocument=source/capitulo4.tex
 masterDocument=
 name=Thesis.Preparation
 pkg_extIsRegExp=false
@@ -135,12 +135,12 @@ order=1
 
 [item:source/capitulo4.tex]
 archive=true
-column=0
+column=10
 encoding=ISO-8859-15
 highlight=LaTeX
-line=7
-open=false
-order=0
+line=34
+open=true
+order=2
 
 [item:source/logounl.tex]
 archive=true
