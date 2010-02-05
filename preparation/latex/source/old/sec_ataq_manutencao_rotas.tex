@@ -1,0 +1,20 @@
+\subsection{Ataques à manutenção de rotas} \label{sect:subsec_ataq_manut_rotas}
+\paragraph*{\textbf{Ataque \textit{Blackhole}}}
+No ataque \textit{blackhole}\cite{HongmeiDeng2002} o atacante intercepta os pacotes destinados ao
+nó/área que pretende comprometer, informando a origem que este se trata de um caminho de melhor
+qualidade. Assim, força todo o tráfego, dirigido ao destino alvo do ataque,  a circular através
+dele. Por exemplo, no protocolo AODV\cite{Perkins1999}, por ser \textit{on-demand} permite que, na
+fase de descoberta de uma rota, qualquer nó, que possua um caminho (suficiente recente), responda a
+uma mensagem de RREQ. Com isto, este algoritmo de encaminhamento pode ficar sujeito a um ataque
+de \textit{blackhole}, pois um nó malicioso intermédio, pode responder com um caminho melhor,
+apesar de não ter sequer caminho para o destino, originando um ``buraco negro'', interrompendo o
+processo de comunicação\cite{Survey_wsn_Sec_issues,Attaks_defenses_sec_in_wsn}.
+\subsubsection{Contra-medidas}
+Para mitigar os ataques de \textit{blackhole} existem várias propostas
+\cite{blackhole_adhoc,Attaks_defenses_sec_in_wsn,HongmeiDeng2002} das quais se destacam as
+que implementam os seguintes mecanismos: i) Confirmação do destino, é enviada uma mensagens ACK por
+cada pacote recibo pelo destino, pelo caminho inverso; iii) Definição de limites
+de tempo para receber as mensagens de ACK. por parte do destino, ou ao invés, receber mensagens de
+falha dos nós intermédios; iii) Mensagens de falha, quando num nó intermédio detecta o fim do
+temporizador de ACK, este gera uma mensagem de falha; iv) Caminho definido pela origem, ou seja, em
+cada pacote é indicado, na origem, o caminho que deve ser seguido pelo pacote até ao destino.
