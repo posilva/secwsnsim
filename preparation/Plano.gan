@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Secure Routing Simulation Platform" company="" webLink="http://" view-date="2010-01-31" view-index="0" gantt-divider-location="27" resource-divider-location="-1" version="2.0">
+<project name="Secure Routing Simulation Platform" company="" webLink="http://" view-date="2010-02-21" view-index="0" gantt-divider-location="176" resource-divider-location="-1" version="2.0">
     <description/>
     <view zooming-state="default:6" id="gantt-chart"/>
     <view id="resource-table">
@@ -31,29 +31,29 @@
             <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
         </taskproperties>
-        <task id="1" name="Plataforma de Simulação de Algortimos de Encaminhamento em RSSF" meeting="false" start="2010-02-15" duration="113" complete="0" priority="1" expand="true">
+        <task id="1" name="Plataforma de Simulação de Algortimos de Encaminhamento em RSSF" meeting="false" start="2010-02-15" duration="112" complete="0" priority="1" expand="true">
             <task id="2" name="Análise" meeting="false" start="2010-02-15" duration="59" complete="0" priority="1" expand="true">
                 <task id="3" name="Refinamento da Bibliografia" meeting="false" start="2010-02-15" duration="20" complete="0" priority="1" expand="true"/>
-                <task id="4" name="Avaliação/Estudo das Plataformas de Simulação" meeting="false" start="2010-02-15" duration="19" complete="0" priority="1" expand="true"/>
-                <task id="5" name="Desenho da Plataforma / Refinamento e Documentação da especificação" meeting="false" start="2010-02-15" duration="59" complete="0" priority="1" expand="true"/>
+                <task id="4" name="Avaliação/Estudo das Plataformas de Simulação" meeting="false" start="2010-02-15" duration="20" complete="0" priority="1" expand="true"/>
+                <task id="5" name="Desenho da Plataforma / Refinamento e Documentação da especificação" meeting="false" start="2010-02-26" duration="50" complete="0" priority="1" expand="true"/>
             </task>
-            <task id="6" name="Desenvolvimento" meeting="false" start="2010-02-15" duration="71" complete="0" priority="1" expand="true">
-                <task id="7" name="Integração do Simulador Base" meeting="false" start="2010-02-15" duration="19" complete="0" priority="1" expand="true">
+            <task id="6" name="Desenvolvimento" meeting="false" start="2010-03-05" duration="45" complete="0" priority="1" expand="true">
+                <task id="7" name="Integração do Simulador Base" meeting="false" start="2010-03-05" duration="5" complete="0" priority="1" expand="true">
                     <depend id="8" type="2" difference="0" hardness="Strong"/>
                 </task>
-                <task id="8" name="Módulo de Configuração" meeting="false" start="2010-03-12" duration="16" complete="0" priority="1" expand="true">
+                <task id="8" name="Módulo de Configuração" meeting="false" start="2010-03-12" duration="5" complete="0" priority="1" expand="true">
                     <depend id="9" type="2" difference="0" hardness="Strong"/>
                 </task>
-                <task id="9" name="Módulo de Gestão de Topologias" meeting="false" start="2010-04-05" duration="6" complete="0" priority="1" expand="true">
+                <task id="9" name="Módulo de Gestão de Topologias" meeting="false" start="2010-03-19" duration="5" complete="0" priority="1" expand="true">
                     <depend id="10" type="2" difference="0" hardness="Strong"/>
                 </task>
-                <task id="10" name="Módulo de Gestão de Energia" meeting="false" start="2010-04-13" duration="10" complete="0" priority="1" expand="true">
+                <task id="10" name="Módulo de Gestão de Energia" meeting="false" start="2010-03-26" duration="10" complete="0" priority="1" expand="true">
                     <depend id="11" type="2" difference="0" hardness="Strong"/>
                 </task>
-                <task id="11" name="Módulo de Visualização" meeting="false" start="2010-04-27" duration="10" complete="0" priority="1" expand="true">
+                <task id="11" name="Módulo de Visualização" meeting="false" start="2010-04-09" duration="10" complete="0" priority="1" expand="true">
                     <depend id="12" type="2" difference="0" hardness="Strong"/>
                 </task>
-                <task id="12" name="Módulo de Injecção de Ataques" meeting="false" start="2010-05-11" duration="10" complete="0" priority="1" expand="true"/>
+                <task id="12" name="Módulo de Injecção de Ataques" meeting="false" start="2010-04-23" duration="10" complete="0" priority="1" expand="true"/>
             </task>
             <task id="13" name="Prova de Conceito" meeting="false" start="2010-05-07" duration="28" complete="0" priority="1" expand="true">
                 <task id="14" name="Implementação de um protocolo básico (flooding)" meeting="false" start="2010-05-07" duration="5" complete="0" priority="1" expand="true">
@@ -76,8 +76,8 @@
                 </task>
                 <task id="21" name="Recolha e Análise de Resultados" meeting="false" start="2010-06-17" duration="12" complete="0" priority="1" expand="true"/>
             </task>
-            <task id="22" name="Relatório" meeting="false" start="2010-06-09" duration="31" complete="0" priority="1" expand="true">
-                <task id="23" name="Modelo de Objectos e Escrita do Relatório" meeting="false" start="2010-06-09" duration="31" complete="0" priority="1" expand="true"/>
+            <task id="22" name="Relatório" meeting="false" start="2010-05-10" duration="52" complete="0" priority="1" expand="true">
+                <task id="23" name="Modelo de Objectos e Escrita do Relatório" meeting="false" start="2010-05-10" duration="52" complete="0" priority="1" expand="true"/>
             </task>
         </task>
     </tasks>
