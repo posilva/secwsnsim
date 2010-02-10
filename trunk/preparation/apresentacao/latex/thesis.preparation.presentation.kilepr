@@ -1,0 +1,35 @@
+[General]
+def_graphic_ext=eps
+img_extIsRegExp=false
+img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
+kileprversion=2
+kileversion=2.1 beta2
+lastDocument=source/Thesis.Preparation.Presentation
+masterDocument=
+name=Thesis.Preparation.Presentation
+pkg_extIsRegExp=false
+pkg_extensions=.cls .sty .bbx .cbx .lbx
+src_extIsRegExp=false
+src_extensions=.tex .ltx .latex .dtx .ins
+
+[Tools]
+MakeIndex=
+QuickBuild=
+
+[item:source/Thesis.Preparation.Presentation]
+archive=true
+column=0
+encoding=ISO-8859-15
+highlight=LaTeX
+line=59
+open=true
+order=0
+
+[item:thesis.preparation.presentation.kilepr]
+archive=true
+column=0
+encoding=
+highlight=
+line=0
+open=false
+order=-1
