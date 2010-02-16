@@ -1,0 +1,31 @@
+%tabela de ataques e protocolos de encaminhamento
+\thispagestyle{empty}
+
+{%
+\begin{table}[H]
+\advance\leftskip-4cm
+\begin{normalsize}
+\begin{tabular}{c|c|c|c|c|c|c|c|c|c|}\cline{2-10}
+\mc{1}{c}{\textbf{}} & \mc{7}{|c|}{\textbf{Ataques ao Encaminhamento}}&
+\mc{1}{|c|}{\textbf{Intrusão}} & \mc{1}{|c|}{\textbf{Comunicação}}\\\cline{1-10}
+\mc{1}{|c|}{\textbf{Protocolos}} & \mc{1}{|c}{\textbf{Info. Falsa}} &
+\mc{1}{|c|}{\textbf{\textit{Rushing}}}& \mc{1}{c|}{\textbf{HELLO flooding}} &
+\mc{1}{c|}{\textbf{\textit{Sinkhole}}} & \mc{1}{c|}{\textbf{\textit{Wormhole}}} &
+\mc{1}{c|}{\textbf{\textit{Sybil}}}& \mc{1}{c|}{\textbf{\textit{Blackhole}}} &
+\mc{1}{c|}{\textbf{\textit{Intrusão/Replicação}}} & \mc{1}{c|}{\textbf{\textit{Dolev-Yao}}} \\\hline
+%% linhas da tabela
+\mc{1}{|c|}{\textbf{SIGF}} & \checkmark & \checkmark &\checkmark & \texttimes &
+\mc{1}{c|}{\texttimes} &\checkmark & \mc{1}{c|}{\checkmark} & \texttimes/\texttimes & \checkmark
+\\\hline
+%
+\mc{1}{|c|}{\textbf{INSENS}} & \checkmark & \checkmark & \checkmark & \checkmark  &
+\checkmark  & \checkmark & \checkmark  & \checkmark/\texttimes & \checkmark \\\hline
+%
+\mc{1}{|c|}{\textbf{Clean-Slate}} & \checkmark & \checkmark & \checkmark & \checkmark &
+\checkmark & \checkmark& \checkmark & \checkmark/\checkmark & \checkmark\\\hline
+\end{tabular}
+\caption{Tabela de Protocolos de Encaminhamento \textit{vs} Ataques
+}\label{tab:ataques_vs_protocolos}
+\end{normalsize}
+\end{table}
+}%

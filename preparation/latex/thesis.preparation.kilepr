@@ -1,10 +1,10 @@
 [General]
-def_graphic_ext=
+def_graphic_ext=png
 img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1 beta2
-lastDocument=source/thesisdifctunl.cls
+lastDocument=source/pic_sim_arch.tex
 masterDocument=
 name=Thesis.Preparation
 pkg_extIsRegExp=false
@@ -22,26 +22,26 @@ column=0
 encoding=ISO-8859-15
 highlight=LaTeX
 line=0
-open=false
-order=2
+open=true
+order=8
 
 [item:source/Thesis.Preparation.PedroMarquesdaSilva.tex]
+archive=true
+column=14
+encoding=ISO-8859-15
+highlight=LaTeX
+line=17
+open=true
+order=6
+
+[item:source/capitulo1.tex]
 archive=true
 column=0
 encoding=ISO-8859-15
 highlight=LaTeX
-line=0
-open=false
-order=0
-
-[item:source/capitulo1.tex]
-archive=true
-column=5
-encoding=ISO-8859-15
-highlight=LaTeX
-line=136
-open=false
-order=5
+line=9
+open=true
+order=7
 
 [item:source/capitulo2.tex]
 archive=true
@@ -148,8 +148,8 @@ column=0
 encoding=UTF-8
 highlight=LaTeX
 line=0
-open=false
-order=-1
+open=true
+order=4
 
 [item:source/mybib.bib]
 archive=true
@@ -180,12 +180,12 @@ order=10
 
 [item:source/pic_sim_arch.tex]
 archive=true
-column=27
-encoding=ISO-8859-1
+column=0
+encoding=ISO-8859-15
 highlight=LaTeX
 line=2
-open=false
-order=0
+open=true
+order=5
 
 [item:source/pic_stack.tex]
 archive=true
@@ -225,10 +225,10 @@ order=1
 
 [item:source/resumopt.tex]
 archive=true
-column=93
+column=3
 encoding=ISO-8859-1
 highlight=LaTeX
-line=8
+line=16
 open=true
 order=0
 
