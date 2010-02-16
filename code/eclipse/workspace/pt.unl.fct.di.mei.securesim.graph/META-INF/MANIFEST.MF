@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: WSN Simulator Graph
+Bundle-SymbolicName: pt.unl.fct.di.mei.securesim.graph; singleton:=true
+Bundle-Version: 1.0.0.1
+Bundle-Activator: pt.unl.fct.di.mei.securesim.graph.Activator
+Bundle-Vendor: Pedro Marques da Silva
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ pt.unl.fct.di.mei.jfreechart.libs;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
