@@ -4,7 +4,7 @@
     version="1.1" baseProfile="full">
     <defs/>
     <g>
-        <g latexdraw:type="rectangle" id="id297">
+        <g latexdraw:type="rectangle" id="id115">
             <rect x="146.0" y="522.0" width="419.0" height="140.0"
                 transform="translate(5.291666507720947 0.0) translate(-1.5498932600021362 3.7417733669281006)"
                 stroke-width="2.0" fill="#404040" stroke="#404040" latexdraw:type="shadow"/>
@@ -12,29 +12,29 @@
                 latexdraw:borderPos="outer" stroke-width="2.0"
                 stroke="black" fill="#eeee84"/>
         </g>
-        <g latexdraw:type="rectangle" id="id298">
+        <g latexdraw:type="rectangle" id="id116">
             <rect x="157.0" y="589.0" width="399.0" height="31.0"
                 latexdraw:borderPos="outer" stroke-width="2.0"
                 stroke="black" fill="#f5b549"/>
         </g>
-        <g latexdraw:type="text" id="id299" font-family="Dialog"
+        <g latexdraw:type="text" id="id117" font-family="Dialog"
             fill="black" font-size="16" latexdraw:x="178.0" font-weight="bold">
             <text x="178.0" y="612.0"><![CDATA[Modelo de Comunicação (MAC/DataLink)]]></text>
         </g>
-        <g latexdraw:type="text" id="id301" font-family="Dialog"
+        <g latexdraw:type="text" id="id119" font-family="Dialog"
             fill="black" font-size="17" latexdraw:x="152.0" font-weight="bold">
             <text x="152.0" y="543.0"><![CDATA[Simulador Base]]></text>
         </g>
-        <g latexdraw:type="rectangle" id="id303">
+        <g latexdraw:type="rectangle" id="id121">
             <rect x="157.0" y="625.0" width="398.0" height="31.0"
                 latexdraw:borderPos="outer" stroke-width="2.0"
                 stroke="black" fill="#f15b1c"/>
         </g>
-        <g latexdraw:type="text" id="id304" font-family="Dialog"
+        <g latexdraw:type="text" id="id122" font-family="Dialog"
             fill="black" font-size="16" latexdraw:x="221.0" font-weight="bold">
             <text x="221.0" y="647.0"><![CDATA[Gerador de Eventos Discretos]]></text>
         </g>
-        <g latexdraw:type="rectangle" id="id306">
+        <g latexdraw:type="rectangle" id="id124">
             <rect x="572.0" y="236.0" width="85.0" height="427.0"
                 transform="translate(5.291666507720947 0.0) translate(-1.5498932600021362 3.7417733669281006)"
                 stroke-width="2.0" fill="#404040" stroke="#404040" latexdraw:type="shadow"/>
@@ -42,7 +42,7 @@
                 latexdraw:borderPos="outer" stroke-width="2.0"
                 stroke="black" fill="#ff1200"/>
         </g>
-        <g latexdraw:type="rectangle" id="id307">
+        <g latexdraw:type="rectangle" id="id125">
             <rect x="287.0" y="235.97373070950948" width="134.0"
                 height="279.0262692904905"
                 transform="translate(5.291666507720947 0.0) translate(-1.5498932600021362 3.7417733669281006)"
@@ -51,17 +51,17 @@
                 height="279.0262692904905" latexdraw:borderPos="outer"
                 stroke-width="2.0" stroke="black" fill="#0bdf3d"/>
         </g>
-        <g latexdraw:type="text" id="id308" font-family="Dialog"
-            fill="black" font-size="16" latexdraw:x="241.17126142533516"
-            font-weight="bold" transform="rotate(-90.0) translate(-717.9620329648073 -38.83826011413703)">
-            <text x="241.17126142533516" y="384.5095215394722"><![CDATA[Mecanismo de Gestão]]></text>
+        <g latexdraw:type="text" id="id126" font-family="Dialog"
+            fill="black" font-size="16" latexdraw:x="250.05407392533516"
+            font-weight="bold" transform="rotate(-90.0) translate(-726.8448454648073 -47.73669761413703)">
+            <text x="250.05407392533516" y="393.4079590394722"><![CDATA[Mecanismo de Gestão]]></text>
         </g>
-        <g latexdraw:type="text" id="id310" font-family="Dialog"
-            fill="black" font-size="16" latexdraw:x="260.14749504671113"
-            font-weight="bold" transform="rotate(-90.0) translate(-747.1420036480711 -17.58138855464881)">
-            <text x="260.14749504671113" y="386.71325860135994"><![CDATA[de Consumo de Energia]]></text>
+        <g latexdraw:type="text" id="id128" font-family="Dialog"
+            fill="black" font-size="16" latexdraw:x="266.79593254671113"
+            font-weight="bold" transform="rotate(-90.0) translate(-753.7904411480711 -24.58920105464881)">
+            <text x="266.79593254671113" y="393.72107110135994"><![CDATA[de Consumo de Energia]]></text>
         </g>
-        <g latexdraw:type="rectangle" id="id312">
+        <g latexdraw:type="rectangle" id="id130">
             <rect x="146.0" y="235.97373070950948" width="134.0"
                 height="279.0262692904905"
                 transform="translate(5.291666507720947 0.0) translate(-1.5498932600021362 3.7417733669281006)"
@@ -70,17 +70,17 @@
                 height="279.0262692904905" latexdraw:borderPos="outer"
                 stroke-width="2.0" stroke="black" fill="#07a52c"/>
         </g>
-        <g latexdraw:type="text" id="id313" font-family="Dialog"
-            fill="black" font-size="16" latexdraw:x="123.0"
-            font-weight="bold" transform="rotate(-90.0) translate(-606.78125 -160.21874999999997)">
-            <text x="123.0" y="388.0"><![CDATA[Geração de Topologias]]></text>
+        <g latexdraw:type="text" id="id131" font-family="Dialog"
+            fill="black" font-size="16" latexdraw:x="130.3515625"
+            font-weight="bold" transform="rotate(-90.0) translate(-614.1328125 -167.72656249999997)">
+            <text x="130.3515625" y="395.5078125"><![CDATA[Geração de Topologias]]></text>
         </g>
-        <g latexdraw:type="text" id="id315" font-family="Dialog"
-            fill="black" font-size="16" latexdraw:x="136.0"
-            font-weight="bold" transform="rotate(-90.0) translate(-584.2734375 -183.80468749999997)">
-            <text x="136.0" y="390.0"><![CDATA[Mecanismo de ]]></text>
+        <g latexdraw:type="text" id="id133" font-family="Dialog"
+            fill="black" font-size="16" latexdraw:x="140.3984375"
+            font-weight="bold" transform="rotate(-90.0) translate(-588.671875 -188.42187499999997)">
+            <text x="140.3984375" y="394.6171875"><![CDATA[Mecanismo de ]]></text>
         </g>
-        <g latexdraw:type="rectangle" id="id317">
+        <g latexdraw:type="rectangle" id="id135">
             <rect x="429.0" y="235.97373070950948" width="134.0"
                 height="279.0262692904905"
                 transform="translate(5.291666507720947 0.0) translate(-1.5498932600021362 3.7417733669281006)"
@@ -89,17 +89,17 @@
                 height="279.0262692904905" latexdraw:borderPos="outer"
                 stroke-width="2.0" stroke="black" fill="#43fd6f"/>
         </g>
-        <g latexdraw:type="text" id="id318" font-family="Dialog"
-            fill="black" font-size="16" latexdraw:x="421.0"
-            font-weight="bold" transform="rotate(-90.0) translate(-862.8125 106.734375)">
-            <text x="421.0" y="384.0"><![CDATA[Mecanismo de]]></text>
+        <g latexdraw:type="text" id="id136" font-family="Dialog"
+            fill="black" font-size="16" latexdraw:x="425.21875"
+            font-weight="bold" transform="rotate(-90.0) translate(-867.03125 102.296875)">
+            <text x="425.21875" y="388.4375"><![CDATA[Mecanismo de]]></text>
         </g>
-        <g latexdraw:type="text" id="id320" font-family="Dialog"
-            fill="black" font-size="16" latexdraw:x="388.0"
-            font-weight="bold" transform="rotate(-90.0) translate(-887.6171875 138.6171875)">
-            <text x="388.0" y="379.0"><![CDATA[Injecção de Faltas / Ataques]]></text>
+        <g latexdraw:type="text" id="id138" font-family="Dialog"
+            fill="black" font-size="16" latexdraw:x="397.828125"
+            font-weight="bold" transform="rotate(-90.0) translate(-897.4453125 128.6328125)">
+            <text x="397.828125" y="388.984375"><![CDATA[Injecção de Faltas / Ataques]]></text>
         </g>
-        <g latexdraw:type="rectangle" id="id322">
+        <g latexdraw:type="rectangle" id="id140">
             <rect x="144.0" y="186.0" width="514.0" height="41.0"
                 transform="translate(5.291666507720947 0.0) translate(-1.5498932600021362 3.7417733669281006)"
                 stroke-width="2.0" fill="#404040" stroke="#404040" latexdraw:type="shadow"/>
@@ -107,98 +107,88 @@
                 latexdraw:borderPos="outer" stroke-width="2.0"
                 stroke="black" fill="#2eaca5"/>
         </g>
-        <g latexdraw:type="text" id="id323" font-family="Dialog"
-            fill="black" font-size="22" latexdraw:x="431.0000000000009"
-            font-weight="bold" transform="rotate(-89.85885123785106) translate(-1070.8986165637184 157.8994166194504)">
-            <text x="431.0000000000009" y="463.9999999999994"><![CDATA[Mecanismos de Configuração]]></text>
+        <g latexdraw:type="text" id="id141" font-family="Dialog"
+            fill="black" font-size="22" latexdraw:x="448.38646098615595"
+            font-weight="bold" transform="rotate(-89.85885123785106) translate(-1088.2850775498732 140.23569605676443)">
+            <text x="448.38646098615595" y="481.66372056268546"><![CDATA[Mecanismos de Configuração]]></text>
         </g>
-        <g latexdraw:type="text" id="id325" font-family="Dialog"
+        <g latexdraw:type="text" id="id143" font-family="Dialog"
             fill="black" font-size="16" latexdraw:x="181.0" font-weight="bold">
             <text x="181.0" y="211.0"><![CDATA[API Simulação de Protocolos de Encaminhamento]]></text>
         </g>
-        <g latexdraw:type="rectangle" id="id327">
+        <g latexdraw:type="rectangle" id="id145">
             <rect x="157.0" y="552.0" width="399.0" height="31.0"
                 latexdraw:borderPos="outer" stroke-width="2.0"
                 stroke="black" fill="#eec175"/>
         </g>
-        <g latexdraw:type="text" id="id328" font-family="Dialog"
+        <g latexdraw:type="text" id="id146" font-family="Dialog"
             fill="black" font-size="16" latexdraw:x="196.0" font-weight="bold">
             <text x="196.0" y="574.0"><![CDATA[Modelo de Sensores (Plataformas)]]></text>
         </g>
-        <g latexdraw:type="drawing" id="id330">
-            <g latexdraw:type="rectangle" id="id331" transform="rotate(90.10455152550014) translate(-552.1211330525675 -1301.6934007030343)">
-                <rect x="637.9727962502988" y="321.0107462049748"
+        <g latexdraw:type="drawing" id="id148">
+            <g latexdraw:type="rectangle" id="id149" transform="rotate(90.10455152550014) translate(-552.121133052568 -1301.6934007030343)">
+                <rect x="637.972796250299" y="321.01074620497457"
                     width="575.4958168682821" height="108.5573503100104"
                     transform="translate(5.291666507720947 0.0) translate(-1.5498932600021362 3.7417733669281006)"
                     stroke-width="2.0" fill="#404040" stroke="#404040" latexdraw:type="shadow"/>
-                <rect x="637.9727962502988" y="321.0107462049748"
+                <rect x="637.972796250299" y="321.01074620497457"
                     width="575.4958168682821" height="108.5573503100104"
                     latexdraw:borderPos="outer" stroke-width="2.0"
                     stroke="black" fill="#eeee84"/>
             </g>
-            <g latexdraw:type="text" id="id332" font-family="Dialog"
+            <g latexdraw:type="text" id="id150" font-family="Dialog"
                 fill="#010101" font-size="17"
-                latexdraw:x="812.7097101771546" font-weight="bold" transform="rotate(90.10455152550014) translate(-688.0709724943484 -1164.3148666869406)">
-                <text x="812.7097101771546" y="243.69447258045193"><![CDATA[\definecolor{color332}{rgb}{0.00392156862745098,0.00392156862745098,0.00392156862745098}\color{color332}Consola de Visualização ]]></text>
+                latexdraw:x="817.0695557223495" font-weight="bold" transform="rotate(90.10455152550014) translate(-692.4308180395433 -1159.5879696000998)">
+                <text x="817.0695557223495" y="238.96757549361132"><![CDATA[\definecolor{color150}{rgb}{0.00392156862745098,0.00392156862745098,0.00392156862745098}\color{color150}Consola de Visualização ]]></text>
             </g>
-            <g latexdraw:type="text" id="id334" font-family="Dialog"
+            <g latexdraw:type="text" id="id152" font-family="Dialog"
                 fill="#010101" font-size="17"
-                latexdraw:x="813.1133880052271" font-weight="bold" transform="rotate(90.10455152550014) translate(-456.4636733097373 -1400.002955777135)">
-                <text x="813.1133880052271" y="477.13104444837825"><![CDATA[\definecolor{color332}{rgb}{0.00392156862745098,0.00392156862745098,0.00392156862745098}\color{color332}e Controlo de Simulação]]></text>
+                latexdraw:x="819.3516549891945" font-weight="bold" transform="rotate(90.10455152550014) translate(-462.7019402937047 -1393.4010618119619)">
+                <text x="819.3516549891945" y="470.52915048320517"><![CDATA[\definecolor{color150}{rgb}{0.00392156862745098,0.00392156862745098,0.00392156862745098}\color{color150}e Controlo de Simulação]]></text>
             </g>
         </g>
-        <g latexdraw:type="rectangle" id="id337">
-            <rect x="143.05000000074506" y="88.05000000074506"
-                width="131.89999999850988" height="89.89999999850988"
-                latexdraw:borderPos="outer"
-                stroke-width="0.10000000149011612" stroke="#010101"
-                fill="#b0b8b7" rx="13.484999999776482"/>
-        </g>
-        <g latexdraw:type="rectangle" id="id338">
+        <g latexdraw:type="rectangle" id="id155">
             <rect x="522.0500000007451" y="89.05000000074506"
                 width="131.89999999850988" height="89.89999999850988"
                 latexdraw:borderPos="outer"
                 stroke-width="0.10000000149011612" stroke="#010101"
                 fill="#b0b8b7" rx="13.484999999776482"/>
         </g>
-        <g latexdraw:type="rectangle" id="id339">
+        <g latexdraw:type="rectangle" id="id156">
             <rect x="281.55000000074506" y="88.05000000074506"
                 width="131.89999999850988" height="89.89999999850988"
                 latexdraw:borderPos="outer"
                 stroke-width="0.10000000149011612" stroke="#010101"
                 fill="#b0b8b7" rx="13.484999999776482"/>
         </g>
-        <g latexdraw:type="text" id="id340" font-family="Dialog"
+        <g latexdraw:type="text" id="id157" font-family="Dialog"
             fill="black" font-size="44" latexdraw:x="445.0" font-weight="bold">
             <text x="445.0" y="174.0"><![CDATA[...]]></text>
         </g>
-        <g latexdraw:type="text" id="id342" font-family="Dialog"
-            fill="black" font-size="35" latexdraw:x="163.0">
-            <text x="163.0" y="146.0"><![CDATA[SIGF]]></text>
-        </g>
-        <g latexdraw:type="text" id="id344" font-family="Dialog"
+        <g latexdraw:type="text" id="id159" font-family="Dialog"
             fill="black" font-size="18" latexdraw:x="532.0" font-weight="bold">
             <text x="532.0" y="142.0"><![CDATA[Clean-Slate]]></text>
         </g>
-        <g latexdraw:type="text" id="id346" font-family="Dialog"
+        <g latexdraw:type="text" id="id161" font-family="Dialog"
             fill="black" font-size="35" latexdraw:x="285.0">
             <text x="285.0" y="145.0"><![CDATA[INSENS]]></text>
         </g>
-        <g latexdraw:type="line" id="id348">
+        <g latexdraw:type="line" id="id163">
             <line x1="108.0" x2="108.0" y1="234.0" y2="516.0"
                 stroke-width="2.0" stroke="black" latexdraw:rotationAngle="0.0"/>
         </g>
-        <g latexdraw:type="line" id="id349">
+        <g latexdraw:type="line" id="id164">
             <line x1="102.0" x2="112.0" y1="517.0" y2="517.0"
                 stroke-width="2.0" stroke="black" latexdraw:rotationAngle="0.0"/>
         </g>
-        <g latexdraw:type="line" id="id350">
+        <g latexdraw:type="line" id="id165">
             <line x1="103.0" x2="113.0" y1="233.0" y2="233.0"
                 stroke-width="2.0" stroke="black" latexdraw:rotationAngle="0.0"/>
         </g>
-        <g latexdraw:type="text" id="id351" font-family="Dialog"
-            fill="black" font-size="18" latexdraw:x="-52.00000000000006" transform="rotate(270.0) translate(-455.26562499999994 -288.2187500000001)">
-            <text x="-52.00000000000006" y="377.0"><![CDATA[Camada de Instrumentalização]]></text>
+        <g latexdraw:type="text" id="id166" font-family="Dialog"
+            fill="black" font-size="18"
+            latexdraw:x="-50.257812500000114" transform="rotate(270.0) translate(-457.0078124999999 -289.52343750000017)">
+            <text x="-50.257812500000114" y="378.3046875"><![CDATA[Camada de Instrumentalização]]></text>
         </g>
     </g>
     <metadata>
