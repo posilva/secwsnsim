@@ -51,26 +51,12 @@
       </view>
    </extension>
    <extension
-         point="org.eclipse.ui.editors">
-      <editor
-            class="pt.unl.fct.di.mei.securesim.rcp.editors.SimulationEditor"
-            default="false"
-            id="pt.unl.fct.di.mei.securesim.rcp.editors.SimulationEditor"
-            name="Simulation Editor">
-      </editor>
-   </extension>
-   <extension
          point="org.eclipse.ui.commands">
       <command
             defaultHandler="pt.unl.fct.di.mei.securesim.rcp.commands.ExitHandler"
             description="Exit"
             id="pt.unl.fct.di.mei.securesim.rcp.commands.Exit"
             name="Exit">
-      </command>
-      <command
-            defaultHandler="pt.unl.fct.di.mei.securesim.rcp.commands.OpenEditorHandler"
-            id="pt.unl.fct.di.mei.securesim.rcp.commands.OpenEditor"
-            name="Open Editor">
       </command>
    </extension>
    <extension
