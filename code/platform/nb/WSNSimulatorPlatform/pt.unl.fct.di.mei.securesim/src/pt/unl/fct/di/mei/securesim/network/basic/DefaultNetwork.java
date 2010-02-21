@@ -9,12 +9,12 @@ import pt.unl.fct.di.mei.securesim.network.Network;
  * @author posilva
  *
  */
-public class BasicNetwork extends Network {
+public class DefaultNetwork extends Network {
 
 	/**
 	 * 
 	 */
-	public BasicNetwork() {
+	public DefaultNetwork() {
 		// TODO Auto-generated constructor stub
 	}
 

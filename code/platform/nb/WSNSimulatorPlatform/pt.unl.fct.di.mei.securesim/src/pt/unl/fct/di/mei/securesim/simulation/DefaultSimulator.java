@@ -13,13 +13,13 @@ import pt.unl.fct.di.mei.securesim.network.Network;
  * @author posilva
  * 
  */
-public class BasicSimulator extends Simulator {
+public class DefaultSimulator extends Simulator {
 	private Network network = null;
 
 	/**
 	 * 
 	 */
-	public BasicSimulator() {
+	public DefaultSimulator() {
 
 	}
 

@@ -11,14 +11,14 @@ import pt.unl.fct.di.mei.securesim.network.nodes.NodeFactory;
  *
  */
 @SuppressWarnings("unchecked")
-public class BasicNodeFactory extends NodeFactory {
+public class DefaultNodeFactory extends NodeFactory {
 
 	/**
 	 * @param simulator
 	 * @param classOfNodes
 	 */
 	
-	public BasicNodeFactory(Simulator simulator, Class classOfNodes) {
+	public DefaultNodeFactory(Simulator simulator, Class classOfNodes) {
 		super(simulator, classOfNodes);
 	}
 
