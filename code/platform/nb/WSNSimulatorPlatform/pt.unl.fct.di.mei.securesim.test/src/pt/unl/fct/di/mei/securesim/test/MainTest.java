@@ -13,12 +13,12 @@ import pt.unl.fct.di.mei.securesim.test.broadcast.BroadcastNode;
 import pt.unl.fct.di.mei.securesim.test.broadcast.BroadcastRoutingLayer;
 import pt.unl.fct.di.mei.securesim.network.Network;
 import pt.unl.fct.di.mei.securesim.network.SimulationArea;
-import pt.unl.fct.di.mei.securesim.network.basic.BasicNetwork;
+import pt.unl.fct.di.mei.securesim.network.basic.DefaultNetwork;
 import pt.unl.fct.di.mei.securesim.network.nodes.NodeFactory;
 import pt.unl.fct.di.mei.securesim.network.nodes.SensorNode;
 import pt.unl.fct.di.mei.securesim.network.nodes.SimpleNode;
-import pt.unl.fct.di.mei.securesim.network.nodes.basic.BasicNodeFactory;
-import pt.unl.fct.di.mei.securesim.simulation.BasicSimulator;
+import pt.unl.fct.di.mei.securesim.network.nodes.basic.DefaultNodeFactory;
+import pt.unl.fct.di.mei.securesim.simulation.DefaultSimulator;
 import pt.unl.fct.di.mei.securesim.simulation.Simulation;
 import pt.unl.fct.di.mei.securesim.simulation.basic.BasicSimulation;
 import pt.unl.fct.di.mei.securesim.topology.RandomTopologyManager;
@@ -26,7 +26,7 @@ import pt.unl.fct.di.mei.securesim.topology.RandomTopologyManager;
 public class MainTest {
 	public static void main(String[] args) {
 		//create simulator
-		BasicSimulator simulator= new BasicSimulator();
+		DefaultSimulator simulator= new DefaultSimulator();
 		// criar o modelo de rádio
 		RadioModel radioModel = new GaussianRadioModel();
 		// create simulation object
@@ -40,7 +40,7 @@ public class MainTest {
 		// associar a configuracao à simulação 
 		RandomTopologyManager topologyManager = new RandomTopologyManager();
 		// create a network
-		Network network = new BasicNetwork();
+		Network network = new DefaultNetwork();
 		// definição da àrea de simulação
 		SimulationArea simulationArea = new SimulationArea();
 		simulationArea.setHeigth(300);
@@ -49,8 +49,8 @@ public class MainTest {
 		// assignar àrea de simulação à rede
 		network.setSimulationArea(simulationArea);
 		// cria factories de nós sink e simples
-		NodeFactory simpleNodeFactory= new BasicNodeFactory(simulator, BroadcastNode.class);
-		NodeFactory sinkNodeFactory= new BasicNodeFactory(simulator, BroadcastNode.class);
+		NodeFactory simpleNodeFactory= new DefaultNodeFactory(simulator, BroadcastNode.class);
+		NodeFactory sinkNodeFactory= new DefaultNodeFactory(simulator, BroadcastNode.class);
 		
 		simulator.setNetwork(network);
 		

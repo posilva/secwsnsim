@@ -58,7 +58,7 @@ public class BroadcastNode extends SimpleNode implements IDisplayable{
 			if( sent )
 				c= Color.pink ;
 			else
-				c=Color.black ;
+				c=Color.CYAN ;
 		}
 //		g.fillOval( _x-radius, _y-radius, radius*2, radius*2);
 //
