@@ -23,7 +23,7 @@ import pt.unl.fct.di.mei.securesim.ui.GraphicNode;
 @SuppressWarnings("unchecked")
 public abstract class Node {
 
-    protected int radius = 3;
+
     protected Batery bateryEnergy = new Batery();
     protected Map<Class, Application> applications = new HashMap<Class, Application>();
     protected RoutingLayer routingLayer = null;
@@ -112,8 +112,9 @@ public abstract class Node {
     public Node(Simulator sim, RadioModel radioModel) {
         this.simulator = sim;
         neighborhood = radioModel.createNeighborhood();
-        this.graphicNode = new GraphicNode();
+        this.graphicNode = new GraphicNode(this);
         this.graphicNode.setPhysicalNode(this);
+
     }
 
     /*
@@ -244,7 +245,7 @@ public abstract class Node {
      * @see net.tinyos.prowler.INode#getY()
      */
     public double getY() {
-        return getGraphicNode().getX();
+        return getGraphicNode().getY();
     }
 
     /*
@@ -253,7 +254,7 @@ public abstract class Node {
      * @see net.tinyos.prowler.INode#getZ()
      */
     public double getZ() {
-        return getGraphicNode().getX();
+        return getGraphicNode().getZ();
     }
 
     /*
@@ -403,5 +404,12 @@ public abstract class Node {
 
     public void setGraphicNode(GraphicNode graphicNode) {
         this.graphicNode = graphicNode;
+    }
+    public int getRadius() {
+        return getGraphicNode().getRadius();
+    }
+
+    public void setRadius(int radius) {
+        getGraphicNode().setRadius(radius);
     }
 }

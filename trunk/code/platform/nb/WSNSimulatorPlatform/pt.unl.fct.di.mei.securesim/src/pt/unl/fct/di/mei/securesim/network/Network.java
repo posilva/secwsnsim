@@ -63,7 +63,7 @@ public abstract class Network extends ConfigurableObject {
 		if (node instanceof SimpleNode){
 			simpleNodes.store(node);
 			nodeDB.store(node);
-			LOG.info("Added simple node");
+			LOG.finest("Added simple node");
 		}else
 			throw new IllegalArgumentException("Node must be a instance of SimpleNode Class");
 	}
@@ -72,7 +72,7 @@ public abstract class Network extends ConfigurableObject {
 		if (node instanceof SinkNode){
 			sinkNodes.store(node);
 			nodeDB.store(node);
-			LOG.info("Added sink node");
+			LOG.finest("Added sink node");
 		}else
 			throw new IllegalArgumentException("Node must be a instance of SinkNode Class");
 		

@@ -10,6 +10,7 @@ import java.awt.Graphics;
 import pt.unl.fct.di.mei.securesim.engine.ISimulationDisplay;
 import pt.unl.fct.di.mei.securesim.engine.Simulator;
 import pt.unl.fct.di.mei.securesim.engine.nodes.Mica2Node;
+import pt.unl.fct.di.mei.securesim.engine.nodes.Node;
 import pt.unl.fct.di.mei.securesim.engine.radio.RadioModel;
 
 /**
@@ -20,9 +21,12 @@ public abstract class SensorNode extends Mica2Node {
 
 	protected boolean sinkNode = false;
 	private boolean paintNeighborhood = false;
-	private boolean showID = true;
+	private boolean showID = false;
 	private static Font monoFont = new Font("Courier", Font.BOLD, 8);
-	
+
+
+
+
 	/**
 	 * @param sim
 	 * @param radioModel
@@ -47,21 +51,22 @@ public abstract class SensorNode extends Mica2Node {
 		Color oldColor = g.getColor();
 		Font oldFont = g.getFont();
 		
-//		if (isPaintNeighborhood()) {
-//
-//            g.setColor(Color.BLUE);
-//			for (Node n : getNeighborhood().neighbors) {
-//				int x2 = disp.x2ScreenX(n.getX());
-//				int y2 = disp.y2ScreenY(n.getY());
-//				g.drawLine(x, y, x2, y2);
-//			}
-//		}
-//
-//		if (showID){
-//			g.setColor(Color.black);
-//			g.setFont(monoFont);
-//		    g.drawString(""+id, x+10, y+10);
-//		}
+		if (isPaintNeighborhood()) {
+
+            g.setColor(Color.BLUE);
+			for (Node n : getNeighborhood().neighbors) {
+				int x2 = disp.x2ScreenX(n.getX());
+				int y2 = disp.y2ScreenY(n.getY());
+				g.drawLine(x, y, x2, y2);
+			}
+		}
+
+		if (showID){
+			g.setColor(Color.black);
+			g.setFont(monoFont);
+            g.drawString(""+getId(), x-getRadius()*2, y-getRadius()*2);
+		    //g.drawString("["+(int)getX()+","+(int)getY()+"]", x-getRadius()*2, y-getRadius()*2);
+		}
 		g.setColor(oldColor);
 		g.setFont(oldFont);
 	}

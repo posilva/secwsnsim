@@ -27,7 +27,7 @@ public interface ISimulationDisplay {
 
     public Simulator getSimulator();
 
-    public void  setSimulator(Simulator s);
+   // public void  setSimulator(Simulator s);
 
     public void show();
     

@@ -16,7 +16,7 @@ import pt.unl.fct.di.mei.securesim.engine.nodes.Node;
  */
 public class GraphicNode {
 
-    Node physicalNode;
+    protected Node physicalNode;
     int id;
     static int count = 0;
     protected int x = 0;
@@ -42,6 +42,11 @@ public class GraphicNode {
 
     public GraphicNode() {
         this.id = count++;
+    }
+
+    public GraphicNode(Node aPhysicalNode) {
+        this.id = count++;
+        this.physicalNode = aPhysicalNode;
     }
 
     public Color getBackcolor() {
