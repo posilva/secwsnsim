@@ -19,29 +19,45 @@ public class WorkbenchPanel extends javax.swing.JPanel {
     /** Creates new form WorkbenchPanel */
     public WorkbenchPanel() {
         initComponents();
-
-
- //org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(pt.unl.fct.di.mei.securesim.platform.PlatformApp.class).getContext().getResourceMap(WorkbenchPanel.class);
- //       btnSelectionTool.setIcon(resourceMap.getIcon("btnSelectionTool.icon")); // NOI18N
         jScrollPane1.setPreferredSize(new Dimension(100,100));
         jScrollPane1.setAutoscrolls(true);
-       
     }
        
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        simulationPanel1 = new pt.unl.fct.di.mei.securesim.platform.ui.SimulationPanel();
+        toolbarPanel = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         verVizinhos = new javax.swing.JToggleButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        simulationPanel1 = new pt.unl.fct.di.mei.securesim.platform.ui.SimulationPanel();
+        saveSimulation = new javax.swing.JButton();
+        numberOfNodes = new javax.swing.JTextField();
         jToolBar2 = new javax.swing.JToolBar();
         btnSelectionTool = new javax.swing.JToggleButton();
+        individualNodeSelection = new javax.swing.JToggleButton();
 
         setLayout(new java.awt.BorderLayout());
+
+        javax.swing.GroupLayout simulationPanel1Layout = new javax.swing.GroupLayout(simulationPanel1);
+        simulationPanel1.setLayout(simulationPanel1Layout);
+        simulationPanel1Layout.setHorizontalGroup(
+            simulationPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1018, Short.MAX_VALUE)
+        );
+        simulationPanel1Layout.setVerticalGroup(
+            simulationPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 584, Short.MAX_VALUE)
+        );
+
+        jScrollPane1.setViewportView(simulationPanel1);
+
+        add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        toolbarPanel.setLayout(new javax.swing.BoxLayout(toolbarPanel, javax.swing.BoxLayout.PAGE_AXIS));
 
         jToolBar1.setRollover(true);
 
@@ -78,28 +94,34 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         });
         jToolBar1.add(verVizinhos);
 
-        add(jToolBar1, java.awt.BorderLayout.PAGE_START);
+        saveSimulation.setText("Save");
+        saveSimulation.setFocusable(false);
+        saveSimulation.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        saveSimulation.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        saveSimulation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveSimulationActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(saveSimulation);
 
-        javax.swing.GroupLayout simulationPanel1Layout = new javax.swing.GroupLayout(simulationPanel1);
-        simulationPanel1.setLayout(simulationPanel1Layout);
-        simulationPanel1Layout.setHorizontalGroup(
-            simulationPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 886, Short.MAX_VALUE)
-        );
-        simulationPanel1Layout.setVerticalGroup(
-            simulationPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 243, Short.MAX_VALUE)
-        );
+        numberOfNodes.setText("100");
+        numberOfNodes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                numberOfNodesActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(numberOfNodes);
 
-        jScrollPane1.setViewportView(simulationPanel1);
+        toolbarPanel.add(jToolBar1);
 
-        add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        add(toolbarPanel, java.awt.BorderLayout.PAGE_START);
 
         jToolBar2.setOrientation(1);
         jToolBar2.setRollover(true);
         jToolBar2.setAutoscrolls(true);
 
-        btnSelectionTool.setText("s");
+        btnSelectionTool.setText("S");
         btnSelectionTool.setToolTipText("Selection Area Tool");
         btnSelectionTool.setFocusable(false);
         btnSelectionTool.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -115,11 +137,22 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         });
         jToolBar2.add(btnSelectionTool);
 
+        individualNodeSelection.setText("N");
+        individualNodeSelection.setFocusable(false);
+        individualNodeSelection.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        individualNodeSelection.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        individualNodeSelection.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                individualNodeSelectionActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(individualNodeSelection);
+
         add(jToolBar2, java.awt.BorderLayout.LINE_END);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        simulationPanel1.initCircles(1000,600);
+        simulationPanel1.deployNetwork(getNumberOfNodes());
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -137,15 +170,31 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSelectionToolActionPerformed
 
+    private void saveSimulationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveSimulationActionPerformed
+        simulationPanel1.saveSimulation();
+    }//GEN-LAST:event_saveSimulationActionPerformed
+
+    private void numberOfNodesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numberOfNodesActionPerformed
+
+    }//GEN-LAST:event_numberOfNodesActionPerformed
+
+    private void individualNodeSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_individualNodeSelectionActionPerformed
+        simulationPanel1.selectIndividualNodeSelect(individualNodeSelection.isSelected());
+    }//GEN-LAST:event_individualNodeSelectionActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnSelectionTool;
+    private javax.swing.JToggleButton individualNodeSelection;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
+    private javax.swing.JTextField numberOfNodes;
+    private javax.swing.JButton saveSimulation;
     private pt.unl.fct.di.mei.securesim.platform.ui.SimulationPanel simulationPanel1;
+    private javax.swing.JPanel toolbarPanel;
     private javax.swing.JToggleButton verVizinhos;
     // End of variables declaration//GEN-END:variables
 
@@ -159,6 +208,10 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         f.pack();
         f.setExtendedState(JFrame.MAXIMIZED_BOTH);
         f.setVisible(true);
+    }
+
+    private int getNumberOfNodes() {
+        return Integer.valueOf(numberOfNodes.getText()).intValue();
     }
 
    
