@@ -24,8 +24,7 @@ Export-Package: pt.unl.fct.di.mei.securesim.rcp;
    pt.unl.fct.di.mei.securesim.rcp.views,
    org.eclipse.ui,
    org.eclipse.jface.viewers",
- pt.unl.fct.di.mei.securesim.rcp.commands;uses:="org.eclipse.core.commands",
- pt.unl.fct.di.mei.securesim.rcp.editors;
+ pt.unl.fct.di.mei.securesim.rcp.commands;uses:="org.eclipse.core.commands";
   uses:="org.eclipse.core.runtime,
    org.eclipse.jface.resource,
    org.eclipse.ui,

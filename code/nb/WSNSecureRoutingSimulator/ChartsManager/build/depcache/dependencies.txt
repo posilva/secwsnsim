@@ -1,0 +1,12 @@
+||:org.sensorsim.chartsmanager.ChartsPanelTopComponent
+org.openide.util.NbBundle
+javax.swing.GroupLayout
+org.sensorsim.chartsmanager.ChartsPanelTopComponent
+javax.swing.GroupLayout$ParallelGroup
+java.lang.Class
+javax.swing.GroupLayout$Alignment
+org.openide.windows.WindowManager
+java.util.logging.Logger
+org.openide.windows.TopComponent
+java.util.Properties
+javax.swing.GroupLayout$Group
