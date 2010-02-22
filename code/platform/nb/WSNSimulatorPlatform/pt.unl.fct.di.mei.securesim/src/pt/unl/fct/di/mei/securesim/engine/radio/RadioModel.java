@@ -25,6 +25,8 @@
 package pt.unl.fct.di.mei.securesim.engine.radio;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 
 import pt.unl.fct.di.mei.securesim.engine.Simulator;
 import pt.unl.fct.di.mei.securesim.engine.nodes.Node;
@@ -80,8 +82,18 @@ public abstract class RadioModel{
 	 * specific radio model.
 	 */
 	public abstract static class Neighborhood{
-		/** The vector of the neighboring nodes. */
+        // vector of neighbors that knowme
+        public ArrayList<Node> neighborsThatKnowMe=new ArrayList<Node>();
+
+        /** The vector of the neighboring nodes. */
 		public ArrayList<Node> neighbors=new ArrayList<Node>();
+
+
+        public HashSet<Node> neighborsThatKnowMeSet=new HashSet<Node>();
+
+        /** The vector of the neighboring nodes. */
+		public HashSet<Node> neighborsSet=new HashSet<Node>();
+
 
 		/**
 		 * This method must call the {@link Node#receptionBegin} method of

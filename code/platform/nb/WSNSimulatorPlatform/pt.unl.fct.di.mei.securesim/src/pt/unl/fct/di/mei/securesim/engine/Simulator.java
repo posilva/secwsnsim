@@ -43,7 +43,8 @@ import pt.unl.fct.di.mei.securesim.engine.radio.RadioModel;
  */
 @SuppressWarnings({"deprecation","unchecked"})
 public class Simulator{
-    public static final int SIMULATOR_STEPS = 100;
+    public static final int SIMULATOR_STEPS = 200;
+    private static long SEED=10;
 
 	public Simulator() {
 		super();
@@ -58,14 +59,18 @@ public class Simulator{
 	 * This makes experiments repeatable, all you have to do is to set
  	 * the seed of this Random class. 
  	 */
-	static public Random random = new Random(10);
+	static public Random random = new Random(SEED);
 	
 	/**
 	 * This defines the time resolution. Every time and time interval
 	 * in the simulator is represented in this resolution. This rate
 	 * corresponds to the 38.4 kbps speed, but maybe a little friendlier.
 	 */
-	public static final int ONE_SECOND = 40000;
+    public static final Integer SIMULATION_SPEED_MAX = 80000;
+    public static final Integer SIMULATION_SPEED_MIN = 400;
+    public static final Integer SIMULATION_SPEED_DEFAULT = SIMULATION_SPEED_MAX/2;
+
+    public static Integer ONE_SECOND = SIMULATION_SPEED_DEFAULT;
 
 	/** Holds the events */
 	
@@ -84,6 +89,20 @@ public class Simulator{
 	public Node firstNode = null;
 
 	private ISimulationDisplay display;
+
+    public static void setSimulatorSpeed(int value) {
+        // 100% -> SIMULATION_SPEED_MAX
+        // value -> x
+        ONE_SECOND=value*SIMULATION_SPEED_MAX/100;
+        if(ONE_SECOND==0) ONE_SECOND= SIMULATION_SPEED_MIN;
+        System.out.println("Speed: " + ONE_SECOND);
+    }
+
+    public void startUpNodes() {
+        for (Node node : getNodes()) {
+            node.startUp();
+        }
+    }
 
 	/** 
 	 * As the simulator is event based there is a need for a queue to handle 
@@ -177,7 +196,9 @@ public class Simulator{
 		if( event != null ){
 			lastEventTime = event.time;
 			event.execute();
-		}
+		}else{
+            System.exit(-1);
+        }
 	}
 	    
 	/**
@@ -392,6 +413,7 @@ public class Simulator{
 	
 	public Simulator init(){
 		radioModel.updateNeighborhoods();
+        startUpNodes();
 		return this;
 	}
 
@@ -408,4 +430,8 @@ public class Simulator{
 	public ISimulationDisplay getDisplay() {
 		return display;
 	}
+
+    public static void resetRandom(){
+        random = new Random(SEED);
+    }
 }

@@ -3,6 +3,8 @@
  */
 package pt.unl.fct.di.mei.securesim.network;
 
+import java.awt.Dimension;
+
 /**
  * @author posilva
  * 
@@ -13,6 +15,7 @@ public class SimulationArea {
 	protected int heigth;
 
 	protected int maxElevation;
+    private static final int MARGIN=20;
 
 	/**
 	 * 
@@ -45,4 +48,7 @@ public class SimulationArea {
 		this.maxElevation = maxElevation;
 	}
 
+    public Dimension getDimension(){
+        return new Dimension(width+MARGIN,heigth+MARGIN);
+    }
 }

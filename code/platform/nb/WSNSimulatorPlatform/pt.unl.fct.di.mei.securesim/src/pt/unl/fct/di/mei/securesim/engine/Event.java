@@ -33,56 +33,64 @@ package pt.unl.fct.di.mei.securesim.engine;
  * @author Gyorgy Balogh, Gabor Pap, Miklos Maroti
  */
 @SuppressWarnings("unchecked")
-public class Event implements Comparable{
+public abstract class Event implements Comparable {
 
-	/** the time of the event */
-    public long time;
-    
+    /** the time of the event */
+    protected long time;
+
     /** 
      * Basic constructor, sets the time property to zero
      */
-    public Event(){       
+    public Event() {
         time = 0;
     }
 
-	/** 
-	 * Parameterized constructor.
-	 * 
-	 * @param time the time of the event
-	 */
-    public Event( long time ){
+    /**
+     * Parameterized constructor.
+     *
+     * @param time the time of the event
+     */
+    public Event(long time) {
         this.time = time;
     }
-	
-	/** 
-	 * This function is called when the event occurs. If you want to have a clock
-	 * event for example, the execute function may look like this: <br>
-	 * public void execute(){ <br>
-	 * &nbsp;&nbsp; //here you can call whatever function you want
-	 * &nbsp;&nbsp; time += clockTickTime;<br>
-	 * &nbsp;&nbsp; sim.addEvent( this );<br>
-	 * }<br> 
-	 */
-    public void execute(){
-    }
-    
-	/**
-	 * @return returns the time of the event as a String
-	 */ 
-    public String toString(){
-        return Long.toString(time);        
+
+    /**
+     * This function is called when the event occurs. If you want to have a clock
+     * event for example, the execute function may look like this: <br>
+     * public void execute(){ <br>
+     * &nbsp;&nbsp; //here you can call whatever function you want
+     * &nbsp;&nbsp; time += clockTickTime;<br>
+     * &nbsp;&nbsp; sim.addEvent( this );<br>
+     * }<br>
+     */
+    public abstract void execute();
+
+    /**
+     * @return returns the time of the event as a String
+     */
+    public String toString() {
+        return Long.toString(time);
     }
 
-	/**
-	 * This makes earlier events happen earlier :)
-	 */  
-    public int compareTo(Object arg0){
-        long arg_time = ((Event)arg0).time;
-        if( arg_time < time )
+    /**
+     * This makes earlier events happen earlier :)
+     */
+    public int compareTo(Object arg0) {
+        long arg_time = ((Event) arg0).time;
+        if (arg_time < time) {
             return 1;
-        else if( arg_time > time )
+        } else if (arg_time > time) {
             return -1;
-        else
+        } else {
             return System.identityHashCode(this) - System.identityHashCode(arg0);
+        }
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
     }
 }
