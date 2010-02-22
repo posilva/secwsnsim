@@ -1,9 +1,8 @@
 package pt.unl.fct.di.mei.securesim.engine.nodes;
 
-import java.util.HashMap;
-import java.util.Map;
 
 import pt.unl.fct.di.mei.securesim.engine.Application;
+import pt.unl.fct.di.mei.securesim.engine.Event;
 import pt.unl.fct.di.mei.securesim.engine.ISimulationDisplay;
 import pt.unl.fct.di.mei.securesim.engine.Simulator;
 import pt.unl.fct.di.mei.securesim.engine.energy.Batery;
@@ -23,18 +22,24 @@ import pt.unl.fct.di.mei.securesim.ui.GraphicNode;
 @SuppressWarnings("unchecked")
 public abstract class Node {
 
-
-    protected Batery bateryEnergy = new Batery();
-    protected Map<Class, Application> applications = new HashMap<Class, Application>();
+    public static final int INITIAL_BATERY_POWER = 100;
+    public static final double DEFAULT_POWER_CONSUMING = 1.0E-3;
+    private static long CLOCK_TICK = Simulator.ONE_SECOND / 100;
+    protected Batery bateryEnergy = null;
+    //protected Map<Class, Application> applications = new HashMap<Class, Application>();
+    protected Application application;
     protected RoutingLayer routingLayer = null;
     protected Config config = new Config();
     protected boolean turnedOn = true;
     protected long lastTransmissionTime;
     protected GraphicNode graphicNode;
     protected boolean receive = true;
-    protected CPUStatus cpuStatus=CPUStatus.ON;
-    protected TXStatus txStatus=TXStatus.ON;
+    protected CPUStatus cpuStatus = CPUStatus.ON;
+    protected TXStatus txStatus = TXStatus.ON;
 
+    public void initEnergyConsumation() {
+        simulator.addEvent(new Node.EnergyWasteEvent((int) simulator.random.nextDouble() * CLOCK_TICK));
+    }
 
     public enum CPUStatus {
 
@@ -47,16 +52,17 @@ public abstract class Node {
     };
 
     public boolean canReceive() {
-        return txStatus==TXStatus.ON;
+        return txStatus == TXStatus.ON;
     }
 
     public void startTransmissionTime() {
         lastTransmissionTime = System.currentTimeMillis();
     }
 
-    public void endTransmissionTime() {
+    public long endTransmissionTime() {
         bateryEnergy.consume(.0000010);
         lastTransmissionTime = System.currentTimeMillis() - lastTransmissionTime;
+        return lastTransmissionTime;
     }
 
     public class Config {
@@ -117,11 +123,17 @@ public abstract class Node {
 
     }
 
-    /*
+    public void initBatery() {
+        this.bateryEnergy = new Batery();
+        this.bateryEnergy.setCurrentPower(INITIAL_BATERY_POWER);
+        initEnergyConsumation();
+    }    /*
      * (non-Javadoc)
      *
      * @see net.tinyos.prowler.INode#getNeighborhood()
      */
+
+
     public Neighborhood getNeighborhood() {
         return neighborhood;
     }
@@ -226,8 +238,8 @@ public abstract class Node {
      */
     public void setPosition(double x, double y, double z) {
         getGraphicNode().moveTo((int) x, (int) y);
-        getGraphicNode().setZ((int)z);
-        
+        getGraphicNode().setZ((int) z);
+
     }
 
     /*
@@ -282,10 +294,14 @@ public abstract class Node {
      * net.tinyos.prowler.INode#addApplication(net.tinyos.prowler.Application)
      */
     public void addApplication(Application app) {
-        if (!applications.containsKey(app.getClass())) {
-            app.setNode(this);
-            applications.put(app.getClass(), app);
-        }
+//        if (!applications.containsKey(app.getClass())) {
+//            app.setNode(this);
+//            applications.put(app.getClass(), app);
+//        }
+              app.setNode(this);
+              application=app;
+
+
     }
 
     /**
@@ -296,8 +312,11 @@ public abstract class Node {
      *            the class that identifies the needed application for us
      * @return Returns the application instance running on this node
      */
-    public Application getApplication(Class appClass) {
-        return applications.get(appClass);
+//    public Application getApplication(Class appClass) {
+//        return applications.get(appClass);
+//    }
+    public Application getApplication() {
+        return application;
     }
 
     /*
@@ -306,9 +325,10 @@ public abstract class Node {
      * @see net.tinyos.prowler.INode#display(net.tinyos.prowler.Display)
      */
     public void displayOn(ISimulationDisplay disp) {
-        for (Application app : applications.values()) {
-            app.display(disp);
-        }
+//        for (Application app : applications.values()) {
+//            app.display(disp);
+//        }
+        application.display(disp);
     }
 
     /**
@@ -370,6 +390,9 @@ public abstract class Node {
     public boolean sendMessageFromApplication(Object message, Application app) {
         return app.sendMessage(message);
     }
+    public boolean sendMessage(Object message) {
+        return application.sendMessage(message);
+    }
 
     public abstract void init();
 
@@ -405,11 +428,55 @@ public abstract class Node {
     public void setGraphicNode(GraphicNode graphicNode) {
         this.graphicNode = graphicNode;
     }
+
     public int getRadius() {
         return getGraphicNode().getRadius();
     }
 
     public void setRadius(int radius) {
         getGraphicNode().setRadius(radius);
+    }
+
+    public void startUp() {
+        initBatery();
+    }
+
+    /**
+     * 
+     */
+    class EnergyWasteEvent extends Event {
+
+        public EnergyWasteEvent(long time) {
+            super(time);
+        }
+
+        public EnergyWasteEvent() {
+            super();
+        }
+
+        @Override
+        public void execute() {
+            if (turnedOn) {
+                if (!getBateryEnergy().off()) {
+                    getBateryEnergy().consume(DEFAULT_POWER_CONSUMING);
+                    time += CLOCK_TICK;
+                    simulator.addEvent(this);
+                } else {
+                    System.out.println("BATERY OF NODE " + getId() + " IS OFF");
+                    turnedOn = false;
+                }
+            }
+        }
+    }
+
+    public void shutdown() {
+        turnedOn = false;
+    }
+
+    public void powerOn() {
+        if (!getBateryEnergy().off()) {
+            turnedOn = true;
+            initEnergyConsumation();
+        }
     }
 }

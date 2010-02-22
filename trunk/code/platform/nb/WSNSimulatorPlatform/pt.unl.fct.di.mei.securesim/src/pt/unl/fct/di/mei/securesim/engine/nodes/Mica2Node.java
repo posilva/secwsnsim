@@ -167,7 +167,7 @@ public class Mica2Node extends Node implements EnergyListener{
 	 * the mote listens for radio traffic to decide about transmission.
 	 */
 	class TestChannelEvent extends Event {
-
+        
 		/**
 		 * If the radio channel is clear it begins the transmission process,
 		 * otherwise generates a backoff and restarts testing later. It also
@@ -179,7 +179,7 @@ public class Mica2Node extends Node implements EnergyListener{
 				// start transmitting
 				transmitting = true;
 				beginTransmission(1, Mica2Node.this);
-				endTransmissionEvent.time = time + sendTransmissionTime;
+				endTransmissionEvent.setTime(getTime() + sendTransmissionTime);
 				simulator.addEvent(endTransmissionEvent);
 			} else {
 				time += generateBackOffTime();
@@ -269,8 +269,8 @@ public class Mica2Node extends Node implements EnergyListener{
 				sendingPostponed = true;
 			} else {
 				sendingPostponed = false;
-				testChannelEvent.time = simulator.getSimulationTime()
-						+ generateWaitingTime();
+				testChannelEvent.setTime(simulator.getSimulationTime()
+						+ generateWaitingTime());
 				simulator.addEvent(testChannelEvent);
 			}
 			return true;
@@ -399,12 +399,14 @@ public class Mica2Node extends Node implements EnergyListener{
 			receiving = false;
 			if (!corrupted) {
 				getRoutingLayer().receiveMessage(((Mica2Node) stream).message, ((Mica2Node) stream).getRoutingLayer().getApplication());
+                getBateryEnergy().consumeReceiving();
+
 			}
 			signalStrength = 0;
 			if (sendingPostponed) {
 				sendingPostponed = false;
-				testChannelEvent.time = simulator.getSimulationTime()
-						+ generateWaitingTime();
+				testChannelEvent.setTime( simulator.getSimulationTime()
+						+ generateWaitingTime());
 				simulator.addEvent(testChannelEvent);
 			}
 			parentID = -1;
