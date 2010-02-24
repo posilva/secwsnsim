@@ -21,9 +21,11 @@ public class BroadcastApplication extends Application {
 	 * Stores the sender from which it first receives the message, and passes
 	 * the message.
 	 */
+    @Override
 	public void receiveMessage(Object message) {
 		if (getBroadcastNode().getParent() == null) {
 			getBroadcastNode().setParent(getNode().getParentNode());
+
 			sendMessage(message);
 		}
 	}
@@ -31,6 +33,7 @@ public class BroadcastApplication extends Application {
 	/**
 	 * Sets the sent flag to true.
 	 */
+    @Override
 	public void sendMessageDone() {
 		getBroadcastNode().sentMenssage(true);
 	}

@@ -21,6 +21,7 @@ public class BroadcastMain {
 		// creating the desired radio model, uncomment the one you need 
 		GaussianRadioModel radioModel = new GaussianRadioModel();
 		//RayleighRadioModel radioModel = new RayleighRadioModel(sim);
+
 		sim.setRadioModel(radioModel);
 		long time0 = System.currentTimeMillis();
 		BroadcastNode root = (BroadcastNode)sim.createNode( BroadcastNode.class, radioModel, (short)ROOT_ID, ROOT_POSX, ROOT_POSY, ROOT_POSZ);
@@ -57,7 +58,7 @@ public class BroadcastMain {
                     System.out.println("execution time: " + (System.currentTimeMillis()-time1) + " millisecs" );
                 }
             };
-            event.time = Simulator.ONE_SECOND * 1000;
+            event.setTime(Simulator.ONE_SECOND * 1000);
             sim.addEvent(event);
             sim.run(20000);
         }       
