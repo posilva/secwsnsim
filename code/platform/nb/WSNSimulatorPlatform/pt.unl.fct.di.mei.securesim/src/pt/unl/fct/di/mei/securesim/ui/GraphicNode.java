@@ -31,7 +31,11 @@ public class GraphicNode {
     protected Color backcolor = Color.RED;
     protected Color linecolor = Color.BLACK;
     protected Color oldColor = Color.WHITE;
+    protected Color MARKEDCOLOR = Color.ORANGE;
+
     protected Rectangle rectangle;
+    private boolean marked;
+
 
   
 
@@ -179,10 +183,12 @@ public class GraphicNode {
     }
 
     public void paint(ISimulationDisplay display) {
-
+        paintMark(display);
         fill(display);
+        
         paintBorder(display);
         paintSelectionBorder(display);
+        
         //paintCenter(g);
     }
 
@@ -239,4 +245,29 @@ public class GraphicNode {
     public void setZ(int z) {
         this.z = z;
     }
+
+    public void mark() {
+        marked = true;
+    }
+    public void unmark() {
+        marked = false;
+    }
+    public boolean isMarked() {
+        return marked;
+    }
+
+    private void paintMark(ISimulationDisplay display) {
+        if(!isMarked()) return ;
+        Graphics g = display.getGraphics();
+        int _x = display.x2ScreenX(x);
+        int _y = display.y2ScreenY(y);
+
+        saveOldColor(g);
+        g.setColor(MARKEDCOLOR);
+        int r=(int) (radius*3);
+        g.drawOval(_x - r, _y - r, r * 2, r * 2);
+        g.fillOval(_x - r, _y - r, r * 2, r * 2);
+        restoreOldColor(g);
+    }
+    
 }
