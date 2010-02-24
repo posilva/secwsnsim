@@ -9,13 +9,15 @@ package pt.unl.fct.di.mei.securesim.platform.ui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import pt.unl.fct.di.mei.securesim.utils.DebugConsole;
 
 /**
  *
  * @author posilva
  */
 public class WorkbenchPanel extends javax.swing.JPanel {
-
+   
     /** Creates new form WorkbenchPanel */
     public WorkbenchPanel() {
         initComponents();
@@ -32,13 +34,17 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         toolbarPanel = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
+        buildNetwork = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         verVizinhos = new javax.swing.JToggleButton();
+        verOsQueConhecem = new javax.swing.JToggleButton();
         saveSimulation = new javax.swing.JButton();
         numberOfNodes = new javax.swing.JTextField();
+        searchNode = new javax.swing.JButton();
         jToolBar2 = new javax.swing.JToolBar();
         btnSelectionTool = new javax.swing.JToggleButton();
-        individualNodeSelection = new javax.swing.JToggleButton();
+        showMouseCoordinates = new javax.swing.JToggleButton();
+        showDebugWindow = new javax.swing.JToggleButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -72,6 +78,17 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         });
         jToolBar1.add(jButton1);
 
+        buildNetwork.setText("Build");
+        buildNetwork.setFocusable(false);
+        buildNetwork.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        buildNetwork.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        buildNetwork.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buildNetworkActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(buildNetwork);
+
         jButton2.setText("Run");
         jButton2.setFocusable(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -83,7 +100,7 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         });
         jToolBar1.add(jButton2);
 
-        verVizinhos.setText("Vizinhos");
+        verVizinhos.setText("Vizinhos Nó");
         verVizinhos.setFocusable(false);
         verVizinhos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         verVizinhos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -93,6 +110,17 @@ public class WorkbenchPanel extends javax.swing.JPanel {
             }
         });
         jToolBar1.add(verVizinhos);
+
+        verOsQueConhecem.setText("Conhecem Nó");
+        verOsQueConhecem.setFocusable(false);
+        verOsQueConhecem.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        verOsQueConhecem.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        verOsQueConhecem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verOsQueConhecemActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(verOsQueConhecem);
 
         saveSimulation.setText("Save");
         saveSimulation.setFocusable(false);
@@ -105,13 +133,28 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         });
         jToolBar1.add(saveSimulation);
 
-        numberOfNodes.setText("100");
+        numberOfNodes.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        numberOfNodes.setText("1000");
+        numberOfNodes.setMaximumSize(new java.awt.Dimension(34, 22));
+        numberOfNodes.setMinimumSize(new java.awt.Dimension(100, 22));
+        numberOfNodes.setPreferredSize(new java.awt.Dimension(100, 22));
         numberOfNodes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 numberOfNodesActionPerformed(evt);
             }
         });
         jToolBar1.add(numberOfNodes);
+
+        searchNode.setText("Search Node");
+        searchNode.setFocusable(false);
+        searchNode.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        searchNode.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        searchNode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchNodeActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(searchNode);
 
         toolbarPanel.add(jToolBar1);
 
@@ -137,16 +180,29 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         });
         jToolBar2.add(btnSelectionTool);
 
-        individualNodeSelection.setText("N");
-        individualNodeSelection.setFocusable(false);
-        individualNodeSelection.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        individualNodeSelection.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        individualNodeSelection.addActionListener(new java.awt.event.ActionListener() {
+        showMouseCoordinates.setText("C");
+        showMouseCoordinates.setToolTipText("Mostrar as coordenadas do Rato");
+        showMouseCoordinates.setFocusable(false);
+        showMouseCoordinates.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        showMouseCoordinates.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        showMouseCoordinates.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                individualNodeSelectionActionPerformed(evt);
+                showMouseCoordinatesActionPerformed(evt);
             }
         });
-        jToolBar2.add(individualNodeSelection);
+        jToolBar2.add(showMouseCoordinates);
+
+        showDebugWindow.setText("D");
+        showDebugWindow.setToolTipText("Abrir consola de debug");
+        showDebugWindow.setFocusable(false);
+        showDebugWindow.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        showDebugWindow.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        showDebugWindow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showDebugWindowActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(showDebugWindow);
 
         add(jToolBar2, java.awt.BorderLayout.LINE_END);
     }// </editor-fold>//GEN-END:initComponents
@@ -178,14 +234,37 @@ public class WorkbenchPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_numberOfNodesActionPerformed
 
-    private void individualNodeSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_individualNodeSelectionActionPerformed
-        simulationPanel1.selectIndividualNodeSelect(individualNodeSelection.isSelected());
-    }//GEN-LAST:event_individualNodeSelectionActionPerformed
+    private void buildNetworkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buildNetworkActionPerformed
+        simulationPanel1.buildNetwork();
+
+    }//GEN-LAST:event_buildNetworkActionPerformed
+
+    private void verOsQueConhecemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verOsQueConhecemActionPerformed
+        simulationPanel1.viewOsQueConhecem(verOsQueConhecem.isSelected());
+    }//GEN-LAST:event_verOsQueConhecemActionPerformed
+
+    private void searchNodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchNodeActionPerformed
+        // TODO add your handling code here:
+        String s = JOptionPane.showInputDialog("Introduza o ID do Sensor:");
+        if(s!=null){
+            simulationPanel1.searchNode(Integer.valueOf(s).intValue());
+        }
+        
+    }//GEN-LAST:event_searchNodeActionPerformed
+
+    private void showMouseCoordinatesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showMouseCoordinatesActionPerformed
+        simulationPanel1.setPaintMouseCoordinates(showMouseCoordinates.isSelected());
+    }//GEN-LAST:event_showMouseCoordinatesActionPerformed
+
+    private void showDebugWindowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showDebugWindowActionPerformed
+        if(showDebugWindow.isSelected()) DebugConsole.getInstance().setVisible(true);
+        else  DebugConsole.getInstance().setVisible(false);
+    }//GEN-LAST:event_showDebugWindowActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnSelectionTool;
-    private javax.swing.JToggleButton individualNodeSelection;
+    private javax.swing.JButton buildNetwork;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -193,8 +272,12 @@ public class WorkbenchPanel extends javax.swing.JPanel {
     private javax.swing.JToolBar jToolBar2;
     private javax.swing.JTextField numberOfNodes;
     private javax.swing.JButton saveSimulation;
+    private javax.swing.JButton searchNode;
+    private javax.swing.JToggleButton showDebugWindow;
+    private javax.swing.JToggleButton showMouseCoordinates;
     private pt.unl.fct.di.mei.securesim.platform.ui.SimulationPanel simulationPanel1;
     private javax.swing.JPanel toolbarPanel;
+    private javax.swing.JToggleButton verOsQueConhecem;
     private javax.swing.JToggleButton verVizinhos;
     // End of variables declaration//GEN-END:variables
 
