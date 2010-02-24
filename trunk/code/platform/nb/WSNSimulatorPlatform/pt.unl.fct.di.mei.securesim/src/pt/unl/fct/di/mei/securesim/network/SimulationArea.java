@@ -3,13 +3,17 @@
  */
 package pt.unl.fct.di.mei.securesim.network;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import pt.unl.fct.di.mei.securesim.engine.ISimulationDisplay;
+import pt.unl.fct.di.mei.securesim.ui.IDisplayable;
 
 /**
  * @author posilva
  * 
  */
-public class SimulationArea {
+public class SimulationArea implements IDisplayable{
 	protected int width;
 
 	protected int heigth;
@@ -50,5 +54,17 @@ public class SimulationArea {
 
     public Dimension getDimension(){
         return new Dimension(width+MARGIN,heigth+MARGIN);
+    }
+
+    public void displayOn(ISimulationDisplay disp) {
+        Graphics g = disp.getGraphics();
+        Color oldColor = g.getColor();
+
+        g.setColor(Color.black);
+        g.drawRect(0, 0, width, heigth);
+
+
+        g.setColor(oldColor);
+
     }
 }
