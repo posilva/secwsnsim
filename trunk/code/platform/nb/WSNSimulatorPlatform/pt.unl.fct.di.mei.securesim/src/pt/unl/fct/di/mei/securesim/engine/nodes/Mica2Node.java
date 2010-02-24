@@ -38,7 +38,7 @@ import pt.unl.fct.di.mei.securesim.engine.radio.RadioModel;
  * 
  * @author Gyorgy Balogh, Gabor Pap, Miklos Maroti
  */
-public class Mica2Node extends Node implements EnergyListener{
+public class Mica2Node extends Node {
 	
 	/**
 	 * In this simulation not messages but references to motes are passed. All

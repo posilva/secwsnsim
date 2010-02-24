@@ -87,7 +87,7 @@ public abstract class Application {
 	 * @see #sendMessageDone 
 	 */
 
-	public final boolean sendMessage(Object message){
+	public synchronized  final boolean sendMessage(Object message){
 		//TODO ESTOU AQUI
 		return getNode().getRoutingLayer().sendMessage(message, this);
 	}
