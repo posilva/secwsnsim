@@ -23,8 +23,8 @@ import pt.unl.fct.di.mei.securesim.ui.GraphicNode;
 public abstract class Node {
 
     public static final int INITIAL_BATERY_POWER = 100;
-    public static final double DEFAULT_POWER_CONSUMING = 1.0E-3;
-    private static long CLOCK_TICK = Simulator.ONE_SECOND / 100;
+    public static final double DEFAULT_POWER_CONSUMING = 1.0E-2;
+    private static long CLOCK_TICK = Simulator.ONE_SECOND/100 ;
     protected Batery bateryEnergy = null;
     //protected Map<Class, Application> applications = new HashMap<Class, Application>();
     protected Application application;
@@ -120,12 +120,13 @@ public abstract class Node {
         neighborhood = radioModel.createNeighborhood();
         this.graphicNode = new GraphicNode(this);
         this.graphicNode.setPhysicalNode(this);
+        this.bateryEnergy = new Batery(INITIAL_BATERY_POWER);
+        this.bateryEnergy.setHostNode(this);
 
     }
 
     public void initBatery() {
-        this.bateryEnergy = new Batery();
-        this.bateryEnergy.setCurrentPower(INITIAL_BATERY_POWER);
+        this.bateryEnergy.start();
         initEnergyConsumation();
     }    /*
      * (non-Javadoc)
@@ -462,7 +463,6 @@ public abstract class Node {
                     time += CLOCK_TICK;
                     simulator.addEvent(this);
                 } else {
-                    System.out.println("BATERY OF NODE " + getId() + " IS OFF");
                     turnedOn = false;
                 }
             }
