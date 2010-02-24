@@ -1,8 +1,7 @@
-package pt.unl.fct.di.mei.securesim.test.broadcast;
+package pt.unl.fct.di.mei.securesim.test.pingpong;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import pt.unl.fct.di.mei.securesim.engine.Event;
 
 import pt.unl.fct.di.mei.securesim.engine.ISimulationDisplay;
 import pt.unl.fct.di.mei.securesim.engine.Simulator;
@@ -11,13 +10,16 @@ import pt.unl.fct.di.mei.securesim.engine.radio.RadioModel;
 import pt.unl.fct.di.mei.securesim.ui.IDisplayable;
 import pt.unl.fct.di.mei.securesim.network.nodes.SimpleNode;
 
-public class BroadcastNode extends SimpleNode implements IDisplayable {
-    private static int CLEAR_TIME=Simulator.ONE_SECOND*10;
+public class PingPongNode extends SimpleNode implements IDisplayable {
 
-    public BroadcastNode(Simulator sim, RadioModel radioModel) {
+    private static int CLEAR_TIME = Simulator.ONE_SECOND * 10;
+
+
+    public PingPongNode(Simulator sim, RadioModel radioModel) {
         super(sim, radioModel);
-        setRoutingLayer(new BroadcastRoutingLayer());
+        setRoutingLayer(new PingPongRoutingLayer());
     }
+   
     /** This field is true if this mote rebroadcasted the message already. */
     boolean sent = false;
     /** This field stores the mote from which the message was first received. */
@@ -42,11 +44,13 @@ public class BroadcastNode extends SimpleNode implements IDisplayable {
 
         super.displayOn(disp);
         if (turnedOn) {
-            
+
 
             Color c = g.getColor();
             if (getId() == 1) {
                 c = Color.yellow;
+            } else if (getId()==945) {
+                c = Color.MAGENTA;
             } else if (sending) {
                 c = Color.blue;
             } else if (receiving) {
@@ -70,7 +74,7 @@ public class BroadcastNode extends SimpleNode implements IDisplayable {
             }
             getGraphicNode().setBackcolor(c);
             getGraphicNode().paint(disp);
-        }else{
+        } else {
             getGraphicNode().setBackcolor(Color.WHITE);
             getGraphicNode().paint(disp);
         }
@@ -79,10 +83,6 @@ public class BroadcastNode extends SimpleNode implements IDisplayable {
 
     public void sentMenssage(boolean b) {
         sent = true;
-//        if(getId()==1 ){
-//            simulator.addEvent(new ResendMessageEvent(simulator.getSimulationTime()+(CLEAR_TIME*2) ));
-//        }
-//        simulator.addEvent(new ClearSentEvent(CLEAR_TIME ));
     }
 
     /**
@@ -98,42 +98,9 @@ public class BroadcastNode extends SimpleNode implements IDisplayable {
     public Node getParent() {
         return parent;
     }
-
- class ResendMessageEvent extends Event{
-
-        @Override
-        public void execute() {
-            sent=false;
-            parent = null;
-//            sendMessageFromApplication(message, (Application)applications.values().toArray()[0]);
-            sendMessageFromApplication(message, application);
-            System.out.println("Resending Message: " +getId());
-        }
-
-        public ResendMessageEvent(long time) {
-            super(time);
-        }
-
-        public ResendMessageEvent() {
-            super();
-        }
+    
+    public static PingPongNode cast(Node n) {
+        return (PingPongNode) n;
     }
-
-    class ClearSentEvent extends Event{
-
-        @Override
-        public void execute() {
-            sent=false;
-            parent = null;
-        }
-
-        public ClearSentEvent(long time) {
-            super(time);
-        }
-
-        public ClearSentEvent() {
-            super();
-        }
-    }
-
+   
 }
