@@ -3,6 +3,8 @@
  */
 package pt.unl.fct.di.mei.securesim.topology;
 
+import java.awt.Rectangle;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 
@@ -71,5 +73,10 @@ public class GridTopologyManager extends TopologyManager {
             return mdc( x - y, y );
         }
         return 0;
+    }
+
+    @Override
+    public ArrayList<Node> apply(Rectangle rect, ArrayList<Node> nodes) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

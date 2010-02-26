@@ -1,5 +1,7 @@
 package pt.unl.fct.di.mei.securesim.platform.ui;
 
+import org.jdesktop.application.Action;
+import org.jdesktop.application.Task;
 import pt.unl.fct.di.mei.securesim.core.events.SimulatorEvent;
 import pt.unl.fct.di.mei.securesim.test.broadcast.BroadcastRoutingLayer;
 import pt.unl.fct.di.mei.securesim.test.broadcast.BroadcastNode;
@@ -9,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.geom.GeneralPath;
+import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.List;
@@ -18,12 +21,12 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.math.stat.descriptive.SummaryStatistics;
 
 import pt.unl.fct.di.mei.securesim.engine.*;
 import pt.unl.fct.di.mei.securesim.engine.energy.Batery;
 import pt.unl.fct.di.mei.securesim.engine.nodes.Node;
-import pt.unl.fct.di.mei.securesim.engine.radio.GaussianRadioModel;
 import pt.unl.fct.di.mei.securesim.network.SimulationArea;
 import pt.unl.fct.di.mei.securesim.network.basic.DefaultNetwork;
 import pt.unl.fct.di.mei.securesim.network.nodes.*;
@@ -57,11 +60,9 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     private Application app;
     private BasicSimulation simulation;
     private RandomTopologyManager topologyManager;
-    private Dimension dim;
     private boolean selectionTool = false;
     private GraphicPoint pressedPoint = null;
     private GeneralPath selectedArea;
-    private boolean individualNodeSelectionTool = false;
     private int mouseX;
     private int mouseY;
     private boolean paintMouseCoordinates = false;
@@ -72,21 +73,30 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     private boolean paintSimulationArea = false;
     private boolean resizeSimulatedArea = true;
     private boolean visibleMouseCoordinates = false;
+    private boolean deployNodeToolSelected = false;
+    private String[] nodeInfo = null;
+    private boolean paintNodesInfo = false;
 
     /** Creates new form SimulationPanel */
     public SimulationPanel() {
         initComponents();
-        simulation = new BasicSimulation();
-        simulation.setDisplay(this);
-        simulationArea = new SimulationArea();
-        simulationArea.setHeigth(AREA_H);
-        simulationArea.setWidth(AREA_W);
-        simulationArea.setMaxElevation(MAX_ELEVATION);
+        clearSimulation();
         try {
             loadImage();
         } catch (Exception ex) {
             Logger.getLogger(SimulationPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void initSimulation() {
+        simulation = new BasicSimulation();
+        simulation.setSimulator(new DefaultSimulator());
+        Simulator.resetRandom();
+        simulation.setRadioModel(new ImprovedGaussianRadioModel());
+        simulation.setNetwork(new DefaultNetwork());
+        simulation.getNetwork().setSimulationArea(simulationArea);
+        simulation.setDisplay(this);
+        simulation.preInit();
     }
 
     public void resizeUpdateSimulatedArea() {
@@ -166,6 +176,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         selNodeOnOff = new javax.swing.JCheckBoxMenuItem();
         selNodeMonitorizacao = new javax.swing.JMenu();
         selNodeMonitEnergia = new javax.swing.JMenuItem();
+        selNodeRunEvent = new javax.swing.JMenuItem();
         selectionToolPopupMenu = new javax.swing.JPopupMenu();
         selNodesVisualizacao = new javax.swing.JMenu();
         selNodesVerVizinhos = new javax.swing.JCheckBoxMenuItem();
@@ -175,6 +186,10 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         selNodesOnOff = new javax.swing.JCheckBoxMenuItem();
         selNodesMonitorizacao = new javax.swing.JMenu();
         selNodesMonitEnergia = new javax.swing.JMenuItem();
+        deployNodesPopupMenu = new javax.swing.JPopupMenu();
+        depNodesDeploy = new javax.swing.JMenu();
+        depNodesRandomTopology = new javax.swing.JMenuItem();
+        depNodesGridTopology = new javax.swing.JMenuItem();
 
         currentSelectedNodePopupMenu.setLabel("Configurar Sensor");
 
@@ -243,6 +258,14 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
 
         currentSelectedNodePopupMenu.add(selNodeMonitorizacao);
 
+        selNodeRunEvent.setText("Generate Event");
+        selNodeRunEvent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selNodeRunEventActionPerformed(evt);
+            }
+        });
+        currentSelectedNodePopupMenu.add(selNodeRunEvent);
+
         selNodesVisualizacao.setText("Visualização");
 
         selNodesVerVizinhos.setSelected(true);
@@ -299,6 +322,19 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
 
         selectionToolPopupMenu.add(selNodesMonitorizacao);
 
+        depNodesDeploy.setText("Lançar nós");
+
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(pt.unl.fct.di.mei.securesim.platform.PlatformApp.class).getContext().getActionMap(SimulationPanel.class, this);
+        depNodesRandomTopology.setAction(actionMap.get("deployNodesUsingRandomTopology")); // NOI18N
+        depNodesRandomTopology.setText("Aleatóriamente");
+        depNodesDeploy.add(depNodesRandomTopology);
+
+        depNodesGridTopology.setAction(actionMap.get("deployNodesGridTopology")); // NOI18N
+        depNodesGridTopology.setText("Em grelha");
+        depNodesDeploy.add(depNodesGridTopology);
+
+        deployNodesPopupMenu.add(depNodesDeploy);
+
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(pt.unl.fct.di.mei.securesim.platform.PlatformApp.class).getContext().getResourceMap(SimulationPanel.class);
         setBackground(resourceMap.getColor("background")); // NOI18N
         setBorder(null);
@@ -347,7 +383,16 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
 
     private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
         updateMouseCoordinates(evt);
-        if (selectionTool) {
+        if (deployNodeToolSelected) {
+            if (evt.getButton() == 0) {
+                if (isMousePressed()) {
+                    drawSelectedArea(evt);
+                }
+                update();
+            }
+
+
+        } else if (selectionTool) {
             if (simulation.getSimulator() == null) {
                 return;
             }
@@ -378,10 +423,19 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
 
     private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
         updateMouseCoordinates(evt);
+        if (!selectionTool) {
+            if (simulation.getSimulator() != null) {
+                GraphicNode c = selectedCircle(evt);
+                if (c != null) {
+                    nodeInfo = c.getPhysicalNode().getInfo();
+                } else {
+                    nodeInfo = null;
+                }
 
-        if (simulation.getSimulator() != null) {
+            }
         }
         update();
+
     }
 
     private GraphicNode selectedCircle(MouseEvent evt) {
@@ -405,8 +459,10 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     @Override
     public void paintComponent(Graphics grphcs) {
         super.paintComponent(grphcs);
+
         paintNetwork(grphcs);
-        if (selectionTool) {
+
+        if (canPaintSelectionArea()) {
             paintSelectedArea(grphcs);
         }
         if (paintMouseCoordinates && visibleMouseCoordinates) {
@@ -416,6 +472,9 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         if (paintSimulationArea) {
             simulationArea.displayOn(this);
         }
+        if (paintNodesInfo) {
+            paintInfo(grphcs);
+        }
     }//GEN-LAST:event_formMouseMoved
     private void paintImage(Graphics g) {
         if (backImage != null) {
@@ -424,7 +483,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     }
 
     private void drawSelectedArea(java.awt.event.MouseEvent evt) {
-        if (!selectionTool) {
+        if (!canPaintSelectionArea()) {
             return;
         }
         selectedArea = new GeneralPath();
@@ -462,8 +521,6 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             }
 
         }
-
-
     }//GEN-LAST:event_formMouseClicked
 
     private void formMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseEntered
@@ -479,13 +536,19 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         if (selectionTool) {
             if (insideSelectionArea(evt) && evt.getButton() == MouseEvent.BUTTON3) {
                 selectionToolPopupMenu.show(this, mouseX, mouseY);
-
-
+            } else {
+                clearSelection();
+                pressedPoint = new GraphicPoint(mouseX, mouseY);
+            }
+        } else if (deployNodeToolSelected) {
+            if (insideSelectionArea(evt) && evt.getButton() == MouseEvent.BUTTON3) {
+                deployNodesPopupMenu.show(this, mouseX, mouseY);
             } else {
                 clearSelection();
                 pressedPoint = new GraphicPoint(mouseX, mouseY);
             }
         }
+
 
     }//GEN-LAST:event_formMousePressed
 
@@ -627,16 +690,30 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         createEnergyWatcher(selectedNodes.toArray());
     }//GEN-LAST:event_selNodesMonitEnergiaActionPerformed
 
+    private void selNodeRunEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selNodeRunEventActionPerformed
+        // TODO add your handling code here:
+        if (currentSelectedNode != null) {
+            JMenuItem m = (JMenuItem) evt.getSource();
+            currentSelectedNode.getPhysicalNode().getApplication().generateEvent();
+            simulation.start();
+        }
+    }//GEN-LAST:event_selNodeRunEventActionPerformed
+
     protected boolean isMousePressed() {
         return pressedPoint != null;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPopupMenu currentSelectedNodePopupMenu;
+    private javax.swing.JMenu depNodesDeploy;
+    private javax.swing.JMenuItem depNodesGridTopology;
+    private javax.swing.JMenuItem depNodesRandomTopology;
+    private javax.swing.JPopupMenu deployNodesPopupMenu;
     private javax.swing.JCheckBoxMenuItem selNodeMarcar;
     private javax.swing.JMenuItem selNodeMonitEnergia;
     private javax.swing.JMenu selNodeMonitorizacao;
     private javax.swing.JCheckBoxMenuItem selNodeOnOff;
     private javax.swing.JMenu selNodeOperacao;
+    private javax.swing.JMenuItem selNodeRunEvent;
     private javax.swing.JCheckBoxMenuItem selNodeVerID;
     private javax.swing.JCheckBoxMenuItem selNodeVerOsQueMeConhecem;
     private javax.swing.JCheckBoxMenuItem selNodeVerVizinhos;
@@ -653,7 +730,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     // End of variables declaration//GEN-END:variables
 
     private void paintSelectedArea(Graphics grphcs) {
-        if (!selectionTool) {
+        if (!canPaintSelectionArea()) {
             return;
         }
 
@@ -707,20 +784,15 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
 
     public void createSimulation(int size) {
         networkDeployed = false;
-        simulation = new BasicSimulation();
-        simulation.setSimulator(new DefaultSimulator());
-        Simulator.resetRandom();
-        simulation.setRadioModel(new ImprovedGaussianRadioModel());
-        simulation.setNetwork(new DefaultNetwork());
+
         // associar a configuracao à simulação
         topologyManager = new RandomTopologyManager();
         topologyManager.setRandom(Simulator.random);
 
         // assignar àrea de simulação à rede
-        simulation.getNetwork().setSimulationArea(simulationArea);
 
-        simulation.setSimpleNodeFactory(new DefaultNodeFactory(simulation.getSimulator(), BroadcastNode.class));
-        simulation.setSinkNodeFactory(new DefaultNodeFactory(simulation.getSimulator(), BroadcastNode.class));
+        simulation.setSimpleNodeFactory(new DefaultNodeFactory(simulation.getSimulator(), BroadcastNode.class, BroadcastApplication.class, BroadcastRoutingLayer.class));
+        simulation.setSinkNodeFactory(new DefaultNodeFactory(simulation.getSimulator(), BroadcastNode.class, BroadcastApplication.class, BroadcastRoutingLayer.class));
 
         simulation.setDisplay(this);
         simulation.setup();
@@ -756,21 +828,12 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
 
     public void createSimulation2(int size) {
         networkDeployed = false;
-        simulation = new BasicSimulation();
-        simulation.setSimulator(new DefaultSimulator());
-        simulation.getSimulator().addSimulatorFinishListener(this);
-        Simulator.resetRandom();
-        simulation.setRadioModel(new GaussianRadioModel());
-        simulation.setNetwork(new DefaultNetwork());
         // associar a configuracao à simulação
         topologyManager = new RandomTopologyManager();
         topologyManager.setRandom(Simulator.random);
 
-        // assignar àrea de simulação à rede
-        simulation.getNetwork().setSimulationArea(simulationArea);
-
-        simulation.setSimpleNodeFactory(new DefaultNodeFactory(simulation.getSimulator(), PingPongNode.class));
-        simulation.setSinkNodeFactory(new DefaultNodeFactory(simulation.getSimulator(), PingPongNode.class));
+        simulation.setSimpleNodeFactory(new DefaultNodeFactory(simulation.getSimulator(), PingPongNode.class, PingPongApplication.class, BroadcastRoutingLayer.class));
+        simulation.setSinkNodeFactory(new DefaultNodeFactory(simulation.getSimulator(), PingPongNode.class, PingPongApplication.class, BroadcastRoutingLayer.class));
 
         simulation.setDisplay(this);
         simulation.setup();
@@ -869,10 +932,6 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         return selectedNodes;
     }
 
-    void selectIndividualNodeSelect(boolean selected) {
-        individualNodeSelectionTool = selected;
-    }
-
     private void paintMouseCoordinates(Graphics grphcs) {
         Color c = grphcs.getColor();
         grphcs.setColor(Color.BLACK);
@@ -947,7 +1006,25 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     }
 
     public void onFinish(SimulatorEvent evt) {
-        JOptionPane.showMessageDialog(this, "A simulação terminou: "+ evt.toString());
+        JOptionPane.showMessageDialog(this, "A simulação terminou: " + evt.toString());
+    }
+
+    void deployNodesToolSelected(boolean selected) {
+        deployNodeToolSelected = selected;
+    }
+
+    void clearSimulation() {
+        simulation = new BasicSimulation();
+        simulation.setDisplay(this);
+        simulationArea = new SimulationArea();
+        simulationArea.setHeigth(AREA_H);
+        simulationArea.setWidth(AREA_W);
+        simulationArea.setMaxElevation(MAX_ELEVATION);
+        initSimulation();
+    }
+
+    void setViewNodeInfo(boolean selected) {
+        paintNodesInfo = selected;
     }
 
     /**
@@ -999,6 +1076,111 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
                 nodes.add(graphicNode.getPhysicalNode());
             }
 
+        }
+    }
+
+    private boolean canPaintSelectionArea() {
+        return (selectionTool || deployNodeToolSelected);
+    }
+
+    @Action
+    public void deployNodesGridTopology() {
+    }
+
+    @Action(block = Task.BlockingScope.ACTION)
+    public Task deployNodesUsingRandomTopology() {
+        return new DeployNodesUsingRandomTopologyTask(org.jdesktop.application.Application.getInstance(pt.unl.fct.di.mei.securesim.platform.PlatformApp.class));
+    }
+
+    private class DeployNodesUsingRandomTopologyTask extends org.jdesktop.application.Task<Object, Void> {
+
+        DeployNodesUsingRandomTopologyTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to DeployNodesUsingRandomTopologyTask fields, here.
+            super(app);
+        }
+
+        @Override
+        protected Object doInBackground() {
+            RandomTopologyManager tm = new RandomTopologyManager();
+            NodeFactory nf = new DefaultNodeFactory(getSimulator(), PingPongNode.class, PingPongApplication.class, BroadcastRoutingLayer.class);
+            boolean ok = false;
+            int nNodes = 0;
+            while (!ok) {
+                String sNodes = JOptionPane.showInputDialog("Introduza o nº de nós:");
+                if (sNodes != null) {
+                    if (NumberUtils.isNumber(sNodes)) {
+                        nNodes = Integer.parseInt(sNodes);
+                        if (nNodes > 0) {
+                            ok = true;
+                        }
+                    }
+                } else {
+                    return null;
+                }
+                if (!ok) {
+                    JOptionPane.showMessageDialog(SimulationPanel.this, "Valor Incorrecto!");
+                }
+            }
+
+            try {
+                ArrayList<Node> nodes = (ArrayList<Node>) nf.createNodes(nNodes);
+                nodes = tm.apply(selectedArea.getBounds(), nodes);
+                for (Node node : nodes) {
+                    simulation.getNetwork().addNode((SensorNode) node);
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(SimulationPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            networkDeployed = true;
+            update();
+            buildNetwork();
+            update();
+            return true;  // return your result
+        }
+
+        @Override
+        protected void succeeded(Object result) {
+        }
+    }
+
+    void paintInfo(Graphics g) {
+
+        if (nodeInfo != null) {
+            Color oldColor = g.getColor();
+            Graphics2D graphics2 = (Graphics2D) g;
+            Font monoFont = new Font("Times", Font.BOLD, 10);
+            g.setFont(monoFont);
+            FontMetrics fm = g.getFontMetrics();
+            int step = fm.getMaxAscent() + fm.getMaxDescent();
+            int mSize = 0;
+            for (int i = 0; i < nodeInfo.length; i++) {
+                String string = nodeInfo[i];
+                int s = fm.charsWidth(string.toCharArray(), 0, string.length());
+                if (s > mSize) {
+                    mSize = s;
+                }
+            }
+
+            RoundRectangle2D roundedRectangle = new RoundRectangle2D.Float(mouseX, mouseY, 10 + mSize, 10 + (nodeInfo.length * (step)), 30, 30);
+            // desenha o fundo
+            g.setColor(Color.lightGray);
+            graphics2.fill(roundedRectangle);
+            // desenha a border do rectangulo
+            g.setColor(Color.BLACK);
+            graphics2.draw(roundedRectangle);
+            // desenha os dados
+
+
+            int y = mouseY + 5;
+            for (int i = 0; i < nodeInfo.length; i++) {
+                String string = nodeInfo[i];
+                y += step;
+                g.drawString(string, mouseX + 5, y);
+            }
+            g.setColor(oldColor);
         }
     }
 }

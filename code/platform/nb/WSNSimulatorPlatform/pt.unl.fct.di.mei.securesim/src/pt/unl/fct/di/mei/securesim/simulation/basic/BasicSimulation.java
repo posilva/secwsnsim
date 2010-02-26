@@ -25,7 +25,7 @@ public class BasicSimulation extends Simulation {
         Runnable r = new Runnable() {
 
             public void run() {
-               
+
                 getSimulator().runWithDisplay();
             }
         };
@@ -41,10 +41,4 @@ public class BasicSimulation extends Simulation {
     public void stop() {
     }
 
-    /* (non-Javadoc)
-     * @see pt.unl.fct.di.mei.securesim.configuration.ConfigurableObject#init()
-     */
-    @Override
-    protected void init() {
-    }
 }

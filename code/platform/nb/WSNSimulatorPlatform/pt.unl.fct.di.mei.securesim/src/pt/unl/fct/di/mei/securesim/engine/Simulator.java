@@ -54,7 +54,7 @@ public class Simulator {
     public void removeSimulatorFinishListener(SimulatorFinishListener listener) {
         listenerList.remove(SimulatorFinishListener.class, listener);
     }
-    public static final int SIMULATOR_STEPS = 200;
+    public static final int SIMULATOR_STEPS = 300;
     private static long SEED = 10;
 
     public Simulator() {
@@ -201,6 +201,7 @@ public class Simulator {
         if (event != null) {
             lastEventTime = event.time;
             event.execute();
+            System.out.println("Executado um evento: "+ event.getClass().getSimpleName());
         } else {
             
             if (!finished) {
@@ -219,6 +220,7 @@ public class Simulator {
         for (int i = 0; i < n; ++i) {
             step();
         }
+        System.out.println("Faltam tratar "+ eventQueue.size()+ "eventos") ;
     }
 
     /**

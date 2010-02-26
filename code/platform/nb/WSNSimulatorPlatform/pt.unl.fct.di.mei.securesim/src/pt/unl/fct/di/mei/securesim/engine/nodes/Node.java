@@ -1,6 +1,6 @@
 package pt.unl.fct.di.mei.securesim.engine.nodes;
 
-
+import java.text.DecimalFormat;
 import pt.unl.fct.di.mei.securesim.engine.Application;
 import pt.unl.fct.di.mei.securesim.engine.Event;
 import pt.unl.fct.di.mei.securesim.engine.ISimulationDisplay;
@@ -21,10 +21,10 @@ import pt.unl.fct.di.mei.securesim.ui.GraphicNode;
  */
 @SuppressWarnings("unchecked")
 public abstract class Node {
-
+    public static int NODEID_AUTOCOUNTER=1;
     public static final int INITIAL_BATERY_POWER = 100;
     public static final double DEFAULT_POWER_CONSUMING = 1.0E-2;
-    private static long CLOCK_TICK = Simulator.ONE_SECOND/100 ;
+    private static long CLOCK_TICK = Simulator.ONE_SECOND ;// /100;
     protected Batery bateryEnergy = null;
     //protected Map<Class, Application> applications = new HashMap<Class, Application>();
     protected Application application;
@@ -122,7 +122,7 @@ public abstract class Node {
         this.graphicNode.setPhysicalNode(this);
         this.bateryEnergy = new Batery(INITIAL_BATERY_POWER);
         this.bateryEnergy.setHostNode(this);
-
+        setId((short) NODEID_AUTOCOUNTER++);
     }
 
     public void initBatery() {
@@ -299,8 +299,8 @@ public abstract class Node {
 //            app.setNode(this);
 //            applications.put(app.getClass(), app);
 //        }
-              app.setNode(this);
-              application=app;
+        app.setNode(this);
+        application = app;
 
 
     }
@@ -391,6 +391,7 @@ public abstract class Node {
     public boolean sendMessageFromApplication(Object message, Application app) {
         return app.sendMessage(message);
     }
+
     public boolean sendMessage(Object message) {
         return application.sendMessage(message);
     }
@@ -479,4 +480,25 @@ public abstract class Node {
             initEnergyConsumation();
         }
     }
+
+    public void setApplication(Application application) {
+        this.application = application;
+        application.setNode(this);
+    }
+
+    public String[] getInfo(){
+        DecimalFormat twoPlaces = new DecimalFormat("0.00");
+        final double remainingPower = 100 * getBateryEnergy().getCurrentPower() / getBateryEnergy().getInitialPower();
+        return new String[]{ "ID: " +getId(),
+        "Position:  (" +(int)getX() +","+(int)getY()+","+(int)getZ()+")",
+        "Node:  " + this.getClass().getSimpleName(),
+        "Application:  " + this.getApplication().getClass().getSimpleName(),
+        "Routing:  " + this.getRoutingLayer().getClass().getSimpleName(),
+        "",
+        "Remaining Power:  " + twoPlaces.format(remainingPower<=0.0?0:remainingPower) +"%"
+        };
+
+
+    }
+
 }
