@@ -26,7 +26,6 @@ package pt.unl.fct.di.mei.securesim.engine.nodes;
 import pt.unl.fct.di.mei.securesim.engine.Application;
 import pt.unl.fct.di.mei.securesim.engine.Event;
 import pt.unl.fct.di.mei.securesim.engine.Simulator;
-import pt.unl.fct.di.mei.securesim.engine.energy.EnergyListener;
 import pt.unl.fct.di.mei.securesim.engine.layers.RoutingLayer;
 import pt.unl.fct.di.mei.securesim.engine.radio.RadioModel;
 
@@ -258,6 +257,7 @@ public class Mica2Node extends Node {
 
 	public boolean sendMessage(Object message, RoutingLayer app) {
 		if (sending) {
+            System.out.println(getId()+" Sending collision");
 			return false;
 		} else {
 			sending = true;

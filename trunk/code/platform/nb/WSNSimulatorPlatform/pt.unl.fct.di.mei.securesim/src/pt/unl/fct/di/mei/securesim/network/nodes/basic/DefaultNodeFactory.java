@@ -18,8 +18,8 @@ public class DefaultNodeFactory extends NodeFactory {
 	 * @param classOfNodes
 	 */
 	
-	public DefaultNodeFactory(Simulator simulator, Class classOfNodes) {
-		super(simulator, classOfNodes);
+	public DefaultNodeFactory(Simulator simulator, Class classOfNodes,Class appClass, Class routingClass) {
+		super(simulator, classOfNodes,appClass,routingClass);
 	}
 
 }

@@ -49,8 +49,8 @@ public class MainTest {
 		// assignar àrea de simulação à rede
 		network.setSimulationArea(simulationArea);
 		// cria factories de nós sink e simples
-		NodeFactory simpleNodeFactory= new DefaultNodeFactory(simulator, BroadcastNode.class);
-		NodeFactory sinkNodeFactory= new DefaultNodeFactory(simulator, BroadcastNode.class);
+		NodeFactory simpleNodeFactory= new DefaultNodeFactory(simulator, BroadcastNode.class,BroadcastApplication.class,BroadcastRoutingLayer.class);
+		NodeFactory sinkNodeFactory= new DefaultNodeFactory(simulator, BroadcastNode.class,BroadcastApplication.class,BroadcastRoutingLayer.class);
 		
 		simulator.setNetwork(network);
 		

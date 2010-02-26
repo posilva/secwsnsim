@@ -85,6 +85,14 @@
             </MenuItem>
           </SubComponents>
         </Menu>
+        <MenuItem class="javax.swing.JMenuItem" name="selNodeRunEvent">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Generate Event"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodeRunEventActionPerformed"/>
+          </Events>
+        </MenuItem>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPopupMenu" name="selectionToolPopupMenu">
@@ -155,6 +163,37 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesMonitEnergiaActionPerformed"/>
               </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPopupMenu" name="deployNodesPopupMenu">
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+        <Property name="useNullLayout" type="boolean" value="true"/>
+      </Layout>
+      <SubComponents>
+        <Menu class="javax.swing.JMenu" name="depNodesDeploy">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Lan&#xe7;ar n&#xf3;s"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="depNodesRandomTopology">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="pt.unl.fct.di.mei.securesim.platform.ui.SimulationPanel" id="deployNodesUsingRandomTopology" methodName="deployNodesUsingRandomTopology"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Aleat&#xf3;riamente"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="depNodesGridTopology">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="pt.unl.fct.di.mei.securesim.platform.ui.SimulationPanel" id="deployNodesGridTopology" methodName="deployNodesGridTopology"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Em grelha"/>
+              </Properties>
             </MenuItem>
           </SubComponents>
         </Menu>

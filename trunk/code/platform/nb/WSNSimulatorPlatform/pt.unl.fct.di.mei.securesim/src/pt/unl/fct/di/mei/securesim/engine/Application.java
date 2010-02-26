@@ -119,4 +119,6 @@ public abstract class Application {
 	public void setNode(Node node) {
 		this.node = node;
 	}
+
+    public abstract void generateEvent() ;
 }

@@ -36,6 +36,11 @@ public class PingPongApplication extends Application {
         }
     }
 
+    @Override
+    public void generateEvent() {
+        sendPingMessage(2);
+    }
+
     public enum TypeOfMessage {
 
         PING,

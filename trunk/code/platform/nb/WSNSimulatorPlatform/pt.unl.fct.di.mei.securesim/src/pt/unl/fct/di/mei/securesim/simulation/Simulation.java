@@ -20,34 +20,20 @@ public abstract class Simulation extends ConfigurableObject {
     protected DefaultNodeFactory sinkNodeFactory;
     protected DefaultNetwork network;
     protected ISimulationDisplay display;
+    private boolean bPreInit=false;
 
     public Simulation() {
         super();
     }
 
     public void setup() {
-        if (simulator == null) {
-            throw new IllegalStateException("Não existe um simulador instanciado");
-        }
-        if (radioModel == null) {
-            throw new IllegalStateException("Não existe um radiomodel instanciado");
-        }
-        if (network == null) {
-            throw new IllegalStateException("Não existe uma network instanciada");
-        }
-        if (display == null) {
-            throw new IllegalStateException("Não existe um display instanciado");
-        }
+        if(!bPreInit) preInit();
         if (simpleNodeFactory == null) {
             throw new IllegalStateException("Não existe um Simple NodeFactory instanciado");
         }
         if (sinkNodeFactory == null) {
             throw new IllegalStateException("Não existe um Sink NodeFactory instanciado");
         }
-
-        simulator.setRadioModel(radioModel);
-        simulator.setNetwork(network);
-        simulator.setDisplay(display);
 
     }
 
@@ -110,4 +96,27 @@ public abstract class Simulation extends ConfigurableObject {
     public void setSinkNodeFactory(DefaultNodeFactory sinkNodeFactory) {
         this.sinkNodeFactory = sinkNodeFactory;
     }
+    protected void init() {
+    }
+
+    public void preInit() {
+        bPreInit=true;
+        if (simulator == null) {
+            throw new IllegalStateException("Não existe um simulador instanciado");
+        }
+        if (radioModel == null) {
+            throw new IllegalStateException("Não existe um radiomodel instanciado");
+        }
+        if (network == null) {
+            throw new IllegalStateException("Não existe uma network instanciada");
+        }
+        if (display == null) {
+            throw new IllegalStateException("Não existe um display instanciado");
+        }
+        simulator.setRadioModel(radioModel);
+        simulator.setNetwork(network);
+        simulator.setDisplay(display);
+
+    }
+
 }

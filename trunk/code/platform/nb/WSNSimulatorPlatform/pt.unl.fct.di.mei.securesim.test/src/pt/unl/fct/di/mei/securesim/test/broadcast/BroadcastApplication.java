@@ -47,4 +47,9 @@ public class BroadcastApplication extends Application {
 		return new BroadcastApplication();
 	}
 
+    @Override
+    public void generateEvent() {
+        sendMessage("1");
+    }
+
 }
