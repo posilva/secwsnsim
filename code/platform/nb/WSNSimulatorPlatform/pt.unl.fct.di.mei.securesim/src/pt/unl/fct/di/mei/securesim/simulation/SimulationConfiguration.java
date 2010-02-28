@@ -7,7 +7,7 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 
 import pt.unl.fct.di.mei.securesim.configuration.Configuration;
-import pt.unl.fct.di.mei.securesim.engine.nodes.Node;
+import pt.unl.fct.di.mei.securesim.core.nodes.Node;
 import pt.unl.fct.di.mei.securesim.simulation.basic.BasicSimulation;
 
 public class SimulationConfiguration extends Configuration {

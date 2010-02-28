@@ -6,9 +6,9 @@
 package pt.unl.fct.di.mei.securesim.radio;
 
 import java.util.ArrayList;
-import pt.unl.fct.di.mei.securesim.engine.nodes.Node;
-import pt.unl.fct.di.mei.securesim.engine.radio.GaussianRadioModel;
-import pt.unl.fct.di.mei.securesim.engine.radio.RadioModel;
+import pt.unl.fct.di.mei.securesim.core.nodes.Node;
+import pt.unl.fct.di.mei.securesim.core.radio.GaussianRadioModel;
+import pt.unl.fct.di.mei.securesim.core.radio.RadioModel;
 
 /**
  *

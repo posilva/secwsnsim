@@ -7,7 +7,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Random;
 
-import pt.unl.fct.di.mei.securesim.engine.nodes.Node;
+import pt.unl.fct.di.mei.securesim.core.nodes.Node;
 import pt.unl.fct.di.mei.securesim.network.Network;
 
 /**
@@ -44,20 +44,6 @@ public class RandomTopologyManager extends TopologyManager {
     public Random getRandom() {
         return random;
     }
-
-    @Override
-    public void apply(Network network) {
-        if (random == null) {
-            random = new Random();
-        }
-        for (Node n : network.getNodeDB().nodes()) {
-            final double x = network.getSimulationArea().getWidth() * random.nextDouble();
-            final double y = network.getSimulationArea().getHeigth() * random.nextDouble();
-            final double z = network.getSimulationArea().getMaxElevation() * random.nextDouble();
-            n.setPosition(x, y, z);
-        }
-    }
-
     @Override
     public ArrayList<Node> apply(Rectangle rect, ArrayList<Node> nodes) {
         int px = rect.x;

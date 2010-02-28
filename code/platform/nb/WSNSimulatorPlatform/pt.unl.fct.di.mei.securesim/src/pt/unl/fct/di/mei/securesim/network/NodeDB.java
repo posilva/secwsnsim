@@ -2,7 +2,7 @@ package pt.unl.fct.di.mei.securesim.network;
 
 import java.util.Collection;
 
-import pt.unl.fct.di.mei.securesim.engine.nodes.Node;
+import pt.unl.fct.di.mei.securesim.core.nodes.Node;
 import pt.unl.fct.di.mei.securesim.utils.RandomList;
 
 public class NodeDB {

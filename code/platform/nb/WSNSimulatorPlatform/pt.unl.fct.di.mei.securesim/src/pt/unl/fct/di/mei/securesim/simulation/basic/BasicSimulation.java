@@ -22,16 +22,7 @@ public class BasicSimulation extends Simulation {
      */
     @Override
     public void start() {
-        Runnable r = new Runnable() {
-
-            public void run() {
-
-                getSimulator().runWithDisplay();
-            }
-        };
-
-        new Thread(r).start();
-
+        getSimulator().runWithDisplayInRealTime();
     }
 
     /* (non-Javadoc)
