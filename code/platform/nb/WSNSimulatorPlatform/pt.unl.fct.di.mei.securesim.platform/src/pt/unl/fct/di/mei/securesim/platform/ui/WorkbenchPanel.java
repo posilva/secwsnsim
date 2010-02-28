@@ -30,9 +30,17 @@ public class WorkbenchPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        SelectionBG = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         simulationPanel1 = new pt.unl.fct.di.mei.securesim.platform.ui.SimulationPanel();
         toolbarPanel = new javax.swing.JPanel();
+        jToolBar2 = new javax.swing.JToolBar();
+        selectionPointerTool = new javax.swing.JToggleButton();
+        btnSelectionTool = new javax.swing.JToggleButton();
+        deployNodes = new javax.swing.JToggleButton();
+        showMouseCoordinates = new javax.swing.JToggleButton();
+        showDebugWindow = new javax.swing.JToggleButton();
+        viewNodesInfo = new javax.swing.JToggleButton();
         jToolBar1 = new javax.swing.JToolBar();
         verVizinhos = new javax.swing.JToggleButton();
         verOsQueConhecem = new javax.swing.JToggleButton();
@@ -40,32 +48,120 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         numberOfNodes = new javax.swing.JTextField();
         searchNode = new javax.swing.JButton();
         clearSimulation = new javax.swing.JButton();
-        jToolBar2 = new javax.swing.JToolBar();
-        btnSelectionTool = new javax.swing.JToggleButton();
-        showMouseCoordinates = new javax.swing.JToggleButton();
-        showDebugWindow = new javax.swing.JToggleButton();
-        deployNodes = new javax.swing.JToggleButton();
-        viewNodesInfo = new javax.swing.JToggleButton();
 
         setLayout(new java.awt.BorderLayout());
+
+        toolbarPanel.setLayout(new javax.swing.BoxLayout(toolbarPanel, javax.swing.BoxLayout.PAGE_AXIS));
 
         javax.swing.GroupLayout simulationPanel1Layout = new javax.swing.GroupLayout(simulationPanel1);
         simulationPanel1.setLayout(simulationPanel1Layout);
         simulationPanel1Layout.setHorizontalGroup(
             simulationPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1018, Short.MAX_VALUE)
+            .addGroup(simulationPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(simulationPanel1Layout.createSequentialGroup()
+                    .addGap(0, 227, Short.MAX_VALUE)
+                    .addComponent(toolbarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 563, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 228, Short.MAX_VALUE)))
         );
         simulationPanel1Layout.setVerticalGroup(
             simulationPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 584, Short.MAX_VALUE)
+            .addGap(0, 628, Short.MAX_VALUE)
+            .addGroup(simulationPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(simulationPanel1Layout.createSequentialGroup()
+                    .addGap(0, 314, Short.MAX_VALUE)
+                    .addComponent(toolbarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 314, Short.MAX_VALUE)))
         );
 
         jScrollPane1.setViewportView(simulationPanel1);
 
         add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        toolbarPanel.setLayout(new javax.swing.BoxLayout(toolbarPanel, javax.swing.BoxLayout.PAGE_AXIS));
+        jToolBar2.setOrientation(1);
+        jToolBar2.setRollover(true);
+        jToolBar2.setAutoscrolls(true);
 
+        SelectionBG.add(selectionPointerTool);
+        selectionPointerTool.setText("P");
+        selectionPointerTool.setFocusable(false);
+        selectionPointerTool.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        selectionPointerTool.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        selectionPointerTool.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectionPointerToolActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(selectionPointerTool);
+
+        SelectionBG.add(btnSelectionTool);
+        btnSelectionTool.setText("S");
+        btnSelectionTool.setToolTipText("Selection Area Tool");
+        btnSelectionTool.setFocusable(false);
+        btnSelectionTool.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnSelectionTool.setMargin(null);
+        btnSelectionTool.setMaximumSize(new java.awt.Dimension(20, 20));
+        btnSelectionTool.setMinimumSize(new java.awt.Dimension(20, 20));
+        btnSelectionTool.setPreferredSize(new java.awt.Dimension(20, 20));
+        btnSelectionTool.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnSelectionTool.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSelectionToolActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(btnSelectionTool);
+
+        SelectionBG.add(deployNodes);
+        deployNodes.setText("DN");
+        deployNodes.setFocusable(false);
+        deployNodes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        deployNodes.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        deployNodes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deployNodesActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(deployNodes);
+
+        showMouseCoordinates.setText("C");
+        showMouseCoordinates.setToolTipText("Mostrar as coordenadas do Rato");
+        showMouseCoordinates.setFocusable(false);
+        showMouseCoordinates.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        showMouseCoordinates.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        showMouseCoordinates.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showMouseCoordinatesActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(showMouseCoordinates);
+
+        showDebugWindow.setText("D");
+        showDebugWindow.setToolTipText("Abrir consola de debug");
+        showDebugWindow.setFocusable(false);
+        showDebugWindow.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        showDebugWindow.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        showDebugWindow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showDebugWindowActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(showDebugWindow);
+
+        viewNodesInfo.setText("I");
+        viewNodesInfo.setToolTipText("View Nodes Info");
+        viewNodesInfo.setFocusable(false);
+        viewNodesInfo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        viewNodesInfo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        viewNodesInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewNodesInfoActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(viewNodesInfo);
+
+        add(jToolBar2, java.awt.BorderLayout.LINE_END);
+
+        jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
         verVizinhos.setText("Vizinhos Nó");
@@ -135,78 +231,7 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         });
         jToolBar1.add(clearSimulation);
 
-        toolbarPanel.add(jToolBar1);
-
-        add(toolbarPanel, java.awt.BorderLayout.PAGE_START);
-
-        jToolBar2.setOrientation(1);
-        jToolBar2.setRollover(true);
-        jToolBar2.setAutoscrolls(true);
-
-        btnSelectionTool.setText("S");
-        btnSelectionTool.setToolTipText("Selection Area Tool");
-        btnSelectionTool.setFocusable(false);
-        btnSelectionTool.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnSelectionTool.setMargin(null);
-        btnSelectionTool.setMaximumSize(new java.awt.Dimension(20, 20));
-        btnSelectionTool.setMinimumSize(new java.awt.Dimension(20, 20));
-        btnSelectionTool.setPreferredSize(new java.awt.Dimension(20, 20));
-        btnSelectionTool.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnSelectionTool.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSelectionToolActionPerformed(evt);
-            }
-        });
-        jToolBar2.add(btnSelectionTool);
-
-        showMouseCoordinates.setText("C");
-        showMouseCoordinates.setToolTipText("Mostrar as coordenadas do Rato");
-        showMouseCoordinates.setFocusable(false);
-        showMouseCoordinates.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        showMouseCoordinates.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        showMouseCoordinates.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                showMouseCoordinatesActionPerformed(evt);
-            }
-        });
-        jToolBar2.add(showMouseCoordinates);
-
-        showDebugWindow.setText("D");
-        showDebugWindow.setToolTipText("Abrir consola de debug");
-        showDebugWindow.setFocusable(false);
-        showDebugWindow.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        showDebugWindow.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        showDebugWindow.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                showDebugWindowActionPerformed(evt);
-            }
-        });
-        jToolBar2.add(showDebugWindow);
-
-        deployNodes.setText("DN");
-        deployNodes.setFocusable(false);
-        deployNodes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        deployNodes.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        deployNodes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deployNodesActionPerformed(evt);
-            }
-        });
-        jToolBar2.add(deployNodes);
-
-        viewNodesInfo.setText("I");
-        viewNodesInfo.setToolTipText("View Nodes Info");
-        viewNodesInfo.setFocusable(false);
-        viewNodesInfo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        viewNodesInfo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        viewNodesInfo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewNodesInfoActionPerformed(evt);
-            }
-        });
-        jToolBar2.add(viewNodesInfo);
-
-        add(jToolBar2, java.awt.BorderLayout.LINE_END);
+        add(jToolBar1, java.awt.BorderLayout.NORTH);
     }// </editor-fold>//GEN-END:initComponents
 
     private void verVizinhosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verVizinhosActionPerformed
@@ -215,8 +240,8 @@ public class WorkbenchPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_verVizinhosActionPerformed
 
     private void btnSelectionToolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectionToolActionPerformed
-      simulationPanel1.selectionToolSelected(btnSelectionTool.isSelected());
-        // TODO add your handling code here:
+      
+      updateSelectionGroup();
     }//GEN-LAST:event_btnSelectionToolActionPerformed
 
     private void saveSimulationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveSimulationActionPerformed
@@ -252,7 +277,7 @@ public class WorkbenchPanel extends javax.swing.JPanel {
     private void deployNodesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deployNodesActionPerformed
         // TODO add your handling code here:
 
-        simulationPanel1.deployNodesToolSelected(deployNodes.isSelected());
+        updateSelectionGroup();
 
 
 
@@ -267,8 +292,13 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         simulationPanel1.setViewNodeInfo(viewNodesInfo.isSelected());
     }//GEN-LAST:event_viewNodesInfoActionPerformed
 
+    private void selectionPointerToolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectionPointerToolActionPerformed
+        updateSelectionGroup();
+    }//GEN-LAST:event_selectionPointerToolActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup SelectionBG;
     private javax.swing.JToggleButton btnSelectionTool;
     private javax.swing.JButton clearSimulation;
     private javax.swing.JToggleButton deployNodes;
@@ -278,6 +308,7 @@ public class WorkbenchPanel extends javax.swing.JPanel {
     private javax.swing.JTextField numberOfNodes;
     private javax.swing.JButton saveSimulation;
     private javax.swing.JButton searchNode;
+    private javax.swing.JToggleButton selectionPointerTool;
     private javax.swing.JToggleButton showDebugWindow;
     private javax.swing.JToggleButton showMouseCoordinates;
     private pt.unl.fct.di.mei.securesim.platform.ui.SimulationPanel simulationPanel1;
@@ -301,6 +332,12 @@ public class WorkbenchPanel extends javax.swing.JPanel {
 
     private int getNumberOfNodes() {
         return Integer.valueOf(numberOfNodes.getText()).intValue();
+    }
+
+    private void updateSelectionGroup() {
+        simulationPanel1.deployNodesToolSelected(deployNodes.isSelected());
+        simulationPanel1.selectionToolSelected(btnSelectionTool.isSelected());
+        simulationPanel1.selectionPointerSelected(selectionPointerTool.isSelected());
     }
 
    

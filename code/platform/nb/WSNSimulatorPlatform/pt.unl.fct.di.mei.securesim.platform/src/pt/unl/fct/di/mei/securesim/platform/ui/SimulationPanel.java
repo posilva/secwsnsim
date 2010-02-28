@@ -1,5 +1,9 @@
 package pt.unl.fct.di.mei.securesim.platform.ui;
 
+import pt.unl.fct.di.mei.securesim.core.Application;
+import pt.unl.fct.di.mei.securesim.core.Simulator;
+import pt.unl.fct.di.mei.securesim.core.ISimulationDisplay;
+import pt.unl.fct.di.mei.securesim.core.SimulatorFinishListener;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 import pt.unl.fct.di.mei.securesim.core.events.SimulatorEvent;
@@ -24,9 +28,9 @@ import javax.swing.JOptionPane;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.math.stat.descriptive.SummaryStatistics;
 
-import pt.unl.fct.di.mei.securesim.engine.*;
-import pt.unl.fct.di.mei.securesim.engine.energy.Batery;
-import pt.unl.fct.di.mei.securesim.engine.nodes.Node;
+
+import pt.unl.fct.di.mei.securesim.core.energy.Batery;
+import pt.unl.fct.di.mei.securesim.core.nodes.Node;
 import pt.unl.fct.di.mei.securesim.network.SimulationArea;
 import pt.unl.fct.di.mei.securesim.network.basic.DefaultNetwork;
 import pt.unl.fct.di.mei.securesim.network.nodes.*;
@@ -76,6 +80,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     private boolean deployNodeToolSelected = false;
     private String[] nodeInfo = null;
     private boolean paintNodesInfo = false;
+    private boolean selectionPointerToolSelected = false;
 
     /** Creates new form SimulationPanel */
     public SimulationPanel() {
@@ -92,6 +97,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         simulation = new BasicSimulation();
         simulation.setSimulator(new DefaultSimulator());
         Simulator.resetRandom();
+        Node.resetCouter();
         simulation.setRadioModel(new ImprovedGaussianRadioModel());
         simulation.setNetwork(new DefaultNetwork());
         simulation.getNetwork().setSimulationArea(simulationArea);
@@ -695,7 +701,11 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         if (currentSelectedNode != null) {
             JMenuItem m = (JMenuItem) evt.getSource();
             currentSelectedNode.getPhysicalNode().getApplication().generateEvent();
-            simulation.start();
+
+            if (!networkRunned) {
+                simulation.start();
+                networkRunned = true;
+            }
         }
     }//GEN-LAST:event_selNodeRunEventActionPerformed
 
@@ -1014,7 +1024,9 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     }
 
     void clearSimulation() {
+
         simulation = new BasicSimulation();
+
         simulation.setDisplay(this);
         simulationArea = new SimulationArea();
         simulationArea.setHeigth(AREA_H);
@@ -1025,6 +1037,10 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
 
     void setViewNodeInfo(boolean selected) {
         paintNodesInfo = selected;
+    }
+
+    void selectionPointerSelected(boolean selected) {
+        this.selectionPointerToolSelected = selected;
     }
 
     /**
@@ -1059,7 +1075,8 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
                 public void run() {
                     SummaryStatistics stat = new SummaryStatistics();
                     for (Node node : NodesEnergyWatcher.this.nodes) {
-                        double c = 100 - (node.getBateryEnergy().getCurrentPower() * 100 / node.getBateryEnergy().getInitialPower());
+//                        double c = 100 - (node.getBateryEnergy().getCurrentPower() * 100 / node.getBateryEnergy().getInitialPower());
+                        double c = node.getBateryEnergy().getLastConsume()<0?0:node.getBateryEnergy().getLastConsume();
                         stat.addValue(c);
                     }
                     double x = NodesEnergyWatcher.this.nodes.get(0).getSimulator().getSimulationTimeInMillisec();
@@ -1087,7 +1104,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     public void deployNodesGridTopology() {
     }
 
-    @Action(block = Task.BlockingScope.ACTION)
+    @Action(block = Task.BlockingScope.COMPONENT)
     public Task deployNodesUsingRandomTopology() {
         return new DeployNodesUsingRandomTopologyTask(org.jdesktop.application.Application.getInstance(pt.unl.fct.di.mei.securesim.platform.PlatformApp.class));
     }

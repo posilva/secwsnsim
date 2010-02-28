@@ -1,4 +1,4 @@
-package pt.unl.fct.di.mei.securesim.platform.charts;
+package pt.unl.fct.di.mei.securesim.platform.charts.core;
 
 import java.util.HashMap;
 

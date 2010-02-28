@@ -184,7 +184,6 @@
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="pt.unl.fct.di.mei.securesim.platform.ui.SimulationPanel" id="deployNodesUsingRandomTopology" methodName="deployNodesUsingRandomTopology"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Aleat&#xf3;riamente"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="depNodesGridTopology">
@@ -192,7 +191,6 @@
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="pt.unl.fct.di.mei.securesim.platform.ui.SimulationPanel" id="deployNodesGridTopology" methodName="deployNodesGridTopology"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Em grelha"/>
               </Properties>
             </MenuItem>
           </SubComponents>
@@ -202,9 +200,6 @@
   </NonVisualComponents>
   <Properties>
     <Property name="background" type="java.awt.Color" resourceKey="background"/>
-    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-      <Border info="null"/>
-    </Property>
   </Properties>
   <Events>
     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="formMouseClicked"/>
