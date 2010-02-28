@@ -3,10 +3,10 @@ package pt.unl.fct.di.mei.securesim.test.broadcast;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import pt.unl.fct.di.mei.securesim.engine.ISimulationDisplay;
-import pt.unl.fct.di.mei.securesim.engine.Simulator;
-import pt.unl.fct.di.mei.securesim.engine.nodes.Node;
-import pt.unl.fct.di.mei.securesim.engine.radio.RadioModel;
+import pt.unl.fct.di.mei.securesim.core.ISimulationDisplay;
+import pt.unl.fct.di.mei.securesim.core.Simulator;
+import pt.unl.fct.di.mei.securesim.core.nodes.Node;
+import pt.unl.fct.di.mei.securesim.core.radio.RadioModel;
 import pt.unl.fct.di.mei.securesim.ui.IDisplayable;
 import pt.unl.fct.di.mei.securesim.network.nodes.SinkNode;
 

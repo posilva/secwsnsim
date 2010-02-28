@@ -2,12 +2,12 @@ package pt.unl.fct.di.mei.securesim.test;
 
 import java.util.List;
 
-import pt.unl.fct.di.mei.securesim.engine.Application;
-import pt.unl.fct.di.mei.securesim.engine.Display;
-import pt.unl.fct.di.mei.securesim.engine.layers.RoutingLayer;
-import pt.unl.fct.di.mei.securesim.engine.nodes.Node;
-import pt.unl.fct.di.mei.securesim.engine.radio.GaussianRadioModel;
-import pt.unl.fct.di.mei.securesim.engine.radio.RadioModel;
+import pt.unl.fct.di.mei.securesim.core.Application;
+import pt.unl.fct.di.mei.securesim.core.Display;
+import pt.unl.fct.di.mei.securesim.core.layers.RoutingLayer;
+import pt.unl.fct.di.mei.securesim.core.nodes.Node;
+import pt.unl.fct.di.mei.securesim.core.radio.GaussianRadioModel;
+import pt.unl.fct.di.mei.securesim.core.radio.RadioModel;
 import pt.unl.fct.di.mei.securesim.test.broadcast.BroadcastApplication;
 import pt.unl.fct.di.mei.securesim.test.broadcast.BroadcastNode;
 import pt.unl.fct.di.mei.securesim.test.broadcast.BroadcastRoutingLayer;

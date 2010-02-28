@@ -1,6 +1,6 @@
 package pt.unl.fct.di.mei.securesim.test.broadcast;
 
-import pt.unl.fct.di.mei.securesim.engine.Application;
+import pt.unl.fct.di.mei.securesim.core.Application;
 
 /**
  * This extension of the {@link Application} baseclass does everything we expect

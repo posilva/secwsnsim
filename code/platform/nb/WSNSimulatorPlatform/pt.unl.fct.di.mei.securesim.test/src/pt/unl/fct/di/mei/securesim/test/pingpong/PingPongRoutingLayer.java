@@ -3,9 +3,9 @@
  */
 package pt.unl.fct.di.mei.securesim.test.pingpong;
 
-import pt.unl.fct.di.mei.securesim.engine.Application;
-import pt.unl.fct.di.mei.securesim.engine.layers.RoutingLayer;
-import pt.unl.fct.di.mei.securesim.engine.nodes.Node;
+import pt.unl.fct.di.mei.securesim.core.Application;
+import pt.unl.fct.di.mei.securesim.core.layers.RoutingLayer;
+import pt.unl.fct.di.mei.securesim.core.nodes.Node;
 
 /**
  * @author posilva
