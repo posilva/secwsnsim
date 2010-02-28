@@ -1,9 +1,9 @@
 package pt.unl.fct.di.mei.securesim.test.broadcast;
 
-import pt.unl.fct.di.mei.securesim.engine.Event;
-import pt.unl.fct.di.mei.securesim.engine.Simulator;
-import pt.unl.fct.di.mei.securesim.engine.nodes.Node;
-import pt.unl.fct.di.mei.securesim.engine.radio.GaussianRadioModel;
+import pt.unl.fct.di.mei.securesim.core.Event;
+import pt.unl.fct.di.mei.securesim.core.Simulator;
+import pt.unl.fct.di.mei.securesim.core.nodes.Node;
+import pt.unl.fct.di.mei.securesim.core.radio.GaussianRadioModel;
 
 public class BroadcastMain {
 	private static final double ROOT_POSZ = 0.0;

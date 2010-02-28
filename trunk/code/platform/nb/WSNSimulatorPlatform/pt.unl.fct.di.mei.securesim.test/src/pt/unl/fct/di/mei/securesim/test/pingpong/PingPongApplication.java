@@ -2,9 +2,10 @@ package pt.unl.fct.di.mei.securesim.test.pingpong;
 
 import java.util.HashSet;
 import java.util.Hashtable;
-import pt.unl.fct.di.mei.securesim.engine.Application;
-import pt.unl.fct.di.mei.securesim.engine.Event;
-import pt.unl.fct.di.mei.securesim.engine.Simulator;
+import pt.unl.fct.di.mei.securesim.cpu.CPUProcess;
+import pt.unl.fct.di.mei.securesim.core.Application;
+import pt.unl.fct.di.mei.securesim.core.Event;
+import pt.unl.fct.di.mei.securesim.core.Simulator;
 
 /**
  * This extension of the {@link Application} baseclass does everything we expect
@@ -14,7 +15,7 @@ import pt.unl.fct.di.mei.securesim.engine.Simulator;
 public class PingPongApplication extends Application {
 
     private static long countMessages = 0;
-    private int CLOCK_TICK = Simulator.ONE_SECOND*100000 ;
+    private int CLOCK_TICK = Simulator.ONE_SECOND * 100000;
 
     public void handleMessage(PingPongMessage m, Object message) {
         if (m.destID == getNode().getId()) {
@@ -64,18 +65,23 @@ public class PingPongApplication extends Application {
     @Override
     @SuppressWarnings("element-type-mismatch")
     public void receiveMessage(Object message) {
+        final Object msg = message;
 
-        if (!(message instanceof PingPongMessage)) {
-            throw new IllegalStateException("Message must be a instance of " + PingPongMessage.class.getSimpleName());
-        }
-        PingPongMessage m = (PingPongMessage) message;
-        // se não já recebi a mensagem trato
-        if (!receivedMessages.contains(message)) {
-            receivedMessages.add((PingPongMessage) message);
-            handleMessage(m, message);
-        } else {
-          //  System.out.println("N: " + getHostNode().getId() + ", M: " + m.id );
-        }
+        getHostNode().getCPU().execute(new CPUProcess() {
+            public void run() {
+                if (!(msg instanceof PingPongMessage)) {
+                    throw new IllegalStateException("Message must be a instance of " + PingPongMessage.class.getSimpleName());
+                }
+                PingPongMessage m = (PingPongMessage) msg;
+                // se não já recebi a mensagem trato
+                if (!receivedMessages.contains(msg)) {
+                    receivedMessages.add((PingPongMessage) msg);
+                    handleMessage(m, msg);
+                } else {
+                    //  System.out.println("N: " + getHostNode().getId() + ", M: " + m.id );
+                }
+            }
+        });
     }
 
     /**
@@ -116,7 +122,7 @@ public class PingPongApplication extends Application {
         PingPongMessage msg = new PingPongMessage(getNode().getId(), to);
         sentMessages.put(msg, new Integer(to));
         receivedMessages.add(msg);
-    //    System.out.println("Ping " + getNode().getId() + ": " + msg.id + " to " + to);
+        //    System.out.println("Ping " + getNode().getId() + ": " + msg.id + " to " + to);
         sendPPMessage(msg);
         return true;
 
@@ -128,7 +134,7 @@ public class PingPongApplication extends Application {
         PingPongMessage msg = new PingPongMessage(getNode().getId(), m.sourceID);
         msg.type = TypeOfMessage.PONG;
         msg.replyToID = m.id;
-  //      System.out.println("Pong " + getNode().getId() + ": " + msg.id + " to " + m.sourceID + " Reply to " + m.id);
+        //      System.out.println("Pong " + getNode().getId() + ": " + msg.id + " to " + m.sourceID + " Reply to " + m.id);
         sentMessages.put(msg, new Integer(m.sourceID));
         receivedMessages.add(msg);
         sendPPMessage(msg);
@@ -148,12 +154,12 @@ public class PingPongApplication extends Application {
 
         @Override
         public void execute() {
-       //     System.out.println("Message sented");
+            //     System.out.println("Message sented");
             sendMessage(message);
         }
     }
 
     private void sendPPMessage(PingPongMessage m) {
-        getHostNode().getSimulator().addEvent(new SendPingPongMessageEvent(getHostNode().getSimulator().getSimulationTime()+(10000 +(int) Simulator.random.nextDouble() * CLOCK_TICK), m));
+        getHostNode().getSimulator().addEvent(new SendPingPongMessageEvent(getHostNode().getSimulator().getSimulationTime() + (10000 + (int) Simulator.random.nextDouble() * CLOCK_TICK), m));
     }
 }
