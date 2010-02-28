@@ -5,6 +5,8 @@
 
 package pt.unl.fct.di.mei.securesim.platform.charts;
 
+import pt.unl.fct.di.mei.securesim.platform.charts.core.XYLineChart;
+
 /**
  *
  * @author posilva
@@ -18,7 +20,7 @@ public class ChartsExample {
       // Create a chart to monitor the infection progress rate
 		final XYLineChart chart = new XYLineChart("Infection Rate", 5.0, "Infected Nodes (%)", "time(s)") ;
 		chart.setYRange( false, 0, 100 ) ;
-		chart.setSeriesLinesAndShapes("s0", true, true) ;
+		//chart.setSeriesLinesAndShapes("s0", true, true) ;
 
         //chart.getSeries("s0").add( currentTime(), 100.0 * T / N ) ;
     }

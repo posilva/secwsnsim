@@ -14,7 +14,7 @@ import java.awt.BorderLayout;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import pt.unl.fct.di.mei.securesim.platform.charts.SimChartPanel;
+import pt.unl.fct.di.mei.securesim.platform.charts.ui.ChartPanel;
 
 /**
  *
@@ -22,16 +22,16 @@ import pt.unl.fct.di.mei.securesim.platform.charts.SimChartPanel;
  */
 public class ChartFrame extends javax.swing.JFrame {
 
-    protected SimChartPanel chartPanel;
+    protected ChartPanel chartPanel;
 
-    public SimChartPanel getChartPanel() {
+    public ChartPanel getChartPanel() {
         return chartPanel;
     }
 
     /** Creates new form ChartFrame */
     public ChartFrame() {
         initComponents();
-        chartPanel = new SimChartPanel(null);
+        chartPanel = new ChartPanel();
         getContentPane().add(chartPanel, BorderLayout.CENTER);
 
     }

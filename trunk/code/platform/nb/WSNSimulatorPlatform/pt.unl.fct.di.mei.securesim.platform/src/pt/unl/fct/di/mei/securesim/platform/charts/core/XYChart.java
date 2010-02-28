@@ -1,4 +1,4 @@
-package pt.unl.fct.di.mei.securesim.platform.charts;
+package pt.unl.fct.di.mei.securesim.platform.charts.core;
 
 
 import java.awt.Graphics2D;
@@ -21,6 +21,8 @@ import com.lowagie.text.pdf.PdfTemplate;
 import com.lowagie.text.pdf.PdfWriter;
 import java.awt.Color;
 import java.awt.Rectangle;
+import pt.unl.fct.di.mei.securesim.platform.charts.IChartDisplay;
+import pt.unl.fct.di.mei.securesim.platform.charts.IChartDisplayable;
 
 /**
  * A convenience wrapper class for using simple XYLineChart charts of the JFreeChart package. 
@@ -125,9 +127,9 @@ abstract public class XYChart<T extends Series> implements IChartDisplayable{
 	
 	
 	public void displayOn( IChartDisplay canvas ) {
-		final Rectangle chartArea = new Rectangle(0, 0, 500, 500);
+		
 		try {
-			chart.draw( (Graphics2D) canvas.getG(), chartArea, null, null);
+			chart.draw( (Graphics2D) canvas.getG(), canvas.getRectangle());
 		} catch (Exception x) {
 			x.printStackTrace();
 		}

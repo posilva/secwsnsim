@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package pt.unl.fct.di.mei.securesim.platform.charts;
+package pt.unl.fct.di.mei.securesim.platform.charts.core;
 
 import java.awt.Color;
 import java.awt.Stroke;
