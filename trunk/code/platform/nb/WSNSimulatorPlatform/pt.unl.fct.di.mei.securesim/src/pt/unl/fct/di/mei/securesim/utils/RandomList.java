@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-import static pt.unl.fct.di.mei.securesim.engine.Simulator.random;
+import static pt.unl.fct.di.mei.securesim.core.Simulator.random;
 /**
  * 
  * An utility class that implements a list that can index elements at random positions.

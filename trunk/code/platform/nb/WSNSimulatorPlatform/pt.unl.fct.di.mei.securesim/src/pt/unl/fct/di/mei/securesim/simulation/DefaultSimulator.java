@@ -5,8 +5,8 @@ package pt.unl.fct.di.mei.securesim.simulation;
 
 import java.util.Collection;
 
-import pt.unl.fct.di.mei.securesim.engine.Simulator;
-import pt.unl.fct.di.mei.securesim.engine.nodes.Node;
+import pt.unl.fct.di.mei.securesim.core.Simulator;
+import pt.unl.fct.di.mei.securesim.core.nodes.Node;
 import pt.unl.fct.di.mei.securesim.network.Network;
 
 /**

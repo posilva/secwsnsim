@@ -3,9 +3,9 @@ package pt.unl.fct.di.mei.securesim.simulation;
 import java.util.logging.Logger;
 
 import pt.unl.fct.di.mei.securesim.configuration.ConfigurableObject;
-import pt.unl.fct.di.mei.securesim.engine.ISimulationDisplay;
-import pt.unl.fct.di.mei.securesim.engine.Simulator;
-import pt.unl.fct.di.mei.securesim.engine.radio.RadioModel;
+import pt.unl.fct.di.mei.securesim.core.ISimulationDisplay;
+import pt.unl.fct.di.mei.securesim.core.Simulator;
+import pt.unl.fct.di.mei.securesim.core.radio.RadioModel;
 import pt.unl.fct.di.mei.securesim.network.Network;
 import pt.unl.fct.di.mei.securesim.network.basic.DefaultNetwork;
 import pt.unl.fct.di.mei.securesim.network.nodes.basic.DefaultNodeFactory;

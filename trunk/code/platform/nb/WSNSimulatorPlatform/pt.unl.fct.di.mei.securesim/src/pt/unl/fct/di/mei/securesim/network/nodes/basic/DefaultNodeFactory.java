@@ -3,7 +3,7 @@
  */
 package pt.unl.fct.di.mei.securesim.network.nodes.basic;
 
-import pt.unl.fct.di.mei.securesim.engine.Simulator;
+import pt.unl.fct.di.mei.securesim.core.Simulator;
 import pt.unl.fct.di.mei.securesim.network.nodes.NodeFactory;
 
 /**

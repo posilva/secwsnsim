@@ -4,20 +4,20 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import pt.unl.fct.di.mei.securesim.engine.Application;
+import pt.unl.fct.di.mei.securesim.core.Application;
 
-import pt.unl.fct.di.mei.securesim.engine.Simulator;
-import pt.unl.fct.di.mei.securesim.engine.layers.RoutingLayer;
-import pt.unl.fct.di.mei.securesim.engine.nodes.Node;
-import pt.unl.fct.di.mei.securesim.engine.radio.RadioModel;
+import pt.unl.fct.di.mei.securesim.core.Simulator;
+import pt.unl.fct.di.mei.securesim.core.layers.RoutingLayer;
+import pt.unl.fct.di.mei.securesim.core.nodes.Node;
+import pt.unl.fct.di.mei.securesim.core.radio.RadioModel;
 
 @SuppressWarnings("unchecked")
 public abstract class NodeFactory {
 
     protected Class classOfNodes = null;
     protected Simulator simulator;
-    private Class application;
-    private Class routingLayer;
+    protected Class application;
+    protected Class routingLayer;
 
     public NodeFactory(Simulator simulator, Class classOfNodes, Class application, Class routingLayer) {
         super();
@@ -26,6 +26,11 @@ public abstract class NodeFactory {
         this.application = application;
         this.routingLayer = routingLayer;
 
+    }
+
+    public NodeFactory(Simulator simulator) {
+        super();
+        this.simulator = simulator;
     }
 
     public Node createNode(short nodeId, double x, double y, double z) throws Exception {

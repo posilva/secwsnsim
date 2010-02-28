@@ -3,7 +3,7 @@ package pt.unl.fct.di.mei.securesim.network;
 import java.util.logging.Logger;
 
 import pt.unl.fct.di.mei.securesim.configuration.ConfigurableObject;
-import pt.unl.fct.di.mei.securesim.engine.Simulator;
+import pt.unl.fct.di.mei.securesim.core.Simulator;
 import pt.unl.fct.di.mei.securesim.network.nodes.SensorNode;
 import pt.unl.fct.di.mei.securesim.network.nodes.SimpleNode;
 import pt.unl.fct.di.mei.securesim.network.nodes.SinkNode;
@@ -116,6 +116,6 @@ public abstract class Network extends ConfigurableObject {
 	}
 
 	public void applyTopology(TopologyManager topologyManager) {
-		topologyManager.apply(this);		
+		//topologyManager.apply(this.getNodeDB(),);
 	}	
 }

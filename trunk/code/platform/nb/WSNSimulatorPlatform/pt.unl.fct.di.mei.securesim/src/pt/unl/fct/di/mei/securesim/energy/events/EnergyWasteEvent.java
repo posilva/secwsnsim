@@ -5,9 +5,9 @@
 
 package pt.unl.fct.di.mei.securesim.energy.events;
 
-import pt.unl.fct.di.mei.securesim.engine.Event;
-import pt.unl.fct.di.mei.securesim.engine.Simulator;
-import pt.unl.fct.di.mei.securesim.engine.nodes.Node;
+import pt.unl.fct.di.mei.securesim.core.Event;
+import pt.unl.fct.di.mei.securesim.core.Simulator;
+import pt.unl.fct.di.mei.securesim.core.nodes.Node;
 
 /**
  *

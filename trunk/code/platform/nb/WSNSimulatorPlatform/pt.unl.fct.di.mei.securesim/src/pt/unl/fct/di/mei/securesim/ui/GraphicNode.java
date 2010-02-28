@@ -7,8 +7,8 @@ package pt.unl.fct.di.mei.securesim.ui;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import pt.unl.fct.di.mei.securesim.engine.ISimulationDisplay;
-import pt.unl.fct.di.mei.securesim.engine.nodes.Node;
+import pt.unl.fct.di.mei.securesim.core.ISimulationDisplay;
+import pt.unl.fct.di.mei.securesim.core.nodes.Node;
 
 /**
  *

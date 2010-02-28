@@ -6,7 +6,7 @@ package pt.unl.fct.di.mei.securesim.network;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import pt.unl.fct.di.mei.securesim.engine.ISimulationDisplay;
+import pt.unl.fct.di.mei.securesim.core.ISimulationDisplay;
 import pt.unl.fct.di.mei.securesim.ui.IDisplayable;
 
 /**

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import pt.unl.fct.di.mei.securesim.engine.nodes.Node;
+import pt.unl.fct.di.mei.securesim.core.nodes.Node;
 import pt.unl.fct.di.mei.securesim.network.Network;
 
 /**
@@ -34,7 +34,6 @@ public class MinDistanceRandomTopologyManager extends RandomTopologyManager {
 		super.init();
 
 	}
-	@Override
 	public void apply(Network network) {
 		List<Node> nodesHandled = new ArrayList<Node>();
 		if (random== null)

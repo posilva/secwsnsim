@@ -1,11 +1,11 @@
 package pt.unl.fct.di.mei.securesim.network;
 
-import pt.unl.fct.di.mei.securesim.engine.Application;
-import pt.unl.fct.di.mei.securesim.engine.Display;
-import pt.unl.fct.di.mei.securesim.engine.Simulator;
-import pt.unl.fct.di.mei.securesim.engine.nodes.Node;
-import pt.unl.fct.di.mei.securesim.engine.radio.RadioModel;
-import pt.unl.fct.di.mei.securesim.engine.radio.RadioModel.Neighborhood;
+import pt.unl.fct.di.mei.securesim.core.Application;
+import pt.unl.fct.di.mei.securesim.core.Display;
+import pt.unl.fct.di.mei.securesim.core.Simulator;
+import pt.unl.fct.di.mei.securesim.core.nodes.Node;
+import pt.unl.fct.di.mei.securesim.core.radio.RadioModel;
+import pt.unl.fct.di.mei.securesim.core.radio.RadioModel.Neighborhood;
 
 public interface INode {
 
