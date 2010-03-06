@@ -23,7 +23,7 @@ public class BroadcastNoRepetitionRoutingLayer extends RoutingLayer {
 	 * the message.
 	 */
 	@Override
-	public void receiveMessage(Object message, Application sendApplication ){
+	public void receiveMessage(Object message ){
 			if (parent == null){
 				parent = getNode().getParentNode();				
                 Application app = getNode().getApplication();
@@ -34,7 +34,7 @@ public class BroadcastNoRepetitionRoutingLayer extends RoutingLayer {
 	public boolean sendMessage(Object message, Application app){
 		if (application!=null) return false;
 		this.application = app;
-		return getNode().sendMessage(message, this);
+		return getNode().getMacLayer().sendMessage(message, this);
 	}
 	
 	/**

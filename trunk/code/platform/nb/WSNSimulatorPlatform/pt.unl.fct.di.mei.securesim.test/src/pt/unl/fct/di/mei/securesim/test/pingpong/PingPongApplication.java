@@ -68,17 +68,17 @@ public class PingPongApplication extends Application {
         final Object msg = message;
 
         getHostNode().getCPU().execute(new CPUProcess() {
+
             public void run() {
                 if (!(msg instanceof PingPongMessage)) {
                     throw new IllegalStateException("Message must be a instance of " + PingPongMessage.class.getSimpleName());
                 }
                 PingPongMessage m = (PingPongMessage) msg;
-                // se não já recebi a mensagem trato
+                // se não recebi a mensagem trato
                 if (!receivedMessages.contains(msg)) {
                     receivedMessages.add((PingPongMessage) msg);
                     handleMessage(m, msg);
                 } else {
-                    //  System.out.println("N: " + getHostNode().getId() + ", M: " + m.id );
                 }
             }
         });
