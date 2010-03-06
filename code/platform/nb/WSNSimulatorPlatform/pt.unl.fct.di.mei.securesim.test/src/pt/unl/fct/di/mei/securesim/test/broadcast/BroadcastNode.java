@@ -9,14 +9,15 @@ import pt.unl.fct.di.mei.securesim.core.Simulator;
 import pt.unl.fct.di.mei.securesim.core.nodes.Node;
 import pt.unl.fct.di.mei.securesim.core.radio.RadioModel;
 import pt.unl.fct.di.mei.securesim.ui.IDisplayable;
-import pt.unl.fct.di.mei.securesim.network.nodes.SimpleNode;
+import pt.unl.fct.di.mei.securesim.network.nodes.basic.Mica2SensorNode;
 
-public class BroadcastNode extends SimpleNode implements IDisplayable {
+public class BroadcastNode extends Mica2SensorNode implements IDisplayable {
     private static int CLEAR_TIME=Simulator.ONE_SECOND*10;
 
     public BroadcastNode(Simulator sim, RadioModel radioModel) {
         super(sim, radioModel);
         setRoutingLayer(new BroadcastRoutingLayer());
+        getConfig().setSetRadioRange(100);
     }
     /** This field is true if this mote rebroadcasted the message already. */
     boolean sent = false;
@@ -49,10 +50,10 @@ public class BroadcastNode extends SimpleNode implements IDisplayable {
             Color c = g.getColor();
             if (getId() == 1) {
                 c = Color.yellow;
-            } else if (sending) {
+            } else if (getMacLayer().isSending()) {
                 c = Color.blue;
-            } else if (receiving) {
-                if (corrupted) {
+            } else if (getMacLayer().isReceiving()) {
+                if (getMacLayer().isCorrupted()) {
                     c = Color.red;
                 } else {
                     c = Color.green;
@@ -99,6 +100,11 @@ public class BroadcastNode extends SimpleNode implements IDisplayable {
      */
     public Node getParent() {
         return parent;
+    }
+
+    @Override
+    public void init() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
  class ResendMessageEvent extends Event{

@@ -16,7 +16,7 @@ import pt.unl.fct.di.mei.securesim.network.SimulationArea;
 import pt.unl.fct.di.mei.securesim.network.basic.DefaultNetwork;
 import pt.unl.fct.di.mei.securesim.network.nodes.NodeFactory;
 import pt.unl.fct.di.mei.securesim.network.nodes.SensorNode;
-import pt.unl.fct.di.mei.securesim.network.nodes.SimpleNode;
+
 import pt.unl.fct.di.mei.securesim.network.nodes.basic.DefaultNodeFactory;
 import pt.unl.fct.di.mei.securesim.simulation.DefaultSimulator;
 import pt.unl.fct.di.mei.securesim.simulation.Simulation;
@@ -56,12 +56,12 @@ public class MainTest {
 		
 		// adicionar um nó sink e dois nós simples
 		//SinkNode sinkNode = null;
-		SimpleNode sinkNode = null;
+		SensorNode sinkNode = null;
 		Application app = new BroadcastApplication();
 		List<Node> listOfSimpleNodes=null;
 		try {
 			
-			sinkNode= (SimpleNode) sinkNodeFactory.createNode((short) 1);
+			sinkNode= (SensorNode) sinkNodeFactory.createNode((short) 1);
 			sinkNode.setRoutingLayer(new BroadcastRoutingLayer());
 			sinkNode.addApplication(app);
 			sinkNode.setPaintNeighborhood(true);

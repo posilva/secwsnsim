@@ -9,7 +9,6 @@ import org.jdesktop.application.Task;
 import pt.unl.fct.di.mei.securesim.core.events.SimulatorEvent;
 import pt.unl.fct.di.mei.securesim.test.broadcast.BroadcastRoutingLayer;
 import pt.unl.fct.di.mei.securesim.test.broadcast.BroadcastNode;
-import pt.unl.fct.di.mei.securesim.test.broadcast.BroadcastApplication;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -18,7 +17,6 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.*;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JCheckBoxMenuItem;
@@ -60,7 +58,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     BufferedImage backImage = null;
     private Graphics currentGraphics;
     private SimulationArea simulationArea;
-    private SimpleNode sinkNode;
+    private SensorNode sinkNode;
     private Application app;
     private BasicSimulation simulation;
     private RandomTopologyManager topologyManager;
@@ -153,13 +151,6 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         if (simulation.getSimulator() != null) {
             simulation.getSimulator().display(this);
         }
-    }
-
-    public void deployNetwork(int size) {
-        createSimulation2(size);
-        setPreferredSize(simulationArea.getDimension());
-
-        update();
     }
 
     public boolean isPaintMouseCoordinates() {
@@ -792,91 +783,6 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         return currentGraphics;
     }
 
-    public void createSimulation(int size) {
-        networkDeployed = false;
-
-        // associar a configuracao à simulação
-        topologyManager = new RandomTopologyManager();
-        topologyManager.setRandom(Simulator.random);
-
-        // assignar àrea de simulação à rede
-
-        simulation.setSimpleNodeFactory(new DefaultNodeFactory(simulation.getSimulator(), BroadcastNode.class, BroadcastApplication.class, BroadcastRoutingLayer.class));
-        simulation.setSinkNodeFactory(new DefaultNodeFactory(simulation.getSimulator(), BroadcastNode.class, BroadcastApplication.class, BroadcastRoutingLayer.class));
-
-        simulation.setDisplay(this);
-        simulation.setup();
-
-        // adicionar um nó sink e dois nós simples
-        //SinkNode sinkNode = null;
-        sinkNode = null;
-        app = new BroadcastApplication();
-        List<Node> listOfSimpleNodes = null;
-        try {
-
-            sinkNode = (SimpleNode) simulation.getSinkNodeFactory().createNode((short) 1);
-            sinkNode.setRoutingLayer(new BroadcastRoutingLayer());
-            sinkNode.addApplication(app);
-            sinkNode.setPaintNeighborhood(true);
-            listOfSimpleNodes = simulation.getSimpleNodeFactory().createNodes(2, size - 1);
-            simulation.getNetwork().addNode(sinkNode);
-            for (Node simpleNode1 : listOfSimpleNodes) {
-                simpleNode1.setRoutingLayer(new BroadcastRoutingLayer());
-                simpleNode1.addApplication(new BroadcastApplication());
-                simulation.getNetwork().addNode(SensorNode.cast(simpleNode1));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        simulation.getNetwork().applyTopology(topologyManager);
-
-        update();
-        networkBuilded = false;
-        networkRunned = false;
-        networkDeployed = true;
-    }
-
-    public void createSimulation2(int size) {
-        networkDeployed = false;
-        // associar a configuracao à simulação
-        topologyManager = new RandomTopologyManager();
-        topologyManager.setRandom(Simulator.random);
-
-        simulation.setSimpleNodeFactory(new DefaultNodeFactory(simulation.getSimulator(), PingPongNode.class, PingPongApplication.class, BroadcastRoutingLayer.class));
-        simulation.setSinkNodeFactory(new DefaultNodeFactory(simulation.getSimulator(), PingPongNode.class, PingPongApplication.class, BroadcastRoutingLayer.class));
-
-        simulation.setDisplay(this);
-        simulation.setup();
-
-        // adicionar um nó sink e dois nós simples
-        //SinkNode sinkNode = null;
-        sinkNode = null;
-        app = new PingPongApplication();
-        List<Node> listOfSimpleNodes = null;
-        try {
-
-            sinkNode = (SimpleNode) simulation.getSinkNodeFactory().createNode((short) 1);
-            sinkNode.setRoutingLayer(new BroadcastRoutingLayer());
-            sinkNode.addApplication(app);
-            sinkNode.setPaintNeighborhood(true);
-            listOfSimpleNodes = simulation.getSimpleNodeFactory().createNodes(2, size - 1);
-            simulation.getNetwork().addNode(sinkNode);
-            for (Node simpleNode1 : listOfSimpleNodes) {
-                simpleNode1.setRoutingLayer(new BroadcastRoutingLayer());
-                simpleNode1.addApplication(new PingPongApplication());
-                simulation.getNetwork().addNode(SensorNode.cast(simpleNode1));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        simulation.getNetwork().applyTopology(topologyManager);
-
-        update();
-        networkBuilded = false;
-        networkRunned = false;
-        networkDeployed = true;
-    }
-
     public void viewVizinhos(boolean selected) {
         if (simulation.getSimulator() != null) {
             for (Node node : simulation.getSimulator().getNodes()) {
@@ -1076,7 +982,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
                     SummaryStatistics stat = new SummaryStatistics();
                     for (Node node : NodesEnergyWatcher.this.nodes) {
 //                        double c = 100 - (node.getBateryEnergy().getCurrentPower() * 100 / node.getBateryEnergy().getInitialPower());
-                        double c = node.getBateryEnergy().getLastConsume()<0?0:node.getBateryEnergy().getLastConsume();
+                        double c = node.getBateryEnergy().getLastConsume() < 0 ? 0 : node.getBateryEnergy().getLastConsume();
                         stat.addValue(c);
                     }
                     double x = NodesEnergyWatcher.this.nodes.get(0).getSimulator().getSimulationTimeInMillisec();
@@ -1145,6 +1051,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
                 ArrayList<Node> nodes = (ArrayList<Node>) nf.createNodes(nNodes);
                 nodes = tm.apply(selectedArea.getBounds(), nodes);
                 for (Node node : nodes) {
+                    node.getConfig().setSetRadioRange(100);
                     simulation.getNetwork().addNode((SensorNode) node);
                 }
             } catch (Exception ex) {

@@ -8,9 +8,9 @@ import pt.unl.fct.di.mei.securesim.core.Simulator;
 import pt.unl.fct.di.mei.securesim.core.nodes.Node;
 import pt.unl.fct.di.mei.securesim.core.radio.RadioModel;
 import pt.unl.fct.di.mei.securesim.ui.IDisplayable;
-import pt.unl.fct.di.mei.securesim.network.nodes.SimpleNode;
+import pt.unl.fct.di.mei.securesim.network.nodes.basic.Mica2SensorNode;
 
-public class PingPongNode extends SimpleNode implements IDisplayable {
+public class PingPongNode extends Mica2SensorNode implements IDisplayable {
 
     private static int CLEAR_TIME = Simulator.ONE_SECOND * 10;
 
@@ -51,10 +51,10 @@ public class PingPongNode extends SimpleNode implements IDisplayable {
                 c = Color.yellow;
             } else if (getId()==945) {
                 c = Color.MAGENTA;
-            } else if (sending) {
+            } else if (getMacLayer().isSending()) {
                 c = Color.blue;
-            } else if (receiving) {
-                if (corrupted) {
+            } else if (getMacLayer().isReceiving()) {
+                if (getMacLayer().isCorrupted()) {
                     c = Color.red;
                 } else {
                     c = Color.green;
@@ -101,6 +101,11 @@ public class PingPongNode extends SimpleNode implements IDisplayable {
     
     public static PingPongNode cast(Node n) {
         return (PingPongNode) n;
+    }
+
+    @Override
+    public void init() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
    
 }

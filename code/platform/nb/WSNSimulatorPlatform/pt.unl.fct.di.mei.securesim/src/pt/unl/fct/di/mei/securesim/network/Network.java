@@ -5,8 +5,6 @@ import java.util.logging.Logger;
 import pt.unl.fct.di.mei.securesim.configuration.ConfigurableObject;
 import pt.unl.fct.di.mei.securesim.core.Simulator;
 import pt.unl.fct.di.mei.securesim.network.nodes.SensorNode;
-import pt.unl.fct.di.mei.securesim.network.nodes.SimpleNode;
-import pt.unl.fct.di.mei.securesim.network.nodes.SinkNode;
 import pt.unl.fct.di.mei.securesim.topology.TopologyManager;
 
 public abstract class Network extends ConfigurableObject {
@@ -50,31 +48,30 @@ public abstract class Network extends ConfigurableObject {
 	}
 
 	public void addNode(SensorNode node){
-			if (node instanceof SimpleNode){
+			if (!node.isSinkNode() ){
 				addSimpleNode(node);
 				
-			}else if(node instanceof SinkNode){
+			}else {
 				addSinkNode(node);
-			}else
-				throw new IllegalArgumentException("Node must be a instance of SimpleNode or SinkNode Class");
+			}
 	}
 	
 	public void addSimpleNode(SensorNode node){
-		if (node instanceof SimpleNode){
+		if (!node.isSinkNode()){
 			simpleNodes.store(node);
 			nodeDB.store(node);
 			LOG.finest("Added simple node");
 		}else
-			throw new IllegalArgumentException("Node must be a instance of SimpleNode Class");
+			throw new IllegalArgumentException("Cannot be Node Sink");
 	}
 	
 	public void addSinkNode(SensorNode node){
-		if (node instanceof SinkNode){
+		if (node.isSinkNode()){
 			sinkNodes.store(node);
 			nodeDB.store(node);
 			LOG.finest("Added sink node");
 		}else
-			throw new IllegalArgumentException("Node must be a instance of SinkNode Class");
+			throw new IllegalArgumentException("Must be Node Sink");
 		
 	}
 	public void removeNode(int id){

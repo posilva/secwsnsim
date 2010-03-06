@@ -9,7 +9,6 @@ import java.awt.Graphics;
 
 import pt.unl.fct.di.mei.securesim.core.ISimulationDisplay;
 import pt.unl.fct.di.mei.securesim.core.Simulator;
-import pt.unl.fct.di.mei.securesim.core.nodes.Mica2Node;
 import pt.unl.fct.di.mei.securesim.core.nodes.Node;
 import pt.unl.fct.di.mei.securesim.core.radio.RadioModel;
 
@@ -17,9 +16,8 @@ import pt.unl.fct.di.mei.securesim.core.radio.RadioModel;
  * @author posilva
  * 
  */
-public abstract class SensorNode extends Mica2Node {
+public abstract class SensorNode extends Node {
 
-    protected boolean sinkNode = false;
     private boolean paintNeighborhoodDst = false;
     private boolean paintNeighborhoodOrg = false;
     private boolean showID = false;
@@ -31,14 +29,11 @@ public abstract class SensorNode extends Mica2Node {
      */
     public SensorNode(Simulator sim, RadioModel radioModel) {
         super(sim, radioModel);
+        configureMACLayer(radioModel);
+
     }
 
-    /**
-     * @return the sinkNode
-     */
-    public boolean isSinkNode() {
-        return sinkNode;
-    }
+    protected abstract void configureMACLayer(RadioModel radioModel);
 
     @Override
     public void displayOn(ISimulationDisplay disp) {
@@ -53,11 +48,11 @@ public abstract class SensorNode extends Mica2Node {
             super.displayOn(disp);
 
             if (isPaintNeighborhoodDst() && isPaintNeighborhoodOrg()) {
-                for (Node n : getNeighborhood().neighbors) {
+                for (Node n : getMacLayer().getNeighborhood().neighbors) {
                     int x2 = disp.x2ScreenX(n.getX());
                     int y2 = disp.y2ScreenY(n.getY());
                     // tem os dois sentidos
-                    if (getNeighborhood().neighborsThatKnowMeSet.contains(n)) {
+                    if (getMacLayer().getNeighborhood().neighborsThatKnowMeSet.contains(n)) {
                         g.setColor(Color.GREEN);
                         g.drawLine(x, y, x2, y2);
                     } else {
@@ -65,19 +60,12 @@ public abstract class SensorNode extends Mica2Node {
                             g.setColor(Color.BLUE);
                             g.drawLine(x, y, x2, y2);
                         }
-//                        else {
-//                            if (isPaintNeighborhoodOrg()) {
-//                                g.setColor(Color.RED);
-//                                g.drawLine(x, y, x2, y2);
-//                            }
-//                        }
-
                     }
                 }
             } else {
                 if (isPaintNeighborhoodDst()) {
                     g.setColor(Color.BLUE);
-                    for (Node n : getNeighborhood().neighbors) {
+                    for (Node n : getMacLayer().getNeighborhood().neighbors) {
                         int x2 = disp.x2ScreenX(n.getX());
                         int y2 = disp.y2ScreenY(n.getY());
                         g.drawLine(x, y, x2, y2);
@@ -85,7 +73,7 @@ public abstract class SensorNode extends Mica2Node {
                 } else {
                     if (isPaintNeighborhoodOrg()) {
                         g.setColor(Color.RED);
-                        for (Node n : getNeighborhood().neighborsThatKnowMe) {
+                        for (Node n : getMacLayer().getNeighborhood().neighborsThatKnowMe) {
                             int x2 = disp.x2ScreenX(n.getX());
                             int y2 = disp.y2ScreenY(n.getY());
                             g.drawLine(x, y, x2, y2);
