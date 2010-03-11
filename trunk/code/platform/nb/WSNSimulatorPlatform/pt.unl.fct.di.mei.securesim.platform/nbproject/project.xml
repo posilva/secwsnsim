@@ -34,7 +34,7 @@
             </reference>
         </references>
         <swingapp xmlns="http://www.netbeans.org/ns/form-swingapp/1">
-            <application-class name="pt.unl.fct.di.mei.securesim.platform.PlatformApp"/>
+            <application-class name="org.mei.securesim.platform.PlatformApp"/>
         </swingapp>
     </configuration>
 </project>

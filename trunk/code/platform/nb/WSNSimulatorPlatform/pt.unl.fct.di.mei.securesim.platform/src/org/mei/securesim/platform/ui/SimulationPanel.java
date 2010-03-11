@@ -11,7 +11,6 @@ import org.mei.securesim.core.SimulatorFinishListener;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 import org.mei.securesim.core.events.SimulatorEvent;
-import org.mei.securesim.test.broadcast.BroadcastRoutingLayer;
 import org.mei.securesim.test.broadcast.BroadcastNode;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -43,6 +42,7 @@ import org.mei.securesim.simulation.SimulationConfiguration;
 import org.mei.securesim.simulation.basic.BasicSimulation;
 import org.mei.securesim.test.pingpong.PingPongApplication;
 import org.mei.securesim.test.pingpong.PingPongNode;
+import org.mei.securesim.test.pingpong.PingPongRoutingLayer;
 import org.mei.securesim.topology.RandomTopologyManager;
 
 /**
@@ -1036,7 +1036,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         @Override
         protected Object doInBackground() {
             RandomTopologyManager tm = new RandomTopologyManager();
-            NodeFactory nf = new DefaultNodeFactory(getSimulator(), PingPongNode.class, PingPongApplication.class, BroadcastRoutingLayer.class);
+            NodeFactory nf = new DefaultNodeFactory(getSimulator(), PingPongNode.class, PingPongApplication.class, PingPongRoutingLayer.class);
             boolean ok = false;
             int nNodes = 0;
             while (!ok) {

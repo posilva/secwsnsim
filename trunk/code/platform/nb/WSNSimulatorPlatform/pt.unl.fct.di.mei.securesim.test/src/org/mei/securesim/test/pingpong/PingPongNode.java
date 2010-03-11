@@ -17,7 +17,7 @@ public class PingPongNode extends Mica2SensorNode implements IDisplayable {
 
     public PingPongNode(Simulator sim, RadioModel radioModel) {
         super(sim, radioModel);
-        setRoutingLayer(new PingPongRoutingLayer());
+        setRoutingLayer(new PingPongRoutingLayer_());
     }
    
     /** This field is true if this mote rebroadcasted the message already. */

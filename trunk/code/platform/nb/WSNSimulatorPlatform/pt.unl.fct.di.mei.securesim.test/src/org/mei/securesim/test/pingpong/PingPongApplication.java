@@ -1,7 +1,5 @@
 package org.mei.securesim.test.pingpong;
 
-import java.util.HashSet;
-import java.util.Hashtable;
 import org.mei.securesim.cpu.CPUProcess;
 import org.mei.securesim.core.Application;
 import org.mei.securesim.core.Event;
@@ -23,7 +21,6 @@ public class PingPongApplication extends Application {
             if (m.type == TypeOfMessage.PING) {
                 sendPongMessage(m);
             } else {
-
                 boolean r = sendPingMessage(m.sourceID);
                 if (getHostNode().getId() == 1) {
                     if (!r) {
@@ -47,8 +44,6 @@ public class PingPongApplication extends Application {
         PING,
         PONG
     };
-    protected Hashtable sentMessages = new Hashtable();
-    protected HashSet<PingPongMessage> receivedMessages = new HashSet<PingPongMessage>();
 
     /**
      * @param node
@@ -70,16 +65,8 @@ public class PingPongApplication extends Application {
         getHostNode().getCPU().execute(new CPUProcess() {
 
             public void run() {
-                if (!(msg instanceof PingPongMessage)) {
-                    throw new IllegalStateException("Message must be a instance of " + PingPongMessage.class.getSimpleName());
-                }
                 PingPongMessage m = (PingPongMessage) msg;
-                // se não recebi a mensagem trato
-                if (!receivedMessages.contains(msg)) {
-                    receivedMessages.add((PingPongMessage) msg);
-                    handleMessage(m, msg);
-                } else {
-                }
+                handleMessage(m, msg);
             }
         });
     }
@@ -102,27 +89,33 @@ public class PingPongApplication extends Application {
         return new PingPongApplication();
     }
 
-    public class PingPongMessage {
+    public class Message {
 
         public long id = countMessages++;
         public int sourceID;
         public int destID;
+
+        public Message(int sourceID, int destID) {
+            this.sourceID = sourceID;
+            this.destID = destID;
+        }
+    }
+
+    public class PingPongMessage extends Message {
+
         public long replyToID;
         public TypeOfMessage type = TypeOfMessage.PING;
 
         public PingPongMessage(int sourceID, int destID) {
-            this.sourceID = sourceID;
-            this.destID = destID;
+            super(sourceID, destID);
         }
+
     }
 
     public boolean sendPingMessage(int to) {
 
         boolean result;
         PingPongMessage msg = new PingPongMessage(getNode().getId(), to);
-        sentMessages.put(msg, new Integer(to));
-        receivedMessages.add(msg);
-        //    System.out.println("Ping " + getNode().getId() + ": " + msg.id + " to " + to);
         sendPPMessage(msg);
         return true;
 
@@ -134,9 +127,6 @@ public class PingPongApplication extends Application {
         PingPongMessage msg = new PingPongMessage(getNode().getId(), m.sourceID);
         msg.type = TypeOfMessage.PONG;
         msg.replyToID = m.id;
-        //      System.out.println("Pong " + getNode().getId() + ": " + msg.id + " to " + m.sourceID + " Reply to " + m.id);
-        sentMessages.put(msg, new Integer(m.sourceID));
-        receivedMessages.add(msg);
         sendPPMessage(msg);
         return true;
 

@@ -23,7 +23,6 @@
  */
 package org.mei.securesim.core;
 
-import java.lang.reflect.Constructor;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -203,7 +202,7 @@ public class Simulator {
             event.execute();
             //System.out.println("Executado um evento: "+ event.getClass().getSimpleName());
         } else {
-            
+
             if (!finished) {
                 fireOnFinishSimulation(new SimulatorEvent(new String("EXIT")));
             }
@@ -248,8 +247,6 @@ public class Simulator {
      * experiment!
      */
     public void runWithDisplay() {
-
-        display.show();
         while (true) {
             step(SIMULATOR_STEPS);
             display.update();
@@ -261,24 +258,28 @@ public class Simulator {
      * The user of the simulator must first add all the nodes used in the
      * experiment!
      */
+    /**
+     * Fazer a simulação andar a simulação andar mais depressa
+     */
     public void runWithDisplayInRealTime() {
         Thread t = new Thread() {
 
             public void run() {
-//                Display disp = new Display(Simulator.this, maxCoordinate);
                 display.show();
 
                 long initDiff = System.currentTimeMillis() - getSimulationTimeInMillisec();
                 while (true) {
-                    step(100);
+                    step(1);
+
                     display.update();
+
                     long diff = System.currentTimeMillis() - getSimulationTimeInMillisec();
                     if (diff < initDiff) {
                         try {
                             sleep(initDiff - diff);
                         } catch (Exception e) {
                             System.out.println("ERROR IN RUN. EXITING");
-                            fireOnFinishSimulation(new SimulatorEvent(""));
+                            fireOnFinishSimulation(new SimulatorEvent("ERROR IN RUN. EXITING"));
                         }
                     }
                 }
@@ -325,70 +326,6 @@ public class Simulator {
         Iterator nodeIterator = nodes.iterator();
         while (nodeIterator.hasNext()) {
             addNode((Node) nodeIterator.next());
-        }
-    }
-
-    /**
-     * Creates a node in the simulator at the given position with the given id.
-     * WARNING: Please call {@link RadioModel#updateNeighborhoods} after you
-     * added all nodes to the system.
-     *
-     * @param nodeClass the class of motes we want to use during the experiment
-     * @param radioModel the radioModel to use
-     * @param nodeId the id of the node
-     * @param x the x coordinate
-     * @param y the y coordinate
-     * @param z the z coordinate
-     * @return returns the node created
-     * @throws Exception throws various exceptions due to the generic way of
-     *         constructing the classes
-     */
-    public Node createNode(Class nodeClass, RadioModel radioModel, short nodeId, double x, double y, double z) throws Exception {
-        Constructor c = nodeClass.getConstructor(new Class[]{Simulator.class, RadioModel.class});
-        Node node = (Node) c.newInstance(new Object[]{this, radioModel});
-        node.setPosition(x, y, z);
-        node.setId(nodeId);
-        addNode(node);
-        return node;
-    }
-
-    /**
-     * Creates a given number of motes dispersed randomly over a given square area.
-     * WARNING: Please call {@link RadioModel#updateNeighborhoods} after you
-     * added all nodes to the system.
-     *
-     * @param nodeClass the class of motes we want to use during the experiment
-     * @param radioModel the radioModel to use
-     * @param startNodeId the first node id of the created nodes
-     * @param nodeNum the number of motes
-     * @param areaWidth the size of one side of the square shaped area
-     * @param maxElevation the maximum node elevation (z coordinate)
-     * @return returns a reference to the first node in the simulator
-     * @throws Exception throws various exceptions due to the generic way of
-     *         constructing the classes
-     */
-    public Node createNodes(Class nodeClass, RadioModel radioModel, int startNodeId, int nodeNum, double areaWidth, double maxElevation) throws Exception {
-        Constructor c = nodeClass.getConstructor(new Class[]{Simulator.class, RadioModel.class});
-        for (int i = 0; i < nodeNum; ++i) {
-            Node node = (Node) c.newInstance(new Object[]{this, radioModel});
-            node.setPosition(areaWidth * random.nextDouble(), areaWidth * random.nextDouble(), maxElevation * random.nextDouble());
-            node.setId((short) (startNodeId + i));
-            addNode(node);
-        }
-        return ((LinkedList<Node>) getNodes()).getFirst();
-    }
-
-    /**
-     * Clears the List of nodes.
-     */
-    public void clear() {
-        firstNode = null;
-    }
-    public double min_timing = Double.MAX_VALUE;
-
-    public void updateMin(double min) {
-        if (min < min_timing) {
-            min_timing = min;
         }
     }
 
@@ -447,8 +384,6 @@ public class Simulator {
 
     protected synchronized void fireOnFinishSimulation(SimulatorEvent evt) {
         Object[] listeners = listenerList.getListenerList();
-        // Each listener occupies two elements - the first is the listener class
-        // and the second is the listener instance
         for (int i = 0; i < listeners.length; i += 2) {
             if (listeners[i] == SimulatorFinishListener.class) {
                 ((SimulatorFinishListener) listeners[i + 1]).onFinish(evt);
