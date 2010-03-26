@@ -67,7 +67,10 @@ public class GaussianRadioModel extends RadioModel {
      * noise. The dynamic noise is recalculated for each transmission.
      */
     public double dynamicRandomFactor = DEFAULT_DYNAMIC_RANDOM_FACTOR;
-    private double maxDistance=0;
+    /**
+     * 
+     */
+    private double maxDistance = 0;
 
     /**
      * A parameterized constructor used to set the simulator at creation time.
@@ -79,7 +82,11 @@ public class GaussianRadioModel extends RadioModel {
         setSimulator(sim);
     }
 
+    /**
+     *
+     */
     public GaussianRadioModel() {
+        super();
     }
 
     /**
@@ -88,9 +95,9 @@ public class GaussianRadioModel extends RadioModel {
      * This operation is extremely expensive and should be used sparsely.
      */
     public void updateNeighborhoods() {
-         /**
-          * Clear neighborhood information
-          */
+        /**
+         * Clear neighborhood information
+         */
         for (Node srcNode : getSimulator().getNodes()) {
             srcNode.getMacLayer().getNeighborhood().neighbors.clear();
             srcNode.getMacLayer().getNeighborhood().neighborsSet.clear();
@@ -106,8 +113,8 @@ public class GaussianRadioModel extends RadioModel {
                 if (srcNode != dstNode) {
                     double staticRadioStrength = getStaticFading(srcNode, dstNode);
                     if (staticRadioStrength >= radioStrengthCutoff) {
-                       final double d=srcNode.getDistance(dstNode);
-                        maxDistance=(Math.max(d,maxDistance));
+                        final double d = srcNode.getDistance(dstNode);
+                        maxDistance = (Math.max(d, maxDistance));
                         neighborhood.neighbors.add(dstNode);
                         dstNode.getMacLayer().getNeighborhood().neighborsThatKnowMe.add(srcNode);
                         neighborhood.staticFadings.add(staticRadioStrength);
@@ -115,7 +122,7 @@ public class GaussianRadioModel extends RadioModel {
                 }
             }
             for (int i = 0; i < neighborhood.neighbors.size(); i++) {// TODO
-                // Optimizar
+                // TODO Optimizar
                 neighborhood.dynamicStrengths.add(0.0);
             }
         }
@@ -126,9 +133,7 @@ public class GaussianRadioModel extends RadioModel {
             srcNode.getMacLayer().getNeighborhood().neighborsSet = new HashSet(srcNode.getMacLayer().getNeighborhood().neighbors);
             srcNode.getMacLayer().getNeighborhood().neighborsThatKnowMeSet = new HashSet(srcNode.getMacLayer().getNeighborhood().neighborsThatKnowMe);
         }
-
-
-        System.out.println("MAXIMUM DISTANCE: "+ maxDistance);
+        System.out.println("MAXIMUM DISTANCE: " + maxDistance);
     }
 
     /**
@@ -148,16 +153,8 @@ public class GaussianRadioModel extends RadioModel {
         double staticRandomFading = 1.0 + staticRandomFactor
                 * Simulator.random.nextGaussian();
         final double distanceSquare = sender.getDistanceSquare(receiver);
-      
-
-
-
-        //  System.out.println("Distance: "+sender.getDistance(receiver));
-
-        return staticRandomFading <= 0.0 ? 0.0 : sender.getConfig().getMaximumRadioStrength()
-                * staticRandomFading
-                / (1.0 + Math.pow(
-                distanceSquare, fallingFactorHalf));
+        return staticRandomFading <= 0.0 ? 0.0 : sender.getConfig().getMaximumRadioStrength() * staticRandomFading
+                / (1.0 + Math.pow(distanceSquare, fallingFactorHalf));
     }
 
     /**
@@ -173,12 +170,9 @@ public class GaussianRadioModel extends RadioModel {
      *            {@link GaussianRadioModel#getStaticFading}.
      * @return The signal strength at the receiver.
      */
-    protected double getDynamicStrength(double signalStrength,
-            double staticFading) {
-        double dynamicRandomFading = 1.0 + dynamicRandomFactor
-                * Simulator.random.nextGaussian();
-        return dynamicRandomFading <= 0.0 ? 0.0 : signalStrength * staticFading
-                * dynamicRandomFading;
+    protected double getDynamicStrength(double signalStrength, double staticFading) {
+        double dynamicRandomFading = 1.0 + dynamicRandomFactor * Simulator.random.nextGaussian();
+        return dynamicRandomFading <= 0.0 ? 0.0 : signalStrength * staticFading * dynamicRandomFading;
     }
 
     /**
@@ -229,21 +223,6 @@ public class GaussianRadioModel extends RadioModel {
 
             int i = neighbors.size();
             getStream2Node().startTransmissionTime();
-
-
-//            for (Node node : neighbors) {
-//                if(node.isTurnedOn()){
-//                    double dynamicStrength = getDynamicStrength(strength,staticFadings.get(i));
-//                    if (dynamicStrengths.get(i) == null) {
-//                        dynamicStrengths.add(dynamicStrength);
-//                    }
-//                    dynamicStrengths.set(i, dynamicStrength);
-//                    node.receptionBegin(dynamicStrength, stream);
-//
-//                }
-//                i++;
-//            }
-
             while (--i >= 0) {
                 if (neighbors.get(i).isTurnedOn()) {
                     double dynamicStrength = getDynamicStrength(strength,
@@ -265,17 +244,12 @@ public class GaussianRadioModel extends RadioModel {
          * {@link RadioModel.Neighborhood#beginTransmission} method.
          */
         public void endTransmission() {
-//            int i=0;
-//            for (Node node : neighbors) {
-//                    node.receptionEnd(dynamicStrengths.get(i), stream);
-//            }
             int i = neighbors.size();
             while (--i >= 0) {
                 neighbors.get(i).getMacLayer().receptionEnd(dynamicStrengths.get(i), stream);
             }
-            
-            getStream2Node().getBateryEnergy().consumeTransmission(getStream2Node().endTransmissionTime());
 
+            getStream2Node().getBateryEnergy().consumeTransmission(1); //getStream2Node().endTransmissionTime()
             stream = null;
         }
     }

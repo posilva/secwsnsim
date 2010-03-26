@@ -33,6 +33,7 @@ import org.mei.securesim.core.events.SimulatorEvent;
 
 import org.mei.securesim.core.nodes.Node;
 import org.mei.securesim.core.radio.RadioModel;
+import org.mei.securesim.network.Network;
 
 /**
  * This class is the heart of Prowler, as this is the event based scheduler, or
@@ -88,6 +89,27 @@ public class Simulator {
      */
     public Node firstNode = null;
     private ISimulationDisplay display;
+	private Network network = null;
+
+
+	/**
+	 * @param network the network to set
+	 */
+	public void setNetwork(Network network) {
+		this.network = network;
+		this.network.setSimulator(this);
+	}
+
+	/**
+	 * @return the network
+	 */
+	public Network getNetwork() {
+		return network;
+	}
+
+	public Collection<Node> getNodes(){
+		return network.getNodeDB().nodes();
+	}
 
     public static void setSimulatorSpeed(int value) {
         // 100% -> SIMULATION_SPEED_MAX
@@ -334,13 +356,6 @@ public class Simulator {
      */
     public void setNodes(LinkedList<Node> nodes) {
         this.nodes = (LinkedList<Node>) nodes;
-    }
-
-    /**
-     * @return the nodes
-     */
-    public Collection<Node> getNodes() {
-        return nodes;
     }
 
     /**

@@ -3,8 +3,11 @@
  */
 package org.mei.securesim.topology;
 
+
+import org.mei.securesim.annotation.Annotated;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import org.mei.securesim.annotation.Parameter;
 
 
 
@@ -14,30 +17,30 @@ import org.mei.securesim.core.nodes.Node;
  * @author posilva
  * 
  */
-public class GridTopologyManager extends TopologyManager {
+public class GridTopologyManager extends TopologyManager implements Annotated {
 	/**
 	 * 
 	 */
-	public GridTopologyManager() {
+    @Parameter(label="Indique a largura da quadricula",value="50")
+    public String gridW; 
+    @Parameter(label="Indique a altura da quadricula",value="50")
+    public String gridH;
+
+    public GridTopologyManager() {
 
 	}
 
-
-	public int mdc( int x, int y ){
-        if(x == y){
-            return x;
-        }
-        else if( y > x ){
-            return mdc( x, y-x );
-        }
-        else if( x > y ){
-            return mdc( x - y, y );
-        }
-        return 0;
-    }
-
     @Override
     public ArrayList<Node> apply(Rectangle rect, ArrayList<Node> nodes) {
-        throw new UnsupportedOperationException("Not supported yet.");
+
+     int h= Integer.valueOf(gridH);
+     int w= Integer.valueOf(gridW);
+
+
+     if (rect.width<w || rect.height<h){
+         
+     }
+
+     return nodes;
     }
 }

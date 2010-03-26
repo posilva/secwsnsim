@@ -14,31 +14,4 @@ import org.mei.securesim.network.Network;
  * 
  */
 public class DefaultSimulator extends Simulator {
-	private Network network = null;
-
-	/**
-	 * 
-	 */
-	public DefaultSimulator() {
-
-	}
-
-	/**
-	 * @param network the network to set
-	 */
-	public void setNetwork(Network network) {
-		this.network = network;
-		this.network.setSimulator(this);
-	}
-
-	/**
-	 * @return the network
-	 */
-	public Network getNetwork() {
-		return network;
-	}
-	
-	public Collection<Node> getNodes(){
-		return network.getNodeDB().nodes();
-	}
 }

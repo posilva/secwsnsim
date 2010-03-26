@@ -61,9 +61,7 @@ public class PingPongApplication extends Application {
     @SuppressWarnings("element-type-mismatch")
     public void receiveMessage(Object message) {
         final Object msg = message;
-
         getHostNode().getCPU().execute(new CPUProcess() {
-
             public void run() {
                 PingPongMessage m = (PingPongMessage) msg;
                 handleMessage(m, msg);

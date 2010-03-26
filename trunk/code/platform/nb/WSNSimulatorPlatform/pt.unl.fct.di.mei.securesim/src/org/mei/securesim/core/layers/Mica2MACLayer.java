@@ -172,7 +172,9 @@ public class Mica2MACLayer extends MACLayer{
 	 * {@link Node#receptionBegin} for more information.
 	 */
 	public void receptionBegin(double strength, Object stream) {
-		addNoise(strength, stream);
+        // inicio da recepção, pode-se verificar o estado do nó e
+        // caso o TX esteja ON recebe senão aborta
+        addNoise(strength, stream);
 	}
 
 	/**
@@ -335,6 +337,7 @@ public class Mica2MACLayer extends MACLayer{
 	 *            the level of noise
 	 */
 	protected void removeNoise(double level, Object stream) {
+        // guarda o ID e compara como o que recebeu no inicio da recepção
 		if (parentID == ((Node) stream).getId()) {
 			receiving = false;
 			if (!corrupted) {
@@ -354,7 +357,4 @@ public class Mica2MACLayer extends MACLayer{
 		}
 
 	}
-
-
-
 }

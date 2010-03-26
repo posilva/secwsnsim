@@ -7,34 +7,31 @@ import org.mei.securesim.core.ISimulationDisplay;
 import org.mei.securesim.core.Simulator;
 import org.mei.securesim.core.radio.RadioModel;
 import org.mei.securesim.network.Network;
-import org.mei.securesim.network.basic.DefaultNetwork;
-import org.mei.securesim.core.nodes.basic.DefaultNodeFactory;
+import org.mei.securesim.core.factories.NodeFactory;
 
 public abstract class Simulation extends ConfigurableObject {
 
     public final static Logger LOG = Logger.getLogger(Simulation.class.getName());
     protected String name;
-    protected DefaultSimulator simulator;
+    private String description;
+    protected Simulator simulator;
     protected RadioModel radioModel;
-    protected DefaultNodeFactory simpleNodeFactory;
-    protected DefaultNodeFactory sinkNodeFactory;
-    protected DefaultNetwork network;
+    protected NodeFactory simpleNodeFactory;
+    protected Network network;
     protected ISimulationDisplay display;
-    private boolean bPreInit=false;
+    private boolean bPreInit = false;
 
     public Simulation() {
         super();
     }
 
     public void setup() {
-        if(!bPreInit) preInit();
+        if (!bPreInit) {
+            preInit();
+        }
         if (simpleNodeFactory == null) {
             throw new IllegalStateException("Não existe um Simple NodeFactory instanciado");
         }
-        if (sinkNodeFactory == null) {
-            throw new IllegalStateException("Não existe um Sink NodeFactory instanciado");
-        }
-
     }
 
     public ISimulationDisplay getDisplay() {
@@ -49,7 +46,7 @@ public abstract class Simulation extends ConfigurableObject {
         return this.simulator;
     }
 
-    public void setSimulator(DefaultSimulator simulator) {
+    public void setSimulator(Simulator simulator) {
         this.simulator = simulator;
     }
 
@@ -57,13 +54,15 @@ public abstract class Simulation extends ConfigurableObject {
         return this.network;
     }
 
-    public void setNetwork(DefaultNetwork network) {
+    public void setNetwork(Network network) {
         this.network = network;
     }
 
     public abstract void stop();
 
     public abstract void start();
+
+    public abstract void reset();
 
     public String getName() {
         return name;
@@ -81,26 +80,19 @@ public abstract class Simulation extends ConfigurableObject {
         this.radioModel = radioModel;
     }
 
-    public DefaultNodeFactory getSimpleNodeFactory() {
+    public NodeFactory getNodeFactory() {
         return simpleNodeFactory;
     }
 
-    public void setSimpleNodeFactory(DefaultNodeFactory simpleNodeFactory) {
+    public void setNodeFactory(NodeFactory simpleNodeFactory) {
         this.simpleNodeFactory = simpleNodeFactory;
     }
 
-    public DefaultNodeFactory getSinkNodeFactory() {
-        return sinkNodeFactory;
-    }
-
-    public void setSinkNodeFactory(DefaultNodeFactory sinkNodeFactory) {
-        this.sinkNodeFactory = sinkNodeFactory;
-    }
     protected void init() {
     }
 
     public void preInit() {
-        bPreInit=true;
+        bPreInit = true;
         if (simulator == null) {
             throw new IllegalStateException("Não existe um simulador instanciado");
         }
@@ -119,7 +111,12 @@ public abstract class Simulation extends ConfigurableObject {
 
     }
 
-  public void reset(){
-      
-  }
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
 }

@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.mei.securesim.cpu;
 
 import org.mei.securesim.core.nodes.Node;
@@ -12,15 +11,25 @@ import org.mei.securesim.core.nodes.Node;
  * @author POSilva
  */
 public class NodeCPU {
+
     private Node node;
+    private boolean on = false;
 
     public NodeCPU(Node n) {
         this.node = n;
     }
 
-    public void execute(CPUProcess process){
+    public boolean isOn() {
+        return on;
+    }
+
+    public void execute(CPUProcess process) {
+        switchON();
+        long start = System.nanoTime();
         process.run();
-        getNode().getBateryEnergy().consumeProcessing();
+        long end = System.nanoTime();
+        getNode().getBateryEnergy().consumeProcessing(end-start);
+        switchOFF();
     }
 
     public Node getNode() {
@@ -29,5 +38,16 @@ public class NodeCPU {
 
     public void setNode(Node node) {
         this.node = node;
+    }
+
+    private void switchON() {
+        if(!isOn()){
+            getNode().getBateryEnergy().consumeCPUTransitionToON();
+            on=true;
+        }
+    }
+
+    private void switchOFF() {
+        on=false;
     }
 }
