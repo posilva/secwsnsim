@@ -16,26 +16,21 @@ public abstract class MACLayer extends Layer {
 
     RadioModel radioModel;
     RadioModel.Neighborhood neighborhood;
-
-	// //////////////////////////////
-	// STATE VARIABLES
-	// //////////////////////////////
-
-	/**
-	 * State variable, true if radio is in sending mode, this means it has a one
-	 * message long buffer, which is full and the Node is trying to transmit its
-	 * content.
-	 */
-	protected boolean sending = false;
-
-	/** State variable, true if the radio is transmitting a message right now. */
-	protected boolean transmitting = false;
-
-	/** State variable, true if the radio is in receiving mode */
-	protected boolean receiving = false;
-
-	/** State variable, true if the last received message got corrupted by noise */
-	protected boolean corrupted = false;
+    // //////////////////////////////
+    // STATE VARIABLES
+    // //////////////////////////////
+    /**
+     * State variable, true if radio is in sending mode, this means it has a one
+     * message long buffer, which is full and the Node is trying to transmit its
+     * content.
+     */
+    protected boolean sending = false;
+    /** State variable, true if the radio is transmitting a message right now. */
+    protected boolean transmitting = false;
+    /** State variable, true if the radio is in receiving mode */
+    protected boolean receiving = false;
+    /** State variable, true if the last received message got corrupted by noise */
+    protected boolean corrupted = false;
 
     public boolean isCorrupted() {
         return corrupted;
@@ -101,7 +96,7 @@ public abstract class MACLayer extends Layer {
         neighborhood.endTransmission();
     }
 
-        /**
+    /**
      * Called for each transmission of a neighboring node by the radio model.
      * The <code>recpetionBegin</code> and <code>receptionEnd</code> calles can
      * be nested or interleaved, but they are always coming in pairs. The
@@ -138,5 +133,4 @@ public abstract class MACLayer extends Layer {
      * net.tinyos.prowler.Application)
      */
     public abstract boolean sendMessage(Object message, RoutingLayer layer);
-
 }

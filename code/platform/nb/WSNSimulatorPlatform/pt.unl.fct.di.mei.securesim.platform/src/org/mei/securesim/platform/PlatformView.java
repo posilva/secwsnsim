@@ -16,14 +16,21 @@ import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import org.mei.securesim.platform.ui.WorkbenchPanel;
 import org.mei.securesim.platform.ui.frames.SimulationWizardDialog;
-import org.mei.securesim.simulation.basic.BasicSimulation;
 
 /**
  * The application's main frame.
  */
 public class PlatformView extends FrameView {
+    private boolean workbenchVisible;
+
+    public boolean isWorkbenchVisible() {
+        return workbenchVisible;
+    }
+
+    public void setWorkbenchVisible(boolean workbenchVisible) {
+        this.workbenchVisible = workbenchVisible;
+    }
 
     public PlatformView(SingleFrameApplication app) {
         super(app);
@@ -83,6 +90,7 @@ public class PlatformView extends FrameView {
                 }
             }
         });
+        instance=this;
         workbenchPanel1.setVisible(false);
     }
 
@@ -104,17 +112,17 @@ public class PlatformView extends FrameView {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         mainPanel = new javax.swing.JPanel();
-        workbenchPanel1 = new WorkbenchPanel();
+        workbenchPanel1 = new org.mei.securesim.platform.ui.WorkbenchPanel();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         menuNewSimulation = new javax.swing.JMenuItem();
         menuOpenSImulation = new javax.swing.JMenuItem();
-        jSeparator3 = new javax.swing.JPopupMenu.Separator();
-        javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
+        menuSaveSimulation = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         statusPanel = new javax.swing.JPanel();
@@ -122,6 +130,10 @@ public class PlatformView extends FrameView {
         statusMessageLabel = new javax.swing.JLabel();
         statusAnimationLabel = new javax.swing.JLabel();
         progressBar = new javax.swing.JProgressBar();
+        jPanel1 = new javax.swing.JPanel();
+        lblNumNode = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        lblSimulationTime = new javax.swing.JLabel();
 
         mainPanel.setName("mainPanel"); // NOI18N
         mainPanel.setLayout(new java.awt.BorderLayout());
@@ -135,30 +147,37 @@ public class PlatformView extends FrameView {
         fileMenu.setText(resourceMap.getString("fileMenu.text")); // NOI18N
         fileMenu.setName("fileMenu"); // NOI18N
 
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, workbenchPanel1, org.jdesktop.beansbinding.ELProperty.create("${enabled}"), fileMenu, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(org.mei.securesim.platform.PlatformApp.class).getContext().getActionMap(PlatformView.class, this);
         menuNewSimulation.setAction(actionMap.get("newSimulation")); // NOI18N
+        menuNewSimulation.setIcon(resourceMap.getIcon("menuNewSimulation.icon")); // NOI18N
         menuNewSimulation.setText(resourceMap.getString("menuNewSimulation.text")); // NOI18N
         menuNewSimulation.setName("menuNewSimulation"); // NOI18N
         fileMenu.add(menuNewSimulation);
 
         menuOpenSImulation.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        menuOpenSImulation.setIcon(resourceMap.getIcon("menuOpenSImulation.icon")); // NOI18N
         menuOpenSImulation.setMnemonic('O');
         menuOpenSImulation.setText(resourceMap.getString("menuOpenSImulation.text")); // NOI18N
         menuOpenSImulation.setName("menuOpenSImulation"); // NOI18N
         fileMenu.add(menuOpenSImulation);
 
-        jSeparator3.setName("jSeparator3"); // NOI18N
-        fileMenu.add(jSeparator3);
-
-        exitMenuItem.setAction(actionMap.get("quit")); // NOI18N
-        exitMenuItem.setName("exitMenuItem"); // NOI18N
-        fileMenu.add(exitMenuItem);
+        menuSaveSimulation.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        menuSaveSimulation.setIcon(resourceMap.getIcon("menuSaveSimulation.icon")); // NOI18N
+        menuSaveSimulation.setMnemonic('S');
+        menuSaveSimulation.setText(resourceMap.getString("menuSaveSimulation.text")); // NOI18N
+        menuSaveSimulation.setName("menuSaveSimulation"); // NOI18N
+        fileMenu.add(menuSaveSimulation);
 
         jSeparator1.setName("jSeparator1"); // NOI18N
         fileMenu.add(jSeparator1);
 
-        jSeparator2.setName("jSeparator2"); // NOI18N
-        fileMenu.add(jSeparator2);
+        exitMenuItem.setAction(actionMap.get("quit")); // NOI18N
+        exitMenuItem.setIcon(resourceMap.getIcon("exitMenuItem.icon")); // NOI18N
+        exitMenuItem.setName("exitMenuItem"); // NOI18N
+        fileMenu.add(exitMenuItem);
 
         menuBar.add(fileMenu);
 
@@ -172,6 +191,8 @@ public class PlatformView extends FrameView {
         menuBar.add(helpMenu);
 
         statusPanel.setName("statusPanel"); // NOI18N
+        statusPanel.setPreferredSize(new java.awt.Dimension(508, 35));
+        statusPanel.setRequestFocusEnabled(false);
 
         statusPanelSeparator.setName("statusPanelSeparator"); // NOI18N
 
@@ -182,47 +203,97 @@ public class PlatformView extends FrameView {
 
         progressBar.setName("progressBar"); // NOI18N
 
+        jPanel1.setName("jPanel1"); // NOI18N
+        jPanel1.setPreferredSize(new java.awt.Dimension(328, 20));
+        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
+
+        lblNumNode.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNumNode.setText(resourceMap.getString("lblNumNode.text")); // NOI18N
+        lblNumNode.setToolTipText(resourceMap.getString("lblNumNode.toolTipText")); // NOI18N
+        lblNumNode.setName("lblNumNode"); // NOI18N
+        jPanel1.add(lblNumNode);
+
+        jPanel2.setName("jPanel2"); // NOI18N
+
+        lblSimulationTime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSimulationTime.setText(resourceMap.getString("lblSimulationTime.text")); // NOI18N
+        lblSimulationTime.setToolTipText(resourceMap.getString("lblSimulationTime.toolTipText")); // NOI18N
+        lblSimulationTime.setName("lblSimulationTime"); // NOI18N
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(193, Short.MAX_VALUE)
+                .addComponent(lblSimulationTime)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(lblSimulationTime)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel2);
+
         javax.swing.GroupLayout statusPanelLayout = new javax.swing.GroupLayout(statusPanel);
         statusPanel.setLayout(statusPanelLayout);
         statusPanelLayout.setHorizontalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 508, Short.MAX_VALUE)
+            .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
             .addGroup(statusPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(statusMessageLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 322, Short.MAX_VALUE)
-                .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(statusAnimationLabel)
+                .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(statusPanelLayout.createSequentialGroup()
+                        .addContainerGap(24, Short.MAX_VALUE)
+                        .addComponent(statusMessageLabel)
+                        .addGap(322, 322, 322))
+                    .addGroup(statusPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(statusPanelLayout.createSequentialGroup()
+                        .addGap(162, 162, 162)
+                        .addComponent(statusAnimationLabel))
+                    .addGroup(statusPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         statusPanelLayout.setVerticalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(statusPanelLayout.createSequentialGroup()
                 .addComponent(statusPanelSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(statusMessageLabel)
-                    .addComponent(statusAnimationLabel)
+                    .addComponent(statusAnimationLabel))
+                .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
                     .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(3, 3, 3))
+                .addContainerGap())
         );
 
         setComponent(mainPanel);
         setMenuBar(menuBar);
         setStatusBar(statusPanel);
+
+        bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
 
     @Action
     public void newSimulation() {
         SimulationWizardDialog sw = new SimulationWizardDialog(null, true);
         sw.setVisible(true);
-        if (sw.isOk()) //           sw.getSimulationObject();
+        if (sw.isOk()) //           sw.getSimulationFactory();
         {
 
-            workbenchPanel1.setSimulation((BasicSimulation) sw.getSimulationObject());
+            workbenchPanel1.setSimulationFactory( sw.getSimulationFactory());
 
             workbenchPanel1.setVisible(true);
+            workbenchVisible=true;
 
         } else {
             JOptionPane.showMessageDialog(null, "Cancelado pelo Utilizador");
@@ -231,18 +302,22 @@ public class PlatformView extends FrameView {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JPopupMenu.Separator jSeparator2;
-    private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JLabel lblNumNode;
+    private javax.swing.JLabel lblSimulationTime;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem menuNewSimulation;
     private javax.swing.JMenuItem menuOpenSImulation;
+    private javax.swing.JMenuItem menuSaveSimulation;
     private javax.swing.JProgressBar progressBar;
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
     private javax.swing.JPanel statusPanel;
-    private WorkbenchPanel workbenchPanel1;
+    private org.mei.securesim.platform.ui.WorkbenchPanel workbenchPanel1;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 
     private final Timer messageTimer;
@@ -250,7 +325,24 @@ public class PlatformView extends FrameView {
     private final Icon idleIcon;
     private final Icon[] busyIcons = new Icon[15];
     private int busyIconIndex = 0;
-
     private JDialog aboutBox;
+
+
+    public  void showCoverage(String value){
+    }
+
+    public void showNumberOfNodes(String value){
+        this.lblNumNode.setText(value);
+    }
+
+    public void showSimulationTime(String value){
+        this.lblSimulationTime.setText(value);
+    }
+
+    protected static PlatformView instance;
+
+    public static PlatformView getInstance() {
+        return instance;
+    }
 
 }

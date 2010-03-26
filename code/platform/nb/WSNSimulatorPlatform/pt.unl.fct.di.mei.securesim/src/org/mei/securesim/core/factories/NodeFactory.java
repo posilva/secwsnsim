@@ -19,26 +19,26 @@ public abstract class NodeFactory {
     protected Class application;
     protected Class routingLayer;
 
-    public NodeFactory(Simulator simulator, Class classOfNodes, Class application, Class routingLayer) {
+    public NodeFactory() {
         super();
-        this.simulator = simulator;
-        this.classOfNodes = classOfNodes;
-        this.application = application;
-        this.routingLayer = routingLayer;
-
+        setup();
     }
 
     public NodeFactory(Simulator simulator) {
         super();
         this.simulator = simulator;
+        setup();
     }
 
+
+    public abstract void setup();
     public Node createNode(short nodeId, double x, double y, double z) throws Exception {
         Node node = createNode(x, y, z);
         node.setPosition(x, y, z);
         node.setId(nodeId);
         return node;
     }
+
 
     public Node createNode(double x, double y, double z) throws Exception {
         Node node = nodeCreation();
@@ -82,6 +82,7 @@ public abstract class NodeFactory {
         }
         return nodes;
     }
+
     public List<Node> createNodes(int nodeNum) throws Exception {
         ArrayList<Node> nodes = new ArrayList<Node>();
         for (int i = 0; i < nodeNum; ++i) {
@@ -104,6 +105,38 @@ public abstract class NodeFactory {
         Node node = nodeCreation();
         node.setId(nodeId);
         return node;
+    }
+
+    public Class getApplication() {
+        return application;
+    }
+
+    public void setApplicationClass(Class application) {
+        this.application = application;
+    }
+
+    public Class getRoutingLayer() {
+        return routingLayer;
+    }
+
+    public void setRoutingLayerClass(Class routingLayer) {
+        this.routingLayer = routingLayer;
+    }
+
+    public Simulator getSimulator() {
+        return simulator;
+    }
+
+    public void setSimulator(Simulator simulator) {
+        this.simulator = simulator;
+    }
+
+    public Class getClassOfNodes() {
+        return classOfNodes;
+    }
+
+    public void setNodeClass(Class classOfNodes) {
+        this.classOfNodes = classOfNodes;
     }
 
 }

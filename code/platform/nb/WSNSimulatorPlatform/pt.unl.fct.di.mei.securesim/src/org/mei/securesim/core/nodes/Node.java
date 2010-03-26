@@ -23,10 +23,10 @@ import org.mei.securesim.ui.GraphicNode;
  * @author Gabor Pap, Gyorgy Balogh, Miklos Maroti
  */
 @SuppressWarnings("unchecked")
-public abstract class Node extends SimulationObject{
+public abstract class Node extends SimulationObject {
 
     public static int NODEID_AUTOCOUNTER = 1;
-    public static final int INITIAL_BATERY_POWER = 100;
+    public static final int INITIAL_BATERY_POWER = 1000;
     public static final double DEFAULT_POWER_CONSUMING = 1.0E-2;
     private static long CLOCK_TICK = Simulator.ONE_SECOND;// /100;
     protected boolean sinkNode = false;
@@ -42,23 +42,13 @@ public abstract class Node extends SimulationObject{
     protected NodeCPU cpu = null;
     protected CPUStatus cpuStatus = CPUStatus.ON;
     protected TXStatus txStatus = TXStatus.ON;
-
-
-
-
-
-
-
-
     /**
-	 * This is the message being sent, on reception it is extracted and the
-	 * message part is forwarded to the appropriate application, see
-	 * {@link Application#receiveMessage}.
-	 */
-
+     * This is the message being sent, on reception it is extracted and the
+     * message part is forwarded to the appropriate application, see
+     * {@link Application#receiveMessage}.
+     */
     protected Object message;
 
-    
     public enum CPUStatus {
 
         ON, OFF
@@ -77,10 +67,8 @@ public abstract class Node extends SimulationObject{
         this.sinkNode = sinkNode;
     }
 
-    
-
     public void initEnergyConsumation() {
-        simulator.addEvent(new Node.EnergyWasteEvent((int) Simulator.random.nextDouble() * CLOCK_TICK));
+       // simulator.addEvent(new Node.EnergyWasteEvent((int) Simulator.random.nextDouble() * CLOCK_TICK));
     }
 
     public Object getMessage() {
@@ -115,17 +103,13 @@ public abstract class Node extends SimulationObject{
 
     public class Config {
 
-        public static final  int DEFAULT_MAX_COMUNICATION_RANGE=30;
+        public static final int DEFAULT_MAX_COMUNICATION_RANGE = 30;
         public static final int DEFAULT_MAX_RADIO_STRENGTH = 100;
-      
-
-
         /**
          * This field defines the relative strength of a mote. If it is set to a
          * high value for a given mote it can supress other motes.
          */
         double maxRadioStrength = DEFAULT_MAX_RADIO_STRENGTH;
-
         double setRadioRange = DEFAULT_MAX_COMUNICATION_RANGE;
 
         /*
@@ -151,10 +135,9 @@ public abstract class Node extends SimulationObject{
         }
 
         public void setSetRadioRange(int setRadioRange) {
-            setMaximumRadioStrength((DEFAULT_MAX_RADIO_STRENGTH*setRadioRange)/DEFAULT_MAX_COMUNICATION_RANGE);
+            setMaximumRadioStrength((DEFAULT_MAX_RADIO_STRENGTH * setRadioRange) / DEFAULT_MAX_COMUNICATION_RANGE);
             this.setRadioRange = setRadioRange;
         }
-
     }
     /** A reference to the simulator in which the Node exists. */
     public Simulator simulator;
@@ -191,15 +174,13 @@ public abstract class Node extends SimulationObject{
     }
 
     public void initBatery() {
-        this.bateryEnergy.start();
         initEnergyConsumation();
-    }    
+    }
     /*
      * (non-Javadoc)
      *
      * @see net.tinyos.prowler.INode#getDistanceSquare(net.tinyos.prowler.Node)
      */
-
 
     public double getDistanceSquare(Node other) {
         return (getX() - other.getX()) * (getX() - other.getX()) + (getY() - other.getY()) * (getY() - other.getY())
@@ -345,7 +326,7 @@ public abstract class Node extends SimulationObject{
     }
 
     public Node getParentNode() {
-        
+
         return parentNode;
     }
 
@@ -381,7 +362,6 @@ public abstract class Node extends SimulationObject{
     public abstract void init();
 
     public void dispose() {
-        
     }
 
     /**
@@ -472,7 +452,7 @@ public abstract class Node extends SimulationObject{
         DecimalFormat twoPlaces = new DecimalFormat("0.00");
         final double remainingPower = 100 * getBateryEnergy().getCurrentPower() / getBateryEnergy().getInitialPower();
         return new String[]{"ID: " + getId(),
-                    "Sink:  " + (isSinkNode()?"True":"False"),
+                    "Sink:  " + (isSinkNode() ? "True" : "False"),
                     "Position:  (" + (int) getX() + "," + (int) getY() + "," + (int) getZ() + ")",
                     "Node:  " + this.getClass().getSimpleName(),
                     "Application:  " + this.getApplication().getClass().getSimpleName(),

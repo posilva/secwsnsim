@@ -8,7 +8,6 @@ import org.apache.commons.configuration.XMLConfiguration;
 
 import org.mei.securesim.configuration.Configuration;
 import org.mei.securesim.core.nodes.Node;
-import org.mei.securesim.simulation.basic.BasicSimulation;
 
 public class SimulationConfiguration extends Configuration {
 
@@ -20,7 +19,7 @@ public class SimulationConfiguration extends Configuration {
    
     }
 
-    public void saveNodes(XMLConfiguration c, BasicSimulation simulation) {
+    public void saveNodes(XMLConfiguration c, Simulation simulation) {
         c.addProperty("simulation.network.class", simulation.getNetwork().getClass().getName());
         c.addProperty("simulation.network.nodes", "");
         for (Node node : simulation.getNetwork().getNodeDB().nodes()) {
@@ -34,7 +33,7 @@ public class SimulationConfiguration extends Configuration {
         }
     }
 
-    public void save(BasicSimulation simulation) {
+    public void save(Simulation simulation) {
 
 
         XMLConfiguration c;

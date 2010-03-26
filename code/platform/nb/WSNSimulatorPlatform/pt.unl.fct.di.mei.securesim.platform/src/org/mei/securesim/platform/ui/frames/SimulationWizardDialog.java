@@ -21,14 +21,12 @@ import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JTextField;
-import org.mei.securesim.core.radio.RadioModel;
 import org.mei.securesim.network.basic.DefaultNetwork;
 import org.mei.securesim.platform.conf.ClassConfigReader;
 import org.mei.securesim.platform.conf.ClassConfigReader.ClassDefinitions;
 import org.mei.securesim.platform.utils.GUI_Utils;
-import org.mei.securesim.simulation.DefaultSimulator;
-import org.mei.securesim.simulation.Simulation;
-import org.mei.securesim.simulation.basic.BasicSimulation;
+
+import org.mei.securesim.simulation.SimulationFactory;
 
 /**
  *
@@ -37,24 +35,26 @@ import org.mei.securesim.simulation.basic.BasicSimulation;
 public class SimulationWizardDialog extends javax.swing.JDialog {
 
     private boolean ok;
-private FocusListener focusListener;
+    private FocusListener focusListener;
+    private SimulationFactory sf;
+
     /** Creates new form SimulationWizardDialog */
     public SimulationWizardDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
 
-        focusListener=new FocusListener() {
+        focusListener = new FocusListener() {
 
             public void focusGained(FocusEvent fe) {
-                JComponent source =((JComponent)fe.getSource());
+                JComponent source = ((JComponent) fe.getSource());
                 source.setBackground(Color.yellow);
-                if(source instanceof JTextField){
-                    ((JTextField)source).selectAll();
+                if (source instanceof JTextField) {
+                    ((JTextField) source).selectAll();
                 }
             }
 
             public void focusLost(FocusEvent fe) {
-                ((JComponent)fe.getSource()).setBackground(Color.WHITE);
+                ((JComponent) fe.getSource()).setBackground(Color.WHITE);
             }
         };
 
@@ -67,9 +67,8 @@ private FocusListener focusListener;
         txtSimulationDescription.addFocusListener(focusListener);
 
         setTitle("Simulation Wizard");
-        GUI_Utils.centerOnScreen((Window)this);
+        GUI_Utils.centerOnScreen((Window) this);
     }
-
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -87,7 +86,6 @@ private FocusListener focusListener;
         jLabel2 = new javax.swing.JLabel();
         cboRadioModelClass = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
         cmdOK = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -127,9 +125,6 @@ private FocusListener focusListener;
         jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
         jLabel4.setName("jLabel4"); // NOI18N
 
-        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
-        jButton2.setName("jButton2"); // NOI18N
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -148,10 +143,7 @@ private FocusListener focusListener;
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cboRadioModelClass, javax.swing.GroupLayout.Alignment.TRAILING, 0, 245, Short.MAX_VALUE)
                     .addComponent(cboSimulatorClass, javax.swing.GroupLayout.Alignment.TRAILING, 0, 245, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(cboNodeClass, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)))
+                    .addComponent(cboNodeClass, 0, 245, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -164,8 +156,7 @@ private FocusListener focusListener;
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(cboNodeClass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addComponent(cboNodeClass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -258,7 +249,7 @@ private FocusListener focusListener;
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(14, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -286,14 +277,12 @@ private FocusListener focusListener;
         ok = false;
         setVisible(false);
     }//GEN-LAST:event_cmdCancelActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox cboNodeClass;
     private javax.swing.JComboBox cboRadioModelClass;
     private javax.swing.JComboBox cboSimulatorClass;
     private javax.swing.JButton cmdCancel;
     private javax.swing.JButton cmdOK;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
@@ -306,38 +295,41 @@ private FocusListener focusListener;
     // End of variables declaration//GEN-END:variables
 
     private boolean validateData() {
-        BasicSimulation simulation = new BasicSimulation();
-        simulation.setSimulator((DefaultSimulator) getClassInstance(((ClassDefinitions)cboSimulatorClass.getSelectedItem()).className));
-        simulation.setRadioModel((RadioModel) getClassInstance(((ClassDefinitions)cboRadioModelClass.getSelectedItem()).className));
-        simulation.setNetwork(new DefaultNetwork());
-        return true;
-
-    }
-    Object getClassInstance(String className){
         try {
-            Class c = Class.forName(className);
-            return c.newInstance();
+            sf = new SimulationFactory();
+            sf.setSimulatorClass(getClassInstance(((ClassDefinitions) cboSimulatorClass.getSelectedItem()).className));
+            sf.setRadioModelClass(getClassInstance(((ClassDefinitions) cboRadioModelClass.getSelectedItem()).className));
+            sf.setNodeFactoryClass(getClassInstance(((ClassDefinitions) cboNodeClass.getSelectedItem()).className));
+            sf.setNetworkClass(DefaultNetwork.class);
+            return true;
         } catch (InstantiationException ex) {
             Logger.getLogger(SimulationWizardDialog.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
             Logger.getLogger(SimulationWizardDialog.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        sf=null;
+        return false;
+
+    }
+
+    Class getClassInstance(String className) {
+        try {
+            return Class.forName(className);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(SimulationWizardDialog.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
+
     public boolean isOk() {
         return ok;
     }
 
-    public Simulation getSimulationObject() {
-
-
-
-
-        return new BasicSimulation();
-
+    public SimulationFactory getSimulationFactory() {
+   
+        return sf;
     }
+
     private void configClasses() {
         try {
             ClassConfigReader sc = new ClassConfigReader("conf/SimulatorClasses.properties");
@@ -351,18 +343,20 @@ private FocusListener focusListener;
         } catch (IOException ex) {
             Logger.getLogger(SimulationWizardDialog.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
 
     }
 
     private void loadComboWithClasses(JComboBox cbo, HashSet<ClassDefinitions> classes) {
-        if (cbo==null) return ;
+        if (cbo == null) {
+            return;
+        }
         cbo.removeAllItems();
 
         for (ClassDefinitions classDefinitions : classes) {
             cbo.addItem(classDefinitions);
         }
-        
+
 
 
     }

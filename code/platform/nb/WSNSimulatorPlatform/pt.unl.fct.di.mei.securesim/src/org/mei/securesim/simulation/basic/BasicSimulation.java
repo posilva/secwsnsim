@@ -32,4 +32,9 @@ public class BasicSimulation extends Simulation {
     public void stop() {
     }
 
+    @Override
+    public void reset() {
+        
+    }
+
 }

@@ -38,6 +38,7 @@ public class PingPongRoutingLayer extends RoutingLayer {
 
             @SuppressWarnings("element-type-mismatch")
             public void run() {
+
                 if (!(msg instanceof PingPongMessage)) {
                     throw new IllegalStateException("Message must be a instance of " + PingPongMessage.class.getSimpleName());
                 }

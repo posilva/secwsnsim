@@ -1,17 +1,16 @@
 package org.mei.securesim.platform.ui;
 
+import java.io.IOException;
+import org.mei.securesim.core.energy.listeners.EnergyEvent;
 import org.mei.securesim.ui.GraphicPoint;
 import org.mei.securesim.ui.GraphicNode;
 import org.mei.securesim.core.nodes.SensorNode;
-import org.mei.securesim.core.factories.NodeFactory;
-import org.mei.securesim.core.Application;
 import org.mei.securesim.core.Simulator;
 import org.mei.securesim.core.ISimulationDisplay;
 import org.mei.securesim.core.SimulatorFinishListener;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 import org.mei.securesim.core.events.SimulatorEvent;
-import org.mei.securesim.test.broadcast.BroadcastNode;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -19,6 +18,8 @@ import java.awt.event.WindowEvent;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
+import java.io.DataOutputStream;
+import java.io.PipedOutputStream;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,23 +27,21 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.lang.NumberUtils;
 import org.apache.commons.math.stat.descriptive.SummaryStatistics;
 
 
 
 import org.mei.securesim.core.energy.Batery;
+import org.mei.securesim.core.energy.listeners.EnergyListener;
+import org.mei.securesim.core.factories.NodeFactory;
 import org.mei.securesim.core.nodes.Node;
-import org.mei.securesim.core.radio.GaussianRadioModel;
-import org.mei.securesim.network.basic.DefaultNetwork;
-import org.mei.securesim.core.nodes.basic.DefaultNodeFactory;
-import org.mei.securesim.simulation.DefaultSimulator;
+import org.mei.securesim.platform.PlatformView;
+import org.mei.securesim.platform.instruments.energy.EnergyWatcherThread;
 import org.mei.securesim.simulation.Simulation;
 import org.mei.securesim.simulation.SimulationConfiguration;
+import org.mei.securesim.simulation.SimulationFactory;
 import org.mei.securesim.simulation.basic.BasicSimulation;
-import org.mei.securesim.test.pingpong.PingPongApplication;
-import org.mei.securesim.test.pingpong.PingPongNode;
-import org.mei.securesim.test.pingpong.PingPongRoutingLayer;
 import org.mei.securesim.topology.RandomTopologyManager;
 
 /**
@@ -51,47 +50,46 @@ import org.mei.securesim.topology.RandomTopologyManager;
  */
 public class SimulationPanel extends javax.swing.JPanel implements ISimulationDisplay, SimulatorFinishListener {
 
-    public static final int AREA_H = 300;
-    public static final int AREA_W = 300;
-    public static final int MAX_ELEVATION = 0;
     public static final int OFFSET_NETWORK = 0;
-    protected Set<Node> nodeenergyWatchers = new HashSet<Node>();
+    /**
+     * MAIN VARIABLES
+     */
+    private Simulation simulation;
+    private SimulationFactory simulationFactory;
+    /**
+     * GRAPHIC HANDLING VARIABLES
+     */
     ArrayList<GraphicNode> selectedNodes = new ArrayList<GraphicNode>();
-    BufferedImage backImage = null;
     private Graphics currentGraphics;
-    private SensorNode sinkNode;
-    private Application app;
-    private BasicSimulation simulation;
-    private RandomTopologyManager topologyManager;
-    private boolean selectionTool = false;
     private GraphicPoint pressedPoint = null;
     private GeneralPath selectedArea;
     private int mouseX;
     private int mouseY;
-    private boolean paintMouseCoordinates = false;
     private GraphicNode currentSelectedNode;
+    private String[] nodeInfo = null;
+    /**
+     * STATE VARIABLES
+     */
+    private boolean selectionTool = false;
+    private boolean paintMouseCoordinates = false;
     private boolean networkBuilded = false;
     private boolean networkDeployed = false;
     private boolean networkRunned = false;
     private boolean resizeSimulatedArea = true;
     private boolean visibleMouseCoordinates = false;
     private boolean deployNodeToolSelected = false;
-    private String[] nodeInfo = null;
     private boolean paintNodesInfo = false;
     private boolean selectionPointerToolSelected = false;
+    /**
+     * UTILS VARIABLES
+     */
+    BufferedImage backImage = null;
 
-    public BasicSimulation getSimulation() {
-        return simulation;
-    }
-
-    public void setSimulation(BasicSimulation simulation) {
-        this.simulation = simulation;
-    }
-
-    /** Creates new form SimulationPanel */
+    /**
+     * CONSTRUCTORS
+     */
     public SimulationPanel() {
         initComponents();
-        clearSimulation();
         try {
             loadImage();
         } catch (Exception ex) {
@@ -99,76 +97,43 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         }
     }
 
+    /**
+     * Settings for the simulation
+     * @param s
+     */
+    public void settingSimulation(SimulationFactory sf) {
+        this.simulationFactory = sf;
+        clearSimulation();
+
+    }
+
+    /**
+     * Clear Simulation
+     * @return
+     */
+    void clearSimulation() {
+        try {
+            this.simulation = this.simulationFactory.getNewInstance();
+            simulation.setDisplay(this);
+            initSimulation();
+
+        } catch (InstantiationException ex) {
+            Logger.getLogger(SimulationPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(SimulationPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     *
+     */
     public void initSimulation() {
-        settingSimulation(simulation);
         Simulator.resetRandom();
         Node.resetCouter();
         simulation.setDisplay(this);
         simulation.preInit();
     }
 
-    public void settingSimulation(Simulation s) {
-
-        s.setSimulator(new DefaultSimulator());
-        s.setRadioModel(new GaussianRadioModel());
-        s.setNetwork(new DefaultNetwork());
-    }
-
-    public void resizeUpdateSimulatedArea() {
-        if (!resizeSimulatedArea) {
-            return;
-        }
-    }
-
-    public void updateMouseCoordinates(MouseEvent evt) {
-        mouseX = x2ScreenX(evt.getX());
-        mouseY = y2ScreenY(evt.getY());
-    }
-
-    void fireEnterCircleInfoEvent(NodeInfoEvent evt) {
-        Object[] listeners = listenerList.getListenerList();
-        for (int i = 0; i < listeners.length; i += 2) {
-            if (listeners[i] == MouseOverNodeEventListener.class) {
-                ((MouseOverNodeEventListener) listeners[i + 1]).mouseEnterCircleOccured(evt);
-            }
-        }
-    }
-
-    void fireExitCircleInfoEvent(NodeInfoEvent evt) {
-        Object[] listeners = listenerList.getListenerList();
-        for (int i = 0; i < listeners.length; i += 2) {
-            if (listeners[i] == MouseOverNodeEventListener.class) {
-                ((MouseOverNodeEventListener) listeners[i + 1]).mouseExitCircleOccured(evt);
-            }
-        }
-    }
-
-    public void addMouseOverCircleEventListener(MouseOverNodeEventListener listener) {
-        listenerList.add(MouseOverNodeEventListener.class, listener);
-    }
-
-    public void removeMouseOverCircleEventListener(MouseOverNodeEventListener listener) {
-        listenerList.remove(MouseOverNodeEventListener.class, listener);
-    }
-
-    public void paintNetwork(Graphics g) {
-        if (simulation == null) {
-            return;
-        }
-        currentGraphics = g;
-
-        if (simulation.getSimulator() != null) {
-            simulation.getSimulator().display(this);
-        }
-    }
-
-    public boolean isPaintMouseCoordinates() {
-        return paintMouseCoordinates;
-    }
-
-    public void setPaintMouseCoordinates(boolean paintMouseCoordinates) {
-        this.paintMouseCoordinates = paintMouseCoordinates;
-    }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -465,40 +430,8 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     @Override
     public void paintComponent(Graphics grphcs) {
         super.paintComponent(grphcs);
-
-        paintNetwork(grphcs);
-
-        if (canPaintSelectionArea()) {
-            paintSelectedArea(grphcs);
-        }
-        if (paintMouseCoordinates && visibleMouseCoordinates) {
-            paintMouseCoordinates(grphcs);
-        }
-
-//        if (paintSimulationArea) {
-//            simulationArea.displayOn(this);
-//        }
-        if (paintNodesInfo) {
-            paintInfo(grphcs);
-        }
+        mainPaintLoop(grphcs);
     }//GEN-LAST:event_formMouseMoved
-    private void paintImage(Graphics g) {
-        if (backImage != null) {
-            g.drawImage(backImage, 0, 0, getWidth(), getHeight(), this);
-        }
-    }
-
-    private void drawSelectedArea(java.awt.event.MouseEvent evt) {
-        if (!canPaintSelectionArea()) {
-            return;
-        }
-        selectedArea = new GeneralPath();
-        selectedArea.moveTo(pressedPoint.x(), pressedPoint.y());
-        selectedArea.lineTo(mouseX, pressedPoint.y());
-        selectedArea.lineTo(mouseX, mouseY);
-        selectedArea.lineTo(pressedPoint.x(), mouseY);
-        selectedArea.lineTo(pressedPoint.x(), pressedPoint.y());
-    }
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         updateMouseCoordinates(evt);
@@ -662,15 +595,21 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     }//GEN-LAST:event_selNodeVerOsQueMeConhecemActionPerformed
 
     private void selNodeMonitEnergiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selNodeMonitEnergiaActionPerformed
+        EnergyController ec;
         if (currentSelectedNode != null) {
             JMenuItem m = (JMenuItem) evt.getSource();
             Node n = currentSelectedNode.getPhysicalNode();
-            Batery b = ((SensorNode) n).getBateryEnergy();
 
-            if (!nodeenergyWatchers.contains(n)) {
-                displayNewChartFrame(n);
-
+            if (!energyControllersTable.contains(n)) {
+                ec = new EnergyController();
+                n.getBateryEnergy().addEnergyListener(ec);
+                energyControllersTable.put(n, ec);
+                ec.start();
             }
+//            if (!nodeenergyWatchers.contains(n)) {
+//                displayNewChartFrame(n);
+//
+//            }
 
             update();
         }
@@ -824,21 +763,6 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         configuration.save(simulation);
     }
 
-    public void RunSimulation() {
-        if (networkBuilded) {
-            if (sinkNode instanceof BroadcastNode) {
-                sinkNode.sendMessageFromApplication("1", app);
-            } else if (sinkNode instanceof PingPongNode) {
-                PingPongApplication ppapp = (PingPongApplication) PingPongNode.cast(sinkNode).getApplication();
-                ppapp.sendPingMessage(945);
-
-            }
-            simulation.start();
-
-            networkRunned = true;
-        }
-    }
-
     private void clearSelection() {
         selectedArea = null;
         for (GraphicNode graphicNode : selectedNodes) {
@@ -889,12 +813,6 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         }
     }
 
-    private void displayNewChartFrame(Node n) {
-        NodesEnergyWatcher w = new NodesEnergyWatcher(new Object[]{n.getGraphicNode()}, "Node " + n.getId());
-        w.start();
-        nodeenergyWatchers.add(n);
-    }
-
     protected Node searchForNode(int id) {
         for (Node node : simulation.getSimulator().getNodes()) {
             if (node.getId() == id) {
@@ -936,18 +854,6 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
 
     void deployNodesToolSelected(boolean selected) {
         deployNodeToolSelected = selected;
-    }
-
-    void clearSimulation() {
-
-        simulation = new BasicSimulation();
-
-        simulation.setDisplay(this);
-//        simulationArea = new SimulationArea();
-//        simulationArea.setHeigth(AREA_H);
-//        simulationArea.setWidth(AREA_W);
-//        simulationArea.setMaxElevation(MAX_ELEVATION);
-        initSimulation();
     }
 
     void setViewNodeInfo(boolean selected) {
@@ -1036,7 +942,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         @Override
         protected Object doInBackground() {
             RandomTopologyManager tm = new RandomTopologyManager();
-            NodeFactory nf = new DefaultNodeFactory(getSimulator(), PingPongNode.class, PingPongApplication.class, PingPongRoutingLayer.class);
+            NodeFactory nf = simulation.getNodeFactory();
             boolean ok = false;
             int nNodes = 0;
             while (!ok) {
@@ -1116,4 +1022,143 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             g.setColor(oldColor);
         }
     }
+
+    public Simulation getSimulation() {
+        return simulation;
+    }
+
+    public void setSimulation(BasicSimulation simulation) {
+        this.simulation = simulation;
+    }
+
+    /**
+     *
+     * PAINTING FUNCTIONS
+     *
+     */
+    public void resizeUpdateSimulatedArea() {
+        if (!resizeSimulatedArea) {
+            return;
+        }
+    }
+
+    public void updateMouseCoordinates(MouseEvent evt) {
+        mouseX = x2ScreenX(evt.getX());
+        mouseY = y2ScreenY(evt.getY());
+    }
+
+    void fireEnterCircleInfoEvent(NodeInfoEvent evt) {
+        Object[] listeners = listenerList.getListenerList();
+        for (int i = 0; i < listeners.length; i += 2) {
+            if (listeners[i] == MouseOverNodeEventListener.class) {
+                ((MouseOverNodeEventListener) listeners[i + 1]).mouseEnterCircleOccured(evt);
+            }
+        }
+    }
+
+    void fireExitCircleInfoEvent(NodeInfoEvent evt) {
+        Object[] listeners = listenerList.getListenerList();
+        for (int i = 0; i < listeners.length; i += 2) {
+            if (listeners[i] == MouseOverNodeEventListener.class) {
+                ((MouseOverNodeEventListener) listeners[i + 1]).mouseExitCircleOccured(evt);
+            }
+        }
+    }
+
+    public void addMouseOverCircleEventListener(MouseOverNodeEventListener listener) {
+        listenerList.add(MouseOverNodeEventListener.class, listener);
+    }
+
+    public void removeMouseOverCircleEventListener(MouseOverNodeEventListener listener) {
+        listenerList.remove(MouseOverNodeEventListener.class, listener);
+    }
+
+    public void paintNetwork(Graphics g) {
+        if (simulation == null) {
+            return;
+        }
+        currentGraphics = g;
+
+        if (simulation.getSimulator() != null) {
+            simulation.getSimulator().display(this);
+        }
+    }
+
+    public boolean isPaintMouseCoordinates() {
+        return paintMouseCoordinates;
+    }
+
+    public void setPaintMouseCoordinates(boolean paintMouseCoordinates) {
+        this.paintMouseCoordinates = paintMouseCoordinates;
+    }
+
+    public void mainPaintLoop(Graphics grphcs) {
+        paintNetwork(grphcs);
+        if (canPaintSelectionArea()) {
+            paintSelectedArea(grphcs);
+        }
+        if (paintMouseCoordinates && visibleMouseCoordinates) {
+            paintMouseCoordinates(grphcs);
+        }
+
+        if (paintNodesInfo) {
+            paintInfo(grphcs);
+        }
+        PlatformView.getInstance().showNumberOfNodes(""+getSimulation().getSimulator().getNodes().size());
+        PlatformView.getInstance().showSimulationTime(""+getSimulation().getSimulator().getSimulationTime());
+
+    }
+
+    private void paintImage(Graphics g) {
+        if (backImage != null) {
+            g.drawImage(backImage, 0, 0, getWidth(), getHeight(), this);
+        }
+    }
+
+    private void drawSelectedArea(java.awt.event.MouseEvent evt) {
+        if (!canPaintSelectionArea()) {
+            return;
+        }
+        selectedArea = new GeneralPath();
+        selectedArea.moveTo(pressedPoint.x(), pressedPoint.y());
+        selectedArea.lineTo(mouseX, pressedPoint.y());
+        selectedArea.lineTo(mouseX, mouseY);
+        selectedArea.lineTo(pressedPoint.x(), mouseY);
+        selectedArea.lineTo(pressedPoint.x(), pressedPoint.y());
+    }
+
+    class EnergyController implements EnergyListener {
+
+        protected PipedOutputStream outputStream;
+        protected DataOutputStream dataOutputStream;
+        protected EnergyWatcherThread energyWatcherThread;
+
+        public EnergyController() {
+            energyWatcherThread = new EnergyWatcherThread();
+            this.dataOutputStream = new DataOutputStream(energyWatcherThread.getOutputStream());
+
+        }
+
+        public void onConsume(EnergyEvent evt) {
+            try {
+
+                this.dataOutputStream.writeDouble(evt.getValue());
+                Batery b = (Batery) evt.getSource();
+                double t = b.getHostNode().getSimulator().getSimulationTimeInMillisec() / 1000;
+                this.dataOutputStream.writeDouble(t);
+            } catch (IOException ex) {
+                getLogger().log(Level.SEVERE, null, ex);
+            }
+
+        }
+
+        public Logger getLogger() {
+            return Logger.getLogger(SimulationPanel.class.getName());
+        }
+
+        private void start() {
+            energyWatcherThread.start();
+        }
+    }
+    protected Hashtable<Node, Object> energyControllersTable = new Hashtable<Node, Object>();
 }
