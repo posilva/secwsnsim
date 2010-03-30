@@ -7,6 +7,7 @@ import java.util.List;
 import org.mei.securesim.core.Application;
 
 import org.mei.securesim.core.Simulator;
+import org.mei.securesim.core.energy.EnergyModel;
 import org.mei.securesim.core.layers.RoutingLayer;
 import org.mei.securesim.core.nodes.Node;
 import org.mei.securesim.core.radio.RadioModel;
@@ -18,11 +19,8 @@ public abstract class NodeFactory {
     protected Simulator simulator;
     protected Class application;
     protected Class routingLayer;
-
-    public NodeFactory() {
-        super();
-        setup();
-    }
+    protected EnergyModel energyModel;
+    protected boolean setup=false;
 
     public NodeFactory(Simulator simulator) {
         super();
@@ -30,15 +28,14 @@ public abstract class NodeFactory {
         setup();
     }
 
-
     public abstract void setup();
+
     public Node createNode(short nodeId, double x, double y, double z) throws Exception {
         Node node = createNode(x, y, z);
         node.setPosition(x, y, z);
         node.setId(nodeId);
         return node;
     }
-
 
     public Node createNode(double x, double y, double z) throws Exception {
         Node node = nodeCreation();
@@ -139,4 +136,24 @@ public abstract class NodeFactory {
         this.classOfNodes = classOfNodes;
     }
 
+    public EnergyModel getEnergyModel() {
+        return energyModel;
+    }
+
+    public void setEnergyModel(EnergyModel energyModel) {
+        this.energyModel = energyModel;
+    }
+
+    public boolean isSetup() {
+        return setup;
+    }
+
+    public void setSetup(boolean setup) {
+        this.setup = setup;
+    }
+
+    public NodeFactory() {
+        super();
+        setup();
+    }
 }

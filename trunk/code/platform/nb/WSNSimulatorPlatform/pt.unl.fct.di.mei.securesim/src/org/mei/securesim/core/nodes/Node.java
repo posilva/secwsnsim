@@ -167,7 +167,7 @@ public abstract class Node extends SimulationObject {
         neighborhood = radioModel.createNeighborhood();
         this.graphicNode = new GraphicNode(this);
         this.graphicNode.setPhysicalNode(this);
-        this.bateryEnergy = new Batery(INITIAL_BATERY_POWER);
+        this.bateryEnergy = new Batery();
         this.cpu = new NodeCPU(this);
         this.bateryEnergy.setHostNode(this);
         setId((short) NODEID_AUTOCOUNTER++);
@@ -190,7 +190,6 @@ public abstract class Node extends SimulationObject {
     public double getDistance(Node other) {
         return Math.sqrt(getDistanceSquare(other));
     }
-
 
     /*
      * (non-Javadoc)
@@ -264,14 +263,8 @@ public abstract class Node extends SimulationObject {
      * net.tinyos.prowler.INode#addApplication(net.tinyos.prowler.Application)
      */
     public void addApplication(Application app) {
-//        if (!applications.containsKey(app.getClass())) {
-//            app.setNode(this);
-//            applications.put(app.getClass(), app);
-//        }
         app.setNode(this);
         application = app;
-
-
     }
 
     /**

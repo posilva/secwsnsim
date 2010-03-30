@@ -20,10 +20,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import org.jdesktop.application.Action;
+import org.mei.securesim.core.energy.EnergyModel;
 import org.mei.securesim.network.basic.DefaultNetwork;
 import org.mei.securesim.platform.conf.ClassConfigReader;
 import org.mei.securesim.platform.conf.ClassConfigReader.ClassDefinitions;
+import org.mei.securesim.platform.instruments.energy.ui.resources.EnergyModelDialog;
 import org.mei.securesim.platform.utils.GUI_Utils;
 
 import org.mei.securesim.simulation.SimulationFactory;
@@ -37,6 +41,7 @@ public class SimulationWizardDialog extends javax.swing.JDialog {
     private boolean ok;
     private FocusListener focusListener;
     private SimulationFactory sf;
+    private EnergyModel energyModel;
 
     /** Creates new form SimulationWizardDialog */
     public SimulationWizardDialog(java.awt.Frame parent, boolean modal) {
@@ -86,6 +91,7 @@ public class SimulationWizardDialog extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         cboRadioModelClass = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
+        cmdEnergyModel = new javax.swing.JButton();
         cmdOK = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -125,6 +131,12 @@ public class SimulationWizardDialog extends javax.swing.JDialog {
         jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
         jLabel4.setName("jLabel4"); // NOI18N
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(org.mei.securesim.platform.PlatformApp.class).getContext().getActionMap(SimulationWizardDialog.class, this);
+        cmdEnergyModel.setAction(actionMap.get("configureEnergyModel")); // NOI18N
+        cmdEnergyModel.setText(resourceMap.getString("cmdEnergyModel.text")); // NOI18N
+        cmdEnergyModel.setToolTipText(resourceMap.getString("cmdEnergyModel.toolTipText")); // NOI18N
+        cmdEnergyModel.setName("cmdEnergyModel"); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -134,16 +146,19 @@ public class SimulationWizardDialog extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
                         .addGap(10, 10, 10)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cboRadioModelClass, javax.swing.GroupLayout.Alignment.TRAILING, 0, 245, Short.MAX_VALUE)
-                    .addComponent(cboSimulatorClass, javax.swing.GroupLayout.Alignment.TRAILING, 0, 245, Short.MAX_VALUE)
-                    .addComponent(cboNodeClass, 0, 245, Short.MAX_VALUE))
+                    .addComponent(cboRadioModelClass, javax.swing.GroupLayout.Alignment.TRAILING, 0, 283, Short.MAX_VALUE)
+                    .addComponent(cboSimulatorClass, javax.swing.GroupLayout.Alignment.TRAILING, 0, 283, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(cboNodeClass, 0, 253, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmdEnergyModel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -156,7 +171,8 @@ public class SimulationWizardDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(cboNodeClass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cboNodeClass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmdEnergyModel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -249,7 +265,7 @@ public class SimulationWizardDialog extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -282,6 +298,7 @@ public class SimulationWizardDialog extends javax.swing.JDialog {
     private javax.swing.JComboBox cboRadioModelClass;
     private javax.swing.JComboBox cboSimulatorClass;
     private javax.swing.JButton cmdCancel;
+    private javax.swing.JButton cmdEnergyModel;
     private javax.swing.JButton cmdOK;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -359,5 +376,16 @@ public class SimulationWizardDialog extends javax.swing.JDialog {
 
 
 
+    }
+
+    @Action
+    public void configureEnergyModel() {
+        EnergyModelDialog emd = new EnergyModelDialog(null, true);
+        emd.setVisible(true);
+        if (emd.isOk()) //           sw.getSimulationFactory();
+        {
+           energyModel=emd.getEnergyModel();
+        }
+        emd.dispose();
     }
 }

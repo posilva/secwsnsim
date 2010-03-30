@@ -12,6 +12,9 @@ public class Batery {
     public static double PROCESSING_CONSUMPTION = 0.005;
     public static double IDLE_CONSUMPTION = 0.005;
     public static double STATE_TRANSITION_ON_OFF_CONSUMPTION = 0.00001;
+
+    EnergyModel energyModel;
+
     /**
      * 
      */
@@ -52,15 +55,15 @@ public class Batery {
     public void removeEnergyListener(EnergyListener listener) {
         listenerList.remove(EnergyListener.class, listener);
     }
-
     public Batery() {
         this.initialPower = INFINIT;
-        this.currentPower = initialPower;
+        this.currentPower = INFINIT;
     }
 
-    public Batery(double initialPower) {
-        this.initialPower = initialPower;
-        this.currentPower = initialPower;
+    public Batery(EnergyModel energyModel) {
+        this.energyModel = energyModel;
+        this.initialPower = this.energyModel.getTotalEnergy();
+        this.currentPower = this.energyModel.getTotalEnergy();
     }
 
     /**
@@ -146,4 +149,12 @@ public class Batery {
     public void consumeProcessing(long time) {
           consume(PROCESSING_CONSUMPTION*time);
     }
+    public EnergyModel getEnergyModel() {
+        return energyModel;
+    }
+
+    public void setEnergyModel(EnergyModel energyModel) {
+        this.energyModel = energyModel;
+    }
+
 }
