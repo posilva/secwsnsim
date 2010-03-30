@@ -44,7 +44,7 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="14" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
@@ -76,20 +76,24 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel1" alignment="0" pref="217" max="32767" attributes="0"/>
-                              <Component id="jLabel2" alignment="1" pref="217" max="32767" attributes="0"/>
+                              <Component id="jLabel1" alignment="0" pref="179" max="32767" attributes="0"/>
+                              <Component id="jLabel2" alignment="1" pref="179" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
-                          <Component id="jLabel4" pref="219" max="32767" attributes="0"/>
+                          <Component id="jLabel4" pref="181" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="cboRadioModelClass" alignment="1" pref="245" max="32767" attributes="1"/>
-                      <Component id="cboSimulatorClass" alignment="1" pref="245" max="32767" attributes="1"/>
-                      <Component id="cboNodeClass" alignment="0" pref="245" max="32767" attributes="1"/>
+                      <Component id="cboRadioModelClass" alignment="1" pref="283" max="32767" attributes="1"/>
+                      <Component id="cboSimulatorClass" alignment="1" pref="283" max="32767" attributes="1"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="cboNodeClass" pref="253" max="32767" attributes="1"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="cmdEnergyModel" min="-2" pref="24" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -107,6 +111,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="cboNodeClass" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cmdEnergyModel" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -177,6 +182,16 @@
             <Property name="font" type="java.awt.Font" resourceKey="jLabel4.font"/>
             <Property name="text" type="java.lang.String" resourceKey="jLabel4.text"/>
             <Property name="name" type="java.lang.String" value="jLabel4" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="cmdEnergyModel">
+          <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="org.mei.securesim.platform.ui.frames.SimulationWizardDialog" id="configureEnergyModel" methodName="configureEnergyModel"/>
+            </Property>
+            <Property name="text" type="java.lang.String" resourceKey="cmdEnergyModel.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="cmdEnergyModel.toolTipText"/>
+            <Property name="name" type="java.lang.String" value="cmdEnergyModel" noResource="true"/>
           </Properties>
         </Component>
       </SubComponents>
