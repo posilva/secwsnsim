@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package org.mei.securesim.core.events;
+package org.mei.securesim.core.engine.events;
 
 import java.util.EventObject;
 

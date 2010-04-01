@@ -5,8 +5,8 @@
 
 package org.mei.securesim.core.energy;
 
-import org.mei.securesim.annotation.Annotated;
-import org.mei.securesim.annotation.EnergyModelParameter;
+import org.mei.securesim.utils.annotation.Annotated;
+import org.mei.securesim.utils.annotation.EnergyModelParameter;
 
 /**
  *

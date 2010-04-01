@@ -1,18 +1,17 @@
 package org.mei.securesim.core.nodes;
 
-import org.mei.securesim.core.SimulationObject;
 import java.text.DecimalFormat;
-import org.mei.securesim.cpu.NodeCPU;
-import org.mei.securesim.core.Application;
-import org.mei.securesim.core.Event;
-import org.mei.securesim.core.ISimulationDisplay;
-import org.mei.securesim.core.Simulator;
+import org.mei.securesim.core.nodes.cpu.NodeCPU;
+import org.mei.securesim.core.application.Application;
+import org.mei.securesim.core.engine.Event;
+import org.mei.securesim.core.ui.ISimulationDisplay;
+import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.energy.Batery;
-import org.mei.securesim.core.layers.MACLayer;
-import org.mei.securesim.core.layers.RoutingLayer;
+import org.mei.securesim.core.layers.mac.MACLayer;
+import org.mei.securesim.core.layers.routing.RoutingLayer;
 import org.mei.securesim.core.radio.RadioModel;
 import org.mei.securesim.core.radio.RadioModel.Neighborhood;
-import org.mei.securesim.ui.GraphicNode;
+import org.mei.securesim.gui.GraphicNode;
 
 /**
  * This class is the base class of all nodes. Nodes are entities in a simulator
@@ -23,7 +22,7 @@ import org.mei.securesim.ui.GraphicNode;
  * @author Gabor Pap, Gyorgy Balogh, Miklos Maroti
  */
 @SuppressWarnings("unchecked")
-public abstract class Node extends SimulationObject {
+public abstract class Node {
 
     public static int NODEID_AUTOCOUNTER = 1;
     public static final int INITIAL_BATERY_POWER = 1000;

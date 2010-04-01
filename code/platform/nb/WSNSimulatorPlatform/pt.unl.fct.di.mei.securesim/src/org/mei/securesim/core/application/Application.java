@@ -22,8 +22,9 @@
  * Date last modified: 02/09/04
  */
  
-package org.mei.securesim.core;
+package org.mei.securesim.core.application;
 
+import org.mei.securesim.core.ui.ISimulationDisplay;
 import org.mei.securesim.core.nodes.Node;
 
 

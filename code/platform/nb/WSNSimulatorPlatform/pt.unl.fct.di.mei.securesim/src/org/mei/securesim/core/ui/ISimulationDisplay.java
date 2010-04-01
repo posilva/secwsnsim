@@ -1,5 +1,6 @@
-package org.mei.securesim.core;
+package org.mei.securesim.core.ui;
 
+import org.mei.securesim.core.engine.Simulator;
 import java.awt.Graphics;
 
 public interface ISimulationDisplay {

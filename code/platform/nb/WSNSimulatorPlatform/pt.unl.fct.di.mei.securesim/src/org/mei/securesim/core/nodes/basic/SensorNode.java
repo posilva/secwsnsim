@@ -1,14 +1,15 @@
 /**
  * 
  */
-package org.mei.securesim.core.nodes;
+package org.mei.securesim.core.nodes.basic;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
-import org.mei.securesim.core.ISimulationDisplay;
-import org.mei.securesim.core.Simulator;
+import org.mei.securesim.core.ui.ISimulationDisplay;
+import org.mei.securesim.core.engine.Simulator;
+import org.mei.securesim.core.nodes.Node;
 import org.mei.securesim.core.nodes.Node;
 import org.mei.securesim.core.radio.RadioModel;
 
