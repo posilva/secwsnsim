@@ -1,6 +1,6 @@
 package org.mei.securesim.test.aodv;
 
-import org.mei.securesim.core.Application;
+import org.mei.securesim.core.application.Application;
 
 /**
  * This extension of the {@link Application} baseclass does everything we expect

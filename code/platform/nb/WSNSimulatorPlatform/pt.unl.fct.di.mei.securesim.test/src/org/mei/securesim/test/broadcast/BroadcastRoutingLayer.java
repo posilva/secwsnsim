@@ -3,8 +3,8 @@
  */
 package org.mei.securesim.test.broadcast;
 
-import org.mei.securesim.core.Application;
-import org.mei.securesim.core.layers.RoutingLayer;
+import org.mei.securesim.core.application.Application;
+import org.mei.securesim.core.layers.routing.RoutingLayer;
 import org.mei.securesim.core.nodes.Node;
 
 /**

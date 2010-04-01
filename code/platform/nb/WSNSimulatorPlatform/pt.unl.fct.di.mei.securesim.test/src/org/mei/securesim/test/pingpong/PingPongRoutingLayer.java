@@ -5,10 +5,10 @@ package org.mei.securesim.test.pingpong;
 
 import java.util.HashSet;
 import java.util.Hashtable;
-import org.mei.securesim.core.Application;
-import org.mei.securesim.core.layers.RoutingLayer;
+import org.mei.securesim.core.application.Application;
+import org.mei.securesim.core.layers.routing.RoutingLayer;
 import org.mei.securesim.core.nodes.Node;
-import org.mei.securesim.cpu.CPUProcess;
+import org.mei.securesim.core.nodes.cpu.CPUProcess;
 import org.mei.securesim.test.pingpong.PingPongApplication.Message;
 import org.mei.securesim.test.pingpong.PingPongApplication.PingPongMessage;
 

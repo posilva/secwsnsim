@@ -1,9 +1,9 @@
 package org.mei.securesim.test.pingpong;
 
-import org.mei.securesim.cpu.CPUProcess;
-import org.mei.securesim.core.Application;
-import org.mei.securesim.core.Event;
-import org.mei.securesim.core.Simulator;
+import org.mei.securesim.core.nodes.cpu.CPUProcess;
+import org.mei.securesim.core.application.Application;
+import org.mei.securesim.core.engine.Event;
+import org.mei.securesim.core.engine.Simulator;
 
 /**
  * This extension of the {@link Application} baseclass does everything we expect
