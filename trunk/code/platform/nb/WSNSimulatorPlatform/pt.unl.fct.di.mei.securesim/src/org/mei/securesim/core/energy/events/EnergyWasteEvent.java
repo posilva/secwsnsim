@@ -5,8 +5,8 @@
 
 package org.mei.securesim.core.energy.events;
 
-import org.mei.securesim.core.Event;
-import org.mei.securesim.core.Simulator;
+import org.mei.securesim.core.engine.Event;
+import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.nodes.Node;
 
 /**

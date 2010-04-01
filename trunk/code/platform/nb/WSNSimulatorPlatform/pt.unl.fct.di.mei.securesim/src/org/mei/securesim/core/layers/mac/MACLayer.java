@@ -2,8 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mei.securesim.core.layers;
+package org.mei.securesim.core.layers.mac;
 
+import org.mei.securesim.core.layers.Layer;
+import org.mei.securesim.core.layers.routing.RoutingLayer;
 import org.mei.securesim.core.nodes.Node;
 import org.mei.securesim.core.radio.RadioModel;
 import org.mei.securesim.core.radio.RadioModel.Neighborhood;

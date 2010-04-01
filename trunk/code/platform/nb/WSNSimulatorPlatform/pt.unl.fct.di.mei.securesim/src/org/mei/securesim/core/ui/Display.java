@@ -22,8 +22,9 @@
  * Date last modified: 02/09/04
  */
 
-package org.mei.securesim.core;
+package org.mei.securesim.core.ui;
 
+import org.mei.securesim.core.engine.Simulator;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;

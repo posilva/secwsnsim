@@ -21,7 +21,7 @@
  * Author: Gyorgy Balogh, Gabor Pap, Miklos Maroti
  * Date last modified: 02/09/04
  */
-package org.mei.securesim.core;
+package org.mei.securesim.core.engine;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -29,11 +29,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.TreeSet;
-import org.mei.securesim.core.events.SimulatorEvent;
+import org.mei.securesim.core.ui.ISimulationDisplay;
+import org.mei.securesim.core.engine.events.SimulatorEvent;
 
 import org.mei.securesim.core.nodes.Node;
 import org.mei.securesim.core.radio.RadioModel;
-import org.mei.securesim.network.Network;
+import org.mei.securesim.core.network.Network;
 
 /**
  * This class is the heart of Prowler, as this is the event based scheduler, or

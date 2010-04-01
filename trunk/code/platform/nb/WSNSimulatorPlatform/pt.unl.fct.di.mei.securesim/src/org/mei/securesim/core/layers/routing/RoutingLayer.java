@@ -1,6 +1,7 @@
-package org.mei.securesim.core.layers;
+package org.mei.securesim.core.layers.routing;
 
-import org.mei.securesim.core.Application;
+import org.mei.securesim.core.application.Application;
+import org.mei.securesim.core.layers.Layer;
 
 public abstract class RoutingLayer extends Layer {
 

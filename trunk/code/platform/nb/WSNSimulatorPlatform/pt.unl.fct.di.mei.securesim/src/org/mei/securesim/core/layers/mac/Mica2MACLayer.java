@@ -2,10 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mei.securesim.core.layers;
+package org.mei.securesim.core.layers.mac;
 
-import org.mei.securesim.core.Event;
-import org.mei.securesim.core.Simulator;
+import org.mei.securesim.core.engine.Event;
+import org.mei.securesim.core.engine.Simulator;
+import org.mei.securesim.core.layers.routing.RoutingLayer;
 import org.mei.securesim.core.nodes.Node;
 
 /**

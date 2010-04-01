@@ -3,10 +3,10 @@
  * and open the template in the editor.
  */
 
-package org.mei.securesim.core;
+package org.mei.securesim.core.engine;
 
 import java.util.EventListener;
-import org.mei.securesim.core.events.SimulatorEvent;
+import org.mei.securesim.core.engine.events.SimulatorEvent;
 
 /**
  *

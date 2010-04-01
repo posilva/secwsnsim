@@ -3,12 +3,14 @@
  * and open the template in the editor.
  */
 
-package org.mei.securesim.core.energy;
+package org.mei.securesim.core.nodes.cpu;
 
 /**
  *
- * @author posilva
+ * @author POSilva
  */
-public class EnergyConsumer {
+public interface  CPUProcess {
+
+    public void run();
 
 }

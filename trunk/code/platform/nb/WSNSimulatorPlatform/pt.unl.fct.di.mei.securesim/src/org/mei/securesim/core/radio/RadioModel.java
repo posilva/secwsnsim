@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 
-import org.mei.securesim.core.Simulator;
+import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.nodes.Node;
 
 /**

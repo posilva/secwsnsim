@@ -1,14 +1,15 @@
-package org.mei.securesim.core.factories;
+package org.mei.securesim.core.nodes.factories;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import org.mei.securesim.core.Application;
+import org.mei.securesim.core.application.Application;
 
-import org.mei.securesim.core.Simulator;
+import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.energy.EnergyModel;
-import org.mei.securesim.core.layers.RoutingLayer;
+import org.mei.securesim.core.layers.routing.RoutingLayer;
+import org.mei.securesim.core.nodes.Node;
 import org.mei.securesim.core.nodes.Node;
 import org.mei.securesim.core.radio.RadioModel;
 

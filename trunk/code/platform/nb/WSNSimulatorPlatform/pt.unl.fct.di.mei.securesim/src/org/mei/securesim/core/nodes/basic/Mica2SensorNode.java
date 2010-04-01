@@ -5,10 +5,9 @@
 
 package org.mei.securesim.core.nodes.basic;
 
-import org.mei.securesim.core.Simulator;
-import org.mei.securesim.core.layers.Mica2MACLayer;
+import org.mei.securesim.core.engine.Simulator;
+import org.mei.securesim.core.layers.mac.Mica2MACLayer;
 import org.mei.securesim.core.radio.RadioModel;
-import org.mei.securesim.core.nodes.SensorNode;
 
 /**
  *
