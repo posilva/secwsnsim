@@ -24,13 +24,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import org.jdesktop.application.Action;
 import org.mei.securesim.core.energy.EnergyModel;
-import org.mei.securesim.network.basic.DefaultNetwork;
+import org.mei.securesim.core.network.basic.DefaultNetwork;
 import org.mei.securesim.platform.conf.ClassConfigReader;
 import org.mei.securesim.platform.conf.ClassConfigReader.ClassDefinitions;
 import org.mei.securesim.platform.instruments.energy.ui.resources.EnergyModelDialog;
 import org.mei.securesim.platform.utils.GUI_Utils;
 
-import org.mei.securesim.simulation.SimulationFactory;
+import org.mei.securesim.components.simulation.SimulationFactory;
 
 /**
  *

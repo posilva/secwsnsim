@@ -2,15 +2,15 @@ package org.mei.securesim.platform.ui;
 
 import java.io.IOException;
 import org.mei.securesim.core.energy.listeners.EnergyEvent;
-import org.mei.securesim.ui.GraphicPoint;
-import org.mei.securesim.ui.GraphicNode;
-import org.mei.securesim.core.nodes.SensorNode;
-import org.mei.securesim.core.Simulator;
-import org.mei.securesim.core.ISimulationDisplay;
-import org.mei.securesim.core.SimulatorFinishListener;
+import org.mei.securesim.gui.GraphicPoint;
+import org.mei.securesim.gui.GraphicNode;
+import org.mei.securesim.core.nodes.basic.SensorNode;
+import org.mei.securesim.core.engine.Simulator;
+import org.mei.securesim.core.ui.ISimulationDisplay;
+import org.mei.securesim.core.engine.SimulatorFinishListener;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
-import org.mei.securesim.core.events.SimulatorEvent;
+import org.mei.securesim.core.engine.events.SimulatorEvent;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -34,15 +34,15 @@ import org.apache.commons.math.stat.descriptive.SummaryStatistics;
 
 import org.mei.securesim.core.energy.Batery;
 import org.mei.securesim.core.energy.listeners.EnergyListener;
-import org.mei.securesim.core.factories.NodeFactory;
+import org.mei.securesim.core.nodes.factories.NodeFactory;
 import org.mei.securesim.core.nodes.Node;
 import org.mei.securesim.platform.PlatformView;
 import org.mei.securesim.platform.instruments.energy.EnergyWatcherThread;
-import org.mei.securesim.simulation.Simulation;
-import org.mei.securesim.simulation.SimulationConfiguration;
-import org.mei.securesim.simulation.SimulationFactory;
-import org.mei.securesim.simulation.basic.BasicSimulation;
-import org.mei.securesim.topology.RandomTopologyManager;
+import org.mei.securesim.components.simulation.Simulation;
+import org.mei.securesim.components.simulation.SimulationConfiguration;
+import org.mei.securesim.components.simulation.SimulationFactory;
+import org.mei.securesim.components.simulation.basic.BasicSimulation;
+import org.mei.securesim.components.topology.RandomTopologyManager;
 
 /**
  *
