@@ -5,7 +5,7 @@
 
 package org.mei.securesim.test.pingpong;
 
-import org.mei.securesim.core.factories.NodeFactory;
+import org.mei.securesim.core.nodes.factories.NodeFactory;
 
 /**
  *
