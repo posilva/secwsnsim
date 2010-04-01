@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-import static org.mei.securesim.core.Simulator.random;
+import static org.mei.securesim.core.engine.Simulator.random;
 /**
  * 
  * An utility class that implements a list that can index elements at random positions.
