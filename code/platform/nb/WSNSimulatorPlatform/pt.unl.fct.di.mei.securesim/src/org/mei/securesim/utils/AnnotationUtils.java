@@ -6,8 +6,8 @@ package org.mei.securesim.utils;
 
 import java.lang.reflect.Field;
 import java.util.Vector;
-import org.mei.securesim.annotation.Annotated;
-import org.mei.securesim.annotation.EnergyModelParameter;
+import org.mei.securesim.utils.annotation.Annotated;
+import org.mei.securesim.utils.annotation.EnergyModelParameter;
 
 /**
  *
