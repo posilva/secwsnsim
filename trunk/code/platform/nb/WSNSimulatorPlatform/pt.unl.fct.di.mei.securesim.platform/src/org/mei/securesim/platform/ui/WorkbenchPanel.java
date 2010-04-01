@@ -7,7 +7,7 @@ package org.mei.securesim.platform.ui;
 
 import java.awt.Dimension;
 import javax.swing.JOptionPane;
-import org.mei.securesim.simulation.SimulationFactory;
+import org.mei.securesim.components.simulation.SimulationFactory;
 import org.mei.securesim.utils.DebugConsole;
 
 /**
