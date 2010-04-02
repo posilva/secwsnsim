@@ -43,6 +43,7 @@ import org.mei.securesim.components.simulation.SimulationConfiguration;
 import org.mei.securesim.components.simulation.SimulationFactory;
 import org.mei.securesim.components.simulation.basic.BasicSimulation;
 import org.mei.securesim.components.topology.RandomTopologyManager;
+import org.mei.securesim.platform.instruments.energy.EnergyHook;
 
 /**
  *
@@ -128,7 +129,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
      *
      */
     public void initSimulation() {
-        Simulator.resetRandom();
+        Simulator.randomGenerator.reset();
         Node.resetCouter();
         simulation.setDisplay(this);
         simulation.preInit();
@@ -595,22 +596,25 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     }//GEN-LAST:event_selNodeVerOsQueMeConhecemActionPerformed
 
     private void selNodeMonitEnergiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selNodeMonitEnergiaActionPerformed
-        EnergyController ec;
+//        EnergyController ec;
         if (currentSelectedNode != null) {
             JMenuItem m = (JMenuItem) evt.getSource();
             Node n = currentSelectedNode.getPhysicalNode();
-
-            if (!energyControllersTable.contains(n)) {
-                ec = new EnergyController();
-                n.getBateryEnergy().addEnergyListener(ec);
-                energyControllersTable.put(n, ec);
-                ec.start();
-            }
-//            if (!nodeenergyWatchers.contains(n)) {
-//                displayNewChartFrame(n);
 //
+//            if (!energyControllersTable.contains(n)) {
+//                ec = new EnergyController();
+//                n.getBateryEnergy().addEnergyListener(ec);
+//                energyControllersTable.put(n, ec);
+//                ec.start();
 //            }
+////            if (!nodeenergyWatchers.contains(n)) {
+////                displayNewChartFrame(n);
+////
+////            }
+//
 
+            EnergyHook eh =EnergyHook.hookToNode(n, 100,true);
+            
             update();
         }
 
@@ -897,8 +901,8 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
                     SummaryStatistics stat = new SummaryStatistics();
                     for (Node node : NodesEnergyWatcher.this.nodes) {
 //                        double c = 100 - (node.getBateryEnergy().getCurrentPower() * 100 / node.getBateryEnergy().getInitialPower());
-                        double c = node.getBateryEnergy().getLastConsume() < 0 ? 0 : node.getBateryEnergy().getLastConsume();
-                        stat.addValue(c);
+//                        double c = node.getBateryEnergy().getLastConsume() < 0 ? 0 : node.getBateryEnergy().getLastConsume();
+//                        stat.addValue(c);
                     }
                     double x = NodesEnergyWatcher.this.nodes.get(0).getSimulator().getSimulationTimeInMillisec();
                     cf.getChartPanel().updateChart(x, stat.getMean());
@@ -971,6 +975,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
                 }
             } catch (Exception ex) {
                 Logger.getLogger(SimulationPanel.class.getName()).log(Level.SEVERE, null, ex);
+                return false;
             }
 
             networkDeployed = true;
@@ -1104,8 +1109,8 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         if (paintNodesInfo) {
             paintInfo(grphcs);
         }
-        PlatformView.getInstance().showNumberOfNodes(""+getSimulation().getSimulator().getNodes().size());
-        PlatformView.getInstance().showSimulationTime(""+getSimulation().getSimulator().getSimulationTime());
+//        PlatformView.getInstance().showNumberOfNodes(""+getSimulation().getSimulator().getNodes().size());
+//        PlatformView.getInstance().showSimulationTime(""+getSimulation().getSimulator().getSimulationTime());
 
     }
 
@@ -1142,9 +1147,10 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         public void onConsume(EnergyEvent evt) {
             try {
 
-                this.dataOutputStream.writeDouble(evt.getValue());
+                //this.dataOutputStream.writeDouble(evt.getValue());
                 Batery b = (Batery) evt.getSource();
-                double t = b.getHostNode().getSimulator().getSimulationTimeInMillisec() / 1000;
+                this.dataOutputStream.writeDouble(b.getAverageConsumption());
+                double t = b.getHostNode().getSimulator().getSimulationTimeInMillisec() / 1000;//System.nanoTime()*10E3; //
                 this.dataOutputStream.writeDouble(t);
             } catch (IOException ex) {
                 getLogger().log(Level.SEVERE, null, ex);

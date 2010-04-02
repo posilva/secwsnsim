@@ -28,7 +28,7 @@ public class NodeCPU {
         long start = System.nanoTime();
         process.run();
         long end = System.nanoTime();
-        getNode().getBateryEnergy().consumeProcessing(end-start);
+        getNode().getBateryEnergy().consumeProcessing(1);//end-start
         switchOFF();
     }
 

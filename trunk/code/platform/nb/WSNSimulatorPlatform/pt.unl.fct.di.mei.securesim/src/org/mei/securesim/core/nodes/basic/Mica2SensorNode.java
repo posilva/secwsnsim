@@ -6,7 +6,6 @@
 package org.mei.securesim.core.nodes.basic;
 
 import org.mei.securesim.core.engine.Simulator;
-import org.mei.securesim.core.layers.mac.Mica2MACLayer;
 import org.mei.securesim.core.radio.RadioModel;
 
 /**
@@ -22,7 +21,7 @@ public abstract class Mica2SensorNode extends SensorNode {
     @Override
     public void configureMACLayer(RadioModel radioModel) {
 
-        setMacLayer(new Mica2MACLayer());
+        if (macLayer == null ) throw  new IllegalStateException("MacLayer cannot be null");
         getMacLayer().setNode(this);
         getMacLayer().setRadioModel(radioModel);
         getMacLayer().setNeighborhood(radioModel.createNeighborhood());
@@ -30,7 +29,7 @@ public abstract class Mica2SensorNode extends SensorNode {
 
     @Override
     public void init() {
-    
+       super.init();
     }
 
 }

@@ -67,7 +67,7 @@ public abstract class Node {
     }
 
     public void initEnergyConsumation() {
-       // simulator.addEvent(new Node.EnergyWasteEvent((int) Simulator.random.nextDouble() * CLOCK_TICK));
+       // simulator.addEvent(new Node.EnergyWasteEvent((int) Simulator.randomGenerator.nextDouble() * CLOCK_TICK));
     }
 
     public Object getMessage() {

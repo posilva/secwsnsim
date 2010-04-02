@@ -4,6 +4,7 @@
  */
 package org.mei.securesim.components.simulation;
 
+import org.mei.securesim.core.energy.EnergyModel;
 import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.nodes.factories.NodeFactory;
 import org.mei.securesim.core.radio.RadioModel;
@@ -22,6 +23,7 @@ public class SimulationFactory {
     Class nodeFactoryClass = null;
     String simulationName = "none";
     String simulationdescription = "none";
+    private EnergyModel energyModel;
 
     public Class getNetworkClass() {
         return networkClass;
@@ -97,8 +99,11 @@ public class SimulationFactory {
         BasicSimulation s = new BasicSimulation();
         s.setNetwork((Network) networkClass.newInstance());
         s.setSimulator((Simulator) (Simulator) simulatorClass.newInstance());
+        Simulator.randomGenerator.reset(); //TODO  Carregar com uma seed
         s.setRadioModel((RadioModel) radioModelClass.newInstance());
         s.setNodeFactory((NodeFactory) nodeFactoryClass.newInstance());
+        s.getNodeFactory().setEnergyModel(energyModel);
+        s.getNodeFactory().setup();
         s.getNodeFactory().setSimulator(s.getSimulator());
         s.setName(simulationName);
 
@@ -106,4 +111,7 @@ public class SimulationFactory {
         return s;
     }
 
+    public void setEnergyModel(EnergyModel energyModel) {
+        this.energyModel = energyModel;
+    }
 }

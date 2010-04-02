@@ -7,12 +7,15 @@
 package org.mei.securesim.platform.instruments.energy.ui;
 
 import java.lang.reflect.Field;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import org.mei.securesim.utils.annotation.EnergyModelParameter;
 import org.mei.securesim.core.energy.EnergyModel;
 import org.mei.securesim.utils.AnnotationUtils;
@@ -28,6 +31,11 @@ public class EnergyModelPanel extends javax.swing.JPanel {
     /** Creates new form EnergyModelPanel */
     public EnergyModelPanel() {
         initComponents();
+        TableColumn column = this.energyModeltable.getColumnModel().getColumn(1);
+        column.setCellRenderer(new DoubleRenderer());
+
+
+
     }
 
     /** This method is called from within the constructor to
@@ -83,8 +91,8 @@ public class EnergyModelPanel extends javax.swing.JPanel {
 
         public EnergyTableModel() {
             columnIdentifiers = new Vector();
-            columnIdentifiers.add("Parâmetro");
-            columnIdentifiers.add("Valor");
+            columnIdentifiers.add("Parameter");
+            columnIdentifiers.add("Value");
             parametersFields = AnnotationUtils.readEnergyModelParametersFields(energyModel);
             dataVector = new Vector();
             for (Field f : parametersFields) {
@@ -113,6 +121,24 @@ public class EnergyModelPanel extends javax.swing.JPanel {
 
     private DefaultTableModel createTableModel() {
         return new EnergyTableModel();
+    }
+
+    static class DoubleRenderer extends DefaultTableCellRenderer {
+
+        DecimalFormat formatter=new DecimalFormat("#.##################");
+
+        public DoubleRenderer() {
+            super();
+        }
+
+        @Override
+        public void setValue(Object value) {
+            if (formatter == null) {
+                formatter = (DecimalFormat) DecimalFormat.getInstance();
+            }
+            setText((value == null) ? "0" : formatter.format(value));
+            setHorizontalAlignment(RIGHT);
+        }
     }
 }
 

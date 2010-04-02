@@ -3,11 +3,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-import static org.mei.securesim.core.engine.Simulator.random;
+import static org.mei.securesim.core.engine.Simulator.randomGenerator;
 /**
  * 
- * An utility class that implements a list that can index elements at random positions.
- * It uses the Simulation random generator to produce the random indices.
+ * An utility class that implements a list that can index elements at randomGenerator positions.
+ * It uses the Simulation randomGenerator generator to produce the randomGenerator indices.
  * @author Sérgio Duarte (smd@di.fct.unl.pt)
  *
  * @param <T> The type of the elements of the list.
@@ -27,10 +27,10 @@ public class RandomList<T> extends ArrayList<T>{
 	}
 	
 	public T randomElement() {
-		return isEmpty() ? null : get( (int)(random.nextDouble() * size() ) ) ;
+		return isEmpty() ? null : get( (int)(randomGenerator.random().nextDouble() * size() ) ) ;
 	}
 	
 	public T removeRandomElement() {
-		return isEmpty() ? null : remove( (int)(random.nextDouble() * size() ) ) ;		
+		return isEmpty() ? null : remove( (int)(randomGenerator.random().nextDouble() * size() ) ) ;
 	}		
 }

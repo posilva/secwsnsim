@@ -7,22 +7,18 @@ import org.mei.securesim.core.nodes.Node;
 public class Batery {
 
     public static final double INFINIT = -1;
-    public static final double TRASMISSION_CONSUMPTION = 0.1;
-    public static final double RECEIVING_CONSUMPTION = 0.01;
-    public static double PROCESSING_CONSUMPTION = 0.005;
-    public static double IDLE_CONSUMPTION = 0.005;
-    public static double STATE_TRANSITION_ON_OFF_CONSUMPTION = 0.00001;
-
+//    public static final double TRASMISSION_CONSUMPTION = 0.1;
+//    public static final double RECEIVING_CONSUMPTION = 0.01;
+//    public static double PROCESSING_CONSUMPTION = 0.005;
+//    public static double IDLE_CONSUMPTION = 0.005;
+//    public static double STATE_TRANSITION_ON_OFF_CONSUMPTION = 0.00001;
     EnergyModel energyModel;
-
+    protected double averageConsumption=0;
+    protected double totalconsumptions=0;
     /**
      * 
      */
     private double currentPower = INFINIT;
-    /**
-     * 
-     */
-    private int sampleCount = 0;
     /**
      * 
      */
@@ -34,11 +30,8 @@ public class Batery {
     /**
      * 
      */
-    protected double lastConsume = -1;
-    /**
-     * 
-     */
     protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
+    private GlobalEnergyController globalEnergyController;
 
     /**
      * 
@@ -55,9 +48,11 @@ public class Batery {
     public void removeEnergyListener(EnergyListener listener) {
         listenerList.remove(EnergyListener.class, listener);
     }
+
     public Batery() {
         this.initialPower = INFINIT;
         this.currentPower = INFINIT;
+        init();
     }
 
     public Batery(EnergyModel energyModel) {
@@ -83,14 +78,12 @@ public class Batery {
 
     public synchronized void consume(double value) {
         currentPower -= value;
-        if (lastConsume == -1) {
-            lastConsume = value;
-        } else {
-            lastConsume += value;
-        }
-        sampleCount++;
+
+        double tot = averageConsumption*totalconsumptions;
+        tot+=value;
+        totalconsumptions++;
+        averageConsumption=tot/totalconsumptions;
         fireOnEnergyConsume(new EnergyEvent(this, value));
-        //System.out.println("Value: " +value);
     }
 
     private void fireOnEnergyConsume(EnergyEvent energyEvent) {
@@ -104,15 +97,15 @@ public class Batery {
         }
     }
 
-    public void consumeTransmission(double time) {
-        //System.out.println("consumeTransmission: " + time);
-        consume(TRASMISSION_CONSUMPTION * time);
-
+    public void consumeTransmission(double length) {
+        consume(energyModel.getTransmissionEnergy() * length);
+        log("Transmission", energyModel.getTransmissionEnergy() * length);
     }
 
-    public void consumeReceiving() {
+    public void consumeReceiving(int length) {
         //System.out.println("consumeReceiving: " );
-        consume(RECEIVING_CONSUMPTION);
+        consume(energyModel.getReceptionEnergy());
+        log("Receiving", energyModel.getReceptionEnergy() * length);
     }
 
     public Node getHostNode() {
@@ -127,28 +120,16 @@ public class Batery {
         return initialPower;
     }
 
-    public double getLastConsume() {
-        if (lastConsume == -1) {
-            return 0.0;
-        }
-
-        double result = lastConsume;
-//        System.out.println("Last Consume: " + result);
-        lastConsume = -1;
-        return result;
-    }
-
-    public void consumeProcessing() {
-        consume(PROCESSING_CONSUMPTION);
-    }
-
     public void consumeCPUTransitionToON() {
-        consume(STATE_TRANSITION_ON_OFF_CONSUMPTION);
+        consume(energyModel.getCpuTransitionToActiveEnergy());
+        log("CPUTransitionToON", energyModel.getCpuTransitionToActiveEnergy());
     }
 
-    public void consumeProcessing(long time) {
-          consume(PROCESSING_CONSUMPTION*time);
+    public void consumeProcessing(long rate) {
+        consume(energyModel.processingEnergy * rate);
+        log("Processing", energyModel.processingEnergy * rate);
     }
+
     public EnergyModel getEnergyModel() {
         return energyModel;
     }
@@ -157,4 +138,35 @@ public class Batery {
         this.energyModel = energyModel;
     }
 
+    public void consumeEncryption(int length) {
+        consume(energyModel.getEncryptEnergy() * length);
+        log("Encryption", energyModel.getEncryptEnergy() * length);
+    }
+
+    public void consumeMAC(int length) {
+        consume(energyModel.getDigestEnergy() * length);
+        log("MAC", energyModel.getDigestEnergy() * length);
+    }
+
+    public void consumeMACVerification(int length) {
+        consume(energyModel.getVerifyDigestEnergy() * length);
+        log("MACVerification", energyModel.getVerifyDigestEnergy() * length);
+    }
+
+    public void consumeDecryption(int length) {
+        consume(energyModel.getDecryptEnergy() * length);
+        log("Decryption", energyModel.getDecryptEnergy() * length);
+    }
+
+    private void init() {
+        //globalEnergyController=new Object();
+    }
+
+    private synchronized void log(String string, double d) {
+//        System.out.println(getHostNode().getId() + "\t" + string + "\t" + d);
+    }
+
+    public double getAverageConsumption() {
+        return averageConsumption;
+    }
 }

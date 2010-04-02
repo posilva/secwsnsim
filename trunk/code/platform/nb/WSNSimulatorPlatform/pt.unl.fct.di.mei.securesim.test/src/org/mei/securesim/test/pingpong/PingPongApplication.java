@@ -1,27 +1,37 @@
 package org.mei.securesim.test.pingpong;
 
+import java.io.Serializable;
 import org.mei.securesim.core.nodes.cpu.CPUProcess;
 import org.mei.securesim.core.application.Application;
 import org.mei.securesim.core.engine.Event;
 import org.mei.securesim.core.engine.Simulator;
+import org.mei.securesim.core.engine.DefaultMessage;
 
 /**
  * This extension of the {@link Application} baseclass does everything we expect
  * from the broadcast application, simply forwards the message once, and that is
  * it.
  */
-public class PingPongApplication extends Application {
+public class PingPongApplication extends Application implements Serializable {
 
     private static long countMessages = 0;
     private int CLOCK_TICK = Simulator.ONE_SECOND * 100000;
+    public static int PING = 0;
+    public static int PONG = 1;
+    private int NO_REPLY = -1;
 
-    public void handleMessage(PingPongMessage m, Object message) {
-        if (m.destID == getNode().getId()) {
+    public void handleMessage(DefaultMessage msg) {
+
+        PingPongMessageWrapper m = new PingPongMessageWrapper();
+        m.wrap(msg);
+        if (m.getDest() == getNode().getId()) {
             // é para mim
-            if (m.type == TypeOfMessage.PING) {
-                sendPongMessage(m);
+            if (m.type == PING) {
+            //    System.out.println("Recebi um PING: " + getNode().getId()+  " from " + m.getSource());
+                sendPongMessage(m.source, m.getId());
             } else {
-                boolean r = sendPingMessage(m.sourceID);
+              //  System.out.println("Recebi um PONG: " + getNode().getId() +  " from " + m.getSource());
+                boolean r = sendPingMessage(m.source);
                 if (getHostNode().getId() == 1) {
                     if (!r) {
                         System.out.println("não consegui enviar");
@@ -29,7 +39,7 @@ public class PingPongApplication extends Application {
                 }
             }
         } else {
-            sendMessage(message);
+            boolean sendMessage = sendMessage(msg);
 
         }
     }
@@ -38,12 +48,6 @@ public class PingPongApplication extends Application {
     public void generateEvent() {
         sendPingMessage(2);
     }
-
-    public enum TypeOfMessage {
-
-        PING,
-        PONG
-    };
 
     /**
      * @param node
@@ -62,9 +66,10 @@ public class PingPongApplication extends Application {
     public void receiveMessage(Object message) {
         final Object msg = message;
         getHostNode().getCPU().execute(new CPUProcess() {
+
             public void run() {
-                PingPongMessage m = (PingPongMessage) msg;
-                handleMessage(m, msg);
+                DefaultMessage m = (DefaultMessage) msg;
+                handleMessage(m);
             }
         });
     }
@@ -87,45 +92,17 @@ public class PingPongApplication extends Application {
         return new PingPongApplication();
     }
 
-    public class Message {
-
-        public long id = countMessages++;
-        public int sourceID;
-        public int destID;
-
-        public Message(int sourceID, int destID) {
-            this.sourceID = sourceID;
-            this.destID = destID;
-        }
-    }
-
-    public class PingPongMessage extends Message {
-
-        public long replyToID;
-        public TypeOfMessage type = TypeOfMessage.PING;
-
-        public PingPongMessage(int sourceID, int destID) {
-            super(sourceID, destID);
-        }
-
-    }
-
     public boolean sendPingMessage(int to) {
-
-        boolean result;
-        PingPongMessage msg = new PingPongMessage(getNode().getId(), to);
-        sendPPMessage(msg);
+        PingPongMessageWrapper w = new PingPongMessageWrapper();
+        byte[] payload = w.createPayload(PING, countMessages++, getNode().getId(), to, NO_REPLY);
+        sendPPMessage(new DefaultMessage(payload));
         return true;
-
-
     }
 
-    private boolean sendPongMessage(PingPongMessage m) {
-        boolean result;
-        PingPongMessage msg = new PingPongMessage(getNode().getId(), m.sourceID);
-        msg.type = TypeOfMessage.PONG;
-        msg.replyToID = m.id;
-        sendPPMessage(msg);
+    private boolean sendPongMessage(int to, long replyID) {
+        PingPongMessageWrapper w = new PingPongMessageWrapper();
+        byte[] payload = w.createPayload(PONG, countMessages++, getNode().getId(), to, replyID);
+        sendPPMessage(new DefaultMessage(payload));
         return true;
 
 
@@ -133,9 +110,9 @@ public class PingPongApplication extends Application {
 
     class SendPingPongMessageEvent extends Event {
 
-        PingPongMessage message;
+        DefaultMessage message;
 
-        public SendPingPongMessageEvent(long time, PingPongMessage message) {
+        public SendPingPongMessageEvent(long time, DefaultMessage message) {
             super(time);
             this.message = message;
         }
@@ -147,7 +124,7 @@ public class PingPongApplication extends Application {
         }
     }
 
-    private void sendPPMessage(PingPongMessage m) {
-        getHostNode().getSimulator().addEvent(new SendPingPongMessageEvent(getHostNode().getSimulator().getSimulationTime() + (10000 + (int) Simulator.random.nextDouble() * CLOCK_TICK), m));
+    private void sendPPMessage(DefaultMessage m) {
+        getHostNode().getSimulator().addEvent(new SendPingPongMessageEvent(getHostNode().getSimulator().getSimulationTime() + (10000 + (int) Simulator.randomGenerator.random().nextDouble() * CLOCK_TICK), m));
     }
 }

@@ -52,7 +52,7 @@ public class EnergyWatcherThread extends Thread{
             try {
                 double y = datainputStream.readDouble();
                 double x = datainputStream.readDouble();
-                System.out.println("X: "+ x + "Y:"+y);
+              //  System.out.println("X: "+ x + "Y:"+y);
                 dialog.updateChart(x, y);
             } catch (IOException ex) {
                 Logger.getLogger(EnergyWatcherThread.class.getName()).log(Level.SEVERE, null, ex);

@@ -19,6 +19,7 @@ public abstract class Simulation extends ConfigurableObject {
     protected NodeFactory simpleNodeFactory;
     protected Network network;
     protected ISimulationDisplay display;
+    protected long seed;
     private boolean bPreInit = false;
 
     public Simulation() {
@@ -32,6 +33,14 @@ public abstract class Simulation extends ConfigurableObject {
         if (simpleNodeFactory == null) {
             throw new IllegalStateException("Não existe um Simple NodeFactory instanciado");
         }
+    }
+
+    public long getSeed() {
+        return seed;
+    }
+
+    public void setSeed(long seed) {
+        this.seed = seed;
     }
 
     public ISimulationDisplay getDisplay() {
@@ -118,5 +127,4 @@ public abstract class Simulation extends ConfigurableObject {
     public void setDescription(String description) {
         this.description = description;
     }
-
 }

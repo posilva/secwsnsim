@@ -102,10 +102,4 @@ public class PingPongNode extends Mica2SensorNode implements IDisplayable {
     public static PingPongNode cast(Node n) {
         return (PingPongNode) n;
     }
-
-    @Override
-    public void init() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-   
 }

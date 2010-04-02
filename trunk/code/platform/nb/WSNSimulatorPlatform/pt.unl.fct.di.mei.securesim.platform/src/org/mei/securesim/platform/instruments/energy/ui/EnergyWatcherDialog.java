@@ -1,9 +1,4 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
  * EnergyWatcherDialog.java
  *
  * Created on Mar 13, 2010, 6:58:33 PM

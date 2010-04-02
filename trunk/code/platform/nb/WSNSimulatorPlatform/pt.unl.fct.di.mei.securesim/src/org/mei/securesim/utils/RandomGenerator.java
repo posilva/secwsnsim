@@ -10,22 +10,33 @@ import java.util.Random;
  *
  */
 public class RandomGenerator {
-	
-	
-	static Random random=null; 
-	
-	static boolean initiated = false;
-	private static void init(long seed) {
-		random = new Random(seed);
-		initiated =true;
-	}
-	private static void init() {
-		random = new Random();
-		initiated =true;
-	}
 
-	public static Random random()  {
-		if (!initiated ) init();
-		return random;
-	}
+    protected Random random = null;
+    private long seed;
+
+    public RandomGenerator(long seed) {
+        this.seed = seed;
+        init();
+    }
+
+    public RandomGenerator() {
+        this.seed = System.currentTimeMillis();
+        init();
+    }
+
+    private void init() {
+        random = new Random(seed);
+    }
+
+    public Random random() {
+        return random;
+    }
+    public void reset() {
+        init();
+    }
+
+    public void reset(long seed) {
+        this.seed = seed;
+        init();
+    }
 }
