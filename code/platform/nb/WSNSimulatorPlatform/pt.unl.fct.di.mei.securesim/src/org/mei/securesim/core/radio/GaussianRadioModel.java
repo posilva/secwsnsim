@@ -145,13 +145,13 @@ public class GaussianRadioModel extends RadioModel {
 
     /**
      * Calculates the static part of the radio fading between two nodes based on
-     * distance and a random factor.
+     * distance and a randomGenerator factor.
      *
      * @return The radio fading coefficient
      */
     protected double getStaticFading(Node sender, Node receiver) {
         double staticRandomFading = 1.0 + staticRandomFactor
-                * Simulator.random.nextGaussian();
+                * Simulator.randomGenerator.random().nextGaussian();
         final double distanceSquare = sender.getDistanceSquare(receiver);
         return staticRandomFading <= 0.0 ? 0.0 : sender.getConfig().getMaximumRadioStrength() * staticRandomFading
                 / (1.0 + Math.pow(distanceSquare, fallingFactorHalf));
@@ -160,7 +160,7 @@ public class GaussianRadioModel extends RadioModel {
     /**
      * Calculates the received radio strength based on the static signal
      * strength determined by the {@link GaussianRadioModel#getStaticFading}, a
-     * dynamic random factor and the signal strength of the node, which can be
+     * dynamic randomGenerator factor and the signal strength of the node, which can be
      * time variant.
      *
      * @param signalStrength
@@ -171,7 +171,7 @@ public class GaussianRadioModel extends RadioModel {
      * @return The signal strength at the receiver.
      */
     protected double getDynamicStrength(double signalStrength, double staticFading) {
-        double dynamicRandomFading = 1.0 + dynamicRandomFactor * Simulator.random.nextGaussian();
+        double dynamicRandomFading = 1.0 + dynamicRandomFactor * Simulator.randomGenerator.random().nextGaussian();
         return dynamicRandomFading <= 0.0 ? 0.0 : signalStrength * staticFading * dynamicRandomFading;
     }
 
@@ -207,7 +207,7 @@ public class GaussianRadioModel extends RadioModel {
 
         /**
          * Calculates the dynamic signal strength based on the static fading
-         * factors and a per-transmission dynamic random factor. Then calls the
+         * factors and a per-transmission dynamic randomGenerator factor. Then calls the
          * {@link Node#receptionBegin} method on all neighbors.
          */
         public void beginTransmission(double strength, Object stream) {
@@ -219,10 +219,12 @@ public class GaussianRadioModel extends RadioModel {
                         "No nested transmissions are allowed");
             }
 
+
+
             this.stream = stream;
+            
 
             int i = neighbors.size();
-            getStream2Node().startTransmissionTime();
             while (--i >= 0) {
                 if (neighbors.get(i).isTurnedOn()) {
                     double dynamicStrength = getDynamicStrength(strength,
@@ -248,8 +250,6 @@ public class GaussianRadioModel extends RadioModel {
             while (--i >= 0) {
                 neighbors.get(i).getMacLayer().receptionEnd(dynamicStrengths.get(i), stream);
             }
-
-            getStream2Node().getBateryEnergy().consumeTransmission(1); //getStream2Node().endTransmissionTime()
             stream = null;
         }
     }

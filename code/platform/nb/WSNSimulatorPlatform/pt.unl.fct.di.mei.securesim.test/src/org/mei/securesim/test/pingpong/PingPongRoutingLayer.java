@@ -4,13 +4,11 @@
 package org.mei.securesim.test.pingpong;
 
 import java.util.HashSet;
-import java.util.Hashtable;
 import org.mei.securesim.core.application.Application;
+import org.mei.securesim.core.engine.DefaultMessage;
 import org.mei.securesim.core.layers.routing.RoutingLayer;
 import org.mei.securesim.core.nodes.Node;
 import org.mei.securesim.core.nodes.cpu.CPUProcess;
-import org.mei.securesim.test.pingpong.PingPongApplication.Message;
-import org.mei.securesim.test.pingpong.PingPongApplication.PingPongMessage;
 
 /**
  * @author posilva
@@ -19,8 +17,7 @@ import org.mei.securesim.test.pingpong.PingPongApplication.PingPongMessage;
 public class PingPongRoutingLayer extends RoutingLayer {
 
     private Node parent;
-    protected Hashtable sentMessages = new Hashtable();
-    protected HashSet<Message> receivedMessages = new HashSet<Message>();
+    protected HashSet<Integer> receivedMessages = new HashSet<Integer>();
 
     public PingPongRoutingLayer() {
         super();
@@ -33,19 +30,14 @@ public class PingPongRoutingLayer extends RoutingLayer {
     @Override
     public void receiveMessage(Object message) {
         final Object msg = message;
-
         getNode().getCPU().execute(new CPUProcess() {
 
             @SuppressWarnings("element-type-mismatch")
             public void run() {
-
-                if (!(msg instanceof PingPongMessage)) {
-                    throw new IllegalStateException("Message must be a instance of " + PingPongMessage.class.getSimpleName());
-                }
-                PingPongMessage m = (PingPongMessage) msg;
+                DefaultMessage m = (DefaultMessage) msg;
                 // se não recebi a mensagem trato
-                if (!receivedMessages.contains(m)) {
-                    receivedMessages.add((PingPongMessage) msg);
+                if (!receivedMessages.contains(m.getPayload().hashCode())) {
+                    receivedMessages.add(m.getPayload().hashCode());
                     Application app = getNode().getApplication();
                     if (app != null) {
                         app.receiveMessage(msg);
@@ -54,20 +46,12 @@ public class PingPongRoutingLayer extends RoutingLayer {
                 }
             }
         });
-
-
-
-
     }
 
     @Override
     public boolean sendMessage(Object message, Application app) {
         application = app;
-        Message msg = (Message) message;
-
-        sentMessages.put(msg, new Integer(msg.destID));
-        receivedMessages.add(msg);
-
+        receivedMessages.add(((DefaultMessage) message).getPayload().hashCode());
         return getNode().getMacLayer().sendMessage(message, this);
     }
 

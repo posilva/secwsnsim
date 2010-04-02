@@ -13,32 +13,47 @@ import org.mei.securesim.utils.annotation.EnergyModelParameter;
  * @author posilva
  */
 public class EnergyModel implements Annotated{
-    @EnergyModelParameter(label="Total energy")
+    /**
+     * Valores Baseados em
+     */
+    @EnergyModelParameter(label="Total energy (Joules)",value=9360.0)
     double totalEnergy;
-    @EnergyModelParameter(label="Encrypt energy")
+    // baseado no paper 3 - Evaluation of security Mechanisms  in WSN // skipjack
+    @EnergyModelParameter(label="Encrypt energy (Joules/Byte)",value=0.000001788)
     double encryptEnergy;
-    @EnergyModelParameter(label="Decrypt energy")
+    @EnergyModelParameter(label="Decrypt energy (Joules/Byte)",value=0.000001788)
     double decryptEnergy;
-    @EnergyModelParameter(label="Digest energy")
+    //Energy Analysis of public key cryptography for WSN PAPER 2
+    @EnergyModelParameter(label="Digest energy (Joules/Byte)",value=0.0000059) // SHA1
     double digestEnergy;
-    @EnergyModelParameter(label="Sign energy")
+    @EnergyModelParameter(label="Sign energy (Joules/Byte)",value=0.0000059)
     double signatureEnergy;
-    @EnergyModelParameter(label="Verify Digest energy")
+    @EnergyModelParameter(label="Verify Digest energy (Joules/Byte)",value=0.0000059)
     double verifyDigestEnergy;
-    @EnergyModelParameter(label="Verify signature energy")
+    @EnergyModelParameter(label="Verify signature energy (Joules/Byte)",value=0.0000059)
     double verifySignatureEnergy;
-    @EnergyModelParameter(label="CPU Transition to ON energy")
+    @EnergyModelParameter(label="CPU Transition to ON energy (Joules)",value=0.000000001)
     double cpuTransitionToActiveEnergy;
-    @EnergyModelParameter(label="Transciver Transition to ON energy")
+    @EnergyModelParameter(label="Transciver Transition to ON energy (Joules)",value=0.000000002)
     double txTransitionToActiveEnergy;
-    @EnergyModelParameter(label="Transmission energy")
+    @EnergyModelParameter(label="Transmission energy (Joules/Byte)",value=0.00000592)
     double transmissionEnergy;
-    @EnergyModelParameter(label="Reception energy")
+    @EnergyModelParameter(label="Reception energy (Joules/Byte)",value=0.00000286)
     double receptionEnergy;
-    @EnergyModelParameter(label="Idle State energy")
+    @EnergyModelParameter(label="Idle State energy (Joules)",value=0.0000059)
     double idleEnergy;
-    @EnergyModelParameter(label="Sleep State energy")
+    @EnergyModelParameter(label="Sleep State energy (Joules)",value=0.0000075)
     double sleepEnergy;
+    @EnergyModelParameter(label="Simple processing energy (Joules)",value=0.0138)
+    double processingEnergy;
+
+    public double getProcessingEnergy() {
+        return processingEnergy;
+    }
+
+    public void setProcessingEnergy(double processingEnergy) {
+        this.processingEnergy = processingEnergy;
+    }
 
     public double getCpuTransitionToActiveEnergy() {
         return cpuTransitionToActiveEnergy;

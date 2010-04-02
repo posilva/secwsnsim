@@ -1,15 +1,14 @@
 package org.mei.securesim.core.nodes.factories;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import org.mei.securesim.core.application.Application;
 
 import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.energy.EnergyModel;
+import org.mei.securesim.core.layers.mac.MACLayer;
 import org.mei.securesim.core.layers.routing.RoutingLayer;
-import org.mei.securesim.core.nodes.Node;
 import org.mei.securesim.core.nodes.Node;
 import org.mei.securesim.core.radio.RadioModel;
 
@@ -21,7 +20,8 @@ public abstract class NodeFactory {
     protected Class application;
     protected Class routingLayer;
     protected EnergyModel energyModel;
-    protected boolean setup=false;
+    protected boolean setup = false;
+    protected Class macLayer;
 
     public NodeFactory(Simulator simulator) {
         super();
@@ -48,9 +48,9 @@ public abstract class NodeFactory {
         ArrayList<Node> nodes = new ArrayList<Node>();
         for (int i = 0; i < nodeNum; ++i) {
             Node node = nodeCreation();
-            node.setPosition(areaWidth * Simulator.random.nextDouble(),
-                    areaWidth * Simulator.random.nextDouble(),
-                    maxElevation * Simulator.random.nextDouble());
+            node.setPosition(areaWidth * Simulator.randomGenerator.random().nextDouble(),
+                    areaWidth * Simulator.randomGenerator.random().nextDouble(),
+                    maxElevation * Simulator.randomGenerator.random().nextDouble());
             nodes.add(node);
         }
         return nodes;
@@ -60,9 +60,9 @@ public abstract class NodeFactory {
         ArrayList<Node> nodes = new ArrayList<Node>();
         for (int i = 0; i < nodeNum; ++i) {
             Node node = nodeCreation((short) (startNodeId + i));
-            node.setPosition(areaWidth * Simulator.random.nextDouble(),
-                    areaWidth * Simulator.random.nextDouble(),
-                    maxElevation * Simulator.random.nextDouble());
+            node.setPosition(areaWidth * Simulator.randomGenerator.random().nextDouble(),
+                    areaWidth * Simulator.randomGenerator.random().nextDouble(),
+                    maxElevation * Simulator.randomGenerator.random().nextDouble());
             nodes.add(node);
         }
         return nodes;
@@ -90,19 +90,41 @@ public abstract class NodeFactory {
         return nodes;
     }
 
-    protected Node nodeCreation() throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException, IllegalArgumentException, SecurityException {
+    protected Node nodeCreation() throws Exception{
+        if (!setup) {
+            throw new IllegalStateException("Factory is not setup!");
+        }
         Constructor c = classOfNodes.getConstructor(new Class[]{Simulator.class, RadioModel.class});
         Node node = (Node) c.newInstance(new Object[]{this.simulator,
                     this.simulator.getRadioModel()});
         node.setRoutingLayer((RoutingLayer) routingLayer.newInstance());
         node.setApplication((Application) application.newInstance());
+        node.setMacLayer(getMacLayerInstance());
+        node.getBateryEnergy().setEnergyModel(getEnergyModelInstance());
+        node.init();
         return node;
     }
 
-    protected Node nodeCreation(short nodeId) throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException, IllegalArgumentException, SecurityException {
+    protected Node nodeCreation(short nodeId) throws Exception {
+
         Node node = nodeCreation();
         node.setId(nodeId);
+
         return node;
+    }
+
+    private EnergyModel getEnergyModelInstance() {
+        if (energyModel == null) {
+            throw new IllegalStateException("EnergyModel is not instanciated!");
+        }
+        return getEnergyModel();
+    }
+
+    private MACLayer getMacLayerInstance() throws Exception {
+        if (macLayer == null) {
+            throw new IllegalStateException("MACLayer Class is not instanciated!");
+        }
+        return (MACLayer) macLayer.newInstance();
     }
 
     public Class getApplication() {
@@ -151,6 +173,14 @@ public abstract class NodeFactory {
 
     public void setSetup(boolean setup) {
         this.setup = setup;
+    }
+
+    public Class getMacLayer() {
+        return macLayer;
+    }
+
+    public void setMacLayer(Class macLayer) {
+        this.macLayer = macLayer;
     }
 
     public NodeFactory() {

@@ -10,7 +10,6 @@ import java.awt.Graphics;
 import org.mei.securesim.core.ui.ISimulationDisplay;
 import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.nodes.Node;
-import org.mei.securesim.core.nodes.Node;
 import org.mei.securesim.core.radio.RadioModel;
 
 /**
@@ -30,7 +29,7 @@ public abstract class SensorNode extends Node {
      */
     public SensorNode(Simulator sim, RadioModel radioModel) {
         super(sim, radioModel);
-        configureMACLayer(radioModel);
+    //    configureMACLayer(radioModel);
 
     }
 
@@ -149,4 +148,10 @@ public abstract class SensorNode extends Node {
         this.paintNeighborhoodOrg = paintNeighborhoodOrg;
 
     }
+
+    @Override
+    public void init() {
+     configureMACLayer(getSimulator().getRadioModel());
+    }
+
 }

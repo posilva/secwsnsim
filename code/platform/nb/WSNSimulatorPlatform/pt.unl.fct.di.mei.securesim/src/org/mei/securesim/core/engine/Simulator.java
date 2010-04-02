@@ -27,7 +27,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
+
 import java.util.TreeSet;
 import org.mei.securesim.core.ui.ISimulationDisplay;
 import org.mei.securesim.core.engine.events.SimulatorEvent;
@@ -35,6 +35,7 @@ import org.mei.securesim.core.engine.events.SimulatorEvent;
 import org.mei.securesim.core.nodes.Node;
 import org.mei.securesim.core.radio.RadioModel;
 import org.mei.securesim.core.network.Network;
+import org.mei.securesim.utils.RandomGenerator;
 
 /**
  * This class is the heart of Prowler, as this is the event based scheduler, or
@@ -68,7 +69,7 @@ public class Simulator {
      * This makes experiments repeatable, all you have to do is to set
      * the seed of this Random class.
      */
-    static public Random random = new Random(SEED);
+    static public RandomGenerator randomGenerator = new RandomGenerator();
     /**
      * This defines the time resolution. Every time and time interval
      * in the simulator is represented in this resolution. This rate
@@ -90,27 +91,26 @@ public class Simulator {
      */
     public Node firstNode = null;
     private ISimulationDisplay display;
-	private Network network = null;
+    private Network network = null;
 
+    /**
+     * @param network the network to set
+     */
+    public void setNetwork(Network network) {
+        this.network = network;
+        this.network.setSimulator(this);
+    }
 
-	/**
-	 * @param network the network to set
-	 */
-	public void setNetwork(Network network) {
-		this.network = network;
-		this.network.setSimulator(this);
-	}
+    /**
+     * @return the network
+     */
+    public Network getNetwork() {
+        return network;
+    }
 
-	/**
-	 * @return the network
-	 */
-	public Network getNetwork() {
-		return network;
-	}
-
-	public Collection<Node> getNodes(){
-		return network.getNodeDB().nodes();
-	}
+    public Collection<Node> getNodes() {
+        return network.getNodeDB().nodes();
+    }
 
     public static void setSimulatorSpeed(int value) {
         // 100% -> SIMULATION_SPEED_MAX
@@ -392,10 +392,6 @@ public class Simulator {
      */
     public ISimulationDisplay getDisplay() {
         return display;
-    }
-
-    public static void resetRandom() {
-        random = new Random(SEED);
     }
 
     protected synchronized void fireOnFinishSimulation(SimulatorEvent evt) {

@@ -42,6 +42,7 @@ public class SimulationWizardDialog extends javax.swing.JDialog {
     private FocusListener focusListener;
     private SimulationFactory sf;
     private EnergyModel energyModel;
+    private boolean energyModelConfig = false;
 
     /** Creates new form SimulationWizardDialog */
     public SimulationWizardDialog(java.awt.Frame parent, boolean modal) {
@@ -318,13 +319,17 @@ public class SimulationWizardDialog extends javax.swing.JDialog {
             sf.setRadioModelClass(getClassInstance(((ClassDefinitions) cboRadioModelClass.getSelectedItem()).className));
             sf.setNodeFactoryClass(getClassInstance(((ClassDefinitions) cboNodeClass.getSelectedItem()).className));
             sf.setNetworkClass(DefaultNetwork.class);
+            if (!energyModelConfig) {
+                energyModel = new EnergyModel();
+            }
+            sf.setEnergyModel(energyModel);
             return true;
         } catch (InstantiationException ex) {
             Logger.getLogger(SimulationWizardDialog.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
             Logger.getLogger(SimulationWizardDialog.class.getName()).log(Level.SEVERE, null, ex);
         }
-        sf=null;
+        sf = null;
         return false;
 
     }
@@ -343,7 +348,7 @@ public class SimulationWizardDialog extends javax.swing.JDialog {
     }
 
     public SimulationFactory getSimulationFactory() {
-   
+
         return sf;
     }
 
@@ -380,11 +385,13 @@ public class SimulationWizardDialog extends javax.swing.JDialog {
 
     @Action
     public void configureEnergyModel() {
+
         EnergyModelDialog emd = new EnergyModelDialog(null, true);
         emd.setVisible(true);
         if (emd.isOk()) //           sw.getSimulationFactory();
         {
-           energyModel=emd.getEnergyModel();
+            energyModel = emd.getEnergyModel();
+            energyModelConfig = true;
         }
         emd.dispose();
     }

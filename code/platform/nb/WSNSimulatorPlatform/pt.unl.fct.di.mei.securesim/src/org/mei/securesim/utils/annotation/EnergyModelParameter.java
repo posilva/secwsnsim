@@ -15,5 +15,7 @@ import java.lang.annotation.Target;
 public @interface EnergyModelParameter {
     String label();
     double value() default 0.0;
-    
+    boolean required() default false;
+    String classToLoad() default "";
+    boolean isClass() default false;
 }
