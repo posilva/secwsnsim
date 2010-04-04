@@ -2,9 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.mei.securesim.core.energy;
 
+import java.lang.reflect.Field;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.mei.securesim.utils.AnnotationUtils;
 import org.mei.securesim.utils.annotation.Annotated;
 import org.mei.securesim.utils.annotation.EnergyModelParameter;
 
@@ -12,39 +16,40 @@ import org.mei.securesim.utils.annotation.EnergyModelParameter;
  *
  * @author posilva
  */
-public class EnergyModel implements Annotated{
+public class EnergyModel implements Annotated {
+
     /**
      * Valores Baseados em
      */
-    @EnergyModelParameter(label="Total energy (Joules)",value=9360.0)
+    @EnergyModelParameter(label = "Total energy (Joules)", value = 9360.0)
     double totalEnergy;
     // baseado no paper 3 - Evaluation of security Mechanisms  in WSN // skipjack
-    @EnergyModelParameter(label="Encrypt energy (Joules/Byte)",value=0.000001788)
+    @EnergyModelParameter(label = "Encrypt energy (Joules/Byte)", value = 0.000001788)
     double encryptEnergy;
-    @EnergyModelParameter(label="Decrypt energy (Joules/Byte)",value=0.000001788)
+    @EnergyModelParameter(label = "Decrypt energy (Joules/Byte)", value = 0.000001788)
     double decryptEnergy;
     //Energy Analysis of public key cryptography for WSN PAPER 2
-    @EnergyModelParameter(label="Digest energy (Joules/Byte)",value=0.0000059) // SHA1
+    @EnergyModelParameter(label = "Digest energy (Joules/Byte)", value = 0.0000059) // SHA1
     double digestEnergy;
-    @EnergyModelParameter(label="Sign energy (Joules/Byte)",value=0.0000059)
+    @EnergyModelParameter(label = "Sign energy (Joules/Byte)", value = 0.0000059)
     double signatureEnergy;
-    @EnergyModelParameter(label="Verify Digest energy (Joules/Byte)",value=0.0000059)
+    @EnergyModelParameter(label = "Verify Digest energy (Joules/Byte)", value = 0.0000059)
     double verifyDigestEnergy;
-    @EnergyModelParameter(label="Verify signature energy (Joules/Byte)",value=0.0000059)
+    @EnergyModelParameter(label = "Verify signature energy (Joules/Byte)", value = 0.0000059)
     double verifySignatureEnergy;
-    @EnergyModelParameter(label="CPU Transition to ON energy (Joules)",value=0.000000001)
+    @EnergyModelParameter(label = "CPU Transition to ON energy (Joules)", value = 0.000000001)
     double cpuTransitionToActiveEnergy;
-    @EnergyModelParameter(label="Transciver Transition to ON energy (Joules)",value=0.000000002)
+    @EnergyModelParameter(label = "Transciver Transition to ON energy (Joules)", value = 0.000000002)
     double txTransitionToActiveEnergy;
-    @EnergyModelParameter(label="Transmission energy (Joules/Byte)",value=0.00000592)
+    @EnergyModelParameter(label = "Transmission energy (Joules/Byte)", value = 0.00000592)
     double transmissionEnergy;
-    @EnergyModelParameter(label="Reception energy (Joules/Byte)",value=0.00000286)
+    @EnergyModelParameter(label = "Reception energy (Joules/Byte)", value = 0.00000286)
     double receptionEnergy;
-    @EnergyModelParameter(label="Idle State energy (Joules)",value=0.0000059)
+    @EnergyModelParameter(label = "Idle State energy (Joules)", value = 0.0000059)
     double idleEnergy;
-    @EnergyModelParameter(label="Sleep State energy (Joules)",value=0.0000075)
+    @EnergyModelParameter(label = "Sleep State energy (Joules)", value = 0.0000075)
     double sleepEnergy;
-    @EnergyModelParameter(label="Simple processing energy (Joules)",value=0.0138)
+    @EnergyModelParameter(label = "Simple processing energy (Joules)", value = 0.0138)
     double processingEnergy;
 
     public double getProcessingEnergy() {
@@ -159,4 +164,23 @@ public class EnergyModel implements Annotated{
         this.verifySignatureEnergy = verifySignatureEnergy;
     }
 
+    public static EnergyModel getDefaultInstance() {
+        EnergyModel energyModel=new EnergyModel();
+        Vector fields = AnnotationUtils.readEnergyModelParametersFields(energyModel);
+
+        for (Object object : fields) {
+            try {
+                Field field = (Field) object;
+                EnergyModelParameter p = field.getAnnotation(EnergyModelParameter.class);
+                double v = p.value();
+                field.setAccessible(true);
+                field.set(energyModel, v);
+            } catch (IllegalArgumentException ex) {
+                Logger.getLogger(EnergyModel.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(EnergyModel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return energyModel;
+    }
 }

@@ -1,9 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.mei.securesim.core.layers.mac;
 
+import org.mei.securesim.core.energy.EnergyConsumptionAction;
+import org.mei.securesim.core.engine.DefaultMessage;
 import org.mei.securesim.core.layers.Layer;
 import org.mei.securesim.core.layers.routing.RoutingLayer;
 import org.mei.securesim.core.nodes.Node;
@@ -17,6 +15,7 @@ import org.mei.securesim.core.radio.RadioModel.Neighborhood;
 public abstract class MACLayer extends Layer {
 
     RadioModel radioModel;
+
     RadioModel.Neighborhood neighborhood;
     // //////////////////////////////
     // STATE VARIABLES
@@ -33,6 +32,8 @@ public abstract class MACLayer extends Layer {
     protected boolean receiving = false;
     /** State variable, true if the last received message got corrupted by noise */
     protected boolean corrupted = false;
+
+
 
     public boolean isCorrupted() {
         return corrupted;
@@ -82,8 +83,23 @@ public abstract class MACLayer extends Layer {
         this.radioModel = radioModel;
     }
 
-    protected final void beginTransmission(double strength, Object stream) {
-        neighborhood.beginTransmission(strength, stream);
+    protected final void beginTransmission(final double strength, Object stream) {
+//        Node n = (Node) stream;
+
+        final Node nd = Node.cast(stream);
+        getNode().getTransceiver().executeTransmission(new EnergyConsumptionAction() {
+
+            Node n = nd;
+
+            public void execute() {
+                neighborhood.beginTransmission(strength, n);
+            }
+
+            public int getNumberOfUnits() {
+                return ((DefaultMessage) n.getMessage()).size();
+            }
+        });
+
     }
 
     /**
@@ -135,4 +151,9 @@ public abstract class MACLayer extends Layer {
      * net.tinyos.prowler.Application)
      */
     public abstract boolean sendMessage(Object message, RoutingLayer layer);
+
+    /**
+     * initialize procedure
+     */
+    public abstract void init();
 }

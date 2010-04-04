@@ -72,6 +72,8 @@ public abstract class Simulation extends ConfigurableObject {
     public abstract void start();
 
     public abstract void reset();
+    
+    public abstract void pause();
 
     public String getName() {
         return name;
@@ -127,4 +129,6 @@ public abstract class Simulation extends ConfigurableObject {
     public void setDescription(String description) {
         this.description = description;
     }
+
+
 }

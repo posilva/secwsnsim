@@ -1,14 +1,16 @@
 package org.mei.securesim.core.nodes;
 
 import java.text.DecimalFormat;
-import org.mei.securesim.core.nodes.cpu.NodeCPU;
+import org.mei.securesim.core.nodes.components.CPU;
 import org.mei.securesim.core.application.Application;
 import org.mei.securesim.core.engine.Event;
 import org.mei.securesim.core.ui.ISimulationDisplay;
 import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.energy.Batery;
+import org.mei.securesim.core.engine.DefaultMessage;
 import org.mei.securesim.core.layers.mac.MACLayer;
 import org.mei.securesim.core.layers.routing.RoutingLayer;
+import org.mei.securesim.core.nodes.components.Transceiver;
 import org.mei.securesim.core.radio.RadioModel;
 import org.mei.securesim.core.radio.RadioModel.Neighborhood;
 import org.mei.securesim.gui.GraphicNode;
@@ -24,10 +26,16 @@ import org.mei.securesim.gui.GraphicNode;
 @SuppressWarnings("unchecked")
 public abstract class Node {
 
+    /**
+     * Constants
+     */
     public static int NODEID_AUTOCOUNTER = 1;
     public static final int INITIAL_BATERY_POWER = 1000;
     public static final double DEFAULT_POWER_CONSUMING = 1.0E-2;
     private static long CLOCK_TICK = Simulator.ONE_SECOND;// /100;
+    /**
+     * Attributes
+     */
     protected boolean sinkNode = false;
     protected Batery bateryEnergy = null;
     protected Application application;
@@ -35,70 +43,39 @@ public abstract class Node {
     protected MACLayer macLayer = null;
     protected Config config = new Config();
     protected boolean turnedOn = true;
-    protected long lastTransmissionTime;
     protected GraphicNode graphicNode;
-    protected boolean receive = true;
-    protected NodeCPU cpu = null;
-    protected CPUStatus cpuStatus = CPUStatus.ON;
-    protected TXStatus txStatus = TXStatus.ON;
+    protected CPU cpu = null;
+    protected Transceiver transceiver = null;
     /**
      * This is the message being sent, on reception it is extracted and the
      * message part is forwarded to the appropriate application, see
      * {@link Application#receiveMessage}.
      */
-    protected Object message;
+    protected DefaultMessage message;
+    /** A reference to the simulator in which the Node exists. */
+    public Simulator simulator;
+    /**
+     * The id of the node. It is allowed that two nodes have the same id in the
+     * simulator.
+     */
+    protected short id;
+    /**
+     * The neighborhood of this node, meaning all the neighboring nodes which
+     * interact with this one.
+     */
+    public Neighborhood neighborhood;
+    /**
+     * 
+     */
+    protected Node parentNode;
 
-    public enum CPUStatus {
-
-        ON, OFF
+    public enum NodeState {
+        ACTIVE,
+        SLEEP
     };
 
-    public enum TXStatus {
+    protected NodeState state;
 
-        ON, OFF
-    };
-
-    public boolean isSinkNode() {
-        return sinkNode;
-    }
-
-    public void setSinkNode(boolean sinkNode) {
-        this.sinkNode = sinkNode;
-    }
-
-    public void initEnergyConsumation() {
-       // simulator.addEvent(new Node.EnergyWasteEvent((int) Simulator.randomGenerator.nextDouble() * CLOCK_TICK));
-    }
-
-    public Object getMessage() {
-        return message;
-    }
-
-    public void setMessage(Object message) {
-        this.message = message;
-    }
-
-    public MACLayer getMacLayer() {
-        return macLayer;
-    }
-
-    public void setMacLayer(MACLayer macLayer) {
-        this.macLayer = macLayer;
-    }
-
-    public boolean canReceive() {
-        return txStatus == TXStatus.ON;
-    }
-
-    public void startTransmissionTime() {
-        lastTransmissionTime = System.currentTimeMillis();
-    }
-
-    public long endTransmissionTime() {
-        bateryEnergy.consume(.0000010);
-        lastTransmissionTime = System.currentTimeMillis() - lastTransmissionTime;
-        return lastTransmissionTime;
-    }
 
     public class Config {
 
@@ -138,19 +115,6 @@ public abstract class Node {
             this.setRadioRange = setRadioRange;
         }
     }
-    /** A reference to the simulator in which the Node exists. */
-    public Simulator simulator;
-    /**
-     * The id of the node. It is allowed that two nodes have the same id in the
-     * simulator.
-     */
-    protected short id;
-    /**
-     * The neighborhood of this node, meaning all the neighboring nodes which
-     * interact with this one.
-     */
-    public Neighborhood neighborhood;
-    private Node parentNode;
 
     /**
      * Parameterized constructor, sets the simulator and creates an initial
@@ -165,22 +129,55 @@ public abstract class Node {
         this.simulator = sim;
         neighborhood = radioModel.createNeighborhood();
         this.graphicNode = new GraphicNode(this);
-        this.graphicNode.setPhysicalNode(this);
         this.bateryEnergy = new Batery();
-        this.cpu = new NodeCPU(this);
         this.bateryEnergy.setHostNode(this);
+        this.cpu = new CPU(this);
+        this.transceiver = new Transceiver(this);
         setId((short) NODEID_AUTOCOUNTER++);
+    }
+
+    /**
+     * Method to be implemented by child classes
+     */
+    public abstract void init();
+
+    public boolean isSinkNode() {
+        return sinkNode;
+    }
+
+    public void setSinkNode(boolean sinkNode) {
+        this.sinkNode = sinkNode;
+    }
+
+    public void initEnergyConsumation() {
+        //simulator.addEvent(new Node.EnergyWasteEvent( (int)Simulator.randomGenerator.random().nextDouble() * CLOCK_TICK));
+    }
+
+    public Object getMessage() {
+        return message;
+    }
+
+    public void setMessage(Object message) {
+        this.message = (DefaultMessage) message;
+    }
+
+    public MACLayer getMacLayer() {
+        return macLayer;
+    }
+
+    public void setMacLayer(MACLayer macLayer) {
+        this.macLayer = macLayer;
     }
 
     public void initBatery() {
         initEnergyConsumation();
     }
+
     /*
      * (non-Javadoc)
      *
      * @see net.tinyos.prowler.INode#getDistanceSquare(net.tinyos.prowler.Node)
      */
-
     public double getDistanceSquare(Node other) {
         return (getX() - other.getX()) * (getX() - other.getX()) + (getY() - other.getY()) * (getY() - other.getY())
                 + (getZ() - other.getZ()) * (getZ() - other.getZ());
@@ -351,16 +348,7 @@ public abstract class Node {
         return application.sendMessage(message);
     }
 
-    public abstract void init();
-
     public void dispose() {
-    }
-
-    /**
-     * @return the lastTransmissionTime
-     */
-    public double getLastTransmissionTime() {
-        return lastTransmissionTime;
     }
 
     /**
@@ -414,7 +402,7 @@ public abstract class Node {
         public void execute() {
             if (turnedOn) {
                 if (!getBateryEnergy().off()) {
-                    getBateryEnergy().consume(DEFAULT_POWER_CONSUMING);
+                    getBateryEnergy().consumeIdle();
                     time += CLOCK_TICK;
                     simulator.addEvent(this);
                 } else {
@@ -449,22 +437,49 @@ public abstract class Node {
                     "Node:  " + this.getClass().getSimpleName(),
                     "Application:  " + this.getApplication().getClass().getSimpleName(),
                     "Routing:  " + this.getRoutingLayer().getClass().getSimpleName(),
+                    "MAC:  " + this.getMacLayer().getClass().getSimpleName(),
                     "",
                     "Remaining Power:  " + twoPlaces.format(remainingPower <= 0.0 ? 0 : remainingPower) + "%"
                 };
-
-
     }
 
-    public NodeCPU getCPU() {
+    public CPU getCPU() {
         return cpu;
     }
 
-    public void setCPU(NodeCPU cpu) {
+    public void setCPU(CPU cpu) {
         this.cpu = cpu;
     }
 
     public static void resetCouter() {
         NODEID_AUTOCOUNTER = 1;
     }
+
+    public Transceiver getTransceiver() {
+        return transceiver;
+    }
+
+    public void setTransceiver(Transceiver transceiver) {
+        this.transceiver = transceiver;
+    }
+
+    public static Node cast(Object object) {
+        return (Node) object;
+    }
+
+    public NodeState getState() {
+        return state;
+    }
+
+    public void setState(NodeState state) {
+        this.state = state;
+    }
+
+    public boolean isActive(){
+        return state==NodeState.ACTIVE;
+    }
+    public boolean isSleep(){
+        return state==NodeState.SLEEP;
+    }
+
 }

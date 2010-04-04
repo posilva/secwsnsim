@@ -5,6 +5,8 @@
 package org.mei.securesim.utils;
 
 import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import javax.swing.*;
 import java.io.*;
 
@@ -25,9 +27,12 @@ import java.io.*;
  * them to a file and more.
  * For more details, read the constructor method description
  */
-public class DebugConsole extends JFrame {
+public class DebugConsole extends JFrame implements WindowListener {
 
     protected static DebugConsole instance;
+
+    protected PrintStream sysOut;
+    protected PrintStream sysErr;
 
     public static DebugConsole getInstance() {
         if (instance == null) {
@@ -49,6 +54,30 @@ public class DebugConsole extends JFrame {
         pack();
     }
 
+    public void windowOpened(WindowEvent e) {
+    }
+
+    public void windowClosing(WindowEvent e) {
+        System.setErr(sysErr);
+        System.setOut(sysOut);
+
+    }
+
+    public void windowClosed(WindowEvent e) {
+    }
+
+    public void windowIconified(WindowEvent e) {
+    }
+
+    public void windowDeiconified(WindowEvent e) {
+    }
+
+    public void windowActivated(WindowEvent e) {
+    }
+
+    public void windowDeactivated(WindowEvent e) {
+    }
+
     public class DebugConsolePanel extends JPanel {
 
         private boolean catchErrors;
@@ -58,12 +87,15 @@ public class DebugConsole extends JFrame {
         TextArea aTextAreaErr = new TextArea();
         PrintStream aPrintStream =
                 new PrintStream(
+                new BufferedOutputStream(
                 new FilteredStream(
-                new ByteArrayOutputStream()));
+                new ByteArrayOutputStream())));
+        
         PrintStream aPrintStreamErr =
                 new PrintStream(
+                new BufferedOutputStream(
                 new FilteredStreamErr(
-                new ByteArrayOutputStream()));
+                new ByteArrayOutputStream())));
 
         /** Creates a new RedirectFrame.
          *  From the moment it is created,
@@ -89,6 +121,8 @@ public class DebugConsole extends JFrame {
          *        (this must be one of the WindowConstants)
          */
         public DebugConsolePanel(boolean catchErrors, boolean logFile, String fileName) {
+            sysOut=System.out;
+            sysErr=System.err;
 
             this.catchErrors = catchErrors;
             this.logFile = logFile;

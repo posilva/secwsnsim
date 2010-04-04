@@ -22,7 +22,11 @@ public class BasicSimulation extends Simulation {
      */
     @Override
     public void start() {
-        getSimulator().runWithDisplayInRealTime();
+        if (!getSimulator().isPaused())
+            getSimulator().start();
+        else
+            getSimulator().restart();
+
     }
 
     /* (non-Javadoc)
@@ -30,11 +34,17 @@ public class BasicSimulation extends Simulation {
      */
     @Override
     public void stop() {
+        getSimulator().stop();
     }
 
     @Override
     public void reset() {
-        
+        getSimulator().reset();
+    }
+
+    @Override
+    public void pause() {
+        getSimulator().pause();
     }
 
 }

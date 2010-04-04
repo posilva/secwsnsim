@@ -24,11 +24,9 @@
 package org.mei.securesim.core.engine;
 
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 
 import java.util.TreeSet;
+import java.util.logging.Logger;
 import org.mei.securesim.core.ui.ISimulationDisplay;
 import org.mei.securesim.core.engine.events.SimulatorEvent;
 
@@ -45,24 +43,14 @@ import org.mei.securesim.utils.RandomGenerator;
  */
 @SuppressWarnings({"deprecation", "unchecked"})
 public class Simulator {
+    static Logger LOGGER = Logger.getLogger(Simulator.class.getName());
 
     protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
     private boolean finished;
-
-    public void addSimulatorFinishListener(SimulatorFinishListener listener) {
-        listenerList.add(SimulatorFinishListener.class, listener);
-    }
-
-    public void removeSimulatorFinishListener(SimulatorFinishListener listener) {
-        listenerList.remove(SimulatorFinishListener.class, listener);
-    }
+    private boolean stop;
+    private boolean paused;
     public static final int SIMULATOR_STEPS = 300;
-    private static long SEED = 10;
-
-    public Simulator() {
-        super();
-    }
-    private LinkedList<Node> nodes = new LinkedList<Node>();
+    public static final int RUNTIME_NUM_STEPS = 1;
     private RadioModel radioModel;
     /**
      * This is a static reference to a Random instance.
@@ -79,6 +67,15 @@ public class Simulator {
     public static final Integer SIMULATION_SPEED_MIN = 400;
     public static final Integer SIMULATION_SPEED_DEFAULT = SIMULATION_SPEED_MAX / 2;
     public static Integer ONE_SECOND = SIMULATION_SPEED_DEFAULT;
+
+    public enum RunMode {
+
+        REAL_TIME, TIME, STEPS
+    }
+
+    public Simulator() {
+        super();
+    }
     /** Holds the events */
     public PriorityQueue eventQueue = new PriorityQueue();
     /** The time of the last event using the given resolution */
@@ -126,6 +123,44 @@ public class Simulator {
         for (Node node : getNodes()) {
             node.startUp();
         }
+    }
+
+    public void stop() {
+        stop = true;
+        reset();
+    }
+
+    public void reset() {
+    }
+
+    public void pause() {
+        paused = true;
+    }
+
+    public boolean isPaused() {
+        return paused;
+    }
+
+    public void setPaused(boolean paused) {
+        this.paused = paused;
+    }
+
+    public boolean isStop() {
+        return stop;
+    }
+
+    public void setStop(boolean stop) {
+        this.stop = stop;
+    }
+
+    public void restart() {
+        if (paused) {
+            notifyAll();
+        }
+    }
+
+    public void start() {
+        runWithDisplayInRealTime();
     }
 
     /**
@@ -217,13 +252,14 @@ public class Simulator {
      * Processes and executes the next event.
      */
     public void step() {
+
         Event event = (Event) eventQueue.getAndRemoveFirst();
         //Event event = (Event)eventQueue.poll();
 
         if (event != null) {
             lastEventTime = event.time;
             event.execute();
-            //System.out.println("Executado um evento: "+ event.getClass().getSimpleName());
+            // System.out.println("Executado um evento: "+ event.getClass().getSimpleName());
         } else {
 
             if (!finished) {
@@ -286,16 +322,14 @@ public class Simulator {
      */
     public void runWithDisplayInRealTime() {
         Thread t = new Thread() {
-
+            @Override
             public void run() {
                 display.show();
 
                 long initDiff = System.currentTimeMillis() - getSimulationTimeInMillisec();
                 while (true) {
-                    step(1);
-
+                    step(RUNTIME_NUM_STEPS);
                     display.update();
-
                     long diff = System.currentTimeMillis() - getSimulationTimeInMillisec();
                     if (diff < initDiff) {
                         try {
@@ -324,42 +358,6 @@ public class Simulator {
     }
 
     /**
-     * Adds a single Node to the simulator.
-     *
-     * @param app the Node to be added
-     */
-    protected void addNode(Node node) {
-        nodes.add(node);
-        if (node.getX() > maxCoordinate) {
-            maxCoordinate = node.getX();
-        }
-        if (node.getY() > maxCoordinate) {
-            maxCoordinate = node.getY();
-        }
-    }
-
-    /**
-     * Adds a List of nodes to the experiment.
-     * WARNING: Please call {@link RadioModel#updateNeighborhoods} after you
-     * added all nodes to the system.
-     *
-     * @param nodes the list of nodes to be added
-     */
-    public void addNodes(List nodes) {
-        Iterator nodeIterator = nodes.iterator();
-        while (nodeIterator.hasNext()) {
-            addNode((Node) nodeIterator.next());
-        }
-    }
-
-    /**
-     * @param nodes the nodes to set
-     */
-    public void setNodes(LinkedList<Node> nodes) {
-        this.nodes = (LinkedList<Node>) nodes;
-    }
-
-    /**
      * @param radioModel the radioModel to set
      */
     public void setRadioModel(RadioModel radioModel) {
@@ -373,7 +371,10 @@ public class Simulator {
     public RadioModel getRadioModel() {
         return radioModel;
     }
-
+    /**
+     * Initialize simulator before start
+     * @return
+     */
     public Simulator init() {
         radioModel.updateNeighborhoods();
         startUpNodes();
@@ -401,5 +402,13 @@ public class Simulator {
                 ((SimulatorFinishListener) listeners[i + 1]).onFinish(evt);
             }
         }
+    }
+
+    public void addSimulatorFinishListener(SimulatorFinishListener listener) {
+        listenerList.add(SimulatorFinishListener.class, listener);
+    }
+
+    public void removeSimulatorFinishListener(SimulatorFinishListener listener) {
+        listenerList.remove(SimulatorFinishListener.class, listener);
     }
 }

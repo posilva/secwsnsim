@@ -121,5 +121,5 @@ public abstract class Application {
 		this.node = node;
 	}
 
-    public abstract void generateEvent() ;
+    public abstract void run() ;
 }
