@@ -225,6 +225,7 @@ public class GaussianRadioModel extends RadioModel {
             
 
             int i = neighbors.size();
+
             while (--i >= 0) {
                 if (neighbors.get(i).isTurnedOn()) {
                     double dynamicStrength = getDynamicStrength(strength,

@@ -169,4 +169,15 @@ public class Batery {
     public double getAverageConsumption() {
         return averageConsumption;
     }
+
+    public void consumeTXTransitionToON() {
+        consume(energyModel.getTxTransitionToActiveEnergy());
+        log("TXTransitionToON", energyModel.getTxTransitionToActiveEnergy());
+    }
+
+    public void consumeIdle() {
+        consume(energyModel.getIdleEnergy());
+        log("Idle", energyModel.getIdleEnergy());
+
+    }
 }

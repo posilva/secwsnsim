@@ -23,39 +23,14 @@ public class SecuredMica2MACLayer extends Mica2MACLayer {
     protected byte[] keyData = CryptoFunctions.MACLayerGlobalKey();
     protected byte[] iv = CryptoFunctions.MACLayerGlobalIV();
 
-    @Override
-    protected void transmitMessage() {
-        try {
 
-            byte[] data = ((DefaultMessage) getNode().getMessage()).getPayload();
-            byte[] cipherData;
-//            System.out.println("Encrypt message: "+ getNode().getMessage() + " Size: "+ data.length);
-            cipherData = CryptoFunctions.cipherData(data, keyData, iv);
-            getNode().getBateryEnergy().consumeEncryption(data.length);
-            byte[] mic = CryptoFunctions.createMIC(cipherData, keyData);
-            getNode().getBateryEnergy().consumeMAC(data.length);
-            final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
-            DataOutputStream dos = new DataOutputStream(byteArrayOutputStream);
-            dos.writeInt(cipherData.length);
-            dos.writeInt(mic.length);
-            dos.write(cipherData);
-            dos.write(mic);
-            dos.flush();
 
-            byte[] payload = byteArrayOutputStream.toByteArray();
-            ((DefaultMessage) getNode().getMessage()).setPayload(payload);
-            super.transmitMessage();
-        } catch (IOException ex) {
-            Logger.getLogger(SecuredMica2MACLayer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    protected DefaultMessage decryptMessage(Object message) {
 
-    @Override
-    public boolean deliverMessage(Object message) {
         try {
             DefaultMessage cm = (DefaultMessage) message;
-//            System.out.println("Decrypt message: "+ message + " Size: "+ cm.getPayload().length);
+            //            System.out.println("Decrypt message: "+ message + " Size: "+ cm.getPayload().length);
             DataInputStream dis = DataUtils.createDataFromByteArray(cm.getPayload());
             int c = dis.readInt();
             int m = dis.readInt();
@@ -67,13 +42,60 @@ public class SecuredMica2MACLayer extends Mica2MACLayer {
             if (CryptoFunctions.verifyMessageIntegrity(data, mic, keyData)) {
                 byte[] cdata = CryptoFunctions.decipherData(data, keyData, iv);
                 getNode().getBateryEnergy().consumeDecryption(cdata.length);
-                super.deliverMessage(new DefaultMessage(cdata));
-                return true;
+                return new DefaultMessage(cdata);
+
             }
         } catch (IOException ex) {
             Logger.getLogger(SecuredMica2MACLayer.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return false;
+        return null;
+    }
 
+    protected boolean encryptMessage() {
+        try {
+            byte[] data = ((DefaultMessage) getNode().getMessage()).getPayload();
+            byte[] cipherData;
+            cipherData = CryptoFunctions.cipherData(data, keyData, iv);
+            getNode().getBateryEnergy().consumeEncryption(data.length);
+            byte[] mic = CryptoFunctions.createMIC(cipherData, keyData);
+            getNode().getBateryEnergy().consumeMAC(data.length);
+            final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            DataOutputStream dos = new DataOutputStream(byteArrayOutputStream);
+            dos.writeInt(cipherData.length);
+            dos.writeInt(mic.length);
+            dos.write(cipherData);
+            dos.write(mic);
+            dos.flush();
+            byte[] payload = byteArrayOutputStream.toByteArray();
+            ((DefaultMessage) getNode().getMessage()).setPayload(payload);
+            return true;
+        } catch (IOException ex) {
+            Logger.getLogger(SecuredMica2MACLayer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+
+
+    @Override
+    protected void transmitMessage() {
+            logger().log(Level.FINE,getNode().getId() +": Trasmit Message");
+            if(encryptMessage())
+                super.transmitMessage();
+    }
+
+    @Override
+    public boolean deliverMessage(Object message) {
+//        DefaultMessage m = (DefaultMessage) message;
+        DefaultMessage m = decryptMessage(message);
+        if (m == null) {
+            return false;
+        } else {
+            logger().log(Level.FINE,getNode().getId() +": Deliver Message");
+            return super.deliverMessage(m);
+        }
+    }
+    static Logger logger(){
+        return Logger.getLogger(SecuredMica2MACLayer.class.getName());
     }
 }

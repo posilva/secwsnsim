@@ -25,4 +25,9 @@ public class DefaultMessage {
         this.payload = payload;
     }
 
+    public int size() {
+        if(this.payload==null) return 0;
+        return this.payload.length;
+    }
+
 }
