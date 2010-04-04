@@ -47,9 +47,11 @@ public class EnergyHook extends Thread {
         watcher.setSize(800,600);
         watcher.pack();
         watcher.setVisible(true);
+        long startTime = System.currentTimeMillis();
         while (!end) {
             try {
-                watcher.updateChart(node.getSimulator().getSimulationTimeInMillisec()/1000,node.getBateryEnergy().getAverageConsumption());
+                //node.getSimulator().getSimulationTimeInMillisec()
+                watcher.updateChart((System.currentTimeMillis()-startTime)/10000,node.getBateryEnergy().getAverageConsumption());
                 sleep(period);
             } catch (InterruptedException ex) {
                 Logger.getLogger(EnergyHook.class.getName()).log(Level.SEVERE, null, ex);

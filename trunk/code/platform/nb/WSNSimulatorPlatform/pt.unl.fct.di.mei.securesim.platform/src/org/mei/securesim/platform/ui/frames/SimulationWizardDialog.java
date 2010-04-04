@@ -20,7 +20,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import org.jdesktop.application.Action;
 import org.mei.securesim.core.energy.EnergyModel;
@@ -320,7 +319,7 @@ public class SimulationWizardDialog extends javax.swing.JDialog {
             sf.setNodeFactoryClass(getClassInstance(((ClassDefinitions) cboNodeClass.getSelectedItem()).className));
             sf.setNetworkClass(DefaultNetwork.class);
             if (!energyModelConfig) {
-                energyModel = new EnergyModel();
+                energyModel = EnergyModel.getDefaultInstance();
             }
             sf.setEnergyModel(energyModel);
             return true;

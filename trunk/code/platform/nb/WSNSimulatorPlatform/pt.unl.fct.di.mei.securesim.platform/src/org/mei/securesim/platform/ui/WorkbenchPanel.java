@@ -7,7 +7,10 @@ package org.mei.securesim.platform.ui;
 
 import java.awt.Dimension;
 import javax.swing.JOptionPane;
+import org.jdesktop.application.Action;
+import org.jdesktop.application.Task;
 import org.mei.securesim.components.simulation.SimulationFactory;
+import org.mei.securesim.platform.uiextended.DropDownButton;
 import org.mei.securesim.utils.DebugConsole;
 
 /**
@@ -19,8 +22,14 @@ public class WorkbenchPanel extends javax.swing.JPanel {
     /** Creates new form WorkbenchPanel */
     public WorkbenchPanel() {
         initComponents();
+        btnDeployMode.setButtonStyle(DropDownButton.TOOLBOX_STYLE);
+        btnDeployMode.setButtonSelected(true);
+        btnDeployMode.add(deployRandomNodes);
+        btnSelectionTool.setSelected(false);
+        selectionPointerTool.setSelected(false);
         jScrollPane1.setPreferredSize(new Dimension(100, 100));
         jScrollPane1.setAutoscrolls(true);
+        updateSelectionGroup();
 
     }
 
@@ -28,22 +37,36 @@ public class WorkbenchPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        deployRandomNodes = new javax.swing.JMenuItem();
         SelectionBG = new javax.swing.ButtonGroup();
+        OperationBG = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         simulationPanel1 = new org.mei.securesim.platform.ui.SimulationPanel();
         toolbarPanel = new javax.swing.JPanel();
         jToolBar2 = new javax.swing.JToolBar();
-        selectionPointerTool = new javax.swing.JToggleButton();
-        btnSelectionTool = new javax.swing.JToggleButton();
-        deployNodes = new javax.swing.JToggleButton();
-        showMouseCoordinates = new javax.swing.JToggleButton();
-        showDebugWindow = new javax.swing.JToggleButton();
-        viewNodesInfo = new javax.swing.JToggleButton();
         jToolBar1 = new javax.swing.JToolBar();
+        jButton1 = new javax.swing.JButton();
+        jSeparator4 = new javax.swing.JToolBar.Separator();
         verVizinhos = new javax.swing.JToggleButton();
         verOsQueConhecem = new javax.swing.JToggleButton();
         searchNode = new javax.swing.JButton();
-        clearSimulation = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JToolBar.Separator();
+        btnSimulationStart = new javax.swing.JToggleButton();
+        btnSimulationPause = new javax.swing.JToggleButton();
+        btnSimulationStop = new javax.swing.JToggleButton();
+        btnSimulationReset = new javax.swing.JToggleButton();
+        jSeparator2 = new javax.swing.JToolBar.Separator();
+        btnDeployMode = new org.mei.securesim.platform.uiextended.DropDownButton();
+        btnSelectionTool = new javax.swing.JToggleButton();
+        selectionPointerTool = new javax.swing.JToggleButton();
+        jSeparator3 = new javax.swing.JToolBar.Separator();
+        showDebugWindow = new javax.swing.JToggleButton();
+        showMouseCoordinates = new javax.swing.JToggleButton();
+        viewNodesInfo = new javax.swing.JToggleButton();
+
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(org.mei.securesim.platform.PlatformApp.class).getContext().getActionMap(WorkbenchPanel.class, this);
+        deployRandomNodes.setAction(actionMap.get("DeployInRandomMode")); // NOI18N
+        deployRandomNodes.setText("Random Mode");
 
         setLayout(new java.awt.BorderLayout());
 
@@ -77,22 +100,109 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         jToolBar2.setOrientation(1);
         jToolBar2.setRollover(true);
         jToolBar2.setAutoscrolls(true);
+        add(jToolBar2, java.awt.BorderLayout.LINE_END);
 
-        SelectionBG.add(selectionPointerTool);
-        selectionPointerTool.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/hand-icon.png"))); // NOI18N
-        selectionPointerTool.setToolTipText("Select Node");
-        selectionPointerTool.setFocusable(false);
-        selectionPointerTool.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        selectionPointerTool.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        selectionPointerTool.addActionListener(new java.awt.event.ActionListener() {
+        jToolBar1.setRollover(true);
+
+        jButton1.setAction(actionMap.get("RebuildNetwork")); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/refresh.png"))); // NOI18N
+        jButton1.setToolTipText("Rebuild Network");
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton1);
+        jToolBar1.add(jSeparator4);
+
+        verVizinhos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/Neighboors16.png"))); // NOI18N
+        verVizinhos.setToolTipText("Show Neighborhood ");
+        verVizinhos.setFocusable(false);
+        verVizinhos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        verVizinhos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        verVizinhos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                selectionPointerToolActionPerformed(evt);
+                verVizinhosActionPerformed(evt);
             }
         });
-        jToolBar2.add(selectionPointerTool);
+        jToolBar1.add(verVizinhos);
+
+        verOsQueConhecem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/OthersNeighboor16.png"))); // NOI18N
+        verOsQueConhecem.setToolTipText("Show Two Way Connecions");
+        verOsQueConhecem.setFocusable(false);
+        verOsQueConhecem.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        verOsQueConhecem.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        verOsQueConhecem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verOsQueConhecemActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(verOsQueConhecem);
+
+        searchNode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/Search16.png"))); // NOI18N
+        searchNode.setToolTipText("Search a Node");
+        searchNode.setFocusable(false);
+        searchNode.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        searchNode.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        searchNode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchNodeActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(searchNode);
+        jToolBar1.add(jSeparator1);
+
+        btnSimulationStart.setAction(actionMap.get("StartSimulation")); // NOI18N
+        OperationBG.add(btnSimulationStart);
+        btnSimulationStart.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/Play16.png"))); // NOI18N
+        btnSimulationStart.setToolTipText("Play Simulation");
+        btnSimulationStart.setFocusable(false);
+        btnSimulationStart.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnSimulationStart.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(btnSimulationStart);
+
+        btnSimulationPause.setAction(actionMap.get("PauseSimulation")); // NOI18N
+        OperationBG.add(btnSimulationPause);
+        btnSimulationPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/Pause16.png"))); // NOI18N
+        btnSimulationPause.setToolTipText("Pause Simulation");
+        btnSimulationPause.setFocusable(false);
+        btnSimulationPause.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnSimulationPause.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(btnSimulationPause);
+
+        btnSimulationStop.setAction(actionMap.get("StopSimulation")); // NOI18N
+        OperationBG.add(btnSimulationStop);
+        btnSimulationStop.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/Stop16.png"))); // NOI18N
+        btnSimulationStop.setToolTipText("Stop Simulation (End Simulation)");
+        btnSimulationStop.setFocusable(false);
+        btnSimulationStop.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnSimulationStop.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(btnSimulationStop);
+
+        btnSimulationReset.setAction(actionMap.get("ResetSimulation")); // NOI18N
+        OperationBG.add(btnSimulationReset);
+        btnSimulationReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/Reset16.png"))); // NOI18N
+        btnSimulationReset.setToolTipText("Reset Simulation");
+        btnSimulationReset.setFocusable(false);
+        btnSimulationReset.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnSimulationReset.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(btnSimulationReset);
+        jToolBar1.add(jSeparator2);
+
+        btnDeployMode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/Hand16.png"))); // NOI18N
+        btnDeployMode.setToolTipText("Select Nodes Deploy Modes");
+        SelectionBG.add(btnDeployMode);
+        btnDeployMode.setButtonSelected(true);
+        btnDeployMode.setDelay(1);
+        btnDeployMode.setFocusable(false);
+        btnDeployMode.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnDeployMode.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnDeployMode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeployModeActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnDeployMode);
 
         SelectionBG.add(btnSelectionTool);
-        btnSelectionTool.setSelected(true);
         btnSelectionTool.setText("S");
         btnSelectionTool.setToolTipText("Selection Area Tool");
         btnSelectionTool.setFocusable(false);
@@ -107,31 +217,21 @@ public class WorkbenchPanel extends javax.swing.JPanel {
                 btnSelectionToolActionPerformed(evt);
             }
         });
-        jToolBar2.add(btnSelectionTool);
+        jToolBar1.add(btnSelectionTool);
 
-        SelectionBG.add(deployNodes);
-        deployNodes.setText("DN");
-        deployNodes.setFocusable(false);
-        deployNodes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        deployNodes.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        deployNodes.addActionListener(new java.awt.event.ActionListener() {
+        SelectionBG.add(selectionPointerTool);
+        selectionPointerTool.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/Arrow16.png"))); // NOI18N
+        selectionPointerTool.setToolTipText("Select Node");
+        selectionPointerTool.setFocusable(false);
+        selectionPointerTool.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        selectionPointerTool.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        selectionPointerTool.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deployNodesActionPerformed(evt);
+                selectionPointerToolActionPerformed(evt);
             }
         });
-        jToolBar2.add(deployNodes);
-
-        showMouseCoordinates.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/coordinates-icon.png"))); // NOI18N
-        showMouseCoordinates.setToolTipText("Show Mouse Coordinates");
-        showMouseCoordinates.setFocusable(false);
-        showMouseCoordinates.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        showMouseCoordinates.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        showMouseCoordinates.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                showMouseCoordinatesActionPerformed(evt);
-            }
-        });
-        jToolBar2.add(showMouseCoordinates);
+        jToolBar1.add(selectionPointerTool);
+        jToolBar1.add(jSeparator3);
 
         showDebugWindow.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/terminal-icon.png"))); // NOI18N
         showDebugWindow.setToolTipText("Debug Console");
@@ -143,7 +243,19 @@ public class WorkbenchPanel extends javax.swing.JPanel {
                 showDebugWindowActionPerformed(evt);
             }
         });
-        jToolBar2.add(showDebugWindow);
+        jToolBar1.add(showDebugWindow);
+
+        showMouseCoordinates.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/coordinates-icon.png"))); // NOI18N
+        showMouseCoordinates.setToolTipText("Show Mouse Coordinates");
+        showMouseCoordinates.setFocusable(false);
+        showMouseCoordinates.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        showMouseCoordinates.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        showMouseCoordinates.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showMouseCoordinatesActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(showMouseCoordinates);
 
         viewNodesInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/about-icon.png"))); // NOI18N
         viewNodesInfo.setToolTipText("View Nodes Info");
@@ -155,61 +267,7 @@ public class WorkbenchPanel extends javax.swing.JPanel {
                 viewNodesInfoActionPerformed(evt);
             }
         });
-        jToolBar2.add(viewNodesInfo);
-
-        add(jToolBar2, java.awt.BorderLayout.LINE_END);
-
-        jToolBar1.setFloatable(false);
-        jToolBar1.setRollover(true);
-
-        verVizinhos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/vizinhos-icon.png"))); // NOI18N
-        verVizinhos.setToolTipText("Show Neighborhood ");
-        verVizinhos.setFocusable(false);
-        verVizinhos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        verVizinhos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        verVizinhos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                verVizinhosActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(verVizinhos);
-
-        verOsQueConhecem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/connect-icon.png"))); // NOI18N
-        verOsQueConhecem.setToolTipText("Show Two Way Connecions");
-        verOsQueConhecem.setFocusable(false);
-        verOsQueConhecem.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        verOsQueConhecem.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        verOsQueConhecem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                verOsQueConhecemActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(verOsQueConhecem);
-
-        searchNode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/search-icon.png"))); // NOI18N
-        searchNode.setToolTipText("Search a Node");
-        searchNode.setFocusable(false);
-        searchNode.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        searchNode.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        searchNode.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchNodeActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(searchNode);
-
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(org.mei.securesim.platform.PlatformApp.class).getContext().getResourceMap(WorkbenchPanel.class);
-        clearSimulation.setIcon(resourceMap.getIcon("clearSimulation.icon")); // NOI18N
-        clearSimulation.setToolTipText("Clear Network");
-        clearSimulation.setFocusable(false);
-        clearSimulation.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        clearSimulation.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        clearSimulation.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clearSimulationActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(clearSimulation);
+        jToolBar1.add(viewNodesInfo);
 
         add(jToolBar1, java.awt.BorderLayout.NORTH);
     }// </editor-fold>//GEN-END:initComponents
@@ -220,6 +278,9 @@ public class WorkbenchPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_verVizinhosActionPerformed
 
     private void btnSelectionToolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectionToolActionPerformed
+        selectionPointerTool.setSelected(false);
+        btnSelectionTool.setSelected(true);
+        btnDeployMode.setButtonSelected(false);
 
         updateSelectionGroup();
     }//GEN-LAST:event_btnSelectionToolActionPerformed
@@ -249,34 +310,46 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_showDebugWindowActionPerformed
 
-    private void deployNodesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deployNodesActionPerformed
-        // TODO add your handling code here:
-
-        updateSelectionGroup();
-
-
-
-    }//GEN-LAST:event_deployNodesActionPerformed
-
-    private void clearSimulationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearSimulationActionPerformed
-        simulationPanel1.clearSimulation();
-    }//GEN-LAST:event_clearSimulationActionPerformed
-
     private void viewNodesInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewNodesInfoActionPerformed
         // TODO add your handling code here:
         simulationPanel1.setViewNodeInfo(viewNodesInfo.isSelected());
     }//GEN-LAST:event_viewNodesInfoActionPerformed
 
     private void selectionPointerToolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectionPointerToolActionPerformed
+        selectionPointerTool.setEnabled(true);
+        btnSelectionTool.setSelected(false);
+        btnDeployMode.setButtonSelected(false);
+
         updateSelectionGroup();
     }//GEN-LAST:event_selectionPointerToolActionPerformed
 
+    private void btnDeployModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeployModeActionPerformed
+
+        selectionPointerTool.setSelected(false);
+        btnSelectionTool.setSelected(false);
+        btnDeployMode.setButtonSelected(true);
+        updateSelectionGroup();
+
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDeployModeActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup OperationBG;
     private javax.swing.ButtonGroup SelectionBG;
+    private org.mei.securesim.platform.uiextended.DropDownButton btnDeployMode;
     private javax.swing.JToggleButton btnSelectionTool;
-    private javax.swing.JButton clearSimulation;
-    private javax.swing.JToggleButton deployNodes;
+    private javax.swing.JToggleButton btnSimulationPause;
+    private javax.swing.JToggleButton btnSimulationReset;
+    private javax.swing.JToggleButton btnSimulationStart;
+    private javax.swing.JToggleButton btnSimulationStop;
+    private javax.swing.JMenuItem deployRandomNodes;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JToolBar.Separator jSeparator1;
+    private javax.swing.JToolBar.Separator jSeparator2;
+    private javax.swing.JToolBar.Separator jSeparator3;
+    private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
     private javax.swing.JButton searchNode;
@@ -291,14 +364,75 @@ public class WorkbenchPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void updateSelectionGroup() {
-        simulationPanel1.deployNodesToolSelected(deployNodes.isSelected());
+        simulationPanel1.deployNodesToolSelected(btnDeployMode.isButtonSelected());
         simulationPanel1.selectionToolSelected(btnSelectionTool.isSelected());
         simulationPanel1.selectionPointerSelected(selectionPointerTool.isSelected());
+
+
+//        setDeployModeState();
     }
-
-
 
     public void setSimulationFactory(SimulationFactory simulationFactory) {
         simulationPanel1.settingSimulation(simulationFactory);
+    }
+
+    @Action(block = Task.BlockingScope.COMPONENT)
+    public Task DeployInRandomMode() {
+        return simulationPanel1.deployNodesUsingRandomTopology();
+    }
+
+    @Action
+    public void StartSimulation() {
+        simulationPanel1.startSimulation();
+    }
+
+    @Action
+    public void PauseSimulation() {
+        simulationPanel1.pauseSimulation();
+    }
+
+    @Action
+    public void StopSimulation() {
+        simulationPanel1.stopSimulation();
+    }
+
+    @Action
+    public void ResetSimulation() {
+        simulationPanel1.clearSimulation();
+    }
+
+    @Action(block = Task.BlockingScope.COMPONENT)
+    public Task RebuildNetwork() {
+        return new RebuildNetworkTask(org.jdesktop.application.Application.getInstance(org.mei.securesim.platform.PlatformApp.class));
+
+
+
+    }
+
+    private class RebuildNetworkTask extends org.jdesktop.application.Task<Object, Void> {
+
+        RebuildNetworkTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to RebuildNetworkTask fields, here.
+            super(app);
+
+
+
+        }
+
+        @Override
+        protected Object doInBackground() {
+            setMessage("Building Network...");
+            simulationPanel1.buildNetwork();
+            setMessage("Building Network... done!");
+            return null;  // return your result
+        }
+
+        @Override
+        protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
     }
 }

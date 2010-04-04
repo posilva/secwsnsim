@@ -16,7 +16,7 @@ import java.util.Vector;
 //import javax.microedition.io.Connector;
 //import javax.microedition.io.HttpConnection;
 //import javax.microedition.lcdui.Image;
-
+@SuppressWarnings("unchecked")
 public class GoogleMaps {
 
     private static final String URL_UNRESERVED =
