@@ -27,7 +27,7 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import org.apache.commons.lang.NumberUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.math.stat.descriptive.SummaryStatistics;
 
 
@@ -36,7 +36,6 @@ import org.mei.securesim.core.energy.Batery;
 import org.mei.securesim.core.energy.listeners.EnergyListener;
 import org.mei.securesim.core.nodes.factories.NodeFactory;
 import org.mei.securesim.core.nodes.Node;
-import org.mei.securesim.platform.PlatformView;
 import org.mei.securesim.platform.instruments.energy.EnergyWatcherThread;
 import org.mei.securesim.components.simulation.Simulation;
 import org.mei.securesim.components.simulation.SimulationConfiguration;
@@ -230,7 +229,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
 
         currentSelectedNodePopupMenu.add(selNodeMonitorizacao);
 
-        selNodeRunEvent.setText("Generate Event");
+        selNodeRunEvent.setText("Run application");
         selNodeRunEvent.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 selNodeRunEventActionPerformed(evt);
@@ -298,18 +297,15 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(org.mei.securesim.platform.PlatformApp.class).getContext().getActionMap(SimulationPanel.class, this);
         depNodesRandomTopology.setAction(actionMap.get("deployNodesUsingRandomTopology")); // NOI18N
-        depNodesRandomTopology.setText("Aleatóriamente");
         depNodesDeploy.add(depNodesRandomTopology);
 
         depNodesGridTopology.setAction(actionMap.get("deployNodesGridTopology")); // NOI18N
-        depNodesGridTopology.setText("Em grelha");
         depNodesDeploy.add(depNodesGridTopology);
 
         deployNodesPopupMenu.add(depNodesDeploy);
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(org.mei.securesim.platform.PlatformApp.class).getContext().getResourceMap(SimulationPanel.class);
         setBackground(resourceMap.getColor("background")); // NOI18N
-        setBorder(null);
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
@@ -482,7 +478,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             }
         } else if (deployNodeToolSelected) {
             if (insideSelectionArea(evt) && evt.getButton() == MouseEvent.BUTTON3) {
-                deployNodesPopupMenu.show(this, mouseX, mouseY);
+                //deployNodesPopupMenu.show(this, mouseX, mouseY);
             } else {
                 clearSelection();
                 pressedPoint = new GraphicPoint(mouseX, mouseY);
@@ -613,8 +609,8 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
 ////            }
 //
 
-            EnergyHook eh =EnergyHook.hookToNode(n, 100,true);
-            
+            EnergyHook eh = EnergyHook.hookToNode(n, 100, true);
+
             update();
         }
 
@@ -643,12 +639,9 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         // TODO add your handling code here:
         if (currentSelectedNode != null) {
             JMenuItem m = (JMenuItem) evt.getSource();
-            currentSelectedNode.getPhysicalNode().getApplication().generateEvent();
+            if(networkRunned)
+            currentSelectedNode.getPhysicalNode().getApplication().run();
 
-            if (!networkRunned) {
-                simulation.start();
-                networkRunned = true;
-            }
         }
     }//GEN-LAST:event_selNodeRunEventActionPerformed
 
@@ -797,7 +790,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         Simulator.setSimulatorSpeed(value);
     }
 
-    void buildNetwork() {
+    public void buildNetwork() {
         if (!networkDeployed) {
             return;
         }
@@ -868,6 +861,27 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         this.selectionPointerToolSelected = selected;
     }
 
+    void startSimulation() {
+        if (!networkRunned) {
+            simulation.start();
+            networkRunned = true;
+        }
+    }
+
+    void stopSimulation() {
+            if (networkRunned) {
+                simulation.stop();
+            }
+
+    }
+
+    void pauseSimulation() {
+            if (networkRunned) {
+                simulation.pause();
+            }
+
+    }
+
     /**
      * 
      */
@@ -929,26 +943,26 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     public void deployNodesGridTopology() {
     }
 
-    @Action(block = Task.BlockingScope.COMPONENT)
+    //@Action(block = Task.BlockingScope.COMPONENT)
     public Task deployNodesUsingRandomTopology() {
         return new DeployNodesUsingRandomTopologyTask(org.jdesktop.application.Application.getInstance(org.mei.securesim.platform.PlatformApp.class));
     }
 
-    private class DeployNodesUsingRandomTopologyTask extends org.jdesktop.application.Task<Object, Void> {
+    public class DeployNodesUsingRandomTopologyTask extends org.jdesktop.application.Task<Object, Void> {
+
+        boolean ok = false;
+        int nNodes = 0;
+        RandomTopologyManager tm = new RandomTopologyManager();
+        NodeFactory nf = simulation.getNodeFactory();
 
         DeployNodesUsingRandomTopologyTask(org.jdesktop.application.Application app) {
             // Runs on the EDT.  Copy GUI state that
             // doInBackground() depends on from parameters
             // to DeployNodesUsingRandomTopologyTask fields, here.
             super(app);
-        }
-
-        @Override
-        protected Object doInBackground() {
-            RandomTopologyManager tm = new RandomTopologyManager();
-            NodeFactory nf = simulation.getNodeFactory();
-            boolean ok = false;
-            int nNodes = 0;
+            if (selectedArea == null) {
+                return;
+            }
             while (!ok) {
                 String sNodes = JOptionPane.showInputDialog("Introduza o nº de nós:");
                 if (sNodes != null) {
@@ -959,28 +973,47 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
                         }
                     }
                 } else {
-                    return null;
+                    return;
                 }
                 if (!ok) {
                     JOptionPane.showMessageDialog(SimulationPanel.this, "Valor Incorrecto!");
                 }
             }
 
+        }
+
+        @Override
+        protected Object doInBackground() {
+            if (!ok) {
+                return null;
+            }
+            int status = 0;
             try {
+                this.setMessage("Generating nodes using factory");
                 ArrayList<Node> nodes = (ArrayList<Node>) nf.createNodes(nNodes);
                 nodes = tm.apply(selectedArea.getBounds(), nodes);
+                this.setProgress(status, 0, 1);
+
                 for (Node node : nodes) {
-                    node.getConfig().setSetRadioRange(100);
+                    status++;
+                    node.getConfig().setSetRadioRange(3000);
                     simulation.getNetwork().addNode((SensorNode) node);
+                    this.setProgress(status, 0, nodes.size());
                 }
             } catch (Exception ex) {
                 Logger.getLogger(SimulationPanel.class.getName()).log(Level.SEVERE, null, ex);
+                networkDeployed = false;
+                update();
                 return false;
             }
 
             networkDeployed = true;
             update();
+            this.setMessage("Building Network using radio");
+            this.setProgress(0, 0, 1);
             buildNetwork();
+            this.setMessage("Building Network done");
+            this.setProgress(1, 0, 1);
             update();
             return true;  // return your result
         }

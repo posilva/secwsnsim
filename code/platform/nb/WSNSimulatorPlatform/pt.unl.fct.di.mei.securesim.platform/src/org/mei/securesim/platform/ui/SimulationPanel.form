@@ -87,7 +87,7 @@
         </Menu>
         <MenuItem class="javax.swing.JMenuItem" name="selNodeRunEvent">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Generate Event"/>
+            <Property name="text" type="java.lang.String" value="Run application"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodeRunEventActionPerformed"/>

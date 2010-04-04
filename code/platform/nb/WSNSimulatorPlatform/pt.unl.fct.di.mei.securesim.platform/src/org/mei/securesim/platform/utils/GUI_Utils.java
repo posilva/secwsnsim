@@ -8,7 +8,6 @@ import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.Window;
-import javax.swing.JOptionPane;
 
 /**
  *

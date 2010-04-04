@@ -48,7 +48,7 @@ public class ChartPanel extends JPanel implements IChartDisplay {
 
     @Override
     public void paintComponent(Graphics grphcs) {
-       super.paintComponent(grphcs);
+//       super.paintComponent(grphcs);
         Image offscreen = createImage(500,500);
         currentG = offscreen.getGraphics();
         chart.displayOn(this);
