@@ -1,8 +1,10 @@
 package org.mei.securesim.test.pingpong;
 
 import java.io.Serializable;
-import org.mei.securesim.core.nodes.cpu.CPUProcess;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.mei.securesim.core.application.Application;
+import org.mei.securesim.core.energy.EnergyConsumptionAction;
 import org.mei.securesim.core.engine.Event;
 import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.engine.DefaultMessage;
@@ -20,24 +22,33 @@ public class PingPongApplication extends Application implements Serializable {
     public static int PONG = 1;
     private int NO_REPLY = -1;
 
+
+    static Logger LOGGER = Logger.getLogger(PingPongApplication.class.getName());
     public void handleMessage(DefaultMessage msg) {
 
         PingPongMessageWrapper m = new PingPongMessageWrapper();
         m.wrap(msg);
+        ((PingPongNode)getNode()).setShowLabel("");
         if (m.getDest() == getNode().getId()) {
             // é para mim
             if (m.type == PING) {
-            //    System.out.println("Recebi um PING: " + getNode().getId()+  " from " + m.getSource());
+                LOGGER.log(Level.INFO,getNode().getId()+":  Ping Message Received");
+                ((PingPongNode)getNode()).setShowLabel("PING");
                 sendPongMessage(m.source, m.getId());
-            } else {
-              //  System.out.println("Recebi um PONG: " + getNode().getId() +  " from " + m.getSource());
-                boolean r = sendPingMessage(m.source);
-                if (getHostNode().getId() == 1) {
-                    if (!r) {
-                        System.out.println("não consegui enviar");
-                    }
-                }
+            }else{
+            ((PingPongNode)getNode()).setShowLabel("PONG");
             }
+
+
+//            else {
+//              //  System.out.println("Recebi um PONG: " + getNode().getId() +  " from " + m.getSource());
+//                boolean r = sendPingMessage(m.source);
+//                if (getHostNode().getId() == 1) {
+//                    if (!r) {
+//                        System.out.println("não consegui enviar");
+//                    }
+//                }
+//            }
         } else {
             boolean sendMessage = sendMessage(msg);
 
@@ -45,8 +56,11 @@ public class PingPongApplication extends Application implements Serializable {
     }
 
     @Override
-    public void generateEvent() {
-        sendPingMessage(2);
+    public void run() {
+
+
+        periodicPingMessage(2);
+        //sendPingMessage(2);
     }
 
     /**
@@ -65,11 +79,16 @@ public class PingPongApplication extends Application implements Serializable {
     @SuppressWarnings("element-type-mismatch")
     public void receiveMessage(Object message) {
         final Object msg = message;
-        getHostNode().getCPU().execute(new CPUProcess() {
+        getHostNode().getCPU().execute(new EnergyConsumptionAction() {
 
-            public void run() {
+            public void execute() {
                 DefaultMessage m = (DefaultMessage) msg;
                 handleMessage(m);
+
+            }
+
+            public int getNumberOfUnits() {
+                return 1;
             }
         });
     }
@@ -127,4 +146,33 @@ public class PingPongApplication extends Application implements Serializable {
     private void sendPPMessage(DefaultMessage m) {
         getHostNode().getSimulator().addEvent(new SendPingPongMessageEvent(getHostNode().getSimulator().getSimulationTime() + (10000 + (int) Simulator.randomGenerator.random().nextDouble() * CLOCK_TICK), m));
     }
+
+    private void periodicPingMessage(int to) {
+        evt = new PeriodicPingMessageEvent(2);
+        evt.setTime(getHostNode().getSimulator().getSimulationTime() + Simulator.ONE_SECOND);
+        getHostNode().getSimulator().addEvent(evt);
+    }
+    PeriodicPingMessageEvent evt;
+
+    class PeriodicPingMessageEvent extends Event {
+
+        int to;
+
+        public PeriodicPingMessageEvent(int to) {
+            this.to = to;
+        }
+
+        @Override
+        public void execute() {
+            PingPongMessageWrapper w = new PingPongMessageWrapper();
+            byte[] payload = w.createPayload(PING, countMessages++, getNode().getId(), to, NO_REPLY);
+            DefaultMessage m = new DefaultMessage(payload);
+            this.setTime(getTime() + 10 * Simulator.ONE_SECOND);
+            sendPPMessage(m);
+            getHostNode().getSimulator().addEvent(this);
+
+        }
+    }
 }
+
+
