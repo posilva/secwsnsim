@@ -13,13 +13,13 @@ import org.mei.securesim.core.nodes.basic.Mica2SensorNode;
 public class PingPongNode extends Mica2SensorNode implements IDisplayable {
 
     private static int CLEAR_TIME = Simulator.ONE_SECOND * 10;
-
+    private String showLabel = "";
+    private int ctshowLabel = 0;
 
     public PingPongNode(Simulator sim, RadioModel radioModel) {
         super(sim, radioModel);
         setRoutingLayer(new PingPongRoutingLayer_());
     }
-   
     /** This field is true if this mote rebroadcasted the message already. */
     boolean sent = false;
     /** This field stores the mote from which the message was first received. */
@@ -49,7 +49,7 @@ public class PingPongNode extends Mica2SensorNode implements IDisplayable {
             Color c = g.getColor();
             if (getId() == 1) {
                 c = Color.yellow;
-            } else if (getId()==945) {
+            } else if (getId() == 945) {
                 c = Color.MAGENTA;
             } else if (getMacLayer().isSending()) {
                 c = Color.blue;
@@ -72,13 +72,27 @@ public class PingPongNode extends Mica2SensorNode implements IDisplayable {
                 int y1 = disp.y2ScreenY(parent.getY());
                 g.drawLine((int) _x, (int) _y, x1, y1);
             }
+
             getGraphicNode().setBackcolor(c);
             getGraphicNode().paint(disp);
+
+            if (!showLabel.isEmpty() && ctshowLabel<5) {
+                g.setColor(Color.BLACK);
+                g.drawRect(_x, _y-10, 50, 20);
+                g.setColor(Color.YELLOW);
+                g.fillRect(_x, _y-10, 50, 20);
+                g.setColor(Color.BLACK);
+                g.drawString(showLabel, _x + 5, _y);
+                ctshowLabel++;
+            }else{ ctshowLabel=0;
+                    showLabel="";
+            }
+
+
         } else {
             getGraphicNode().setBackcolor(Color.WHITE);
             getGraphicNode().paint(disp);
         }
-
     }
 
     public void sentMenssage(boolean b) {
@@ -98,8 +112,16 @@ public class PingPongNode extends Mica2SensorNode implements IDisplayable {
     public Node getParent() {
         return parent;
     }
-    
+
     public static PingPongNode cast(Node n) {
         return (PingPongNode) n;
+    }
+
+    public String getShowLabel() {
+        return showLabel;
+    }
+
+    public void setShowLabel(String showLabel) {
+        this.showLabel = showLabel;
     }
 }
