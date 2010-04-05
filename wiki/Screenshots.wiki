@@ -1,5 +1,14 @@
 
-
 = Screenshots =
 
-Screenshots001: http://secwsnsim.googlecode.com/files/Screenshot.png
+Screenshots001: 
+Presentation of a network random topology
+http://secwsnsim.googlecode.com/files/Screenshot1.png
+
+Screenshots002: 
+Node Info and neigbors visualization  
+http://secwsnsim.googlecode.com/files/Screenshot3.png
+
+Screenshots003: 
+Simulation creation and Energy parameters configuration 
+http://secwsnsim.googlecode.com/files/ScreenshotE.png
