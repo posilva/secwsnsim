@@ -43,8 +43,9 @@ import org.mei.securesim.utils.RandomGenerator;
  */
 @SuppressWarnings({"deprecation", "unchecked"})
 public class Simulator {
-    static Logger LOGGER = Logger.getLogger(Simulator.class.getName());
+    protected SimulatorWorker worker ;
 
+    static Logger LOGGER = Logger.getLogger(Simulator.class.getName());
     protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
     private boolean finished;
     private boolean stop;
@@ -52,6 +53,7 @@ public class Simulator {
     public static final int SIMULATOR_STEPS = 300;
     public static final int RUNTIME_NUM_STEPS = 1;
     private RadioModel radioModel;
+
     /**
      * This is a static reference to a Random instance.
      * This makes experiments repeatable, all you have to do is to set
@@ -67,6 +69,13 @@ public class Simulator {
     public static final Integer SIMULATION_SPEED_MIN = 400;
     public static final Integer SIMULATION_SPEED_DEFAULT = SIMULATION_SPEED_MAX / 2;
     public static Integer ONE_SECOND = SIMULATION_SPEED_DEFAULT;
+    private long nanotimeStart;
+
+
+
+    public long getSysNanoTimeStart() {
+        return nanotimeStart;
+    }
 
     public enum RunMode {
 
@@ -75,6 +84,7 @@ public class Simulator {
 
     public Simulator() {
         super();
+//         worker=new SimulatorWorker(this);
     }
     /** Holds the events */
     public PriorityQueue eventQueue = new PriorityQueue();
@@ -125,16 +135,24 @@ public class Simulator {
         }
     }
 
+    public void resume() {
+        System.out.println("RESUME SIM");
+        worker.resumeRun();
+    }
+
     public void stop() {
         stop = true;
+        worker.stopRun();
         reset();
     }
 
     public void reset() {
+
     }
 
     public void pause() {
         paused = true;
+        worker.setPause(true);
     }
 
     public boolean isPaused() {
@@ -153,14 +171,14 @@ public class Simulator {
         this.stop = stop;
     }
 
-    public void restart() {
-        if (paused) {
-            notifyAll();
-        }
-    }
-
     public void start() {
-        runWithDisplayInRealTime();
+        nanotimeStart = System.nanoTime();
+//        run(60000);
+
+        //runWithDisplayInRealTime();
+        worker = new SimulatorWorker(this);
+        worker.startRun(RunMode.REAL_TIME);
+
     }
 
     /**
@@ -286,18 +304,25 @@ public class Simulator {
      *
      * @param timeInSec the time in seconds until the simulation is to run
      */
-    public void run(double timeInSec) {
-        long tmax = lastEventTime + (int) (Simulator.ONE_SECOND * timeInSec);
-        while (lastEventTime < tmax) {
-            Event event = (Event) eventQueue.getAndRemoveFirst();
-            //Event event = (Event)eventQueue.poll();
-            if (event != null) {
-                lastEventTime = event.time;
-                event.execute();
-            } else {
-                break;
+    public void run(final double timeInSec) {
+
+        new Thread(new Runnable() {
+
+            public void run() {
+                long tmax = lastEventTime + (int) (Simulator.ONE_SECOND * timeInSec);
+                while (lastEventTime < tmax) {
+                    Event event = (Event) eventQueue.getAndRemoveFirst();
+                    //Event event = (Event)eventQueue.poll();
+                    if (event != null) {
+                        lastEventTime = event.time;
+                        event.execute();
+                    } else {
+                        break;
+                    }
+                    getDisplay().update();
+                }
             }
-        }
+        }).start();
     }
 
     /**
@@ -322,6 +347,7 @@ public class Simulator {
      */
     public void runWithDisplayInRealTime() {
         Thread t = new Thread() {
+
             @Override
             public void run() {
                 display.show();
@@ -371,6 +397,7 @@ public class Simulator {
     public RadioModel getRadioModel() {
         return radioModel;
     }
+
     /**
      * Initialize simulator before start
      * @return

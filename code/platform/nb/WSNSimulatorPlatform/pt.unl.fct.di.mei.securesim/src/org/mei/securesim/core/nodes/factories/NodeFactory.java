@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 import org.mei.securesim.core.application.Application;
+import org.mei.securesim.core.energy.Batery;
 
 import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.energy.EnergyModel;
@@ -97,10 +98,16 @@ public abstract class NodeFactory {
         Constructor c = classOfNodes.getConstructor(new Class[]{Simulator.class, RadioModel.class});
         Node node = (Node) c.newInstance(new Object[]{this.simulator,
                     this.simulator.getRadioModel()});
+        /* assign routing layer */
         node.setRoutingLayer((RoutingLayer) routingLayer.newInstance());
+        /* assign application */
         node.setApplication((Application) application.newInstance());
+        /* assign MAC layer */
         node.setMacLayer(getMacLayerInstance());
-        node.getBateryEnergy().setEnergyModel(getEnergyModelInstance());
+        /* assign energy model */
+        node.setBateryEnergy(new Batery(getEnergyModelInstance()));
+        node.getBateryEnergy().setHostNode(node);
+
         node.init();
         return node;
     }

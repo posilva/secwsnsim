@@ -14,6 +14,7 @@ import java.awt.BorderLayout;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import org.mei.securesim.platform.charts.ui.ChartPanel;
 
 /**
@@ -74,7 +75,11 @@ public class ChartFrame extends javax.swing.JFrame {
 
     private void mnuExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuExportarActionPerformed
         try {
-            chartPanel.getChartObject().saveChartToPDF("Teste", WIDTH, WIDTH);
+        JFileChooser fc = new JFileChooser(".");
+        int returnVal = fc.showSaveDialog(this);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                chartPanel.getChartObject().saveChartToPDF(fc.getSelectedFile().getAbsolutePath(), 800, 600);
+            }
         } catch (Exception ex) {
             Logger.getLogger(ChartFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -96,6 +101,7 @@ public class ChartFrame extends javax.swing.JFrame {
     private javax.swing.JButton mnuExportar;
     // End of variables declaration//GEN-END:variables
     private double xval=0;
+
 
     class GThread extends Thread {
 

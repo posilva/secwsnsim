@@ -42,7 +42,6 @@ import org.mei.securesim.components.simulation.SimulationConfiguration;
 import org.mei.securesim.components.simulation.SimulationFactory;
 import org.mei.securesim.components.simulation.basic.BasicSimulation;
 import org.mei.securesim.components.topology.RandomTopologyManager;
-import org.mei.securesim.platform.instruments.energy.EnergyHook;
 
 /**
  *
@@ -293,18 +292,22 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
 
         selectionToolPopupMenu.add(selNodesMonitorizacao);
 
-        depNodesDeploy.setText("Lançar nós");
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(org.mei.securesim.platform.PlatformApp.class).getContext().getResourceMap(SimulationPanel.class);
+        depNodesDeploy.setText(resourceMap.getString("depNodesDeploy.text")); // NOI18N
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(org.mei.securesim.platform.PlatformApp.class).getContext().getActionMap(SimulationPanel.class, this);
         depNodesRandomTopology.setAction(actionMap.get("deployNodesUsingRandomTopology")); // NOI18N
+        depNodesRandomTopology.setText(resourceMap.getString("depNodesRandomTopology.text")); // NOI18N
+        depNodesRandomTopology.setToolTipText(resourceMap.getString("depNodesRandomTopology.toolTipText")); // NOI18N
         depNodesDeploy.add(depNodesRandomTopology);
 
         depNodesGridTopology.setAction(actionMap.get("deployNodesGridTopology")); // NOI18N
+        depNodesGridTopology.setText(resourceMap.getString("depNodesGridTopology.text")); // NOI18N
+        depNodesGridTopology.setToolTipText(resourceMap.getString("depNodesGridTopology.toolTipText")); // NOI18N
         depNodesDeploy.add(depNodesGridTopology);
 
         deployNodesPopupMenu.add(depNodesDeploy);
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(org.mei.securesim.platform.PlatformApp.class).getContext().getResourceMap(SimulationPanel.class);
         setBackground(resourceMap.getColor("background")); // NOI18N
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -437,11 +440,6 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             if (evt.getButton() == MouseEvent.BUTTON1) {
                 currentSelectedNode = null;
                 currentSelectedNode = selectedCircle(evt);
-                if (currentSelectedNode != null) {
-                    fireEnterCircleInfoEvent(new NodeInfoEvent(currentSelectedNode, mouseX, mouseY));
-                } else {
-                    fireExitCircleInfoEvent(new NodeInfoEvent(new GraphicNode(), mouseX, mouseY));
-                }
             } else if (evt.getButton() == MouseEvent.BUTTON3) {
                 currentSelectedNode = null;
                 currentSelectedNode = selectedCircle(evt);
@@ -478,7 +476,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             }
         } else if (deployNodeToolSelected) {
             if (insideSelectionArea(evt) && evt.getButton() == MouseEvent.BUTTON3) {
-                //deployNodesPopupMenu.show(this, mouseX, mouseY);
+                deployNodesPopupMenu.show(this, mouseX, mouseY);
             } else {
                 clearSelection();
                 pressedPoint = new GraphicPoint(mouseX, mouseY);
@@ -593,26 +591,28 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
 
     private void selNodeMonitEnergiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selNodeMonitEnergiaActionPerformed
 //        EnergyController ec;
-        if (currentSelectedNode != null) {
-            JMenuItem m = (JMenuItem) evt.getSource();
-            Node n = currentSelectedNode.getPhysicalNode();
-//
+//        if (currentSelectedNode != null) {
+//            JMenuItem m = (JMenuItem) evt.getSource();
+//            Node n = currentSelectedNode.getPhysicalNode();
 //            if (!energyControllersTable.contains(n)) {
 //                ec = new EnergyController();
 //                n.getBateryEnergy().addEnergyListener(ec);
 //                energyControllersTable.put(n, ec);
 //                ec.start();
 //            }
-////            if (!nodeenergyWatchers.contains(n)) {
-////                displayNewChartFrame(n);
-////
-////            }
+//            if (!nodeenergyWatchers.contains(n)) {
+//                displayNewChartFrame(n);
+//
+//            }
 //
 
-            EnergyHook eh = EnergyHook.hookToNode(n, 100, true);
 
-            update();
-        }
+        createEnergyWatcher(new Object[]{currentSelectedNode});
+
+//            EnergyHook eh = EnergyHook.hookToNode(n, 100, true);
+//
+        update();
+//        }
 
     }//GEN-LAST:event_selNodeMonitEnergiaActionPerformed
 
@@ -633,14 +633,16 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         // TODO add your handling code here:
 
         createEnergyWatcher(selectedNodes.toArray());
+
     }//GEN-LAST:event_selNodesMonitEnergiaActionPerformed
 
     private void selNodeRunEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selNodeRunEventActionPerformed
         // TODO add your handling code here:
         if (currentSelectedNode != null) {
             JMenuItem m = (JMenuItem) evt.getSource();
-            if(networkRunned)
-            currentSelectedNode.getPhysicalNode().getApplication().run();
+            if (networkRunned) {
+                currentSelectedNode.getPhysicalNode().getApplication().run();
+            }
 
         }
     }//GEN-LAST:event_selNodeRunEventActionPerformed
@@ -693,22 +695,14 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     }
 
     public int x2ScreenX(double x) {
-        //  return 40+(int)((dim.width-80)  * x / simulationArea.getWidth());
         return OFFSET_NETWORK + (int) ((getSize().getWidth() - (OFFSET_NETWORK * 2)) * x / getSize().getWidth());
     }
 
-    /* (non-Javadoc)
-     * @see net.tinyos.prowler.IDisplay#y2ScreenY(double)
-     */
-    /* (non-Javadoc)
-     * @see net.tinyos.prowler.extension.ISimulationDisplay#y2ScreenY(double)
-     */
     public int y2ScreenY(double y) {
-        // return 40+(int)((dim.height-80) * y / simulationArea.getHeigth());
         return OFFSET_NETWORK + (int) ((getSize().getHeight() - (OFFSET_NETWORK * 2)) * y / getSize().getHeight());
     }
 
-    public synchronized void update() {
+    public void update() {
         JComponent parent = (JComponent) getParent();
         if (parent != null) {
             ((JComponent) getParent()).revalidate();
@@ -832,21 +826,29 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         }
     }
 
+    /**
+     * 
+     * @param selectedNodes
+     */
     private void createEnergyWatcher(Object[] selectedNodes) {
-        if (selectionTool) {
+
+        if (selectionTool || selectionPointerToolSelected) {
             if (selectedNodes != null) {
                 if (selectedNodes.length > 0) {
-                    String input = JOptionPane.showInputDialog("Indique um nome");
+                    String input = JOptionPane.showInputDialog("Name of the monitoring action");
                     if (input != null) {
                         new NodesEnergyWatcher(selectedNodes, input.toUpperCase()).start();
                     }
                 }
             }
+        }else{
+            // é necessário seleccionar ou a selection tool ou a pointer tool
         }
+
     }
 
     public void onFinish(SimulatorEvent evt) {
-        JOptionPane.showMessageDialog(this, "A simulação terminou: " + evt.toString());
+        JOptionPane.showMessageDialog(this, "Simulation has terminated: " + evt.toString());
     }
 
     void deployNodesToolSelected(boolean selected) {
@@ -869,16 +871,16 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     }
 
     void stopSimulation() {
-            if (networkRunned) {
-                simulation.stop();
-            }
+        if (networkRunned) {
+            simulation.stop();
+        }
 
     }
 
     void pauseSimulation() {
-            if (networkRunned) {
-                simulation.pause();
-            }
+        if (networkRunned) {
+            simulation.pause();
+        }
 
     }
 
@@ -888,20 +890,30 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     class NodesEnergyWatcher extends Thread {
 
         String name = "";
-        int delay = 500;   // delay for 5 sec.
+        int delay = 0;   // delay for 5 sec.
         int period = 1000;  // repeat every sec.
         ArrayList<Node> nodes = new ArrayList<Node>();
         ChartFrame cf = new ChartFrame();
         Timer timer = new Timer();
 
+        /**
+         * 
+         * @param nodes
+         * @param name
+         */
         public NodesEnergyWatcher(Object[] nodes, String name) {
             importNodes(nodes);
+
             this.name = name;
+
             cf.setTitle("Energy watcher: " + name);
+
             cf.setPreferredSize(new Dimension(300, 200));
+
             cf.pack();
 
             cf.setVisible(true);
+
             cf.addWindowListener(new WindowAdapter() {
 
                 @Override
@@ -909,16 +921,18 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
                     timer.cancel();
                 }
             });
+
             timer.scheduleAtFixedRate(new TimerTask() {
 
                 public void run() {
                     SummaryStatistics stat = new SummaryStatistics();
                     for (Node node : NodesEnergyWatcher.this.nodes) {
-//                        double c = 100 - (node.getBateryEnergy().getCurrentPower() * 100 / node.getBateryEnergy().getInitialPower());
-//                        double c = node.getBateryEnergy().getLastConsume() < 0 ? 0 : node.getBateryEnergy().getLastConsume();
-//                        stat.addValue(c);
+
+                        //double c = node.getBateryEnergy().getAverageConsumption();//.getLastConsume();//100 - (node.getBateryEnergy().getCurrentPower() * 100 / node.getBateryEnergy().getInitialPower());
+                        double c = 100 - (node.getBateryEnergy().getCurrentPower() * 100 / node.getBateryEnergy().getInitialPower());
+                        stat.addValue(c);
                     }
-                    double x = NodesEnergyWatcher.this.nodes.get(0).getSimulator().getSimulationTimeInMillisec();
+                    double x = NodesEnergyWatcher.this.nodes.get(0).getSimulator().getSimulationTimeInMillisec() / 1000;
                     cf.getChartPanel().updateChart(x, stat.getMean());
                 }
             }, delay, period);
@@ -941,9 +955,9 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
 
     @Action
     public void deployNodesGridTopology() {
+        JOptionPane.showMessageDialog(this, "Feature not implemented yet!", "", JOptionPane.WARNING_MESSAGE);
     }
-
-    //@Action(block = Task.BlockingScope.COMPONENT)
+        @Action(block = Task.BlockingScope.COMPONENT)
     public Task deployNodesUsingRandomTopology() {
         return new DeployNodesUsingRandomTopologyTask(org.jdesktop.application.Application.getInstance(org.mei.securesim.platform.PlatformApp.class));
     }
@@ -954,17 +968,14 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         int nNodes = 0;
         RandomTopologyManager tm = new RandomTopologyManager();
         NodeFactory nf = simulation.getNodeFactory();
-
+        int nRange= simulation.getNodeRange();
         DeployNodesUsingRandomTopologyTask(org.jdesktop.application.Application app) {
-            // Runs on the EDT.  Copy GUI state that
-            // doInBackground() depends on from parameters
-            // to DeployNodesUsingRandomTopologyTask fields, here.
             super(app);
             if (selectedArea == null) {
                 return;
             }
             while (!ok) {
-                String sNodes = JOptionPane.showInputDialog("Introduza o nº de nós:");
+                String sNodes = JOptionPane.showInputDialog("Number of nodes to deploy:");
                 if (sNodes != null) {
                     if (NumberUtils.isNumber(sNodes)) {
                         nNodes = Integer.parseInt(sNodes);
@@ -979,7 +990,6 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
                     JOptionPane.showMessageDialog(SimulationPanel.this, "Valor Incorrecto!");
                 }
             }
-
         }
 
         @Override
@@ -994,9 +1004,11 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
                 nodes = tm.apply(selectedArea.getBounds(), nodes);
                 this.setProgress(status, 0, 1);
 
+
+
                 for (Node node : nodes) {
                     status++;
-                    node.getConfig().setSetRadioRange(3000);
+                    node.getConfig().setSetRadioRange(nRange);
                     simulation.getNetwork().addNode((SensorNode) node);
                     this.setProgress(status, 0, nodes.size());
                 }
@@ -1012,14 +1024,14 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             this.setMessage("Building Network using radio");
             this.setProgress(0, 0, 1);
             buildNetwork();
-            this.setMessage("Building Network done");
-            this.setProgress(1, 0, 1);
             update();
             return true;  // return your result
         }
 
         @Override
         protected void succeeded(Object result) {
+            this.setMessage("Building Network done");
+            this.setProgress(1, 0, 1);
         }
     }
 
@@ -1048,8 +1060,6 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             // desenha a border do rectangulo
             g.setColor(Color.BLACK);
             graphics2.draw(roundedRectangle);
-            // desenha os dados
-
 
             int y = mouseY + 5;
             for (int i = 0; i < nodeInfo.length; i++) {
@@ -1085,32 +1095,6 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         mouseY = y2ScreenY(evt.getY());
     }
 
-    void fireEnterCircleInfoEvent(NodeInfoEvent evt) {
-        Object[] listeners = listenerList.getListenerList();
-        for (int i = 0; i < listeners.length; i += 2) {
-            if (listeners[i] == MouseOverNodeEventListener.class) {
-                ((MouseOverNodeEventListener) listeners[i + 1]).mouseEnterCircleOccured(evt);
-            }
-        }
-    }
-
-    void fireExitCircleInfoEvent(NodeInfoEvent evt) {
-        Object[] listeners = listenerList.getListenerList();
-        for (int i = 0; i < listeners.length; i += 2) {
-            if (listeners[i] == MouseOverNodeEventListener.class) {
-                ((MouseOverNodeEventListener) listeners[i + 1]).mouseExitCircleOccured(evt);
-            }
-        }
-    }
-
-    public void addMouseOverCircleEventListener(MouseOverNodeEventListener listener) {
-        listenerList.add(MouseOverNodeEventListener.class, listener);
-    }
-
-    public void removeMouseOverCircleEventListener(MouseOverNodeEventListener listener) {
-        listenerList.remove(MouseOverNodeEventListener.class, listener);
-    }
-
     public void paintNetwork(Graphics g) {
         if (simulation == null) {
             return;
@@ -1142,9 +1126,6 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         if (paintNodesInfo) {
             paintInfo(grphcs);
         }
-//        PlatformView.getInstance().showNumberOfNodes(""+getSimulation().getSimulator().getNodes().size());
-//        PlatformView.getInstance().showSimulationTime(""+getSimulation().getSimulator().getSimulationTime());
-
     }
 
     private void paintImage(Graphics g) {
@@ -1174,21 +1155,18 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         public EnergyController() {
             energyWatcherThread = new EnergyWatcherThread();
             this.dataOutputStream = new DataOutputStream(energyWatcherThread.getOutputStream());
-
         }
 
         public void onConsume(EnergyEvent evt) {
             try {
-
-                //this.dataOutputStream.writeDouble(evt.getValue());
                 Batery b = (Batery) evt.getSource();
-                this.dataOutputStream.writeDouble(b.getAverageConsumption());
-                double t = b.getHostNode().getSimulator().getSimulationTimeInMillisec() / 1000;//System.nanoTime()*10E3; //
+                this.dataOutputStream.writeDouble(evt.getValue());
+                //this.dataOutputStream.writeDouble(b.getAverageConsumption());
+                double t = evt.getTime();//b.getHostNode().getSimulator().getSimulationTimeInMillisec() / 1000;//System.nanoTime()*10E3; //
                 this.dataOutputStream.writeDouble(t);
             } catch (IOException ex) {
                 getLogger().log(Level.SEVERE, null, ex);
             }
-
         }
 
         public Logger getLogger() {

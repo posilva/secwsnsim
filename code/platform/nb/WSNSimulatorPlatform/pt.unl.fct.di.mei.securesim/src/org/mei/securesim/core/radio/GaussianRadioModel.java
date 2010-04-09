@@ -25,6 +25,7 @@ package org.mei.securesim.core.radio;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Random;
 
 import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.nodes.Node;
@@ -50,18 +51,18 @@ public class GaussianRadioModel extends RadioModel {
      * to 3/2. For efficiency reasons, this number is the half of the usually
      * defined falling factor.
      */
-    public double fallingFactorHalf = DEFAULT_FALLING_FACTOR_HALF;
+    public static double fallingFactorHalf = DEFAULT_FALLING_FACTOR_HALF;
     /**
      * This coefficient is used to "simulate" the static part of environmental
      * noise. It is used when the mote field is first set up.
      */
-    public double staticRandomFactor = DEFAULT_STATIC_RANDOM_FACTOR;
+    public static double staticRandomFactor = DEFAULT_STATIC_RANDOM_FACTOR;
     /**
      * This limits the number of neighbours used to calculate interference
      * ratio. Using neighborhood instead of endless radio signals makes the
      * simulation somewhat faster.
      */
-    public double radioStrengthCutoff = DEFAULT_RADIO_STRENGTH_CUTOFF;
+    public static double radioStrengthCutoff = DEFAULT_RADIO_STRENGTH_CUTOFF;
     /**
      * This coefficient is used to "simulate" the dynamic part of environmental
      * noise. The dynamic noise is recalculated for each transmission.
@@ -253,5 +254,30 @@ public class GaussianRadioModel extends RadioModel {
             }
             stream = null;
         }
+    }
+
+    
+    public static double RangeEstimation(int range){
+
+        Random r = new Random();
+
+        double staticRandomFading = 1.0 + staticRandomFactor * r.nextGaussian();
+
+        int mx = 1;
+        
+        double staticRadioStrength = 0;
+        staticRadioStrength= mx* staticRandomFading/ (1.0 + Math.pow(range*range, fallingFactorHalf));
+        while (staticRadioStrength < radioStrengthCutoff){
+            staticRadioStrength= mx* staticRandomFading/ (1.0 + Math.pow(range*range, fallingFactorHalf));
+         //   staticRandomFading = 1.0 + staticRandomFactor * r.nextGaussian();
+
+            mx++;
+        }
+//         System.out.println("staticRandomFading:" + staticRandomFading);
+        return mx;
+    }
+
+    public static void main(String []a){
+        System.out.println("M: "+ GaussianRadioModel.RangeEstimation(263));
     }
 }
