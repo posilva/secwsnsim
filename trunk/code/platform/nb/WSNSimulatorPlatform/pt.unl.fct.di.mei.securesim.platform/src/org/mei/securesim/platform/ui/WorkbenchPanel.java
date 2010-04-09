@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 import org.mei.securesim.components.simulation.SimulationFactory;
-import org.mei.securesim.platform.uiextended.DropDownButton;
 import org.mei.securesim.utils.DebugConsole;
 
 /**
@@ -22,13 +21,9 @@ public class WorkbenchPanel extends javax.swing.JPanel {
     /** Creates new form WorkbenchPanel */
     public WorkbenchPanel() {
         initComponents();
-        btnDeployMode.setButtonStyle(DropDownButton.TOOLBOX_STYLE);
-        btnDeployMode.setButtonSelected(true);
-        btnDeployMode.add(deployRandomNodes);
-        btnSelectionTool.setSelected(false);
-        selectionPointerTool.setSelected(false);
         jScrollPane1.setPreferredSize(new Dimension(100, 100));
         jScrollPane1.setAutoscrolls(true);
+        btnDeployNodesMode.setSelected(true);
         updateSelectionGroup();
 
     }
@@ -37,15 +32,12 @@ public class WorkbenchPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        deployRandomNodes = new javax.swing.JMenuItem();
         SelectionBG = new javax.swing.ButtonGroup();
         OperationBG = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         simulationPanel1 = new org.mei.securesim.platform.ui.SimulationPanel();
-        toolbarPanel = new javax.swing.JPanel();
-        jToolBar2 = new javax.swing.JToolBar();
         jToolBar1 = new javax.swing.JToolBar();
-        jButton1 = new javax.swing.JButton();
+        btnRebuildNetwork = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JToolBar.Separator();
         verVizinhos = new javax.swing.JToggleButton();
         verOsQueConhecem = new javax.swing.JToggleButton();
@@ -54,9 +46,9 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         btnSimulationStart = new javax.swing.JToggleButton();
         btnSimulationPause = new javax.swing.JToggleButton();
         btnSimulationStop = new javax.swing.JToggleButton();
-        btnSimulationReset = new javax.swing.JToggleButton();
+        btnSimulationReset = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
-        btnDeployMode = new org.mei.securesim.platform.uiextended.DropDownButton();
+        btnDeployNodesMode = new javax.swing.JToggleButton();
         btnSelectionTool = new javax.swing.JToggleButton();
         selectionPointerTool = new javax.swing.JToggleButton();
         jSeparator3 = new javax.swing.JToolBar.Separator();
@@ -64,53 +56,35 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         showMouseCoordinates = new javax.swing.JToggleButton();
         viewNodesInfo = new javax.swing.JToggleButton();
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(org.mei.securesim.platform.PlatformApp.class).getContext().getActionMap(WorkbenchPanel.class, this);
-        deployRandomNodes.setAction(actionMap.get("DeployInRandomMode")); // NOI18N
-        deployRandomNodes.setText("Random Mode");
-
         setLayout(new java.awt.BorderLayout());
-
-        toolbarPanel.setLayout(new javax.swing.BoxLayout(toolbarPanel, javax.swing.BoxLayout.PAGE_AXIS));
 
         javax.swing.GroupLayout simulationPanel1Layout = new javax.swing.GroupLayout(simulationPanel1);
         simulationPanel1.setLayout(simulationPanel1Layout);
         simulationPanel1Layout.setHorizontalGroup(
             simulationPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1018, Short.MAX_VALUE)
-            .addGroup(simulationPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(simulationPanel1Layout.createSequentialGroup()
-                    .addGap(0, 227, Short.MAX_VALUE)
-                    .addComponent(toolbarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 563, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 228, Short.MAX_VALUE)))
         );
         simulationPanel1Layout.setVerticalGroup(
             simulationPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 628, Short.MAX_VALUE)
-            .addGroup(simulationPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(simulationPanel1Layout.createSequentialGroup()
-                    .addGap(0, 314, Short.MAX_VALUE)
-                    .addComponent(toolbarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 314, Short.MAX_VALUE)))
         );
 
         jScrollPane1.setViewportView(simulationPanel1);
 
         add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jToolBar2.setOrientation(1);
-        jToolBar2.setRollover(true);
-        jToolBar2.setAutoscrolls(true);
-        add(jToolBar2, java.awt.BorderLayout.LINE_END);
-
+        jToolBar1.setOrientation(1);
         jToolBar1.setRollover(true);
 
-        jButton1.setAction(actionMap.get("RebuildNetwork")); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/refresh.png"))); // NOI18N
-        jButton1.setToolTipText("Rebuild Network");
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton1);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(org.mei.securesim.platform.PlatformApp.class).getContext().getActionMap(WorkbenchPanel.class, this);
+        btnRebuildNetwork.setAction(actionMap.get("RebuildNetwork")); // NOI18N
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(org.mei.securesim.platform.PlatformApp.class).getContext().getResourceMap(WorkbenchPanel.class);
+        btnRebuildNetwork.setIcon(resourceMap.getIcon("btnRebuildNetwork.icon")); // NOI18N
+        btnRebuildNetwork.setToolTipText(resourceMap.getString("btnRebuildNetwork.toolTipText")); // NOI18N
+        btnRebuildNetwork.setFocusable(false);
+        btnRebuildNetwork.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnRebuildNetwork.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(btnRebuildNetwork);
         jToolBar1.add(jSeparator4);
 
         verVizinhos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/Neighboors16.png"))); // NOI18N
@@ -152,8 +126,8 @@ public class WorkbenchPanel extends javax.swing.JPanel {
 
         btnSimulationStart.setAction(actionMap.get("StartSimulation")); // NOI18N
         OperationBG.add(btnSimulationStart);
-        btnSimulationStart.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/Play16.png"))); // NOI18N
-        btnSimulationStart.setToolTipText("Play Simulation");
+        btnSimulationStart.setIcon(resourceMap.getIcon("btnSimulationStart.icon")); // NOI18N
+        btnSimulationStart.setToolTipText(resourceMap.getString("btnSimulationStart.toolTipText")); // NOI18N
         btnSimulationStart.setFocusable(false);
         btnSimulationStart.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSimulationStart.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -161,8 +135,8 @@ public class WorkbenchPanel extends javax.swing.JPanel {
 
         btnSimulationPause.setAction(actionMap.get("PauseSimulation")); // NOI18N
         OperationBG.add(btnSimulationPause);
-        btnSimulationPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/Pause16.png"))); // NOI18N
-        btnSimulationPause.setToolTipText("Pause Simulation");
+        btnSimulationPause.setIcon(resourceMap.getIcon("btnSimulationPause.icon")); // NOI18N
+        btnSimulationPause.setToolTipText(resourceMap.getString("btnSimulationPause.toolTipText")); // NOI18N
         btnSimulationPause.setFocusable(false);
         btnSimulationPause.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSimulationPause.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -170,37 +144,30 @@ public class WorkbenchPanel extends javax.swing.JPanel {
 
         btnSimulationStop.setAction(actionMap.get("StopSimulation")); // NOI18N
         OperationBG.add(btnSimulationStop);
-        btnSimulationStop.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/Stop16.png"))); // NOI18N
-        btnSimulationStop.setToolTipText("Stop Simulation (End Simulation)");
+        btnSimulationStop.setIcon(resourceMap.getIcon("btnSimulationStop.icon")); // NOI18N
+        btnSimulationStop.setToolTipText(resourceMap.getString("btnSimulationStop.toolTipText")); // NOI18N
         btnSimulationStop.setFocusable(false);
         btnSimulationStop.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSimulationStop.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(btnSimulationStop);
 
         btnSimulationReset.setAction(actionMap.get("ResetSimulation")); // NOI18N
-        OperationBG.add(btnSimulationReset);
-        btnSimulationReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/Reset16.png"))); // NOI18N
-        btnSimulationReset.setToolTipText("Reset Simulation");
+        btnSimulationReset.setIcon(resourceMap.getIcon("btnSimulationReset.icon")); // NOI18N
+        btnSimulationReset.setToolTipText(resourceMap.getString("btnSimulationReset.toolTipText")); // NOI18N
         btnSimulationReset.setFocusable(false);
         btnSimulationReset.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSimulationReset.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(btnSimulationReset);
         jToolBar1.add(jSeparator2);
 
-        btnDeployMode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/Hand16.png"))); // NOI18N
-        btnDeployMode.setToolTipText("Select Nodes Deploy Modes");
-        SelectionBG.add(btnDeployMode);
-        btnDeployMode.setButtonSelected(true);
-        btnDeployMode.setDelay(1);
-        btnDeployMode.setFocusable(false);
-        btnDeployMode.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnDeployMode.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnDeployMode.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeployModeActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(btnDeployMode);
+        btnDeployNodesMode.setAction(actionMap.get("selectedNodeDeployMode")); // NOI18N
+        SelectionBG.add(btnDeployNodesMode);
+        btnDeployNodesMode.setIcon(resourceMap.getIcon("btnDeployNodesMode.icon")); // NOI18N
+        btnDeployNodesMode.setToolTipText(resourceMap.getString("btnDeployNodesMode.toolTipText")); // NOI18N
+        btnDeployNodesMode.setFocusable(false);
+        btnDeployNodesMode.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnDeployNodesMode.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(btnDeployNodesMode);
 
         SelectionBG.add(btnSelectionTool);
         btnSelectionTool.setText("S");
@@ -269,7 +236,7 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         });
         jToolBar1.add(viewNodesInfo);
 
-        add(jToolBar1, java.awt.BorderLayout.NORTH);
+        add(jToolBar1, java.awt.BorderLayout.LINE_START);
     }// </editor-fold>//GEN-END:initComponents
 
     private void verVizinhosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verVizinhosActionPerformed
@@ -278,10 +245,6 @@ public class WorkbenchPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_verVizinhosActionPerformed
 
     private void btnSelectionToolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectionToolActionPerformed
-        selectionPointerTool.setSelected(false);
-        btnSelectionTool.setSelected(true);
-        btnDeployMode.setButtonSelected(false);
-
         updateSelectionGroup();
     }//GEN-LAST:event_btnSelectionToolActionPerformed
 
@@ -291,7 +254,7 @@ public class WorkbenchPanel extends javax.swing.JPanel {
 
     private void searchNodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchNodeActionPerformed
         // TODO add your handling code here:
-        String s = JOptionPane.showInputDialog("Introduza o ID do Sensor:");
+        String s = JOptionPane.showInputDialog("Insert Sensor ID:");
         if (s != null) {
             simulationPanel1.searchNode(Integer.valueOf(s).intValue());
         }
@@ -316,70 +279,46 @@ public class WorkbenchPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_viewNodesInfoActionPerformed
 
     private void selectionPointerToolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectionPointerToolActionPerformed
-        selectionPointerTool.setEnabled(true);
-        btnSelectionTool.setSelected(false);
-        btnDeployMode.setButtonSelected(false);
-
         updateSelectionGroup();
     }//GEN-LAST:event_selectionPointerToolActionPerformed
 
-    private void btnDeployModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeployModeActionPerformed
-
-        selectionPointerTool.setSelected(false);
-        btnSelectionTool.setSelected(false);
-        btnDeployMode.setButtonSelected(true);
-        updateSelectionGroup();
-
-
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDeployModeActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup OperationBG;
     private javax.swing.ButtonGroup SelectionBG;
-    private org.mei.securesim.platform.uiextended.DropDownButton btnDeployMode;
+    private javax.swing.JToggleButton btnDeployNodesMode;
+    private javax.swing.JButton btnRebuildNetwork;
     private javax.swing.JToggleButton btnSelectionTool;
     private javax.swing.JToggleButton btnSimulationPause;
-    private javax.swing.JToggleButton btnSimulationReset;
+    private javax.swing.JButton btnSimulationReset;
     private javax.swing.JToggleButton btnSimulationStart;
     private javax.swing.JToggleButton btnSimulationStop;
-    private javax.swing.JMenuItem deployRandomNodes;
-    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JToolBar jToolBar2;
     private javax.swing.JButton searchNode;
     private javax.swing.JToggleButton selectionPointerTool;
     private javax.swing.JToggleButton showDebugWindow;
     private javax.swing.JToggleButton showMouseCoordinates;
     private org.mei.securesim.platform.ui.SimulationPanel simulationPanel1;
-    private javax.swing.JPanel toolbarPanel;
     private javax.swing.JToggleButton verOsQueConhecem;
     private javax.swing.JToggleButton verVizinhos;
     private javax.swing.JToggleButton viewNodesInfo;
     // End of variables declaration//GEN-END:variables
 
     private void updateSelectionGroup() {
-        simulationPanel1.deployNodesToolSelected(btnDeployMode.isButtonSelected());
+        simulationPanel1.deployNodesToolSelected(btnDeployNodesMode.isSelected());
         simulationPanel1.selectionToolSelected(btnSelectionTool.isSelected());
         simulationPanel1.selectionPointerSelected(selectionPointerTool.isSelected());
 
-
-//        setDeployModeState();
     }
 
     public void setSimulationFactory(SimulationFactory simulationFactory) {
         simulationPanel1.settingSimulation(simulationFactory);
     }
 
-    @Action(block = Task.BlockingScope.COMPONENT)
-    public Task DeployInRandomMode() {
-        return simulationPanel1.deployNodesUsingRandomTopology();
-    }
 
     @Action
     public void StartSimulation() {
@@ -434,5 +373,10 @@ public class WorkbenchPanel extends javax.swing.JPanel {
             // Runs on the EDT.  Update the GUI based on
             // the result computed by doInBackground().
         }
+    }
+
+    @Action
+    public void selectedNodeDeployMode() {
+        updateSelectionGroup();
     }
 }

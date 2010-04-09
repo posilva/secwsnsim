@@ -31,7 +31,16 @@ public class Batery {
      * 
      */
     protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
-    private GlobalEnergyController globalEnergyController;
+    private double lastConsume;
+
+    public double getLastConsume() {
+        return lastConsume;
+    }
+
+    public void setLastConsume(double lastConsume) {
+        this.lastConsume = lastConsume;
+    }
+    
 
     /**
      * 
@@ -83,7 +92,8 @@ public class Batery {
         tot+=value;
         totalconsumptions++;
         averageConsumption=tot/totalconsumptions;
-        fireOnEnergyConsume(new EnergyEvent(this, value));
+        fireOnEnergyConsume(new EnergyEvent(this, value,System.nanoTime() - getHostNode().getSimulator().getSysNanoTimeStart()));
+        lastConsume=value;
     }
 
     private void fireOnEnergyConsume(EnergyEvent energyEvent) {

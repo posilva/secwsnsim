@@ -16,6 +16,7 @@ import org.mei.securesim.components.simulation.basic.BasicSimulation;
  * @author posilva
  */
 public class SimulationFactory {
+    public static final int DEFAULT_NODE_RANGE = 30;
 
     Class radioModelClass = null;
     Class simulatorClass = null;
@@ -23,6 +24,7 @@ public class SimulationFactory {
     Class nodeFactoryClass = null;
     String simulationName = "none";
     String simulationdescription = "none";
+    int nodeRange=DEFAULT_NODE_RANGE;
     private EnergyModel energyModel;
 
     public Class getNetworkClass() {
@@ -105,6 +107,7 @@ public class SimulationFactory {
         s.getNodeFactory().setEnergyModel(energyModel);
         s.getNodeFactory().setup();
         s.getNodeFactory().setSimulator(s.getSimulator());
+        s.setNodeRange(nodeRange);
         s.setName(simulationName);
 
         s.setDescription(simulationdescription);
@@ -114,4 +117,13 @@ public class SimulationFactory {
     public void setEnergyModel(EnergyModel energyModel) {
         this.energyModel = energyModel;
     }
+
+    public int getNodeRange() {
+        return nodeRange;
+    }
+
+    public void setNodeRange(int nodeRange) {
+        this.nodeRange = nodeRange;
+    }
+
 }

@@ -116,6 +116,10 @@ public class PlatformView extends FrameView {
 
         mainPanel = new javax.swing.JPanel();
         workbenchPanel1 = new org.mei.securesim.platform.ui.WorkbenchPanel();
+        mainToolbar = new javax.swing.JToolBar();
+        btnNew = new javax.swing.JButton();
+        btnOpen = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         menuNewSimulation = new javax.swing.JMenuItem();
@@ -137,16 +141,49 @@ public class PlatformView extends FrameView {
         workbenchPanel1.setName("workbenchPanel1"); // NOI18N
         mainPanel.add(workbenchPanel1, java.awt.BorderLayout.CENTER);
 
+        mainToolbar.setRollover(true);
+        mainToolbar.setName("mainToolbar"); // NOI18N
+
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(org.mei.securesim.platform.PlatformApp.class).getContext().getActionMap(PlatformView.class, this);
+        btnNew.setAction(actionMap.get("newSimulation")); // NOI18N
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(org.mei.securesim.platform.PlatformApp.class).getContext().getResourceMap(PlatformView.class);
+        btnNew.setIcon(resourceMap.getIcon("btnNew.icon")); // NOI18N
+        btnNew.setText(resourceMap.getString("btnNew.text")); // NOI18N
+        btnNew.setToolTipText(resourceMap.getString("btnNew.toolTipText")); // NOI18N
+        btnNew.setFocusable(false);
+        btnNew.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnNew.setName("btnNew"); // NOI18N
+        btnNew.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        mainToolbar.add(btnNew);
+
+        btnOpen.setIcon(resourceMap.getIcon("btnOpen.icon")); // NOI18N
+        btnOpen.setText(resourceMap.getString("btnOpen.text")); // NOI18N
+        btnOpen.setToolTipText(resourceMap.getString("btnOpen.toolTipText")); // NOI18N
+        btnOpen.setFocusable(false);
+        btnOpen.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnOpen.setName("btnOpen"); // NOI18N
+        btnOpen.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        mainToolbar.add(btnOpen);
+
+        btnSave.setIcon(resourceMap.getIcon("btnSave.icon")); // NOI18N
+        btnSave.setText(resourceMap.getString("btnSave.text")); // NOI18N
+        btnSave.setToolTipText(resourceMap.getString("btnSave.toolTipText")); // NOI18N
+        btnSave.setFocusable(false);
+        btnSave.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnSave.setName("btnSave"); // NOI18N
+        btnSave.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        mainToolbar.add(btnSave);
+
+        mainPanel.add(mainToolbar, java.awt.BorderLayout.PAGE_START);
+
         menuBar.setName("menuBar"); // NOI18N
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(org.mei.securesim.platform.PlatformApp.class).getContext().getResourceMap(PlatformView.class);
         fileMenu.setText(resourceMap.getString("fileMenu.text")); // NOI18N
         fileMenu.setName("fileMenu"); // NOI18N
 
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, workbenchPanel1, org.jdesktop.beansbinding.ELProperty.create("${enabled}"), fileMenu, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(org.mei.securesim.platform.PlatformApp.class).getContext().getActionMap(PlatformView.class, this);
         menuNewSimulation.setAction(actionMap.get("newSimulation")); // NOI18N
         menuNewSimulation.setIcon(resourceMap.getIcon("menuNewSimulation.icon")); // NOI18N
         menuNewSimulation.setText(resourceMap.getString("menuNewSimulation.text")); // NOI18N
@@ -248,15 +285,18 @@ public class PlatformView extends FrameView {
             workbenchVisible=true;
 
         } else {
-            JOptionPane.showMessageDialog(null, "Cancelado pelo Utilizador");
         }
         sw.dispose();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnNew;
+    private javax.swing.JButton btnOpen;
+    private javax.swing.JButton btnSave;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JToolBar mainToolbar;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem menuNewSimulation;
     private javax.swing.JMenuItem menuOpenSImulation;

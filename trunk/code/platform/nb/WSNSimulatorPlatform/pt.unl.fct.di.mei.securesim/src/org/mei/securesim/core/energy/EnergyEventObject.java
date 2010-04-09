@@ -9,9 +9,9 @@ import java.util.EventObject;
  * @author posilva
  *
  */
-public class EnergyEvent extends EventObject {
+public class EnergyEventObject extends EventObject {
 
-	public EnergyEvent(Object arg0) {
+	public EnergyEventObject(Object arg0) {
 		super(arg0);
 	}
 

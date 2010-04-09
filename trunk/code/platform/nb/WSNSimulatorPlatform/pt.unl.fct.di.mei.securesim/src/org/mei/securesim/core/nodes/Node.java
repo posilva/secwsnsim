@@ -11,6 +11,7 @@ import org.mei.securesim.core.engine.DefaultMessage;
 import org.mei.securesim.core.layers.mac.MACLayer;
 import org.mei.securesim.core.layers.routing.RoutingLayer;
 import org.mei.securesim.core.nodes.components.Transceiver;
+import org.mei.securesim.core.radio.GaussianRadioModel;
 import org.mei.securesim.core.radio.RadioModel;
 import org.mei.securesim.core.radio.RadioModel.Neighborhood;
 import org.mei.securesim.gui.GraphicNode;
@@ -32,7 +33,7 @@ public abstract class Node {
     public static int NODEID_AUTOCOUNTER = 1;
     public static final int INITIAL_BATERY_POWER = 1000;
     public static final double DEFAULT_POWER_CONSUMING = 1.0E-2;
-    private static long CLOCK_TICK = Simulator.ONE_SECOND;// /100;
+    private static long CLOCK_TICK = Simulator.ONE_SECOND/100;// /100;
     /**
      * Attributes
      */
@@ -111,7 +112,27 @@ public abstract class Node {
         }
 
         public void setSetRadioRange(int setRadioRange) {
-            setMaximumRadioStrength((DEFAULT_MAX_RADIO_STRENGTH * setRadioRange) / DEFAULT_MAX_COMUNICATION_RANGE);
+            // é necessário rever para calcular a função inversa que permite 
+            // estimar o m do no face a um range desejado
+
+            switch(setRadioRange){
+                case 30:
+                    setMaximumRadioStrength(100);
+                    break;
+                case 130:
+                    setMaximumRadioStrength(2300);
+                        break;
+                case 230:
+                    setMaximumRadioStrength(7300);
+                         break;
+                case 300:
+                    setMaximumRadioStrength(13000);
+                         break;
+            }
+
+//            setMaximumRadioStrength((DEFAULT_MAX_RADIO_STRENGTH * setRadioRange) / DEFAULT_MAX_COMUNICATION_RANGE);
+//            setMaximumRadioStrength(GaussianRadioModel.RangeEstimation(setRadioRange));
+           
             this.setRadioRange = setRadioRange;
         }
     }
@@ -150,7 +171,7 @@ public abstract class Node {
     }
 
     public void initEnergyConsumation() {
-        //simulator.addEvent(new Node.EnergyWasteEvent( (int)Simulator.randomGenerator.random().nextDouble() * CLOCK_TICK));
+        simulator.addEvent(new Node.EnergyWasteEvent( (int)Simulator.randomGenerator.random().nextDouble() * CLOCK_TICK));
     }
 
     public Object getMessage() {

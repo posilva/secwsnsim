@@ -19,6 +19,57 @@
             </Constraint>
           </Constraints>
         </Component>
+        <Container class="javax.swing.JToolBar" name="mainToolbar">
+          <Properties>
+            <Property name="rollover" type="boolean" value="true"/>
+            <Property name="name" type="java.lang.String" value="mainToolbar" noResource="true"/>
+          </Properties>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+              <BorderConstraints direction="First"/>
+            </Constraint>
+          </Constraints>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JButton" name="btnNew">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="org.mei.securesim.platform.PlatformView" id="newSimulation" methodName="newSimulation"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="btnNew.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="btnNew.text"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="btnNew.toolTipText"/>
+                <Property name="focusable" type="boolean" value="false"/>
+                <Property name="horizontalTextPosition" type="int" value="0"/>
+                <Property name="name" type="java.lang.String" value="btnNew" noResource="true"/>
+                <Property name="verticalTextPosition" type="int" value="3"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnOpen">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="btnOpen.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="btnOpen.text"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="btnOpen.toolTipText"/>
+                <Property name="focusable" type="boolean" value="false"/>
+                <Property name="horizontalTextPosition" type="int" value="0"/>
+                <Property name="name" type="java.lang.String" value="btnOpen" noResource="true"/>
+                <Property name="verticalTextPosition" type="int" value="3"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnSave">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="btnSave.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="btnSave.text"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="btnSave.toolTipText"/>
+                <Property name="focusable" type="boolean" value="false"/>
+                <Property name="horizontalTextPosition" type="int" value="0"/>
+                <Property name="name" type="java.lang.String" value="btnSave" noResource="true"/>
+                <Property name="verticalTextPosition" type="int" value="3"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JMenuBar" name="menuBar">

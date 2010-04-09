@@ -176,7 +176,7 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="depNodesDeploy">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Lan&#xe7;ar n&#xf3;s"/>
+            <Property name="text" type="java.lang.String" resourceKey="depNodesDeploy.text"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="depNodesRandomTopology">
@@ -184,6 +184,8 @@
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="org.mei.securesim.platform.ui.SimulationPanel" id="deployNodesUsingRandomTopology" methodName="deployNodesUsingRandomTopology"/>
                 </Property>
+                <Property name="text" type="java.lang.String" resourceKey="depNodesRandomTopology.text"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="depNodesRandomTopology.toolTipText"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="depNodesGridTopology">
@@ -191,6 +193,8 @@
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="org.mei.securesim.platform.ui.SimulationPanel" id="deployNodesGridTopology" methodName="deployNodesGridTopology"/>
                 </Property>
+                <Property name="text" type="java.lang.String" resourceKey="depNodesGridTopology.text"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="depNodesGridTopology.toolTipText"/>
               </Properties>
             </MenuItem>
           </SubComponents>

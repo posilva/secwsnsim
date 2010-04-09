@@ -48,8 +48,8 @@ public class ChartPanel extends JPanel implements IChartDisplay {
 
     @Override
     public void paintComponent(Graphics grphcs) {
-//       super.paintComponent(grphcs);
-        Image offscreen = createImage(500,500);
+        super.paintComponent(grphcs);
+        Image offscreen = createImage(getSize().width,getSize().height);
         currentG = offscreen.getGraphics();
         chart.displayOn(this);
         grphcs.drawImage(offscreen,0,0,this);
@@ -62,7 +62,7 @@ public class ChartPanel extends JPanel implements IChartDisplay {
 
     public void updateChart(double x, double y) {
         chart.getSeries("Consumo de Energia").add(x, y);
-        update();
+        updateUI();
     }
 
     public Rectangle getRectangle() {

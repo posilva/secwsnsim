@@ -19,6 +19,7 @@ public abstract class Simulation extends ConfigurableObject {
     protected NodeFactory simpleNodeFactory;
     protected Network network;
     protected ISimulationDisplay display;
+    protected int nodeRange;
     protected long seed;
     private boolean bPreInit = false;
 
@@ -33,6 +34,14 @@ public abstract class Simulation extends ConfigurableObject {
         if (simpleNodeFactory == null) {
             throw new IllegalStateException("Não existe um Simple NodeFactory instanciado");
         }
+    }
+
+    public int getNodeRange() {
+        return nodeRange;
+    }
+
+    public void setNodeRange(int nodeRange) {
+        this.nodeRange = nodeRange;
     }
 
     public long getSeed() {

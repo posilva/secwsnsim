@@ -2,14 +2,6 @@
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <NonVisualComponents>
-    <Component class="javax.swing.JMenuItem" name="deployRandomNodes">
-      <Properties>
-        <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-          <action class="org.mei.securesim.platform.ui.WorkbenchPanel" id="DeployInRandomMode" methodName="DeployInRandomMode"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Random Mode"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.ButtonGroup" name="SelectionBG">
     </Component>
     <Component class="javax.swing.ButtonGroup" name="OperationBG">
@@ -45,74 +37,37 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <EmptySpace min="0" pref="1018" max="32767" attributes="0"/>
-                  <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="0" pref="227" max="32767" attributes="0"/>
-                          <Component id="toolbarPanel" min="-2" pref="563" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="228" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <EmptySpace min="0" pref="628" max="32767" attributes="0"/>
-                  <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="0" pref="314" max="32767" attributes="0"/>
-                          <Component id="toolbarPanel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="314" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
               </Group>
             </DimensionLayout>
           </Layout>
-          <SubComponents>
-            <Container class="javax.swing.JPanel" name="toolbarPanel">
-
-              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout">
-                <Property name="axis" type="int" value="3"/>
-              </Layout>
-            </Container>
-          </SubComponents>
         </Container>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JToolBar" name="jToolBar2">
+    <Container class="javax.swing.JToolBar" name="jToolBar1">
       <Properties>
         <Property name="orientation" type="int" value="1"/>
         <Property name="rollover" type="boolean" value="true"/>
-        <Property name="autoscrolls" type="boolean" value="true"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
-          <BorderConstraints direction="After"/>
-        </Constraint>
-      </Constraints>
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
-    </Container>
-    <Container class="javax.swing.JToolBar" name="jToolBar1">
-      <Properties>
-        <Property name="rollover" type="boolean" value="true"/>
-      </Properties>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
-          <BorderConstraints direction="North"/>
+          <BorderConstraints direction="Before"/>
         </Constraint>
       </Constraints>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="btnRebuildNetwork">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
               <action class="org.mei.securesim.platform.ui.WorkbenchPanel" id="RebuildNetwork" methodName="RebuildNetwork"/>
             </Property>
-            <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/mei/securesim/platform/ui/resources/refresh.png"/>
-            </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Rebuild Network"/>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="btnRebuildNetwork.icon"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="btnRebuildNetwork.toolTipText"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -172,10 +127,8 @@
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="OperationBG"/>
             </Property>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/mei/securesim/platform/ui/resources/Play16.png"/>
-            </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Play Simulation"/>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="btnSimulationStart.icon"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="btnSimulationStart.toolTipText"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -189,10 +142,8 @@
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="OperationBG"/>
             </Property>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/mei/securesim/platform/ui/resources/Pause16.png"/>
-            </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Pause Simulation"/>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="btnSimulationPause.icon"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="btnSimulationPause.toolTipText"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -206,27 +157,20 @@
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="OperationBG"/>
             </Property>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/mei/securesim/platform/ui/resources/Stop16.png"/>
-            </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Stop Simulation (End Simulation)"/>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="btnSimulationStop.icon"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="btnSimulationStop.toolTipText"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JToggleButton" name="btnSimulationReset">
+        <Component class="javax.swing.JButton" name="btnSimulationReset">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
               <action class="org.mei.securesim.platform.ui.WorkbenchPanel" id="ResetSimulation" methodName="ResetSimulation"/>
             </Property>
-            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-              <ComponentRef name="OperationBG"/>
-            </Property>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/mei/securesim/platform/ui/resources/Reset16.png"/>
-            </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Reset Simulation"/>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="btnSimulationReset.icon"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="btnSimulationReset.toolTipText"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -234,24 +178,20 @@
         </Component>
         <Component class="javax.swing.JToolBar$Separator" name="jSeparator2">
         </Component>
-        <Component class="org.mei.securesim.platform.uiextended.DropDownButton" name="btnDeployMode">
+        <Component class="javax.swing.JToggleButton" name="btnDeployNodesMode">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/mei/securesim/platform/ui/resources/Hand16.png"/>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="org.mei.securesim.platform.ui.WorkbenchPanel" id="selectedNodeDeployMode" methodName="selectedNodeDeployMode"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Select Nodes Deploy Modes"/>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="SelectionBG"/>
             </Property>
-            <Property name="buttonSelected" type="boolean" value="true"/>
-            <Property name="delay" type="int" value="1"/>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="btnDeployNodesMode.icon"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="btnDeployNodesMode.toolTipText"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeployModeActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JToggleButton" name="btnSelectionTool">
           <Properties>
