@@ -42,6 +42,7 @@ import org.mei.securesim.components.simulation.SimulationConfiguration;
 import org.mei.securesim.components.simulation.SimulationFactory;
 import org.mei.securesim.components.simulation.basic.BasicSimulation;
 import org.mei.securesim.components.topology.RandomTopologyManager;
+import org.mei.securesim.platform.ui.frames.NodePropertiesDialog;
 
 /**
  *
@@ -391,7 +392,10 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         }
 
     }//GEN-LAST:event_formMouseDragged
-
+    /**
+     * 
+     * @param evt
+     */
     private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
         updateMouseCoordinates(evt);
         if (!selectionTool) {
@@ -408,7 +412,11 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         update();
 
     }
-
+    /**
+     * 
+     * @param evt
+     * @return
+     */
     private GraphicNode selectedCircle(MouseEvent evt) {
         if (simulation.getSimulator() == null) {
             return null;
@@ -432,17 +440,39 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         super.paintComponent(grphcs);
         mainPaintLoop(grphcs);
     }//GEN-LAST:event_formMouseMoved
-
+    /**
+     *
+     * @param evt
+     */
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+
         updateMouseCoordinates(evt);
+
         if (selectionTool) {
+            /**
+             * Done nothing
+             * 
+             */
         } else {
+
             if (evt.getButton() == MouseEvent.BUTTON1) {
                 currentSelectedNode = null;
                 currentSelectedNode = selectedCircle(evt);
+
+                if (evt.getClickCount() > 1) {
+                    if (currentSelectedNode != null) {
+
+
+                        showNodeProperties();
+                    }
+                } else {
+                }
+
             } else if (evt.getButton() == MouseEvent.BUTTON3) {
+
                 currentSelectedNode = null;
                 currentSelectedNode = selectedCircle(evt);
+
                 if (currentSelectedNode != null) {
                     SensorNode s = SensorNode.cast(currentSelectedNode.getPhysicalNode());
                     selNodeVerID.setSelected(s.isShowID());
@@ -453,7 +483,6 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
                 }
 
             }
-
         }
     }//GEN-LAST:event_formMouseClicked
 
@@ -841,7 +870,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
                     }
                 }
             }
-        }else{
+        } else {
             // é necessário seleccionar ou a selection tool ou a pointer tool
         }
 
@@ -867,7 +896,8 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         if (!networkRunned) {
             simulation.start();
             networkRunned = true;
-        }
+        }else
+            simulation.resume();
     }
 
     void stopSimulation() {
@@ -882,6 +912,19 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             simulation.pause();
         }
 
+    }
+
+    void resumeSimulation() {
+        simulation.resume();
+    }
+
+    private void showNodeProperties() {
+        if (currentSelectedNode!=null){
+            NodePropertiesDialog dialog = new NodePropertiesDialog();
+            ArrayList<Node> r = new ArrayList<Node>();
+            r.add(currentSelectedNode.getPhysicalNode());
+            dialog.showNodesProperties(r);
+        }
     }
 
     /**
@@ -957,7 +1000,8 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     public void deployNodesGridTopology() {
         JOptionPane.showMessageDialog(this, "Feature not implemented yet!", "", JOptionPane.WARNING_MESSAGE);
     }
-        @Action(block = Task.BlockingScope.COMPONENT)
+
+    @Action(block = Task.BlockingScope.COMPONENT)
     public Task deployNodesUsingRandomTopology() {
         return new DeployNodesUsingRandomTopologyTask(org.jdesktop.application.Application.getInstance(org.mei.securesim.platform.PlatformApp.class));
     }
@@ -968,7 +1012,8 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         int nNodes = 0;
         RandomTopologyManager tm = new RandomTopologyManager();
         NodeFactory nf = simulation.getNodeFactory();
-        int nRange= simulation.getNodeRange();
+        int nRange = simulation.getNodeRange();
+
         DeployNodesUsingRandomTopologyTask(org.jdesktop.application.Application app) {
             super(app);
             if (selectedArea == null) {

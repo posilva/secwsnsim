@@ -139,5 +139,9 @@ public abstract class Simulation extends ConfigurableObject {
         this.description = description;
     }
 
+    public void resume() {
+        simulator.resume();
+    }
+
 
 }
