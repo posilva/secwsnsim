@@ -22,10 +22,12 @@ public class BasicSimulation extends Simulation {
      */
     @Override
     public void start() {
-        if (!getSimulator().isPaused())
+        if (!getSimulator().isPaused()) {
             getSimulator().start();
-        else
+            System.out.println("Started");
+        } else {
             getSimulator().resume();
+        }
 
     }
 
@@ -35,16 +37,20 @@ public class BasicSimulation extends Simulation {
     @Override
     public void stop() {
         getSimulator().stop();
+
+
     }
 
     @Override
     public void reset() {
         getSimulator().reset();
+
+
     }
 
     @Override
     public void pause() {
         getSimulator().pause();
-    }
 
+    }
 }

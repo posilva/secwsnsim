@@ -14,23 +14,20 @@ import java.awt.Color;
 import java.awt.Window;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.io.IOException;
-import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JTextField;
 import org.jdesktop.application.Action;
 import org.mei.securesim.core.energy.EnergyModel;
 import org.mei.securesim.core.network.basic.DefaultNetwork;
-import org.mei.securesim.platform.conf.ClassConfigReader;
 import org.mei.securesim.platform.conf.ClassConfigReader.ClassDefinitions;
 import org.mei.securesim.platform.instruments.energy.ui.resources.EnergyModelDialog;
 import org.mei.securesim.platform.utils.GUI_Utils;
 
 import org.mei.securesim.components.simulation.SimulationFactory;
+import org.mei.securesim.platform.utils.Configuration;
 
 /**
  *
@@ -409,35 +406,11 @@ public class SimulationWizardDialog extends JDialog {
     }
 
     private void configClasses() {
-        try {
-            ClassConfigReader sc = new ClassConfigReader("conf/SimulatorClasses.properties");
-            loadComboWithClasses(cboSimulatorClass, sc.getClasses());
-
-            ClassConfigReader rc = new ClassConfigReader("conf/RadioModelClasses.properties");
-            loadComboWithClasses(cboRadioModelClass, rc.getClasses());
-
-            ClassConfigReader nc = new ClassConfigReader("conf/NodeClasses.properties");
-            loadComboWithClasses(cboNodeClass, nc.getClasses());
-        } catch (IOException ex) {
-            Logger.getLogger(SimulationWizardDialog.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-
+        Configuration.loadComboWithClasses(cboSimulatorClass, Configuration.loadConfigurationClasses(Configuration.CONF_SIMULATOR_CLASSES_PROPERTIES));
+        Configuration.loadComboWithClasses(cboRadioModelClass, Configuration.loadConfigurationClasses(Configuration.CONF_RADIOMODEL_CLASSES_PROPERTIES));
+        Configuration.loadComboWithClasses(cboNodeClass, Configuration.loadConfigurationClasses(Configuration.CONF_NODE_CLASSES_PROPERTIES));
     }
 
-    private void loadComboWithClasses(JComboBox cbo, HashSet<ClassDefinitions> classes) {
-        if (cbo == null) {
-            return;
-        }
-        cbo.removeAllItems();
-
-        for (ClassDefinitions classDefinitions : classes) {
-            cbo.addItem(classDefinitions);
-        }
-
-
-
-    }
 
     @Action
     public void configureEnergyModel() {
@@ -451,5 +424,4 @@ public class SimulationWizardDialog extends JDialog {
         }
         emd.dispose();
     }
-
 }

@@ -26,6 +26,7 @@ package org.mei.securesim.core.engine;
 import java.util.Collection;
 
 import java.util.TreeSet;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.mei.securesim.core.ui.ISimulationDisplay;
 import org.mei.securesim.core.engine.events.SimulatorEvent;
@@ -33,6 +34,7 @@ import org.mei.securesim.core.engine.events.SimulatorEvent;
 import org.mei.securesim.core.nodes.Node;
 import org.mei.securesim.core.radio.RadioModel;
 import org.mei.securesim.core.network.Network;
+import org.mei.securesim.core.ui.Display;
 import org.mei.securesim.utils.RandomGenerator;
 
 /**
@@ -43,17 +45,15 @@ import org.mei.securesim.utils.RandomGenerator;
  */
 @SuppressWarnings({"deprecation", "unchecked"})
 public class Simulator {
-    protected SimulatorWorker worker ;
 
     static Logger LOGGER = Logger.getLogger(Simulator.class.getName());
     protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
     private boolean finished;
     private boolean stop;
     private boolean paused;
-    public static final int SIMULATOR_STEPS = 300;
-    public static final int RUNTIME_NUM_STEPS = 1;
+    public static final int SIMULATOR_STEPS = 200;
+    public static final int RUNTIME_NUM_STEPS = 100;
     private RadioModel radioModel;
-
     /**
      * This is a static reference to a Random instance.
      * This makes experiments repeatable, all you have to do is to set
@@ -70,8 +70,7 @@ public class Simulator {
     public static final Integer SIMULATION_SPEED_DEFAULT = SIMULATION_SPEED_MAX / 2;
     public static Integer ONE_SECOND = SIMULATION_SPEED_DEFAULT;
     private long nanotimeStart;
-
-
+    private final Object monitor=new Object();
 
     public long getSysNanoTimeStart() {
         return nanotimeStart;
@@ -83,8 +82,9 @@ public class Simulator {
     }
 
     public Simulator() {
+
         super();
-//         worker=new SimulatorWorker(this);
+
     }
     /** Holds the events */
     public PriorityQueue eventQueue = new PriorityQueue();
@@ -92,11 +92,6 @@ public class Simulator {
     long lastEventTime = 0;
     /** Needed for the display, stores the maximum of both the x and y coordinates */
     protected double maxCoordinate = 0;
-    /**
-     * The nodes of the Simulator are linked together in a single linked list.
-     * This points to the first, and then {@link Node#nextNode} to the next.
-     */
-    public Node firstNode = null;
     private ISimulationDisplay display;
     private Network network = null;
 
@@ -129,6 +124,9 @@ public class Simulator {
         //System.out.println("Speed: " + ONE_SECOND);
     }
 
+    /**
+     * run startup method in nodes
+     */
     public void startUpNodes() {
         for (Node node : getNodes()) {
             node.startUp();
@@ -137,30 +135,23 @@ public class Simulator {
 
     public void resume() {
         System.out.println("RESUME SIM");
-        worker.resumeRun();
+        handleResume();
     }
 
     public void stop() {
         stop = true;
-        worker.stopRun();
         reset();
     }
 
     public void reset() {
-
     }
 
     public void pause() {
         paused = true;
-        worker.setPause(true);
     }
 
     public boolean isPaused() {
         return paused;
-    }
-
-    public void setPaused(boolean paused) {
-        this.paused = paused;
     }
 
     public boolean isStop() {
@@ -175,9 +166,7 @@ public class Simulator {
         nanotimeStart = System.nanoTime();
 //        run(60000);
 
-        //runWithDisplayInRealTime();
-        worker = new SimulatorWorker(this);
-        worker.startRun(RunMode.REAL_TIME);
+        runWithDisplayInRealTime();
 
     }
 
@@ -307,7 +296,6 @@ public class Simulator {
     public void run(final double timeInSec) {
 
         new Thread(new Runnable() {
-
             public void run() {
                 long tmax = lastEventTime + (int) (Simulator.ONE_SECOND * timeInSec);
                 while (lastEventTime < tmax) {
@@ -320,6 +308,7 @@ public class Simulator {
                         break;
                     }
                     getDisplay().update();
+                    
                 }
             }
         }).start();
@@ -331,10 +320,12 @@ public class Simulator {
      * experiment!
      */
     public void runWithDisplay() {
+
         while (true) {
             step(SIMULATOR_STEPS);
             display.update();
         }
+
     }
 
     /**
@@ -350,13 +341,17 @@ public class Simulator {
 
             @Override
             public void run() {
-                display.show();
+//                display.show();
 
                 long initDiff = System.currentTimeMillis() - getSimulationTimeInMillisec();
                 while (true) {
+
                     step(RUNTIME_NUM_STEPS);
+
                     display.update();
+
                     long diff = System.currentTimeMillis() - getSimulationTimeInMillisec();
+
                     if (diff < initDiff) {
                         try {
                             sleep(initDiff - diff);
@@ -365,6 +360,7 @@ public class Simulator {
                             fireOnFinishSimulation(new SimulatorEvent("ERROR IN RUN. EXITING"));
                         }
                     }
+                    handlePause();
                 }
             }
         };
@@ -437,5 +433,31 @@ public class Simulator {
 
     public void removeSimulatorFinishListener(SimulatorFinishListener listener) {
         listenerList.remove(SimulatorFinishListener.class, listener);
+    }
+
+
+    private void handlePause(){
+
+        synchronized(monitor){
+            if(paused){
+                try {
+                    System.out.println("Pausing");
+                    monitor.wait();
+                    System.out.println("Pausing...done");
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Simulator.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
+
+    private void handleResume(){
+        synchronized(monitor){
+            if(paused)
+                monitor.notifyAll();
+            paused=false;
+        }
+
     }
 }
