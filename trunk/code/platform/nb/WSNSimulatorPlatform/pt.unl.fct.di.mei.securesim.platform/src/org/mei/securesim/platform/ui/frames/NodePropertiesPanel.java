@@ -25,9 +25,12 @@ import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import org.mei.securesim.core.energy.EnergyModel;
+import org.mei.securesim.core.nodes.Node;
+import org.mei.securesim.gui.GraphicNode;
 import org.mei.securesim.platform.instruments.energy.ui.resources.EnergyModelDialog;
 
 /**
@@ -78,7 +81,6 @@ public class NodePropertiesPanel extends javax.swing.JPanel {
         public NodePropertiesTableModel() {
             super(col_names, prop_names.length);
         }
-
 
         @Override
         public Object getValueAt(int row, int col) {
@@ -138,6 +140,9 @@ public class NodePropertiesPanel extends javax.swing.JPanel {
         return jTable1.getCellEditor(row, col);
     }
 
+    /**
+     * 
+     */
     class PropertiesTable extends JTable {
 
         protected RowEditorModel rm = null;
@@ -198,28 +203,27 @@ public class NodePropertiesPanel extends javax.swing.JPanel {
 
     TableCellEditor getMACLayers() {
         JComboBox mac = new JComboBox(MAC_values);
-        return  new DefaultCellEditor(mac);
+        return new DefaultCellEditor(mac);
     }
 
     TableCellEditor getApplications() {
         JComboBox app = new JComboBox(APP_values);
-        return  new DefaultCellEditor(app);
+        return new DefaultCellEditor(app);
     }
 
     TableCellEditor getRoutingLayers() {
         JComboBox route = new JComboBox(ROUTING_values);
-        return  new DefaultCellEditor(route);
+        return new DefaultCellEditor(route);
     }
 
     TableCellEditor getSinkNode() {
-        JComboBox bool= new JComboBox(new String[]{"True","False"});
-        return  new DefaultCellEditor(bool);
+        JComboBox bool = new JComboBox(new String[]{"True", "False"});
+        return new DefaultCellEditor(bool);
     }
 
 //    TableCellEditor getEnergyModel() {
 //        return new DefaultCellEditor;
 //    }
-
     TableCellEditor getMaxStrength() {
         return null;
     }
@@ -237,86 +241,103 @@ public class NodePropertiesPanel extends javax.swing.JPanel {
         rowEditorModel.addEditorForRow(1, new ButtonColumn());
         rowEditorModel.addEditorForRow(3, getApplications());
         rowEditorModel.addEditorForRow(4, getRoutingLayers());
-        ((PropertiesTable)jTable1).setRowEditorModel(rowEditorModel);
+        ((PropertiesTable) jTable1).setRowEditorModel(rowEditorModel);
     }
-        String[] col_names = {"Propertie", "Value"};
-        String[] MAC_values = {"Mica2MACLayer", "SecureMica2MACLayer"};
-        String[] ROUTING_values = {"Ping Pong Routing Layer", "AODV Routing Layer"};
-        String[] APP_values = {"Ping Pong", "AODV"};
-        public static String[] prop_names = {"Sink Node", "Energy Model", "Max Strenght",
-            "Application", "RoutingLayer"};
+    String[] col_names = {"Propertie", "Value"};
+    String[] MAC_values = {"Mica2MACLayer", "SecureMica2MACLayer"};
+    String[] ROUTING_values = {"Ping Pong Routing Layer", "AODV Routing Layer"};
+    String[] APP_values = {"Ping Pong", "AODV"};
+    public static String[] prop_names = {"Sink Node", "Energy Model", "Max Strenght",
+        "Application", "RoutingLayer"};
 
+    class ButtonColumn extends AbstractCellEditor
+            implements TableCellRenderer, TableCellEditor, ActionListener {
 
-class ButtonColumn extends AbstractCellEditor
-        implements TableCellRenderer, TableCellEditor, ActionListener
-    {
         public static final String CONFIG_BUTTON = "Click to Configure";
         JButton renderButton;
         JButton editButton;
-        String text=CONFIG_BUTTON;
+        String text = CONFIG_BUTTON;
         private EnergyModel energyModel;
         private boolean energyModelConfig;
 
-        public ButtonColumn()
-        {
+        public ButtonColumn() {
             super();
-            
+
             renderButton = new JButton(CONFIG_BUTTON);
 
             editButton = new JButton(CONFIG_BUTTON);
-            editButton.setFocusPainted( true);
-            editButton.addActionListener( this );
+            editButton.setFocusPainted(true);
+            editButton.addActionListener(this);
         }
 
         public Component getTableCellRendererComponent(
-            JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
-        {
-            if (hasFocus)
-            {
+                JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            if (hasFocus) {
                 renderButton.setForeground(table.getForeground());
                 renderButton.setBackground(UIManager.getColor("Button.background"));
-            }
-            else if (isSelected)
-            {
+            } else if (isSelected) {
                 renderButton.setForeground(table.getSelectionForeground());
-                 renderButton.setBackground(table.getSelectionBackground());
-            }
-            else
-            {
+                renderButton.setBackground(table.getSelectionBackground());
+            } else {
                 renderButton.setForeground(table.getForeground());
                 renderButton.setBackground(UIManager.getColor("Button.background"));
             }
-                renderButton.setText(CONFIG_BUTTON);
+            renderButton.setText(CONFIG_BUTTON);
 
 //            renderButton.setText( (value == null) ? "" : value.toString() );
             return renderButton;
         }
 
         public Component getTableCellEditorComponent(
-            JTable table, Object value, boolean isSelected, int row, int column)
-        {
+                JTable table, Object value, boolean isSelected, int row, int column) {
             text = CONFIG_BUTTON;//(value == null) ? "" : value.toString();
-            editButton.setText( text );
+            editButton.setText(text);
             return editButton;
         }
 
-        public Object getCellEditorValue()
-        {
+        public Object getCellEditorValue() {
             return text;
         }
 
-        public void actionPerformed(ActionEvent e)
-        {
+        public void actionPerformed(ActionEvent e) {
             fireEditingStopped();
 
             EnergyModelDialog emd = new EnergyModelDialog(null, true);
-        emd.setVisible(true);
-        if (emd.isOk()) //           sw.getSimulationFactory();
-        {
-            energyModel = emd.getEnergyModel();
-            energyModelConfig = true;
+            emd.setVisible(true);
+            if (emd.isOk()) //           sw.getSimulationFactory();
+            {
+                energyModel = emd.getEnergyModel();
+                energyModelConfig = true;
+            }
+            emd.dispose();
         }
-        emd.dispose();
+    }
+
+    public void applyProperties(Vector<GraphicNode> nodes) {
+        for (GraphicNode graphicNode : nodes) {
+            Node node = graphicNode.getPhysicalNode();
+            applySinkNodeProperty(node);
+            applyRoutingLayerProperty(node);
+            applyApplicationLayerProperty(node);
+            applyEnergyModelProperty(node);
+            applyMaxStreghtProperty(node);
+
         }
+    }
+
+    private void applySinkNodeProperty(Node n) {
+        TableColumn c = jTable1.getColumnModel().getColumn(1);
+    }
+
+    private void applyRoutingLayerProperty(Node n) {
+    }
+
+    private void applyApplicationLayerProperty(Node n) {
+    }
+
+    private void applyEnergyModelProperty(Node n) {
+    }
+
+    private void applyMaxStreghtProperty(Node n) {
     }
 }

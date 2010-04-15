@@ -11,7 +11,6 @@ import org.mei.securesim.core.engine.DefaultMessage;
 import org.mei.securesim.core.layers.mac.MACLayer;
 import org.mei.securesim.core.layers.routing.RoutingLayer;
 import org.mei.securesim.core.nodes.components.Transceiver;
-import org.mei.securesim.core.radio.GaussianRadioModel;
 import org.mei.securesim.core.radio.RadioModel;
 import org.mei.securesim.core.radio.RadioModel.Neighborhood;
 import org.mei.securesim.gui.GraphicNode;
@@ -69,6 +68,7 @@ public abstract class Node {
      * 
      */
     protected Node parentNode;
+    private boolean enableFunctioningEnergyConsumption=true;
 
     public enum NodeState {
         ACTIVE,
@@ -171,6 +171,7 @@ public abstract class Node {
     }
 
     public void initEnergyConsumation() {
+     if(enableFunctioningEnergyConsumption)
         simulator.addEvent(new Node.EnergyWasteEvent( (int)Simulator.randomGenerator.random().nextDouble() * CLOCK_TICK));
     }
 

@@ -4,7 +4,7 @@
 package org.mei.securesim.components.topology;
 
 import java.awt.Rectangle;
-import java.util.ArrayList;
+import java.util. Vector;
 import java.util.Random;
 
 import org.mei.securesim.core.nodes.Node;
@@ -38,7 +38,7 @@ public class RandomTopologyManager extends TopologyManager {
     }
 
     @Override
-    public ArrayList<Node> apply(Rectangle rect, ArrayList<Node> nodes) {
+    public  Vector<Node> apply(Rectangle rect,  Vector<Node> nodes) {
         int px = rect.x;
         int py = rect.y;
         if (random == null) {
