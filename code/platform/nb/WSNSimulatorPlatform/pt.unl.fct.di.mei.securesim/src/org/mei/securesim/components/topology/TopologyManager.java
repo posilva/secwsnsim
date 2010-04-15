@@ -1,9 +1,9 @@
 package org.mei.securesim.components.topology;
 
 import java.awt.Rectangle;
-import java.util.ArrayList;
+import java.util. Vector;
 import org.mei.securesim.core.nodes.Node;
 
 public abstract class TopologyManager {
-    public abstract ArrayList<Node>  apply(Rectangle rect,ArrayList<Node> nodes) ;
+    public abstract  Vector<Node>  apply(Rectangle rect, Vector<Node> nodes) ;
 }

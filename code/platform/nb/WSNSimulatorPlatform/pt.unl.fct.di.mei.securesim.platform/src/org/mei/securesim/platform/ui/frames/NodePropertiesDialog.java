@@ -16,7 +16,7 @@ import java.awt.Frame;
 import java.awt.GraphicsConfiguration;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
+import java.util. Vector;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
@@ -25,14 +25,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.border.BevelBorder;
-import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.nodes.Node;
-import org.mei.securesim.core.nodes.basic.Mica2SensorNode;
-import org.mei.securesim.core.nodes.basic.SensorNode;
-import org.mei.securesim.core.radio.RadioModel;
-import org.mei.securesim.platform.ui.frames.NodePropertiesPanel;
+import org.mei.securesim.gui.GraphicNode;
 import org.mei.securesim.platform.utils.GUI_Utils;
-import org.mei.securesim.test.pingpong.PingPongNode;
 
 /**
  *
@@ -40,7 +35,7 @@ import org.mei.securesim.test.pingpong.PingPongNode;
  */
 public class NodePropertiesDialog extends StandardDialog {
 
-     ArrayList<Node> selectedNodes;
+      Vector<GraphicNode> selectedNodes;
 
 
     public NodePropertiesDialog(Dialog dialog, String string, boolean bln, GraphicsConfiguration gc) throws HeadlessException {
@@ -156,16 +151,34 @@ public class NodePropertiesDialog extends StandardDialog {
 
     public static void main(String[] a) {
         NodePropertiesDialog p = new NodePropertiesDialog();
-        ArrayList<Node>  r=new ArrayList<Node>();
+         Vector<GraphicNode>  r=new  Vector<GraphicNode>();
         p.showNodesProperties(r);
     }
-    public void showNodesProperties(ArrayList<Node> nodes){
+    public void showNodesProperties( Vector<GraphicNode> nodes){
+        if (nodes==null ) return;
         selectedNodes=nodes;
-//        if(selectedNodes.size()>0 ){
+        if(selectedNodes.size()>0 ){
             GUI_Utils.centerOnScreen(this);
             setModal(true);
+
+            setNodeProperties(selectedNodes);
+
             setVisible(true);
-//        }
+        }
     }
+
+    private void setNodeProperties(Vector<GraphicNode> selNodes) {
+        if (selNodes.size()==1){
+            /**
+             * set current properties for node and show
+             */
+        }else{
+            /**
+             * set properties for all nodes
+             */
+        }
+    }
+
+
 
 }

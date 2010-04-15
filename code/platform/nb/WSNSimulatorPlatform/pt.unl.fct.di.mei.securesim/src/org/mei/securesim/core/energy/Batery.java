@@ -92,7 +92,7 @@ public class Batery {
         tot+=value;
         totalconsumptions++;
         averageConsumption=tot/totalconsumptions;
-        fireOnEnergyConsume(new EnergyEvent(this, value,System.nanoTime() - getHostNode().getSimulator().getSysNanoTimeStart()));
+        fireOnEnergyConsume(new EnergyEvent(this, value,System.currentTimeMillis()));
         lastConsume=value;
     }
 

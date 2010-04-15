@@ -46,14 +46,11 @@ import org.mei.securesim.utils.RandomGenerator;
 @SuppressWarnings({"deprecation", "unchecked"})
 public class Simulator {
 
-    static Logger LOGGER = Logger.getLogger(Simulator.class.getName());
-    protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
-    private boolean finished;
-    private boolean stop;
-    private boolean paused;
     public static final int SIMULATOR_STEPS = 200;
-    public static final int RUNTIME_NUM_STEPS = 100;
-    private RadioModel radioModel;
+    public static final int RUNTIME_NUM_STEPS = 1000;
+    public static final Integer SIMULATION_SPEED_DEFAULT = 40000;
+    public static Integer ONE_SECOND = SIMULATION_SPEED_DEFAULT;
+    static Logger LOGGER = Logger.getLogger(Simulator.class.getName());
     /**
      * This is a static reference to a Random instance.
      * This makes experiments repeatable, all you have to do is to set
@@ -65,16 +62,12 @@ public class Simulator {
      * in the simulator is represented in this resolution. This rate
      * corresponds to the 38.4 kbps speed, but maybe a little friendlier.
      */
-    public static final Integer SIMULATION_SPEED_MAX = 80000;
-    public static final Integer SIMULATION_SPEED_MIN = 400;
-    public static final Integer SIMULATION_SPEED_DEFAULT = SIMULATION_SPEED_MAX / 2;
-    public static Integer ONE_SECOND = SIMULATION_SPEED_DEFAULT;
-    private long nanotimeStart;
-    private final Object monitor=new Object();
-
-    public long getSysNanoTimeStart() {
-        return nanotimeStart;
-    }
+    protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
+    private boolean finished;
+    private boolean stop;
+    private boolean paused;
+    private RadioModel radioModel;
+    private final Object monitor = new Object();
 
     public enum RunMode {
 
@@ -114,16 +107,6 @@ public class Simulator {
         return network.getNodeDB().nodes();
     }
 
-    public static void setSimulatorSpeed(int value) {
-        // 100% -> SIMULATION_SPEED_MAX
-        // value -> x
-        ONE_SECOND = value * SIMULATION_SPEED_MAX / 100;
-        if (ONE_SECOND == 0) {
-            ONE_SECOND = SIMULATION_SPEED_MIN;
-        }
-        //System.out.println("Speed: " + ONE_SECOND);
-    }
-
     /**
      * run startup method in nodes
      */
@@ -134,7 +117,6 @@ public class Simulator {
     }
 
     public void resume() {
-        System.out.println("RESUME SIM");
         handleResume();
     }
 
@@ -163,11 +145,7 @@ public class Simulator {
     }
 
     public void start() {
-        nanotimeStart = System.nanoTime();
-//        run(60000);
-
         runWithDisplayInRealTime();
-
     }
 
     /**
@@ -191,7 +169,6 @@ public class Simulator {
                     queue.add(item);
                 } catch (Exception e1) {
                     System.out.println("ERROR. EXITING.");
-
                     fireOnFinishSimulation(new SimulatorEvent(new String(e1.getMessage())));
                 }
 
@@ -267,6 +244,7 @@ public class Simulator {
             lastEventTime = event.time;
             event.execute();
             // System.out.println("Executado um evento: "+ event.getClass().getSimpleName());
+            handlePause();
         } else {
 
             if (!finished) {
@@ -296,6 +274,7 @@ public class Simulator {
     public void run(final double timeInSec) {
 
         new Thread(new Runnable() {
+
             public void run() {
                 long tmax = lastEventTime + (int) (Simulator.ONE_SECOND * timeInSec);
                 while (lastEventTime < tmax) {
@@ -307,8 +286,8 @@ public class Simulator {
                     } else {
                         break;
                     }
-                    getDisplay().update();
-                    
+                    // getDisplay().update();
+
                 }
             }
         }).start();
@@ -360,7 +339,7 @@ public class Simulator {
                             fireOnFinishSimulation(new SimulatorEvent("ERROR IN RUN. EXITING"));
                         }
                     }
-                    handlePause();
+
                 }
             }
         };
@@ -435,15 +414,12 @@ public class Simulator {
         listenerList.remove(SimulatorFinishListener.class, listener);
     }
 
+    private void handlePause() {
 
-    private void handlePause(){
-
-        synchronized(monitor){
-            if(paused){
+        synchronized (monitor) {
+            if (paused) {
                 try {
-                    System.out.println("Pausing");
                     monitor.wait();
-                    System.out.println("Pausing...done");
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Simulator.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -451,12 +427,12 @@ public class Simulator {
         }
     }
 
-
-    private void handleResume(){
-        synchronized(monitor){
-            if(paused)
+    private void handleResume() {
+        synchronized (monitor) {
+            if (paused) {
                 monitor.notifyAll();
-            paused=false;
+            }
+            paused = false;
         }
 
     }

@@ -13,10 +13,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
 import javax.swing.Icon;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import org.mei.securesim.platform.ui.frames.SimulationWizardDialog;
+import org.mei.securesim.platform.uiextended.BestTabbedPane;
 
 /**
  * The application's main frame.
@@ -24,19 +26,11 @@ import org.mei.securesim.platform.ui.frames.SimulationWizardDialog;
 public class PlatformView extends FrameView {
     private boolean workbenchVisible;
 
-    public boolean isWorkbenchVisible() {
-        return workbenchVisible;
-    }
-
-    public void setWorkbenchVisible(boolean workbenchVisible) {
-        this.workbenchVisible = workbenchVisible;
-    }
 
     public PlatformView(SingleFrameApplication app) {
         super(app);
 
         initComponents();
-
         // status bar initialization - message timeout, idle icon and busy animation, etc
         ResourceMap resourceMap = getResourceMap();
         int messageTimeout = resourceMap.getInteger("StatusBar.messageTimeout");
@@ -92,6 +86,11 @@ public class PlatformView extends FrameView {
         });
         instance=this;
         workbenchPanel1.setVisible(false);
+        
+        mainSplitPane.setDividerLocation(1024);
+        
+
+
     }
 
     @Action
@@ -115,11 +114,13 @@ public class PlatformView extends FrameView {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         mainPanel = new javax.swing.JPanel();
-        workbenchPanel1 = new org.mei.securesim.platform.ui.WorkbenchPanel();
         mainToolbar = new javax.swing.JToolBar();
         btnNew = new javax.swing.JButton();
         btnOpen = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
+        mainSplitPane = new javax.swing.JSplitPane();
+        workbenchPanel1 = new org.mei.securesim.platform.ui.WorkbenchPanel();
+        tabbedTools = new org.mei.securesim.platform.uiextended.BestTabbedPane();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         menuNewSimulation = new javax.swing.JMenuItem();
@@ -137,9 +138,6 @@ public class PlatformView extends FrameView {
 
         mainPanel.setName("mainPanel"); // NOI18N
         mainPanel.setLayout(new java.awt.BorderLayout());
-
-        workbenchPanel1.setName("workbenchPanel1"); // NOI18N
-        mainPanel.add(workbenchPanel1, java.awt.BorderLayout.CENTER);
 
         mainToolbar.setRollover(true);
         mainToolbar.setName("mainToolbar"); // NOI18N
@@ -175,6 +173,22 @@ public class PlatformView extends FrameView {
         mainToolbar.add(btnSave);
 
         mainPanel.add(mainToolbar, java.awt.BorderLayout.PAGE_START);
+
+        mainSplitPane.setDividerLocation(50000);
+        mainSplitPane.setDividerSize(10);
+        mainSplitPane.setAutoscrolls(true);
+        mainSplitPane.setLastDividerLocation(50000);
+        mainSplitPane.setMinimumSize(new java.awt.Dimension(0, 0));
+        mainSplitPane.setName("mainSplitPane"); // NOI18N
+        mainSplitPane.setOneTouchExpandable(true);
+
+        workbenchPanel1.setName("workbenchPanel1"); // NOI18N
+        mainSplitPane.setLeftComponent(workbenchPanel1);
+
+        tabbedTools.setName("tabbedTools"); // NOI18N
+        mainSplitPane.setRightComponent(tabbedTools);
+
+        mainPanel.add(mainSplitPane, java.awt.BorderLayout.CENTER);
 
         menuBar.setName("menuBar"); // NOI18N
 
@@ -281,7 +295,7 @@ public class PlatformView extends FrameView {
         {
 
             workbenchPanel1.setSimulationFactory( sw.getSimulationFactory());
-
+            mainSplitPane.setVisible(true);
             workbenchPanel1.setVisible(true);
             workbenchVisible=true;
 
@@ -297,6 +311,7 @@ public class PlatformView extends FrameView {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JSplitPane mainSplitPane;
     private javax.swing.JToolBar mainToolbar;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem menuNewSimulation;
@@ -306,6 +321,7 @@ public class PlatformView extends FrameView {
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
     private javax.swing.JPanel statusPanel;
+    private org.mei.securesim.platform.uiextended.BestTabbedPane tabbedTools;
     private org.mei.securesim.platform.ui.WorkbenchPanel workbenchPanel1;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
@@ -327,5 +343,19 @@ public class PlatformView extends FrameView {
     public static PlatformView getInstance() {
         return instance;
     }
+    public boolean isWorkbenchVisible() {
+        return workbenchVisible;
+    }
 
+    public void setWorkbenchVisible(boolean workbenchVisible) {
+        this.workbenchVisible = workbenchVisible;
+    }
+
+
+    public void addTab(String title,JComponent component){
+        tabbedTools.setTabPlacement(BestTabbedPane.RIGHT );
+        tabbedTools.addTab(title, component);
+        
+        
+    }
 }

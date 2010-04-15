@@ -14,6 +14,11 @@ public class EnergyEvent extends EventObject {
     private double value=0;
     private long time;
 
+    @Override
+    public Batery getSource() {
+        return (Batery) source;
+    }
+
     public long getTime() {
         return time;
     }

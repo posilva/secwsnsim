@@ -1,7 +1,7 @@
 package org.mei.securesim.utils;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Vector;
 
 import static org.mei.securesim.core.engine.Simulator.randomGenerator;
 /**
@@ -13,7 +13,7 @@ import static org.mei.securesim.core.engine.Simulator.randomGenerator;
  * @param <T> The type of the elements of the list.
  */
 @SuppressWarnings("serial")
-public class RandomList<T> extends ArrayList<T>{
+public class RandomList<T> extends Vector<T>{
 
 	public RandomList() {}
 

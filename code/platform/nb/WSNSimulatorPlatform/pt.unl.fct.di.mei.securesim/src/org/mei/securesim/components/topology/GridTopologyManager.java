@@ -6,7 +6,7 @@ package org.mei.securesim.components.topology;
 
 import org.mei.securesim.utils.annotation.Annotated;
 import java.awt.Rectangle;
-import java.util.ArrayList;
+import java.util. Vector;
 import org.mei.securesim.utils.annotation.Parameter;
 
 
@@ -31,7 +31,7 @@ public class GridTopologyManager extends TopologyManager implements Annotated {
 	}
 
     @Override
-    public ArrayList<Node> apply(Rectangle rect, ArrayList<Node> nodes) {
+    public  Vector<Node> apply(Rectangle rect,  Vector<Node> nodes) {
 
      int h= Integer.valueOf(gridH);
      int w= Integer.valueOf(gridW);

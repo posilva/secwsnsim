@@ -93,6 +93,15 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodeRunEventActionPerformed"/>
           </Events>
         </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="selNodeShowProperties">
+          <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="org.mei.securesim.platform.ui.SimulationPanel" id="ShowNodeProperties" methodName="ShowNodeProperties"/>
+            </Property>
+            <Property name="text" type="java.lang.String" resourceKey="selNodeShowProperties.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="selNodeShowProperties.toolTipText"/>
+          </Properties>
+        </MenuItem>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPopupMenu" name="selectionToolPopupMenu">
@@ -166,6 +175,15 @@
             </MenuItem>
           </SubComponents>
         </Menu>
+        <MenuItem class="javax.swing.JMenuItem" name="selNodesShowProperties">
+          <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="org.mei.securesim.platform.ui.SimulationPanel" id="ShowNodesProperties" methodName="ShowNodesProperties"/>
+            </Property>
+            <Property name="text" type="java.lang.String" resourceKey="selNodesShowProperties.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="selNodesShowProperties.toolTipText"/>
+          </Properties>
+        </MenuItem>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPopupMenu" name="deployNodesPopupMenu">

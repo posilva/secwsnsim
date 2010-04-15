@@ -1,7 +1,7 @@
 package org.mei.securesim.core.nodes.factories;
 
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
+import java.util. Vector;
 import java.util.List;
 import org.mei.securesim.core.application.Application;
 import org.mei.securesim.core.energy.Batery;
@@ -46,7 +46,7 @@ public abstract class NodeFactory {
     }
 
     public List<Node> createNodes(int nodeNum, double areaWidth, double maxElevation) throws Exception {
-        ArrayList<Node> nodes = new ArrayList<Node>();
+         Vector<Node> nodes = new  Vector<Node>();
         for (int i = 0; i < nodeNum; ++i) {
             Node node = nodeCreation();
             node.setPosition(areaWidth * Simulator.randomGenerator.random().nextDouble(),
@@ -58,7 +58,7 @@ public abstract class NodeFactory {
     }
 
     public List<Node> createNodes(int startNodeId, int nodeNum, double areaWidth, double maxElevation) throws Exception {
-        ArrayList<Node> nodes = new ArrayList<Node>();
+         Vector<Node> nodes = new  Vector<Node>();
         for (int i = 0; i < nodeNum; ++i) {
             Node node = nodeCreation((short) (startNodeId + i));
             node.setPosition(areaWidth * Simulator.randomGenerator.random().nextDouble(),
@@ -74,7 +74,7 @@ public abstract class NodeFactory {
     }
 
     public List<Node> createNodes(int startNodeId, int nodeNum) throws Exception {
-        ArrayList<Node> nodes = new ArrayList<Node>();
+         Vector<Node> nodes = new  Vector<Node>();
         for (int i = 0; i < nodeNum; ++i) {
             Node node = nodeCreation((short) (startNodeId + i));
             nodes.add(node);
@@ -83,7 +83,7 @@ public abstract class NodeFactory {
     }
 
     public List<Node> createNodes(int nodeNum) throws Exception {
-        ArrayList<Node> nodes = new ArrayList<Node>();
+         Vector<Node> nodes = new  Vector<Node>();
         for (int i = 0; i < nodeNum; ++i) {
             Node node = nodeCreation();
             nodes.add(node);
