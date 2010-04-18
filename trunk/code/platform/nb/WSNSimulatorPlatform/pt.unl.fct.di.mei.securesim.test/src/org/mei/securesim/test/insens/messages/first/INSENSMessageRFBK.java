@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mei.securesim.test.insens.messages;
+package org.mei.securesim.test.insens.messages.first;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
@@ -12,7 +12,6 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.mei.securesim.core.engine.DefaultMessage;
-import org.mei.securesim.test.pingpong.PingPongApplication;
 import org.mei.securesim.utils.DataUtils;
 
 /**
@@ -21,9 +20,10 @@ import org.mei.securesim.utils.DataUtils;
  */
 public class INSENSMessageRFBK extends INSENSMessage {
 
-    int size;
-    Vector<Integer> path;
-    byte[] MACR;
+    byte[] MACR_Parent;
+    PathInfo pathInfo;
+    NbrInfo nbrInfo;
+    byte[] MACF;
 
     public INSENSMessageRFBK(byte[] payload) {
         super(payload);
@@ -38,23 +38,16 @@ public class INSENSMessageRFBK extends INSENSMessage {
                 DataInputStream dis = DataUtils.createDataFromByteArray(m.getPayload());
                 type = dis.readInt();
                 OWS = dis.readInt();
-                size=dis.readInt();
-                path = new Vector<Integer>();
-                for (int i = 0; i < size; i++) {
-                    path.add(i);
-                }
 
             } catch (IOException ex) {
                 Logger.getLogger(INSENSMessageRFBK.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
-        public byte[] createPayload(int _type, int _ows, int _size, Vector<Integer> _path, byte[] _MACR) {
+        public byte[] createPayload(int _type, int _ows, int _size, Vector<Integer> _path, byte[] _MACF) {
             type = _type;
             OWS = _ows;
-            size = _size;
-            path = _path;
-            MACR = _MACR;
+            MACF = _MACF;
             return createPayloadData();
         }
 
@@ -64,12 +57,8 @@ public class INSENSMessageRFBK extends INSENSMessage {
                 DataOutputStream dos = new DataOutputStream(bos);
                 dos.writeInt(type);
                 dos.writeLong(OWS);
-                dos.writeInt(size);
-                for (Integer id : path) {
-                    dos.writeInt(id);
-                }
-                for (int i = 0; i < MACR.length; i++) {
-                    dos.writeByte(MACR[i]);
+                for (int i = 0; i < MACF.length; i++) {
+                    dos.writeByte(MACF[i]);
                 }
                 dos.flush();
                 return bos.toByteArray();
@@ -80,28 +69,56 @@ public class INSENSMessageRFBK extends INSENSMessage {
 
         }
 
-        public Vector<Integer> getPath() {
-            return path;
+        public byte[] getMACF() {
+            return MACF;
         }
 
-        public void setPath(Vector<Integer> _path) {
-            path = _path;
+        public void setMACF(byte[] _MACF) {
+            MACF = _MACF;
         }
 
-        public int getSize() {
-            return size;
+        public byte[] getMACR_Parent() {
+            return MACR_Parent;
         }
 
-        public void setSize(int _size) {
-            size = _size;
+        public void setMACR_Parent(byte[] _MACR_Parent) {
+            MACR_Parent = _MACR_Parent;
         }
 
-        public byte[] getMACR() {
-            return MACR;
+        public NbrInfo getNbrInfo() {
+            return nbrInfo;
         }
 
-        public void setMACR(byte[] _MACR) {
-            MACR = _MACR;
+        public void setNbrInfo(NbrInfo _nbrInfo) {
+            nbrInfo = _nbrInfo;
+        }
+
+        public PathInfo getPathInfo() {
+            return pathInfo;
+        }
+
+        public void setPathInfo(PathInfo _pathInfo) {
+            pathInfo = _pathInfo;
+        }
+    }
+
+    public class PathInfo {
+
+        public int id;
+        public int size;
+        public Vector<Integer> pathToNode;
+        public byte[] MACR;
+    }
+
+    public class NbrInfo {
+
+        int size;
+        Vector<NodeMAC> nodeMacs;
+
+        public class NodeMAC {
+
+            int id;
+            byte[] MACR;
         }
     }
 }
