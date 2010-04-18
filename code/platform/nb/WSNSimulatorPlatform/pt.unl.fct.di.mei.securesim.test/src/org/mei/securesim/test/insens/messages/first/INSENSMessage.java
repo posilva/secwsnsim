@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mei.securesim.test.insens.messages;
+package org.mei.securesim.test.insens.messages.first;
 
 import org.mei.securesim.core.engine.DefaultMessage;
 
