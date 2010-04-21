@@ -5,7 +5,7 @@
 
 package org.mei.securesim.test.insens.messages;
 
-import org.mei.securesim.test.insens.INSENSConstants;
+import org.mei.securesim.test.insens.utils.INSENSConstants;
 import org.mei.securesim.test.insens.messages.INSENSMsg;
 
 /**
