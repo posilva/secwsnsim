@@ -1,7 +1,7 @@
 package org.mei.securesim.test.insens.messages;
 
 import java.util.Vector;
-import org.mei.securesim.test.insens.INSENSConstants;
+import org.mei.securesim.test.insens.utils.INSENSConstants;
 
 /**
  *

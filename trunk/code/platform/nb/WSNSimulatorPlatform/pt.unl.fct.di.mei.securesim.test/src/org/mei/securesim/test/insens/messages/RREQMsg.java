@@ -1,7 +1,7 @@
 package org.mei.securesim.test.insens.messages;
 
 import java.util.Vector;
-import org.mei.securesim.test.insens.INSENSConstants;
+import org.mei.securesim.test.insens.utils.INSENSConstants;
 
 /**
  *
@@ -11,6 +11,7 @@ public class RREQMsg extends INSENSMsg {
 
     int size;
     Vector<Integer> path;
+    int id;
 
     public RREQMsg(byte[] payload) {
         super(payload);
@@ -32,5 +33,13 @@ public class RREQMsg extends INSENSMsg {
 
     public void setSize(int size) {
         this.size = size;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

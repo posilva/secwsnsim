@@ -6,6 +6,7 @@ package org.mei.securesim.components.crypto;
  */
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
+import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.util.Arrays;
@@ -28,7 +29,7 @@ public class CryptoFunctions {
 //    private static final String CYPHER_SUITE = "Skipjack/CTR/NoPadding";
     private static final String CYPHER_SUITE = "Skipjack/CFB/NoPadding";
     private static final String CYPHER_ALGORITHM = "Skipjack";
-    public static final int BLOCK_SIZE = 8, MIC_SIZE = 4, KEY_SIZE = 10;
+    public static final int BLOCK_SIZE = 8, MIC_SIZE = 4, KEY_SIZE = 10, MAC_SIZE = 16;
     private static byte[] keyData;
     private static byte[] ivData;
 
@@ -92,6 +93,15 @@ public class CryptoFunctions {
         return buffer;
     }
 
+    public static byte[] createMAC(byte[] data, byte[] key) {
+        CMac mic = new CMac(new SkipjackEngine(), MAC_SIZE * 8);
+        byte[] buffer = new byte[MAC_SIZE];
+        mic.init(new KeyParameter(key));
+        mic.update(data, 0, data.length);
+        mic.doFinal(buffer, 0);
+        return buffer;
+    }
+
     public static byte[] createIV(int counter) {
         byte[] iv = new byte[BLOCK_SIZE];
         for (int i = 0; i < BLOCK_SIZE / (Integer.SIZE / 8); i++) {
@@ -105,13 +115,8 @@ public class CryptoFunctions {
 
     public static byte[] createSkipjackKey() {
         try {
-            KeyGenerator key_g = KeyGenerator.getInstance(CYPHER_ALGORITHM, "BC");
-            SecretKey k = key_g.generateKey();
-            return k.getEncoded();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            System.exit(0);
-        } catch (NoSuchProviderException e) {
+            return createSkipjackKeyObject().getEncoded();
+        } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);
         }
@@ -202,5 +207,32 @@ public class CryptoFunctions {
             ivData = createIV(BLOCK_SIZE);
         }
         return ivData;
+    }
+
+    public static byte[] createEncryptionKeyFromKey(byte[] key) {
+        CMac mic = new CMac(new SkipjackEngine(), BLOCK_SIZE * 8);
+        byte[] buffer = new byte[BLOCK_SIZE];
+        mic.init(new KeyParameter(key));
+        mic.update(key, 0, key.length);
+        mic.doFinal(buffer, 0);
+        return Arrays.copyOf(buffer, KEY_SIZE);
+
+    }
+
+    public static byte[] createMACKeyFromKey(byte[] key) {
+        CMac mic = new CMac(new SkipjackEngine(), BLOCK_SIZE * 8);
+        byte[] buffer = new byte[BLOCK_SIZE];
+        mic.init(new KeyParameter(key));
+        mic.update(key, 0, key.length);
+        mic.doFinal(buffer, 0);
+        return Arrays.copyOf(buffer, KEY_SIZE);
+
+    }
+    public static Key createSkipjackKeyObject() throws Exception {
+
+            KeyGenerator key_g = KeyGenerator.getInstance(CYPHER_ALGORITHM, "BC");
+            SecretKey k = key_g.generateKey();
+            return k;
+
     }
 }
