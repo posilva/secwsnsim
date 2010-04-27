@@ -4,9 +4,13 @@
  */
 package org.mei.securesim.test.insens;
 
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,7 +38,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
     private long currentOWS;
     private int myParent;
     private int roundNumber;
-    private Set neighboorsSet = new HashSet();
+    private HashMap<Integer, byte[]> neighboorsSet = new HashMap<Integer, byte[]>();
 
     @Override
     public void receiveMessage(Object message) {
@@ -75,6 +79,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
     }
 
     private void handleRUPDReceive(Object message) {
+
     }
 
     private void handleFDBKReceive(Object message) {
@@ -84,33 +89,38 @@ public class INSENSRoutingLayer extends RoutingLayer {
         if (getNode().isSinkNode()) {
             // DESCARTO AS MENSAGENS RECEBIDAS
         } else {
-            try {
                 RREQMsg msg = (RREQMsg) message;
-                byte[] payload = msg.getPayload();
-                DataInputStream dis = DataUtils.createDataFromByteArray(payload);
-                int type = dis.readInt();
-                int senderID = dis.readInt();
-                addToNeighboorSet(senderID);
-                long ows = dis.readLong();
-                byte[] parentMAC = new byte[CryptoFunctions.MAC_SIZE];
-                dis.read(parentMAC);
+                int senderID = msg.getId();
+                long ows = msg.getOWS();
+                byte[] parentMAC = msg.getMAC();
                 if (ows != currentOWS) {
                     // é novo ou então não é fresco
                     // se for novo
                     newRouteDiscovery(senderID, ows, parentMAC);
                 }
-                addToNeighboorSet(senderID);
-
-            } catch (IOException ex) {
-                Logger.getLogger(INSENSRoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-
-
+                addToNeighboorSet(senderID,parentMAC);
         }
 
     }
+    byte[] buildFeedBackMessage(){
+        // build list of neighbors
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        DataOutputStream dos = new DataOutputStream(baos);
 
+        for (Object object : neighboorsSet.entrySet()) {
+            try {
+                dos.writeInt(0);
+                dos.write(null);
+            } catch (IOException ex) {
+                Logger.getLogger(INSENSRoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        byte[] data=baos.toByteArray();
+
+        // cipher list of neighbors
+        byte[]cipherData = CryptoFunctions.cipherData(data, ((INSENSNode)getNode()).getEncKey().getEncoded(), ((INSENSNode)getNode()).getIv());
+        return cipherData;
+    }
     private void handleRUPDSend(Object message) {
     }
 
@@ -151,8 +161,8 @@ public class INSENSRoutingLayer extends RoutingLayer {
         sendDelayedMessage(m);
     }
 
-    private void addToNeighboorSet(int id) {
-        neighboorsSet.add(id);
+    private void addToNeighboorSet(int id, byte[] mac) {
+        neighboorsSet.put(id,mac);
     }
 
     private void newRouteDiscovery(int parentId, long ows, byte[] macP) {
@@ -179,7 +189,10 @@ public class INSENSRoutingLayer extends RoutingLayer {
     }
 
     private void sendFeedbackMessage() {
-        throw new UnsupportedOperationException("Not yet implemented");
+  //      throw new UnsupportedOperationException("Not yet implemented");
+
+
+
     }
 
     /**
