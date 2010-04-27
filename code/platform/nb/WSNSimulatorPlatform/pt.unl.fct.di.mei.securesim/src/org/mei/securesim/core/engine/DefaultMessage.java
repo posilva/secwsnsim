@@ -11,6 +11,8 @@ package org.mei.securesim.core.engine;
 public class DefaultMessage {
 
     private byte[] payload;
+    private int origin;
+    private int destination;
 
 
     public DefaultMessage(byte[] payload) {
@@ -28,6 +30,23 @@ public class DefaultMessage {
     public int size() {
         if(this.payload==null) return 0;
         return this.payload.length;
+    }
+
+    // A pedido do tiago araujo
+    public int getDestination() {
+        return destination;
+    }
+
+    public void setDestination(int destination) {
+        this.destination = destination;
+    }
+
+    public int getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(int origin) {
+        this.origin = origin;
     }
 
 }

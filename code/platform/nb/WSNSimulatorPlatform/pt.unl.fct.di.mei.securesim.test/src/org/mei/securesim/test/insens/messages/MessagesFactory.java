@@ -6,7 +6,6 @@
 package org.mei.securesim.test.insens.messages;
 
 import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.security.Key;
@@ -14,7 +13,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.mei.securesim.components.crypto.CryptoFunctions;
 import org.mei.securesim.test.insens.utils.INSENSConstants;
-import org.mei.securesim.utils.DataUtils;
 
 /**
  *
