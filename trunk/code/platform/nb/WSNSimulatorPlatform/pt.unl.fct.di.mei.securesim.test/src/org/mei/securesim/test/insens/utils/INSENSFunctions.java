@@ -14,7 +14,7 @@ import org.mei.securesim.core.engine.Simulator;
  *
  * @author POSilva
  */
-public class INSENSUtils {
+public class INSENSFunctions {
 
     protected static boolean initiated = false;
     protected static Map KEY_MAP = new HashMap();
@@ -48,10 +48,10 @@ public class INSENSUtils {
         Random r = new Random();
 
         INSENSConstants.OWSArray = new long[INSENSConstants.OWSARRAY_SIZE];
-        INSENSConstants.OWSArray[0] = INSENSUtils.oneWayHash(r.nextLong());
+        INSENSConstants.OWSArray[0] = INSENSFunctions.oneWayHash(r.nextLong());
 
         for (int i = 1; i < INSENSConstants.OWSArray.length; i++) {
-            INSENSConstants.OWSArray[i] = INSENSUtils.oneWayHash(INSENSConstants.OWSArray[i - 1]);
+            INSENSConstants.OWSArray[i] = INSENSFunctions.oneWayHash(INSENSConstants.OWSArray[i - 1]);
         }
 
     }

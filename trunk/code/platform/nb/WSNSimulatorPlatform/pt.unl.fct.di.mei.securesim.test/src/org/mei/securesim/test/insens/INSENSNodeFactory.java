@@ -12,6 +12,7 @@ import org.mei.securesim.core.nodes.factories.NodeFactory;
  *
  * @author pedro
  */
+//org.mei.securesim.test.insens.INSENSNodeFactory
 public class INSENSNodeFactory extends NodeFactory{
 
     @Override

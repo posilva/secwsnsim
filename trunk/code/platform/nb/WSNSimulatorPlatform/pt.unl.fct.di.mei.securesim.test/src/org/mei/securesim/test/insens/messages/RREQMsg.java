@@ -1,6 +1,10 @@
 package org.mei.securesim.test.insens.messages;
 
+import java.io.IOException;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.mei.securesim.test.insens.utils.ByteArrayDataOutputStream;
 import org.mei.securesim.test.insens.utils.INSENSConstants;
 
 /**
@@ -41,5 +45,26 @@ public class RREQMsg extends INSENSMsg {
 
     public void setId(int id) {
         this.id = id;
+    }
+    /**
+     * 
+     * @return
+     */
+    public byte[] toByteArray() {
+        try {
+            ByteArrayDataOutputStream bados = new ByteArrayDataOutputStream();
+            bados.writeInt(getType());
+            bados.writeInt(getId());
+            bados.writeLong(getOWS());
+            setSize(getPath().size());
+            bados.writeInt(getSize());
+            for (int i = 0; i < getSize(); i++) {
+                bados.writeInt(getPath().get(i));
+            }
+            return bados.toByteArray();
+        } catch (IOException ex) {
+            Logger.getLogger(RREQMsg.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }

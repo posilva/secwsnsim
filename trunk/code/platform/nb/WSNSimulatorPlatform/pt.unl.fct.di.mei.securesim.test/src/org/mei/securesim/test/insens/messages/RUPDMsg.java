@@ -22,6 +22,11 @@ public class RUPDMsg extends INSENSMsg {
 
     }
 
+    @Override
+    public byte[] toByteArray() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
     public class ForwardingEntries {
     }
 
@@ -40,4 +45,5 @@ public class RUPDMsg extends INSENSMsg {
     public void setSize(int size) {
         this.size = size;
     }
+
 }

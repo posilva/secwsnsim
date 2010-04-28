@@ -22,7 +22,7 @@ public class INSENSConstants {
     public static long[] OWSArray;
     public static Key[] KEY_SET;
     public static final long FEEDBACK_WAITING_TIME=20*Simulator.ONE_SECOND;
-    public static final long DELAY_TIME_MESSAGE=3*Simulator.ONE_SECOND;
+    public static final long DELAY_TIME_MESSAGE=(long) (.5 * Simulator.ONE_SECOND);
 
     
 
