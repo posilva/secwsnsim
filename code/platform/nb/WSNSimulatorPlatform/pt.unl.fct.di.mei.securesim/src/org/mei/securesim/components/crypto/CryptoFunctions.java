@@ -29,7 +29,7 @@ public class CryptoFunctions {
 //    private static final String CYPHER_SUITE = "Skipjack/CTR/NoPadding";
     private static final String CYPHER_SUITE = "Skipjack/CFB/NoPadding";
     private static final String CYPHER_ALGORITHM = "Skipjack";
-    public static final int BLOCK_SIZE = 8, MIC_SIZE = 4, KEY_SIZE = 10, MAC_SIZE = 16;
+    public static final int BLOCK_SIZE = 8, MIC_SIZE = 4, KEY_SIZE = 10, MAC_SIZE = 8;
     private static byte[] keyData;
     private static byte[] ivData;
 

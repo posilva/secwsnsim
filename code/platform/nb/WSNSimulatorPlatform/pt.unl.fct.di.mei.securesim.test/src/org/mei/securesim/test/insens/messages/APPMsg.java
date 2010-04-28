@@ -6,7 +6,6 @@
 package org.mei.securesim.test.insens.messages;
 
 import org.mei.securesim.test.insens.utils.INSENSConstants;
-import org.mei.securesim.test.insens.messages.INSENSMsg;
 
 /**
  *
@@ -14,6 +13,10 @@ import org.mei.securesim.test.insens.messages.INSENSMsg;
  */
 public class APPMsg extends INSENSMsg{
     protected int action ;
+
+    public void setAction(int action) {
+        this.action = action;
+    }
     public APPMsg(byte[] payload) {
         super(payload);
         setType(INSENSConstants.MSG_APP);
@@ -21,6 +24,11 @@ public class APPMsg extends INSENSMsg{
 
     public int getAction() {
         return action;
+    }
+
+    @Override
+    public byte[] toByteArray() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }

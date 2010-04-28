@@ -10,7 +10,7 @@ import org.mei.securesim.core.engine.DefaultMessage;
  *
  * @author posilva
  */
-public abstract class INSENSMsg extends DefaultMessage {
+public abstract class INSENSMsg extends DefaultMessage implements Cloneable{
 
     protected int type ;
     protected long OWS;
@@ -43,5 +43,17 @@ public abstract class INSENSMsg extends DefaultMessage {
     public void setMAC(byte[] MAC) {
         this.MAC = MAC;
     }
+    /**
+     * This function is for retrieve the byte array with data
+     * that must be used for MAC 
+     * @return
+     */
+    abstract public byte[] toByteArray();
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
 
 }

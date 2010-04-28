@@ -15,4 +15,9 @@ public class DATAMsg extends INSENSMsg{
         super(payload);
     }
 
+    @Override
+    public byte[] toByteArray() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }

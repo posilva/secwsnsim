@@ -2,13 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.mei.securesim.test.insens.messages;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.security.Key;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.mei.securesim.components.crypto.CryptoFunctions;
@@ -19,8 +19,88 @@ import org.mei.securesim.test.insens.utils.INSENSConstants;
  * @author POSilva
  */
 public class MessagesFactory {
-    
-    public static INSENSMsg getInitialRouteRequestMessage(int id, long ows, Key keyM){
+
+    /**
+     * |------|------|-----|--------------------------|
+     *   RREQ   IDbs   OWS   MAC(Kbs,RREQ||IDbs||OWS)
+     * |------|------|-----|--------------------------|
+     * @param origId
+     * @param ows
+     * @param macKey
+     * @return
+     */
+    public static INSENSMsg createRouteRequestMessage(int origId, long ows, Key macKey) {
+        RREQMsg message = new RREQMsg(null);
+        message.setType(INSENSConstants.MSG_RREQ);
+        message.setId(origId);
+        message.setOWS(ows);
+        message.setPath(new Vector<Integer>());
+        message.getPath().add(origId);
+
+        byte[] data = message.toByteArray();
+        byte[] macData = CryptoFunctions.createMAC(data, macKey.getEncoded());
+        message.setMAC(macData);
+        return message;
+    }
+
+    /**
+     * |------|-----|-----|------------------------------|
+     *   RREQ   IDx   OWS   MAC(Kx,RREQ||IDx||OWS||MACp)
+     * |------|-----|-----|------------------------------|
+     * @param origId
+     *
+     * @param ows
+     * @param macKey
+     * @param parentMac
+     * @return
+     */
+    public static INSENSMsg createForwardRouteRequestMessage(RREQMsg reqMessage, int origId, Key macKey) {
+        RREQMsg message = new RREQMsg(null);
+        message.setType(INSENSConstants.MSG_RREQ);
+        message.setId(origId);
+        message.setOWS(reqMessage.getOWS());
+        message.setPath(new Vector<Integer>());
+        message.getPath().addAll(reqMessage.getPath());
+        message.getPath().add(origId);
+
+        byte[] parentMac = reqMessage.getMAC();
+        byte[] data = message.toByteArray();
+        byte[] buffer =  new byte[data.length+parentMac.length];
+
+        System.arraycopy(data, 0, buffer,0, data.length);
+        System.arraycopy(parentMac, 0, buffer,data.length, parentMac.length);
+
+        byte[] macData = CryptoFunctions.createMAC(buffer, macKey.getEncoded());
+        message.setMAC(macData);
+        return message;
+    }
+    /**
+     * |------|-----|-----|------------------------------|
+     *   FDBK   IDx   OWS   MAC(Kx,RREQ||IDx||OWS||MACp)
+     * |------|-----|-----|------------------------------|
+     *
+     * @param origId
+     * @param ows
+     * @param macKey
+     * @return
+     */
+    public static INSENSMsg createFeedbackMessage(long ows, Key macKey,FDBKMsg.NbrInfo nbrInfo, FDBKMsg.PathInfo pathInfo, byte[] macParent) {
+        FDBKMsg message = new FDBKMsg(null);
+        message.setType(INSENSConstants.MSG_FDBK);
+        message.setOWS(ows);
+        message.setPathInfo(pathInfo);
+        message.setNbrInfo(nbrInfo);
+        message.setMACRParent(macParent);
+        byte[] data = message.toByteArray();
+
+        byte[] macData = CryptoFunctions.createMAC(data, macKey.getEncoded());
+
+        message.setMAC(macData);
+
+        return message;
+    }
+
+    public static INSENSMsg getInitialRouteRequestMessage(int id, long ows, Key keyM) {
         byte[] mac = null;
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -40,7 +120,7 @@ public class MessagesFactory {
         }
     }
 
-    public static INSENSMsg getRouteRequestMessage(int id, long ows, byte[] macP, Key keyM){
+    public static INSENSMsg getRouteRequestMessage(int id, long ows, byte[] macP, Key keyM) {
         byte[] mac = null;
         try {
 
