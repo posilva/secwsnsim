@@ -65,7 +65,9 @@ public class INSENSFunctions {
         KEY_MAP.put(id, key);
 
     }
-
+    public static void debug(Object msg ){
+        System.out.println(msg);
+    } 
     public static Key getShareKey(int id) {
         return (Key) KEY_MAP.get(id);
     }

@@ -134,7 +134,7 @@ public class GaussianRadioModel extends RadioModel {
             srcNode.getMacLayer().getNeighborhood().neighborsSet = new HashSet(srcNode.getMacLayer().getNeighborhood().neighbors);
             srcNode.getMacLayer().getNeighborhood().neighborsThatKnowMeSet = new HashSet(srcNode.getMacLayer().getNeighborhood().neighborsThatKnowMe);
         }
-        System.out.println("MAXIMUM DISTANCE: " + maxDistance);
+
     }
 
     /**
@@ -202,6 +202,30 @@ public class GaussianRadioModel extends RadioModel {
          */
         protected Object stream = null;
 
+        public ArrayList<Double> getDynamicStrengths() {
+            return dynamicStrengths;
+        }
+
+        public ArrayList<Double> getStaticFadings() {
+            return staticFadings;
+        }
+
+        public ArrayList<Node> getNeighbors() {
+            return neighbors;
+        }
+
+        public HashSet<Node> getNeighborsSet() {
+            return neighborsSet;
+        }
+
+        public ArrayList<Node> getNeighborsThatKnowMe() {
+            return neighborsThatKnowMe;
+        }
+
+        public HashSet<Node> getNeighborsThatKnowMeSet() {
+            return neighborsThatKnowMeSet;
+        }
+
         Node getStream2Node() {
             return (Node) this.stream;
         }
@@ -223,10 +247,10 @@ public class GaussianRadioModel extends RadioModel {
 
 
             this.stream = stream;
-            
+
 
             int i = neighbors.size();
-
+            System.out.println(getStream2Node().getId()+" tem " + i +" vizinhos");
             while (--i >= 0) {
                 if (neighbors.get(i).isTurnedOn()) {
                     double dynamicStrength = getDynamicStrength(strength,
@@ -256,20 +280,19 @@ public class GaussianRadioModel extends RadioModel {
         }
     }
 
-    
-    public static double RangeEstimation(int range){
+    public static double RangeEstimation(int range) {
 
         Random r = new Random();
 
         double staticRandomFading = 1.0 + staticRandomFactor * r.nextGaussian();
 
         int mx = 1;
-        
+
         double staticRadioStrength = 0;
-        staticRadioStrength= mx* staticRandomFading/ (1.0 + Math.pow(range*range, fallingFactorHalf));
-        while (staticRadioStrength < radioStrengthCutoff){
-            staticRadioStrength= mx* staticRandomFading/ (1.0 + Math.pow(range*range, fallingFactorHalf));
-         //   staticRandomFading = 1.0 + staticRandomFactor * r.nextGaussian();
+        staticRadioStrength = mx * staticRandomFading / (1.0 + Math.pow(range * range, fallingFactorHalf));
+        while (staticRadioStrength < radioStrengthCutoff) {
+            staticRadioStrength = mx * staticRandomFading / (1.0 + Math.pow(range * range, fallingFactorHalf));
+            //   staticRandomFading = 1.0 + staticRandomFactor * r.nextGaussian();
 
             mx++;
         }
@@ -277,7 +300,7 @@ public class GaussianRadioModel extends RadioModel {
         return mx;
     }
 
-    public static void main(String []a){
-        System.out.println("M: "+ GaussianRadioModel.RangeEstimation(263));
+    public static void main(String[] a) {
+        System.out.println("M: " + GaussianRadioModel.RangeEstimation(263));
     }
 }

@@ -14,6 +14,7 @@ import org.mei.securesim.test.insens.utils.INSENSConstants;
 import org.mei.securesim.test.insens.messages.APPMsg;
 import org.mei.securesim.core.application.Application;
 import org.mei.securesim.core.engine.Event;
+import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.layers.routing.RoutingLayer;
 import org.mei.securesim.test.insens.messages.FDBKMsg;
 import org.mei.securesim.test.insens.messages.FDBKMsg.MACS;
@@ -31,10 +32,10 @@ import org.mei.securesim.test.insens.utils.INSENSFunctions;
 public class INSENSRoutingLayer extends RoutingLayer {
 
     boolean stable;
-    private long currentOWS=-1;
+    private long currentOWS = -1;
     private RREQMsg firstRREQMsg;
-    private int myParentId=-1;
-    private int roundNumber=-1;
+    private int myParentId = -1;
+    private int roundNumber = -1;
     private HashMap<Integer, byte[]> neighboorsSet = new HashMap<Integer, byte[]>();
     private byte[] myMAC;
 
@@ -51,7 +52,6 @@ public class INSENSRoutingLayer extends RoutingLayer {
 
     @Override
     public boolean sendMessage(Object message, Application app) {
-        System.out.println("Sending message");
         if (message instanceof INSENSMsg) {
             this.application = app;
             handleMessageSend(message);
@@ -78,55 +78,53 @@ public class INSENSRoutingLayer extends RoutingLayer {
     }
 
     private void handleRUPDReceive(Object message) {
-
     }
 
     private void handleFDBKReceive(Object message) {
         FDBKMsg m = (FDBKMsg) message;
-        if (getNode().isSinkNode()){
+        if (getNode().isSinkNode()) {
+            System.out.println("["+getNode().getId()+"]Is from my child: " + m.getOrigin());
             saveFeedbackMessage(m);
-        }else{
+        } else {
             // verifica se eu sou o pai do vizinho que enviou a mensagem
-            if (isMyChild(m) ){
-                sendMessage2BaseStation(m);
+            if (isFromMyChild(m)) {
+                System.out.println("["+getNode().getId()+"]Is from my child: " + m.getOrigin());
+                forwardMessage2BaseStation(m);
+            } else {
             }
         }
     }
+
     /**
      * tratamento de recepção de mensagem de Route Requests
      * @param message
      */
     private void handleRREQReceive(Object message) {
+        
         if (getNode().isSinkNode()) {
             // DESCARTO AS MENSAGENS RECEBIDAS
         } else {
-                RREQMsg msg = (RREQMsg) message;
-                int senderID = msg.getId();
-                long ows = msg.getOWS();
-                byte[] parentMAC = msg.getMAC();
-                if (ows != currentOWS) {
-                    // se receber um ows diferente do currente
-                    // então é uma nova epoca e esta é a primeira vez q recebe
-                    // então faz broadcast
-                    firstRREQMsg=msg;
-                    myParentId=msg.getId();
-                    newRouteDiscovery(msg);
-                    // actualiza o ows corrente
-                    currentOWS=ows;
-                }
-                addToNeighboorSet(senderID,parentMAC);
+            RREQMsg msg = (RREQMsg) message;
+            int senderID = msg.getId();
+            long ows = msg.getOWS();
+            byte[] parentMAC = msg.getMAC();
+
+            if (ows != currentOWS) {
+                // se receber um ows diferente do currente
+                // então é uma nova epoca e esta é a primeira vez q recebe
+                // então faz broadcast
+                firstRREQMsg = msg;
+                System.out.println("RREQ [" + msg.getId() + "]->" + getNode().getId());
+                myParentId = msg.getId();
+                newRouteDiscovery(msg);
+                // actualiza o ows corrente
+                currentOWS = ows;
+            }
+            addToNeighboorSet(senderID, parentMAC);
         }
 
     }
-   
-    private void handleRUPDSend(Object message) {
-    }
 
-    private void handleFDBKSend(Object message) {
-    }
-
-    private void handleRREQSend(Object message) {
-    }
     /**
      * permite controlar se se pode utilizar o encaminhamento para
      * comunicação de dados ou se encontra em fase de organização da rede
@@ -139,6 +137,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
     public void setStable(boolean stable) {
         this.stable = stable;
     }
+
     /**
      * Mensagens especiais para interacção com a camada de aplicação
      * @param message
@@ -155,6 +154,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
             }
         }
     }
+
     /**
      * Inicio de uma nova organização da rede
      */
@@ -163,28 +163,30 @@ public class INSENSRoutingLayer extends RoutingLayer {
         currentOWS = INSENSFunctions.getNextOWS(roundNumber);
         startNetworkOrganization();
     }
+
     /**
      * Mensagem inicial de reorganização da rede
      */
     private void startNetworkOrganization() {
         // create de message instance
         RREQMsg m = (RREQMsg) MessagesFactory.createRouteRequestMessage(getNode().getId(), currentOWS, ((INSENSNode) getNode()).getMacKey());
-        myMAC=m.getMAC();
+        myMAC = m.getMAC();
         sendDelayedMessage(m);
     }
 
     private void addToNeighboorSet(int id, byte[] mac) {
-        neighboorsSet.put(id,mac);
+        neighboorsSet.put(id, mac);
     }
 
     private void newRouteDiscovery(RREQMsg reqMessage) {
         resetNeighboorSet();
-        INSENSMsg m =MessagesFactory.createForwardRouteRequestMessage(reqMessage, getNode().getId(), ((INSENSNode)getNode()).getMacKey());
-        myMAC=m.getMAC();
+        INSENSMsg m = MessagesFactory.createForwardRouteRequestMessage(reqMessage, getNode().getId(), ((INSENSNode) getNode()).getMacKey());
+        myMAC = m.getMAC();
         sendDelayedMessage(m);
         waitToSendFeedBack();
 
     }
+
     /**
      * enviar uma mensagem usando um temporizador
      * @param m
@@ -193,12 +195,14 @@ public class INSENSRoutingLayer extends RoutingLayer {
         Event e = new DelayedMessageEvent(m);
         getNode().getSimulator().addEvent(e);
     }
+
     /**
      * Reinicia os dados referentes aos vizinhos conhecidos
      */
     private void resetNeighboorSet() {
         neighboorsSet.clear();
     }
+
     /**
      * Temporizador que controla o tempo de inicio de envio de Mensagem de
      * Feedback
@@ -209,35 +213,42 @@ public class INSENSRoutingLayer extends RoutingLayer {
     }
 
     private void sendFeedbackMessage() {
-        FDBKMsg message =new FDBKMsg(null);
+        System.out.println("["+ getNode().getId()+"]sending fdbk message to " + myParentId );
+        FDBKMsg message = new FDBKMsg(null);
+
         NbrInfo nbrInfo = message.new NbrInfo();
+
         PathInfo pathInfo = message.new PathInfo();
 
         pathInfo.id = getNode().getId();
         pathInfo.size = firstRREQMsg.getSize();
-        pathInfo.pathToMe= firstRREQMsg.getPath();
+        pathInfo.pathToMe = firstRREQMsg.getPath();
         pathInfo.MACRx = firstRREQMsg.getMAC();
 
         nbrInfo.size = neighboorsSet.size();
 
         Vector macs = new Vector();
+
         for (Integer key : neighboorsSet.keySet()) {
             macs.add(message.new MACS(key, neighboorsSet.get(key)));
         }
-        nbrInfo.macs=macs;
+        nbrInfo.macs = macs;
 
-        message = (FDBKMsg)MessagesFactory.createFeedbackMessage(currentOWS, ((INSENSNode)getNode()).getMacKey(),nbrInfo ,pathInfo , neighboorsSet.get(myParentId));
+        message = (FDBKMsg) MessagesFactory.createFeedbackMessage(currentOWS, ((INSENSNode) getNode()).getMacKey(), nbrInfo, pathInfo, neighboorsSet.get(myParentId));
+        message.setOrigin(getNode().getId());
 
         sendDelayedMessage(message);
     }
 
-    private boolean isMyChild(FDBKMsg m) {
-        return  (Arrays.equals(m.getMACRParent(),myMAC));
+    private boolean isFromMyChild(FDBKMsg m) {
+        return (Arrays.equals(m.getMACRParent(), myMAC));
 
     }
 
-    private void sendMessage2BaseStation(FDBKMsg m) {
+    private void forwardMessage2BaseStation(FDBKMsg m) {
         try {
+            System.out.println("Forward Message from "+m.getOrigin() );
+            // copia da mensagem
             FDBKMsg clone = (FDBKMsg) m.clone();
             clone.setMACRParent(neighboorsSet.get(myParentId));
             sendDelayedMessage(m);
@@ -248,7 +259,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
     }
 
     private void saveFeedbackMessage(FDBKMsg m) {
-//        throw new UnsupportedOperationException("Not yet implemented");
+        System.out.println("Saved FDBK Message From "+ m.getOrigin()  );
     }
 
     /**
@@ -280,7 +291,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
         }
 
         public DelayedMessageEvent(Object message) {
-            setTime(getNode().getSimulator().getSimulationTime() + INSENSConstants.DELAY_TIME_MESSAGE);
+            setTime(getNode().getSimulator().getSimulationTime() + (int) Simulator.randomGenerator.random().nextDouble() * INSENSConstants.DELAY_TIME_MESSAGE);
             this.message = message;
         }
 
@@ -291,8 +302,11 @@ public class INSENSRoutingLayer extends RoutingLayer {
 
         @Override
         public void execute() {
-            System.out.println("Executing delayed Message");
-            getNode().getMacLayer().sendMessage(getMessage(), INSENSRoutingLayer.this);
+
+            if (!getNode().getMacLayer().sendMessage(getMessage(), INSENSRoutingLayer.this)) {
+                System.out.println("Sending failed");
+            }
+            ;
         }
     }
 }
