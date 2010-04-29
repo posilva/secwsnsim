@@ -31,6 +31,7 @@ public class MessagesFactory {
      */
     public static INSENSMsg createRouteRequestMessage(int origId, long ows, Key macKey) {
         RREQMsg message = new RREQMsg(null);
+        message.setOrigin(origId);
         message.setType(INSENSConstants.MSG_RREQ);
         message.setId(origId);
         message.setOWS(ows);
@@ -85,6 +86,7 @@ public class MessagesFactory {
      * @return
      */
     public static INSENSMsg createFeedbackMessage(long ows, Key macKey,FDBKMsg.NbrInfo nbrInfo, FDBKMsg.PathInfo pathInfo, byte[] macParent) {
+        if (macParent==null ) throw  new IllegalStateException("MacParent Cannot be null");
         FDBKMsg message = new FDBKMsg(null);
         message.setType(INSENSConstants.MSG_FDBK);
         message.setOWS(ows);
