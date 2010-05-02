@@ -1,4 +1,4 @@
-= Abstract =
+
 Wireless Sensor Networks (WSN) are an emerging and very interesting technology applied to 
 different applications. They are formed by small, self organized devices that cooperate to
 form a large scale network with thousands of nodes covering a large area.
