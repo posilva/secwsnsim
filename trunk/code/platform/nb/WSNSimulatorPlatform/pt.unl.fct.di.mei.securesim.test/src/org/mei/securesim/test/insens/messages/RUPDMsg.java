@@ -14,7 +14,7 @@ import org.mei.securesim.test.insens.utils.INSENSConstants;
 public class RUPDMsg extends INSENSMsg {
 
     int size;
-    Vector<ForwardingEntries> forwardingTable;
+    Vector<ForwardingEntries> forwardingTable=new Vector<ForwardingEntries>();
 
     public RUPDMsg(byte[] payload) {
         super(payload);
@@ -25,6 +25,12 @@ public class RUPDMsg extends INSENSMsg {
     @Override
     public byte[] toByteArray() {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    protected int getDataSize() {
+        return forwardingTable.size()*16;
+        
     }
 
     public class ForwardingEntries {

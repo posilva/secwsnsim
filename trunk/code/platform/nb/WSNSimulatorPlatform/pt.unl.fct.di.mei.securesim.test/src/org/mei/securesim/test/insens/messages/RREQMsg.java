@@ -14,7 +14,7 @@ import org.mei.securesim.test.insens.utils.INSENSConstants;
 public class RREQMsg extends INSENSMsg {
 
     int size;
-    Vector<Integer> path;
+    Vector<Integer> path=new Vector<Integer>();
     int id;
 
     public RREQMsg(byte[] payload) {
@@ -67,4 +67,20 @@ public class RREQMsg extends INSENSMsg {
         }
         return null;
     }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        RREQMsg m = (RREQMsg) super.clone();
+        m.path = new Vector<Integer>();
+        for (Integer i : path) {
+            m.path.addElement(i.intValue());
+        }
+        return m;
+    }
+
+    @Override
+    protected int getDataSize() {
+        return path.size()*4;
+    }
+
 }

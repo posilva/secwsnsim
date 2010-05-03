@@ -163,6 +163,7 @@ public class Mica2MACLayer extends MACLayer {
     public void receptionBegin(double strength, Object stream) {
         // inicio da recepção, pode-se verificar o estado do nó e
         // caso o TX esteja ON recebe senão aborta
+//ss        System.out.println(">"+ getNode().getId()  + ": "+ ((Node) stream).getMessage() + " from "+ ((DefaultMessage)((Node) stream).getMessage()).getOrigin());
         addNoise(strength, stream);
     }
 
@@ -310,7 +311,9 @@ public class Mica2MACLayer extends MACLayer {
                 corrupted = false;
                 signalStrength = level;
             } else {
+                System.out.println("not receivable");
                 noiseStrength += level;
+
             }
         }
     }

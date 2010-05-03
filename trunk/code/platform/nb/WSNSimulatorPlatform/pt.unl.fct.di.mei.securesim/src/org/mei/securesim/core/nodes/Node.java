@@ -32,7 +32,7 @@ public abstract class Node {
     public static int NODEID_AUTOCOUNTER = 1;
     public static final int INITIAL_BATERY_POWER = 1000;
     public static final double DEFAULT_POWER_CONSUMING = 1.0E-2;
-    private static long CLOCK_TICK = Simulator.ONE_SECOND/100;// /100;
+    private static long CLOCK_TICK = Simulator.ONE_SECOND;// /100;
     /**
      * Attributes
      */

@@ -36,7 +36,12 @@ public class INSENSNode extends Mica2SensorNode implements IDisplayable {
     @Override
     public void init() {
         try {
-            if (getId()==2 ) setSinkNode(true);
+            if (getId() == 2) {
+                setSinkNode(true);
+                getGraphicNode().mark();
+
+            }
+
             super.init();
             macKey = CryptoFunctions.createSkipjackKeyObject();
             encKey = CryptoFunctions.createSkipjackKeyObject();
@@ -81,7 +86,6 @@ public class INSENSNode extends Mica2SensorNode implements IDisplayable {
     }
 
     @Override
-   
     public void displayOn(ISimulationDisplay disp) {
         Graphics g = disp.getGraphics();
 
@@ -112,6 +116,4 @@ public class INSENSNode extends Mica2SensorNode implements IDisplayable {
             getGraphicNode().paint(disp);
         }
     }
-
-    
 }

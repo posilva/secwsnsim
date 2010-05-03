@@ -5,6 +5,7 @@
 package org.mei.securesim.components;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.mei.securesim.components.logging.EnergyLogger;
@@ -16,13 +17,20 @@ import org.mei.securesim.core.energy.listeners.EnergyListener;
  * @author posilva
  */
 public class EnergyController implements EnergyListener {
+    protected static EnergyController instance=null;
+    public static EnergyController getInstance() {
+        if (instance==null)
+            instance = new EnergyController();
+        return instance;
+
+    }
 
     protected EnergyLogger energyLogger;
     protected String filename;
 
     public EnergyController() {
         try {
-            filename = "energy" + System.currentTimeMillis() + ".log";
+            filename = "energy" + System.currentTimeMillis() + ".xml";
             this.energyLogger = new EnergyLogger(filename);
             
         } catch (FileNotFoundException ex) {
@@ -32,4 +40,13 @@ public class EnergyController implements EnergyListener {
 
     public void onConsume(EnergyEvent evt) {
     }
+
+    public void log(String toString) {
+        try {
+            this.energyLogger.getOutputStream().write(toString.getBytes());
+        } catch (IOException ex) {
+            Logger.getLogger(EnergyController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 }

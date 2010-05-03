@@ -20,4 +20,9 @@ public class DATAMsg extends INSENSMsg{
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
+    protected int getDataSize() {
+        return 0;
+    }
+
 }

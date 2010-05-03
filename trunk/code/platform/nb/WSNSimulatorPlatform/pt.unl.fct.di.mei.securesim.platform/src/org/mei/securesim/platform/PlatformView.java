@@ -4,6 +4,7 @@
 
 package org.mei.securesim.platform;
 
+import java.awt.Toolkit;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
@@ -16,7 +17,6 @@ import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import org.mei.securesim.platform.ui.frames.SimulationWizardDialog;
 import org.mei.securesim.platform.uiextended.BestTabbedPane;
 
@@ -295,9 +295,10 @@ public class PlatformView extends FrameView {
         {
 
             workbenchPanel1.setSimulationFactory( sw.getSimulationFactory());
-            mainSplitPane.setVisible(true);
-            workbenchPanel1.setVisible(true);
             workbenchVisible=true;
+            workbenchPanel1.setVisible(true);
+            mainSplitPane.setVisible(true);
+            mainSplitPane.setDividerLocation(.80);
 
         } else {
         }
