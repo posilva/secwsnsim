@@ -31,4 +31,9 @@ public class APPMsg extends INSENSMsg{
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
+    protected int getDataSize() {
+        return 4;
+    }
+
 }

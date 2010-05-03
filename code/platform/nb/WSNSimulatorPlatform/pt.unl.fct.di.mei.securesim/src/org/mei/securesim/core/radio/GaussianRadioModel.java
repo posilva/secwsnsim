@@ -250,7 +250,7 @@ public class GaussianRadioModel extends RadioModel {
 
 
             int i = neighbors.size();
-            System.out.println(getStream2Node().getId()+" tem " + i +" vizinhos");
+    
             while (--i >= 0) {
                 if (neighbors.get(i).isTurnedOn()) {
                     double dynamicStrength = getDynamicStrength(strength,

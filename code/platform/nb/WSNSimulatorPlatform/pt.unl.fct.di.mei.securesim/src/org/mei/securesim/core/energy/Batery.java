@@ -1,5 +1,6 @@
 package org.mei.securesim.core.energy;
 
+import org.mei.securesim.components.EnergyController;
 import org.mei.securesim.core.energy.listeners.EnergyEvent;
 import org.mei.securesim.core.energy.listeners.EnergyListener;
 import org.mei.securesim.core.nodes.Node;
@@ -173,7 +174,14 @@ public class Batery {
     }
 
     private synchronized void log(String string, double d) {
-//        System.out.println(getHostNode().getId() + "\t" + string + "\t" + d);
+        StringBuilder sb = new  StringBuilder("<energy>");
+        sb.append("<node>" + getHostNode().getId() +"</node>");
+        sb.append("<event>" + string +"</event>");
+        sb.append("<value>" + d +"</value>");
+
+        sb.append("</energy>\n");
+        EnergyController.getInstance().log(sb.toString());
+
     }
 
     public double getAverageConsumption() {
@@ -182,6 +190,7 @@ public class Batery {
 
     public void consumeTXTransitionToON() {
         consume(energyModel.getTxTransitionToActiveEnergy());
+
         log("TXTransitionToON", energyModel.getTxTransitionToActiveEnergy());
     }
 

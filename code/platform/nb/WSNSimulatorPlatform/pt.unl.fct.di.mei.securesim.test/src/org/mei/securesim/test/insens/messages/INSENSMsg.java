@@ -55,5 +55,12 @@ public abstract class INSENSMsg extends DefaultMessage implements Cloneable{
         return super.clone();
     }
 
+    @Override
+    public int size() {
+        return getDataSize();
+    }
+
+    abstract protected int getDataSize();
+
 
 }

@@ -13,7 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.mei.securesim.components.crypto.CryptoFunctions;
 import org.mei.securesim.test.insens.utils.INSENSConstants;
-
+import static org.mei.securesim.test.insens.utils.INSENSFunctions.cloneMAC;
 /**
  *
  * @author POSilva
@@ -34,13 +34,18 @@ public class MessagesFactory {
         message.setOrigin(origId);
         message.setType(INSENSConstants.MSG_RREQ);
         message.setId(origId);
+
         message.setOWS(ows);
         message.setPath(new Vector<Integer>());
+
         message.getPath().add(origId);
 
         byte[] data = message.toByteArray();
+
         byte[] macData = CryptoFunctions.createMAC(data, macKey.getEncoded());
+
         message.setMAC(macData);
+
         return message;
     }
 
@@ -57,15 +62,26 @@ public class MessagesFactory {
      */
     public static INSENSMsg createForwardRouteRequestMessage(RREQMsg reqMessage, int origId, Key macKey) {
         RREQMsg message = new RREQMsg(null);
+
         message.setType(INSENSConstants.MSG_RREQ);
+
         message.setId(origId);
+
         message.setOWS(reqMessage.getOWS());
+
         message.setPath(new Vector<Integer>());
+
+        for (Integer object : reqMessage.getPath()) {
+            message.getPath().addElement(object.intValue());
+        }
+
         message.getPath().addAll(reqMessage.getPath());
         message.getPath().add(origId);
 
-        byte[] parentMac = reqMessage.getMAC();
+        byte[] parentMac = cloneMAC(reqMessage.getMAC());
+
         byte[] data = message.toByteArray();
+
         byte[] buffer =  new byte[data.length+parentMac.length];
 
         System.arraycopy(data, 0, buffer,0, data.length);
@@ -73,6 +89,7 @@ public class MessagesFactory {
 
         byte[] macData = CryptoFunctions.createMAC(buffer, macKey.getEncoded());
         message.setMAC(macData);
+        message.setOrigin(origId);
         return message;
     }
     /**
@@ -92,7 +109,7 @@ public class MessagesFactory {
         message.setOWS(ows);
         message.setPathInfo(pathInfo);
         message.setNbrInfo(nbrInfo);
-        message.setMACRParent(macParent);
+        message.setMACRParent(cloneMAC(macParent));
         byte[] data = message.toByteArray();
 
         byte[] macData = CryptoFunctions.createMAC(data, macKey.getEncoded());
@@ -122,37 +139,37 @@ public class MessagesFactory {
         }
     }
 
-    public static INSENSMsg getRouteRequestMessage(int id, long ows, byte[] macP, Key keyM) {
-        byte[] mac = null;
-        try {
-
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            DataOutputStream dos = new DataOutputStream(baos);
-            dos.writeInt(INSENSConstants.MSG_RREQ);
-            dos.writeInt(id);
-            dos.writeLong(ows);
-            dos.flush();
-
-            ByteArrayOutputStream baosMac = new ByteArrayOutputStream();
-            DataOutputStream dosMac = new DataOutputStream(baos);
-            dosMac.writeInt(id);
-            dosMac.writeLong(ows);
-            dosMac.write(macP);
-            dosMac.flush();
-            byte[] data = baosMac.toByteArray();
-
-            mac = CryptoFunctions.createMAC(data, keyM.getEncoded());
-            dos.write(mac);
-            dos.flush();
-            RREQMsg m = new RREQMsg(baos.toByteArray());
-            m.setMAC(mac);
-            m.setOWS(ows);
-            m.setType(id);
-            m.setId(id);
-            return m;
-        } catch (IOException ex) {
-            Logger.getLogger(MessagesFactory.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-    }
+//    public static INSENSMsg getRouteRequestMessage(int id, long ows, byte[] macP, Key keyM) {
+//        byte[] mac = null;
+//        try {
+//
+//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//            DataOutputStream dos = new DataOutputStream(baos);
+//            dos.writeInt(INSENSConstants.MSG_RREQ);
+//            dos.writeInt(id);
+//            dos.writeLong(ows);
+//            dos.flush();
+//
+//            ByteArrayOutputStream baosMac = new ByteArrayOutputStream();
+//            DataOutputStream dosMac = new DataOutputStream(baos);
+//            dosMac.writeInt(id);
+//            dosMac.writeLong(ows);
+//            dosMac.write(macP);
+//            dosMac.flush();
+//            byte[] data = baosMac.toByteArray();
+//
+//            mac = CryptoFunctions.createMAC(data, keyM.getEncoded());
+//            dos.write(mac);
+//            dos.flush();
+//            RREQMsg m = new RREQMsg(baos.toByteArray());
+//            m.setMAC(mac);
+//            m.setOWS(ows);
+//            m.setType(id);
+//            m.setId(id);
+//            return m;
+//        } catch (IOException ex) {
+//            Logger.getLogger(MessagesFactory.class.getName()).log(Level.SEVERE, null, ex);
+//            return null;
+//        }
+//    }
 }

@@ -219,7 +219,7 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="20" max="32767" attributes="0"/>
                   <Component id="jPanel1" min="-2" pref="44" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="statusMessageLabel" min="-2" pref="494" max="-2" attributes="0"/>
@@ -234,8 +234,8 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jPanel1" alignment="0" max="32767" attributes="1"/>
-                      <Component id="statusAnimationLabel" alignment="0" pref="20" max="32767" attributes="0"/>
+                      <Component id="jPanel1" alignment="0" pref="19" max="32767" attributes="1"/>
+                      <Component id="statusAnimationLabel" alignment="0" pref="19" max="32767" attributes="0"/>
                       <Component id="progressBar" alignment="0" max="32767" attributes="1"/>
                       <Component id="statusMessageLabel" alignment="0" min="-2" pref="19" max="-2" attributes="0"/>
                   </Group>
