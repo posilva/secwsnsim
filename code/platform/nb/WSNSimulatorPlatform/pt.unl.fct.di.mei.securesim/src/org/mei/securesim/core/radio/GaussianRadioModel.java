@@ -243,11 +243,7 @@ public class GaussianRadioModel extends RadioModel {
                 throw new IllegalStateException(
                         "No nested transmissions are allowed");
             }
-
-
-
             this.stream = stream;
-
 
             int i = neighbors.size();
     
@@ -255,7 +251,6 @@ public class GaussianRadioModel extends RadioModel {
                 if (neighbors.get(i).isTurnedOn()) {
                     double dynamicStrength = getDynamicStrength(strength,
                             staticFadings.get(i));
-
                     if (dynamicStrengths.get(i) == null) {
                         dynamicStrengths.add(dynamicStrength);
                     }
@@ -278,29 +273,5 @@ public class GaussianRadioModel extends RadioModel {
             }
             stream = null;
         }
-    }
-
-    public static double RangeEstimation(int range) {
-
-        Random r = new Random();
-
-        double staticRandomFading = 1.0 + staticRandomFactor * r.nextGaussian();
-
-        int mx = 1;
-
-        double staticRadioStrength = 0;
-        staticRadioStrength = mx * staticRandomFading / (1.0 + Math.pow(range * range, fallingFactorHalf));
-        while (staticRadioStrength < radioStrengthCutoff) {
-            staticRadioStrength = mx * staticRandomFading / (1.0 + Math.pow(range * range, fallingFactorHalf));
-            //   staticRandomFading = 1.0 + staticRandomFactor * r.nextGaussian();
-
-            mx++;
-        }
-//         System.out.println("staticRandomFading:" + staticRandomFading);
-        return mx;
-    }
-
-    public static void main(String[] a) {
-        System.out.println("M: " + GaussianRadioModel.RangeEstimation(263));
     }
 }
