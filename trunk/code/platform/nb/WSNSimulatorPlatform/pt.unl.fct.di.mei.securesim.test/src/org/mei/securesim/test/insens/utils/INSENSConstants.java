@@ -24,8 +24,8 @@ public class INSENSConstants {
     public static final long FEEDBACK_WAITING_TIME=10*Simulator.ONE_SECOND;
     public static final long DELAY_TIME_MESSAGE=(long) (Simulator.ONE_SECOND*8);
    
-
+    static int ows=0;
     public static long getNextOWS() {
-        return 0;
+        return ows++;
     }
 }

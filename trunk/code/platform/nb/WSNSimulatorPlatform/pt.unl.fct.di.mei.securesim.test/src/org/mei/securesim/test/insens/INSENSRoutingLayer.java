@@ -256,18 +256,23 @@ public class INSENSRoutingLayer extends RoutingLayer {
     }
 
     private boolean isFromMyChild(FDBKMsg m) {
-        System.out.println(getNode().getId() +":MyMAC= " + INSENSFunctions.toHex(myMAC) );
-        System.out.println(getNode().getId() +":getMACRParent= " + INSENSFunctions.toHex(m.getMACRParent()) );
+        System.out.println(getNode().getId()  + ":MyMAC= " + INSENSFunctions.toHex(myMAC) +
+                " " + ":MACRParent= " + INSENSFunctions.toHex(m.getMACRParent()) );
+
+        if (myMAC==null) return false;
         return (Arrays.equals(m.getMACRParent(), myMAC));
 
     }
 
     private void forwardMessage2BaseStation(FDBKMsg m) {
         try {
-            System.out.println("Forward Message from "+m.getOrigin() );
+            System.out.println(getNode().getId() +": Forward Message from "+m.getOrigin() );
             // copia da mensagem
             FDBKMsg clone = (FDBKMsg) m.clone();
+            System.out.println(getNode().getId()  + ":CurrentParentMAC= " + INSENSFunctions.toHex(m.getMACRParent()) +
+                    " " + ":NewMACRParent= " + INSENSFunctions.toHex(neighboorsSet.get(myParentId)) );
             clone.setMACRParent(cloneMAC(neighboorsSet.get(myParentId)));
+            clone.setOrigin(getNode().getId());
             sendDelayedMessage(m);
         } catch (CloneNotSupportedException ex) {
             Logger.getLogger(INSENSRoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
