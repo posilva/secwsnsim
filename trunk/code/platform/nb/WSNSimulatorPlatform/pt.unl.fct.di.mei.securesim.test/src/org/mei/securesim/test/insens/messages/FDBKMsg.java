@@ -15,12 +15,15 @@ import org.mei.securesim.test.insens.utils.INSENSConstants;
 public class FDBKMsg extends INSENSMsg {
 
     byte[] MACRParent;
-    PathInfo pathInfo=new  PathInfo();
+    PathInfo pathInfo = new PathInfo();
     NbrInfo nbrInfo = new NbrInfo();
-@Override
+    int forwardBy = -1; // this attribute is for debugging purposes only
+
+    @Override
     protected int getDataSize() {
-        return 8+pathInfo.size*(4+8)+12*nbrInfo.size;
+        return 8 + pathInfo.size * (4 + 8) + 12 * nbrInfo.size;
     }
+
     public byte[] getMACRParent() {
         return MACRParent;
     }
@@ -58,7 +61,6 @@ public class FDBKMsg extends INSENSMsg {
         f.setPathInfo((PathInfo) pathInfo.clone());
         f.setMACRParent(Arrays.copyOf(MACRParent, MACRParent.length));
         return f;
-
     }
 
     @Override
@@ -78,8 +80,6 @@ public class FDBKMsg extends INSENSMsg {
         return null;
 
     }
-
-    
 
     public class PathInfo implements Cloneable {
 
@@ -103,10 +103,11 @@ public class FDBKMsg extends INSENSMsg {
             }
             return null;
         }
+
         @Override
         public Object clone() throws CloneNotSupportedException {
             PathInfo p = (PathInfo) super.clone();
-            p.pathToMe= new Vector();
+            p.pathToMe = new Vector();
             for (int i = 0; i < pathToMe.size(); ++i) {
                 p.pathToMe.addElement(((Integer) pathToMe.elementAt(i)).intValue());
             }
@@ -152,7 +153,7 @@ public class FDBKMsg extends INSENSMsg {
         @Override
         public Object clone() throws CloneNotSupportedException {
             NbrInfo n = (NbrInfo) super.clone();
-            n.macs=new Vector();
+            n.macs = new Vector();
             for (int i = 0; i < macs.size(); ++i) {
                 n.macs.addElement(((MACS) macs.elementAt(i)).clone());
             }
@@ -189,6 +190,14 @@ public class FDBKMsg extends INSENSMsg {
             return m;
 
         }
+    }
+
+    public int getForwardBy() {
+        return forwardBy;
+    }
+
+    public void setForwardBy(int forwardBy) {
+        this.forwardBy = forwardBy;
     }
 }
 

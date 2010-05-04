@@ -68,15 +68,14 @@ public abstract class Node {
      * 
      */
     protected Node parentNode;
-    private boolean enableFunctioningEnergyConsumption=true;
+    private boolean enableFunctioningEnergyConsumption = true;
 
     public enum NodeState {
+
         ACTIVE,
         SLEEP
     };
-
     protected NodeState state;
-
 
     public class Config {
 
@@ -115,24 +114,24 @@ public abstract class Node {
             // é necessário rever para calcular a função inversa que permite 
             // estimar o m do no face a um range desejado
 
-            switch(setRadioRange){
+            switch (setRadioRange) {
                 case 30:
                     setMaximumRadioStrength(100);
                     break;
                 case 130:
                     setMaximumRadioStrength(2300);
-                        break;
+                    break;
                 case 230:
                     setMaximumRadioStrength(7300);
-                         break;
+                    break;
                 case 300:
                     setMaximumRadioStrength(13000);
-                         break;
+                    break;
             }
 
 //            setMaximumRadioStrength((DEFAULT_MAX_RADIO_STRENGTH * setRadioRange) / DEFAULT_MAX_COMUNICATION_RANGE);
 //            setMaximumRadioStrength(GaussianRadioModel.RangeEstimation(setRadioRange));
-           
+
             this.setRadioRange = setRadioRange;
         }
     }
@@ -171,8 +170,9 @@ public abstract class Node {
     }
 
     public void initEnergyConsumation() {
-     if(enableFunctioningEnergyConsumption)
-        simulator.addEvent(new Node.EnergyWasteEvent( (int)Simulator.randomGenerator.random().nextDouble() * CLOCK_TICK));
+        if (enableFunctioningEnergyConsumption) {
+            simulator.addEvent(new Node.EnergyWasteEvent((int) Simulator.randomGenerator.random().nextDouble() * CLOCK_TICK));
+        }
     }
 
     public Object getMessage() {
@@ -453,6 +453,12 @@ public abstract class Node {
     public String[] getInfo() {
         DecimalFormat twoPlaces = new DecimalFormat("0.00");
         final double remainingPower = 100 * getBateryEnergy().getCurrentPower() / getBateryEnergy().getInitialPower();
+        int nroNeighbors = 0;
+        try {
+            nroNeighbors = getMacLayer().getNeighborhood().neighbors.size();
+        } catch (Exception e) {
+        }
+
         return new String[]{"ID: " + getId(),
                     "Sink:  " + (isSinkNode() ? "True" : "False"),
                     "Position:  (" + (int) getX() + "," + (int) getY() + "," + (int) getZ() + ")",
@@ -460,6 +466,7 @@ public abstract class Node {
                     "Application:  " + this.getApplication().getClass().getSimpleName(),
                     "Routing:  " + this.getRoutingLayer().getClass().getSimpleName(),
                     "MAC:  " + this.getMacLayer().getClass().getSimpleName(),
+                    "Nro. Neighbors:  " + nroNeighbors,
                     "",
                     "Remaining Power:  " + twoPlaces.format(remainingPower <= 0.0 ? 0 : remainingPower) + "%"
                 };
@@ -497,11 +504,11 @@ public abstract class Node {
         this.state = state;
     }
 
-    public boolean isActive(){
-        return state==NodeState.ACTIVE;
-    }
-    public boolean isSleep(){
-        return state==NodeState.SLEEP;
+    public boolean isActive() {
+        return state == NodeState.ACTIVE;
     }
 
+    public boolean isSleep() {
+        return state == NodeState.SLEEP;
+    }
 }

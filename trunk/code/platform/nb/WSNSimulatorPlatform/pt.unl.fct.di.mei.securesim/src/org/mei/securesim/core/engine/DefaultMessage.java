@@ -9,15 +9,24 @@ package org.mei.securesim.core.engine;
  * @author posilva
  */
 public class DefaultMessage {
+    static long numberOfTotalMessage=0;
 
     private byte[] payload;
     private int origin;
     private int destination;
+    private long messageNumber;
 
+    public static long getNumberOfTotalMessage() {
+        return numberOfTotalMessage;
+    }
+
+    public long getMessageNumber() {
+        return messageNumber;
+    }
 
     public DefaultMessage(byte[] payload) {
         this.payload = payload;
-
+        messageNumber=numberOfTotalMessage++;
     }
 
     public byte[] getPayload() {

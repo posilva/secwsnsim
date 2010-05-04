@@ -311,8 +311,6 @@ public class Mica2MACLayer extends MACLayer {
                 corrupted = false;
                 signalStrength = level;
             } else {
-                System.out.println("not receivable: "+ ((DefaultMessage)((Node) stream).getMessage()));
-                
                 noiseStrength += level;
 
             }

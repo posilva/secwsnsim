@@ -62,7 +62,7 @@ public class MessagesFactory {
      */
     public static INSENSMsg createForwardRouteRequestMessage(RREQMsg reqMessage, int origId, Key macKey) {
         RREQMsg message = new RREQMsg(null);
-
+        // can be cloned instead of  a manual copy of attributes
         message.setType(INSENSConstants.MSG_RREQ);
 
         message.setId(origId);
