@@ -25,9 +25,11 @@ package org.mei.securesim.core.radio;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import org.mei.securesim.core.engine.DefaultMessage;
 
 import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.nodes.Node;
+import org.mei.securesim.utils.DebugUtils;
 
 /**
  * This radio model uses the assumption that nodes are mainly static, they don't
@@ -236,16 +238,17 @@ public class GaussianRadioModel extends RadioModel {
          */
         public void beginTransmission(double strength, Object stream) {
             if (stream == null) {
-                throw new IllegalArgumentException(
-                        "The stream object must be non-null");
+                throw new IllegalArgumentException("The stream object must be non-null");
             } else if (this.stream != null) {
-                throw new IllegalStateException(
-                        "No nested transmissions are allowed");
+                throw new IllegalStateException("No nested transmissions are allowed");
             }
+
+            DebugUtils.debugMessage("beginTransmission", stream);
+
             this.stream = stream;
 
             int i = neighbors.size();
-    
+
             while (--i >= 0) {
                 if (neighbors.get(i).isTurnedOn()) {
                     double dynamicStrength = getDynamicStrength(strength,
@@ -253,7 +256,6 @@ public class GaussianRadioModel extends RadioModel {
                     if (dynamicStrengths.get(i) == null) {
                         dynamicStrengths.add(dynamicStrength);
                     }
-
                     dynamicStrengths.set(i, dynamicStrength);
                     neighbors.get(i).getMacLayer().receptionBegin(dynamicStrength, stream);
                 }
@@ -266,11 +268,17 @@ public class GaussianRadioModel extends RadioModel {
          * {@link RadioModel.Neighborhood#beginTransmission} method.
          */
         public void endTransmission() {
+            DebugUtils.debugMessage("endTransmission", stream);
             int i = neighbors.size();
             while (--i >= 0) {
                 neighbors.get(i).getMacLayer().receptionEnd(dynamicStrengths.get(i), stream);
             }
             stream = null;
         }
+        /**
+         *
+         * @param source
+         * @param msg
+         */
     }
 }

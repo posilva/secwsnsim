@@ -13,6 +13,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.mei.securesim.components.crypto.CryptoFunctions;
 import org.mei.securesim.test.insens.utils.INSENSConstants;
+import org.mei.securesim.test.insens.utils.NbrInfo;
+import org.mei.securesim.test.insens.utils.PathInfo;
 import static org.mei.securesim.test.insens.utils.INSENSFunctions.cloneMAC;
 /**
  *
@@ -102,7 +104,8 @@ public class MessagesFactory {
      * @param macKey
      * @return
      */
-    public static INSENSMsg createFeedbackMessage(long ows, Key macKey,FDBKMsg.NbrInfo nbrInfo, FDBKMsg.PathInfo pathInfo, byte[] macParent) {
+    public static INSENSMsg createFeedbackMessage(long ows, Key macKey,NbrInfo nbrInfo, PathInfo pathInfo, byte[] macParent) {
+        
         if (macParent==null ) throw  new IllegalStateException("MacParent Cannot be null");
         FDBKMsg message = new FDBKMsg(null);
         message.setType(INSENSConstants.MSG_FDBK);
