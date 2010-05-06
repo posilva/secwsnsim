@@ -68,7 +68,7 @@ public abstract class Node {
      * 
      */
     protected Node parentNode;
-    private boolean enableFunctioningEnergyConsumption = true;
+    private boolean enableFunctioningEnergyConsumption = false;
 
     public enum NodeState {
 
