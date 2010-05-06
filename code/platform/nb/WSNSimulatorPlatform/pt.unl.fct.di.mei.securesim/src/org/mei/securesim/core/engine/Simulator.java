@@ -228,7 +228,7 @@ public class Simulator {
      *
      * @param e the event to be added to the queue
      */
-    public void addEvent(Event e) {
+    public synchronized void addEvent(Event e) {
         eventQueue.add(e);
     }
 

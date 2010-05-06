@@ -17,6 +17,7 @@ import org.mei.securesim.test.insens.messages.INSENSMsg;
 import org.mei.securesim.test.insens.messages.MessagesFactory;
 import org.mei.securesim.test.insens.messages.RREQMsg;
 import org.mei.securesim.test.insens.messages.RUPDMsg;
+import org.mei.securesim.test.insens.utils.INSENSDebug;
 
 import org.mei.securesim.test.insens.utils.INSENSFunctions;
 import org.mei.securesim.test.insens.utils.MACS;
@@ -53,11 +54,14 @@ public class INSENSRoutingLayer extends RoutingLayer {
     public void receiveMessage(Object message) {
         if (message instanceof INSENSMsg) {
             handleMessageReceive(message);
+        }else{
+            System.out.println("Not a INSENS Message");
         }
     }
 
     @Override
     public void sendMessageDone() {
+        System.out.println("Message " + getNode().getMessage() +"   done...");
     }
 
     @Override
@@ -105,6 +109,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
             if (isFromMyChild(m)) {
                 forwardMessage2BaseStation(m);
             } else {
+//                System.out.println("["+ getNode().getId()+ "]\t Não é meu filho... descarto Origem: "+ m.getOrigin());
             }
         }
     }
@@ -119,12 +124,16 @@ public class INSENSRoutingLayer extends RoutingLayer {
             // DESCARTO AS MENSAGENS RECEBIDAS
         } else {
 
+
+
             RREQMsg msg = (RREQMsg) message;
+
             int senderID = msg.getId();
             long ows = msg.getOWS();
             byte[] parentMAC = msg.getMAC();
 
             if (ows != currentOWS) {
+                System.out.println("["+getNode().getId()+"]\t Receive RREQ: "+ msg.getMessageNumber() + " From " + msg.getOrigin());
                 try {
                     // se receber um ows diferente do corrente
                     // então é uma nova epoca e esta é a primeira vez q recebe
@@ -138,6 +147,8 @@ public class INSENSRoutingLayer extends RoutingLayer {
                 } catch (CloneNotSupportedException ex) {
                     Logger.getLogger(INSENSRoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            }else{
+//                System.out.println("["+getNode().getId()+"]\t MESMO OWS From " + msg.getOrigin());
             }
             addToNeighboorSet(senderID, INSENSFunctions.cloneMAC(parentMAC));
         }
@@ -152,7 +163,10 @@ public class INSENSRoutingLayer extends RoutingLayer {
     public boolean isStable() {
         return stable;
     }
-
+    /**
+     *
+     * @param stable
+     */
     public void setStable(boolean stable) {
         this.stable = stable;
     }
@@ -232,7 +246,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
     /**
      * 
      */
-    private void sendFeedbackMessage() {
+    private synchronized void sendFeedbackMessage() {
         try {
             PathInfo pathInfo = new PathInfo();
             pathInfo.id = getNode().getId();
@@ -256,7 +270,8 @@ public class INSENSRoutingLayer extends RoutingLayer {
             message.setPathInfo(pathInfo);
             message.setNbrInfo(nbrInfo);
             message.setOrigin(getNode().getId());
-            
+            System.out.println("["+getNode().getId()+"]\t Send FeedBack: " + message.getMessageNumber()  );
+
             sendDelayedMessage(message);
         } catch (CloneNotSupportedException ex) {
             Logger.getLogger(INSENSRoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
@@ -282,6 +297,8 @@ public class INSENSRoutingLayer extends RoutingLayer {
      */
     private void forwardMessage2BaseStation(FDBKMsg m) {
         try {
+            System.out.println("["+getNode().getId()+"]\t Forward FDBK: "+ m.getMessageNumber() + " From " + m.getOrigin());
+
             // copia da mensagem
             FDBKMsg clone = (FDBKMsg) m.clone();
             clone.setMACRParent(cloneMAC(neighboorsSet.get(myParentId)));
@@ -298,19 +315,19 @@ public class INSENSRoutingLayer extends RoutingLayer {
      * @param m
      */
     private void sendDelayedMessage(INSENSMsg m) {
-//        Event e = new DelayedMessageEvent(m);
-//        getNode().getSimulator().addEvent(e);
-
-        if (!getNode().getMacLayer().sendMessage(m, this)) {
-            System.out.println("Sending failed");
-        }
+        Event e = new DelayedMessageEvent(m);
+        getNode().getSimulator().addEvent(e);
+     
+//        if (!getNode().getMacLayer().sendMessage(m, this)) {
+//            System.out.println("Sending failed");
+//        }
     }
 
     private void saveFeedbackMessage(FDBKMsg m) {
         System.out.println("Saved FDBK Message " + m.getMessageNumber() + " From " + m.getOrigin());
     }
 
-    /*
+    /**
      * Class para materializar um evento de temporização
      * de mensagens de feedback
      */

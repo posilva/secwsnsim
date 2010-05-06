@@ -4,6 +4,8 @@
  */
 package org.mei.securesim.core.layers.mac;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.mei.securesim.core.energy.EnergyConsumptionAction;
 import org.mei.securesim.core.engine.DefaultMessage;
 import org.mei.securesim.core.engine.Event;
@@ -160,7 +162,7 @@ public class Mica2MACLayer extends MACLayer {
      * Calls the {@link Mica2MACLayer#addNoise} method. See also
      * {@link Node#receptionBegin} for more information.
      */
-    public void receptionBegin(double strength, Object stream) {
+    public synchronized  void receptionBegin(double strength, Object stream) {
         // inicio da recepção, pode-se verificar o estado do nó e
         // caso o TX esteja ON recebe senão aborta
 //ss        System.out.println(">"+ getNode().getId()  + ": "+ ((Node) stream).getMessage() + " from "+ ((DefaultMessage)((Node) stream).getMessage()).getOrigin());
@@ -171,7 +173,7 @@ public class Mica2MACLayer extends MACLayer {
      * Calls the {@link Mica2MACLayer#removeNoise} method. See also
      * {@link Node#receptionEnd} for more information.
      */
-    public void receptionEnd(double strength, Object stream) {
+    public synchronized  void receptionEnd(double strength, Object stream) {
         removeNoise(strength, stream);
     }
 
@@ -192,6 +194,7 @@ public class Mica2MACLayer extends MACLayer {
         } else {
             sending = true;
             transmitting = false;
+            
             this.getNode().setMessage(message);
             senderRoutingLayer = (RoutingLayer) app;
 
@@ -311,6 +314,7 @@ public class Mica2MACLayer extends MACLayer {
                 corrupted = false;
                 signalStrength = level;
             } else {
+//                System.out.println("Not receivable");
                 noiseStrength += level;
 
             }
@@ -331,26 +335,20 @@ public class Mica2MACLayer extends MACLayer {
     protected void removeNoise(double level, final Object stream) {
         // guarda o ID e compara como o que recebeu no inicio da recepção
         if (parentID == ((Node) stream).getId()) {
+
             receiving = false;
             if (!corrupted) {
+                    final Node node = Node.cast(stream);
+                    getNode().getTransceiver().executeReception(new EnergyConsumptionAction() {
+                        DefaultMessage m =(DefaultMessage) node.getMessage();
+                        public void execute() {
+                            deliverMessage(m);
+                        }
 
-                final Node node = Node.cast(stream);
-
-                getNode().getTransceiver().executeReception(new EnergyConsumptionAction() {
-
-                    DefaultMessage m = (DefaultMessage) node.getMessage();
-
-                    public void execute() {
-
-                        deliverMessage(m);
-
-                    }
-
-                    public int getNumberOfUnits() {
-
-                        return m.size();
-                    }
-                });
+                        public int getNumberOfUnits() {
+                            return m.size();
+                        }
+                    });
             }
 
             signalStrength = 0;
