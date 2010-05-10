@@ -228,11 +228,16 @@ public class CryptoFunctions {
         return Arrays.copyOf(buffer, KEY_SIZE);
 
     }
+
     public static Key createSkipjackKeyObject() throws Exception {
 
-            KeyGenerator key_g = KeyGenerator.getInstance(CYPHER_ALGORITHM, "BC");
-            SecretKey k = key_g.generateKey();
-            return k;
+        KeyGenerator key_g = KeyGenerator.getInstance(CYPHER_ALGORITHM, "BC");
+        SecretKey k = key_g.generateKey();
+        return k;
 
+    }
+
+    public static boolean verifyMessageIntegrityMAC(byte[] payload, byte[] received_mac, byte[] key) {
+        return Arrays.equals(received_mac, CryptoFunctions.createMAC(payload, key));
     }
 }

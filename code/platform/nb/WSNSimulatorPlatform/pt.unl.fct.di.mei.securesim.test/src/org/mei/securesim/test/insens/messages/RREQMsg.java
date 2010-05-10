@@ -73,7 +73,7 @@ public class RREQMsg extends INSENSMsg {
         RREQMsg m = (RREQMsg) super.clone();
         m.path = new Vector<Integer>();
         for (Integer i : path) {
-            m.path.addElement(i.intValue());
+            m.path.addElement(new Integer(i.intValue()));
         }
         return m;
     }

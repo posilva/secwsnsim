@@ -46,6 +46,8 @@ public class INSENSNode extends Mica2SensorNode implements IDisplayable {
             macKey = CryptoFunctions.createSkipjackKeyObject();
             encKey = CryptoFunctions.createSkipjackKeyObject();
             INSENSFunctions.shareKeyWithBaseStation(getId(), encKey);
+            INSENSFunctions.shareMACKeyWithBaseStation(getId(), macKey);
+
             iv = CryptoFunctions.createIV(0);
             S0 = INSENSConstants.INITIAL_NK;
         } catch (Exception ex) {

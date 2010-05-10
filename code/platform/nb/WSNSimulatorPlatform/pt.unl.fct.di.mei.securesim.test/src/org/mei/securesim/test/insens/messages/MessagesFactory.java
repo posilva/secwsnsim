@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.mei.securesim.components.crypto.CryptoFunctions;
 import org.mei.securesim.test.insens.utils.INSENSConstants;
+import org.mei.securesim.test.insens.utils.INSENSFunctions;
 import org.mei.securesim.test.insens.utils.NbrInfo;
 import org.mei.securesim.test.insens.utils.PathInfo;
 import static org.mei.securesim.test.insens.utils.INSENSFunctions.cloneMAC;
@@ -114,11 +115,13 @@ public class MessagesFactory {
         message.setNbrInfo(nbrInfo);
         message.setMACRParent(cloneMAC(macParent));
         byte[] data = message.toByteArray();
-
         byte[] macData = CryptoFunctions.createMAC(data, macKey.getEncoded());
 
         message.setMAC(macData);
-
+//        System.out.println("Creation of FDBK Message from " + pathInfo.id);
+//       System.out.println("\t Sent MACF: "+ INSENSFunctions.toHex(macData));
+//       System.out.println("\t Sent Payload: "+ INSENSFunctions.toHex(data));
+//       System.out.println("\t Origin KEY: "+ INSENSFunctions.toHex(macKey.getEncoded()));
         return message;
     }
 
