@@ -2,9 +2,13 @@ package org.mei.securesim.test.insens;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.Set;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.mei.securesim.components.crypto.CryptoFunctions;
 import org.mei.securesim.test.insens.utils.INSENSConstants;
 import org.mei.securesim.test.insens.messages.APPMsg;
 import org.mei.securesim.core.application.Application;
@@ -17,12 +21,13 @@ import org.mei.securesim.test.insens.messages.INSENSMsg;
 import org.mei.securesim.test.insens.messages.MessagesFactory;
 import org.mei.securesim.test.insens.messages.RREQMsg;
 import org.mei.securesim.test.insens.messages.RUPDMsg;
-import org.mei.securesim.test.insens.utils.INSENSDebug;
 
 import org.mei.securesim.test.insens.utils.INSENSFunctions;
 import org.mei.securesim.test.insens.utils.MACS;
 import org.mei.securesim.test.insens.utils.NbrInfo;
 import org.mei.securesim.test.insens.utils.PathInfo;
+import org.mei.securesim.test.insens.utils.graph.Dijkstra;
+import org.mei.securesim.test.insens.utils.graph.WeightedGraph;
 import static org.mei.securesim.test.insens.utils.INSENSFunctions.cloneMAC;
 
 /**
@@ -30,6 +35,8 @@ import static org.mei.securesim.test.insens.utils.INSENSFunctions.cloneMAC;
  * @author pedro
  */
 public class INSENSRoutingLayer extends RoutingLayer {
+
+    private Hashtable networkNeighbors = new Hashtable();
 
     public enum ProtocolState {
 
@@ -39,13 +46,11 @@ public class INSENSRoutingLayer extends RoutingLayer {
     /**
      * Attributes
      */
-    boolean stable;
-    private long currentOWS = -1;
-    private RREQMsg parentRREQMsg;
-    private int myParentId = -1;
-    private int roundNumber = -1;
+    private long currentOWS = -1; // currente OWS value
+    private RREQMsg parentRREQMsg; // message received from parent
+    private int roundNumber = -1; // helper for sink node start new round
     private HashMap<Integer, byte[]> neighboorsSet = new HashMap<Integer, byte[]>();
-    private byte[] myMAC;
+    private byte[] sentRREQMAC; // record the mac sent for each first RREQ received
 
     /*
      * Base methods
@@ -53,15 +58,20 @@ public class INSENSRoutingLayer extends RoutingLayer {
     @Override
     public void receiveMessage(Object message) {
         if (message instanceof INSENSMsg) {
-            handleMessageReceive(message);
-        }else{
+            try {
+                INSENSMsg msg = (INSENSMsg) ((INSENSMsg) message).clone();
+                handleMessageReceive(msg);
+            } catch (CloneNotSupportedException ex) {
+                Logger.getLogger(INSENSRoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
             System.out.println("Not a INSENS Message");
         }
     }
 
     @Override
     public void sendMessageDone() {
-        System.out.println("Message " + getNode().getMessage() +"   done...");
+        System.out.println("Message " + getNode().getMessage() + "   done...");
     }
 
     @Override
@@ -123,36 +133,20 @@ public class INSENSRoutingLayer extends RoutingLayer {
         if (getNode().isSinkNode()) {
             // DESCARTO AS MENSAGENS RECEBIDAS
         } else {
-
-
-
             RREQMsg msg = (RREQMsg) message;
 
             int senderID = msg.getId();
             long ows = msg.getOWS();
             byte[] parentMAC = msg.getMAC();
 
-            if (ows != currentOWS) {
-                System.out.println("["+getNode().getId()+"]\t Receive RREQ: "+ msg.getMessageNumber() + " From " + msg.getOrigin());
-                try {
-                    // se receber um ows diferente do corrente
-                    // então é uma nova epoca e esta é a primeira vez q recebe
-                    // então faz broadcast
-                    parentRREQMsg = (RREQMsg) msg.clone();
-
-                    myParentId = msg.getId();
-                    newRouteDiscovery(msg);
-                    // actualiza o ows corrente
-                    currentOWS = ows;
-                } catch (CloneNotSupportedException ex) {
-                    Logger.getLogger(INSENSRoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }else{
-//                System.out.println("["+getNode().getId()+"]\t MESMO OWS From " + msg.getOrigin());
+            if (verifyOWS(ows)) {
+                currentOWS = ows;
+                System.out.println("[" + getNode().getId() + "]\t Receive RREQ: " + msg.getMessageNumber() + " From " + msg.getOrigin());
+                saveFirstRREQMessage(msg);
+                newRouteDiscovery(msg);
             }
             addToNeighboorSet(senderID, INSENSFunctions.cloneMAC(parentMAC));
         }
-
     }
 
     /**
@@ -161,14 +155,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
      * @return
      */
     public boolean isStable() {
-        return stable;
-    }
-    /**
-     *
-     * @param stable
-     */
-    public void setStable(boolean stable) {
-        this.stable = stable;
+        return state == ProtocolState.STABLE;
     }
 
     /**
@@ -202,13 +189,15 @@ public class INSENSRoutingLayer extends RoutingLayer {
         // create de message instance
         RREQMsg m = (RREQMsg) MessagesFactory.createRouteRequestMessage(getNode().getId(), currentOWS, ((INSENSNode) getNode()).getMacKey());
 
-        myMAC = cloneMAC(m.getMAC());
+        sentRREQMAC = cloneMAC(m.getMAC());
 
-        if (myMAC == null) {
+        if (sentRREQMAC == null) {
             System.out.println("MAC NULL");
         }
 
         sendDelayedMessage(m);
+        waitToCalculateRoutingTables();
+
     }
 
     private void addToNeighboorSet(int id, byte[] mac) {
@@ -217,12 +206,19 @@ public class INSENSRoutingLayer extends RoutingLayer {
 
     private void newRouteDiscovery(RREQMsg reqMessage) {
         resetNeighboorSet();
+
+        state = ProtocolState.BUILD;
+
         INSENSMsg m = MessagesFactory.createForwardRouteRequestMessage(reqMessage, getNode().getId(), ((INSENSNode) getNode()).getMacKey());
+
         if (m.getMAC() == null) {
             System.out.println("newRouteDiscovery: MAC == NULL");
         }
-        myMAC = cloneMAC(m.getMAC());
+
+        sentRREQMAC = cloneMAC(m.getMAC());
+
         sendDelayedMessage(m);
+
         waitToSendFeedBack();
 
     }
@@ -265,29 +261,30 @@ public class INSENSRoutingLayer extends RoutingLayer {
             }
             nbrInfo.macs = macs;
 
-            FDBKMsg message = (FDBKMsg) MessagesFactory.createFeedbackMessage(currentOWS, ((INSENSNode) getNode()).getMacKey(), (NbrInfo) (nbrInfo.clone()), (PathInfo) (pathInfo.clone()), cloneMAC(neighboorsSet.get(myParentId)));
-            
+            FDBKMsg message = (FDBKMsg) MessagesFactory.createFeedbackMessage(currentOWS, ((INSENSNode) getNode()).getMacKey(), (NbrInfo) (nbrInfo.clone()), (PathInfo) (pathInfo.clone()), cloneMAC(neighboorsSet.get(parentRREQMsg.getId())));
+
             message.setPathInfo(pathInfo);
             message.setNbrInfo(nbrInfo);
             message.setOrigin(getNode().getId());
-            System.out.println("["+getNode().getId()+"]\t Send FeedBack: " + message.getMessageNumber()  );
+            System.out.println("[" + getNode().getId() + "]\t Send FeedBack: " + message.getMessageNumber());
 
             sendDelayedMessage(message);
         } catch (CloneNotSupportedException ex) {
             Logger.getLogger(INSENSRoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     /**
      * 
      * @param m
      * @return
      */
     private boolean isFromMyChild(FDBKMsg m) {
-        if (myMAC == null) {
+        if (sentRREQMAC == null) {
             System.out.println("MAC NULL");
             return false;
         }
-        return (Arrays.equals(m.getMACRParent(), myMAC));
+        return (Arrays.equals(m.getMACRParent(), sentRREQMAC));
     }
 
     /**
@@ -297,17 +294,17 @@ public class INSENSRoutingLayer extends RoutingLayer {
      */
     private void forwardMessage2BaseStation(FDBKMsg m) {
         try {
-            System.out.println("["+getNode().getId()+"]\t Forward FDBK: "+ m.getMessageNumber() + " From " + m.getOrigin());
+            System.out.println("[" + getNode().getId() + "]\t Forward FDBK: "
+                    + m.getMessageNumber() + " From " + m.getOrigin());
 
             // copia da mensagem
             FDBKMsg clone = (FDBKMsg) m.clone();
-            clone.setMACRParent(cloneMAC(neighboorsSet.get(myParentId)));
+            clone.setMACRParent(cloneMAC(neighboorsSet.get(parentRREQMsg.getId())));
             clone.setForwardBy(getNode().getId());
             sendDelayedMessage(clone);
         } catch (CloneNotSupportedException ex) {
             Logger.getLogger(INSENSRoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     /**
@@ -317,14 +314,165 @@ public class INSENSRoutingLayer extends RoutingLayer {
     private void sendDelayedMessage(INSENSMsg m) {
         Event e = new DelayedMessageEvent(m);
         getNode().getSimulator().addEvent(e);
-     
+
 //        if (!getNode().getMacLayer().sendMessage(m, this)) {
 //            System.out.println("Sending failed");
 //        }
     }
 
+    private void computeForwardingTables() {
+        int numberOfNodes = networkNeighbors.size();
+
+        Set<Edge> edges = verifyEdges();
+
+        WeightedGraph graph = new WeightedGraph(numberOfNodes);
+
+        for (int i = 0; i < numberOfNodes; i++) {
+            graph.setLabel(i, "node_" + i);
+        }
+
+        for (Edge e : edges) {
+            graph.addEdge(e.node1, e.node2);
+        }
+        final int[] pred = Dijkstra.dijkstra(graph, getNode().getId());
+        for (int n = 0; n < numberOfNodes; n++) {
+            Dijkstra.printPath(graph, pred, getNode().getId(), n);
+        }
+
+
+
+
+    }
+
     private void saveFeedbackMessage(FDBKMsg m) {
         System.out.println("Saved FDBK Message " + m.getMessageNumber() + " From " + m.getOrigin());
+
+        if (sinkNodeVerificationOfMACFx(m)) {
+            updateTableOfNetworkNeighbors(m);
+        }
+
+        // save the list of nodes existing in network
+
+        // for each node verify the MAC
+
+        // save list of parents
+
+        // save neighborhood information
+
+        // build routing tables
+
+        //
+
+
+
+    }
+
+    /**
+     * 
+     * @param msg
+     */
+    private void saveFirstRREQMessage(RREQMsg msg) {
+        try {
+            // se receber um ows diferente do corrente
+            // então é uma nova epoca e esta é a primeira vez q recebe
+            // então faz broadcast
+            parentRREQMsg = (RREQMsg) msg.clone();
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(INSENSRoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * 
+     * @param m
+     * @return
+     */
+    private boolean sinkNodeVerificationOfMACFx(FDBKMsg m) {
+        byte[] receivedMACF = m.getMAC();
+        int origin = m.getPathInfo().id;
+        byte[] payload = m.toByteArray();
+        byte[] key = INSENSFunctions.getShareMacKey(origin).getEncoded();
+        boolean status = CryptoFunctions.verifyMessageIntegrityMAC(payload, receivedMACF, key);
+
+//        System.out.println("Verification of FDBK Message from " + m.getPathInfo().id);
+//        System.out.println("\t Received MACF: " + INSENSFunctions.toHex(receivedMACF));
+//        System.out.println("\t Received Payload: " + INSENSFunctions.toHex(payload));
+//        System.out.println("\t Origin KEY: " + INSENSFunctions.toHex(key));
+//        System.out.println("\t Verification: " + (status ? "OK" : "FAILED"));
+
+        return status;
+    }
+
+    /**
+     *
+     * @param m
+     * @return
+     */
+    private boolean verifyNeighborHoodInformation(FDBKMsg m) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    /**
+     *
+     * @param m
+     */
+    private void updateTableOfNetworkNeighbors(FDBKMsg m) {
+        Vector neighbors = (Vector) networkNeighbors.get(m.getPathInfo().id);
+        if (neighbors == null) {
+            networkNeighbors.put(m.getPathInfo().id, m.getNbrInfo());
+        }
+    }
+
+    /**
+     *
+     * @param ows
+     * @return
+     */
+    private boolean verifyOWS(long ows) {
+        return ows != currentOWS;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    private Set verifyEdges() {
+        Set edges = new HashSet();
+        for (Object o : networkNeighbors.keySet()) {
+            Vector v = (Vector) networkNeighbors.get(o);
+            for (Object o2 : v) {
+                MACS m = (MACS) o2;
+                if (nodesAreNeighbors(((Integer) o).intValue(), m.id)) {
+                    edges.add(new Edge(((Integer) o).intValue(), m.id));
+                }
+            }
+
+
+
+        }
+        return edges;
+    }
+
+    /**
+     *
+     * @param n1
+     * @param n2
+     * @return
+     */
+    private boolean nodesAreNeighbors(int n1, int n2) {
+        Vector nb1 = (Vector) networkNeighbors.get(n1);
+        Vector nb2 = (Vector) networkNeighbors.get(n2);
+        return true;
+
+
+
+    }
+    
+    /**
+     *
+     */
+    private void waitToCalculateRoutingTables() {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     /**
@@ -373,6 +521,20 @@ public class INSENSRoutingLayer extends RoutingLayer {
                 System.out.println("SEND FAILED " + ((DefaultMessage) getMessage()).getMessageNumber());
             }
 
+        }
+    }
+
+    /**
+     * Class representing a edge from a graph
+     */
+    class Edge {
+
+        int node1;
+        int node2;
+
+        private Edge(int n1, int n2) {
+            node1 = n1;
+            node2 = n2;
         }
     }
 }

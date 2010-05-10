@@ -19,6 +19,7 @@ public class INSENSFunctions {
 
     protected static boolean initiated = false;
     protected static Map KEY_MAP = new HashMap();
+    protected static Map MACKEY_MAP = new HashMap();
 
     public static long oneWayHash(long number) {
         return JSHash(String.valueOf(number));
@@ -66,11 +67,18 @@ public class INSENSFunctions {
         KEY_MAP.put(id, key);
 
     }
+     public static void shareMACKeyWithBaseStation(int id, Key key) {
+        MACKEY_MAP.put(id, key);
+
+    }
     public static void debug(Object msg ){
         System.out.println(msg);
     } 
     public static Key getShareKey(int id) {
         return (Key) KEY_MAP.get(id);
+    }
+    public static Key getShareMacKey(int id) {
+        return (Key) MACKEY_MAP.get(id);
     }
 
     public static long getNextOWS(int roundNumber) {
