@@ -25,7 +25,6 @@ package org.mei.securesim.core.radio;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import org.mei.securesim.core.engine.DefaultMessage;
 
 import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.nodes.Node;
@@ -236,7 +235,7 @@ public class GaussianRadioModel extends RadioModel {
          * factors and a per-transmission dynamic randomGenerator factor. Then calls the
          * {@link Node#receptionBegin} method on all neighbors.
          */
-        public void beginTransmission(double strength, Object stream) {
+        public synchronized  void beginTransmission(double strength, Object stream) {
             if (stream == null) {
                 throw new IllegalArgumentException("The stream object must be non-null");
             } else if (this.stream != null) {
@@ -248,7 +247,7 @@ public class GaussianRadioModel extends RadioModel {
             this.stream = stream;
 
             int i = neighbors.size();
-
+//            Node node = (Node) stream;
             while (--i >= 0) {
                 if (neighbors.get(i).isTurnedOn()) {
                     double dynamicStrength = getDynamicStrength(strength,
@@ -257,6 +256,7 @@ public class GaussianRadioModel extends RadioModel {
                         dynamicStrengths.add(dynamicStrength);
                     }
                     dynamicStrengths.set(i, dynamicStrength);
+//                    System.out.println("Send >"+ node.getId()  + ": "+ node.getMessage() + " to  "+ neighbors.get(i).getId());
                     neighbors.get(i).getMacLayer().receptionBegin(dynamicStrength, stream);
                 }
             }

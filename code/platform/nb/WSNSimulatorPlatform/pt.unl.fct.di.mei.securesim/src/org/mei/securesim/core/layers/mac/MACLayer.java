@@ -84,21 +84,21 @@ public abstract class MACLayer extends Layer {
     }
 
     protected final void beginTransmission(final double strength, Object stream) {
-//        Node n = (Node) stream;
-
-        final Node nd = Node.cast(stream);
-        getNode().getTransceiver().executeTransmission(new EnergyConsumptionAction() {
-
-            Node n = nd;
-
-            public void execute() {
-                neighborhood.beginTransmission(strength, n);
-            }
-
-            public int getNumberOfUnits() {
-                return ((DefaultMessage) n.getMessage()).size();
-            }
-        });
+        Node n = (Node) stream;
+        neighborhood.beginTransmission(strength, n);
+//        final Node nd = Node.cast(stream);
+//        getNode().getTransceiver().executeTransmission(new EnergyConsumptionAction() {
+//
+//            Node n = nd;
+//
+//            public void execute() {
+//                neighborhood.beginTransmission(strength, n);
+//            }
+//
+//            public int getNumberOfUnits() {
+//                return ((DefaultMessage) n.getMessage()).size();
+//            }
+//        });
 
     }
 

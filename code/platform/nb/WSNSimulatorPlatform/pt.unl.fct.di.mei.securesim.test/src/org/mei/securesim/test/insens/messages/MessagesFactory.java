@@ -74,8 +74,9 @@ public class MessagesFactory {
 
         message.setPath(new Vector<Integer>());
 
-        for (Integer object : reqMessage.getPath()) {
-            message.getPath().addElement(object.intValue());
+        for (Object object : reqMessage.getPath()) {
+            int i = ((Integer)object).intValue();
+            message.getPath().addElement(i);
         }
 
         message.getPath().addAll(reqMessage.getPath());

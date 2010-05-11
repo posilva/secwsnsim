@@ -48,7 +48,7 @@ public class Simulator {
 
     public static final int SIMULATOR_STEPS = 200;
     public static final int RUNTIME_NUM_STEPS = 1;
-    public static final Integer SIMULATION_SPEED_DEFAULT = 40000;
+    public static final Integer SIMULATION_SPEED_DEFAULT = 80000;
     public static Integer ONE_SECOND = SIMULATION_SPEED_DEFAULT;
     static Logger LOGGER = Logger.getLogger(Simulator.class.getName());
     /**
@@ -228,7 +228,7 @@ public class Simulator {
      *
      * @param e the event to be added to the queue
      */
-    public synchronized void addEvent(Event e) {
+    public void addEvent(Event e) {
         eventQueue.add(e);
     }
 
@@ -243,7 +243,7 @@ public class Simulator {
         if (event != null) {
             lastEventTime = event.time;
             event.execute();
-            // System.out.println("Executado um evento: "+ event.getClass().getSimpleName());
+//            System.out.println("Executado um evento: "+ event);
             handlePause();
         } else {
 

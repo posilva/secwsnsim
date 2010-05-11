@@ -4,9 +4,6 @@
  */
 package org.mei.securesim.core.layers.mac;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.mei.securesim.core.energy.EnergyConsumptionAction;
 import org.mei.securesim.core.engine.DefaultMessage;
 import org.mei.securesim.core.engine.Event;
 import org.mei.securesim.core.engine.Simulator;
@@ -43,9 +40,9 @@ public class Mica2MACLayer extends MACLayer {
     // MAC layer specific constants
     // //////////////////////////////
     /** The constant component of the time spent waiting before a transmission. */
-    public static int sendMinWaitingTime = 200;
+    public static int sendMinWaitingTime = 200;//200;
     /** The variable component of the time spent waiting before a transmission. */
-    public static int sendRandomWaitingTime = 128;
+    public static int sendRandomWaitingTime = 128;//128;
     /** The constant component of the backoff time. */
     public static int sendMinBackOffTime = 100;
     /** The variable component of the backoff time. */
@@ -165,7 +162,7 @@ public class Mica2MACLayer extends MACLayer {
     public synchronized  void receptionBegin(double strength, Object stream) {
         // inicio da recepção, pode-se verificar o estado do nó e
         // caso o TX esteja ON recebe senão aborta
-//ss        System.out.println(">"+ getNode().getId()  + ": "+ ((Node) stream).getMessage() + " from "+ ((DefaultMessage)((Node) stream).getMessage()).getOrigin());
+       // System.out.println(">"+ getNode().getId()  + ": "+ ((Node) stream).getMessage() + " from "+ ((DefaultMessage)((Node) stream).getMessage()).getOrigin());
         addNoise(strength, stream);
     }
 
@@ -194,7 +191,7 @@ public class Mica2MACLayer extends MACLayer {
         } else {
             sending = true;
             transmitting = false;
-            
+//            System.out.println("Sending Message: "+ message.getClass().getName() + " Overwrite " + getNode().getMessage().getClass().getName());
             this.getNode().setMessage(message);
             senderRoutingLayer = (RoutingLayer) app;
 
@@ -300,6 +297,7 @@ public class Mica2MACLayer extends MACLayer {
     }
 
     protected void addNoise(double level, Object stream) {
+
         if (receiving) {
             noiseStrength += level;
             if (isMessageCorrupted(signalStrength, noiseStrength)) {
@@ -338,17 +336,29 @@ public class Mica2MACLayer extends MACLayer {
 
             receiving = false;
             if (!corrupted) {
-                    final Node node = Node.cast(stream);
-                    getNode().getTransceiver().executeReception(new EnergyConsumptionAction() {
-                        DefaultMessage m =(DefaultMessage) node.getMessage();
-                        public void execute() {
-                            deliverMessage(m);
-                        }
+                
+                Node node = Node.cast(stream);
+                DefaultMessage m =(DefaultMessage) node.getMessage();
+                deliverMessage(m);
 
-                        public int getNumberOfUnits() {
-                            return m.size();
-                        }
-                    });
+//                    final Node node = Node.cast(stream);
+//
+//                    getNode().getTransceiver().executeReception(new EnergyConsumptionAction() {
+//
+//                        DefaultMessage m =(DefaultMessage) node.getMessage();
+//
+//                        public void execute() {
+//                            deliverMessage(m);
+//                        }
+//
+//                        public int getNumberOfUnits() {
+//                            return m.size();
+//                        }
+//                    });
+            }else {
+//                Node node = Node.cast(stream);
+//                DefaultMessage m =(DefaultMessage) node.getMessage();
+//                System.out.println("["+ getNode().getId() +"] "+ m+ " is currupted! from " + m.getOrigin() );
             }
 
             signalStrength = 0;
