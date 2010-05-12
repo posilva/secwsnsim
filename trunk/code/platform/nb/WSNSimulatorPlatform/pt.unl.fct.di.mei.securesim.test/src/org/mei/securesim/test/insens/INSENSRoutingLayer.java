@@ -12,7 +12,6 @@ import org.mei.securesim.components.crypto.CryptoFunctions;
 import org.mei.securesim.test.insens.utils.INSENSConstants;
 import org.mei.securesim.test.insens.messages.APPMsg;
 import org.mei.securesim.core.application.Application;
-import org.mei.securesim.core.engine.DefaultMessage;
 import org.mei.securesim.core.engine.Event;
 import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.layers.routing.RoutingLayer;
@@ -36,9 +35,6 @@ import static org.mei.securesim.test.insens.utils.INSENSFunctions.cloneMAC;
  */
 public class INSENSRoutingLayer extends RoutingLayer {
 
-    private HashSet edges;
-    private HashSet vertix;
-
     public enum TimeoutAction {
 
         WAIT_FEEDBACK, WAIT_BUILD_ROUTING
@@ -51,16 +47,16 @@ public class INSENSRoutingLayer extends RoutingLayer {
     private Set feedbackMessagesSet = new HashSet();
     private Hashtable tableOfNetworkNeighbors = new Hashtable();
     private Hashtable tableOfNetworkNodes = new Hashtable();
+    private Hashtable tableOfForwardingTables=new Hashtable();
+    private HashSet edges;
+    private HashSet vertix;
+    private HashMap neighboorsSet = new HashMap();
+
     private ProtocolState state = ProtocolState.ROUTE_REQUEST;
-    /**
-     * Attributes
-     */
     private long currentOWS = -1; // currente OWS value
     private RREQMsg parentRREQMsg; // message received from parent
     private int roundNumber = -1; // helper for sink node start new round
-    private HashMap neighboorsSet = new HashMap();
     private byte[] myMACR; // record the mac sent for each first RREQ received
-
     /*
      * Base methods
      */
@@ -70,9 +66,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
             try {
                 INSENSMsg msg = (INSENSMsg) message;
 //                System.out.println("["+ getNode().getId()+ "] Receive Message:"+msg +" From " + msg.getOrigin() );
-
                 msg = (INSENSMsg) ((INSENSMsg) message).clone();
-
                 handleMessageReceive(msg);
             } catch (CloneNotSupportedException ex) {
                 Logger.getLogger(INSENSRoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
@@ -149,8 +143,6 @@ public class INSENSRoutingLayer extends RoutingLayer {
 
         if (getNode().isSinkNode()) {
             // DESCARTO AS MENSAGENS RECEBIDAS
-            addToNeighboorSet(senderID, INSENSFunctions.cloneMAC(parentMAC));
-
         } else {
 
             if (verifyOWS(ows)) {
@@ -159,8 +151,8 @@ public class INSENSRoutingLayer extends RoutingLayer {
                 saveFirstRREQMessage(msg);
                 newRouteDiscovery(msg);
             }
-            addToNeighboorSet(senderID, INSENSFunctions.cloneMAC(parentMAC));
         }
+        addToNeighboorSet(senderID, INSENSFunctions.cloneMAC(parentMAC));
     }
 
     /**
@@ -200,7 +192,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
      * Mensagem inicial de reorganização da rede
      */
     private void startNetworkOrganization() {
-        // create de message instance
+        /* create a initial route request message */
         RREQMsg m = (RREQMsg) MessagesFactory.createRouteRequestMessage(getNode().getId(), currentOWS, ((INSENSNode) getNode()).getMacKey());
 
         myMACR = cloneMAC(m.getMAC());
@@ -215,6 +207,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
     }
 
     private void addToNeighboorSet(int id, byte[] mac) {
+        //System.out.println(getNode().getId() +": Add Neighbor: "+id);
         neighboorsSet.put(id, mac);
     }
 
@@ -234,7 +227,6 @@ public class INSENSRoutingLayer extends RoutingLayer {
         sendDelayedMessage(m);
 
         waitToSendFeedBack();
-
     }
 
     /**
@@ -312,8 +304,8 @@ public class INSENSRoutingLayer extends RoutingLayer {
      */
     private void forwardMessage2BaseStation(FDBKMsg m) {
         try {
-            System.out.println("[" + getNode().getId() + "]\t Forward FDBK: "
-                    + m.getMessageNumber() + " From " + m.getOrigin());
+//            System.out.println("[" + getNode().getId() + "]\t Forward FDBK: "
+//                    + m.getMessageNumber() + " From " + m.getOrigin());
 
             // copia da mensagem
             FDBKMsg clone = (FDBKMsg) m.clone();
@@ -346,13 +338,17 @@ public class INSENSRoutingLayer extends RoutingLayer {
     private void computeForwardingTables() {
         //@TODO MUST VALIDATE EDGE AND VERTIX SETS*/
         int numberOfNodes = vertix.size();
+        System.out.println("Number of knowned nodes: " + numberOfNodes);
         WeightedGraph graph = new WeightedGraph(numberOfNodes);
 
         Vector nodeTable = new Vector();
         nodeTable.addAll(vertix);
 
 
-
+        for (Object object : vertix) {
+            int n1 = nodeTable.indexOf(object);
+            graph.setLabel(n1, object);
+        }
 
         for (Object edge : edges) {
 
@@ -361,11 +357,11 @@ public class INSENSRoutingLayer extends RoutingLayer {
             int n2 = nodeTable.indexOf(e.node2);
             graph.addEdge(n1, n2);
         }
-        final int[] pred = Dijkstra.dijkstra(graph, nodeTable.indexOf(getNode().getId()));
-
-        for (int n = 0; n < numberOfNodes; n++) {
-            Dijkstra.printPath(graph, pred, getNode().getId(), n);
+        for (Object key : tableOfNetworkNodes.keySet()) {
+            int node = ((Integer) key).intValue();
+            getNodeDijkstraPaths(graph, nodeTable, numberOfNodes, node);
         }
+//        getNodeDijkstraPaths(graph, nodeTable, numberOfNodes,(int) getNode().getId());
     }
 
     private void saveFeedbackMessage(FDBKMsg m) {
@@ -428,7 +424,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
      */
     private void waitToCalculateRoutingTables() {
         Event e = new TimeoutWaitEvent(TimeoutAction.WAIT_BUILD_ROUTING);
-        e.setTime(getNode().getSimulator().getSimulationTime() + INSENSConstants.FEEDBACK_WAITING_TIME * 5);
+        e.setTime(getNode().getSimulator().getSimulationTime() + INSENSConstants.FEEDBACK_WAITING_TIME * 2);
         getNode().getSimulator().addEvent(e);
 
     }
@@ -492,7 +488,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
         @Override
         public void execute() {
             if (!getNode().getMacLayer().sendMessage(getMessage(), INSENSRoutingLayer.this)) {
-                System.out.println("SEND FAILED " + ((DefaultMessage) getMessage()).getMessageNumber());
+//                System.out.println("SEND FAILED " + ((DefaultMessage) getMessage()).getMessageNumber());
             }
 
         }
@@ -543,14 +539,15 @@ public class INSENSRoutingLayer extends RoutingLayer {
             /* construir uma tabela com os nos da rede*/
             tableOfNetworkNodes.put(idOfNode, MACRNode);
             tableOfNetworkNeighbors.put(idOfNode, m.getNbrInfo().macs);
+
         }
         if (getNode().isSinkNode()) {
-            tableOfNetworkNodes.put(getNode().getId(), myMACR);
+            tableOfNetworkNodes.put((int) getNode().getId(), myMACR);
             Vector v = new Vector();
             for (Object key : neighboorsSet.keySet()) {
                 v.add(new MACS(((Integer) key).intValue(), cloneMAC((byte[]) neighboorsSet.get(key))));
             }
-            tableOfNetworkNeighbors.put(getNode().getId(), v);
+            tableOfNetworkNeighbors.put((int) getNode().getId(), v);
         }
 
     }
@@ -579,19 +576,28 @@ public class INSENSRoutingLayer extends RoutingLayer {
                         if (neighborhoodTable.get(key) == null) {
                             neighborhoodTable.put(key, new Vector());
                         }
-
                         Vector v = (Vector) neighborhoodTable.get(key);
                         v.add(n.id);
-                        neighborhoodTable.put(key, v);
+                        int k = ((Integer) key).intValue();
+                        neighborhoodTable.put(k, v);
+                    } else {
+                        // this could be a case of intrusion or a tampering attack
+                        System.out.println("MCR doesn't match:key: " + key + " " + INSENSFunctions.toHex(MACRxReported) + ",n.id: " + n.id + " " + INSENSFunctions.toHex(n.MACR));
                     }
+                } else {
+//                    System.out.println("MAC Reported is null: " + n.id);
+                    // is means that the baseStation doesn't receive a feedback
+                    // message from this node so we don't have a MAC to validate
+                    // against the neighbor info
                 }
             }
-
         }
+
         for (Object node1 : neighborhoodTable.keySet()) {
             Vector neighbors = (Vector) neighborhoodTable.get(node1);
 
             for (Object neighbor : neighbors) {
+
                 Vector otherNeighbors = (Vector) neighborhoodTable.get(neighbor);
                 if (otherNeighbors != null) {
                     /*node x said that have y as neigboor and y must confirm that information*/
@@ -601,13 +607,57 @@ public class INSENSRoutingLayer extends RoutingLayer {
                         edges.add(new Edge(v1, v2));
                         vertix.add(v1);
                         vertix.add(v2);
-                        otherNeighbors.remove(node1);
-                        neighborhoodTable.put(neighbor, otherNeighbors);
+//                        otherNeighbors.remove(node1);
+//                        neighborhoodTable.put(neighbor, otherNeighbors);
                     }
                 }
             }
         }
-
+        //printEdges(edges);
         return edges;
+    }
+
+    /**
+     * 
+     * @param edges
+     */
+    private void printEdges(HashSet edges) {
+        for (Object object : edges) {
+            Edge e = (Edge) object;
+            System.out.println(e.node1 + "," + e.node2);
+
+        }
+    }
+
+    /**
+     *
+     * @param tableOfNetworkNeighbors
+     */
+    private void dumpTableOfNetworkNeighbors(Hashtable tableOfNetworkNeighbors) {
+        if (tableOfNetworkNeighbors == null) {
+            return;
+        }
+        for (Object key : tableOfNetworkNeighbors.keySet()) {
+            System.out.print("Node " + key + ": ");
+            Vector v = (Vector) tableOfNetworkNeighbors.get(key);
+            for (Object object : v) {
+                MACS m = (MACS) object;
+                System.out.print("," + m.id);
+            }
+            System.out.print("\n");
+        }
+    }
+
+    private void getNodeDijkstraPaths(WeightedGraph graph, Vector nodeTable, int numberOfNodes, int fromNode) {
+        final int fromNodePosition = nodeTable.indexOf(fromNode);
+
+        final int[] pred = Dijkstra.dijkstra(graph, fromNodePosition);
+
+        for (int n = 0; n < numberOfNodes; n++) {
+
+            if (n != fromNodePosition) {
+                Dijkstra.printPath(graph, pred, fromNodePosition, n);
+            }
+        }
     }
 }
