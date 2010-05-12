@@ -4,6 +4,7 @@
  */
 package org.mei.securesim.core.layers.mac;
 
+import org.mei.securesim.core.energy.EnergyConsumptionAction;
 import org.mei.securesim.core.engine.DefaultMessage;
 import org.mei.securesim.core.engine.Event;
 import org.mei.securesim.core.engine.Simulator;
@@ -295,7 +296,11 @@ public class Mica2MACLayer extends MACLayer {
     protected void transmitMessage() {
         beginTransmission(1, getNode());
     }
-
+    /**
+     * 
+     * @param level
+     * @param stream
+     */
     protected void addNoise(double level, Object stream) {
 
         if (receiving) {
@@ -337,24 +342,24 @@ public class Mica2MACLayer extends MACLayer {
             receiving = false;
             if (!corrupted) {
                 
-                Node node = Node.cast(stream);
-                DefaultMessage m =(DefaultMessage) node.getMessage();
-                deliverMessage(m);
+//                Node node = Node.cast(stream);
+//                DefaultMessage m =(DefaultMessage) node.getMessage();
+//                deliverMessage(m);
 
-//                    final Node node = Node.cast(stream);
-//
-//                    getNode().getTransceiver().executeReception(new EnergyConsumptionAction() {
-//
-//                        DefaultMessage m =(DefaultMessage) node.getMessage();
-//
-//                        public void execute() {
-//                            deliverMessage(m);
-//                        }
-//
-//                        public int getNumberOfUnits() {
-//                            return m.size();
-//                        }
-//                    });
+                    final Node node = Node.cast(stream);
+
+                    getNode().getTransceiver().executeReception(new EnergyConsumptionAction() {
+
+                        DefaultMessage m =(DefaultMessage) node.getMessage();
+
+                        public void execute() {
+                            deliverMessage(m);
+                        }
+
+                        public int getNumberOfUnits() {
+                            return m.size();
+                        }
+                    });
             }else {
 //                Node node = Node.cast(stream);
 //                DefaultMessage m =(DefaultMessage) node.getMessage();

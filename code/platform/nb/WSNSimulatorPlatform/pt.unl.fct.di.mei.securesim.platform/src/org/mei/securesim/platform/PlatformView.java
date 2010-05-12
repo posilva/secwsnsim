@@ -1,10 +1,9 @@
 /*
  * PlatformView.java
  */
-
 package org.mei.securesim.platform;
 
-import java.awt.Toolkit;
+import java.awt.BorderLayout;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
@@ -24,8 +23,8 @@ import org.mei.securesim.platform.uiextended.BestTabbedPane;
  * The application's main frame.
  */
 public class PlatformView extends FrameView {
-    private boolean workbenchVisible;
 
+    private boolean workbenchVisible;
 
     public PlatformView(SingleFrameApplication app) {
         super(app);
@@ -35,6 +34,7 @@ public class PlatformView extends FrameView {
         ResourceMap resourceMap = getResourceMap();
         int messageTimeout = resourceMap.getInteger("StatusBar.messageTimeout");
         messageTimer = new Timer(messageTimeout, new ActionListener() {
+
             public void actionPerformed(ActionEvent e) {
                 statusMessageLabel.setText("");
             }
@@ -45,6 +45,7 @@ public class PlatformView extends FrameView {
             busyIcons[i] = resourceMap.getIcon("StatusBar.busyIcons[" + i + "]");
         }
         busyIconTimer = new Timer(busyAnimationRate, new ActionListener() {
+
             public void actionPerformed(ActionEvent e) {
                 busyIconIndex = (busyIconIndex + 1) % busyIcons.length;
                 statusAnimationLabel.setIcon(busyIcons[busyIconIndex]);
@@ -57,6 +58,7 @@ public class PlatformView extends FrameView {
         // connecting action tasks to status bar via TaskMonitor
         TaskMonitor taskMonitor = new TaskMonitor(getApplication().getContext());
         taskMonitor.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 String propertyName = evt.getPropertyName();
                 if ("started".equals(propertyName)) {
@@ -73,24 +75,20 @@ public class PlatformView extends FrameView {
                     progressBar.setVisible(false);
                     progressBar.setValue(0);
                 } else if ("message".equals(propertyName)) {
-                    String text = (String)(evt.getNewValue());
+                    String text = (String) (evt.getNewValue());
                     statusMessageLabel.setText((text == null) ? "" : text);
                     messageTimer.restart();
                 } else if ("progress".equals(propertyName)) {
-                    int value = (Integer)(evt.getNewValue());
+                    int value = (Integer) (evt.getNewValue());
                     progressBar.setVisible(true);
                     progressBar.setIndeterminate(false);
                     progressBar.setValue(value);
                 }
             }
         });
-        instance=this;
+        instance = this;
         workbenchPanel1.setVisible(false);
-        
-        mainSplitPane.setDividerLocation(1024);
-        
-
-
+        mainSplitPane.setVisible(false);
     }
 
     @Action
@@ -118,9 +116,13 @@ public class PlatformView extends FrameView {
         btnNew = new javax.swing.JButton();
         btnOpen = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
+        btnProperties = new javax.swing.JButton();
         mainSplitPane = new javax.swing.JSplitPane();
         workbenchPanel1 = new org.mei.securesim.platform.ui.WorkbenchPanel();
+        jSplitPane1 = new javax.swing.JSplitPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
         tabbedTools = new org.mei.securesim.platform.uiextended.BestTabbedPane();
+        jTextPane1 = new javax.swing.JTextPane();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         menuNewSimulation = new javax.swing.JMenuItem();
@@ -172,6 +174,15 @@ public class PlatformView extends FrameView {
         btnSave.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         mainToolbar.add(btnSave);
 
+        btnProperties.setIcon(resourceMap.getIcon("btnProperties.icon")); // NOI18N
+        btnProperties.setText(resourceMap.getString("btnProperties.text")); // NOI18N
+        btnProperties.setToolTipText(resourceMap.getString("btnProperties.toolTipText")); // NOI18N
+        btnProperties.setFocusable(false);
+        btnProperties.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnProperties.setName("btnProperties"); // NOI18N
+        btnProperties.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        mainToolbar.add(btnProperties);
+
         mainPanel.add(mainToolbar, java.awt.BorderLayout.PAGE_START);
 
         mainSplitPane.setDividerLocation(50000);
@@ -185,8 +196,23 @@ public class PlatformView extends FrameView {
         workbenchPanel1.setName("workbenchPanel1"); // NOI18N
         mainSplitPane.setLeftComponent(workbenchPanel1);
 
+        jSplitPane1.setDividerLocation(400);
+        jSplitPane1.setDividerSize(10);
+        jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+        jSplitPane1.setName("jSplitPane1"); // NOI18N
+        jSplitPane1.setOneTouchExpandable(true);
+
+        jScrollPane1.setName("jScrollPane1"); // NOI18N
+        jSplitPane1.setLeftComponent(jScrollPane1);
+
         tabbedTools.setName("tabbedTools"); // NOI18N
-        mainSplitPane.setRightComponent(tabbedTools);
+        jSplitPane1.setTopComponent(tabbedTools);
+
+        jTextPane1.setEditable(false);
+        jTextPane1.setName("jTextPane1"); // NOI18N
+        jSplitPane1.setRightComponent(jTextPane1);
+
+        mainSplitPane.setRightComponent(jSplitPane1);
 
         mainPanel.add(mainSplitPane, java.awt.BorderLayout.CENTER);
 
@@ -260,7 +286,7 @@ public class PlatformView extends FrameView {
         statusPanelLayout.setHorizontalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statusPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(204, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(statusMessageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -273,9 +299,9 @@ public class PlatformView extends FrameView {
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(statusPanelLayout.createSequentialGroup()
                 .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(statusAnimationLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
-                    .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
+                    .addComponent(statusAnimationLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
+                    .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
                     .addComponent(statusMessageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -293,24 +319,26 @@ public class PlatformView extends FrameView {
         sw.setVisible(true);
         if (sw.isOk()) //           sw.getSimulationFactory();
         {
+            workbenchPanel1.setSimulationFactory(sw.getSimulationFactory());
 
-            workbenchPanel1.setSimulationFactory( sw.getSimulationFactory());
-            workbenchVisible=true;
+            workbenchVisible = true;
             workbenchPanel1.setVisible(true);
             mainSplitPane.setVisible(true);
             mainSplitPane.setDividerLocation(.80);
-
         } else {
         }
         sw.dispose();
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnNew;
     private javax.swing.JButton btnOpen;
+    private javax.swing.JButton btnProperties;
     private javax.swing.JButton btnSave;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JTextPane jTextPane1;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JSplitPane mainSplitPane;
     private javax.swing.JToolBar mainToolbar;
@@ -326,7 +354,6 @@ public class PlatformView extends FrameView {
     private org.mei.securesim.platform.ui.WorkbenchPanel workbenchPanel1;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
-
     private final Timer messageTimer;
     private final Timer busyIconTimer;
     private final Icon idleIcon;
@@ -334,16 +361,14 @@ public class PlatformView extends FrameView {
     private int busyIconIndex = 0;
     private JDialog aboutBox;
 
-
-    public  void showCoverage(String value){
+    public void showCoverage(String value) {
     }
-
-
     protected static PlatformView instance;
 
     public static PlatformView getInstance() {
         return instance;
     }
+
     public boolean isWorkbenchVisible() {
         return workbenchVisible;
     }
@@ -352,11 +377,10 @@ public class PlatformView extends FrameView {
         this.workbenchVisible = workbenchVisible;
     }
 
-
-    public void addTab(String title,JComponent component){
-        tabbedTools.setTabPlacement(BestTabbedPane.RIGHT );
+    public void addTab(String title, JComponent component) {
+        tabbedTools.setTabPlacement(BestTabbedPane.RIGHT);
         tabbedTools.addTab(title, component);
-        
-        
+
+
     }
 }

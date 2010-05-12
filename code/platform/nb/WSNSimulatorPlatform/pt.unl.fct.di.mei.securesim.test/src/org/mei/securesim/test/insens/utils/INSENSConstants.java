@@ -23,8 +23,8 @@ public class INSENSConstants {
     public static Key[] KEY_SET;
     public static final long FEEDBACK_WAITING_TIME=30*Simulator.ONE_SECOND;
 
-    public static final long MAX_DELAY_TIME_MESSAGE=(long) (Simulator.ONE_SECOND*6);
-    public static final long MIN_DELAY_TIME_MESSAGE=(long) (Simulator.ONE_SECOND*3);
+    public static final long MAX_DELAY_TIME_MESSAGE=(long) (Simulator.ONE_SECOND*5);
+    public static final long MIN_DELAY_TIME_MESSAGE=(long) (Simulator.ONE_SECOND*1);
 
     static int ows=0;
     public static long getNextOWS() {

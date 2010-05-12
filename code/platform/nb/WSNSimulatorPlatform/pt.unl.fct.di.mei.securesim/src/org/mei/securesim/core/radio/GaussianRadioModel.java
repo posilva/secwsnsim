@@ -235,7 +235,7 @@ public class GaussianRadioModel extends RadioModel {
          * factors and a per-transmission dynamic randomGenerator factor. Then calls the
          * {@link Node#receptionBegin} method on all neighbors.
          */
-        public synchronized  void beginTransmission(double strength, Object stream) {
+        public synchronized void beginTransmission(double strength, Object stream) {
             if (stream == null) {
                 throw new IllegalArgumentException("The stream object must be non-null");
             } else if (this.stream != null) {
@@ -250,8 +250,7 @@ public class GaussianRadioModel extends RadioModel {
 //            Node node = (Node) stream;
             while (--i >= 0) {
                 if (neighbors.get(i).isTurnedOn()) {
-                    double dynamicStrength = getDynamicStrength(strength,
-                            staticFadings.get(i));
+                    double dynamicStrength = getDynamicStrength(strength, staticFadings.get(i));
                     if (dynamicStrengths.get(i) == null) {
                         dynamicStrengths.add(dynamicStrength);
                     }
