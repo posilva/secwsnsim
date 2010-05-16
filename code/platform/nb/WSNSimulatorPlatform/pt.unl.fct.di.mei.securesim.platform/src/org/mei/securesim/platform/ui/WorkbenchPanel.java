@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 import org.mei.securesim.components.simulation.SimulationFactory;
+import org.mei.securesim.platform.PlatformView;
 import org.mei.securesim.utils.DebugConsole;
 
 /**
@@ -253,7 +254,7 @@ public class WorkbenchPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_verOsQueConhecemActionPerformed
 
     private void searchNodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchNodeActionPerformed
-        // TODO add your handling code here:
+
         String s = JOptionPane.showInputDialog("Insert Sensor ID:");
         if (s != null) {
             simulationPanel1.searchNode(Integer.valueOf(s).intValue());
@@ -274,14 +275,13 @@ public class WorkbenchPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_showDebugWindowActionPerformed
 
     private void viewNodesInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewNodesInfoActionPerformed
-        // TODO add your handling code here:
+
         simulationPanel1.setViewNodeInfo(viewNodesInfo.isSelected());
     }//GEN-LAST:event_viewNodesInfoActionPerformed
 
     private void selectionPointerToolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectionPointerToolActionPerformed
         updateSelectionGroup();
     }//GEN-LAST:event_selectionPointerToolActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup OperationBG;
     private javax.swing.ButtonGroup SelectionBG;
@@ -316,9 +316,9 @@ public class WorkbenchPanel extends javax.swing.JPanel {
     }
 
     public void setSimulationFactory(SimulationFactory simulationFactory) {
+
         simulationPanel1.settingSimulation(simulationFactory);
     }
-
 
     @Action
     public void StartSimulation() {
@@ -364,6 +364,8 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         protected Object doInBackground() {
             setMessage("Building Network...");
             simulationPanel1.buildNetwork();
+           
+
             setMessage("Building Network... done!");
             return null;  // return your result
         }

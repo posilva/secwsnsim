@@ -329,7 +329,6 @@ public class SimulationWizardDialog extends JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmdOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdOKActionPerformed
-        // TODO add your handling code here:
         if (validateData()) {
             ok = true;
             setVisible(false);
@@ -339,7 +338,6 @@ public class SimulationWizardDialog extends JDialog {
 }//GEN-LAST:event_cmdOKActionPerformed
 
     private void cmdCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCancelActionPerformed
-        // TODO add your handling code here:
         ok = false;
         setVisible(false);
     }//GEN-LAST:event_cmdCancelActionPerformed

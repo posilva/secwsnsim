@@ -100,7 +100,7 @@ public class Simulator {
      * @return the network
      */
     public Network getNetwork() {
-        return network; 
+        return network;
     }
 
     public Collection<Node> getNodes() {
@@ -299,12 +299,14 @@ public class Simulator {
      * experiment!
      */
     public void runWithDisplay() {
-
-        while (true) {
-            step(SIMULATOR_STEPS);
-            display.update();
-        }
-
+        new Thread(new Runnable() {
+            public void run() {
+                while (true) {
+                    step(SIMULATOR_STEPS);
+                    display.update();
+                }
+            }
+        }).start();
     }
 
     /**
@@ -313,7 +315,7 @@ public class Simulator {
      * experiment!
      */
     /**
-     * Fazer a simulação andar a simulação andar mais depressa
+     * Fazer a simulação andar mais depressa
      */
     public void runWithDisplayInRealTime() {
         Thread t = new Thread() {
@@ -333,7 +335,9 @@ public class Simulator {
 
                     if (diff < initDiff) {
                         try {
+                            System.out.print("sleeping...");
                             sleep(initDiff - diff);
+                            System.out.println(" done!");
                         } catch (Exception e) {
                             System.out.println("ERROR IN RUN. EXITING");
                             fireOnFinishSimulation(new SimulatorEvent("ERROR IN RUN. EXITING"));

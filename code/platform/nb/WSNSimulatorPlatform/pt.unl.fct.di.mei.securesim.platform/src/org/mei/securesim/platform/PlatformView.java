@@ -3,7 +3,6 @@
  */
 package org.mei.securesim.platform;
 
-import java.awt.BorderLayout;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
@@ -24,6 +23,7 @@ import org.mei.securesim.platform.uiextended.BestTabbedPane;
  */
 public class PlatformView extends FrameView {
 
+    
     private boolean workbenchVisible;
 
     public PlatformView(SingleFrameApplication app) {
@@ -88,7 +88,7 @@ public class PlatformView extends FrameView {
         });
         instance = this;
         workbenchPanel1.setVisible(false);
-        mainSplitPane.setVisible(false);
+        //mainSplitPane.setVisible(false);
     }
 
     @Action
@@ -117,6 +117,7 @@ public class PlatformView extends FrameView {
         btnOpen = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
         btnProperties = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
         mainSplitPane = new javax.swing.JSplitPane();
         workbenchPanel1 = new org.mei.securesim.platform.ui.WorkbenchPanel();
         jSplitPane1 = new javax.swing.JSplitPane();
@@ -133,10 +134,14 @@ public class PlatformView extends FrameView {
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         statusPanel = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
         progressBar = new javax.swing.JProgressBar();
         statusAnimationLabel = new javax.swing.JLabel();
         statusMessageLabel = new javax.swing.JLabel();
+        SimulationTime = new javax.swing.JLabel();
+        NrSimulationNodes = new javax.swing.JLabel();
+        SimulationStatus = new javax.swing.JLabel();
+        SimulationSelNodes = new javax.swing.JLabel();
+        NrEvents = new javax.swing.JLabel();
 
         mainPanel.setName("mainPanel"); // NOI18N
         mainPanel.setLayout(new java.awt.BorderLayout());
@@ -182,6 +187,22 @@ public class PlatformView extends FrameView {
         btnProperties.setName("btnProperties"); // NOI18N
         btnProperties.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         mainToolbar.add(btnProperties);
+
+        jPanel3.setName("jPanel3"); // NOI18N
+        jPanel3.setPreferredSize(new java.awt.Dimension(1000, 25));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1025, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 25, Short.MAX_VALUE)
+        );
+
+        mainToolbar.add(jPanel3);
 
         mainPanel.add(mainToolbar, java.awt.BorderLayout.PAGE_START);
 
@@ -267,10 +288,6 @@ public class PlatformView extends FrameView {
         statusPanel.setPreferredSize(new java.awt.Dimension(508, 20));
         statusPanel.setRequestFocusEnabled(false);
 
-        jPanel1.setName("jPanel1"); // NOI18N
-        jPanel1.setPreferredSize(new java.awt.Dimension(328, 20));
-        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
-
         progressBar.setName("progressBar"); // NOI18N
 
         statusAnimationLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -278,33 +295,87 @@ public class PlatformView extends FrameView {
 
         statusMessageLabel.setFont(resourceMap.getFont("statusMessageLabel.font")); // NOI18N
         statusMessageLabel.setText(resourceMap.getString("statusMessageLabel.text")); // NOI18N
+        statusMessageLabel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         statusMessageLabel.setName("statusMessageLabel"); // NOI18N
         statusMessageLabel.setPreferredSize(new java.awt.Dimension(950, 12));
+
+        SimulationTime.setBackground(resourceMap.getColor("SimulationTime.background")); // NOI18N
+        SimulationTime.setFont(resourceMap.getFont("SimulationTime.font")); // NOI18N
+        SimulationTime.setForeground(resourceMap.getColor("SimulationTime.foreground")); // NOI18N
+        SimulationTime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        SimulationTime.setText(resourceMap.getString("SimulationTime.text")); // NOI18N
+        SimulationTime.setToolTipText(resourceMap.getString("SimulationTime.toolTipText")); // NOI18N
+        SimulationTime.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED, resourceMap.getColor("SimulationTime.border.highlightColor"), resourceMap.getColor("SimulationTime.border.shadowColor"))); // NOI18N
+        SimulationTime.setName("SimulationTime"); // NOI18N
+        SimulationTime.setOpaque(true);
+
+        NrSimulationNodes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        NrSimulationNodes.setText(resourceMap.getString("NroNodes.text")); // NOI18N
+        NrSimulationNodes.setToolTipText(resourceMap.getString("NroNodes.toolTipText")); // NOI18N
+        NrSimulationNodes.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        NrSimulationNodes.setName("NroNodes"); // NOI18N
+
+        SimulationStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        SimulationStatus.setText(resourceMap.getString("SimulationStatus.text")); // NOI18N
+        SimulationStatus.setToolTipText(resourceMap.getString("SimulationStatus.toolTipText")); // NOI18N
+        SimulationStatus.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        SimulationStatus.setName("SimulationStatus"); // NOI18N
+
+        SimulationSelNodes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        SimulationSelNodes.setText(resourceMap.getString("SimulationSelNodes.text")); // NOI18N
+        SimulationSelNodes.setToolTipText(resourceMap.getString("SimulationSelNodes.toolTipText")); // NOI18N
+        SimulationSelNodes.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        SimulationSelNodes.setName("SimulationSelNodes"); // NOI18N
+
+        NrEvents.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        NrEvents.setText(resourceMap.getString("NrEvents.text")); // NOI18N
+        NrEvents.setToolTipText(resourceMap.getString("NrEvents.toolTipText")); // NOI18N
+        NrEvents.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        NrEvents.setName("NrEvents"); // NOI18N
 
         javax.swing.GroupLayout statusPanelLayout = new javax.swing.GroupLayout(statusPanel);
         statusPanel.setLayout(statusPanelLayout);
         statusPanelLayout.setHorizontalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statusPanelLayout.createSequentialGroup()
-                .addContainerGap(204, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(statusMessageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 458, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(statusMessageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(550, 550, 550)
-                .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(NrEvents, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(SimulationStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(SimulationSelNodes)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(NrSimulationNodes, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(SimulationTime, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
                 .addComponent(statusAnimationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+
+        statusPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {NrSimulationNodes, SimulationTime});
+
         statusPanelLayout.setVerticalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(statusPanelLayout.createSequentialGroup()
                 .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
-                    .addComponent(statusAnimationLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
-                    .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
-                    .addComponent(statusMessageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(progressBar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                        .addComponent(statusAnimationLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                        .addGroup(statusPanelLayout.createSequentialGroup()
+                            .addComponent(statusMessageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(3, 3, 3)))
+                    .addComponent(NrEvents)
+                    .addComponent(SimulationStatus)
+                    .addComponent(SimulationSelNodes)
+                    .addComponent(NrSimulationNodes)
+                    .addComponent(SimulationTime))
                 .addContainerGap())
         );
+
+        statusPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {NrSimulationNodes, SimulationTime});
 
         setComponent(mainPanel);
         setMenuBar(menuBar);
@@ -317,24 +388,32 @@ public class PlatformView extends FrameView {
     public void newSimulation() {
         SimulationWizardDialog sw = new SimulationWizardDialog(null, true);
         sw.setVisible(true);
-        if (sw.isOk()) //           sw.getSimulationFactory();
+        boolean status = sw.isOk();
+
+        if (status) //           sw.getSimulationFactory();
         {
             workbenchPanel1.setSimulationFactory(sw.getSimulationFactory());
-
+        }
+        sw.dispose();
+        if (status) {
             workbenchVisible = true;
             workbenchPanel1.setVisible(true);
             mainSplitPane.setVisible(true);
             mainSplitPane.setDividerLocation(.80);
-        } else {
+
         }
-        sw.dispose();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel NrEvents;
+    private javax.swing.JLabel NrSimulationNodes;
+    private javax.swing.JLabel SimulationSelNodes;
+    private javax.swing.JLabel SimulationStatus;
+    private javax.swing.JLabel SimulationTime;
     private javax.swing.JButton btnNew;
     private javax.swing.JButton btnOpen;
     private javax.swing.JButton btnProperties;
     private javax.swing.JButton btnSave;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JSplitPane jSplitPane1;
@@ -383,4 +462,32 @@ public class PlatformView extends FrameView {
 
 
     }
+
+    public void setSimulationNrNodes(int value) {
+        NrSimulationNodes.setText(value + " nodes");
+
+    }
+
+    public void setSimulationStatus(String status) {
+        SimulationStatus.setText(status);
+    }
+
+    public void setSimulationTime(String value) {
+        SimulationTime.setText(value);
+    }
+
+    public void setSelectedNodes(String value) {
+        SimulationSelNodes.setText(value);
+    }
+
+    public void setStatusMessage(String message) {
+        statusMessageLabel.setText(message);
+    }
+
+    public void setSimulationEvents(int value) {
+        NrEvents.setText(""+value);
+    }
+
+
+
 }

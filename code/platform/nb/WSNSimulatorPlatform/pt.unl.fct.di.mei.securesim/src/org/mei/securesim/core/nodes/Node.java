@@ -175,6 +175,14 @@ public abstract class Node {
         }
     }
 
+    public boolean isEnableFunctioningEnergyConsumption() {
+        return enableFunctioningEnergyConsumption;
+    }
+
+    public void setEnableFunctioningEnergyConsumption(boolean enableFunctioningEnergyConsumption) {
+        this.enableFunctioningEnergyConsumption = enableFunctioningEnergyConsumption;
+    }
+
     public Object getMessage() {
         return message;
     }

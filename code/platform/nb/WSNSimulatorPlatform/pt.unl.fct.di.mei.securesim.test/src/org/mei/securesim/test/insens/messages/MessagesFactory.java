@@ -13,7 +13,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.mei.securesim.components.crypto.CryptoFunctions;
 import org.mei.securesim.test.insens.utils.INSENSConstants;
-import org.mei.securesim.test.insens.utils.INSENSFunctions;
 import org.mei.securesim.test.insens.utils.NbrInfo;
 import org.mei.securesim.test.insens.utils.PathInfo;
 import static org.mei.securesim.test.insens.utils.INSENSFunctions.cloneMAC;
@@ -45,8 +44,12 @@ public class MessagesFactory {
 
         byte[] data = message.toByteArray();
 
+        if (data==null) System.out.println("data is NULL");
+
+
         byte[] macData = CryptoFunctions.createMAC(data, macKey.getEncoded());
 
+        if (macData==null) System.out.println("data is NULL");
         message.setMAC(macData);
 
         return message;

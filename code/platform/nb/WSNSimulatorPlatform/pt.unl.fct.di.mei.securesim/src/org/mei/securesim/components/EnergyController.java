@@ -1,10 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.mei.securesim.components;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.mei.securesim.components.logging.EnergyLogger;
@@ -26,6 +23,7 @@ public class EnergyController implements EnergyListener {
         return instance;
 
     }
+    protected Stack energyPhases = new Stack();
     protected EnergyLogger energyLogger;
     protected String filename;
 
@@ -33,16 +31,41 @@ public class EnergyController implements EnergyListener {
         try {
             filename = "energy" + System.currentTimeMillis() + ".xml";
             this.energyLogger = new EnergyLogger(filename);
-
-        } catch (FileNotFoundException ex) {
+            startPhase("EnergyConsumption");
+        } catch (IOException ex) {
             Logger.getLogger(EnergyController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void onConsume(EnergyEvent evt) {
+    public synchronized void onConsume(EnergyEvent evt) {
+        if (SimulationController.getInstance().isLogEnergyEnable()) {
+            energyLogger.openTag("energy");
+                energyLogger.writeTag("node", "" + evt.getNodeid());
+                energyLogger.writeTag("event", "" + evt.getEvent());
+                energyLogger.writeTag("time", "" + evt.getTime());
+                energyLogger.writeTag("value", "" + evt.getValue());
+            energyLogger.closeTag("energy");
+        }
     }
 
-    public void log(String logText) {
-        this.energyLogger.log(logText);
+    public synchronized void startPhase(String name) {
+        String tag = name.replaceAll(" ", "_");
+        this.energyLogger.openTag(tag);
+        this.energyPhases.push(tag);
+    }
+
+    public synchronized void endPhase() {
+        String tag = (String) this.energyPhases.pop();
+        this.energyLogger.closeTag(tag);
+    }
+
+    public synchronized void endPhase(String name) {
+        String tag = (String) this.energyPhases.pop();
+        this.energyLogger.closeTag(tag);
+    }
+
+    public void close() {
+        endPhase("EnergyConsumption");
+        energyLogger.close();
     }
 }

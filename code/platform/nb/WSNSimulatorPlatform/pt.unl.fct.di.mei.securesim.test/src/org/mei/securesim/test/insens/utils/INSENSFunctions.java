@@ -20,6 +20,7 @@ public class INSENSFunctions {
     protected static boolean initiated = false;
     protected static Map KEY_MAP = new HashMap();
     protected static Map MACKEY_MAP = new HashMap();
+    private static long ows=0;
 
     public static long oneWayHash(long number) {
         return JSHash(String.valueOf(number));
@@ -82,7 +83,7 @@ public class INSENSFunctions {
     }
 
     public static long getNextOWS(int roundNumber) {
-        return 0;
+        return ows++;
     }
 
     public static byte []cloneMAC (byte[] a ){

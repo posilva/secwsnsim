@@ -13,6 +13,24 @@ import org.mei.securesim.core.energy.Batery;
 public class EnergyEvent extends EventObject {
     private double value=0;
     private long time;
+    private String event="";
+    private int nodeid;
+
+    public String getEvent() {
+        return event;
+    }
+
+    public void setEvent(String event) {
+        this.event = event;
+    }
+
+    public int getNodeid() {
+        return nodeid;
+    }
+
+    public void setNodeid(int nodeid) {
+        this.nodeid = nodeid;
+    }
 
     @Override
     public Batery getSource() {

@@ -1,7 +1,5 @@
 package org.mei.securesim.core.layers.mac;
 
-import org.mei.securesim.core.energy.EnergyConsumptionAction;
-import org.mei.securesim.core.engine.DefaultMessage;
 import org.mei.securesim.core.layers.Layer;
 import org.mei.securesim.core.layers.routing.RoutingLayer;
 import org.mei.securesim.core.nodes.Node;
@@ -14,8 +12,10 @@ import org.mei.securesim.core.radio.RadioModel.Neighborhood;
  */
 public abstract class MACLayer extends Layer {
 
+    protected static long totalMessagesSent = 0;
+    protected static long totalMessagesNotSent = 0;
+    protected static long totalMessagesCorrupted = 0;
     RadioModel radioModel;
-
     RadioModel.Neighborhood neighborhood;
     // //////////////////////////////
     // STATE VARIABLES
@@ -32,8 +32,6 @@ public abstract class MACLayer extends Layer {
     protected boolean receiving = false;
     /** State variable, true if the last received message got corrupted by noise */
     protected boolean corrupted = false;
-
-
 
     public boolean isCorrupted() {
         return corrupted;
@@ -156,4 +154,17 @@ public abstract class MACLayer extends Layer {
      * initialize procedure
      */
     public abstract void init();
+
+    public static long getTotalMessagesCorrupted() {
+        return totalMessagesCorrupted;
+    }
+
+    public static long getTotalMessagesNotSent() {
+        return totalMessagesNotSent;
+    }
+
+    public static long getTotalMessagesSent() {
+        return totalMessagesSent;
+    }
+
 }
