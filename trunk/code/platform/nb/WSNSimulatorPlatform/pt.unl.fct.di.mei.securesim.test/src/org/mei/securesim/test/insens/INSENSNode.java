@@ -4,8 +4,6 @@
  */
 package org.mei.securesim.test.insens;
 
-import java.awt.Color;
-import java.awt.Graphics;
 import java.security.Key;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,7 +11,6 @@ import org.mei.securesim.components.crypto.CryptoFunctions;
 import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.nodes.basic.Mica2SensorNode;
 import org.mei.securesim.core.radio.RadioModel;
-import org.mei.securesim.core.ui.ISimulationDisplay;
 import org.mei.securesim.gui.IDisplayable;
 import org.mei.securesim.test.insens.utils.INSENSConstants;
 import org.mei.securesim.test.insens.utils.INSENSFunctions;
@@ -31,12 +28,15 @@ public class INSENSNode extends Mica2SensorNode implements IDisplayable {
 
     public INSENSNode(Simulator sim, RadioModel radioModel) {
         super(sim, radioModel);
+        setEnableFunctioningEnergyConsumption(false);
+        setRadius(2);
+        setPaintingPaths(true);
     }
 
     @Override
     public void init() {
         try {
-            if (getId() == 2) {
+            if (getId() == 1) {
                 setSinkNode(true);
                 getGraphicNode().mark();
 
@@ -87,35 +87,4 @@ public class INSENSNode extends Mica2SensorNode implements IDisplayable {
         this.macKey = macKey;
     }
 
-    @Override
-    public void displayOn(ISimulationDisplay disp) {
-        Graphics g = disp.getGraphics();
-
-        int _x = disp.x2ScreenX(this.getX());
-        int _y = disp.y2ScreenY(this.getY());
-
-        super.displayOn(disp);
-        if (turnedOn) {
-
-
-            Color c = g.getColor();
-            if (getMacLayer().isSending()) {
-                c = Color.blue;
-            } else if (getMacLayer().isReceiving()) {
-                if (getMacLayer().isCorrupted()) {
-                    c = Color.red;
-                } else {
-                    c = Color.green;
-                }
-            }
-
-            getGraphicNode().setBackcolor(c);
-            getGraphicNode().paint(disp);
-
-
-        } else {
-            getGraphicNode().setBackcolor(Color.WHITE);
-            getGraphicNode().paint(disp);
-        }
-    }
 }

@@ -20,6 +20,7 @@ is divided into following sections:
 
         -->
 <project xmlns:j2seproject1="http://www.netbeans.org/ns/j2se-project/1" xmlns:j2seproject3="http://www.netbeans.org/ns/j2se-project/3" xmlns:jaxrpc="http://www.netbeans.org/ns/j2se-project/jax-rpc" basedir=".." default="default" name="pt.unl.fct.di.mei.securesim.platform-impl">
+    <import file="jnlp-impl.xml"/>
     <fail message="Please build using Ant 1.7.1 or higher.">
         <condition>
             <not>
@@ -43,7 +44,7 @@ is divided into following sections:
         <property file="nbproject/private/private.properties"/>
     </target>
     <target name="-pre-init-libraries">
-        <property location="./lib/nblibraries.properties" name="libraries.path"/>
+        <property location="lib\nblibraries.properties" name="libraries.path"/>
         <dirname file="${libraries.path}" property="libraries.dir.nativedirsep"/>
         <pathconvert dirsep="/" property="libraries.dir">
             <path path="${libraries.dir.nativedirsep}"/>
@@ -420,8 +421,8 @@ is divided into following sections:
         </antcall>
         <antcall target="-maybe-call-dep">
             <param name="call.built.properties" value="${built-jar.properties}"/>
-            <param location="${project.pt_unl_fct_di_mei_securesim_test-1}" name="call.subproject"/>
-            <param location="${project.pt_unl_fct_di_mei_securesim_test-1}/build.xml" name="call.script"/>
+            <param location="${project.pt_unl_fct_di_mei_securesim_test}" name="call.subproject"/>
+            <param location="${project.pt_unl_fct_di_mei_securesim_test}/build.xml" name="call.script"/>
             <param name="call.target" value="jar"/>
             <param name="transfer.built-jar.properties" value="${built-jar.properties}"/>
         </antcall>
@@ -578,7 +579,7 @@ is divided into following sections:
         <!-- Empty placeholder for easier customization. -->
         <!-- You can override this target in the ../build.xml file. -->
     </target>
-    <target depends="init,compile,-pre-jar,-do-jar-with-manifest,-do-jar-without-manifest,-do-jar-with-mainclass,-do-jar-with-libraries,-do-jar-with-libraries-without-mainclass,-do-jar-with-libraries-without-manifest,-post-jar" description="Build JAR." name="jar"/>
+    <target depends="init,compile,-pre-jar,-do-jar-with-manifest,-do-jar-without-manifest,-do-jar-with-mainclass,-do-jar-with-libraries,-do-jar-with-libraries-without-mainclass,-do-jar-with-libraries-without-manifest,-post-jar,jnlp" description="Build JAR." name="jar"/>
     <!--
                 =================
                 EXECUTION SECTION
@@ -824,8 +825,8 @@ is divided into following sections:
         </antcall>
         <antcall target="-maybe-call-dep">
             <param name="call.built.properties" value="${built-clean.properties}"/>
-            <param location="${project.pt_unl_fct_di_mei_securesim_test-1}" name="call.subproject"/>
-            <param location="${project.pt_unl_fct_di_mei_securesim_test-1}/build.xml" name="call.script"/>
+            <param location="${project.pt_unl_fct_di_mei_securesim_test}" name="call.subproject"/>
+            <param location="${project.pt_unl_fct_di_mei_securesim_test}/build.xml" name="call.script"/>
             <param name="call.target" value="clean"/>
             <param name="transfer.built-clean.properties" value="${built-clean.properties}"/>
         </antcall>

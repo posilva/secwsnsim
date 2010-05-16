@@ -2,19 +2,18 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mei.securesim.test.insens.utils;
+package org.mei.securesim.core.radio;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import org.mei.securesim.core.nodes.Node;
-import org.mei.securesim.core.radio.GaussianRadioModel;
 
 /**
  *
  * @author CIAdmin
  */
 public class INSENSGaussianRadioModel extends GaussianRadioModel {
-//org.mei.securesim.test.insens.utils.INSENSGaussianRadioModel
+//org.mei.securesim.core.radio.INSENSGaussianRadioModel
 
     @Override
     public void updateNeighborhoods() {
@@ -40,7 +39,7 @@ public class INSENSGaussianRadioModel extends GaussianRadioModel {
             // guardo novos vizinhos
             srcNode.getMacLayer().getNeighborhood().neighbors = n;
             neighborhood.getDynamicStrengths().clear();
-            for (int i = 0; i < neighborhood.neighbors.size(); i++) {// TODO
+            for (int i = 0; i < neighborhood.neighbors.size(); i++) {
                 neighborhood.getDynamicStrengths().add(0.0);
             }
         }

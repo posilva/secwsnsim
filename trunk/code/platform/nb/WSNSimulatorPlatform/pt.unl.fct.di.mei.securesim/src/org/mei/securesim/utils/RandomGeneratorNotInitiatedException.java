@@ -13,7 +13,7 @@ public class RandomGeneratorNotInitiatedException extends Exception {
 	 * 
 	 */
 	public RandomGeneratorNotInitiatedException() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	/**
@@ -21,7 +21,7 @@ public class RandomGeneratorNotInitiatedException extends Exception {
 	 */
 	public RandomGeneratorNotInitiatedException(String arg0) {
 		super(arg0);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	/**
@@ -29,7 +29,7 @@ public class RandomGeneratorNotInitiatedException extends Exception {
 	 */
 	public RandomGeneratorNotInitiatedException(Throwable arg0) {
 		super(arg0);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	/**
@@ -38,7 +38,6 @@ public class RandomGeneratorNotInitiatedException extends Exception {
 	 */
 	public RandomGeneratorNotInitiatedException(String arg0, Throwable arg1) {
 		super(arg0, arg1);
-		// TODO Auto-generated constructor stub
 	}
 
 }

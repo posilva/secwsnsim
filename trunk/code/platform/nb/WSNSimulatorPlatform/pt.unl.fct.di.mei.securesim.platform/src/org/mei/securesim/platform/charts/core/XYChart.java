@@ -20,7 +20,6 @@ import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfTemplate;
 import com.lowagie.text.pdf.PdfWriter;
 import java.awt.Color;
-import java.awt.Rectangle;
 import org.mei.securesim.platform.charts.IChartDisplay;
 import org.mei.securesim.platform.charts.IChartDisplayable;
 

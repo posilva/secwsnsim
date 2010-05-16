@@ -13,13 +13,13 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="selNodeVisualizacao">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Visualiza&#xe7;&#xe3;o"/>
+            <Property name="text" type="java.lang.String" resourceKey="selNodeVisualizacao.text"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodeVerVizinhos">
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
-                <Property name="text" type="java.lang.String" value="Ver Vizinhos"/>
+                <Property name="text" type="java.lang.String" resourceKey="selNodeVerVizinhos.text"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodeVerVizinhosActionPerformed"/>
@@ -28,7 +28,7 @@
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodeVerID">
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
-                <Property name="text" type="java.lang.String" value="Ver ID"/>
+                <Property name="text" type="java.lang.String" resourceKey="selNodeVerID.text"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodeVerIDActionPerformed"/>
@@ -37,7 +37,7 @@
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodeVerOsQueMeConhecem">
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
-                <Property name="text" type="java.lang.String" value="Os que me conhecem"/>
+                <Property name="text" type="java.lang.String" resourceKey="selNodeVerOsQueMeConhecem.text"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodeVerOsQueMeConhecemActionPerformed"/>
@@ -46,7 +46,7 @@
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodeMarcar">
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
-                <Property name="text" type="java.lang.String" value="Marcar"/>
+                <Property name="text" type="java.lang.String" resourceKey="selNodeMarcar.text"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodeMarcarActionPerformed"/>
@@ -56,13 +56,13 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="selNodeOperacao">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Opera&#xe7;&#xe3;o"/>
+            <Property name="text" type="java.lang.String" resourceKey="selNodeOperacao.text"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodeOnOff">
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
-                <Property name="text" type="java.lang.String" value="On"/>
+                <Property name="text" type="java.lang.String" resourceKey="selNodeOnOff.text"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodeOnOffActionPerformed"/>
@@ -72,12 +72,12 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="selNodeMonitorizacao">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Monitoriza&#xe7;&#xe3;o"/>
+            <Property name="text" type="java.lang.String" resourceKey="selNodeMonitorizacao.text"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="selNodeMonitEnergia">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Energia"/>
+                <Property name="text" type="java.lang.String" resourceKey="selNodeMonitEnergia.text"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodeMonitEnergiaActionPerformed"/>
@@ -112,13 +112,13 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="selNodesVisualizacao">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Visualiza&#xe7;&#xe3;o"/>
+            <Property name="text" type="java.lang.String" resourceKey="selNodesVisualizacao.text"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodesVerVizinhos">
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
-                <Property name="text" type="java.lang.String" value="Ver Vizinhos"/>
+                <Property name="text" type="java.lang.String" resourceKey="selNodesVerVizinhos.text"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesVerVizinhosActionPerformed"/>
@@ -127,7 +127,7 @@
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodesVerID">
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
-                <Property name="text" type="java.lang.String" value="Ver ID"/>
+                <Property name="text" type="java.lang.String" resourceKey="selNodesVerID.text"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesVerIDActionPerformed"/>
@@ -136,7 +136,7 @@
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodesVerOsQueMeConhecem">
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
-                <Property name="text" type="java.lang.String" value="Os que me conhecem"/>
+                <Property name="text" type="java.lang.String" resourceKey="selNodesVerOsQueMeConhecem.text"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesVerOsQueMeConhecemActionPerformed"/>
@@ -146,13 +146,13 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="selNodesOperacao">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Opera&#xe7;&#xe3;o"/>
+            <Property name="text" type="java.lang.String" resourceKey="selNodesOperacao.text"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodesOnOff">
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
-                <Property name="text" type="java.lang.String" value="On"/>
+                <Property name="text" type="java.lang.String" resourceKey="selNodesOnOff.text"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesOnOffActionPerformed"/>
@@ -162,12 +162,12 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="selNodesMonitorizacao">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Monitoriza&#xe7;&#xe3;o"/>
+            <Property name="text" type="java.lang.String" resourceKey="selNodesMonitorizacao.text"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="selNodesMonitEnergia">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Energia"/>
+                <Property name="text" type="java.lang.String" resourceKey="selNodesMonitEnergia.text"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesMonitEnergiaActionPerformed"/>

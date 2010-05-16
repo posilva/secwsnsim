@@ -24,10 +24,10 @@ public class GraphicNode {
     protected int z = 0;
 
     protected GraphicPoint center = new GraphicPoint(x, y);
-    protected int radius = 3;
+    protected int radius = 2;
     protected boolean filled = false;
     protected boolean selected = false;
-    protected Color selectedBackcolor = Color.YELLOW;
+    protected Color selectedBackcolor = Color.RED;
     protected Color backcolor = Color.RED;
     protected Color linecolor = Color.BLACK;
     protected Color oldColor = Color.WHITE;

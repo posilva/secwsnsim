@@ -17,11 +17,15 @@ import org.mei.securesim.core.radio.RadioModel;
  * 
  */
 public abstract class SensorNode extends Node {
+    protected Color baseColor = Color.YELLOW;
+    protected Color receivingCorruptedColor = Color.red;
+    protected Color receivingNotCorruptedColor = Color.green;
+    protected Color sendingColor = Color.blue;
 
-    private boolean paintNeighborhoodDst = false;
-    private boolean paintNeighborhoodOrg = false;
-    private boolean showID = false;
-    private static Font monoFont = new Font("Courier", Font.BOLD, 8);
+    protected boolean paintNeighborhoodDst = false;
+    protected boolean paintNeighborhoodOrg = false;
+    protected boolean showID = false;
+    protected static Font monoFont = new Font("Courier", Font.BOLD, 8);
 
     /**
      * @param sim
@@ -152,6 +156,38 @@ public abstract class SensorNode extends Node {
     @Override
     public void init() {
      configureMACLayer(getSimulator().getRadioModel());
+    }
+
+    public Color getBaseColor() {
+        return baseColor;
+    }
+
+    public void setBaseColor(Color baseColor) {
+        this.baseColor = baseColor;
+    }
+
+    public Color getReceivingCorruptedColor() {
+        return receivingCorruptedColor;
+    }
+
+    public void setReceivingCorruptedColor(Color receivingCorruptedColor) {
+        this.receivingCorruptedColor = receivingCorruptedColor;
+    }
+
+    public Color getReceivingNotCorruptedColor() {
+        return receivingNotCorruptedColor;
+    }
+
+    public void setReceivingNotCorruptedColor(Color receivingNotCorruptedColor) {
+        this.receivingNotCorruptedColor = receivingNotCorruptedColor;
+    }
+
+    public Color getSendingColor() {
+        return sendingColor;
+    }
+
+    public void setSendingColor(Color sendingColor) {
+        this.sendingColor = sendingColor;
     }
 
 }
