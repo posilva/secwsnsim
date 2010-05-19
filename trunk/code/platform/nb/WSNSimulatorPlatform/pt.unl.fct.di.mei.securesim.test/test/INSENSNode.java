@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mei.securesim.test.insens;
+
 
 import java.security.Key;
 import java.util.logging.Level;
@@ -22,8 +22,8 @@ import org.mei.securesim.test.insens.utils.INSENSFunctions;
 public class INSENSNode extends Mica2SensorNode implements IDisplayable {
 
     long S0;
-    private byte[] macKey;
-    private byte[] encKey;
+    private Key macKey;
+    private Key encKey;
     private byte[] iv;
 
     public INSENSNode(Simulator sim, RadioModel radioModel) {
@@ -43,8 +43,8 @@ public class INSENSNode extends Mica2SensorNode implements IDisplayable {
             }
 
             super.init();
-            macKey = CryptoFunctions.createSkipjackKey();
-            encKey = CryptoFunctions.createSkipjackKey();
+            macKey = CryptoFunctions.createSkipjackKeyObject();
+            encKey = CryptoFunctions.createSkipjackKeyObject();
             INSENSFunctions.shareKeyWithBaseStation(getId(), encKey);
             INSENSFunctions.shareMACKeyWithBaseStation(getId(), macKey);
 
@@ -63,11 +63,11 @@ public class INSENSNode extends Mica2SensorNode implements IDisplayable {
         this.S0 = S0;
     }
 
-    public byte[] getEncKey() {
+    public Key getEncKey() {
         return encKey;
     }
 
-    public void setEncKey(byte[] encKey) {
+    public void setEncKey(Key encKey) {
         this.encKey = encKey;
     }
 
@@ -79,11 +79,11 @@ public class INSENSNode extends Mica2SensorNode implements IDisplayable {
         this.iv = iv;
     }
 
-    public byte[] getMacKey() {
+    public Key getMacKey() {
         return macKey;
     }
 
-    public void setMacKey(byte[] macKey) {
+    public void setMacKey(Key macKey) {
         this.macKey = macKey;
     }
 

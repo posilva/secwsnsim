@@ -153,18 +153,6 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                 </Container>
-                <Container class="org.mei.securesim.platform.uiextended.BestTabbedPane" name="tabbedTools">
-                  <Properties>
-                    <Property name="name" type="java.lang.String" value="tabbedTools" noResource="true"/>
-                  </Properties>
-                  <Constraints>
-                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
-                      <JSplitPaneConstraints position="top"/>
-                    </Constraint>
-                  </Constraints>
-
-                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
-                </Container>
                 <Component class="javax.swing.JTextPane" name="jTextPane1">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
@@ -301,35 +289,35 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="SimulationStatus" min="-2" pref="110" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="SimulationSelNodes" min="-2" max="-2" attributes="0"/>
+                  <Component id="SimulationSelNodes" min="-2" pref="88" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="NrSimulationNodes" linkSize="2" min="-2" pref="98" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="SimulationTime" linkSize="2" min="-2" pref="99" max="-2" attributes="0"/>
-                  <EmptySpace pref="17" max="32767" attributes="0"/>
-                  <Component id="progressBar" min="-2" pref="106" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                  <Component id="statusAnimationLabel" min="-2" pref="21" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="32767" attributes="0"/>
+                  <Component id="progressBar" min="-2" pref="89" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <Component id="statusAnimationLabel" min="-2" pref="25" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" alignment="1" groupAlignment="1" attributes="0">
-                          <Component id="progressBar" alignment="0" pref="22" max="32767" attributes="1"/>
-                          <Component id="statusAnimationLabel" alignment="0" pref="22" max="32767" attributes="0"/>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="statusMessageLabel" min="-2" pref="19" max="-2" attributes="0"/>
-                              <EmptySpace min="3" pref="3" max="3" attributes="0"/>
-                          </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="progressBar" alignment="0" pref="22" max="32767" attributes="1"/>
+                      <Component id="statusAnimationLabel" alignment="0" pref="22" max="32767" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="statusMessageLabel" min="-2" pref="19" max="-2" attributes="0"/>
+                          <EmptySpace min="3" pref="3" max="3" attributes="0"/>
                       </Group>
                       <Component id="NrEvents" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="SimulationStatus" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                          <Component id="NrSimulationNodes" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="SimulationTime" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <Component id="SimulationSelNodes" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="NrSimulationNodes" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="SimulationTime" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>

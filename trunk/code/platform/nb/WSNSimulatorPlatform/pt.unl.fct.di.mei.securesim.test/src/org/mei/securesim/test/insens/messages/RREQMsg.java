@@ -1,5 +1,6 @@
 package org.mei.securesim.test.insens.messages;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -20,7 +21,8 @@ public class RREQMsg extends INSENSMsg {
     public RREQMsg(byte[] payload) {
         super(payload);
         setType(INSENSConstants.MSG_RREQ);
-
+        setShowColor(true);
+        setColor(Color.PINK);
     }
 
     public Vector getPath() {

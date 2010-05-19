@@ -1,5 +1,6 @@
 package org.mei.securesim.core.nodes;
 
+import java.awt.Color;
 import java.text.DecimalFormat;
 import org.mei.securesim.core.nodes.components.CPU;
 import org.mei.securesim.core.application.Application;
@@ -46,6 +47,8 @@ public abstract class Node {
     protected GraphicNode graphicNode;
     protected CPU cpu = null;
     protected Transceiver transceiver = null;
+    protected Color messageColor=Color.BLACK;
+
     /**
      * This is the message being sent, on reception it is extracted and the
      * message part is forwarded to the appropriate application, see
@@ -518,5 +521,13 @@ public abstract class Node {
 
     public boolean isSleep() {
         return state == NodeState.SLEEP;
+    }
+
+    public Color getMessageColor() {
+        return messageColor;
+    }
+
+    public void setMessageColor(Color messageColor) {
+        this.messageColor = messageColor;
     }
 }
