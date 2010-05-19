@@ -4,6 +4,7 @@
  */
 package org.mei.securesim.core.engine;
 
+import java.awt.Color;
 import java.util.Arrays;
 
 /**
@@ -14,10 +15,12 @@ public class DefaultMessage implements Cloneable {
 
     static long numberOfTotalMessage = 0;
     private byte[] payload;
-    private int origin;
-    private int destination;
+    private short origin;
+    private short forwardBy;
+    private short destination;
     private long messageNumber;
-
+    protected Color color = Color.green;
+    protected boolean showColor=false;
     public static long getNumberOfTotalMessage() {
         return numberOfTotalMessage;
     }
@@ -47,19 +50,19 @@ public class DefaultMessage implements Cloneable {
     }
 
     // A pedido do tiago araujo
-    public int getDestination() {
+    public short getDestination() {
         return destination;
     }
 
-    public void setDestination(int destination) {
+    public void setDestination(short destination) {
         this.destination = destination;
     }
 
-    public int getOrigin() {
+    public short getOrigin() {
         return origin;
     }
 
-    public void setOrigin(int origin) {
+    public void setOrigin(short origin) {
         this.origin = origin;
     }
 
@@ -73,4 +76,29 @@ public class DefaultMessage implements Cloneable {
         m.setPayload(c);
         return m;
     }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public boolean isShowColor() {
+        return showColor;
+    }
+
+    public void setShowColor(boolean showColor) {
+        this.showColor = showColor;
+    }
+
+    public short getForwardBy() {
+        return forwardBy;
+    }
+
+    public void setForwardBy(short forwardBy) {
+        this.forwardBy = forwardBy;
+    }
+    
 }

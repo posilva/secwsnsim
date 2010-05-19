@@ -78,7 +78,7 @@ public abstract class Mica2SensorNode extends SensorNode {
     private void paintPath2Parent(Graphics g, int _x, int _y) {
         Color oldcolor = g.getColor();
         if (getParentNode() != null) {
-            Color c = paintingPathColor;
+            Color c = getMessageColor();
             int x1 = getParentNode().getGraphicNode().getX();
             int y1 = getParentNode().getGraphicNode().getY();
             g.drawLine(_x, _y, x1, y1);

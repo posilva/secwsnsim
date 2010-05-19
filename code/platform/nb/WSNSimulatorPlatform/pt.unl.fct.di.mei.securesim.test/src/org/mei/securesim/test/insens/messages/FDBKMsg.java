@@ -1,5 +1,6 @@
 package org.mei.securesim.test.insens.messages;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -19,7 +20,6 @@ public class FDBKMsg extends INSENSMsg {
     byte[] MACRParent;
     PathInfo pathInfo = new PathInfo();
     NbrInfo nbrInfo = new NbrInfo();
-    int forwardBy = -1; // this attribute is for debugging purposes only
 
     @Override
     protected int getDataSize() {
@@ -53,6 +53,8 @@ public class FDBKMsg extends INSENSMsg {
     public FDBKMsg(byte[] payload) {
         super(payload);
         setType(INSENSConstants.MSG_FDBK);
+        setShowColor(true);
+        setColor(Color.CYAN);
     }
 
     @Override
@@ -83,16 +85,5 @@ public class FDBKMsg extends INSENSMsg {
 
     }
 
-    
-
-    
-
-    public int getForwardBy() {
-        return forwardBy;
-    }
-
-    public void setForwardBy(int forwardBy) {
-        this.forwardBy = forwardBy;
-    }
 }
 

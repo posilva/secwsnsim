@@ -33,7 +33,7 @@ public class MessagesFactory {
      */
     public static INSENSMsg createRouteRequestMessage(int origId, long ows, Key macKey) {
         RREQMsg message = new RREQMsg(null);
-        message.setOrigin(origId);
+        message.setOrigin((short)origId);
         message.setType(INSENSConstants.MSG_RREQ);
         message.setId(origId);
 
@@ -96,7 +96,7 @@ public class MessagesFactory {
 
         byte[] macData = CryptoFunctions.createMAC(buffer, macKey.getEncoded());
         message.setMAC(macData);
-        message.setOrigin(origId);
+        message.setOrigin((short)origId);
         return message;
     }
     /**

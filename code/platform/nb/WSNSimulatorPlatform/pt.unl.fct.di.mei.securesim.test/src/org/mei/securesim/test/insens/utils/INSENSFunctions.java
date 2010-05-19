@@ -64,22 +64,22 @@ public class INSENSFunctions {
 
     }
 
-    public static void shareKeyWithBaseStation(int id, Key key) {
+    public static void shareKeyWithBaseStation(int id, byte[] key) {
         KEY_MAP.put(id, key);
 
     }
-     public static void shareMACKeyWithBaseStation(int id, Key key) {
+     public static void shareMACKeyWithBaseStation(int id, byte[] key) {
         MACKEY_MAP.put(id, key);
 
     }
     public static void debug(Object msg ){
         System.out.println(msg);
     } 
-    public static Key getShareKey(int id) {
-        return (Key) KEY_MAP.get(id);
+    public static byte[] getShareKey(int id) {
+        return (byte[]) KEY_MAP.get(id);
     }
-    public static Key getShareMacKey(int id) {
-        return (Key) MACKEY_MAP.get(id);
+    public static byte[] getShareMacKey(int id) {
+        return (byte[]) MACKEY_MAP.get(id);
     }
 
     public static long getNextOWS(int roundNumber) {

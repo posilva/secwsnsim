@@ -16,11 +16,6 @@ import org.mei.securesim.core.nodes.Node;
  */
 public class Mica2MACLayer extends MACLayer {
 
-    protected static long totalMessagesSent=0;
-    protected static long totalMessagesNotSent=0;
-    protected static long totalMessagesCorrupted=0;
-
-
     public short parentID = -1;
     /**
      * In this simulation not messages but references to motes are passed. All
@@ -95,7 +90,7 @@ public class Mica2MACLayer extends MACLayer {
     public double corruptionSNR = 2.0;//2.0
 
     public boolean deliverMessage(Object message) {
-
+        setMessageColor(message);
         getNode().getRoutingLayer().receiveMessage(message);
         return true;
     }
@@ -103,6 +98,12 @@ public class Mica2MACLayer extends MACLayer {
     @Override
     public void init() {
         
+    }
+
+    private void setMessageColor(Object message) {
+        DefaultMessage m = (DefaultMessage) message;
+        if(m.isShowColor())
+        getNode().setMessageColor(m.getColor());
     }
 
     /**
@@ -194,6 +195,7 @@ public class Mica2MACLayer extends MACLayer {
         totalMessagesSent++;
         if (sending) {
             totalMessagesNotSent++;
+            System.out.println(getNode().getId() + " Message failed from  "+ ((DefaultMessage)message).getOrigin() +" Total: " +totalMessagesNotSent);
             return false;
         } else {
             sending = true;
@@ -247,7 +249,6 @@ public class Mica2MACLayer extends MACLayer {
     protected boolean isChannelFree(double noiseStrength) {
         return noiseStrength < maxAllowedNoiseOnSending * noiseVariance;
     }
-
     /**
      * Tells if the transmitting media is free of transmissions based on the
      * noise level.
@@ -259,7 +260,7 @@ public class Mica2MACLayer extends MACLayer {
      * @return returns true if the message is corrupted
      */
     public boolean isMessageCorrupted(double signal, double noise) {
-       return calcSNR(signal, noise) < corruptionSNR;
+       return false;//calcSNR(signal, noise) < corruptionSNR;
     }
 
     /**
@@ -286,7 +287,7 @@ public class Mica2MACLayer extends MACLayer {
      * @return returns true if the message is corrupted
      */
     public boolean isReceivable(double signal, double noise) {
-        return calcSNR(signal, noise) > receivingStartSNR;
+        return true;// calcSNR(signal, noise) > receivingStartSNR; // PMS
     }
 
     
@@ -306,7 +307,8 @@ public class Mica2MACLayer extends MACLayer {
     protected void addNoise(double level, Object stream) {
 
         if (receiving) {
-            noiseStrength += level;
+//            noiseStrength += level;
+            noiseStrength += 0;
             if (isMessageCorrupted(signalStrength, noiseStrength)) {
                 corrupted = true;
             }
@@ -319,8 +321,10 @@ public class Mica2MACLayer extends MACLayer {
                 corrupted = false;
                 signalStrength = level;
             } else {
+                if (transmitting) System.out.println("TRANSMITING");
 //                System.out.println("Not receivable");
-                noiseStrength += level;
+//                noiseStrength += level;
+                noiseStrength += 0;
 
             }
         }
@@ -378,7 +382,8 @@ public class Mica2MACLayer extends MACLayer {
             }
             parentID = -1;
         } else {
-            noiseStrength -= level;
+//            noiseStrength -= level;
+            noiseStrength += 0;
         }
 
     }
