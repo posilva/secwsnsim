@@ -4,13 +4,14 @@
  */
 package org.mei.securesim.test.insens;
 
-import java.security.Key;
+import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.mei.securesim.components.crypto.CryptoFunctions;
 import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.nodes.basic.Mica2SensorNode;
 import org.mei.securesim.core.radio.RadioModel;
+import org.mei.securesim.core.ui.ISimulationDisplay;
 import org.mei.securesim.gui.IDisplayable;
 import org.mei.securesim.test.insens.utils.INSENSConstants;
 import org.mei.securesim.test.insens.utils.INSENSFunctions;
@@ -38,9 +39,8 @@ public class INSENSNode extends Mica2SensorNode implements IDisplayable {
         try {
             if (getId() == 1) {
                 setSinkNode(true);
-                getGraphicNode().mark();
-
             }
+            getGraphicNode().setMarkColor(Color.RED);
 
             super.init();
             macKey = CryptoFunctions.createSkipjackKey();
@@ -85,6 +85,12 @@ public class INSENSNode extends Mica2SensorNode implements IDisplayable {
 
     public void setMacKey(byte[] macKey) {
         this.macKey = macKey;
+    }
+
+    @Override
+    public void displayOn(ISimulationDisplay disp) {
+        super.displayOn(disp);
+        if (isSinkNode()) getGraphicNode().mark();
     }
 
 }

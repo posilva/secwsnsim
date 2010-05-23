@@ -10,6 +10,7 @@ package org.mei.securesim.test.cleanslate;
  * @author CIAdmin
  */
 class CleanSlateConstants {
+    static byte MSG_HELLO=1;
 
     public  static byte[] getNAKey() {
         return null;

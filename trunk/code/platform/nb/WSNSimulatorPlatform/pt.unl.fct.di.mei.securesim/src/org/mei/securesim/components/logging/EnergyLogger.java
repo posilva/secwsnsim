@@ -4,16 +4,23 @@
  */
 package org.mei.securesim.components.logging;
 
-import java.io.IOException;
-import org.mei.securesim.utils.xml.XMLWriter;
-
 /**
  *
  * @author posilva
  */
-public class EnergyLogger extends XMLWriter{
+public abstract class EnergyLogger {
+   
+    /**
+     *
+     */
+    public abstract void init();
 
-    public EnergyLogger(String fileName) throws IOException {
-        super(fileName);
-    }
+    /**
+     *
+     */
+    public abstract void update(short id, String event,long realTime, long simTime, double value, String state);
+
+    public abstract void open();
+    public abstract void close();
+
 }

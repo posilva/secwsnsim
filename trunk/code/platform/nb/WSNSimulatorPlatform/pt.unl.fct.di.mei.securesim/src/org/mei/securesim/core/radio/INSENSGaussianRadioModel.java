@@ -18,7 +18,7 @@ public class INSENSGaussianRadioModel extends GaussianRadioModel {
     @Override
     public void updateNeighborhoods() {
         super.updateNeighborhoods();
-        settingTwoWayNeighborHood();
+//        settingTwoWayNeighborHood();
     }
 
     private void settingTwoWayNeighborHood() {

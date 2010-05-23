@@ -13,9 +13,6 @@ import org.mei.securesim.platform.PlatformView;
  */
 public class GUI {
 
-    public static void showSimulationStatus (String status){
-        PlatformView.getInstance().setSimulationStatus(status);
-    }
     public static void showSimulationNrOfNodes (int value){
         PlatformView.getInstance().setSimulationNrNodes(value);
     }

@@ -9,8 +9,8 @@ import java.awt.Dimension;
 import javax.swing.JOptionPane;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
+import org.mei.securesim.components.SimulationController;
 import org.mei.securesim.components.simulation.SimulationFactory;
-import org.mei.securesim.platform.PlatformView;
 import org.mei.securesim.utils.DebugConsole;
 
 /**
@@ -56,6 +56,8 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         showDebugWindow = new javax.swing.JToggleButton();
         showMouseCoordinates = new javax.swing.JToggleButton();
         viewNodesInfo = new javax.swing.JToggleButton();
+        jSeparator5 = new javax.swing.JToolBar.Separator();
+        selRandomNodes = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -236,6 +238,14 @@ public class WorkbenchPanel extends javax.swing.JPanel {
             }
         });
         jToolBar1.add(viewNodesInfo);
+        jToolBar1.add(jSeparator5);
+
+        selRandomNodes.setAction(actionMap.get("RandomNodeSelection")); // NOI18N
+        selRandomNodes.setText("R");
+        selRandomNodes.setFocusable(false);
+        selRandomNodes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        selRandomNodes.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(selRandomNodes);
 
         add(jToolBar1, java.awt.BorderLayout.LINE_START);
     }// </editor-fold>//GEN-END:initComponents
@@ -297,8 +307,10 @@ public class WorkbenchPanel extends javax.swing.JPanel {
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JToolBar.Separator jSeparator4;
+    private javax.swing.JToolBar.Separator jSeparator5;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JButton searchNode;
+    private javax.swing.JButton selRandomNodes;
     private javax.swing.JToggleButton selectionPointerTool;
     private javax.swing.JToggleButton showDebugWindow;
     private javax.swing.JToggleButton showMouseCoordinates;
@@ -323,21 +335,26 @@ public class WorkbenchPanel extends javax.swing.JPanel {
     @Action
     public void StartSimulation() {
         simulationPanel1.startSimulation();
+        SimulationController.getInstance().getSimulationPlatform().updateSimulationState("START");
     }
 
     @Action
     public void PauseSimulation() {
         simulationPanel1.pauseSimulation();
+        SimulationController.getInstance().getSimulationPlatform().updateSimulationState("PAUSE");
     }
 
     @Action
     public void StopSimulation() {
         simulationPanel1.stopSimulation();
+        SimulationController.getInstance().getSimulationPlatform().updateSimulationState("STOP");
+
     }
 
     @Action
     public void ResetSimulation() {
         simulationPanel1.clearSimulation();
+        SimulationController.getInstance().getSimulationPlatform().updateSimulationState("RESET");
     }
 
     @Action(block = Task.BlockingScope.COMPONENT)
@@ -362,11 +379,10 @@ public class WorkbenchPanel extends javax.swing.JPanel {
 
         @Override
         protected Object doInBackground() {
+            long start = System.currentTimeMillis();
             setMessage("Building Network...");
             simulationPanel1.buildNetwork();
-           
-
-            setMessage("Building Network... done!");
+            setMessage("Building Network... done in " +(System.currentTimeMillis() -start ) + " milliseconds");
             return null;  // return your result
         }
 
@@ -380,5 +396,11 @@ public class WorkbenchPanel extends javax.swing.JPanel {
     @Action
     public void selectedNodeDeployMode() {
         updateSelectionGroup();
+    }
+
+    @Action
+    public void RandomNodeSelection() {
+        simulationPanel1.selectRandomNodes(10);
+
     }
 }

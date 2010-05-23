@@ -68,6 +68,15 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodeOnOffActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodeSink">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="org.mei.securesim.platform.ui.SimulationPanel" id="SetNodeAsSink" methodName="SetNodeAsSink"/>
+                </Property>
+                <Property name="selected" type="boolean" value="true"/>
+                <Property name="text" type="java.lang.String" value="Sink Node"/>
+              </Properties>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="selNodeMonitorizacao">
@@ -183,6 +192,19 @@
             <Property name="text" type="java.lang.String" resourceKey="selNodesShowProperties.text"/>
             <Property name="toolTipText" type="java.lang.String" resourceKey="selNodesShowProperties.toolTipText"/>
           </Properties>
+        </MenuItem>
+        <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
+        </Component>
+        <MenuItem class="javax.swing.JMenuItem" name="selNodesRemove">
+          <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="org.mei.securesim.platform.ui.SimulationPanel" id="RemoveNodesSelected" methodName="RemoveNodesSelected"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Remove Selected Nodes"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesRemoveActionPerformed"/>
+          </Events>
         </MenuItem>
       </SubComponents>
     </Container>

@@ -4,6 +4,7 @@
  */
 package org.mei.securesim.core.layers.mac;
 
+import org.mei.securesim.core.energy.EnergyConsumptionAction;
 import org.mei.securesim.core.engine.DefaultMessage;
 import org.mei.securesim.core.engine.Event;
 import org.mei.securesim.core.engine.Simulator;
@@ -122,7 +123,17 @@ public class Mica2MACLayer extends MACLayer {
             if (isChannelFree(noiseStrength)) {
                 // start transmitting
                 transmitting = true;
-                transmitMessage();
+                final Node node = getNode();
+                getNode().getTransceiver().executeTransmission(new EnergyConsumptionAction() {
+                    DefaultMessage m =(DefaultMessage) node.getMessage();
+                    public void execute() {
+                        transmitMessage();
+                    }
+                    public int getNumberOfUnits() {
+                        return m.size();
+                    }
+                });
+
                 endTransmissionEvent.setTime(getTime() + sendTransmissionTime);
                 getNode().getSimulator().addEvent(endTransmissionEvent);
             } else {
@@ -260,7 +271,7 @@ public class Mica2MACLayer extends MACLayer {
      * @return returns true if the message is corrupted
      */
     public boolean isMessageCorrupted(double signal, double noise) {
-       return false;//calcSNR(signal, noise) < corruptionSNR;
+       return calcSNR(signal, noise) < corruptionSNR;
     }
 
     /**
@@ -287,7 +298,7 @@ public class Mica2MACLayer extends MACLayer {
      * @return returns true if the message is corrupted
      */
     public boolean isReceivable(double signal, double noise) {
-        return true;// calcSNR(signal, noise) > receivingStartSNR; // PMS
+        return  calcSNR(signal, noise) > receivingStartSNR; // PMS
     }
 
     
@@ -307,8 +318,8 @@ public class Mica2MACLayer extends MACLayer {
     protected void addNoise(double level, Object stream) {
 
         if (receiving) {
-//            noiseStrength += level;
-            noiseStrength += 0;
+            noiseStrength += level;
+//            noiseStrength += 0;
             if (isMessageCorrupted(signalStrength, noiseStrength)) {
                 corrupted = true;
             }
@@ -321,10 +332,10 @@ public class Mica2MACLayer extends MACLayer {
                 corrupted = false;
                 signalStrength = level;
             } else {
-                if (transmitting) System.out.println("TRANSMITING");
+//                if (transmitting) System.out.println(getNode().getId()+" TRANSMITING: " +(getNode()).getMessage() + " from " + ((DefaultMessage)((Node)stream).getMessage()).getOrigin());
 //                System.out.println("Not receivable");
-//                noiseStrength += level;
-                noiseStrength += 0;
+                noiseStrength += level;
+//                noiseStrength += 0;
 
             }
         }
@@ -348,24 +359,19 @@ public class Mica2MACLayer extends MACLayer {
             receiving = false;
             if (!corrupted) {
                 
-                Node node = Node.cast(stream);
-                DefaultMessage m =(DefaultMessage) node.getMessage();
-                deliverMessage(m);
-
-//                    final Node node = Node.cast(stream);
-//
-//                    getNode().getTransceiver().executeReception(new EnergyConsumptionAction() {
-//
-//                        DefaultMessage m =(DefaultMessage) node.getMessage();
-//
-//                        public void execute() {
-//                            deliverMessage(m);
-//                        }
-//
-//                        public int getNumberOfUnits() {
-//                            return m.size();
-//                        }
-//                    });
+//                Node node = Node.cast(stream);
+//                DefaultMessage m =(DefaultMessage) node.getMessage();
+//                deliverMessage(m);
+                    final Node node = Node.cast(stream);
+                    getNode().getTransceiver().executeReception(new EnergyConsumptionAction() {
+                        DefaultMessage m =(DefaultMessage) node.getMessage();
+                        public void execute() {
+                            deliverMessage(m);
+                        }
+                        public int getNumberOfUnits() {
+                            return m.size();
+                        }
+                    });
             }else {
                 totalMessagesCorrupted++;
 //                Node node = Node.cast(stream);
@@ -382,8 +388,8 @@ public class Mica2MACLayer extends MACLayer {
             }
             parentID = -1;
         } else {
-//            noiseStrength -= level;
-            noiseStrength += 0;
+            noiseStrength -= level;
+//            noiseStrength += 0;
         }
 
     }

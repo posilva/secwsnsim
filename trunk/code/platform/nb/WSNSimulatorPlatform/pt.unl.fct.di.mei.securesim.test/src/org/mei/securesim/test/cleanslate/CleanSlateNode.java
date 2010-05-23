@@ -16,7 +16,7 @@ import org.mei.securesim.core.radio.RadioModel;
 public class CleanSlateNode extends Mica2SensorNode {
 
     private byte[] networkKey = null;
-    private byte[] NAKey = null;
+    private byte[] NAPublicKey = null;
 
     public CleanSlateNode(Simulator sim, RadioModel radioModel) {
         super(sim, radioModel);
@@ -26,11 +26,11 @@ public class CleanSlateNode extends Mica2SensorNode {
     public void init() {
         super.init();
         networkKey = CryptoFunctions.createSkipjackKey();
-        NAKey = CleanSlateConstants.getNAKey();
+        NAPublicKey = CleanSlateConstants.getNAKey();
     }
 
     public byte[] getNAKey() {
-        return NAKey;
+        return NAPublicKey;
     }
 
     public byte[] getNetworkKey() {

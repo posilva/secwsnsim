@@ -14,7 +14,7 @@ public class EnergyEvent extends EventObject {
     private double value=0;
     private long time;
     private String event="";
-    private int nodeid;
+    private short nodeid;
 
     public String getEvent() {
         return event;
@@ -24,11 +24,11 @@ public class EnergyEvent extends EventObject {
         this.event = event;
     }
 
-    public int getNodeid() {
+    public short getNodeid() {
         return nodeid;
     }
 
-    public void setNodeid(int nodeid) {
+    public void setNodeid(short nodeid) {
         this.nodeid = nodeid;
     }
 

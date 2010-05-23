@@ -58,6 +58,7 @@ public class ClassConfigReader {
     }
 
     private void validateClasses(Collection classes) throws ClassNotFoundException {
+        
         for (Object className : classes) {
             Class c = Class.forName(((ClassDefinitions) className).className);
         }

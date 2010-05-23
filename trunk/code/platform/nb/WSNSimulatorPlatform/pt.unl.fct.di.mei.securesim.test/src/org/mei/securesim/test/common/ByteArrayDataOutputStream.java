@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package org.mei.securesim.test.insens.utils;
+package org.mei.securesim.test.common;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;

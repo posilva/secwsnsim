@@ -127,7 +127,7 @@ public class XMLWriter {
 	 *
 	 * @param buff string to write.
 	 */
-	private void write(String buff) {
+	private synchronized void write(String buff) {
 		try {
 			out.write(buff);
 			out.flush();

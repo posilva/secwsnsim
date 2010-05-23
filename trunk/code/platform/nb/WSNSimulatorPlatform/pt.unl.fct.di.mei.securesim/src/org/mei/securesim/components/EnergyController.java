@@ -1,9 +1,5 @@
 package org.mei.securesim.components;
 
-import java.io.IOException;
-import java.util.Stack;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.mei.securesim.components.logging.EnergyLogger;
 import org.mei.securesim.core.energy.listeners.EnergyEvent;
 import org.mei.securesim.core.energy.listeners.EnergyListener;
@@ -23,49 +19,41 @@ public class EnergyController implements EnergyListener {
         return instance;
 
     }
-    protected Stack energyPhases = new Stack();
     protected EnergyLogger energyLogger;
-    protected String filename;
 
     public EnergyController() {
-        try {
-            filename = "energy" + System.currentTimeMillis() + ".xml";
-            this.energyLogger = new EnergyLogger(filename);
-            startPhase("EnergyConsumption");
-        } catch (IOException ex) {
-            Logger.getLogger(EnergyController.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     public synchronized void onConsume(EnergyEvent evt) {
+        String ev;
         if (SimulationController.getInstance().isLogEnergyEnable()) {
-            energyLogger.openTag("energy");
-                energyLogger.writeTag("node", "" + evt.getNodeid());
-                energyLogger.writeTag("event", "" + evt.getEvent());
-                energyLogger.writeTag("time", "" + evt.getTime());
-                energyLogger.writeTag("value", "" + evt.getValue());
-            energyLogger.closeTag("energy");
+            if (energyLogger != null) {
+                ev=evt.getEvent();
+                energyLogger.update(evt.getNodeid(), ev, evt.getTime(), 0, evt.getValue(), "nostate");
+            }
         }
     }
 
-    public synchronized void startPhase(String name) {
-        String tag = name.replaceAll(" ", "_");
-        this.energyLogger.openTag(tag);
-        this.energyPhases.push(tag);
+    public EnergyLogger getEnergyLogger() {
+        return energyLogger;
     }
 
-    public synchronized void endPhase() {
-        String tag = (String) this.energyPhases.pop();
-        this.energyLogger.closeTag(tag);
+    public void setEnergyLogger(EnergyLogger energyLogger) {
+        this.energyLogger = energyLogger;
+        this.energyLogger.init();
     }
 
-    public synchronized void endPhase(String name) {
-        String tag = (String) this.energyPhases.pop();
-        this.energyLogger.closeTag(tag);
+    public void start() {
+        if (energyLogger != null) {
+            energyLogger.open();
+        }
+
     }
 
-    public void close() {
-        endPhase("EnergyConsumption");
-        energyLogger.close();
+    public void stop() {
+        if (energyLogger != null) {
+            energyLogger.close();
+        }
+
     }
 }

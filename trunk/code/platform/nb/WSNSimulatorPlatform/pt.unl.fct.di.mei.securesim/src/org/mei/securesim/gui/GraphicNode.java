@@ -31,7 +31,7 @@ public class GraphicNode {
     protected Color backcolor = Color.RED;
     protected Color linecolor = Color.BLACK;
     protected Color oldColor = Color.WHITE;
-    protected Color MARKEDCOLOR = Color.ORANGE;
+    protected Color markColor = Color.ORANGE;
 
     protected Rectangle rectangle;
     private boolean marked;
@@ -263,11 +263,19 @@ public class GraphicNode {
         int _y = display.y2ScreenY(y);
 
         saveOldColor(g);
-        g.setColor(MARKEDCOLOR);
+        g.setColor(markColor);
         int r=(int) (radius*3);
         g.drawOval(_x - r, _y - r, r * 2, r * 2);
         g.fillOval(_x - r, _y - r, r * 2, r * 2);
         restoreOldColor(g);
+    }
+
+    public Color getMarkColor() {
+        return markColor;
+    }
+
+    public void setMarkColor(Color markColor) {
+        this.markColor = markColor;
     }
     
 }
