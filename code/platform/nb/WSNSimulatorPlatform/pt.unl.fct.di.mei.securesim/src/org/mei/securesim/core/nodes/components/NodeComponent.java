@@ -4,6 +4,7 @@
  */
 package org.mei.securesim.core.nodes.components;
 
+import java.util.Random;
 import org.mei.securesim.core.nodes.Node;
 
 /**
@@ -11,7 +12,7 @@ import org.mei.securesim.core.nodes.Node;
  * @author posilva
  */
 public abstract class NodeComponent {
-
+    protected static Random onOff=new Random() ;
     protected Node node;
     protected boolean on;
 
@@ -28,7 +29,8 @@ public abstract class NodeComponent {
     }
 
     public boolean isOn() {
-        return on;
+       // implements some kind of random state in the component
+        return onOff.nextBoolean();
     }
 
     protected void switchON() {

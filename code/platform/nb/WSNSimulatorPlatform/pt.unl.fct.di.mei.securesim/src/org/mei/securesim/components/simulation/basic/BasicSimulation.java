@@ -3,6 +3,7 @@
  */
 package org.mei.securesim.components.simulation.basic;
 
+import org.mei.securesim.components.SimulationController;
 import org.mei.securesim.components.simulation.Simulation;
 
 /**
@@ -24,7 +25,7 @@ public class BasicSimulation extends Simulation {
     public void start() {
         if (!getSimulator().isPaused()) {
             getSimulator().start();
-            System.out.println("Started");
+        
         } else {
             getSimulator().resume();
         }
@@ -37,6 +38,7 @@ public class BasicSimulation extends Simulation {
     @Override
     public void stop() {
         getSimulator().stop();
+
 
 
     }

@@ -1,9 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.mei.securesim.test.cleanslate;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.mei.securesim.test.cleanslate.messages.APPMsg;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,6 +10,8 @@ import org.mei.securesim.test.cleanslate.messages.HELLOMsg;
 import org.mei.securesim.core.application.Application;
 import org.mei.securesim.core.layers.routing.RoutingLayer;
 import org.mei.securesim.test.cleanslate.messages.CleanSlateMsg;
+import org.mei.securesim.test.common.ByteArrayDataInputStream;
+import org.mei.securesim.test.common.ByteArrayDataOutputStream;
 
 /**
  *
@@ -94,19 +95,17 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
     }
 
     private void addToNeigborhoodList(HELLOMsg msg) {
-        getNeighborhood().add(msg.getNodeId());
+        HELLOMsgData hello = new HELLOMsgData(msg.getPayload());
+        getNeighborhood().add(hello.id);
     }
 
     private boolean verifySignature(HELLOMsg msg) {
         return true;
     }
 
-    private void timeBoundSecureNetworkDiscovery() {
-        
-    }
-
     private void startSecureNetworkDiscovery() {
         broadcastHELLO();
+        scheduleSecureNetworkDiscoveryTimeBound();
     }
 
     private boolean isNetworkDiscoveryPhase() {
@@ -114,9 +113,75 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
     }
 
     private void broadcastHELLO() {
-        HELLOMsg m = new HELLOMsg(null);
-        m.setNodeId(""+this.getNode().getId());
+        HELLOMsg m = new HELLOMsg(createPayloadHelloMessage());
+
 
         getNode().getMacLayer().sendMessage(m, this);
+    }
+
+    /**
+     * Schedules a event to bound the discovery time period
+     */
+    private void scheduleSecureNetworkDiscoveryTimeBound() {
+    }
+
+    /**
+     * Create a message payload 
+     * @return
+     */
+    byte[] createPayloadHelloMessage() {
+        try {
+            ByteArrayDataOutputStream bados = new ByteArrayDataOutputStream();
+            bados.writeByte(CleanSlateConstants.MSG_HELLO);
+            bados.writeShort(getNode().getId());
+            bados.write(signData(bados.toByteArray()));
+            return bados.toByteArray();
+        } catch (IOException ex) {
+            Logger.getLogger(CleanSlateRoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+
+    }
+
+    /**
+     * Creates a MAC from data
+     * @param data input data to sign
+     * @return a MAC
+     */
+    private byte[] signData(byte[] data) {
+
+        return null;
+    }
+
+    /**
+     * This is a wrapper class to handle with message payload
+     */
+    class HELLOMsgData {
+
+        byte type;
+        short id;
+        byte[] signature;
+
+        public HELLOMsgData(byte[] payload) {
+            try {
+                ByteArrayDataInputStream badis = new ByteArrayDataInputStream(payload);
+                type = badis.readByte();
+                id = badis.readShort();
+                signature = extractSignatureFromPayload(payload);
+            } catch (IOException ex) {
+                Logger.getLogger(CleanSlateRoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+    }
+
+    /**
+     * Extract a signature data from a message payload
+     * the signature must be at the end
+     * @param payload
+     * @return
+     */
+    private byte[] extractSignatureFromPayload(byte[] payload) {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 }

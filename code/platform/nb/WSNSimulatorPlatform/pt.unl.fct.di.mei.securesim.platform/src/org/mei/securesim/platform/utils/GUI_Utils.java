@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.Window;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,6 +22,18 @@ public class GUI_Utils {
         int screenHeight = screenSize.height;
         int screenWidth = screenSize.width;
         f.setLocation(screenWidth / 4, screenHeight / 4);
+    }
+
+    public static void showMessage(String message, int type) {
+
+        JOptionPane.showMessageDialog(null, message,"Message",type);
+
+    }
+
+    public static boolean confirm(String message) {
+    Object[] o = {"Yes", "No"};
+
+        return JOptionPane.showOptionDialog(null,message,"Confirm...",-1,JOptionPane.QUESTION_MESSAGE,null,o,o[1])==JOptionPane.YES_OPTION;
     }
 
 //    public static String InputBox(String title) {

@@ -2,6 +2,7 @@ package org.mei.securesim.components.simulation;
 
 import java.util.logging.Logger;
 import org.mei.securesim.components.EnergyController;
+import org.mei.securesim.components.SimulationController;
 
 import org.mei.securesim.components.configuration.ConfigurableObject;
 import org.mei.securesim.core.ui.ISimulationDisplay;
@@ -32,6 +33,8 @@ public abstract class Simulation extends ConfigurableObject {
 
     public Simulation() {
         super();
+        SimulationController.getInstance().registerSimulation(this);
+
     }
 
     public void setup() {

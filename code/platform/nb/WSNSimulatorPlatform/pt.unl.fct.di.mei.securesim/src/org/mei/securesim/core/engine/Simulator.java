@@ -28,13 +28,14 @@ import java.util.Collection;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.mei.securesim.components.SimulationController;
+import org.mei.securesim.components.simulation.Simulation;
 import org.mei.securesim.core.ui.ISimulationDisplay;
 import org.mei.securesim.core.engine.events.SimulatorEvent;
 
 import org.mei.securesim.core.nodes.Node;
 import org.mei.securesim.core.radio.RadioModel;
 import org.mei.securesim.core.network.Network;
-import org.mei.securesim.core.ui.Display;
 import org.mei.securesim.utils.RandomGenerator;
 
 /**
@@ -68,6 +69,7 @@ public class Simulator {
     private boolean paused;
     private RadioModel radioModel;
     private final Object monitor = new Object();
+    private Simulation simulation;
 
     public enum RunMode {
 
@@ -122,6 +124,7 @@ public class Simulator {
 
     public void stop() {
         stop = true;
+        SimulationController.getInstance().stop();
         reset();
     }
 
@@ -140,11 +143,8 @@ public class Simulator {
         return stop;
     }
 
-    public void setStop(boolean stop) {
-        this.stop = stop;
-    }
-
     public void start() {
+        SimulationController.getInstance().begin();
         runWithDisplay();
     }
 
@@ -300,6 +300,7 @@ public class Simulator {
      */
     public void runWithDisplay() {
         new Thread(new Runnable() {
+
             public void run() {
                 while (true) {
                     step(SIMULATOR_STEPS);
@@ -356,7 +357,7 @@ public class Simulator {
      *
      * @param disp the Display on which to draw Nodes
      */
-    public void display(ISimulationDisplay disp) {
+    public synchronized void display(ISimulationDisplay disp) {
         for (Node n : getNodes()) {
             n.displayOn(disp);
         }
@@ -439,5 +440,13 @@ public class Simulator {
             paused = false;
         }
 
+    }
+
+    public Simulation getSimulation() {
+        return simulation;
+    }
+
+    public void setSimulation(Simulation simulation) {
+        this.simulation = simulation;
     }
 }

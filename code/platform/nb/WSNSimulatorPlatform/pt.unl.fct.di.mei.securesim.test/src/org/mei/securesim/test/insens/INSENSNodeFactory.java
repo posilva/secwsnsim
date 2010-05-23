@@ -7,6 +7,9 @@ package org.mei.securesim.test.insens;
 
 import org.mei.securesim.core.layers.mac.Mica2MACLayer;
 import org.mei.securesim.core.nodes.factories.NodeFactory;
+import org.mei.securesim.test.insens.INSENSApplication;
+import org.mei.securesim.test.insens.INSENSNode;
+import org.mei.securesim.test.insens.INSENSRoutingLayer;
 
 /**
  *
