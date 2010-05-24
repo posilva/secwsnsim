@@ -74,7 +74,6 @@
                   <action class="org.mei.securesim.platform.ui.SimulationPanel" id="SetNodeAsSink" methodName="SetNodeAsSink"/>
                 </Property>
                 <Property name="selected" type="boolean" value="true"/>
-                <Property name="text" type="java.lang.String" value="Sink Node"/>
               </Properties>
             </MenuItem>
           </SubComponents>
@@ -200,7 +199,6 @@
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
               <action class="org.mei.securesim.platform.ui.SimulationPanel" id="RemoveNodesSelected" methodName="RemoveNodesSelected"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Remove Selected Nodes"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesRemoveActionPerformed"/>

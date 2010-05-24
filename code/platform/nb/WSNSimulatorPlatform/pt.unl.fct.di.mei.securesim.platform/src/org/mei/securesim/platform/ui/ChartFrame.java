@@ -15,7 +15,7 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
-import org.mei.securesim.platform.charts.ui.ChartPanel;
+import org.mei.securesim.platform.core.charts.ui.ChartPanel;
 
 /**
  *

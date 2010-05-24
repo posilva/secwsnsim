@@ -23,11 +23,11 @@ import org.jdesktop.application.Action;
 import org.mei.securesim.core.energy.EnergyModel;
 import org.mei.securesim.core.network.basic.DefaultNetwork;
 import org.mei.securesim.platform.conf.ClassConfigReader.ClassDefinitions;
-import org.mei.securesim.platform.instruments.energy.ui.resources.EnergyModelDialog;
-import org.mei.securesim.platform.utils.GUI_Utils;
+import org.mei.securesim.platform.core.instruments.energy.ui.EnergyModelDialog;
+import org.mei.securesim.platform.utils.gui.GUI_Utils;
 
 import org.mei.securesim.components.simulation.SimulationFactory;
-import org.mei.securesim.platform.utils.Configuration;
+import org.mei.securesim.platform.conf.ConfigurationUtils;
 
 /**
  *
@@ -404,9 +404,9 @@ public class SimulationWizardDialog extends JDialog {
     }
 
     private void configClasses() {
-        Configuration.loadComboWithClasses(cboSimulatorClass, Configuration.loadConfigurationClasses(Configuration.CONF_SIMULATOR_CLASSES_PROPERTIES));
-        Configuration.loadComboWithClasses(cboRadioModelClass, Configuration.loadConfigurationClasses(Configuration.CONF_RADIOMODEL_CLASSES_PROPERTIES));
-        Configuration.loadComboWithClasses(cboNodeClass, Configuration.loadConfigurationClasses(Configuration.CONF_NODE_CLASSES_PROPERTIES));
+        ConfigurationUtils.loadComboWithClasses(cboSimulatorClass, ConfigurationUtils.loadConfigurationClasses(ConfigurationUtils.CONF_SIMULATOR_CLASSES_PROPERTIES));
+        ConfigurationUtils.loadComboWithClasses(cboRadioModelClass, ConfigurationUtils.loadConfigurationClasses(ConfigurationUtils.CONF_RADIOMODEL_CLASSES_PROPERTIES));
+        ConfigurationUtils.loadComboWithClasses(cboNodeClass, ConfigurationUtils.loadConfigurationClasses(ConfigurationUtils.CONF_NODE_CLASSES_PROPERTIES));
     }
 
 
