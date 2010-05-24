@@ -7,12 +7,24 @@ import org.mei.securesim.core.nodes.Node;
 
 public class Batery {
 
+    public static final String CPUTRANSITIONTOON_EVENT = "CPUTransitionToON";
+    public static final String DECRYPTION_EVENT = "Decryption";
+    public static final String ENCRYPTION_EVENT = "Encryption";
+    public static final String IDLE_EVENT = "Idle";
+    public static final String MACVERIFICATION_EVENT = "MACVerification";
+    public static final String MAC_EVENT = "MAC";
+    public static final String PROCESSING_EVENT = "Processing";
+    public static final String RECEIVING_EVENT = "Receiving";
+    public static final String SIGNATUREVERIFY_EVENT = "SignatureVerify";
+    public static final String SIGNATURE_EVENT = "Signature";
+    public static final String TRANSMISSION_EVENT = "Transmission";
+    public static final String TXTRANSITIONTOON_EVENT = "TXTransitionToON";
+    public static final String UNKNOWNED_EVENT = "unknowned";
+    /**
+     * 
+     */
+    public boolean enable = true;
     public static final double INFINIT = -1;
-//    public static final double TRASMISSION_CONSUMPTION = 0.1;
-//    public static final double RECEIVING_CONSUMPTION = 0.01;
-//    public static double PROCESSING_CONSUMPTION = 0.005;
-//    public static double IDLE_CONSUMPTION = 0.005;
-//    public static double STATE_TRANSITION_ON_OFF_CONSUMPTION = 0.00001;
     EnergyModel energyModel;
     protected double averageConsumption = 0;
     protected double totalconsumptions = 0;
@@ -86,7 +98,11 @@ public class Batery {
         }
     }
 
-    public synchronized void consume(double value, String event) {
+    protected synchronized void consume(double value, String event) {
+        if (!enable) {
+            return;
+        }
+
         currentPower -= value;
 
         double tot = averageConsumption * totalconsumptions;
@@ -94,22 +110,22 @@ public class Batery {
         totalconsumptions++;
         averageConsumption = tot / totalconsumptions;
 
-        EnergyEvent evt = new EnergyEvent(this, value, System.currentTimeMillis());
-        evt.setNodeid(getHostNode().getId());
-        evt.setEvent(event);
-        fireOnEnergyConsume(evt);
+        fireOnEnergyConsume(new EnergyEvent(this, value, System.currentTimeMillis(), getHostNode().getSimulator().getSimulationTime(), event, getHostNode().getId()));
 
         lastConsume = value;
     }
 
-    public synchronized void consume(double value) {
+    protected synchronized void consume(double value) {
+        if (!enable) {
+            return;
+        }
         currentPower -= value;
 
         double tot = averageConsumption * totalconsumptions;
         tot += value;
         totalconsumptions++;
         averageConsumption = tot / totalconsumptions;
-        fireOnEnergyConsume(new EnergyEvent(this, value, System.currentTimeMillis()));
+        fireOnEnergyConsume(new EnergyEvent(this, value, System.currentTimeMillis(), getHostNode().getSimulator().getSimulationTime(), UNKNOWNED_EVENT, getHostNode().getId()));
         lastConsume = value;
     }
 
@@ -125,11 +141,11 @@ public class Batery {
     }
 
     public void consumeTransmission(double length) {
-        consume(energyModel.getTransmissionEnergy() * length, "Transmission");
+        consume(energyModel.getTransmissionEnergy() * length, TRANSMISSION_EVENT);
     }
 
     public void consumeReceiving(int length) {
-        consume(energyModel.getReceptionEnergy(), "Receiving");
+        consume(energyModel.getReceptionEnergy(), RECEIVING_EVENT);
     }
 
     public Node getHostNode() {
@@ -145,11 +161,11 @@ public class Batery {
     }
 
     public void consumeCPUTransitionToON() {
-        consume(energyModel.getCpuTransitionToActiveEnergy(), "CPUTransitionToON");
+        consume(energyModel.getCpuTransitionToActiveEnergy(), CPUTRANSITIONTOON_EVENT);
     }
 
     public void consumeProcessing(long rate) {
-        consume(energyModel.processingEnergy * rate, "Processing");
+        consume(energyModel.processingEnergy * rate, PROCESSING_EVENT);
     }
 
     public EnergyModel getEnergyModel() {
@@ -161,19 +177,19 @@ public class Batery {
     }
 
     public void consumeEncryption(int length) {
-        consume(energyModel.getEncryptEnergy() * length, "Encryption");
+        consume(energyModel.getEncryptEnergy() * length, ENCRYPTION_EVENT);
     }
 
     public void consumeMAC(int length) {
-        consume(energyModel.getDigestEnergy() * length, "MAC");
+        consume(energyModel.getDigestEnergy() * length, MAC_EVENT);
     }
 
     public void consumeMACVerification(int length) {
-        consume(energyModel.getVerifyDigestEnergy() * length, "MACVerification");
+        consume(energyModel.getVerifyDigestEnergy() * length, MACVERIFICATION_EVENT);
     }
 
     public void consumeDecryption(int length) {
-        consume(energyModel.getDecryptEnergy() * length, "Decryption");
+        consume(energyModel.getDecryptEnergy() * length, DECRYPTION_EVENT);
     }
 
     private void init() {
@@ -185,12 +201,28 @@ public class Batery {
     }
 
     public void consumeTXTransitionToON() {
-        consume(energyModel.getTxTransitionToActiveEnergy(), "TXTransitionToON");
+        consume(energyModel.getTxTransitionToActiveEnergy(), TXTRANSITIONTOON_EVENT);
 
     }
 
     public void consumeIdle() {
-        consume(energyModel.getIdleEnergy(), "Idle");
+        consume(energyModel.getIdleEnergy(), IDLE_EVENT);
 
+    }
+
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+
+    public void consumeSignature(long rate) {
+        consume(energyModel.getSignatureEnergy(), SIGNATURE_EVENT);
+    }
+
+    public void consumeSignatureVerify(long rate) {
+        consume(energyModel.getVerifySignatureEnergy(), SIGNATUREVERIFY_EVENT);
     }
 }

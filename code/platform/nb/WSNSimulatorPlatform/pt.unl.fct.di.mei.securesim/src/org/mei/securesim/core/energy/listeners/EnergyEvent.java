@@ -11,9 +11,10 @@ import org.mei.securesim.core.energy.Batery;
  *
  */
 public class EnergyEvent extends EventObject {
-    private double value=0;
-    private long time;
-    private String event="";
+    private double value;
+    private long realTime;
+    private long simTime;
+    private String event;
     private short nodeid;
 
     public String getEvent() {
@@ -37,31 +38,34 @@ public class EnergyEvent extends EventObject {
         return (Batery) source;
     }
 
-    public long getTime() {
-        return time;
+    public long getRealTime() {
+        return realTime;
     }
 
-    public void setTime(long time) {
-        this.time = time;
-    }
-    
-    public EnergyEvent(Batery aThis, double value, long time) {
-        super(aThis);
-        this.value=value;
-        this.time = time;
+    public void setRealTime(long time) {
+        this.realTime = time;
     }
 
     public double getValue() {
         return value;
     }
 
-//	public EnergyEvent(Object arg0) {
-//		super(arg0);
-//	}
-//
-//    public EnergyEvent(Batery aThis, double value) {
-//        super(aThis);
-//        this.value=value;
-//    }
+    public long getSimTime() {
+        return simTime;
+    }
+
+    public void setSimTime(long simTime) {
+        this.simTime = simTime;
+    }
+
+    public EnergyEvent(Object source, double value, long realTime, long simTime, String event, short nodeid) {
+        super(source);
+        this.value = value;
+        this.realTime = realTime;
+        this.simTime = simTime;
+        this.event = event;
+        this.nodeid = nodeid;
+    }
+
 
 }
