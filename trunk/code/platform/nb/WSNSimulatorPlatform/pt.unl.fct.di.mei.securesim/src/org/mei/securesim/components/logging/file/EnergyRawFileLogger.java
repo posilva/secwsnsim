@@ -18,6 +18,10 @@ import java.util.logging.Logger;
  */
 public class EnergyRawFileLogger extends EnergyFileLogger {
 
+    private boolean updating;
+    private final Object writeMonitor = new Object();
+    private boolean exiting;
+
     @Override
     public void init() {
         try {
@@ -30,7 +34,11 @@ public class EnergyRawFileLogger extends EnergyFileLogger {
     }
 
     @Override
-    public synchronized  void update(short id, String event, long realTime, long simTime, double value, String state) {
+    public synchronized void update(short id, String event, long realTime, long simTime, double value, String state) {
+        updating = true;
+        if (exiting) {
+            return;
+        }
         try {
             ((DataOutputStream) getOutputStream()).writeShort(id);
             ((DataOutputStream) getOutputStream()).writeUTF(event);
@@ -39,20 +47,34 @@ public class EnergyRawFileLogger extends EnergyFileLogger {
             ((DataOutputStream) getOutputStream()).writeDouble(value);
             ((DataOutputStream) getOutputStream()).writeUTF(state);
             getOutputStream().flush();
+            synchronized (writeMonitor) {
+                writeMonitor.notifyAll();
+            }
+
         } catch (IOException ex) {
             Logger.getLogger(EnergyRawFileLogger.class.getName()).log(Level.SEVERE, null, ex);
         }
+        updating = false;
     }
 
     @Override
     public void open() {
-        
     }
 
     @Override
     public void close() {
         try {
-            ((DataOutputStream)getOutputStream()).close();
+            synchronized (writeMonitor) {
+                exiting = true;
+                if (updating) {
+                    writeMonitor.wait();
+                }
+                System.out.print("Gracefull log exit...");
+                ((DataOutputStream) getOutputStream()).close();
+                exiting = true;
+                                System.out.println("done");
+
+            }
         } catch (Exception e) {
         }
     }

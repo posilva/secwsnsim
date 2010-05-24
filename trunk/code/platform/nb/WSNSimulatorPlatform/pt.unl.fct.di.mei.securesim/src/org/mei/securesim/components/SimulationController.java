@@ -23,6 +23,7 @@ public class SimulationController {
     protected boolean logEnergyEnable = true;
     protected ISimulationPlatform simulationPlatform;
     protected Simulation simulation;
+    private String simulationState;
    
 
     public SimulationController() {
@@ -155,7 +156,14 @@ public class SimulationController {
     }
 
     public void exitPlatform() {
+
         EnergyController.getInstance().stop();
     }
-    
+    public void setSimulationState(String state){
+        simulationState=state;
+    }
+
+    public String getSimulationState() {
+        return simulationState;
+    }
 }

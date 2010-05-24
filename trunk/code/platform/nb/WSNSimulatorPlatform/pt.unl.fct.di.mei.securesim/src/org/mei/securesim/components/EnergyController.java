@@ -29,7 +29,7 @@ public class EnergyController implements EnergyListener {
         if (SimulationController.getInstance().isLogEnergyEnable()) {
             if (energyLogger != null) {
                 ev=evt.getEvent();
-                energyLogger.update(evt.getNodeid(), ev, evt.getTime(), 0, evt.getValue(), "nostate");
+                energyLogger.update(evt.getNodeid(), ev, evt.getRealTime(), 0, evt.getValue(), "nostate");
             }
         }
     }

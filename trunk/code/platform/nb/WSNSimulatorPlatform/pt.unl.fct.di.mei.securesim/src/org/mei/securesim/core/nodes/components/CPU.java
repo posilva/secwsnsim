@@ -7,7 +7,7 @@ import org.mei.securesim.core.nodes.Node;
  *
  * @author POSilva
  */
-public class CPU extends NodeComponent{
+public class CPU extends NodeComponent {
 
     public CPU(Node node) {
         super(node);
@@ -16,22 +16,21 @@ public class CPU extends NodeComponent{
     public void execute(EnergyConsumptionAction action) {
         switchON();
         action.execute();
-        long rate=action.getNumberOfUnits();
+        long rate = action.getNumberOfUnits();
         getNode().getBateryEnergy().consumeProcessing(rate);
         switchOFF();
     }
 
-
     @Override
     protected void consumeTransitionToONEnergy() {
-            getNode().getBateryEnergy().consumeCPUTransitionToON();
+        getNode().getBateryEnergy().consumeCPUTransitionToON();
 
     }
 
     public void executeEncryption(EnergyConsumptionAction action) {
         switchON();
         action.execute();
-        long rate=action.getNumberOfUnits();
+        long rate = action.getNumberOfUnits();
         getNode().getBateryEnergy().consumeProcessing(rate);
         switchOFF();
     }
@@ -39,7 +38,7 @@ public class CPU extends NodeComponent{
     public void executeDecryption(EnergyConsumptionAction action) {
         switchON();
         action.execute();
-        long rate=action.getNumberOfUnits();
+        long rate = action.getNumberOfUnits();
         getNode().getBateryEnergy().consumeProcessing(rate);
         switchOFF();
     }
@@ -47,18 +46,16 @@ public class CPU extends NodeComponent{
     public void executeSignature(EnergyConsumptionAction action) {
         switchON();
         action.execute();
-        long rate=action.getNumberOfUnits();
-        getNode().getBateryEnergy().consumeProcessing(rate);
+        long rate = action.getNumberOfUnits();
+        getNode().getBateryEnergy().consumeSignature(rate);
         switchOFF();
     }
 
     public void executeVerifySignature(EnergyConsumptionAction action) {
         switchON();
         action.execute();
-        long rate=action.getNumberOfUnits();
-        getNode().getBateryEnergy().consume(rate);
+        long rate = action.getNumberOfUnits();
+        getNode().getBateryEnergy().consumeSignatureVerify(rate);
         switchOFF();
     }
-
-
 }
