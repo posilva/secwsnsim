@@ -31,7 +31,7 @@ import javax.swing.table.TableModel;
 import org.mei.securesim.core.energy.EnergyModel;
 import org.mei.securesim.core.nodes.Node;
 import org.mei.securesim.gui.GraphicNode;
-import org.mei.securesim.platform.instruments.energy.ui.resources.EnergyModelDialog;
+import org.mei.securesim.platform.core.instruments.energy.ui.EnergyModelDialog;
 
 /**
  *

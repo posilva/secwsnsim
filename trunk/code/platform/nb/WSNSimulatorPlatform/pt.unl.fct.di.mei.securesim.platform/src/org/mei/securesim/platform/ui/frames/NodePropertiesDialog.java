@@ -27,7 +27,7 @@ import javax.swing.JComponent;
 import javax.swing.border.BevelBorder;
 import org.mei.securesim.core.nodes.Node;
 import org.mei.securesim.gui.GraphicNode;
-import org.mei.securesim.platform.utils.GUI_Utils;
+import org.mei.securesim.platform.utils.gui.GUI_Utils;
 
 /**
  *

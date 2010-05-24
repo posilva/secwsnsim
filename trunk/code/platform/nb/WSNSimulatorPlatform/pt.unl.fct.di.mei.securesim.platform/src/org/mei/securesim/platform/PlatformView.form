@@ -139,6 +139,18 @@
                     </Component>
                   </SubComponents>
                 </Container>
+                <Container class="org.mei.securesim.platform.ui.uiextended.BestTabbedPane" name="tabbedTools">
+                  <Properties>
+                    <Property name="name" type="java.lang.String" value="tabbedTools" noResource="true"/>
+                  </Properties>
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
+                      <JSplitPaneConstraints position="left"/>
+                    </Constraint>
+                  </Constraints>
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
+                </Container>
               </SubComponents>
             </Container>
           </SubComponents>

@@ -25,9 +25,10 @@ import org.jdesktop.application.Application.ExitListener;
 import org.mei.securesim.components.SimulationController;
 import org.mei.securesim.components.simulation.ISimulationPlatform;
 import org.mei.securesim.platform.ui.frames.SimulationWizardDialog;
-import org.mei.securesim.platform.utils.ClockCounter;
-import org.mei.securesim.platform.utils.GUI_Utils;
-import org.mei.securesim.platform.utils.IClockDisplay;
+import org.mei.securesim.platform.ui.uiextended.BestTabbedPane;
+import org.mei.securesim.platform.utils.gui.ClockCounter;
+import org.mei.securesim.platform.utils.gui.GUI_Utils;
+import org.mei.securesim.platform.utils.gui.IClockDisplay;
 
 /**
  * The application's main frame.
@@ -140,6 +141,7 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         jSplitPane1 = new javax.swing.JSplitPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
+        tabbedTools = new org.mei.securesim.platform.ui.uiextended.BestTabbedPane();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         menuNewSimulation = new javax.swing.JMenuItem();
@@ -232,6 +234,9 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         jScrollPane1.setViewportView(jTextPane1);
 
         jSplitPane1.setRightComponent(jScrollPane1);
+
+        tabbedTools.setName("tabbedTools"); // NOI18N
+        jSplitPane1.setLeftComponent(tabbedTools);
 
         mainSplitPane.setRightComponent(jSplitPane1);
 
@@ -449,6 +454,7 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
     protected javax.swing.JPanel statusPanel;
+    protected org.mei.securesim.platform.ui.uiextended.BestTabbedPane tabbedTools;
     protected org.mei.securesim.platform.ui.WorkbenchPanel workbenchPanel1;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
@@ -476,8 +482,8 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
     }
 
     public void addTab(String title, JComponent component) {
-//        tabbedTools.setTabPlacement(BestTabbedPane.RIGHT);
-//        tabbedTools.addTab(title, component);
+        tabbedTools.setTabPlacement(BestTabbedPane.RIGHT);
+        tabbedTools.addTab(title, component);
     }
 
     public void setSimulationNrNodes(int value) {
@@ -537,11 +543,15 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
     }
 
     public boolean canExit(EventObject event) {
-        return GUI_Utils.confirm("Confirm Simulation Platform Exit?");
+        boolean return_value = GUI_Utils.confirm("Confirm Simulation Platform Exit?");
+        if (return_value){
+            SimulationController.getInstance().exitPlatform();
+        }
+        return return_value;
     }
 
     public void willExit(EventObject event) {
-        SimulationController.getInstance().exitPlatform();
+//        SimulationController.getInstance().exitPlatform();
     }
 
     public void onStartPlatform() {

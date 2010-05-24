@@ -34,16 +34,16 @@ import org.mei.securesim.core.energy.Batery;
 import org.mei.securesim.core.energy.listeners.EnergyListener;
 import org.mei.securesim.core.nodes.factories.NodeFactory;
 import org.mei.securesim.core.nodes.Node;
-import org.mei.securesim.platform.instruments.energy.EnergyWatcherThread;
+import org.mei.securesim.platform.core.instruments.energy.EnergyWatcherThread;
 import org.mei.securesim.components.simulation.Simulation;
 import org.mei.securesim.components.simulation.SimulationConfiguration;
 import org.mei.securesim.components.simulation.SimulationFactory;
 import org.mei.securesim.components.simulation.basic.BasicSimulation;
 import org.mei.securesim.components.topology.RandomTopologyManager;
 import org.mei.securesim.platform.PlatformView;
-import org.mei.securesim.platform.charts.ui.ChartPanel;
+import org.mei.securesim.platform.core.charts.ui.ChartPanel;
 import org.mei.securesim.platform.ui.frames.NodePropertiesDialog;
-import org.mei.securesim.platform.utils.GUI_Utils;
+import org.mei.securesim.platform.utils.gui.GUI_Utils;
 import org.mei.securesim.utils.RandomList;
 
 /**
@@ -1125,6 +1125,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             int status = 0;
             start = System.currentTimeMillis();
             try {
+                GUI_Utils.mouseWait(SimulationPanel.this);
                 this.setMessage("Generating nodes using factory");
                 Vector<Node> nodes = (Vector<Node>) nf.createNodes(nNodes);
                 nodes = tm.apply(deployArea, nodes);
@@ -1139,6 +1140,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
                     this.setProgress(status, 0, nodes.size());
                 }
             } catch (Exception ex) {
+                GUI_Utils.mouseDefault(SimulationPanel.this);
                 Logger.getLogger(SimulationPanel.class.getName()).log(Level.SEVERE, null, ex);
                 networkDeployed = false;
                 update();
@@ -1149,6 +1151,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             update();
             this.setMessage("Building Network using radio");
             this.setProgress(0, 0, 1);
+            GUI_Utils.mouseWait(SimulationPanel.this);
             buildNetwork();
 
             update();
@@ -1159,6 +1162,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         protected void succeeded(Object result) {
             setMessage("Building Network... done in " + (System.currentTimeMillis() - start) + " milliseconds");
             this.setProgress(1, 0, 1);
+            GUI_Utils.mouseDefault(SimulationPanel.this);
         }
     }
 
@@ -1296,7 +1300,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
                 Batery b = (Batery) evt.getSource();
                 this.dataOutputStream.writeDouble(evt.getValue());
                 //this.dataOutputStream.writeDouble(b.getAverageConsumption());
-                double t = evt.getTime();//b.getHostNode().getSimulator().getSimulationTimeInMillisec() / 1000;//System.nanoTime()*10E3; //
+                double t = evt.getRealTime();//b.getHostNode().getSimulator().getSimulationTimeInMillisec() / 1000;//System.nanoTime()*10E3; //
                 this.dataOutputStream.writeDouble(t);
             } catch (IOException ex) {
                 getLogger().log(Level.SEVERE, null, ex);
