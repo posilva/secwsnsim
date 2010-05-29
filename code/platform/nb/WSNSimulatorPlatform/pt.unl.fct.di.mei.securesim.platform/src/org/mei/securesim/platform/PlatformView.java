@@ -5,7 +5,6 @@ package org.mei.securesim.platform;
 
 import java.util.EventObject;
 import org.jdesktop.application.Action;
-import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
 import org.jdesktop.application.FrameView;
 import org.jdesktop.application.TaskMonitor;
@@ -21,11 +20,18 @@ import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import org.jdesktop.application.Application.ExitListener;
-import org.mei.securesim.components.SimulationController;
+import org.jdesktop.application.ResourceMap;
+import org.mei.securesim.components.instruments.CoverageController;
+import org.mei.securesim.components.instruments.SimulationController;
+import org.mei.securesim.components.instruments.listeners.CoverageListener;
+import org.mei.securesim.components.instruments.listeners.SignalUpdateEvent;
 import org.mei.securesim.components.simulation.ISimulationPlatform;
+import org.mei.securesim.platform.core.PlatformController;
 import org.mei.securesim.platform.ui.frames.SimulationWizardDialog;
 import org.mei.securesim.platform.ui.uiextended.BestTabbedPane;
+import org.mei.securesim.platform.utils.PlatformUtils;
 import org.mei.securesim.platform.utils.gui.ClockCounter;
 import org.mei.securesim.platform.utils.gui.GUI_Utils;
 import org.mei.securesim.platform.utils.gui.IClockDisplay;
@@ -33,7 +39,7 @@ import org.mei.securesim.platform.utils.gui.IClockDisplay;
 /**
  * The application's main frame.
  */
-public class PlatformView extends FrameView implements ISimulationPlatform, ExitListener, IClockDisplay {
+public class PlatformView extends FrameView implements ISimulationPlatform, ExitListener, IClockDisplay, CoverageListener {
 
     private boolean workbenchVisible;
     protected ClockCounter clockCounter;
@@ -42,12 +48,18 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         super(app);
 
         initComponents();
+        
+        PlatformApp.loadClasses();
+        getComponent().setVisible(false);
+        PlatformController.getInstance().setPlatformView(this);
+
         clockCounter = new ClockCounter();
         clockCounter.setDisplay(this);
 
         getApplication().addExitListener(this);
 
         SimulationController.getInstance().registerPlatform(this);
+        CoverageController.getInstance().addCoverageListener(this);
 
         // status bar initialization - message timeout, idle icon and busy animation, etc
         ResourceMap resourceMap = getResourceMap();
@@ -128,7 +140,6 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         mainPanel = new javax.swing.JPanel();
         mainToolbar = new javax.swing.JToolBar();
@@ -136,19 +147,32 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         btnOpen = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
         btnProperties = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        lblRadioCoverageValue = new javax.swing.JLabel();
         mainSplitPane = new javax.swing.JSplitPane();
-        workbenchPanel1 = new org.mei.securesim.platform.ui.WorkbenchPanel();
-        jSplitPane1 = new javax.swing.JSplitPane();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
         tabbedTools = new org.mei.securesim.platform.ui.uiextended.BestTabbedPane();
+        workbenchPanel1 = new org.mei.securesim.platform.ui.WorkbenchPanel();
         menuBar = new javax.swing.JMenuBar();
-        javax.swing.JMenu fileMenu = new javax.swing.JMenu();
+        javax.swing.JMenu simulationMenu = new javax.swing.JMenu();
         menuNewSimulation = new javax.swing.JMenuItem();
         menuOpenSImulation = new javax.swing.JMenuItem();
         menuSaveSimulation = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
+        simPropertiesSubMenu = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
+        instrumentsMenu = new javax.swing.JMenu();
+        energyCtlMenu = new javax.swing.JMenu();
+        energyCtlStatusMenu = new javax.swing.JCheckBoxMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
+        coverageCtlMenu = new javax.swing.JMenu();
+        coverageCtlStatusMenu = new javax.swing.JCheckBoxMenuItem();
+        jSeparator5 = new javax.swing.JPopupMenu.Separator();
+        reliabilityCtlMenu = new javax.swing.JMenu();
+        reliabilityCtlStatusMenu = new javax.swing.JCheckBoxMenuItem();
+        jSeparator6 = new javax.swing.JPopupMenu.Separator();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        instrumentsConfigMenu = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         statusPanel = new javax.swing.JPanel();
@@ -157,9 +181,10 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         statusMessageLabel = new javax.swing.JLabel();
         SimulationRealTime = new javax.swing.JLabel();
         NrSimulationNodes = new javax.swing.JLabel();
-        simulationStatus = new javax.swing.JLabel();
+        SimulationStatus = new javax.swing.JLabel();
         NrEvents = new javax.swing.JLabel();
         SimulationTime = new javax.swing.JLabel();
+        NrSelectedNodes = new javax.swing.JLabel();
         jPopupMenu1 = new javax.swing.JPopupMenu();
         jMenu2 = new javax.swing.JMenu();
         jMenu1 = new javax.swing.JMenu();
@@ -167,6 +192,7 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         mainPanel.setName("mainPanel"); // NOI18N
         mainPanel.setLayout(new java.awt.BorderLayout());
 
+        mainToolbar.setFloatable(false);
         mainToolbar.setRollover(true);
         mainToolbar.setName("mainToolbar"); // NOI18N
 
@@ -191,6 +217,7 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         btnOpen.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         mainToolbar.add(btnOpen);
 
+        btnSave.setAction(actionMap.get("SaveSimulation")); // NOI18N
         btnSave.setIcon(resourceMap.getIcon("btnSave.icon")); // NOI18N
         btnSave.setText(resourceMap.getString("btnSave.text")); // NOI18N
         btnSave.setToolTipText(resourceMap.getString("btnSave.toolTipText")); // NOI18N
@@ -209,6 +236,34 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         btnProperties.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         mainToolbar.add(btnProperties);
 
+        jPanel1.setName("jPanel1"); // NOI18N
+        jPanel1.setPreferredSize(new java.awt.Dimension(1085, 10));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1008, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 23, Short.MAX_VALUE)
+        );
+
+        mainToolbar.add(jPanel1);
+
+        lblRadioCoverageValue.setFont(resourceMap.getFont("lblRadioCoverageValue.font")); // NOI18N
+        lblRadioCoverageValue.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblRadioCoverageValue.setText(resourceMap.getString("lblRadioCoverageValue.text")); // NOI18N
+        lblRadioCoverageValue.setToolTipText(resourceMap.getString("lblRadioCoverageValue.toolTipText")); // NOI18N
+        lblRadioCoverageValue.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        lblRadioCoverageValue.setMaximumSize(new java.awt.Dimension(21, 20));
+        lblRadioCoverageValue.setMinimumSize(new java.awt.Dimension(21, 20));
+        lblRadioCoverageValue.setName("lblRadioCoverageValue"); // NOI18N
+        lblRadioCoverageValue.setPreferredSize(new java.awt.Dimension(100, 20));
+        mainToolbar.add(lblRadioCoverageValue);
+        lblRadioCoverageValue.getAccessibleContext().setAccessibleName(resourceMap.getString("lblRadioCoverageValue.AccessibleContext.accessibleName")); // NOI18N
+
         mainPanel.add(mainToolbar, java.awt.BorderLayout.PAGE_START);
 
         mainSplitPane.setDividerLocation(200);
@@ -218,67 +273,107 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         mainSplitPane.setName("mainSplitPane"); // NOI18N
         mainSplitPane.setOneTouchExpandable(true);
 
+        tabbedTools.setName("tabbedTools"); // NOI18N
+        mainSplitPane.setRightComponent(tabbedTools);
+
         workbenchPanel1.setName("workbenchPanel1"); // NOI18N
         mainSplitPane.setLeftComponent(workbenchPanel1);
-
-        jSplitPane1.setDividerLocation(400);
-        jSplitPane1.setDividerSize(10);
-        jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
-        jSplitPane1.setName("jSplitPane1"); // NOI18N
-        jSplitPane1.setOneTouchExpandable(true);
-
-        jScrollPane1.setName("jScrollPane1"); // NOI18N
-
-        jTextPane1.setEditable(false);
-        jTextPane1.setName("jTextPane1"); // NOI18N
-        jScrollPane1.setViewportView(jTextPane1);
-
-        jSplitPane1.setRightComponent(jScrollPane1);
-
-        tabbedTools.setName("tabbedTools"); // NOI18N
-        jSplitPane1.setLeftComponent(tabbedTools);
-
-        mainSplitPane.setRightComponent(jSplitPane1);
 
         mainPanel.add(mainSplitPane, java.awt.BorderLayout.CENTER);
 
         menuBar.setName("menuBar"); // NOI18N
 
-        fileMenu.setText(resourceMap.getString("fileMenu.text")); // NOI18N
-        fileMenu.setName("fileMenu"); // NOI18N
-
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, workbenchPanel1, org.jdesktop.beansbinding.ELProperty.create("${enabled}"), fileMenu, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
+        simulationMenu.setText(resourceMap.getString("simulationMenu.text")); // NOI18N
+        simulationMenu.setName("simulationMenu"); // NOI18N
 
         menuNewSimulation.setAction(actionMap.get("newSimulation")); // NOI18N
         menuNewSimulation.setIcon(resourceMap.getIcon("menuNewSimulation.icon")); // NOI18N
         menuNewSimulation.setText(resourceMap.getString("menuNewSimulation.text")); // NOI18N
         menuNewSimulation.setName("menuNewSimulation"); // NOI18N
-        fileMenu.add(menuNewSimulation);
+        simulationMenu.add(menuNewSimulation);
 
         menuOpenSImulation.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         menuOpenSImulation.setIcon(resourceMap.getIcon("menuOpenSImulation.icon")); // NOI18N
         menuOpenSImulation.setMnemonic('O');
         menuOpenSImulation.setText(resourceMap.getString("menuOpenSImulation.text")); // NOI18N
         menuOpenSImulation.setName("menuOpenSImulation"); // NOI18N
-        fileMenu.add(menuOpenSImulation);
+        simulationMenu.add(menuOpenSImulation);
 
         menuSaveSimulation.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         menuSaveSimulation.setIcon(resourceMap.getIcon("menuSaveSimulation.icon")); // NOI18N
         menuSaveSimulation.setMnemonic('S');
         menuSaveSimulation.setText(resourceMap.getString("menuSaveSimulation.text")); // NOI18N
         menuSaveSimulation.setName("menuSaveSimulation"); // NOI18N
-        fileMenu.add(menuSaveSimulation);
+        simulationMenu.add(menuSaveSimulation);
+
+        jSeparator3.setName("jSeparator3"); // NOI18N
+        simulationMenu.add(jSeparator3);
+
+        simPropertiesSubMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        simPropertiesSubMenu.setText(resourceMap.getString("simPropertiesSubMenu.text")); // NOI18N
+        simPropertiesSubMenu.setName("simPropertiesSubMenu"); // NOI18N
+        simulationMenu.add(simPropertiesSubMenu);
 
         jSeparator1.setName("jSeparator1"); // NOI18N
-        fileMenu.add(jSeparator1);
+        simulationMenu.add(jSeparator1);
 
         exitMenuItem.setAction(actionMap.get("quit")); // NOI18N
         exitMenuItem.setIcon(resourceMap.getIcon("exitMenuItem.icon")); // NOI18N
         exitMenuItem.setName("exitMenuItem"); // NOI18N
-        fileMenu.add(exitMenuItem);
+        simulationMenu.add(exitMenuItem);
 
-        menuBar.add(fileMenu);
+        menuBar.add(simulationMenu);
+
+        instrumentsMenu.setText(resourceMap.getString("instrumentsMenu.text")); // NOI18N
+        instrumentsMenu.setName("instrumentsMenu"); // NOI18N
+
+        energyCtlMenu.setText(resourceMap.getString("energyCtlMenu.text")); // NOI18N
+        energyCtlMenu.setName("energyCtlMenu"); // NOI18N
+
+        energyCtlStatusMenu.setSelected(true);
+        energyCtlStatusMenu.setText(resourceMap.getString("energyCtlStatusMenu.text")); // NOI18N
+        energyCtlStatusMenu.setName("energyCtlStatusMenu"); // NOI18N
+        energyCtlMenu.add(energyCtlStatusMenu);
+
+        jSeparator4.setName("jSeparator4"); // NOI18N
+        energyCtlMenu.add(jSeparator4);
+
+        instrumentsMenu.add(energyCtlMenu);
+
+        coverageCtlMenu.setText(resourceMap.getString("coverageCtlMenu.text")); // NOI18N
+        coverageCtlMenu.setName("coverageCtlMenu"); // NOI18N
+
+        coverageCtlStatusMenu.setSelected(true);
+        coverageCtlStatusMenu.setText(resourceMap.getString("coverageCtlStatusMenu.text")); // NOI18N
+        coverageCtlStatusMenu.setName("coverageCtlStatusMenu"); // NOI18N
+        coverageCtlMenu.add(coverageCtlStatusMenu);
+
+        jSeparator5.setName("jSeparator5"); // NOI18N
+        coverageCtlMenu.add(jSeparator5);
+
+        instrumentsMenu.add(coverageCtlMenu);
+
+        reliabilityCtlMenu.setText(resourceMap.getString("reliabilityCtlMenu.text")); // NOI18N
+        reliabilityCtlMenu.setName("reliabilityCtlMenu"); // NOI18N
+
+        reliabilityCtlStatusMenu.setSelected(true);
+        reliabilityCtlStatusMenu.setText(resourceMap.getString("reliabilityCtlStatusMenu.text")); // NOI18N
+        reliabilityCtlStatusMenu.setName("reliabilityCtlStatusMenu"); // NOI18N
+        reliabilityCtlMenu.add(reliabilityCtlStatusMenu);
+
+        jSeparator6.setName("jSeparator6"); // NOI18N
+        reliabilityCtlMenu.add(jSeparator6);
+
+        instrumentsMenu.add(reliabilityCtlMenu);
+
+        jSeparator2.setName("jSeparator2"); // NOI18N
+        instrumentsMenu.add(jSeparator2);
+
+        instrumentsConfigMenu.setText(resourceMap.getString("instrumentsConfigMenu.text")); // NOI18N
+        instrumentsConfigMenu.setName("instrumentsConfigMenu"); // NOI18N
+        instrumentsMenu.add(instrumentsConfigMenu);
+
+        menuBar.add(instrumentsMenu);
 
         helpMenu.setText(resourceMap.getString("helpMenu.text")); // NOI18N
         helpMenu.setName("helpMenu"); // NOI18N
@@ -310,25 +405,25 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         SimulationRealTime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         SimulationRealTime.setText(resourceMap.getString("SimulationRealTime.text")); // NOI18N
         SimulationRealTime.setToolTipText(resourceMap.getString("SimulationRealTime.toolTipText")); // NOI18N
-        SimulationRealTime.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        SimulationRealTime.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         SimulationRealTime.setName("SimulationRealTime"); // NOI18N
         SimulationRealTime.setOpaque(true);
 
         NrSimulationNodes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         NrSimulationNodes.setText(resourceMap.getString("NroNodes.text")); // NOI18N
         NrSimulationNodes.setToolTipText(resourceMap.getString("NroNodes.toolTipText")); // NOI18N
-        NrSimulationNodes.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        NrSimulationNodes.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         NrSimulationNodes.setName("NroNodes"); // NOI18N
 
-        simulationStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        simulationStatus.setText(resourceMap.getString("simulationStatus.text")); // NOI18N
-        simulationStatus.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        simulationStatus.setName("simulationStatus"); // NOI18N
+        SimulationStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        SimulationStatus.setText(resourceMap.getString("SimulationStatus.text")); // NOI18N
+        SimulationStatus.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        SimulationStatus.setName("SimulationStatus"); // NOI18N
 
         NrEvents.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         NrEvents.setText(resourceMap.getString("NrEvents.text")); // NOI18N
         NrEvents.setToolTipText(resourceMap.getString("NrEvents.toolTipText")); // NOI18N
-        NrEvents.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        NrEvents.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         NrEvents.setName("NrEvents"); // NOI18N
 
         SimulationTime.setBackground(resourceMap.getColor("SimulationTime.background")); // NOI18N
@@ -337,9 +432,15 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         SimulationTime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         SimulationTime.setText(resourceMap.getString("SimulationTime.text")); // NOI18N
         SimulationTime.setToolTipText(resourceMap.getString("SimulationTime.toolTipText")); // NOI18N
-        SimulationTime.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        SimulationTime.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         SimulationTime.setName("SimulationTime"); // NOI18N
         SimulationTime.setOpaque(true);
+
+        NrSelectedNodes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        NrSelectedNodes.setText(resourceMap.getString("NrSelectedNodes.text")); // NOI18N
+        NrSelectedNodes.setToolTipText(resourceMap.getString("NrSelectedNodes.toolTipText")); // NOI18N
+        NrSelectedNodes.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        NrSelectedNodes.setName("NrSelectedNodes"); // NOI18N
 
         javax.swing.GroupLayout statusPanelLayout = new javax.swing.GroupLayout(statusPanel);
         statusPanel.setLayout(statusPanelLayout);
@@ -348,47 +449,58 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statusPanelLayout.createSequentialGroup()
                 .addComponent(statusMessageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 458, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
-                .addComponent(simulationStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(SimulationStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2)
+                .addComponent(NrSimulationNodes, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2)
+                .addComponent(NrSelectedNodes, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2)
+                .addComponent(NrEvents, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2)
+                .addComponent(SimulationRealTime)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(NrSimulationNodes, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(NrEvents, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(SimulationRealTime, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(SimulationTime, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
-                .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(SimulationTime, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(statusAnimationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        statusPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {NrSimulationNodes, SimulationRealTime});
+        statusPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {SimulationRealTime, SimulationTime});
+
+        statusPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {NrSelectedNodes, NrSimulationNodes});
 
         statusPanelLayout.setVerticalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statusPanelLayout.createSequentialGroup()
+            .addGroup(statusPanelLayout.createSequentialGroup()
                 .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                    .addComponent(statusAnimationLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
                     .addGroup(statusPanelLayout.createSequentialGroup()
-                        .addComponent(simulationStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
+                        .addComponent(SimulationTime)
+                        .addGap(2, 2, 2))
+                    .addComponent(SimulationRealTime)
+                    .addGroup(statusPanelLayout.createSequentialGroup()
+                        .addComponent(NrEvents, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
                         .addGap(1, 1, 1))
-                    .addComponent(NrSimulationNodes)
-                    .addComponent(NrEvents, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
-                    .addComponent(SimulationRealTime, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(statusPanelLayout.createSequentialGroup()
-                        .addComponent(SimulationTime, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(2, 2, 2)))
-                .addContainerGap())
-            .addGroup(statusPanelLayout.createSequentialGroup()
-                .addComponent(statusMessageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
-                .addGap(3, 3, 3))
-            .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-            .addGroup(statusPanelLayout.createSequentialGroup()
-                .addComponent(statusAnimationLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+                        .addComponent(NrSelectedNodes, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(1, 1, 1))
+                    .addGroup(statusPanelLayout.createSequentialGroup()
+                        .addComponent(NrSimulationNodes)
+                        .addGap(1, 1, 1))
+                    .addGroup(statusPanelLayout.createSequentialGroup()
+                        .addComponent(SimulationStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
+                        .addGap(1, 1, 1))
+                    .addGroup(statusPanelLayout.createSequentialGroup()
+                        .addComponent(statusMessageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
+                        .addGap(3, 3, 3)))
                 .addContainerGap())
         );
 
-        statusPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {NrEvents, NrSimulationNodes, simulationStatus, statusMessageLabel});
+        statusPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {NrEvents, NrSimulationNodes, SimulationStatus, statusMessageLabel});
+
+        statusPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {SimulationRealTime, SimulationTime});
 
         jPopupMenu1.setName("jPopupMenu1"); // NOI18N
 
@@ -403,8 +515,7 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         setComponent(mainPanel);
         setMenuBar(menuBar);
         setStatusBar(statusPanel);
-
-        bindingGroup.bind();
+        setToolBar(mainToolbar);
     }// </editor-fold>//GEN-END:initComponents
 
     @Action
@@ -412,36 +523,51 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         SimulationWizardDialog sw = new SimulationWizardDialog(null, true);
         sw.setVisible(true);
         boolean status = sw.isOk();
-
         if (status) //           sw.getSimulationFactory();
         {
             workbenchPanel1.setSimulationFactory(sw.getSimulationFactory());
         }
         sw.dispose();
         if (status) {
+            getComponent().setVisible(true);
             workbenchVisible = true;
             workbenchPanel1.setVisible(true);
             mainSplitPane.setVisible(true);
-            mainSplitPane.setDividerLocation(.80);
-
+            mainPanel.setVisible(true);
+            mainSplitPane.setDividerLocation(1280);
+            PlatformController.getInstance().setNewSimulation(true);
+            PlatformController.getInstance().showSimulationName("");
+            CoverageController.getInstance().updateNetworkSize();
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected javax.swing.JLabel NrEvents;
+    protected javax.swing.JLabel NrSelectedNodes;
     protected javax.swing.JLabel NrSimulationNodes;
     protected javax.swing.JLabel SimulationRealTime;
+    protected javax.swing.JLabel SimulationStatus;
     protected javax.swing.JLabel SimulationTime;
     protected javax.swing.JButton btnNew;
     protected javax.swing.JButton btnOpen;
     protected javax.swing.JButton btnProperties;
     protected javax.swing.JButton btnSave;
+    protected javax.swing.JMenu coverageCtlMenu;
+    protected javax.swing.JCheckBoxMenuItem coverageCtlStatusMenu;
+    protected javax.swing.JMenu energyCtlMenu;
+    protected javax.swing.JCheckBoxMenuItem energyCtlStatusMenu;
+    protected javax.swing.JMenuItem instrumentsConfigMenu;
+    protected javax.swing.JMenu instrumentsMenu;
     protected javax.swing.JMenu jMenu1;
     protected javax.swing.JMenu jMenu2;
+    protected javax.swing.JPanel jPanel1;
     protected javax.swing.JPopupMenu jPopupMenu1;
-    protected javax.swing.JScrollPane jScrollPane1;
     protected javax.swing.JPopupMenu.Separator jSeparator1;
-    protected javax.swing.JSplitPane jSplitPane1;
-    protected javax.swing.JTextPane jTextPane1;
+    protected javax.swing.JPopupMenu.Separator jSeparator2;
+    protected javax.swing.JPopupMenu.Separator jSeparator3;
+    protected javax.swing.JPopupMenu.Separator jSeparator4;
+    protected javax.swing.JPopupMenu.Separator jSeparator5;
+    protected javax.swing.JPopupMenu.Separator jSeparator6;
+    protected javax.swing.JLabel lblRadioCoverageValue;
     protected javax.swing.JPanel mainPanel;
     protected javax.swing.JSplitPane mainSplitPane;
     protected javax.swing.JToolBar mainToolbar;
@@ -450,13 +576,14 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
     protected javax.swing.JMenuItem menuOpenSImulation;
     protected javax.swing.JMenuItem menuSaveSimulation;
     private javax.swing.JProgressBar progressBar;
-    protected javax.swing.JLabel simulationStatus;
+    protected javax.swing.JMenu reliabilityCtlMenu;
+    protected javax.swing.JCheckBoxMenuItem reliabilityCtlStatusMenu;
+    protected javax.swing.JMenuItem simPropertiesSubMenu;
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
     protected javax.swing.JPanel statusPanel;
     protected org.mei.securesim.platform.ui.uiextended.BestTabbedPane tabbedTools;
     protected org.mei.securesim.platform.ui.WorkbenchPanel workbenchPanel1;
-    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
     private final Timer messageTimer;
     private final Timer busyIconTimer;
@@ -496,7 +623,7 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
     }
 
     public void setSelectedNodes(String value) {
-        simulationStatus.setText(value);
+        NrSelectedNodes.setText(value + " selected");
     }
 
     public void setStatusMessage(String message) {
@@ -539,7 +666,7 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
     }
 
     public void updateSimulationState(String state) {
-        this.simulationStatus.setText(state.toUpperCase());
+        this.SimulationStatus.setText(state.toUpperCase());
     }
 
     public boolean canExit(EventObject event) {
@@ -564,4 +691,41 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
     public void updateClock(String time) {
         SimulationRealTime.setText(time);
     }
+
+    @Action
+    public void ControlCoverageController() {
+        
+    }
+
+    @Action
+    public void ControlReliabilityController() {
+        
+    }
+
+
+    public void configureMenuSimulation(){
+    }
+    public void configureMenuInstruments(){
+        
+    }
+
+    @Action
+    public void SaveSimulation() {
+        PlatformUtils.saveSimulation(SimulationController.getInstance().getSimulation());
+    }
+
+    @Action
+    public void ShowRadioCoverageValue() {
+        double value=CoverageController.getInstance().getCoverageValueByModel(CoverageController.CoverageModelEnum.RADIO);
+        JOptionPane.showMessageDialog(this.getFrame(), value);
+    }
+
+    public void onSignalUpdate(SignalUpdateEvent event) {
+        if (event.getModel()==CoverageController.CoverageModelEnum.RADIO){
+            lblRadioCoverageValue.setText(""+CoverageController.getInstance().getCoverageValueByModel(CoverageController.CoverageModelEnum.RADIO)+"%");
+        }
+    }
+
+
+
 }

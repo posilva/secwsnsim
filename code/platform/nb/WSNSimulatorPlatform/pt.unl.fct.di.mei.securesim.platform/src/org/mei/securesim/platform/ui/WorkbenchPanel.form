@@ -288,7 +288,6 @@
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
               <action class="org.mei.securesim.platform.ui.WorkbenchPanel" id="RandomNodeSelection" methodName="RandomNodeSelection"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="R"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>

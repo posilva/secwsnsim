@@ -183,6 +183,61 @@
             </MenuItem>
           </SubComponents>
         </Menu>
+        <Menu class="javax.swing.JMenu" name="selNodesInstruments">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="selNodesInstruments.text"/>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
+          </Properties>
+          <SubComponents>
+            <Menu class="javax.swing.JMenu" name="selNodesInstrumentsCoverage">
+              <Properties>
+                <Property name="text" type="java.lang.String" resourceKey="selNodesInstrumentsCoverage.text"/>
+              </Properties>
+              <Events>
+                <EventHandler event="menuSelected" listener="javax.swing.event.MenuListener" parameters="javax.swing.event.MenuEvent" handler="selNodesInstrumentsCoverageMenuSelected"/>
+              </Events>
+              <SubComponents>
+                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodesInstrumentsCoverageEnable">
+                  <Properties>
+                    <Property name="selected" type="boolean" value="true"/>
+                    <Property name="text" type="java.lang.String" resourceKey="selNodesInstrumentsCoverageEnable.text"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator2">
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="selNodesInstrumentsCoverageSelSources">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="selNodesInstrumentsCoverageSelSources.text"/>
+                  </Properties>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
+            <Menu class="javax.swing.JMenu" name="selNodesInstrumentsReliability">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="jMenu2"/>
+              </Properties>
+              <SubComponents>
+                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodesInstrumentsReliabilityEnable">
+                  <Properties>
+                    <Property name="selected" type="boolean" value="true"/>
+                    <Property name="text" type="java.lang.String" resourceKey="selNodesInstrumentsReliabilityEnable.text"/>
+                    <Property name="focusPainted" type="boolean" value="true"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator3">
+                </MenuItem>
+                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodesInstrumentsReliabilitySelSources">
+                  <Properties>
+                    <Property name="selected" type="boolean" value="true"/>
+                    <Property name="text" type="java.lang.String" resourceKey="selNodesInstrumentsReliabilitySelSources.text"/>
+                  </Properties>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
+          </SubComponents>
+        </Menu>
+        <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
+        </Component>
         <MenuItem class="javax.swing.JMenuItem" name="selNodesShowProperties">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
@@ -192,8 +247,6 @@
             <Property name="toolTipText" type="java.lang.String" resourceKey="selNodesShowProperties.toolTipText"/>
           </Properties>
         </MenuItem>
-        <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
-        </Component>
         <MenuItem class="javax.swing.JMenuItem" name="selNodesRemove">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
@@ -252,6 +305,8 @@
     <EventHandler event="componentResized" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="formComponentResized"/>
     <EventHandler event="mouseDragged" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="formMouseDragged"/>
     <EventHandler event="mouseMoved" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="formMouseMoved"/>
+    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="formKeyPressed"/>
+    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="formKeyReleased"/>
   </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>

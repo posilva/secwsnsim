@@ -6,30 +6,46 @@
 package org.mei.securesim.platform.core.charts.ui;
 
 import java.awt.Rectangle;
+import org.jdesktop.application.Action;
 import org.mei.securesim.platform.core.charts.core.XYLineChart;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.MouseEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import org.mei.securesim.platform.core.charts.IChartDisplay;
+import org.mei.securesim.platform.ui.ChartFrame;
 
 /**
  *
  * @author posilva
  */
 public class ChartPanel extends JPanel implements IChartDisplay {
+
     public static final String CHART_NAME = "Energy Consumption Chart";
     public static final String X_LABEL = "Time(s)";
     public static final String Y_LABEL = "Energy Consumption(%)";
     private Graphics currentG;
     XYLineChart chart;
+
     public XYLineChart getChartObject() {
         return chart;
     }
+    protected String chartName = CHART_NAME;
+    protected String xLabel = X_LABEL;
+    protected String yLabel = Y_LABEL;
+
     public ChartPanel() {
         initComponents();
-        this.chart = new XYLineChart(CHART_NAME, 5.0, Y_LABEL, X_LABEL);
-        this.chart.setSeriesLinesAndShapes(CHART_NAME, true, false);
-        //chart.getSeries("Consumo de Energia").add(1, 1);
+        init();
+        updateUI();
+    }
+
+    public void init() {
+        this.chart = new XYLineChart(getChartName(), 5.0,  getyLabel(),getxLabel());
+        this.chart.setSeriesLinesAndShapes(getChartName(), true, false);
     }
 
     /** This method is called from within the constructor to
@@ -41,9 +57,43 @@ public class ChartPanel extends JPanel implements IChartDisplay {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        exportMenu = new javax.swing.JPopupMenu();
+        exportToPDF = new javax.swing.JMenuItem();
+
+        exportMenu.setName("exportMenu"); // NOI18N
+
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(org.mei.securesim.platform.PlatformApp.class).getContext().getActionMap(ChartPanel.class, this);
+        exportToPDF.setAction(actionMap.get("ExportChartToPDF")); // NOI18N
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(org.mei.securesim.platform.PlatformApp.class).getContext().getResourceMap(ChartPanel.class);
+        exportToPDF.setText(resourceMap.getString("exportToPDF.text")); // NOI18N
+        exportToPDF.setName("exportToPDF"); // NOI18N
+        exportMenu.add(exportToPDF);
+
         setName("Form"); // NOI18N
-        setLayout(new java.awt.BorderLayout());
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        // TODO add your handling code here:
+        if (evt.getButton()==MouseEvent.BUTTON3){
+             exportMenu.show(this, evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_formMouseClicked
 
     public Graphics getG() {
         return currentG;
@@ -52,10 +102,12 @@ public class ChartPanel extends JPanel implements IChartDisplay {
     @Override
     public void paintComponent(Graphics grphcs) {
         super.paintComponent(grphcs);
-        Image offscreen = createImage(getSize().width,getSize().height);
+        Image offscreen = createImage(getSize().width, getSize().height);
         currentG = offscreen.getGraphics();
-        chart.displayOn(this);
-        grphcs.drawImage(offscreen,0,0,this);
+        if (chart != null) {
+            chart.displayOn(this);
+        }
+        grphcs.drawImage(offscreen, 0, 0, this);
     }
 
     public void update() {
@@ -64,6 +116,7 @@ public class ChartPanel extends JPanel implements IChartDisplay {
     }
 
     public void updateChart(double x, double y) {
+        if (chart==null) return;
         chart.getSeries(CHART_NAME).add(x, y);
         updateUI();
     }
@@ -71,6 +124,45 @@ public class ChartPanel extends JPanel implements IChartDisplay {
     public Rectangle getRectangle() {
         return getBounds();
     }
+
+    public String getChartName() {
+        return chartName;
+    }
+
+    public void setChartName(String chartName) {
+        this.chartName = chartName;
+    }
+
+    public String getxLabel() {
+        return xLabel;
+    }
+
+    public void setxLabel(String xLabel) {
+        this.xLabel = xLabel;
+    }
+
+    public String getyLabel() {
+        return yLabel;
+    }
+
+    public void setyLabel(String yLabel) {
+        this.yLabel = yLabel;
+    }
+
+    @Action
+    public void ExportChartToPDF() {
+           try {
+        JFileChooser fc = new JFileChooser(".");
+        int returnVal = fc.showSaveDialog(this);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+              getChartObject().saveChartToPDF(fc.getSelectedFile().getAbsolutePath(), 800, 600);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(ChartFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPopupMenu exportMenu;
+    private javax.swing.JMenuItem exportToPDF;
     // End of variables declaration//GEN-END:variables
 }

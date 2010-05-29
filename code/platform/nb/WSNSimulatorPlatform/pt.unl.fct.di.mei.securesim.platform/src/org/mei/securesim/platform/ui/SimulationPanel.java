@@ -13,6 +13,8 @@ import org.jdesktop.application.Task;
 import org.mei.securesim.core.engine.events.SimulatorEvent;
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
@@ -27,20 +29,18 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.math.stat.descriptive.SummaryStatistics;
-
-
-
+import org.mei.securesim.components.instruments.CoverageController;
 import org.mei.securesim.core.energy.Batery;
 import org.mei.securesim.core.energy.listeners.EnergyListener;
 import org.mei.securesim.core.nodes.factories.NodeFactory;
 import org.mei.securesim.core.nodes.Node;
 import org.mei.securesim.platform.core.instruments.energy.EnergyWatcherThread;
 import org.mei.securesim.components.simulation.Simulation;
-import org.mei.securesim.components.simulation.SimulationConfiguration;
 import org.mei.securesim.components.simulation.SimulationFactory;
 import org.mei.securesim.components.simulation.basic.BasicSimulation;
 import org.mei.securesim.components.topology.RandomTopologyManager;
 import org.mei.securesim.platform.PlatformView;
+import org.mei.securesim.platform.core.PlatformController;
 import org.mei.securesim.platform.core.charts.ui.ChartPanel;
 import org.mei.securesim.platform.ui.frames.NodePropertiesDialog;
 import org.mei.securesim.platform.utils.gui.GUI_Utils;
@@ -53,6 +53,7 @@ import org.mei.securesim.utils.RandomList;
 public class SimulationPanel extends javax.swing.JPanel implements ISimulationDisplay, SimulatorFinishListener {
 
     public static final int OFFSET_NETWORK = 0;
+    public static final int SHIFT_KEYCODE = 16;
     /**
      * MAIN VARIABLES
      */
@@ -82,6 +83,8 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     private boolean deployNodeToolSelected = false;
     private boolean paintNodesInfo = false;
     private boolean selectionPointerToolSelected = false;
+    private boolean controlKeyPressed;
+    private boolean shiftKeyPressed;
     /**
      * UTILS VARIABLES
      */
@@ -133,7 +136,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
      */
     public void initSimulation() {
         Simulator.randomGenerator.reset();
-        Node.resetCouter();
+        Node.resetCounter();
         simulation.setDisplay(this);
         simulation.preInit();
     }
@@ -163,8 +166,17 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         selNodesOnOff = new javax.swing.JCheckBoxMenuItem();
         selNodesMonitorizacao = new javax.swing.JMenu();
         selNodesMonitEnergia = new javax.swing.JMenuItem();
-        selNodesShowProperties = new javax.swing.JMenuItem();
+        selNodesInstruments = new javax.swing.JMenu();
+        selNodesInstrumentsCoverage = new javax.swing.JMenu();
+        selNodesInstrumentsCoverageEnable = new javax.swing.JCheckBoxMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        selNodesInstrumentsCoverageSelSources = new javax.swing.JMenuItem();
+        selNodesInstrumentsReliability = new javax.swing.JMenu();
+        selNodesInstrumentsReliabilityEnable = new javax.swing.JCheckBoxMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
+        selNodesInstrumentsReliabilitySelSources = new javax.swing.JCheckBoxMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        selNodesShowProperties = new javax.swing.JMenuItem();
         selNodesRemove = new javax.swing.JMenuItem();
         deployNodesPopupMenu = new javax.swing.JPopupMenu();
         depNodesDeploy = new javax.swing.JMenu();
@@ -228,7 +240,6 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(org.mei.securesim.platform.PlatformApp.class).getContext().getActionMap(SimulationPanel.class, this);
         selNodeSink.setAction(actionMap.get("SetNodeAsSink")); // NOI18N
         selNodeSink.setSelected(true);
-        selNodeSink.setText("Sink Node");
         selNodeOperacao.add(selNodeSink);
 
         currentSelectedNodePopupMenu.add(selNodeOperacao);
@@ -314,14 +325,53 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
 
         selectionToolPopupMenu.add(selNodesMonitorizacao);
 
+        selNodesInstruments.setText(resourceMap.getString("selNodesInstruments.text")); // NOI18N
+        selNodesInstruments.setToolTipText("");
+
+        selNodesInstrumentsCoverage.setText(resourceMap.getString("selNodesInstrumentsCoverage.text")); // NOI18N
+        selNodesInstrumentsCoverage.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                selNodesInstrumentsCoverageMenuSelected(evt);
+            }
+        });
+
+        selNodesInstrumentsCoverageEnable.setSelected(true);
+        selNodesInstrumentsCoverageEnable.setText(resourceMap.getString("selNodesInstrumentsCoverageEnable.text")); // NOI18N
+        selNodesInstrumentsCoverage.add(selNodesInstrumentsCoverageEnable);
+        selNodesInstrumentsCoverage.add(jSeparator2);
+
+        selNodesInstrumentsCoverageSelSources.setText(resourceMap.getString("selNodesInstrumentsCoverageSelSources.text")); // NOI18N
+        selNodesInstrumentsCoverage.add(selNodesInstrumentsCoverageSelSources);
+
+        selNodesInstruments.add(selNodesInstrumentsCoverage);
+
+        selNodesInstrumentsReliability.setText("jMenu2");
+
+        selNodesInstrumentsReliabilityEnable.setSelected(true);
+        selNodesInstrumentsReliabilityEnable.setText(resourceMap.getString("selNodesInstrumentsReliabilityEnable.text")); // NOI18N
+        selNodesInstrumentsReliabilityEnable.setFocusPainted(true);
+        selNodesInstrumentsReliability.add(selNodesInstrumentsReliabilityEnable);
+        selNodesInstrumentsReliability.add(jSeparator3);
+
+        selNodesInstrumentsReliabilitySelSources.setSelected(true);
+        selNodesInstrumentsReliabilitySelSources.setText(resourceMap.getString("selNodesInstrumentsReliabilitySelSources.text")); // NOI18N
+        selNodesInstrumentsReliability.add(selNodesInstrumentsReliabilitySelSources);
+
+        selNodesInstruments.add(selNodesInstrumentsReliability);
+
+        selectionToolPopupMenu.add(selNodesInstruments);
+        selectionToolPopupMenu.add(jSeparator1);
+
         selNodesShowProperties.setAction(actionMap.get("ShowNodesProperties")); // NOI18N
         selNodesShowProperties.setText(resourceMap.getString("selNodesShowProperties.text")); // NOI18N
         selNodesShowProperties.setToolTipText(resourceMap.getString("selNodesShowProperties.toolTipText")); // NOI18N
         selectionToolPopupMenu.add(selNodesShowProperties);
-        selectionToolPopupMenu.add(jSeparator1);
 
         selNodesRemove.setAction(actionMap.get("RemoveNodesSelected")); // NOI18N
-        selNodesRemove.setText("Remove Selected Nodes");
         selNodesRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 selNodesRemoveActionPerformed(evt);
@@ -374,6 +424,14 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
                 formMouseMoved(evt);
             }
         });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                formKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -415,11 +473,11 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
                             selectedNodes.add(circle);
                         }
                     }
+                    PlatformController.getInstance().getPlatformView().setSelectedNodes(selectedNodes.size() + "");
                 }
                 update();
             }
         } else if (selectionPointerToolSelected) {
-            System.out.println("drag + " + currentSelectedNode);
             if (!mousePressed) {
                 return;
             }
@@ -508,7 +566,12 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
 //                        showNodeProperties();
                     }
                 } else {
+                    if (shiftKeyPressed) {
+                        selectedNodes.add(currentSelectedNode);
+                    }
+
                 }
+                PlatformController.getInstance().getPlatformView().setSelectedNodes(selectedNodes.size() + "");
 
             } else if (evt.getButton() == MouseEvent.BUTTON3) {
 
@@ -541,7 +604,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
         updateMouseCoordinates(evt);
         if (selectionTool) {
-            if (insideSelectionArea(evt) && evt.getButton() == MouseEvent.BUTTON3) {
+            if ((insideSelectionArea(evt) && evt.getButton() == MouseEvent.BUTTON3) || selectedNodes.size() > 0) {
                 selectionToolPopupMenu.show(this, mouseX, mouseY);
             } else {
                 clearSelection();
@@ -549,7 +612,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             }
         } else if (deployNodeToolSelected) {
 
-            if (insideSelectionArea(evt) || evt.getButton() == MouseEvent.BUTTON3) {
+            if (insideSelectionArea(evt) && evt.getButton() == MouseEvent.BUTTON3) {
                 deployNodesPopupMenu.show(this, mouseX, mouseY);
             } else {
                 clearSelection();
@@ -733,6 +796,29 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         // TODO add your handling code here:
     }//GEN-LAST:event_selNodesRemoveActionPerformed
 
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        // TODO add your handling code here:
+
+
+        shiftKeyPressed = (evt.getKeyCode() == SHIFT_KEYCODE);
+
+    }//GEN-LAST:event_formKeyPressed
+
+    private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
+        if (evt.getKeyCode() == SHIFT_KEYCODE) {
+            shiftKeyPressed = false;
+        }
+    }//GEN-LAST:event_formKeyReleased
+    /**
+     * 
+     * @param evt
+     */
+    private void selNodesInstrumentsCoverageMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_selNodesInstrumentsCoverageMenuSelected
+        boolean enable = CoverageController.getInstance().isEnable();
+        selNodesInstrumentsCoverageSelSources.setEnabled(enable);
+        selNodesInstrumentsCoverageEnable.setSelected(enable);
+    }//GEN-LAST:event_selNodesInstrumentsCoverageMenuSelected
+
     protected boolean isMousePressed() {
         return pressedPoint != null;
     }
@@ -743,6 +829,8 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     private javax.swing.JMenuItem depNodesRandomTopology;
     private javax.swing.JPopupMenu deployNodesPopupMenu;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JCheckBoxMenuItem selNodeMarcar;
     private javax.swing.JMenuItem selNodeMonitEnergia;
     private javax.swing.JMenu selNodeMonitorizacao;
@@ -755,6 +843,13 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     private javax.swing.JCheckBoxMenuItem selNodeVerOsQueMeConhecem;
     private javax.swing.JCheckBoxMenuItem selNodeVerVizinhos;
     private javax.swing.JMenu selNodeVisualizacao;
+    private javax.swing.JMenu selNodesInstruments;
+    private javax.swing.JMenu selNodesInstrumentsCoverage;
+    private javax.swing.JCheckBoxMenuItem selNodesInstrumentsCoverageEnable;
+    private javax.swing.JMenuItem selNodesInstrumentsCoverageSelSources;
+    private javax.swing.JMenu selNodesInstrumentsReliability;
+    private javax.swing.JCheckBoxMenuItem selNodesInstrumentsReliabilityEnable;
+    private javax.swing.JCheckBoxMenuItem selNodesInstrumentsReliabilitySelSources;
     private javax.swing.JMenuItem selNodesMonitEnergia;
     private javax.swing.JMenu selNodesMonitorizacao;
     private javax.swing.JCheckBoxMenuItem selNodesOnOff;
@@ -840,16 +935,12 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         return false;
     }
 
-    void saveSimulation() {
-        SimulationConfiguration configuration = new SimulationConfiguration();
-        configuration.save(simulation);
-    }
-
     private void clearSelection() {
         selectedArea = null;
         for (GraphicNode graphicNode : selectedNodes) {
             graphicNode.select(false);
         }
+        selectedNodes.clear();
         update();
     }
 
@@ -923,7 +1014,12 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         if (selectionTool || selectionPointerToolSelected) {
             if (selectedNodes != null) {
                 if (selectedNodes.length > 0) {
-                    String input = JOptionPane.showInputDialog("Name of the monitoring action");
+                    String input = "";
+                    if (selectedNodes.length == 1) {
+                        input = "Monitoring Node " + ((GraphicNode) selectedNodes[0]).getId();
+                    } else {
+                        input = JOptionPane.showInputDialog("Name of the monitoring action");
+                    }
                     if (input != null) {
                         new NodesEnergyWatcher(selectedNodes, input.toUpperCase()).start();
                     }
@@ -992,12 +1088,52 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     }
 
     void selectRandomNodes(int n) {
+        if (!selectionTool) {
+            GUI_Utils.showMessage("Selection tool must be selected to use Random Node selection feature", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        boolean ok = false;
+        int nNodes = 0;
+
+        while (!ok) {
+            String sNodes = JOptionPane.showInputDialog("Number of random nodes:");
+            if (sNodes != null) {
+                if (NumberUtils.isNumber(sNodes)) {
+                    nNodes = Integer.parseInt(sNodes);
+                    if (nNodes > 0 && nNodes <= getSimulation().getSimulator().getNodes().size()) {
+                        ok = true;
+                    }
+                }
+            } else {
+                return;
+            }
+            if (!ok) {
+                JOptionPane.showMessageDialog(SimulationPanel.this, "Invalid value!");
+            }
+        }
+
+        if (!ok) {
+            return;
+        }
+
         clearSelection();
-        for (int i = 0; i < n; i++) {
+        if (((RandomList) getSimulator().getNodes()).size() == 0) {
+            return;
+        }
+        int selNodesCount = 0;
+        GUI_Utils.mouseWait(this);
+        while (selNodesCount < nNodes) {
             Node node = (Node) ((RandomList) getSimulator().getNodes()).randomElement();
             node.getGraphicNode().select(true);
-            selectedNodes.add(node.getGraphicNode());
+            if (!selectedNodes.contains(node.getGraphicNode())) {
+                selNodesCount++;
+                selectedNodes.add(node.getGraphicNode());
+            }
+
         }
+        GUI_Utils.mouseDefault(this);
+        PlatformController.getInstance().getPlatformView().setSelectedNodes(selectedNodes.size() + "");
         update();
 
     }
@@ -1023,23 +1159,18 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         public NodesEnergyWatcher(Object[] nodes, String name) {
             importNodes(nodes);
             this.name = name;
+            cf.configChartPanel("Energy Consumption", "Time", "Energy Consumed");
+            cf.setTitle("Energy watcher: " + name);
+            cf.setPreferredSize(new Dimension(300, 200));
+            cf.pack();
+            cf.setVisible(true);
+            cf.addWindowListener(new WindowAdapter() {
 
-            PlatformView.getInstance().addTab(name, cp);
-//            cf.setTitle("Energy watcher: " + name);
-//
-//            cf.setPreferredSize(new Dimension(300, 200));
-//
-//            cf.pack();
-//
-//            cf.setVisible(true);
-//
-//            cf.addWindowListener(new WindowAdapter() {
-//
-//                @Override
-//                public void windowClosing(WindowEvent w) {
-//                    timer.cancel();
-//                }
-//            });
+                @Override
+                public void windowClosing(WindowEvent w) {
+                    timer.cancel();
+                }
+            });
 
             timer.scheduleAtFixedRate(new TimerTask() {
 
@@ -1216,6 +1347,8 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
      *
      */
     public void resizeUpdateSimulatedArea() {
+        setAutoscrolls(true);
+
         if (!resizeSimulatedArea) {
             return;
         }
