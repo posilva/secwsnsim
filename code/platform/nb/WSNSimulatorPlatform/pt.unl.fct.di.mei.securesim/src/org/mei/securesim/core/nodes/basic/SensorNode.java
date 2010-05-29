@@ -159,11 +159,11 @@ public abstract class SensorNode extends Node {
     }
 
     public Color getBaseColor() {
-        return baseColor;
+        return graphicNode.getBackcolor();
     }
 
     public void setBaseColor(Color baseColor) {
-        this.baseColor = baseColor;
+        this.graphicNode.setBackcolor(baseColor);
     }
 
     public Color getReceivingCorruptedColor() {

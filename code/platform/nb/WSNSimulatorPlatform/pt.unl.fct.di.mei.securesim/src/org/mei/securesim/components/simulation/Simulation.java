@@ -1,8 +1,7 @@
 package org.mei.securesim.components.simulation;
 
 import java.util.logging.Logger;
-import org.mei.securesim.components.EnergyController;
-import org.mei.securesim.components.SimulationController;
+import org.mei.securesim.components.instruments.SimulationController;
 
 import org.mei.securesim.components.configuration.ConfigurableObject;
 import org.mei.securesim.core.ui.ISimulationDisplay;
@@ -14,6 +13,7 @@ import org.mei.securesim.core.nodes.factories.NodeFactory;
 public abstract class Simulation extends ConfigurableObject {
 
     public final static Logger LOG = Logger.getLogger(Simulation.class.getName());
+    
     protected String name;
     private String description;
     protected Simulator simulator;
@@ -24,12 +24,6 @@ public abstract class Simulation extends ConfigurableObject {
     protected int nodeRange;
     protected long seed;
     private boolean bPreInit = false;
-
-
-    protected EnergyController energyController;
-
-
-
 
     public Simulation() {
         super();
@@ -91,7 +85,7 @@ public abstract class Simulation extends ConfigurableObject {
     public abstract void start();
 
     public abstract void reset();
-    
+
     public abstract void pause();
 
     public String getName() {
@@ -122,6 +116,7 @@ public abstract class Simulation extends ConfigurableObject {
     }
 
     public void preInit() {
+        SimulationController.getInstance().resetSimulation();
         bPreInit = true;
         if (simulator == null) {
             throw new IllegalStateException("Não existe um simulador instanciado");
@@ -136,7 +131,10 @@ public abstract class Simulation extends ConfigurableObject {
             throw new IllegalStateException("Não existe um display instanciado");
         }
         simulator.setRadioModel(radioModel);
+        radioModel.reset();
+        network.reset();
         simulator.setNetwork(network);
+        
         simulator.setDisplay(display);
 
     }
@@ -152,6 +150,4 @@ public abstract class Simulation extends ConfigurableObject {
     public void resume() {
         simulator.resume();
     }
-
-
 }

@@ -28,7 +28,7 @@ import java.util.Collection;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.mei.securesim.components.SimulationController;
+import org.mei.securesim.components.instruments.SimulationController;
 import org.mei.securesim.components.simulation.Simulation;
 import org.mei.securesim.core.ui.ISimulationDisplay;
 import org.mei.securesim.core.engine.events.SimulatorEvent;
@@ -144,7 +144,9 @@ public class Simulator {
     }
 
     public void start() {
+
         SimulationController.getInstance().begin();
+        autostartRoutingLayer();
         runWithDisplay();
     }
 
@@ -448,5 +450,12 @@ public class Simulator {
 
     public void setSimulation(Simulation simulation) {
         this.simulation = simulation;
+    }
+
+    private void autostartRoutingLayer() {
+        for (Object object : getNodes()) {
+            Node n = (Node) object;
+            n.getRoutingLayer().autostart();
+        }
     }
 }

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mei.securesim.components;
+package org.mei.securesim.components.instruments;
 
 import java.util.Stack;
 import org.mei.securesim.components.logging.file.EnergyRawFileLogger;
@@ -43,6 +43,10 @@ public class SimulationController {
 
     public void registerSimulation(Simulation simulation) {
         this.simulation=simulation;
+    }
+
+    public void resetSimulation() {
+
     }
 
 

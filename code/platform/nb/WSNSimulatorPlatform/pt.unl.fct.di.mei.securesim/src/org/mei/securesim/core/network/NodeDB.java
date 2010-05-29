@@ -32,6 +32,9 @@ public class NodeDB {
 		return nodes;
 	}
 
+        public void clear(){
+            nodes.clear();
+        }
 	// Returns a set of seeds that form connected graph in a transitive sense.
 	// static RandomList<Node> seeds = new RandomList<Node>() ;
 	// static Collection<EndPoint> randomEndPoints( Node caller, int total ) {

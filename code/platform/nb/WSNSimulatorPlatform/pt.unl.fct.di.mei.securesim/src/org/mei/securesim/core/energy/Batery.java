@@ -1,6 +1,6 @@
 package org.mei.securesim.core.energy;
 
-import org.mei.securesim.components.EnergyController;
+import org.mei.securesim.components.instruments.EnergyController;
 import org.mei.securesim.core.energy.listeners.EnergyEvent;
 import org.mei.securesim.core.energy.listeners.EnergyListener;
 import org.mei.securesim.core.nodes.Node;
@@ -111,7 +111,7 @@ public class Batery {
         averageConsumption = tot / totalconsumptions;
 
         fireOnEnergyConsume(new EnergyEvent(this, value, System.currentTimeMillis(), getHostNode().getSimulator().getSimulationTime(), event, getHostNode().getId()));
-
+        if (currentPower<=0) getHostNode().shutdown();
         lastConsume = value;
     }
 
@@ -127,6 +127,7 @@ public class Batery {
         averageConsumption = tot / totalconsumptions;
         fireOnEnergyConsume(new EnergyEvent(this, value, System.currentTimeMillis(), getHostNode().getSimulator().getSimulationTime(), UNKNOWNED_EVENT, getHostNode().getId()));
         lastConsume = value;
+        if (currentPower<=0) getHostNode().shutdown();
     }
 
     private void fireOnEnergyConsume(EnergyEvent energyEvent) {

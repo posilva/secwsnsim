@@ -3,7 +3,6 @@
  */
 package org.mei.securesim.components.simulation.basic;
 
-import org.mei.securesim.components.SimulationController;
 import org.mei.securesim.components.simulation.Simulation;
 
 /**
