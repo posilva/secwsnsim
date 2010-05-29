@@ -10,11 +10,7 @@
  */
 package org.mei.securesim.platform.ui;
 
-import java.awt.BorderLayout;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFileChooser;
 import org.mei.securesim.platform.core.charts.ui.ChartPanel;
 
 /**
@@ -23,19 +19,23 @@ import org.mei.securesim.platform.core.charts.ui.ChartPanel;
  */
 public class ChartFrame extends javax.swing.JFrame {
 
-    protected ChartPanel chartPanel;
-
     public ChartPanel getChartPanel() {
-        return chartPanel;
+        return chartPanel1;
     }
 
     /** Creates new form ChartFrame */
     public ChartFrame() {
         initComponents();
-        chartPanel = new ChartPanel();
-        getContentPane().add(chartPanel, BorderLayout.CENTER);
-
     }
+
+    void configChartPanel(String name, String xLabel, String yLabel){
+        chartPanel1.setChartName(name);
+        chartPanel1.setxLabel(xLabel);
+        chartPanel1.setyLabel(yLabel);
+        chartPanel1.init();
+        chartPanel1.updateUI();
+    }
+
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -46,44 +46,16 @@ public class ChartFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jToolBar1 = new javax.swing.JToolBar();
-        mnuExportar = new javax.swing.JButton();
+        chartPanel1 = new org.mei.securesim.platform.core.charts.ui.ChartPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("Form"); // NOI18N
 
-        jToolBar1.setRollover(true);
-        jToolBar1.setName("jToolBar1"); // NOI18N
-
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(org.mei.securesim.platform.PlatformApp.class).getContext().getResourceMap(ChartFrame.class);
-        mnuExportar.setText(resourceMap.getString("mnuExportar.text")); // NOI18N
-        mnuExportar.setFocusable(false);
-        mnuExportar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        mnuExportar.setName("mnuExportar"); // NOI18N
-        mnuExportar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        mnuExportar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuExportarActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(mnuExportar);
-
-        getContentPane().add(jToolBar1, java.awt.BorderLayout.NORTH);
+        chartPanel1.setName("chartPanel1"); // NOI18N
+        getContentPane().add(chartPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void mnuExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuExportarActionPerformed
-        try {
-        JFileChooser fc = new JFileChooser(".");
-        int returnVal = fc.showSaveDialog(this);
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                chartPanel.getChartObject().saveChartToPDF(fc.getSelectedFile().getAbsolutePath(), 800, 600);
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(ChartFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_mnuExportarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -97,8 +69,7 @@ public class ChartFrame extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JButton mnuExportar;
+    private org.mei.securesim.platform.core.charts.ui.ChartPanel chartPanel1;
     // End of variables declaration//GEN-END:variables
     private double xval=0;
 
@@ -112,7 +83,7 @@ public class ChartFrame extends javax.swing.JFrame {
                 try {
                     
                     double y = (r).nextDouble() * 100;
-                    chartPanel.updateChart(xval, y);
+                    chartPanel1.updateChart(xval, y);
                     xval+=0.1;
                     sleep(500+(long)r.nextDouble()*1000);
                 } catch (InterruptedException ex) {

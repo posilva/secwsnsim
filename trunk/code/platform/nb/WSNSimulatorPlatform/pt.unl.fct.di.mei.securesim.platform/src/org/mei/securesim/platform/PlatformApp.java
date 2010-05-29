@@ -4,14 +4,21 @@
 
 package org.mei.securesim.platform;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
+import org.mei.securesim.platform.utils.ClassFinder;
 
 /**
  * The main class of the application.
  */
 public class PlatformApp extends SingleFrameApplication {
 
+    public static List routingLayerClasses=new ArrayList();
+    public static List macLayerClasses=new ArrayList();
+    public static List applicationLayerClasses=new ArrayList();
     /**
      * At startup create and show the main frame of the application.
      */
@@ -40,5 +47,33 @@ public class PlatformApp extends SingleFrameApplication {
      */
     public static void main(String[] args) {
         launch(PlatformApp.class, args);
+    }
+
+
+
+    protected static List findClasses(String classes){
+        List listRL= new ArrayList();
+        ClassFinder finder = new ClassFinder();
+        Vector<Class<?>> v = finder.findSubclasses (classes);
+		List<Throwable> 	errors = finder.getErrors ();
+		if (v != null && v.size () > 0)
+		{
+			for (Class<?> cls : v)
+			{
+                            listRL.add(cls+"#"+cls.getSimpleName());
+			}
+		}
+		else
+		{
+			
+		}
+        return listRL;
+    }
+
+
+    public static void loadClasses(){
+//        routingLayerClasses = findClasses("org.mei.securesim.core.layers.routing.RoutingLayer");
+//        macLayerClasses = findClasses("org.mei.securesim.core.layers.mac.MACLayer");
+//        applicationLayerClasses = findClasses("org.mei.securesim.core.application.Application");
     }
 }

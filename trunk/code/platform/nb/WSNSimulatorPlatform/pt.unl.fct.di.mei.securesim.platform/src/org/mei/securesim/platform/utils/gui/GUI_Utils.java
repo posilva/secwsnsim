@@ -4,13 +4,17 @@
  */
 package org.mei.securesim.platform.utils.gui;
 
+import com.jidesoft.icons.IconSet.File;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.Window;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
+import org.mei.securesim.platform.core.PlatformController;
 
 /**
  *
@@ -58,4 +62,27 @@ public class GUI_Utils {
 //    public static boolean AskBox(String title, String message) {
 //        return JOptionPane.OK_OPTION==JOptionPane.showConfirmDialog(null,title,);
 //    }
+    /**
+     * If any 0 is the default file filter
+     * @param filters
+     * @param title
+     * @return
+     */
+    public static String showSaveDialog(FileFilter[] filters, String title){
+        JFileChooser jf = new JFileChooser();
+        if (filters!=null){
+            jf.setAcceptAllFileFilterUsed(false);
+            for (int i = 0; i < filters.length; i++) {
+                jf.addChoosableFileFilter(filters[i]);
+            }
+            jf.setFileFilter(filters[0]);
+        }
+        jf.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        jf.setMultiSelectionEnabled(false);
+        int result = jf.showSaveDialog(PlatformController.getInstance().getPlatformView().getFrame());
+        if (result==JFileChooser.CANCEL_OPTION || result==JFileChooser.ERROR_OPTION){
+            return null;
+        }
+        return jf.getSelectedFile().getAbsolutePath();
+    }
 }

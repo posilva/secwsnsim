@@ -9,7 +9,7 @@ import java.awt.Dimension;
 import javax.swing.JOptionPane;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
-import org.mei.securesim.components.SimulationController;
+import org.mei.securesim.components.instruments.SimulationController;
 import org.mei.securesim.components.simulation.SimulationFactory;
 import org.mei.securesim.utils.DebugConsole;
 
@@ -17,12 +17,13 @@ import org.mei.securesim.utils.DebugConsole;
  *
  * @author posilva
  */
-public class WorkbenchPanel extends javax.swing.JPanel {
+public class WorkbenchPanel extends javax.swing.JPanel  {
 
     /** Creates new form WorkbenchPanel */
     public WorkbenchPanel() {
         initComponents();
-        jScrollPane1.setPreferredSize(new Dimension(100, 100));
+        
+                jScrollPane1.setPreferredSize(new Dimension(1280,800));
         jScrollPane1.setAutoscrolls(true);
         btnDeployNodesMode.setSelected(true);
         updateSelectionGroup();
@@ -328,8 +329,7 @@ public class WorkbenchPanel extends javax.swing.JPanel {
     }
 
     public void setSimulationFactory(SimulationFactory simulationFactory) {
-
-        simulationPanel1.settingSimulation(simulationFactory);
+    simulationPanel1.settingSimulation(simulationFactory);
     }
 
     @Action

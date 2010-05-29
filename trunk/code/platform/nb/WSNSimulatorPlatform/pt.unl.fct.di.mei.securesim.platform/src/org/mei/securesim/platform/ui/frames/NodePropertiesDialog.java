@@ -16,7 +16,7 @@ import java.awt.Frame;
 import java.awt.GraphicsConfiguration;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
-import java.util. Vector;
+import java.util.Vector;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
@@ -25,7 +25,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.border.BevelBorder;
-import org.mei.securesim.core.nodes.Node;
 import org.mei.securesim.gui.GraphicNode;
 import org.mei.securesim.platform.utils.gui.GUI_Utils;
 
@@ -35,8 +34,8 @@ import org.mei.securesim.platform.utils.gui.GUI_Utils;
  */
 public class NodePropertiesDialog extends StandardDialog {
 
-      Vector<GraphicNode> selectedNodes;
-
+    Vector<GraphicNode> selectedNodes;
+    private NodePropertiesPanel nodePropertiesPanel;
 
     public NodePropertiesDialog(Dialog dialog, String string, boolean bln, GraphicsConfiguration gc) throws HeadlessException {
         super(dialog, string, bln, gc);
@@ -82,10 +81,9 @@ public class NodePropertiesDialog extends StandardDialog {
         init();
     }
 
-
     void init() {
         setSize(600, 400);
-        
+
         pack();
 
     }
@@ -101,7 +99,8 @@ public class NodePropertiesDialog extends StandardDialog {
 
     @Override
     public JComponent createContentPanel() {
-        return new NodePropertiesPanel();
+        nodePropertiesPanel=new NodePropertiesPanel();
+        return nodePropertiesPanel;
     }
 
     @Override
@@ -151,34 +150,40 @@ public class NodePropertiesDialog extends StandardDialog {
 
     public static void main(String[] a) {
         NodePropertiesDialog p = new NodePropertiesDialog();
-         Vector<GraphicNode>  r=new  Vector<GraphicNode>();
+        Vector<GraphicNode> r = new Vector<GraphicNode>();
         p.showNodesProperties(r);
     }
-    public void showNodesProperties( Vector<GraphicNode> nodes){
-        if (nodes==null ) return;
-        selectedNodes=nodes;
-        if(selectedNodes.size()>0 ){
+
+    public void showNodesProperties(Vector<GraphicNode> nodes) {
+        if (nodes == null) {
+            return;
+        }
+        selectedNodes = nodes;
+        if (selectedNodes.size() > 0) {
             GUI_Utils.centerOnScreen(this);
             setModal(true);
 
             setNodeProperties(selectedNodes);
 
-            setVisible(true);
+           
         }
     }
 
     private void setNodeProperties(Vector<GraphicNode> selNodes) {
-        if (selNodes.size()==1){
+        if (selNodes.size() == 1) {
+            nodePropertiesPanel.setSelectedNodes(selNodes);
+             setVisible(true);
+             nodePropertiesPanel.applyProperties(selNodes);
             /**
              * set current properties for node and show
              */
-        }else{
+
+            
+        } else {
+
             /**
              * set properties for all nodes
              */
         }
     }
-
-
-
 }

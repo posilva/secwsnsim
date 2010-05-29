@@ -13,6 +13,7 @@ package org.mei.securesim.platform.ui.frames;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Vector;
 import javax.swing.AbstractCellEditor;
@@ -31,14 +32,17 @@ import javax.swing.table.TableModel;
 import org.mei.securesim.core.energy.EnergyModel;
 import org.mei.securesim.core.nodes.Node;
 import org.mei.securesim.gui.GraphicNode;
+import org.mei.securesim.platform.conf.ClassConfigReader.ClassDefinitions;
+import org.mei.securesim.platform.conf.ConfigurationUtils;
 import org.mei.securesim.platform.core.instruments.energy.ui.EnergyModelDialog;
+import org.mei.securesim.platform.utils.NodeClassesLoader;
 
 /**
  *
  * @author posilva
  */
 public class NodePropertiesPanel extends javax.swing.JPanel {
-
+     Vector<GraphicNode> selectedNodes;
     RowEditorModel rowEditorModel;
     private JTable jTable1;
 
@@ -243,9 +247,18 @@ public class NodePropertiesPanel extends javax.swing.JPanel {
         rowEditorModel.addEditorForRow(4, getRoutingLayers());
         ((PropertiesTable) jTable1).setRowEditorModel(rowEditorModel);
     }
-    String[] col_names = {"Propertie", "Value"};
-    String[] MAC_values = {"Mica2MACLayer", "SecureMica2MACLayer"};
-    String[] ROUTING_values = {"Ping Pong Routing Layer", "AODV Routing Layer"};
+    String[] col_names = {"Property", "Value"};
+
+
+
+
+    ClassDefinitions[] MAC_values =  loadMACValues();//{"Mica2MACLayer", "SecureMica2MACLayer"};
+
+
+
+
+
+    ClassDefinitions[] ROUTING_values = loadROUTINGValues();//{"Ping Pong Routing Layer", "AODV Routing Layer"};
     String[] APP_values = {"Ping Pong", "AODV"};
     public static String[] prop_names = {"Sink Node", "Energy Model", "Max Strenght",
         "Application", "RoutingLayer"};
@@ -308,6 +321,7 @@ public class NodePropertiesPanel extends javax.swing.JPanel {
             {
                 energyModel = emd.getEnergyModel();
                 energyModelConfig = true;
+                applyProperties(selectedNodes);
             }
             emd.dispose();
         }
@@ -328,8 +342,11 @@ public class NodePropertiesPanel extends javax.swing.JPanel {
     private void applySinkNodeProperty(Node n) {
         TableColumn c = jTable1.getColumnModel().getColumn(1);
     }
-
     private void applyRoutingLayerProperty(Node n) {
+        TableCellEditor editor = rowEditorModel.getEditor(4);
+            ClassDefinitions c =(ClassDefinitions) editor.getCellEditorValue();
+            String routingLayer  = c.className;
+          NodeClassesLoader.loadRoutingLayerIntoNode(routingLayer, n);
     }
 
     private void applyApplicationLayerProperty(Node n) {
@@ -340,4 +357,37 @@ public class NodePropertiesPanel extends javax.swing.JPanel {
 
     private void applyMaxStreghtProperty(Node n) {
     }
+
+    ClassDefinitions[] loadValues(String file){
+        HashSet s = ConfigurationUtils.loadConfigurationClasses(file);
+        Vector c = new Vector();
+        for (Object o : s) {
+            ClassDefinitions cd = (ClassDefinitions) o;
+            c.add(cd);
+        }
+
+        ClassDefinitions[] cd = new ClassDefinitions[c.size()];
+
+        for (int i = 0; i < c.size(); i++) {
+            cd[i]=(ClassDefinitions) c.get(i);
+        }
+        return cd;
+    }
+    ClassDefinitions[] loadMACValues() {
+        return loadValues(ConfigurationUtils.CONF_MAC_CLASSES_PROPERTIES);
+        
+    }
+
+    ClassDefinitions[] loadROUTINGValues() {
+        return loadValues(ConfigurationUtils.CONF_ROUTING_CLASSES_PROPERTIES);
+    }
+
+    public Vector<GraphicNode> getSelectedNodes() {
+        return selectedNodes;
+    }
+
+    public void setSelectedNodes(Vector<GraphicNode> selectedNodes) {
+        this.selectedNodes = selectedNodes;
+    }
+    
 }

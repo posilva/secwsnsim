@@ -1,9 +1,4 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
  * SimulationWizardDialog.java
  *
  * Created on Mar 7, 2010, 5:04:38 PM
