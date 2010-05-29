@@ -1,8 +1,9 @@
 /**
  * 
  */
-package org.mei.securesim.test.pingpong;
+package org.mei.securesim.test.flooding;
 
+import org.mei.securesim.test.pingpong.*;
 import java.util.HashSet;
 import org.mei.securesim.core.application.Application;
 import org.mei.securesim.core.energy.EnergyConsumptionAction;
@@ -14,12 +15,12 @@ import org.mei.securesim.core.nodes.Node;
  * @author posilva
  *
  */
-public class PingPongRoutingLayer extends RoutingLayer {
+public class FloodingRoutingLayer extends RoutingLayer {
 
     private Node parent;
     protected HashSet<Long> receivedMessages = new HashSet<Long>();
 
-    public PingPongRoutingLayer() {
+    public FloodingRoutingLayer() {
         super();
     }
 
@@ -34,7 +35,7 @@ public class PingPongRoutingLayer extends RoutingLayer {
 
             public void execute() {
                 DefaultMessage m = (DefaultMessage) msg;
-                // se não recebi a mensagem trato
+                // if not received the message handle it 
                 if (!receivedMessages.contains(getMessageID(m))) {
                     receivedMessages.add(getMessageID(m));
                     Application app = getNode().getApplication();

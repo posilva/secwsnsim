@@ -19,21 +19,6 @@ public class AODVRoutingLayer extends RoutingLayer {
 
     private long sequenceNumber;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public AODVRoutingLayer() {
         super();
     }
@@ -63,5 +48,10 @@ public class AODVRoutingLayer extends RoutingLayer {
     public void sendMessageDone() {
         application.sendMessageDone();
         application = null;
+    }
+
+    @Override
+    public void autostart() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

@@ -26,8 +26,6 @@ import org.mei.securesim.test.insens.utils.INSENSFunctions;
 import org.mei.securesim.test.insens.utils.MACS;
 import org.mei.securesim.test.insens.utils.algorithms.dijkstra.engine.Calculator;
 import org.mei.securesim.test.insens.utils.algorithms.dijkstra.model.Edge;
-import org.mei.securesim.test.insens.utils.graph.Dijkstra;
-import org.mei.securesim.test.insens.utils.graph.WeightedGraph;
 import static org.mei.securesim.test.insens.utils.INSENSFunctions.cloneMAC;
 
 /**
@@ -37,6 +35,7 @@ import static org.mei.securesim.test.insens.utils.INSENSFunctions.cloneMAC;
 public class INSENSRoutingLayer extends RoutingLayer {
 
     private int countMessages = 0;
+
 
     public enum TimeoutAction {
 
@@ -433,7 +432,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
         }
 
         public DelayedMessageEvent(Object message) {
-            double result = Simulator.randomGenerator.random().nextDouble() * INSENSConstants.MAX_DELAY_TIME_MESSAGE;//INSENSConstants.MIN_DELAY_TIME_MESSAGE + (int) (Simulator.randomGenerator.random().nextDouble() * (INSENSConstants.MAX_DELAY_TIME_MESSAGE - INSENSConstants.MIN_DELAY_TIME_MESSAGE));
+            double result = Simulator.randomGenerator.random().nextDouble() * INSENSConstants.MIN_DELAY_TIME_MESSAGE + (int) (Simulator.randomGenerator.random().nextDouble() * (INSENSConstants.MAX_DELAY_TIME_MESSAGE - INSENSConstants.MIN_DELAY_TIME_MESSAGE));
             setTime(getNode().getSimulator().getSimulationTime() + (int) result);
             this.message = message;
         }
@@ -853,5 +852,9 @@ public class INSENSRoutingLayer extends RoutingLayer {
                 break;
         }
         System.out.println("[" + message.getOrigin() + "]=>" + getNodeID() + " - " + messageType + "(" + message.getMessageNumber() + ")" + " - " + text);
+    }
+    @Override
+    public void autostart() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
