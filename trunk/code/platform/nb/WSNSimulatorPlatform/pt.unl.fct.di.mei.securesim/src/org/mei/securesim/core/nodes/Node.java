@@ -47,8 +47,7 @@ public abstract class Node {
     protected GraphicNode graphicNode;
     protected CPU cpu = null;
     protected Transceiver transceiver = null;
-    protected Color messageColor=Color.BLACK;
-
+    protected Color messageColor = Color.BLACK;
     /**
      * This is the message being sent, on reception it is extracted and the
      * message part is forwarded to the appropriate application, see
@@ -131,10 +130,6 @@ public abstract class Node {
                     setMaximumRadioStrength(13000);
                     break;
             }
-
-//            setMaximumRadioStrength((DEFAULT_MAX_RADIO_STRENGTH * setRadioRange) / DEFAULT_MAX_COMUNICATION_RANGE);
-//            setMaximumRadioStrength(GaussianRadioModel.RangeEstimation(setRadioRange));
-
             this.setRadioRange = setRadioRange;
         }
     }
@@ -491,7 +486,7 @@ public abstract class Node {
         this.cpu = cpu;
     }
 
-    public static void resetCouter() {
+    public static void resetCounter() {
         NODEID_AUTOCOUNTER = 1;
     }
 

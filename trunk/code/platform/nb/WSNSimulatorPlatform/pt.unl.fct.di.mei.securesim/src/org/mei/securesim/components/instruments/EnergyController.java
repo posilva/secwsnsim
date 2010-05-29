@@ -1,4 +1,4 @@
-package org.mei.securesim.components;
+package org.mei.securesim.components.instruments;
 
 import org.mei.securesim.components.logging.EnergyLogger;
 import org.mei.securesim.core.energy.listeners.EnergyEvent;

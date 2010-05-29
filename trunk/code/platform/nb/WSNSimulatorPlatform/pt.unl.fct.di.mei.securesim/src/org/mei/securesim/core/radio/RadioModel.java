@@ -75,6 +75,10 @@ public abstract class RadioModel{
 		return simulator;
 	}
 
+    public void reset() {
+        
+    }
+
 	/**
 	 * The Neighborhood class represents the set of neighboring nodes of a given
 	 * node. This class is radio model specific and must be derived in the 

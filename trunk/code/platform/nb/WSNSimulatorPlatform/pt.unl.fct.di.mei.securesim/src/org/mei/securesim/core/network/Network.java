@@ -72,15 +72,6 @@ public abstract class Network extends ConfigurableObject {
 
     }
 
-    public void removeNode(int id) {
-    }
-
-    public void removeSimpleNode(int id) {
-    }
-
-    public void removeSinkNode(int id) {
-    }
-
     /**
      * @param simulator the simulator to set
      */
@@ -95,7 +86,18 @@ public abstract class Network extends ConfigurableObject {
         return simulator;
     }
 
+    /**
+     * 
+     * @param topologyManager
+     */
     public void applyTopology(TopologyManager topologyManager) {
         //topologyManager.apply(this.getNodeDB(),);
+    }
+
+    /**
+     * 
+     */
+    public void reset() {
+        nodeDB.clear();
     }
 }
