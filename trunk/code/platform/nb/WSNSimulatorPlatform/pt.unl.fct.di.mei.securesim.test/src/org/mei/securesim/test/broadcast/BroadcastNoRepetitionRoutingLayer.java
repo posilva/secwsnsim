@@ -45,5 +45,10 @@ public class BroadcastNoRepetitionRoutingLayer extends RoutingLayer {
 		application.sendMessageDone();
 		application=null;
 	}
+
+    @Override
+    public void autostart() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 	
 }

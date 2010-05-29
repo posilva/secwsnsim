@@ -3,25 +3,23 @@
  * and open the template in the editor.
  */
 
-package org.mei.securesim.test.insens;
+package org.mei.securesim.test.cleanslate;
 
 import org.mei.securesim.core.layers.mac.Mica2MACLayer;
 import org.mei.securesim.core.nodes.factories.NodeFactory;
 
 /**
  *
- * @author pedro
+ * @author Pedro Marques da Silva
  */
-//org.mei.securesim.test.insens.INSENSNodeFactory
-public class INSENSNodeFactory extends NodeFactory{
+public class CleanSlateNodeFactory extends NodeFactory{
 
     @Override
     public void setup() {
-        setApplicationClass(INSENSApplication.class);
-        setRoutingLayerClass(INSENSRoutingLayer.class);
-        setNodeClass(INSENSNode.class);
+        setApplicationClass(CleanSlateApplication.class);
+        setRoutingLayerClass(CleanSlateRoutingLayer.class);
+        setNodeClass(CleanSlateNode.class);
         setMacLayer(Mica2MACLayer.class);
         setSetup(true);
     }
-
 }
