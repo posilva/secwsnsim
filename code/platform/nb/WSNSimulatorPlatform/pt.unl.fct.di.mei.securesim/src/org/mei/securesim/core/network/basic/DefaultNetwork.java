@@ -15,7 +15,6 @@ public class DefaultNetwork extends Network {
 	 * 
 	 */
 	public DefaultNetwork() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/* (non-Javadoc)

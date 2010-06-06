@@ -89,7 +89,6 @@ public abstract class Application {
 	 */
 
 	public synchronized  final boolean sendMessage(Object message){
-		//TODO ESTOU AQUI
 		return getNode().getRoutingLayer().sendMessage(message, this);
 	}
 	
