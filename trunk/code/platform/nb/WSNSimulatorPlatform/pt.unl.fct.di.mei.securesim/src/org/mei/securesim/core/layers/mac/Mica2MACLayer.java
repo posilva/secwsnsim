@@ -206,7 +206,7 @@ public class Mica2MACLayer extends MACLayer {
         totalMessagesSent++;
         if (sending) {
             totalMessagesNotSent++;
-            System.out.println(getNode().getId() + " Message failed from  "+ ((DefaultMessage)message).getOrigin() +" Total: " +totalMessagesNotSent);
+//            System.out.println(getNode().getId() + " Message failed from  "+ ((DefaultMessage)message).getOrigin() +" Total: " +totalMessagesNotSent);
             return false;
         } else {
             sending = true;

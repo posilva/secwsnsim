@@ -7,9 +7,12 @@ package org.mei.securesim.components.crypto;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.Key;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -239,5 +242,18 @@ public class CryptoFunctions {
 
     public static boolean verifyMessageIntegrityMAC(byte[] payload, byte[] received_mac, byte[] key) {
         return Arrays.equals(received_mac, CryptoFunctions.createMAC(payload, key));
+    }
+
+    public static byte[] digestMD5(byte[] data) {
+        try {
+            MessageDigest algorithm = MessageDigest.getInstance("MD5");
+            algorithm.reset();
+            algorithm.update(data);
+            byte[] messageDigest = algorithm.digest();
+            return messageDigest;
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(CryptoFunctions.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }

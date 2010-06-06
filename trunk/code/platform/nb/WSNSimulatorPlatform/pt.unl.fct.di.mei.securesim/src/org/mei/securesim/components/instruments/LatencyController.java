@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.mei.securesim.components.instruments;
 
 import java.util.HashSet;
@@ -20,9 +16,6 @@ public class LatencyController {
     Hashtable<Node, Vector<LatencyEntry>> latencyControlTable = new Hashtable<Node, Vector<LatencyEntry>>();
     protected HashSet<Node> senders= new HashSet<Node>();
     protected HashSet<Node> receivers= new HashSet<Node>();
-
-
-
 
     /**
      * Table Entry to update values
