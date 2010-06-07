@@ -11,7 +11,7 @@ import org.mei.securesim.core.engine.Simulator;
  *
  * @author CIAdmin
  */
-class CleanSlateConstants {
+public class CleanSlateConstants {
 
     public final static int INVALID_TYPE = -1;
     public final static byte MSG_HELLO = 1;
@@ -38,6 +38,7 @@ class CleanSlateConstants {
     static double GROUP_INFO_BROADCAST_REPEAT_TIME = (long) (Simulator.ONE_SECOND * 5);
     static long RESTART_GROUP_MERGE_BOUND_TIME = (long) (Simulator.ONE_SECOND * 3);
     static long FLOODING_NEIGHBOR_INFO_BOUND_TIME = (long) (Simulator.ONE_SECOND * 3);
+    static long MERGE_WAITING_BOUND_TIME= (long) (Simulator.ONE_SECOND * 3);;
 
     public static byte[] getNAPrivateKey() {
         return NAPrivateKey;
