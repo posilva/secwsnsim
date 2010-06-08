@@ -635,7 +635,7 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
     }
 
     public void showLogMessage(String message) {
-        throw new UnsupportedOperationException("Not supported yet.");
+
     }
 
     public void onStartSimulation() {
@@ -658,11 +658,11 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
     }
 
     public void onPauseSimulation() {
-        throw new UnsupportedOperationException("Not supported yet.");
+
     }
 
     public void onStopSimulation() {
-        throw new UnsupportedOperationException("Not supported yet.");
+
     }
 
     public void updateSimulationState(String state) {
@@ -685,7 +685,7 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
     }
 
     public void onExitPlatform() {
-        throw new UnsupportedOperationException("Not supported yet.");
+      
     }
 
     public void updateClock(String time) {
