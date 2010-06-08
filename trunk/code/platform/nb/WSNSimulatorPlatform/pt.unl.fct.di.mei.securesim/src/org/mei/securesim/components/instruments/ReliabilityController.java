@@ -1,5 +1,7 @@
 package org.mei.securesim.components.instruments;
 
+import org.mei.securesim.core.nodes.Node;
+
 /**
  *
  * @author posilva
@@ -22,5 +24,13 @@ public class ReliabilityController {
 
     public void setEnable(boolean enable) {
         this.enable = enable;
+    }
+
+    public void notifyMessageSent(Object message, Node node) {
+    
+    }
+
+    public void notifyMessageReception(Object message, Node node) {
+    
     }
 }

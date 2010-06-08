@@ -22,6 +22,12 @@ public class CoverageController {
     private SignalHandler routingModelNeighbors = new SignalHandler();
     protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
 
+    public void notifyMessageSent(Object message, Node node) {
+    }
+
+    public void notifyMessageReception(Object message, Node node) {
+    }
+
     /**
      * There 3 types of converage models
      * 1. Radio model: based on radio conectivity

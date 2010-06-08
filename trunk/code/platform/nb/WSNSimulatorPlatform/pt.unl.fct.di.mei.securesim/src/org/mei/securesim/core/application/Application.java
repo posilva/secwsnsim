@@ -89,7 +89,7 @@ public abstract class Application {
 	 */
 
 	public synchronized  final boolean sendMessage(Object message){
-		return getNode().getRoutingLayer().sendMessage(message, this);
+		return getNode().getRoutingLayer().sendMessageHandler(message, this);
 	}
 	
 	/**

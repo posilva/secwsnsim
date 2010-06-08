@@ -32,6 +32,8 @@ public abstract class MACLayer extends Layer {
     protected boolean receiving = false;
     /** State variable, true if the last received message got corrupted by noise */
     protected boolean corrupted = false;
+    protected double noiseStrength;
+    protected double signalStrength;
 
     public boolean isCorrupted() {
         return corrupted;
@@ -167,4 +169,19 @@ public abstract class MACLayer extends Layer {
         return totalMessagesSent;
     }
 
+    public double getNoiseStrength() {
+        return noiseStrength;
+    }
+
+    public void setNoiseStrength(double noiseStrength) {
+        this.noiseStrength = noiseStrength;
+    }
+
+    public double getSignalStrength() {
+        return signalStrength;
+    }
+
+    public void setSignalStrength(double signalStrength) {
+        this.signalStrength = signalStrength;
+    }
 }
