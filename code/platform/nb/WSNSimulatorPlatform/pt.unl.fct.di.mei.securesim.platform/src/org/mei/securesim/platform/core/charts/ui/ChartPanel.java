@@ -89,7 +89,6 @@ public class ChartPanel extends JPanel implements IChartDisplay {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        // TODO add your handling code here:
         if (evt.getButton()==MouseEvent.BUTTON3){
              exportMenu.show(this, evt.getX(), evt.getY());
         }
