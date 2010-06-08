@@ -793,11 +793,11 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     }//GEN-LAST:event_selNodeRunEventActionPerformed
 
     private void selNodesRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selNodesRemoveActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_selNodesRemoveActionPerformed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-        // TODO add your handling code here:
+
 
 
         shiftKeyPressed = (evt.getKeyCode() == SHIFT_KEYCODE);
