@@ -57,6 +57,7 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
     // TODO: Verificar porque um grupo depois de se juntar os elementos desse grupo agem em separado
     // TODO: Continuação - Juntando-se os ambos os nós aos mesmos nós, e os nós do mesmo grupo voltam a juntar-se
     // TODO: Cont. - Começar por verificar a selecção do minimo grupo
+    
     /**************************************************************************
      * ROUTING LAYER SPECIFIC OPERATIONS
      * 
@@ -103,7 +104,6 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
             case CleanSlateConstants.MSG_GROUP_NEIGHBORING_INFO:
                 receiveGroupNeighboringInfoMessage(message);
                 break;
-
         }
     }
 
@@ -291,12 +291,12 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
 //                    endNeighborInfoCollection();
 //                    schedulesGroupMerge();
 //                } else {
-                    if (this.currentMergeProposalData == null) {
-                        // TODO: Verificar se só os nós edge é q recusam e q tratam mensagens de proposal
-                        if (isEdgeNode()) {
-                            sendMergeProposalRefuseTo(mergeProposalData.sourceGroupID);
-                        }
+                if (this.currentMergeProposalData == null) {
+                    // TODO: Verificar se só os nós edge é q recusam e q tratam mensagens de proposal
+                    if (isEdgeNode()) {
+                        sendMergeProposalRefuseTo(mergeProposalData.sourceGroupID);
                     }
+                }
 //                }
             }
         } else {
@@ -462,22 +462,8 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
     private void receiveUpdateGroupInfoMessage(Object message) {
         MergeProposalData updateGroupInfo = new MergeProposalData(((DefaultMessage) message).getPayload());
         short nodeId = updateGroupInfo.sourceId;
-
-
-        System.out.println("Received Update GroupInfo Message");
         Long oldGid = updateGroupInfo.targetGroup;
 
-
-        listNeighboringGroupsWorkingCopy.remove(listNeighboringGroups.remove(oldGid));
-
-        NeighborInfo ni = new NeighborInfo(updateGroupInfo.sourceGroupID, updateGroupInfo.sourceGroupSize);
-        listNeighboringGroups.put(updateGroupInfo.sourceGroupID, ni); // update new group
-
-        if (!listNeighboringGroupsWorkingCopy.contains(ni)) {
-            listNeighboringGroupsWorkingCopy.add(ni);
-        }
-
-        listNeighbors.put(nodeId, updateGroupInfo.sourceGroupID);
         if (debug_level > DEBUG_LEVEL_FINE) {
             System.out.println(getNodeID() + " - Update group info: from " + updateGroupInfo.sourceId);
             System.out.println(getNodeID() + " - Old Group: " + oldGid);
@@ -489,6 +475,15 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
             }
             System.out.println();
         }
+        
+        listNeighboringGroupsWorkingCopy.remove(listNeighboringGroups.remove(oldGid));
+        NeighborInfo ni = new NeighborInfo(updateGroupInfo.sourceGroupID, updateGroupInfo.sourceGroupSize);
+        listNeighboringGroups.put(updateGroupInfo.sourceGroupID, ni); // update new group
+        if (!listNeighboringGroupsWorkingCopy.contains(ni)) {
+            listNeighboringGroupsWorkingCopy.add(ni);
+        }
+
+        listNeighbors.put(nodeId, updateGroupInfo.sourceGroupID);
 
     }
 
@@ -680,8 +675,15 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
      * @return
      */
     private long chooseSmallestNeighborGroup() {
+        Object o = null;
         // escolher o menor grupo dos que ainda n foram recusados
-        Object o = listNeighboringGroupsWorkingCopy.poll();
+        for (Object object : listNeighboringGroupsWorkingCopy) {
+            if (object.equals(listNeighboringGroupsWorkingCopy.peek())){
+                o=object;
+                break;
+            }
+        }
+        //o = listNeighboringGroupsWorkingCopy.peek();
         if (o == null) {
             return -1;
         }

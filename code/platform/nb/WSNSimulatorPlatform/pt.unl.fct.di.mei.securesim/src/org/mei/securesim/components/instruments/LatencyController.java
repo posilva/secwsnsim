@@ -17,6 +17,14 @@ public class LatencyController {
     protected HashSet<Node> senders= new HashSet<Node>();
     protected HashSet<Node> receivers= new HashSet<Node>();
 
+    public void notifyMessageSent(Object message, Node node) {
+    
+    }
+
+    public void notifyMessageReception(Object message, Node node) {
+    
+    }
+
     /**
      * Table Entry to update values
      */
