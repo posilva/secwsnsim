@@ -1,5 +1,20 @@
 package org.mei.securesim.components.instruments;
-
+/************************************
+ * Instrumento de Medição de fiabilidade de uma rede
+ *
+ * Tendo em conta o numero as mensagens enviadas por uma simulataneamente na rede
+ * qual o numero de mensagens que chega ao destino
+ *
+ *
+ * Neste caso as mensagens são enviadas em burst que possam provocar algum stress na rede
+ * e é medido o numero de mensagens que chegam face a este stress.
+ *
+ * Quando se estiver perante ataques ao encaminhamento o que se faz é igual
+ * permitindo determinar o impacto do ataque nesta propriedade da rede.
+ *
+ *
+ *
+ */
 import org.mei.securesim.core.nodes.Node;
 
 /**

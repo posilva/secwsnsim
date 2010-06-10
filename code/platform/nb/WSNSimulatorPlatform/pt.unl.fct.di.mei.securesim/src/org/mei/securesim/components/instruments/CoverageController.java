@@ -4,28 +4,143 @@
  */
 package org.mei.securesim.components.instruments;
 
+import org.mei.securesim.components.instruments.messages.ICoverageMessage;
+import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
+import org.mei.securesim.components.instruments.events.InstrumentsEventsFactory;
+import org.mei.securesim.components.instruments.events.TotalCoverageEvent;
 import org.mei.securesim.components.instruments.listeners.CoverageListener;
 import org.mei.securesim.components.instruments.listeners.SignalUpdateEvent;
+import org.mei.securesim.components.instruments.utils.NodeIdComparator;
 import org.mei.securesim.components.instruments.utils.SignalHandler;
+import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.nodes.Node;
-
+/***************************************
+ * PARA A ANALISE DE COBERTURA TOTAL
+ *
+ * Para a Utilização do modulo de cobertura é necessário implementar duas classes
+ * Adaptadas ao protocolo que se quer analisar:
+ * - Implementar uma class derivada de NodeIdComparator que permite comparar o identificador
+ * de dois nós da rede
+ * - Implementar uma mensagem que permita ao protocolo depois fazer o encaminhamento
+ * mas que implemente o interface ICoveraMessage
+ *
+ * - Esta class deve ser passada para o controlador com vista a que em cada evento de
+ * Cobertura seja criada uma mensagem para reenvio periodico
+ *
+ * PARA A ANALISE DE COBERTURA PARCIAL (COM OS VIZINHOS)
+ *
+ * O depois de seleccionar os nós Sources o controlador vai enviar N mensagens para os nós vizinhos
+ * se estes receberem pelo menos um threshold de mensagens então tem cobertura que deve
+ * ser comparada com a cobertura fisica de radio.
+ *
+ */
 /**
  *
  * @author posilva
  */
 public class CoverageController {
 
-    private List sources;
-    private List destination;
+    private List sources = new ArrayList();
+    private List destination = new ArrayList();
+    private Hashtable statistics = new Hashtable();
+    private int totalMessagesSent = 0;
     private SignalHandler radioModelNeighbors = new SignalHandler();
     private SignalHandler routingModelNeighbors = new SignalHandler();
     protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
+    private Class totalCoverageMessageClass;
+    private NodeIdComparator nodeIdComparator;
+
+    public NodeIdComparator getNodeIdComparator() {
+        return nodeIdComparator;
+    }
+
+    public void setNodeIdComparator(NodeIdComparator nodeIdComparator) {
+        this.nodeIdComparator = nodeIdComparator;
+    }
+    class StatisticEntry {
+
+        int sentMessages;
+        int receivedMessages;
+
+        public StatisticEntry() {
+            this.sentMessages = 0;
+            this.receivedMessages = 0;
+
+        }
+
+        public int getReceivedMessages() {
+            return receivedMessages;
+        }
+
+        public void setReceivedMessages(int receivedMessages) {
+            this.receivedMessages = receivedMessages;
+        }
+
+        public int getSentMessages() {
+            return sentMessages;
+        }
+
+        public void setSentMessages(int sentMessages) {
+            this.sentMessages = sentMessages;
+        }
+    }
+    // TODO: Arranjar uma semantica para o ID por forma a poder implementar um ID adequado
 
     public void notifyMessageSent(Object message, Node node) {
+        if (message instanceof ICoverageMessage) { // é mensagem de cobertura
+            ICoverageMessage msg = (ICoverageMessage) message;
+
+            if ( getNodeIdComparator().isEqual(msg.getSourceNodeId() , node.getId())) { // primeiro envio
+                if (sources.contains(node)) { // o nó é de source
+                    addToDestinationBox(msg);
+                }
+            }
+        }
     }
 
     public void notifyMessageReception(Object message, Node node) {
+        if (message instanceof ICoverageMessage) { // é mensagem de cobertura
+            ICoverageMessage msg = (ICoverageMessage) message;
+            if ( getNodeIdComparator().isEqual(msg.getDestinationNodeId() , node.getId())) { // chegou ao destino
+                if (destination.contains(node)) { // o nó é de destino
+                    updateStatistics(msg);
+                }
+            }
+        }
+    }
+
+    public void unregisterSourceNode(Node node) {
+        sources.remove(node);
+    }
+
+    public void unregisterDestinationNode(Node node) {
+        destination.remove(node);
+    }
+
+    private void addToDestinationBox(ICoverageMessage msg) {
+        System.out.println("Adicionei à destination box ");
+
+        StatisticEntry se = (StatisticEntry) statistics.get(msg.getDestinationNodeId());
+        if (se == null) {
+            se = new StatisticEntry();
+        }
+
+        se.setSentMessages(se.getSentMessages()+1);
+
+        statistics.put(msg.getDestinationNodeId(), se);
+    }
+
+    private void updateStatistics(ICoverageMessage msg) {
+        System.out.println("Actualizei estatisticas");
+
+        StatisticEntry se = (StatisticEntry) statistics.get(msg.getDestinationNodeId());
+        if (se == null) {
+            return;
+        }
+        se.setReceivedMessages(se.getReceivedMessages()+1);
+        statistics.put(msg.getDestinationNodeId(), se);
     }
 
     /**
@@ -45,11 +160,12 @@ public class CoverageController {
     protected boolean enable = false;
     protected static CoverageController instance;
 
-    public void updateNetworkSize(){
+    public void updateNetworkSize() {
         radioModelNeighbors.setTotalOfNodes(SimulationController.getInstance().getSimulation().getSimulator().getNodes().size());
         routingModelNeighbors.setTotalOfNodes(SimulationController.getInstance().getSimulation().getSimulator().getNodes().size());
 
     }
+
     /**
      * Singleton
      * @return
@@ -71,7 +187,11 @@ public class CoverageController {
     }
 
     public void registerSourceNode(Node srcNode) {
-        sources.add(srcNode);
+
+        if (!sources.contains(srcNode)) {
+            System.out.println("Registered a new node " + srcNode);
+            sources.add(srcNode);
+        }
     }
 
     public void registerDestinationNode(Node dstNode) {
@@ -175,4 +295,26 @@ public class CoverageController {
     public void removeCoverageListener(CoverageListener listener) {
         listenerList.remove(CoverageListener.class, listener);
     }
+
+
+    void startTotalCoverageAnalisys() throws Exception{
+        if (sources.isEmpty())
+            throw  new IllegalStateException("Must add source nodes to coverage controller");
+        if (sources.isEmpty())
+            throw  new IllegalStateException("Must add destination nodes to coverage controller");
+            // para cada um das sources adiciono um evento de repetição na fila do simulador
+
+        for (Object object : sources) {
+            Node n = (Node) object;
+            
+            TotalCoverageEvent evt = (TotalCoverageEvent) InstrumentsEventsFactory.createTotalCoverageEvent((short)20, Simulator.ONE_SECOND*5, getTotalCoverageTestMessageClass());
+            evt.setSourceNode(n);
+            SimulationController.getInstance().getSimulation().getSimulator().addEvent(evt);
+
+        }
+
+    }
+    public Class getTotalCoverageTestMessageClass(){
+        return totalCoverageMessageClass;
+}
 }

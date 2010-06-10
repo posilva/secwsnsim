@@ -24,6 +24,7 @@ import javax.swing.JOptionPane;
 import org.jdesktop.application.Application.ExitListener;
 import org.jdesktop.application.ResourceMap;
 import org.mei.securesim.components.instruments.CoverageController;
+import org.mei.securesim.components.instruments.ReliabilityController;
 import org.mei.securesim.components.instruments.SimulationController;
 import org.mei.securesim.components.instruments.listeners.CoverageListener;
 import org.mei.securesim.components.instruments.listeners.SignalUpdateEvent;
@@ -168,6 +169,7 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         coverageCtlMenu = new javax.swing.JMenu();
         coverageCtlStatusMenu = new javax.swing.JCheckBoxMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
+        coverageCtlConfigMenu = new javax.swing.JCheckBoxMenuItem();
         reliabilityCtlMenu = new javax.swing.JMenu();
         reliabilityCtlStatusMenu = new javax.swing.JCheckBoxMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
@@ -329,10 +331,20 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
 
         energyCtlMenu.setText(resourceMap.getString("energyCtlMenu.text")); // NOI18N
         energyCtlMenu.setName("energyCtlMenu"); // NOI18N
+        energyCtlMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                energyCtlMenuActionPerformed(evt);
+            }
+        });
 
         energyCtlStatusMenu.setSelected(true);
         energyCtlStatusMenu.setText(resourceMap.getString("energyCtlStatusMenu.text")); // NOI18N
         energyCtlStatusMenu.setName("energyCtlStatusMenu"); // NOI18N
+        energyCtlStatusMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                energyCtlStatusMenuActionPerformed(evt);
+            }
+        });
         energyCtlMenu.add(energyCtlStatusMenu);
 
         jSeparator4.setName("jSeparator4"); // NOI18N
@@ -342,14 +354,34 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
 
         coverageCtlMenu.setText(resourceMap.getString("coverageCtlMenu.text")); // NOI18N
         coverageCtlMenu.setName("coverageCtlMenu"); // NOI18N
+        coverageCtlMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                coverageCtlMenuActionPerformed(evt);
+            }
+        });
 
         coverageCtlStatusMenu.setSelected(true);
         coverageCtlStatusMenu.setText(resourceMap.getString("coverageCtlStatusMenu.text")); // NOI18N
         coverageCtlStatusMenu.setName("coverageCtlStatusMenu"); // NOI18N
+        coverageCtlStatusMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                coverageCtlStatusMenuActionPerformed(evt);
+            }
+        });
         coverageCtlMenu.add(coverageCtlStatusMenu);
 
         jSeparator5.setName("jSeparator5"); // NOI18N
         coverageCtlMenu.add(jSeparator5);
+
+        coverageCtlConfigMenu.setSelected(true);
+        coverageCtlConfigMenu.setText(resourceMap.getString("coverageCtlConfigMenu.text")); // NOI18N
+        coverageCtlConfigMenu.setName("coverageCtlConfigMenu"); // NOI18N
+        coverageCtlConfigMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                coverageCtlConfigMenuActionPerformed(evt);
+            }
+        });
+        coverageCtlMenu.add(coverageCtlConfigMenu);
 
         instrumentsMenu.add(coverageCtlMenu);
 
@@ -359,6 +391,11 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         reliabilityCtlStatusMenu.setSelected(true);
         reliabilityCtlStatusMenu.setText(resourceMap.getString("reliabilityCtlStatusMenu.text")); // NOI18N
         reliabilityCtlStatusMenu.setName("reliabilityCtlStatusMenu"); // NOI18N
+        reliabilityCtlStatusMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reliabilityCtlStatusMenuActionPerformed(evt);
+            }
+        });
         reliabilityCtlMenu.add(reliabilityCtlStatusMenu);
 
         jSeparator6.setName("jSeparator6"); // NOI18N
@@ -518,6 +555,35 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         setToolBar(mainToolbar);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void energyCtlMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_energyCtlMenuActionPerformed
+        // TODO add your handling code here:
+        //CoverageController.getInstance().setEnable(ener);
+    }//GEN-LAST:event_energyCtlMenuActionPerformed
+
+    private void energyCtlStatusMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_energyCtlStatusMenuActionPerformed
+        
+        
+    }//GEN-LAST:event_energyCtlStatusMenuActionPerformed
+
+    private void coverageCtlMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coverageCtlMenuActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_coverageCtlMenuActionPerformed
+
+    private void coverageCtlStatusMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coverageCtlStatusMenuActionPerformed
+        // TODO add your handling code here:
+        CoverageController.getInstance().setEnable(coverageCtlStatusMenu.isSelected());
+    }//GEN-LAST:event_coverageCtlStatusMenuActionPerformed
+
+    private void reliabilityCtlStatusMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reliabilityCtlStatusMenuActionPerformed
+        // TODO add your handling code here:
+        ReliabilityController.getInstance().setEnable(reliabilityCtlStatusMenu.isSelected());
+    }//GEN-LAST:event_reliabilityCtlStatusMenuActionPerformed
+
+    private void coverageCtlConfigMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coverageCtlConfigMenuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_coverageCtlConfigMenuActionPerformed
+
     @Action
     public void newSimulation() {
         SimulationWizardDialog sw = new SimulationWizardDialog(null, true);
@@ -551,6 +617,7 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
     protected javax.swing.JButton btnOpen;
     protected javax.swing.JButton btnProperties;
     protected javax.swing.JButton btnSave;
+    protected javax.swing.JCheckBoxMenuItem coverageCtlConfigMenu;
     protected javax.swing.JMenu coverageCtlMenu;
     protected javax.swing.JCheckBoxMenuItem coverageCtlStatusMenu;
     protected javax.swing.JMenu energyCtlMenu;

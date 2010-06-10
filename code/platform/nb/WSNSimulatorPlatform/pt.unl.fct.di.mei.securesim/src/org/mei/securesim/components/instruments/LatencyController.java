@@ -5,6 +5,37 @@ import java.util.Hashtable;
 import java.util.Vector;
 import org.mei.securesim.core.nodes.Node;
 
+/********************************************************
+ *  INSTRUMENTO DE MEDICAO DE LATENCIA NUMA RSSF
+ *
+ *  Existem dois modos de medição de latencia numa rede:
+ *
+ * 1. Tempo de simulação ou tempo real (depende da metrica que se pretende seguir)
+ *
+ * 2. Medição do numero de hops percorridos
+ *
+ *
+ * Para o 1º Caso:
+ *
+ * Implementação semelhante à da cobertura que vai calculando 3 dados estatisticos
+ * valor minimo, maximo e média do tempo para percorrer um caminho entre o no A e B
+ *
+ * A implementação assenta na notificação do envio de uma mensagem e o registo do tempo
+ * a quando da recepção é calculado a diferenca de tempo
+ *
+ *
+ * Para o 2º Caso:
+ *
+ * EM cada envio de mensagens é verificado o identificador das mensagens e com isto
+ * é contabilizado o numero de hops até que o destino notifique a sua chegada
+ *
+ * no final é apresentado a latencia máxima, minima e média e poderá ser poderada
+ * pela distancia fisica entre os dois pontos. Desta forma corrige-se os valores
+ * menores provenientes de nós próximos.s
+ *
+ */
+
+
 /**
  *
  * @author posilva

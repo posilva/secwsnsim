@@ -86,4 +86,27 @@ public class CleanSlateMessageFactory {
         }
         return null;
     }
+
+    public static byte[] createPostMergeMessagePayload(CleanSlateRoutingLayer routingLayer, long gid, byte type) {
+        try {
+            ByteArrayDataOutputStream bados = new ByteArrayDataOutputStream();
+            bados.writeByte(type);
+            bados.writeShort(routingLayer.getNode().getId()); // source node ID
+            bados.writeLong(routingLayer.myGroupId); // source group ID
+            bados.writeShort(routingLayer.myGroupSize); // source group Size
+            bados.writeShort(routingLayer.listNeighboringGroups.size()); // size of neighbors list
+
+            for (Iterator it = routingLayer.listNeighboringGroups.values().iterator(); it.hasNext();) { // acrescentei o values
+                NeighborInfo ni = (NeighborInfo) it.next();
+                bados.writeLong(ni.getGroupID());
+                bados.writeShort(ni.getSize());
+            } // write list of neighbors
+
+            bados.writeLong(gid); // update group ID
+            return bados.toByteArray();
+        } catch (IOException ex) {
+            Logger.getLogger(CleanSlateRoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }
