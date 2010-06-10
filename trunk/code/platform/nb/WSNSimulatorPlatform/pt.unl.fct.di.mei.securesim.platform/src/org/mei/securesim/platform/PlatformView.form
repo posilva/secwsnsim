@@ -263,6 +263,9 @@
                 <Property name="text" type="java.lang.String" resourceKey="energyCtlMenu.text"/>
                 <Property name="name" type="java.lang.String" value="energyCtlMenu" noResource="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="energyCtlMenuActionPerformed"/>
+              </Events>
               <SubComponents>
                 <MenuItem class="javax.swing.JCheckBoxMenuItem" name="energyCtlStatusMenu">
                   <Properties>
@@ -270,6 +273,9 @@
                     <Property name="text" type="java.lang.String" resourceKey="energyCtlStatusMenu.text"/>
                     <Property name="name" type="java.lang.String" value="energyCtlStatusMenu" noResource="true"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="energyCtlStatusMenuActionPerformed"/>
+                  </Events>
                 </MenuItem>
                 <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator4">
                   <Properties>
@@ -283,6 +289,9 @@
                 <Property name="text" type="java.lang.String" resourceKey="coverageCtlMenu.text"/>
                 <Property name="name" type="java.lang.String" value="coverageCtlMenu" noResource="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="coverageCtlMenuActionPerformed"/>
+              </Events>
               <SubComponents>
                 <MenuItem class="javax.swing.JCheckBoxMenuItem" name="coverageCtlStatusMenu">
                   <Properties>
@@ -290,11 +299,24 @@
                     <Property name="text" type="java.lang.String" resourceKey="coverageCtlStatusMenu.text"/>
                     <Property name="name" type="java.lang.String" value="coverageCtlStatusMenu" noResource="true"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="coverageCtlStatusMenuActionPerformed"/>
+                  </Events>
                 </MenuItem>
                 <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator5">
                   <Properties>
                     <Property name="name" type="java.lang.String" value="jSeparator5" noResource="true"/>
                   </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="coverageCtlConfigMenu">
+                  <Properties>
+                    <Property name="selected" type="boolean" value="true"/>
+                    <Property name="text" type="java.lang.String" resourceKey="coverageCtlConfigMenu.text"/>
+                    <Property name="name" type="java.lang.String" value="coverageCtlConfigMenu" noResource="true"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="coverageCtlConfigMenuActionPerformed"/>
+                  </Events>
                 </MenuItem>
               </SubComponents>
             </Menu>
@@ -310,6 +332,9 @@
                     <Property name="text" type="java.lang.String" resourceKey="reliabilityCtlStatusMenu.text"/>
                     <Property name="name" type="java.lang.String" value="reliabilityCtlStatusMenu" noResource="true"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="reliabilityCtlStatusMenuActionPerformed"/>
+                  </Events>
                 </MenuItem>
                 <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator6">
                   <Properties>

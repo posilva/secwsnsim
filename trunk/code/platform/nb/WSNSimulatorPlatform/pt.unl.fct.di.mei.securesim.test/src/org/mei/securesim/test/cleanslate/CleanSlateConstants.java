@@ -20,7 +20,7 @@ public class CleanSlateConstants {
     public final static byte MSG_MERGE_PROPOSAL_ACK = 4;
     public final static byte MSG_MERGE_PROPOSAL_REFUSE = 5;
     public final static byte MSG_KNOWNED_GROUP_INFO = 6;
-    public final static byte MSG_UPDATE_GROUPINFO = 7;
+    public final static byte MSG_POST_MERGE = 7;
     public final static byte MSG_BROADCAST_MERGE_PROPOSAL_REFUSE = 8;
     public final static byte MSG_GROUP_NEIGHBORING_INFO = 9;
     /**
@@ -39,6 +39,7 @@ public class CleanSlateConstants {
     static long RESTART_GROUP_MERGE_BOUND_TIME = (long) (Simulator.ONE_SECOND * 3);
     static long FLOODING_NEIGHBOR_INFO_BOUND_TIME = (long) (Simulator.ONE_SECOND * 3);
     static long MERGE_WAITING_BOUND_TIME= (long) (Simulator.ONE_SECOND * 3);;
+    static double NEIGHBOR_SIGNAL_THRESHOLD=0.0;
 
     public static byte[] getNAPrivateKey() {
         return NAPrivateKey;
