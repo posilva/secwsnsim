@@ -519,6 +519,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             if (evt.getButton() == 0) {
                 if (isMousePressed()) {
                     drawSelectedArea(evt);
+                    updateScrollArea();
                 }
                 update();
             }
@@ -529,6 +530,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             if (evt.getButton() == 0) {
                 if (isMousePressed()) {
                     drawSelectedArea(evt);
+                    updateScrollArea();
                     selectedNodes.clear();
 
                     for (Node node : simulation.getSimulator().getNodes()) {
@@ -666,7 +668,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
         updateMouseCoordinates(evt);
         if (selectionTool) {
-            if ((insideSelectionArea(evt) && evt.getButton() == MouseEvent.BUTTON3) || (selectedNodes.size() > 0 && evt.getButton() == MouseEvent.BUTTON3) ) {
+            if ((insideSelectionArea(evt) && evt.getButton() == MouseEvent.BUTTON3) || (selectedNodes.size() > 0 && evt.getButton() == MouseEvent.BUTTON3)) {
                 selectionToolPopupMenu.show(this, mouseX, mouseY);
             } else {
                 clearSelection();
@@ -888,7 +890,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     private void selNodesInstrumentsCoverageSelSourcesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selNodesInstrumentsCoverageSelSourcesActionPerformed
         // TODO add your handling code here:
 
-        if (selectedNodes.size()>0){
+        if (selectedNodes.size() > 0) {
             for (GraphicNode graphicNode : selectedNodes) {
                 CoverageController.getInstance().registerSourceNode(graphicNode.getPhysicalNode());
             }
@@ -898,7 +900,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
 
     private void selNodesInstrumentsCoverageDelSourcesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selNodesInstrumentsCoverageDelSourcesActionPerformed
 
-        if (selectedNodes.size()>0){
+        if (selectedNodes.size() > 0) {
             for (GraphicNode graphicNode : selectedNodes) {
                 CoverageController.getInstance().unregisterSourceNode(graphicNode.getPhysicalNode());
             }
@@ -907,7 +909,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     }//GEN-LAST:event_selNodesInstrumentsCoverageDelSourcesActionPerformed
 
     private void selNodesInstrumentsCoverageSelDestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selNodesInstrumentsCoverageSelDestActionPerformed
-       if (selectedNodes.size()>0){
+        if (selectedNodes.size() > 0) {
             for (GraphicNode graphicNode : selectedNodes) {
                 CoverageController.getInstance().registerDestinationNode(graphicNode.getPhysicalNode());
             }
@@ -917,7 +919,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     }//GEN-LAST:event_selNodesInstrumentsCoverageSelDestActionPerformed
 
     private void selNodesInstrumentsCoverageDelDestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selNodesInstrumentsCoverageDelDestActionPerformed
-         if (selectedNodes.size()>0){
+        if (selectedNodes.size() > 0) {
             for (GraphicNode graphicNode : selectedNodes) {
                 CoverageController.getInstance().unregisterDestinationNode(graphicNode.getPhysicalNode());
             }
@@ -1252,6 +1254,19 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         PlatformController.getInstance().getPlatformView().setSelectedNodes(selectedNodes.size() + "");
         update();
 
+    }
+
+    private void updateScrollArea() {
+        if (mouseX > (getSize().getWidth() - 10)) {
+            this.setPreferredSize(new Dimension((int) getSize().getWidth() + 10, (int) getSize().getHeight()));
+        }
+        if (mouseY > (getSize().getHeight() - 10)) {
+            this.setPreferredSize(new Dimension(getWidth(), (int) getHeight() + 10));
+            
+        }
+        this.scrollRectToVisible(new Rectangle(mouseX, mouseY, 10, 10));
+        
+        update();
     }
 
     /**

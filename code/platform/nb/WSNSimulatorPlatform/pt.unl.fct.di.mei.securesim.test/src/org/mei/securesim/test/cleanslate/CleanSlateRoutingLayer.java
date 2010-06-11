@@ -1,24 +1,12 @@
 package org.mei.securesim.test.cleanslate;
 
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.PriorityQueue;
-import java.util.Set;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.mei.securesim.components.crypto.CryptoFunctions;
+import java.util.*;
 import org.mei.securesim.core.application.Application;
-import org.mei.securesim.core.engine.DefaultMessage;
-import org.mei.securesim.core.engine.Event;
-import org.mei.securesim.core.engine.Simulator;
+import org.mei.securesim.core.engine.*;
 import org.mei.securesim.core.layers.routing.RoutingLayer;
 import org.mei.securesim.test.cleanslate.messages.CleanSlateMsg;
-import org.mei.securesim.test.cleanslate.utils.MergeTableEntry;
-import org.mei.securesim.test.cleanslate.utils.NeighborInfo;
-import org.mei.securesim.test.cleanslate.utils.ProtocolPhases;
-import org.mei.securesim.test.common.ByteArrayDataInputStream;
+import org.mei.securesim.test.cleanslate.messages.data.*;
+import org.mei.securesim.test.cleanslate.utils.*;
 import org.mei.securesim.test.common.events.DelayedMessageEvent;
 
 /**
@@ -32,27 +20,24 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
     public static final byte DEBUG_LEVEL_FINE = 2;
     public static final byte DEBUG_LEVEL_FINNEST = 3;
     public static final byte DEBUG_LEVEL_ALL = 9;
-    private byte debug_level = DEBUG_LEVEL_FINNEST;        // controls the debug level output
+    private byte debug_level = DEBUG_LEVEL_ALL;        // controls the debug level output
     protected long myGroupId;         // group ID were this node belongs
     protected short myGroupSize;          // group size were this node belongs
     protected Hashtable listNeighboringGroups = new Hashtable();
     protected Hashtable listNeighbors = new Hashtable();
-    protected ProtocolPhases currentPhase = ProtocolPhases.NONE;
-    protected ProtocolPhases previousPhase = null;
     protected short mergeCounter = 0;  // counts the number of group merges
     private long waitingMergeProposalFrom;
-    private MergeProposalData currentMergeProposalData = null;  // current merge info
     private Vector mergeTable = new Vector(); // table of merging info
     private Vector routingTable = new Vector();   // routing table
     private String networkAddress = "";
     private Set groupInfoAnnouncements = new HashSet();
     private boolean inMergingProcess = false;
-    private boolean receivedBroadcastMergeProposalRefuseMessage;
+    private int groupMergeRefuseMessafeSeqNumber = 0;
+    private boolean secureNeighborDiscovery = false;
+    private boolean recursiveGroupingInitiated = false;
+
     //TODO: Com 3 nós eles conseguem se juntar, verificar porque não ficam os grupos actualizados
     //TODO: Trabalhar no broadcast para o grupo
-
-
-
     /**************************************************************************
      * ROUTING LAYER SPECIFIC OPERATIONS
      * 
@@ -62,9 +47,6 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
      */
     @Override
     public void autostart() {
-        if (debug_level > DEBUG_LEVEL_FINNEST) {
-            System.out.println(getNodeID() + " - Autostart procedure lauched");
-        }
         myGroupId = getNode().getId();
         myGroupSize = 1;
         runSecureNeighboringDiscovery();
@@ -80,9 +62,12 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
         BaseMessageData data = new BaseMessageData(((CleanSlateMsg) message).getPayload());
         if (data.type != CleanSlateConstants.MSG_HELLO) {
             if (!isMyNeighbor(data.sourceId)) {
+                System.out.println(getInfo() + " - received a message from a non neighbor: " + data.sourceId);
                 return;
             }
         }
+        // saves neihgbors data to evaluate my edge node state
+        updateNodeNeighbors(data.sourceId, data.sourceGroupId);
         switch (data.type) {
             case CleanSlateConstants.MSG_HELLO:
                 receiveHelloMessage(message);
@@ -94,7 +79,7 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
                 receiveGroupInfoMessage(message);
                 break;
             case CleanSlateConstants.MSG_POST_MERGE:
-                receiveUpdateGroupInfoMessage(message);
+                receivePostMergeInfoMessage(message);
                 break;
             case CleanSlateConstants.MSG_BROADCAST_MERGE_PROPOSAL_REFUSE:
                 receiveBroadcastMergeProposalRefuseMessage(message);
@@ -102,9 +87,10 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
             case CleanSlateConstants.MSG_GROUP_NEIGHBORING_INFO:
                 receiveGroupNeighboringInfoMessage(message);
                 break;
+            case CleanSlateConstants.MSG_GROUP_MERGE:
+                receiveGroupMergeMessage(message);
+                break;
         }
-
-
     }
 
     /**
@@ -127,7 +113,7 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
 
     private void addToNeighborsList(HELLOMsgData helloData) {
         if (debug_level > DEBUG_LEVEL_FINNEST) {
-            System.out.println(getNodeID() + " Added Neighbor " + helloData.sourceId);
+            System.out.println(getInfo() + " Added Neighbor " + helloData.sourceId);
         }
         listNeighbors.put(helloData.sourceId, new Long(-1));
     }
@@ -140,8 +126,8 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
      * Util function to facilitate getting node id
      * @return
      */
-    private String getNodeID() {
-        return "<" + getNode().getSimulator().getSimulationTime() + ">  " + getNode().getId();
+    private String getInfo() {
+        return "<" + getNode().getSimulator().getSimulationTime() + ">  " + getNode().getId() + " [ " + myGroupId + "," + myGroupSize + " ]";
     }
 
     /**
@@ -157,10 +143,39 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
      * @param message
      */
     private void sendMessageToAir(DefaultMessage message) {
+        boolean reliable = false;
         long time = (long) (getNode().getSimulator().getSimulationTime()
-                + Simulator.randomGenerator.random().nextDouble() * CleanSlateConstants.DELAYED_MESSAGE_BOUND);
+                + Simulator.randomGenerator.nextDoubleBetween((int) CleanSlateConstants.MIN_DELAYED_MESSAGE_BOUND, (int) CleanSlateConstants.MAX_DELAYED_MESSAGE_BOUND));
         DelayedMessageEvent delayMessageEvent = new DelayedMessageEvent(time, message, getNode());
         getNode().getSimulator().addEvent(delayMessageEvent);
+        if (reliable) {
+            DelayedMessageEvent delayMessageEvent1 = new DelayedMessageEvent(time + 200, message, getNode());
+            getNode().getSimulator().addEvent(delayMessageEvent1);
+            DelayedMessageEvent delayMessageEvent2 = new DelayedMessageEvent(time + 200, message, getNode());
+            getNode().getSimulator().addEvent(delayMessageEvent2);
+        }
+    }
+
+    private void updateNodeNeighbors(short sourceNodeID, long groupId) {
+        listNeighbors.put(sourceNodeID, groupId);
+    }
+    
+    /**
+     * 
+     * @param message
+     */
+    private void receiveGroupMergeMessage(Object message) {
+        if (inMergingProcess) {
+            return;
+        }
+        GroupMergeData groupMergeData = new GroupMergeData(((CleanSlateMsg) message).getPayload());
+        if (groupMergeData.sourceGroupId == myGroupId) { // intra group message
+            MergeProposalData mergeProposalData = new MergeProposalData(groupMergeData.mergeProposalData);
+            if (debug_level > DEBUG_LEVEL_FINNEST) {
+                System.out.println(getInfo() + " - Start intra group merge with " + mergeProposalData.sourceGroupId);
+            }
+            startMergingProcess(mergeProposalData);
+        }
     }
 
     /**
@@ -168,11 +183,11 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
      * @param message
      */
     private void receiveHelloMessage(Object message) {
-        if (currentPhase == ProtocolPhases.NEIGHBOR_DISCOVERY) {
+        if (secureNeighborDiscovery) {
             HELLOMsgData helloData = new HELLOMsgData(((CleanSlateMsg) message).getPayload());
             if (getNode().getMacLayer().getSignalStrength() > CleanSlateConstants.NEIGHBOR_SIGNAL_THRESHOLD) {
                 if (debug_level > DEBUG_LEVEL_FINNEST) {
-                    System.out.println(getNodeID() + " - Received Hello message from " + helloData.sourceId + " With RSSI: " + getNode().getMacLayer().getSignalStrength());
+                    System.out.println(getInfo() + " - Received Hello message from " + helloData.sourceId + " With RSSI: " + getNode().getMacLayer().getSignalStrength());
                 }
                 // verifify signature
                 if (CleanSlateFunctions.verifySignature((CleanSlateMsg) message)) {
@@ -194,21 +209,22 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
         }
 
         MergeProposalData mergeProposalData = new MergeProposalData(((DefaultMessage) message).getPayload());
-
         if (mergeProposalData.targetGroup == myGroupId) { // se for para mim ?
-            if (mergeProposalData.sourceGroupID == waitingMergeProposalFrom) { // se estou à espera?
-                sendMergeProposalTo(mergeProposalData.sourceGroupID);
-                startMergingProcess(mergeProposalData);
+            if (mergeProposalData.sourceGroupId == waitingMergeProposalFrom) { // se estou à espera?
+                sendMergeProposalTo(mergeProposalData.sourceGroupId);
                 if (debug_level > DEBUG_LEVEL_NORMAL) {
-                    System.out.println(getNodeID() + " - Received MergeProposal message from " + (long) mergeProposalData.sourceGroupID);
+                    System.out.println(getInfo() + " - Received MergeProposal message from " + (long) mergeProposalData.sourceGroupId + " Notify group");
                 }
+                notifyGroup2Merge(mergeProposalData);
+                startMergingProcess(mergeProposalData);
             } else {
-                if (mergeProposalData.sourceGroupID == chooseSmallestNeighborGroup()) { // é candidato a merge?
-                    sendMergeProposalTo(mergeProposalData.sourceGroupID);
-                    startMergingProcess(mergeProposalData);
+                if (mergeProposalData.sourceGroupId == chooseSmallestNeighborGroup()) { // é candidato a merge?
+                    sendMergeProposalTo(mergeProposalData.sourceGroupId);
                     if (debug_level > DEBUG_LEVEL_NORMAL) {
-                        System.out.println(getNodeID() + " - Received MergeProposal message from " + (long) mergeProposalData.sourceGroupID);
+                        System.out.println(getInfo() + " - Received MergeProposal message from " + (long) mergeProposalData.sourceGroupId + " Notify group");
                     }
+                    notifyGroup2Merge(mergeProposalData);
+                    startMergingProcess(mergeProposalData);
                 }
             }
         }
@@ -219,44 +235,36 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
      * @param message
      */
     private void receiveGroupNeighboringInfoMessage(Object message) {
-        if (currentPhase != ProtocolPhases.FLOODING_NEIGHBOR_GROUPS_INFO) {
-            return; //FIX: verificar se esta condição está correcta
-        }
+        //TODO: Verificar a informação dos grupos que estou a receber 
         GroupInfoBroadcastData groupInfoData = new GroupInfoBroadcastData(((DefaultMessage) message).getPayload());
         if (groupInfoData.sourceId == getNode().getId()) {
             return; // descarta se a mensagem vier de mim
         }
-        if (groupInfoData.sourceGroupID == myGroupId) { // its a group message
+        if (groupInfoData.sourceGroupId == myGroupId) { // its a group message
             if (isEdgeNode()) {
                 if (debug_level > DEBUG_LEVEL_FINNEST) {
-                    System.out.println(getNodeID() + " - Receive Group: " + groupInfoData.sourceGroupID + " Neighboring Info Message from " + (long) groupInfoData.sourceId);
+                    System.out.println(getInfo() + " - Receive Group: " + groupInfoData.sourceGroupId + " Neighboring Info Message from " + (long) groupInfoData.sourceId);
                 }
-                groupInfoAnnouncements.add(new NeighborInfo(groupInfoData.sourceGroupID, groupInfoData.sourceGroupSize));
+                groupInfoAnnouncements.add(new NeighborInfo(groupInfoData.sourceGroupId, groupInfoData.sourceGroupSize));
                 if (groupInfoAnnouncements.size() == listNeighboringGroups.size()) {
                     if (debug_level > DEBUG_LEVEL_FINE) {
-                        System.out.println(getNodeID() + " - Number of Announcements reached the group size");
+                        System.out.println(getInfo() + " - Number of Announcements reached the group size");
                     }
-                    endNeighborInfoCollection();
+                    initiateMergeProposals();
                 }
             }
         }
     }
 
-    /**
-     *
-     * @param mergeProposalRefuseData
-     */
-    private void propagateMergeProposalRefuseToGroup(MergeProposalData mergeProposalRefuseData) {
-        if (debug_level > DEBUG_LEVEL_NORMAL) {
-            System.out.println(getNodeID() + " - Propagate Merge Proposal Refuse To Group Message ");
-        }
-        startMergeProposalRefuseBroadcast(mergeProposalRefuseData.sourceGroupID);
-    }
-
     private void startMergeProposalRefuseBroadcast(long sourceGroupID) {
-        byte[] payload = CleanSlateMessageFactory.createBroadcastMergeRefuseMessageToGroup(this, sourceGroupID, CleanSlateConstants.MSG_BROADCAST_MERGE_PROPOSAL_REFUSE);
+        if (debug_level > DEBUG_LEVEL_NORMAL) {
+            System.out.println(getInfo() + " - Propagate Merge Proposal Refuse To Group Message From " + sourceGroupID + " my merge is: "+waitingMergeProposalFrom);
+        }
+        byte[] payload = CleanSlateMessageFactory.createBroadcastMergeRefuseMessageToGroup(this, sourceGroupID, CleanSlateConstants.MSG_BROADCAST_MERGE_PROPOSAL_REFUSE, groupMergeRefuseMessafeSeqNumber++);
         CleanSlateMsg message = new CleanSlateMsg(payload);
         sendMessageToAir(message);
+
+        waitingMergeProposalFrom = -1;
         if (isEdgeNode()) {
             scheduleSelectionNewGroupToMergeTimeBound();
         }
@@ -272,7 +280,7 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
 
                     @Override
                     public void execute() {
-                        endNeighborInfoCollection();
+                        startNeighborInfoCollection();
                     }
                 });
     }
@@ -286,12 +294,11 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
         }
         inMergingProcess = true;
         if (debug_level > DEBUG_LEVEL_NORMAL) {
-            System.out.println(getNodeID() + " - Starting merging with " + (long) mergeProposalData.sourceGroupID);
+            System.out.println(getInfo() + " - Starting merging with " + (long) mergeProposalData.sourceGroupId);
         }
-        updatePhase(ProtocolPhases.MERGE_GROUP);
-        long newGroupID = computeNewGroupId(myGroupId, myGroupSize, mergeProposalData.sourceGroupID, mergeProposalData.sourceGroupSize);
+        long newGroupID = computeNewGroupId(myGroupId, myGroupSize, mergeProposalData.sourceGroupId, mergeProposalData.sourceGroupSize);
         if (debug_level > DEBUG_LEVEL_FINE) {
-            System.out.println(getNodeID() + " - New Group ID " + newGroupID);
+            System.out.println(getInfo() + " - New Group ID " + newGroupID);
         }
         mergeCounter++;
         updateMergeTable(mergeProposalData);
@@ -299,19 +306,21 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
         updateRoutingTable(mergeProposalData);
         updateMergeNeighborsList(mergeProposalData);
         myGroupId = newGroupID;
-        broadcastNewMergeInfoToNeighbors(mergeProposalData);
+        if (isEdgeNode()) {
+            broadcastPostMergeInfo(mergeProposalData);
+        }
     }
 
     /**
      *
      */
-    private void broadcastNewMergeInfoToNeighbors(MergeProposalData mergeProposalData) {
+    private void broadcastPostMergeInfo(MergeProposalData mergeProposalData) {
         // este broadcast pode ser desencadeado a partir de uma mensagem delayed
         if (isEdgeNode()) {
             if (debug_level > DEBUG_LEVEL_NORMAL) {
-                System.out.println(getNodeID() + "- broadcast New Merge Info To Neighbors");
+                System.out.println(getInfo() + "- Broadcast Post Merge Info To Neighbors");
             }
-            byte[] payload = CleanSlateMessageFactory.createMergeProposalMessagePayload(this, mergeProposalData.targetGroup, CleanSlateConstants.MSG_POST_MERGE);
+            byte[] payload = CleanSlateMessageFactory.createPostMergeMessagePayload(this, mergeProposalData.sourceGroupId);
             CleanSlateMsg message = new CleanSlateMsg(payload);
             sendMessageToAir(message);
         }
@@ -329,24 +338,13 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
             listNeighboringGroups.put(ni.getGroupID(), ni);
 
         }
-        listNeighboringGroups.remove(mergeProposalData.sourceGroupID);
+        listNeighboringGroups.remove(mergeProposalData.sourceGroupId);
         listNeighboringGroups.remove(myGroupId);
         myGroupSize += mergeProposalData.sourceGroupSize;
 
         if (debug_level > DEBUG_LEVEL_FINE) {
-            System.out.print(getNodeID() + " - [ ");
-            for (Object object : listNeighboringGroups.values()) { // acrescentei  o values
-                NeighborInfo n = (NeighborInfo) object;
-                System.out.print(n + " ");
-            }
-            System.out.println(" ] ");
+            CleanSlateFunctions.printNeighborsGroupInfo(listNeighboringGroups.values(), getInfo());
         }
-
-    }
-
-    private void updatePhase(ProtocolPhases phase) {
-        previousPhase = currentPhase;
-        currentPhase = phase;
     }
 
     /**
@@ -363,9 +361,9 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
      * @param mergeProposalData
      */
     private void updateNetworkAddress(MergeProposalData mergeProposalData) {
-        networkAddress += (myGroupId < mergeProposalData.sourceGroupID ? "0" : "1");
+        networkAddress += (myGroupId < mergeProposalData.sourceGroupId ? "0" : "1");
         if (debug_level > DEBUG_LEVEL_FINE) {
-            System.out.println(getNodeID() + " - Address: " + networkAddress);
+            System.out.println(getInfo() + " - Address: " + networkAddress);
         }
     }
 
@@ -374,7 +372,7 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
      * @param mergeProposalData
      */
     private void updateMergeTable(MergeProposalData mergeProposalData) {
-        mergeTable.add(new MergeTableEntry(mergeProposalData.sourceGroupID, mergeProposalData.sourceGroupSize));
+        mergeTable.add(new MergeTableEntry(mergeProposalData.sourceGroupId, mergeProposalData.sourceGroupSize));
     }
 
     /**
@@ -383,34 +381,29 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
     private long computeNewGroupId(long mygid, short mysize, long gid, short size) {
         long newGroupID = 0;
         if (mygid > gid) {
-            newGroupID = CleanSlateFunctions.groupIdHash(myGroupId, myGroupSize, gid, size);
+            newGroupID = CleanSlateFunctions.groupIdHash(mygid, mysize, gid, size);
         } else {
-            newGroupID = CleanSlateFunctions.groupIdHash(gid, size, myGroupId, myGroupSize);
+            newGroupID = CleanSlateFunctions.groupIdHash(gid, size, mygid, mysize);
         }
-
-
         return newGroupID;
     }
 
     /**
-     *
+     * Receives the messages with de groups information
      * @param message
      */
     private void receiveGroupInfoMessage(Object message) {
-        if (currentPhase != ProtocolPhases.GROUP_INFO_BROADCAST) {
-            return;
-        }
         byte[] payload = ((DefaultMessage) message).getPayload();
         GroupInfoBroadcastData groupInfoBroadcastData = new GroupInfoBroadcastData(payload);
         if (listNeighbors.keySet().contains(groupInfoBroadcastData.sourceId)) {
-            listNeighbors.put(groupInfoBroadcastData.sourceId, groupInfoBroadcastData.sourceGroupID);
+            listNeighbors.put(groupInfoBroadcastData.sourceId, groupInfoBroadcastData.sourceGroupId);
             if (debug_level > DEBUG_LEVEL_FINNEST) {
-                System.out.println(getNodeID() + " - Received Group Info from " + groupInfoBroadcastData.sourceId);
+                System.out.println(getInfo() + " - Received Group Info from " + groupInfoBroadcastData.sourceId);
             }
-            listNeighboringGroups.put(groupInfoBroadcastData.sourceGroupID, new NeighborInfo(groupInfoBroadcastData.sourceGroupID, groupInfoBroadcastData.sourceGroupSize));
+            listNeighboringGroups.put(groupInfoBroadcastData.sourceGroupId, new NeighborInfo(groupInfoBroadcastData.sourceGroupId, groupInfoBroadcastData.sourceGroupSize));
         } else {
             if (debug_level > DEBUG_LEVEL_FINNEST) {
-                System.out.println(getNodeID() + " - MESSAGE SENT FROM NON NEIGHBOR NODE: " + groupInfoBroadcastData.sourceId);
+                System.out.println(getInfo() + " - MESSAGE SENT FROM NON NEIGHBOR NODE: " + groupInfoBroadcastData.sourceId);
             }
         }
     }
@@ -419,34 +412,38 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
      * 
      * @param message
      */
-    private void receiveUpdateGroupInfoMessage(Object message) {
+    private void receivePostMergeInfoMessage(Object message) {
+        //TODO: Rever este metodo alterei a mensagem de postMerge
         PostMergeData postMergeData = new PostMergeData(((DefaultMessage) message).getPayload());
         //Se estiver a fazer merge tenho q ter em atenção q tenho de descartar
         // as mensagens que vêm do nó a quem me estou a juntar
-        if (inMergingProcess && postMergeData.sourceGroupID == waitingMergeProposalFrom) {
+        if (inMergingProcess || postMergeData.sourceGroupId == waitingMergeProposalFrom) {
             return;
         }
-        short nodeId = postMergeData.sourceId;
-        Long oldGid = postMergeData.targetGroup;
+        short nodeId = postMergeData.sourceId; // quem se esta a juntar
+        Long oldGid = postMergeData.sourceGroupId; // com quem se esta a juntar
 
-        NeighborInfo ni = new NeighborInfo(postMergeData.sourceGroupID, postMergeData.sourceGroupSize);
+        NeighborInfo ni = new NeighborInfo(postMergeData.sourceGroupId, postMergeData.sourceGroupSize);
         listNeighboringGroups.remove(oldGid);
-        listNeighbors.put(nodeId, postMergeData.sourceGroupID);
-        if (postMergeData.sourceGroupID != myGroupId) {
-            listNeighboringGroups.put(postMergeData.sourceGroupID, ni); // update new group
-            if (waitingMergeProposalFrom == oldGid && !inMergingProcess) {
-                startMergeProposalRefuseBroadcast(oldGid);
-            }
-        }
+        listNeighbors.put(nodeId, postMergeData.sourceGroupId);
+
         if (debug_level > DEBUG_LEVEL_FINNEST) {//TODO: Alterar o nivel de debug
-            System.out.print(getNodeID() + " - Update group info: from " + postMergeData.sourceId);
+            System.out.print(getInfo() + " - Received Post Merge info from " + postMergeData.sourceId);
             System.out.print(" - Old Group: " + oldGid);
-            System.out.println(" - New Group " + postMergeData.sourceGroupID);
+            System.out.println(" - New Group " + postMergeData.sourceGroupId);
             for (Object object : listNeighboringGroups.values()) {
                 System.out.print(" " + object + " ");
             }
             System.out.println();
         }
+
+        if (postMergeData.sourceGroupId != myGroupId) { // it comes from my group
+            listNeighboringGroups.put(postMergeData.sourceGroupId, ni); // update new group
+            if (waitingMergeProposalFrom == oldGid && !inMergingProcess) {
+                startMergeProposalRefuseBroadcast(oldGid);
+            }
+        }
+
     }
 
     /**
@@ -454,23 +451,29 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
      * @param message
      */
     private void receiveBroadcastMergeProposalRefuseMessage(Object message) {
+        if (inMergingProcess) {
+            return;
+        }
         BroadcastMergeProposalRefuseData broadcastMergeProposalRefuseData = new BroadcastMergeProposalRefuseData(((DefaultMessage) message).getPayload());
-        if (myGroupId == broadcastMergeProposalRefuseData.sourceGroupID) {
-            if (!receivedBroadcastMergeProposalRefuseMessage) {
+        if (myGroupId == broadcastMergeProposalRefuseData.sourceGroupId) {
+            if (broadcastMergeProposalRefuseData.sequenceNumber > groupMergeRefuseMessafeSeqNumber) {
+                groupMergeRefuseMessafeSeqNumber = broadcastMergeProposalRefuseData.sequenceNumber;
                 if (debug_level > DEBUG_LEVEL_NONE) {
-                    System.out.println(getNodeID() + " - Received a BroadcastMergeProposalRefuse from " + broadcastMergeProposalRefuseData.sourceId);
+                    System.out.println(getInfo() + " - Received a Broadcast Merge Proposal Refuse from " + broadcastMergeProposalRefuseData.sourceId + " forward to neighbors");
                 }
-                startMergeProposalRefuseBroadcast(broadcastMergeProposalRefuseData.sourceGroupID);
-                receivedBroadcastMergeProposalRefuseMessage = true;
+                startMergeProposalRefuseBroadcast(broadcastMergeProposalRefuseData.sourceGroupId);
+
             }
         }
     }
 
     /**
-     * 
+     *
      */
     private void startNeighborInfoCollection() {
-        updatePhase(ProtocolPhases.NEIGHBOR_INFO_COLLECTION);
+        if (debug_level > DEBUG_LEVEL_FINE) {
+            System.out.println(getInfo() + " - Start new Merge");
+        }
         if (isEdgeNode()) {
             floodGroupWithNeighborsInfo(); // TODO: algumas duvidas em relação à existência desta função
         }
@@ -479,7 +482,7 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
 
             @Override
             public void execute() {
-                endNeighborInfoCollection();
+                initiateMergeProposals();
             }
         };
         getNode().getSimulator().addEvent(e);
@@ -488,12 +491,9 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
     /**
      *
      */
-    private void endNeighborInfoCollection() {
+    private void initiateMergeProposals() {
         inMergingProcess = false;
-        updatePhase(ProtocolPhases.MERGE_PROPOSAL);
-        this.currentMergeProposalData = null;
         waitingMergeProposalFrom = -1;
-
         long gid = chooseSmallestNeighborGroup();
         if (gid > -1) {
             sendMergeProposalTo(gid);
@@ -504,10 +504,10 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
      *
      */
     private void startRecursiveGroupingPhase() {
-        updatePhase(ProtocolPhases.RECURSIVE_GROUPING);
+        recursiveGroupingInitiated = true;
         if (debug_level > DEBUG_LEVEL_FINNEST) {
-            System.out.println(getNodeID() + " - Starting RecursiveGroupingAlgorithm");
-            CleanSlateFunctions.printNeighborsGroupInfo(listNeighboringGroups.values(), getNode().getId()); // acrescentei o values
+            System.out.println(getInfo() + " - Starting RecursiveGroupingAlgorithm");
+            CleanSlateFunctions.printNeighborsGroupInfo(listNeighboringGroups.values(), getInfo());
         }
         runRecursiveGroupingAlgorithm();
     }
@@ -516,45 +516,23 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
      *  OPERATION METHODS
      **************************************************************************/
     private void runSecureNeighboringDiscovery() {
-        updatePhase(ProtocolPhases.NEIGHBOR_DISCOVERY);
-        periodicHelloMessagesBroadcast();
+        secureNeighborDiscovery = true;
+        sendMessageToAir(new CleanSlateMsg(CleanSlateMessageFactory.createHELLOMessagePayload(this)));
+        sendMessageToAir(new CleanSlateMsg(CleanSlateMessageFactory.createHELLOMessagePayload(this)));
+        sendMessageToAir(new CleanSlateMsg(CleanSlateMessageFactory.createHELLOMessagePayload(this)));
         scheduleSecureNetworkDiscoveryTimeBound();
+
+
     }
 
     /**
      *
      */
-    private void periodicHelloMessagesBroadcast() {
-        if (currentPhase == ProtocolPhases.NEIGHBOR_DISCOVERY) {
-            sendMessageToAir(new CleanSlateMsg(CleanSlateMessageFactory.createHELLOMessagePayload(this)));
-            initBroadcastHelloTimer();
-        }
-    }
-
-    /**
-     * Create a event to send  a hello message
-     */
-    private void initBroadcastHelloTimer() {
-        long time = (int) (getNode().getSimulator().getSimulationTime() + Simulator.randomGenerator.random().nextDouble() * CleanSlateConstants.NEIGHBOR_DISCOVERY_REPEAT_TIME);
-        Event e = new Event(time) {
-
-            @Override
-            public void execute() {
-                periodicHelloMessagesBroadcast();
-            }
-        };
-        getNode().getSimulator().addEvent(e);
-    }
-
-    /**
-     * 
-     */
     private void runRecursiveGroupingAlgorithm() {
         if (debug_level > DEBUG_LEVEL_FINNEST) {
-            System.out.println(getNodeID() + " - Running RecursiveGroupingAlgorithm");
+            System.out.println(getInfo() + " - Running RecursiveGroupingAlgorithm");
         }
         startNeighborInfoCollection();
-
     }
 
     /**
@@ -567,16 +545,19 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
             @Override
             public void execute() {
                 startGroupInfoBroadcast();
+
+
             }
         };
         getNode().getSimulator().addEvent(e);
+
+
     }
 
     /**
      *
      */
     private void startGroupInfoBroadcast() {
-        updatePhase(ProtocolPhases.GROUP_INFO_BROADCAST);
         periodicGroupInfoMessageBroadcast();
         scheduleGroupInfoBroadcastTimeBound();
     }
@@ -591,22 +572,27 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
             @Override
             public void execute() {
                 startRecursiveGroupingPhase();
+
+
             }
         };
         getNode().getSimulator().addEvent(e);
+
+
     }
 
     /**
      *
      */
     private void periodicGroupInfoMessageBroadcast() {
-        if (currentPhase == ProtocolPhases.GROUP_INFO_BROADCAST) {
-            if (debug_level > DEBUG_LEVEL_FINNEST) {
-                System.out.println(getNodeID() + " - Sent Group info message");
-            }
-            sendMessageToAir(new CleanSlateMsg(CleanSlateMessageFactory.createGroupInfoBroadcastMessagePayload(this, myGroupId, myGroupSize, CleanSlateConstants.MSG_KNOWNED_GROUP_INFO)));
-            initBroadcastGroupInfoTimer();
+        if (recursiveGroupingInitiated) {
+            return;
         }
+        if (debug_level > DEBUG_LEVEL_FINNEST) {
+            System.out.println(getInfo() + " - Sent Group info message");
+        }
+        sendMessageToAir(new CleanSlateMsg(CleanSlateMessageFactory.createGroupInfoBroadcastMessagePayload(this, myGroupId, myGroupSize, CleanSlateConstants.MSG_KNOWNED_GROUP_INFO)));
+        initBroadcastGroupInfoTimer();
     }
 
     /**
@@ -619,9 +605,13 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
             @Override
             public void execute() {
                 periodicGroupInfoMessageBroadcast();
+
+
             }
         };
         getNode().getSimulator().addEvent(e);
+
+
     }
 
     /**
@@ -631,7 +621,11 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
     private long chooseSmallestNeighborGroup() {
         PriorityQueue queue = new PriorityQueue(listNeighboringGroups.values());
         Object o = queue.peek();
+
+
         return (o == null) ? -1 : (Long) ((NeighborInfo) o).getGroupID();
+
+
     }
 
     /**
@@ -640,15 +634,12 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
      */
     private void sendMergeProposalTo(long gid) {
         waitingMergeProposalFrom = gid;
-        if (debug_level > DEBUG_LEVEL_FINNEST) {
-            System.out.println(getNodeID() + " - Send MergeProposal message TO " + (long) gid + " Round: " + mergeCounter);
+        if (debug_level > DEBUG_LEVEL_FINE) {
+            System.out.println(getInfo() + " - Send MergeProposal message TO " + (long) gid + " Round: " + mergeCounter);
         }
         byte[] payload = CleanSlateMessageFactory.createMergeProposalMessagePayload(this, gid, CleanSlateConstants.MSG_MERGE_PROPOSAL_REQUEST);
         CleanSlateMsg message = new CleanSlateMsg(payload);
         sendMessageToAir(message);
-        receivedBroadcastMergeProposalRefuseMessage = false; //FIX test if this its a problem
-        scheduleMergeProposalWaitTimeBound();
-
     }
 
     /**
@@ -666,23 +657,23 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
                     return true;
                 }
             }
-
         }
         return false;
     }
 
     /**
-     * 
+     *
      */
     private void floodGroupWithNeighborsInfo() {
-        updatePhase(ProtocolPhases.FLOODING_NEIGHBOR_GROUPS_INFO);
-        if (debug_level > DEBUG_LEVEL_FINNEST) {
-            System.out.println(getNodeID() + " - Flood Group: " + myGroupId + " With Neighbors Info ");
+        if (debug_level > DEBUG_LEVEL_FINE) {
+            System.out.print(getInfo() + " - Flooding My Group: " + myGroupId + " With Neighbors Info ");
+            CleanSlateFunctions.printNeighborsGroupInfo(listNeighboringGroups.values(), "");
         }
         if (isEdgeNode()) {
             for (Object object : listNeighboringGroups.values()) { // acrescentei o values
                 NeighborInfo ni = (NeighborInfo) object;
-                sendFloodingNeighborsInfo(ni.getGroupID(), ni.getSize());
+                sendFloodingNeighborsInfo(
+                        ni.getGroupID(), ni.getSize());
             }
         }
     }
@@ -696,190 +687,15 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
         sendMessageToAir(message);
     }
 
-    private void schedulesGroupMerge() {
-        long time = getNode().getSimulator().getSimulationTime() + CleanSlateConstants.START_MERGE_BOUND_TIME;
-        Event e = new Event(time) {
-
-            @Override
-            public void execute() {
-                startMergingProcess(currentMergeProposalData);
-            }
-        };
-        getNode().getSimulator().addEvent(e);
-
-    }
-
     private boolean isMyNeighbor(short id) {
         return (listNeighbors.get(id) != null);
     }
 
-    private void verifyMergePhaseStatus() {
-        if (currentPhase == ProtocolPhases.MERGE_PROPOSAL) {
-            // se estiver a aguardar por uma merge proposal
-            // considero que já passou algum tempo e ainda n me juntei a ninguem
-            // recomeço o processo
-            // se já iniciou o processo ignoro este passo
-//
-//            updatePhase(ProtocolPhases.RECURSIVE_GROUPING);
-//            if (debug_level > DEBUG_LEVEL_NONE) {
-//                System.out.println(getNodeID() + " - mergeFailedByTimeout");
-//            }
-//            endNeighborInfoCollection();
-        }
+    private void broadcastToGroup() {
     }
 
-    private void scheduleMergeProposalWaitTimeBound() {
-        long time = getNode().getSimulator().getSimulationTime() + CleanSlateConstants.MERGE_WAITING_BOUND_TIME;
-        Event e = new Event(time) {
-
-            @Override
-            public void execute() {
-                verifyMergePhaseStatus();
-            }
-        };
-        getNode().getSimulator().addEvent(e);
-    }
-
-    /**
-     *
-     */
-    class GroupInfoBroadcastData {
-
-        byte type;
-        long sourceGroupID;
-        short sourceGroupSize;
-        short sourceId;
-
-        public GroupInfoBroadcastData(byte[] payload) {
-            try {
-                ByteArrayDataInputStream badis = new ByteArrayDataInputStream(payload);
-                type = badis.readByte();
-                sourceId = badis.readShort();
-                sourceGroupID = badis.readLong();
-                sourceGroupSize = badis.readShort();
-            } catch (IOException ex) {
-                Logger.getLogger(CleanSlateRoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
-    }
-
-    /**
-     *
-     */
-    class PostMergeData extends BaseMessageData {
-
-        long targetGroup;
-        long sourceGroupID;
-        short sourceGroupSize;
-        short sourceNeighborsListSize = 0;
-        long[] sourceNeighborsListGroupID;
-        short[] sourceNeighborsListGroupSize;
-
-        public PostMergeData(byte[] payload) {
-            super(payload);
-            try {
-                sourceGroupID = badis.readLong();
-                sourceGroupSize = badis.readShort();
-                sourceNeighborsListSize = badis.readShort();
-                if (sourceGroupSize > 0) {
-                    sourceNeighborsListGroupID = new long[sourceNeighborsListSize];
-                    sourceNeighborsListGroupSize = new short[sourceNeighborsListSize];
-                    for (int i = 0; i < sourceNeighborsListSize; i++) {
-                        sourceNeighborsListGroupID[i] = badis.readLong();
-                        sourceNeighborsListGroupSize[i] = badis.readShort();
-                    }
-                }
-                targetGroup = badis.readLong();
-            } catch (IOException ex) {
-                Logger.getLogger(CleanSlateRoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
-    }
-
-    class MergeProposalData extends BaseMessageData {
-
-        long targetGroup;
-        long sourceGroupID;
-        short sourceGroupSize;
-        short sourceNeighborsListSize = 0;
-        long[] sourceNeighborsListGroupID;
-        short[] sourceNeighborsListGroupSize;
-
-        public MergeProposalData(byte[] payload) {
-            super(payload);
-            try {
-                sourceGroupID = badis.readLong();
-                sourceGroupSize = badis.readShort();
-                sourceNeighborsListSize = badis.readShort();
-                if (sourceGroupSize > 0) {
-                    sourceNeighborsListGroupID = new long[sourceNeighborsListSize];
-                    sourceNeighborsListGroupSize = new short[sourceNeighborsListSize];
-                    for (int i = 0; i < sourceNeighborsListSize; i++) {
-                        sourceNeighborsListGroupID[i] = badis.readLong();
-                        sourceNeighborsListGroupSize[i] = badis.readShort();
-                    }
-                }
-                targetGroup = badis.readLong();
-            } catch (IOException ex) {
-                Logger.getLogger(CleanSlateRoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
-    }
-
-    /**************************************************************************
-     *
-     */
-    class HELLOMsgData extends BaseMessageData {
-
-        long groupID;
-        byte[] signature;
-
-        public HELLOMsgData(byte[] payload) {
-            super(payload);
-            try {
-                groupID = badis.readLong();
-                signature = new byte[CryptoFunctions.MAC_SIZE];
-                badis.read(signature);
-            } catch (IOException ex) {
-                Logger.getLogger(CleanSlateRoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-
-    class BroadcastMergeProposalRefuseData extends BaseMessageData {
-
-        long sourceGroupID;
-        long refuseGroupID;
-
-        public BroadcastMergeProposalRefuseData(byte[] payload) {
-            super(payload);
-            try {
-                sourceGroupID = badis.readLong();
-                refuseGroupID = badis.readShort();
-            } catch (IOException ex) {
-                Logger.getLogger(CleanSlateRoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
-    }
-
-    class BaseMessageData {
-
-        ByteArrayDataInputStream badis;
-        byte type;
-        short sourceId;
-
-        public BaseMessageData(byte[] payload) {
-            try {
-                badis = new ByteArrayDataInputStream(payload);
-                type = badis.readByte();
-                sourceId = badis.readShort();
-            } catch (IOException ex) {
-                Logger.getLogger(CleanSlateRoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+    private void notifyGroup2Merge(MergeProposalData mergeProposalData) {
+        byte[] payload = CleanSlateMessageFactory.createGroupMergeMessagePayload(this, mergeProposalData);
+        sendMessageToAir(new CleanSlateMsg(payload));
     }
 }

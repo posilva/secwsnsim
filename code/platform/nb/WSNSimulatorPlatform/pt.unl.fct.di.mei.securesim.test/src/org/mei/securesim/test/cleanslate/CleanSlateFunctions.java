@@ -7,7 +7,6 @@ package org.mei.securesim.test.cleanslate;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.mei.securesim.components.crypto.CryptoFunctions;
@@ -51,16 +50,16 @@ public class CleanSlateFunctions {
         return true;
     }
 
-    static void printNeighborInfo(Collection<Long> listNeighbors, short nodeid) {
+    static void printNeighborInfo(Collection<Long> listNeighbors, String info) {
         if (listNeighbors == null) {
-            System.out.println(nodeid+ " - [NULL]");
+            System.out.println(info+ " - [NULL]");
             return;
         }
         if (listNeighbors.size() == 0) {
-            System.out.println(nodeid+ " - []");
+            System.out.println(info+ " - []");
             return;
         }
-        System.out.print(nodeid+ " - [ ");
+        System.out.print(info+ " - [ ");
         for (Iterator it = listNeighbors.iterator(); it.hasNext();) {
             long gid = (Long) it.next();
             System.out.print(gid+ " ");
@@ -77,20 +76,20 @@ public class CleanSlateFunctions {
         return GeneralHashFunctions.JSHash(hash_data);
     }
 
-    static void printNeighborsGroupInfo(Collection<NeighborInfo> listNeighbors, short nodeid) {
+    static void printNeighborsGroupInfo(Collection<NeighborInfo> listNeighbors, String info) {
 
          if (listNeighbors == null) {
-            System.out.println(nodeid+ " - Neighbors Groups [NULL]");
+            System.out.println(info+ " - Neighbors Groups [NULL]");
             return;
         }
         if (listNeighbors.size() == 0) {
-            System.out.println(nodeid+ " - Neighbors Groups []");
+            System.out.println(info+ " - Neighbors Groups []");
             return;
         }
-        System.out.print(nodeid+ " - Neighbors Groups [ ");
+        System.out.print(info+ " - Neighbors Groups [ ");
         for (Iterator it = listNeighbors.iterator(); it.hasNext();) {
             NeighborInfo gid = (NeighborInfo) it.next();
-            System.out.print(gid.getGroupID()+ " ");
+            System.out.print(gid.toString()+ " ");
         }
         System.out.println("]");
     }

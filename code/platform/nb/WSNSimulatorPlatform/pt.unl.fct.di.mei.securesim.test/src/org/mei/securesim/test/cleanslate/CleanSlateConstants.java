@@ -23,6 +23,8 @@ public class CleanSlateConstants {
     public final static byte MSG_POST_MERGE = 7;
     public final static byte MSG_BROADCAST_MERGE_PROPOSAL_REFUSE = 8;
     public final static byte MSG_GROUP_NEIGHBORING_INFO = 9;
+    public final static byte MSG_GROUP_MERGE = 10;
+
     /**
      * 
      */
@@ -32,7 +34,8 @@ public class CleanSlateConstants {
     static int EVENT_ACTION_BOUND_DISCOVERY = 1;
     static long NEIGHBOR_DISCOVERY_BOUND_TIME = Simulator.ONE_SECOND * 60;
     static long NEIGHBOR_DISCOVERY_REPEAT_TIME = Simulator.ONE_SECOND * 10;
-    static double DELAYED_MESSAGE_BOUND = Simulator.ONE_SECOND * 1;
+    static double MAX_DELAYED_MESSAGE_BOUND = Simulator.ONE_SECOND * 1;
+    static double MIN_DELAYED_MESSAGE_BOUND = 2000;
     static long COLLECT_NEIGHBOR_INFO_BOUND_TIME = Simulator.ONE_SECOND * 10;
     static long START_MERGE_BOUND_TIME = (long) (Simulator.ONE_SECOND * .2);
     static double GROUP_INFO_BROADCAST_REPEAT_TIME = (long) (Simulator.ONE_SECOND * 5);

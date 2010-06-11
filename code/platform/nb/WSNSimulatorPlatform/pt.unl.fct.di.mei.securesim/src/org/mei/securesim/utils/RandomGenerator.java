@@ -39,4 +39,15 @@ public class RandomGenerator {
         this.seed = seed;
         init();
     }
+    public double nextDoubleBetween(int min, int max){
+        return min + (double)(random.nextDouble() * ((max - min) + 1));
+    }
+    public int nextDoubleInt(int min, int max){
+        return min + (int)(random.nextInt() * ((max - min) + 1));
+    }
+    public long nextDoubleLong(int min, int max){
+        return min + (long)(random.nextLong() * ((max - min) + 1));
+    }
+
+
 }
