@@ -150,6 +150,7 @@ public class SimulationWizardDialog extends JDialog {
         nodeRangeSlider.setPaintTicks(true);
         nodeRangeSlider.setSnapToTicks(true);
         nodeRangeSlider.setToolTipText(resourceMap.getString("nodeRangeSlider.toolTipText")); // NOI18N
+        nodeRangeSlider.setValue(130);
         nodeRangeSlider.setName("nodeRangeSlider"); // NOI18N
         nodeRangeSlider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {

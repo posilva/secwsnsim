@@ -1,0 +1,10 @@
+1. Send Secure Neighbors Discovery                      =>Secure Discovery
+2. Time bound Secure Neighbors Discovery
+3. BroadCast MyGroup Info to Group                      =>Collect Group Info
+4. Time Bound BroadCast MyGroup Info to Group
+5. Send Merge Proposal                                  =>Merging Proposal
+6. Time Bound Merge Proposal
+    7. Received Merge Proposal                          => Merging
+        If (merge_proposal==lastSentMergeProposal){
+            Begin Merge Process
+        } else Discard Merge Proposal;
