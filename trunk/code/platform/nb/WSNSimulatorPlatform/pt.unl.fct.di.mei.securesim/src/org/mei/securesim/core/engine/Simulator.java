@@ -48,7 +48,7 @@ import org.mei.securesim.utils.RandomGenerator;
 public class Simulator {
 
     public static final int SIMULATOR_STEPS = 200;
-    public static final int RUNTIME_NUM_STEPS = 200;
+    public static final int RUNTIME_NUM_STEPS = 100;
     public static final Integer SIMULATION_SPEED_DEFAULT = 80000;
     public static Integer ONE_SECOND = SIMULATION_SPEED_DEFAULT;
     static Logger LOGGER = Logger.getLogger(Simulator.class.getName());
@@ -147,7 +147,11 @@ public class Simulator {
 
         SimulationController.getInstance().begin();
         autostartRoutingLayer();
-        runWithDisplay();
+        if (SimulationController.getInstance().getMode() == SimulationController.FAST) {
+            runWithDisplay();
+        } else {
+            runWithDisplayInRealTime();
+        }
     }
 
     /**

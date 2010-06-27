@@ -22,7 +22,6 @@ public class GraphicNode {
     protected int x = 0;
     protected int y = 0;
     protected int z = 0;
-
     protected GraphicPoint center = new GraphicPoint(x, y);
     protected int radius = 2;
     protected boolean filled = false;
@@ -32,12 +31,12 @@ public class GraphicNode {
     protected Color linecolor = Color.BLACK;
     protected Color oldColor = Color.WHITE;
     protected Color markColor = Color.ORANGE;
-
+    protected Color sourceColor = Color.GREEN;
+    protected Color destinationColor = Color.BLUE ;
     protected Rectangle rectangle;
     private boolean marked;
-
-
-  
+    private boolean source;
+    private boolean destination;
 
     public GraphicNode(int x, int y) {
         moveTo(x, y);
@@ -61,7 +60,6 @@ public class GraphicNode {
         this.backcolor = backcolor;
     }
 
-    
     public Color getSelectedBackcolor() {
         return selectedBackcolor;
     }
@@ -69,6 +67,7 @@ public class GraphicNode {
     public void setSelectedBackcolor(Color selectedBackcolor) {
         this.selectedBackcolor = selectedBackcolor;
     }
+
     public GraphicPoint getCenter() {
         return center;
     }
@@ -164,7 +163,7 @@ public class GraphicNode {
         int _y = display.y2ScreenY(y);
         if (!selected) {
             return;
-            
+
         }
         saveOldColor(g);
         g.setColor(selectedBackcolor);
@@ -184,11 +183,13 @@ public class GraphicNode {
 
     public void paint(ISimulationDisplay display) {
         paintMark(display);
+        paintAsDestination(display);
+        paintAsSource(display);
         fill(display);
-        
+
         paintBorder(display);
         paintSelectionBorder(display);
-        
+
         //paintCenter(g);
     }
 
@@ -201,10 +202,11 @@ public class GraphicNode {
         return p.distanceTo(center) <= radius;
     }
 
-    public void moveTo(int x, int y,int z) {
+    public void moveTo(int x, int y, int z) {
         this.z = z;
         moveTo(x, y);
     }
+
     public void moveTo(int x, int y) {
         this.x = x;
         this.y = y;
@@ -237,7 +239,6 @@ public class GraphicNode {
         return "Circle " + id;
     }
 
-    
     public int getZ() {
         return z;
     }
@@ -249,22 +250,57 @@ public class GraphicNode {
     public void mark() {
         marked = true;
     }
+
     public void unmark() {
         marked = false;
     }
+
     public boolean isMarked() {
         return marked;
     }
 
+    private void paintAsDestination(ISimulationDisplay display) {
+        if (!isDestination()) {
+            return;
+        }
+        Graphics g = display.getGraphics();
+        int _x = display.x2ScreenX(x);
+        int _y = display.y2ScreenY(y);
+
+        saveOldColor(g);
+        g.setColor(destinationColor);
+        int r = (int) (radius * 4);
+        g.drawOval(_x - r, _y - r, r * 2, r * 2);
+        g.fillOval(_x - r, _y - r, r * 2, r * 2);
+        restoreOldColor(g);
+    }
+    private void paintAsSource(ISimulationDisplay display) {
+        if (!isSource()) {
+            return;
+        }
+        Graphics g = display.getGraphics();
+        int _x = display.x2ScreenX(x);
+        int _y = display.y2ScreenY(y);
+
+        saveOldColor(g);
+        g.setColor(sourceColor);
+        int r = (int) (radius * 4);
+        g.drawOval(_x - r, _y - r, r * 2, r * 2);
+        g.fillOval(_x - r, _y - r, r * 2, r * 2);
+        restoreOldColor(g);
+    }
+
     private void paintMark(ISimulationDisplay display) {
-        if(!isMarked()) return ;
+        if (!isMarked()) {
+            return;
+        }
         Graphics g = display.getGraphics();
         int _x = display.x2ScreenX(x);
         int _y = display.y2ScreenY(y);
 
         saveOldColor(g);
         g.setColor(markColor);
-        int r=(int) (radius*3);
+        int r = (int) (radius * 3);
         g.drawOval(_x - r, _y - r, r * 2, r * 2);
         g.fillOval(_x - r, _y - r, r * 2, r * 2);
         restoreOldColor(g);
@@ -277,5 +313,37 @@ public class GraphicNode {
     public void setMarkColor(Color markColor) {
         this.markColor = markColor;
     }
-    
+
+    public boolean isDestination() {
+        return destination;
+    }
+
+    public void setDestination(boolean destination) {
+        this.destination = destination;
+    }
+
+    public boolean isSource() {
+        return source;
+    }
+
+    public void setSource(boolean source) {
+        this.source = source;
+    }
+
+    public Color getDestinationColor() {
+        return destinationColor;
+    }
+
+    public void setDestinationColor(Color destinationColor) {
+        this.destinationColor = destinationColor;
+    }
+
+    public Color getSourceColor() {
+        return sourceColor;
+    }
+
+    public void setSourceColor(Color sourceColor) {
+        this.sourceColor = sourceColor;
+    }
+
 }

@@ -15,7 +15,6 @@ public abstract class RepeatableEvent extends Event {
 
     short numberOfRepetitions;
     long interval;
-
     public long getInterval() {
         return interval;
     }

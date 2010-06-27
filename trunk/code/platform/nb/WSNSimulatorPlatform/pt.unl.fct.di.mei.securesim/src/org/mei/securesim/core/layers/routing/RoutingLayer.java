@@ -1,6 +1,6 @@
 package org.mei.securesim.core.layers.routing;
 
-import org.mei.securesim.components.instruments.CoverageController;
+import org.mei.securesim.components.instruments.coverage.CoverageController;
 import org.mei.securesim.components.instruments.LatencyController;
 import org.mei.securesim.components.instruments.ReliabilityController;
 import org.mei.securesim.core.application.Application;
@@ -60,7 +60,7 @@ public abstract class RoutingLayer extends Layer {
         return sendMessage(message, app);
     }
 
-    private void instrumentationNotifyMessageReception(Object message) {
+    protected void instrumentationNotifyMessageReception(Object message) {
         CoverageController.getInstance().notifyMessageReception(message, getNode());
         LatencyController.getInstance().notifyMessageReception(message, getNode());
         ReliabilityController.getInstance().notifyMessageReception(message, getNode());

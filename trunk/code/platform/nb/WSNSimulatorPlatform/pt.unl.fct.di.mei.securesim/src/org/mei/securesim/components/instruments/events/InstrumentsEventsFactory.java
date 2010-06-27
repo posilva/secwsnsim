@@ -4,6 +4,7 @@
  */
 package org.mei.securesim.components.instruments.events;
 
+import org.mei.securesim.components.instruments.coverage.TotalCoverageEvent;
 import org.mei.securesim.components.instruments.SimulationController;
 import org.mei.securesim.core.engine.Event;
 
@@ -18,12 +19,14 @@ public class InstrumentsEventsFactory {
      * @param interval
      * @return
      */
-    public static Event createTotalCoverageEvent(short repetitions, long interval, Class messageClass) {
+    public static Event createTotalCoverageEvent(short repetitions, long delay, long interval, Class messageClass) {
+        if (messageClass==null)
+            throw  new IllegalArgumentException("Message Class cannot be null");
         TotalCoverageEvent coverageEvent = new TotalCoverageEvent();
         coverageEvent.setNumberOfRepetitions(repetitions);
         coverageEvent.setInterval(interval);
         coverageEvent.setMessageClass(messageClass);
-        coverageEvent.setTime(SimulationController.getInstance().getCurrentSimulationTime()+ interval);
+        coverageEvent.setTime(SimulationController.getInstance().getCurrentSimulationTime()+ delay);
         return coverageEvent;
     }
 }

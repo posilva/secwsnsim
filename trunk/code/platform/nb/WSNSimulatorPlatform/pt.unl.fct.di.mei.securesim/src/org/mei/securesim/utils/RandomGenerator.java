@@ -20,7 +20,7 @@ public class RandomGenerator {
     }
 
     public RandomGenerator() {
-        this.seed = System.currentTimeMillis();
+        this.seed = 1024;// System.currentTimeMillis();
         init();
     }
 

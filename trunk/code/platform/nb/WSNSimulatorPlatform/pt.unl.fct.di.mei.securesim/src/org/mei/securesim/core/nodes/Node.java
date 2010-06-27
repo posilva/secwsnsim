@@ -8,7 +8,7 @@ import org.mei.securesim.core.engine.Event;
 import org.mei.securesim.core.ui.ISimulationDisplay;
 import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.energy.Batery;
-import org.mei.securesim.core.engine.DefaultMessage;
+import org.mei.securesim.core.engine.BaseMessage;
 import org.mei.securesim.core.layers.mac.MACLayer;
 import org.mei.securesim.core.layers.routing.RoutingLayer;
 import org.mei.securesim.core.nodes.components.Transceiver;
@@ -53,7 +53,7 @@ public abstract class Node {
      * message part is forwarded to the appropriate application, see
      * {@link Application#receiveMessage}.
      */
-    protected DefaultMessage message;
+    protected BaseMessage message;
     /** A reference to the simulator in which the Node exists. */
     public Simulator simulator;
     /**
@@ -186,7 +186,7 @@ public abstract class Node {
     }
 
     public void setMessage(Object message) {
-        this.message = (DefaultMessage) message;
+        this.message = (BaseMessage) message;
     }
 
     public MACLayer getMacLayer() {

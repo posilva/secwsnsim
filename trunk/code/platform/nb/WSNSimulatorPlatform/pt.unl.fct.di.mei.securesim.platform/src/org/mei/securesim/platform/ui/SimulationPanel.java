@@ -1,5 +1,7 @@
 package org.mei.securesim.platform.ui;
 
+import com.sun.image.codec.jpeg.*;
+import java.io.File;
 import java.io.IOException;
 import org.mei.securesim.core.energy.listeners.EnergyEvent;
 import org.mei.securesim.gui.GraphicPoint;
@@ -19,17 +21,20 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.DataOutputStream;
+import java.io.FileOutputStream;
 import java.io.PipedOutputStream;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.math.stat.descriptive.SummaryStatistics;
-import org.mei.securesim.components.instruments.CoverageController;
+import org.mei.securesim.components.instruments.coverage.CoverageController;
 import org.mei.securesim.core.energy.Batery;
 import org.mei.securesim.core.energy.listeners.EnergyListener;
 import org.mei.securesim.core.nodes.factories.NodeFactory;
@@ -168,21 +173,15 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         selNodesMonitEnergia = new javax.swing.JMenuItem();
         selNodesInstruments = new javax.swing.JMenu();
         selNodesInstrumentsCoverage = new javax.swing.JMenu();
-        selNodesInstrumentsCoverageEnable = new javax.swing.JCheckBoxMenuItem();
-        jSeparator2 = new javax.swing.JPopupMenu.Separator();
         selNodesInstrumentsCoverageSelSources = new javax.swing.JMenuItem();
         selNodesInstrumentsCoverageDelSources = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
         selNodesInstrumentsCoverageSelDest = new javax.swing.JMenuItem();
         selNodesInstrumentsCoverageDelDest = new javax.swing.JMenuItem();
         selNodesInstrumentsReliability = new javax.swing.JMenu();
-        selNodesInstrumentsReliabilityEnable = new javax.swing.JCheckBoxMenuItem();
-        jSeparator3 = new javax.swing.JPopupMenu.Separator();
         selNodesInstrumentsReliabilitySelSources = new javax.swing.JCheckBoxMenuItem();
         selNodesInstrumentsReliabilityDelSources = new javax.swing.JCheckBoxMenuItem();
         selNodesInstrumentsLatency = new javax.swing.JMenu();
-        selNodesInstrumentsLatencyEnable = new javax.swing.JCheckBoxMenuItem();
-        jSeparator4 = new javax.swing.JPopupMenu.Separator();
         selNodesInstrumentsLatencySelSources = new javax.swing.JCheckBoxMenuItem();
         selNodesInstrumentsLatencyDelSources = new javax.swing.JCheckBoxMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
@@ -192,6 +191,8 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         depNodesDeploy = new javax.swing.JMenu();
         depNodesRandomTopology = new javax.swing.JMenuItem();
         depNodesGridTopology = new javax.swing.JMenuItem();
+        deployNodePopupMenu = new javax.swing.JPopupMenu();
+        depNodeDeployOneNode = new javax.swing.JMenuItem();
 
         currentSelectedNodePopupMenu.setLabel("Configurar Sensor");
 
@@ -349,16 +350,6 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             }
         });
 
-        selNodesInstrumentsCoverageEnable.setSelected(true);
-        selNodesInstrumentsCoverageEnable.setText(resourceMap.getString("selNodesInstrumentsCoverageEnable.text")); // NOI18N
-        selNodesInstrumentsCoverageEnable.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                selNodesInstrumentsCoverageEnableActionPerformed(evt);
-            }
-        });
-        selNodesInstrumentsCoverage.add(selNodesInstrumentsCoverageEnable);
-        selNodesInstrumentsCoverage.add(jSeparator2);
-
         selNodesInstrumentsCoverageSelSources.setText(resourceMap.getString("selNodesInstrumentsCoverageSelSources.text")); // NOI18N
         selNodesInstrumentsCoverageSelSources.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -396,12 +387,6 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
 
         selNodesInstrumentsReliability.setText(resourceMap.getString("selNodesInstrumentsReliability.text")); // NOI18N
 
-        selNodesInstrumentsReliabilityEnable.setSelected(true);
-        selNodesInstrumentsReliabilityEnable.setText(resourceMap.getString("selNodesInstrumentsReliabilityEnable.text")); // NOI18N
-        selNodesInstrumentsReliabilityEnable.setFocusPainted(true);
-        selNodesInstrumentsReliability.add(selNodesInstrumentsReliabilityEnable);
-        selNodesInstrumentsReliability.add(jSeparator3);
-
         selNodesInstrumentsReliabilitySelSources.setSelected(true);
         selNodesInstrumentsReliabilitySelSources.setText(resourceMap.getString("selNodesInstrumentsReliabilitySelSources.text")); // NOI18N
         selNodesInstrumentsReliability.add(selNodesInstrumentsReliabilitySelSources);
@@ -413,12 +398,6 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         selNodesInstruments.add(selNodesInstrumentsReliability);
 
         selNodesInstrumentsLatency.setText("Reliability");
-
-        selNodesInstrumentsLatencyEnable.setSelected(true);
-        selNodesInstrumentsLatencyEnable.setText("Enable");
-        selNodesInstrumentsLatencyEnable.setFocusPainted(true);
-        selNodesInstrumentsLatency.add(selNodesInstrumentsLatencyEnable);
-        selNodesInstrumentsLatency.add(jSeparator4);
 
         selNodesInstrumentsLatencySelSources.setSelected(true);
         selNodesInstrumentsLatencySelSources.setText("Add to source nodes");
@@ -460,6 +439,10 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         depNodesDeploy.add(depNodesGridTopology);
 
         deployNodesPopupMenu.add(depNodesDeploy);
+
+        depNodeDeployOneNode.setAction(actionMap.get("PlaceNodeHereAction")); // NOI18N
+        depNodeDeployOneNode.setText(resourceMap.getString("depNodeDeployOneNode.text")); // NOI18N
+        deployNodePopupMenu.add(depNodeDeployOneNode);
 
         setBackground(resourceMap.getColor("background")); // NOI18N
         addMouseListener(new java.awt.event.MouseAdapter() {
@@ -676,11 +659,15 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             }
         } else if (deployNodeToolSelected) {
 
-            if (insideSelectionArea(evt) && evt.getButton() == MouseEvent.BUTTON3) {
-                deployNodesPopupMenu.show(this, mouseX, mouseY);
+            if (selectedArea == null && evt.getButton() == MouseEvent.BUTTON3) {
+                deployNodePopupMenu.show(this, mouseX, mouseY);
             } else {
-                clearSelection();
-                pressedPoint = new GraphicPoint(mouseX, mouseY);
+                if (insideSelectionArea(evt) && evt.getButton() == MouseEvent.BUTTON3) {
+                    deployNodesPopupMenu.show(this, mouseX, mouseY);
+                } else {
+                    clearSelection();
+                    pressedPoint = new GraphicPoint(mouseX, mouseY);
+                }
             }
         } else if (selectionPointerToolSelected) {
             mousePressed = true;
@@ -880,12 +867,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         boolean enable = CoverageController.getInstance().isEnable();
         selNodesInstrumentsCoverageSelSources.setEnabled(enable);
         selNodesInstrumentsCoverageDelSources.setEnabled(enable);
-        selNodesInstrumentsCoverageEnable.setSelected(enable);
     }//GEN-LAST:event_selNodesInstrumentsCoverageMenuSelected
-
-    private void selNodesInstrumentsCoverageEnableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selNodesInstrumentsCoverageEnableActionPerformed
-        CoverageController.getInstance().setEnable(selNodesInstrumentsCoverageEnable.isSelected());
-    }//GEN-LAST:event_selNodesInstrumentsCoverageEnableActionPerformed
 
     private void selNodesInstrumentsCoverageSelSourcesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selNodesInstrumentsCoverageSelSourcesActionPerformed
         // TODO add your handling code here:
@@ -932,14 +914,13 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPopupMenu currentSelectedNodePopupMenu;
+    private javax.swing.JMenuItem depNodeDeployOneNode;
     private javax.swing.JMenu depNodesDeploy;
     private javax.swing.JMenuItem depNodesGridTopology;
     private javax.swing.JMenuItem depNodesRandomTopology;
+    private javax.swing.JPopupMenu deployNodePopupMenu;
     private javax.swing.JPopupMenu deployNodesPopupMenu;
     private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JPopupMenu.Separator jSeparator2;
-    private javax.swing.JPopupMenu.Separator jSeparator3;
-    private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JCheckBoxMenuItem selNodeMarcar;
     private javax.swing.JMenuItem selNodeMonitEnergia;
@@ -957,16 +938,13 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     private javax.swing.JMenu selNodesInstrumentsCoverage;
     private javax.swing.JMenuItem selNodesInstrumentsCoverageDelDest;
     private javax.swing.JMenuItem selNodesInstrumentsCoverageDelSources;
-    private javax.swing.JCheckBoxMenuItem selNodesInstrumentsCoverageEnable;
     private javax.swing.JMenuItem selNodesInstrumentsCoverageSelDest;
     private javax.swing.JMenuItem selNodesInstrumentsCoverageSelSources;
     private javax.swing.JMenu selNodesInstrumentsLatency;
     private javax.swing.JCheckBoxMenuItem selNodesInstrumentsLatencyDelSources;
-    private javax.swing.JCheckBoxMenuItem selNodesInstrumentsLatencyEnable;
     private javax.swing.JCheckBoxMenuItem selNodesInstrumentsLatencySelSources;
     private javax.swing.JMenu selNodesInstrumentsReliability;
     private javax.swing.JCheckBoxMenuItem selNodesInstrumentsReliabilityDelSources;
-    private javax.swing.JCheckBoxMenuItem selNodesInstrumentsReliabilityEnable;
     private javax.swing.JCheckBoxMenuItem selNodesInstrumentsReliabilitySelSources;
     private javax.swing.JMenuItem selNodesMonitEnergia;
     private javax.swing.JMenu selNodesMonitorizacao;
@@ -1262,10 +1240,10 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         }
         if (mouseY > (getSize().getHeight() - 10)) {
             this.setPreferredSize(new Dimension(getWidth(), (int) getHeight() + 10));
-            
+
         }
         this.scrollRectToVisible(new Rectangle(mouseX, mouseY, 10, 10));
-        
+
         update();
     }
 
@@ -1621,7 +1599,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
                     setMessage("Removing nodes... done!");
                     GUI.showSimulationNrOfNodes(getSimulator().getNodes().size());
 
-                    networkDeployed = true;
+                    networkDeployed = getSimulator().getNodes().size() > 0;
                     update();
                     start = System.currentTimeMillis();
                     this.setMessage("Building Network using radio");
@@ -1659,5 +1637,80 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         }
 
     }
+
+    @Action
+    public void PlaceNodeHereAction() {
+        try {
+            NodeFactory nf = simulation.getNodeFactory();
+            int nRange = simulation.getNodeRange();
+            Node node = nf.createNode(mouseX, mouseY, 0);
+            node.getConfig().setSetRadioRange(nRange);
+            simulation.getNetwork().addNode((SensorNode) node);
+            networkDeployed = true;
+            buildNetwork();
+            update();
+        } catch (Exception ex) {
+            Logger.getLogger(SimulationPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+
+    }
     protected Hashtable<Node, Object> energyControllersTable = new Hashtable<Node, Object>();
+
+    public void takeSnapshot() {
+        if (getSimulator().getNodes().size() == 0) {
+            return;
+        }
+
+        BufferedImage bImage = new BufferedImage(this.getWidth(), this.getHeight(), 1);
+        Graphics g = bImage.getGraphics();
+        g.setColor(Color.white);
+        g.fillRect(0, 0, this.getWidth(), this.getHeight());
+        mainPaintLoop(g);
+        String savefile = "";
+        JFileChooser fc = new JFileChooser();
+        fc.addChoosableFileFilter(new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                return f.getName().toLowerCase().endsWith(".jpg") || f.getName().toLowerCase().endsWith(".jpeg");
+            }
+            @Override
+            public String getDescription() {
+                return "Jpeg Image Files";
+            }
+        });
+        int returnVal = fc.showSaveDialog(this);
+        FileOutputStream fout;
+        if (returnVal == 0) {
+            savefile = fc.getSelectedFile().getPath();
+            if (savefile == null) {
+                return;
+            }
+            setCursor(new Cursor(3));
+            try {
+
+                fout = new FileOutputStream(savefile
+                        + ((savefile.toLowerCase().endsWith(".jpg") || savefile.toLowerCase().endsWith(".jpeg")) ? "" : ".jpg"));
+                JPEGImageEncoder encoder =
+                        JPEGCodec.createJPEGEncoder(fout);
+
+                JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam(bImage);
+                param.setQuality(1.0f, false);   // 100% high quality setting, no compression
+                encoder.setJPEGEncodeParam(param);
+
+                encoder.encode(bImage);
+                setCursor(new Cursor(0));
+                fout.close();
+            } catch (ImageFormatException ife) {
+                JOptionPane.showMessageDialog(null,
+                        "Image format Error.\n" + ife, "Error", 0);
+            } catch (IOException ioe) {
+                JOptionPane.showMessageDialog(null,
+                        "Saving error.\n" + ioe, "Error", 0);
+            }
+
+        }
+    }
 }
+

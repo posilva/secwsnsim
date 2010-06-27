@@ -17,7 +17,7 @@ import org.mei.securesim.core.ui.ISimulationDisplay;
 public abstract class Mica2SensorNode extends SensorNode {
     private Color paintingPathColor = Color.LIGHT_GRAY;;
 
-    private boolean paintingPaths;
+    private boolean paintingPaths=true;
 
     public Mica2SensorNode(Simulator sim, RadioModel radioModel) {
         super(sim, radioModel);

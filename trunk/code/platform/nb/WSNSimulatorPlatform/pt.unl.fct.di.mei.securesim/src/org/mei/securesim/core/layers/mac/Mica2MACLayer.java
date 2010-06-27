@@ -5,7 +5,7 @@
 package org.mei.securesim.core.layers.mac;
 
 import org.mei.securesim.core.energy.EnergyConsumptionAction;
-import org.mei.securesim.core.engine.DefaultMessage;
+import org.mei.securesim.core.engine.BaseMessage;
 import org.mei.securesim.core.engine.Event;
 import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.layers.routing.RoutingLayer;
@@ -98,7 +98,7 @@ public class Mica2MACLayer extends MACLayer {
     }
 
     private void setMessageColor(Object message) {
-        DefaultMessage m = (DefaultMessage) message;
+        BaseMessage m = (BaseMessage) message;
         if (m.isShowColor()) {
             getNode().setMessageColor(m.getColor());
         }
@@ -123,7 +123,7 @@ public class Mica2MACLayer extends MACLayer {
                 final Node node = getNode();
                 getNode().getTransceiver().executeTransmission(new EnergyConsumptionAction() {
 
-                    DefaultMessage m = (DefaultMessage) node.getMessage();
+                    BaseMessage m = (BaseMessage) node.getMessage();
 
                     public void execute() {
                         transmitMessage();
@@ -357,7 +357,7 @@ public class Mica2MACLayer extends MACLayer {
                 final Node node = Node.cast(stream);
                 getNode().getTransceiver().executeReception(new EnergyConsumptionAction() {
 
-                    DefaultMessage m = (DefaultMessage) node.getMessage();
+                    BaseMessage m = (BaseMessage) node.getMessage();
 
                     public void execute() {
                         deliverMessage(m);

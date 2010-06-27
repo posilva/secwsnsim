@@ -5,7 +5,7 @@
 
 package org.mei.securesim.utils;
 
-import org.mei.securesim.core.engine.DefaultMessage;
+import org.mei.securesim.core.engine.BaseMessage;
 import org.mei.securesim.core.nodes.Node;
 
 /**
@@ -22,7 +22,7 @@ public class DebugUtils {
          */
         public static void debugMessage(String source, Object node) {
             if (!DEBUG) return;
-            DefaultMessage m = (DefaultMessage) ((Node)node).getMessage();
+            BaseMessage m = (BaseMessage) ((Node)node).getMessage();
             System.out.println("Source: "+ source + "  "+"Type: "+m.getClass().getSimpleName()  +" Nro.: "+ m.getMessageNumber());
         }
 
