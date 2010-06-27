@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.mei.securesim.core.engine.DefaultMessage;
+import org.mei.securesim.core.engine.BaseMessage;
 import org.mei.securesim.utils.DataUtils;
 
 /**
@@ -33,7 +33,7 @@ public class INSENSMessageRFBK extends INSENSMessage {
     protected class Wrapper extends INSENSMessage.Wrapper {
 
         @Override
-        public void wrap(DefaultMessage m) {
+        public void wrap(BaseMessage m) {
             try {
                 DataInputStream dis = DataUtils.createDataFromByteArray(m.getPayload());
                 type = dis.readInt();

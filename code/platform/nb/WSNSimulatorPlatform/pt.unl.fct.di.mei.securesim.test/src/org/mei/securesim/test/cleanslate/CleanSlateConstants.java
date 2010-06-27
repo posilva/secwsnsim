@@ -13,36 +13,30 @@ import org.mei.securesim.core.engine.Simulator;
  */
 public class CleanSlateConstants {
 
+    public static final byte DEBUG_LEVEL_NONE = 0, DEBUG_LEVEL_NORMAL = 1, DEBUG_LEVEL_FINE = 2, DEBUG_LEVEL_FINNEST = 3, DEBUG_LEVEL_ALL = 9;
+    public static final int DISCOVERY_MESSAGES_INTERVAL = 20000;
+    public static final int MAX_DISCOVERY_MESSAGES_SENT = 3;
     public final static int INVALID_TYPE = -1;
     public final static byte MSG_HELLO = 1;
-    public final static byte MSG_MERGE_PROPOSAL_REQUEST = 2;
-    public final static byte MSG_MERGE_PROPOSAL_REPLY = 3;
-    public final static byte MSG_MERGE_PROPOSAL_ACK = 4;
-    public final static byte MSG_MERGE_PROPOSAL_REFUSE = 5;
-    public final static byte MSG_KNOWNED_GROUP_INFO = 6;
-    public final static byte MSG_POST_MERGE = 7;
-    public final static byte MSG_BROADCAST_MERGE_PROPOSAL_REFUSE = 8;
-    public final static byte MSG_GROUP_NEIGHBORING_INFO = 9;
-    public final static byte MSG_GROUP_MERGE = 10;
-
+    public final static byte MSG_MERGE_PROPOSAL = 2;
+    public final static byte MSG_MERGE_PROPOSAL_REFUSE = 3;
+    public final static byte MSG_MERGE_PROPOSAL_AGREEMENT = 4;
+    public final static byte MSG_POST_MERGE = 5;
+    public final static byte MSG_NEIGHBOR_GROUP_ANNOUNCE = 6;
     /**
      * 
      */
     private static byte[] NAPrivateKey = CryptoFunctions.createSkipjackKey();
     private static byte[] NAPublicKey = CryptoFunctions.createSkipjackKey();
     static int ACTION_START = 0;
-    static int EVENT_ACTION_BOUND_DISCOVERY = 1;
     static long NEIGHBOR_DISCOVERY_BOUND_TIME = Simulator.ONE_SECOND * 60;
-    static long NEIGHBOR_DISCOVERY_REPEAT_TIME = Simulator.ONE_SECOND * 10;
-    static double MAX_DELAYED_MESSAGE_BOUND = Simulator.ONE_SECOND * 1;
+    static double MAX_DELAYED_MESSAGE_BOUND = Simulator.ONE_SECOND * 3;
     static double MIN_DELAYED_MESSAGE_BOUND = 2000;
-    static long COLLECT_NEIGHBOR_INFO_BOUND_TIME = Simulator.ONE_SECOND * 10;
-    static long START_MERGE_BOUND_TIME = (long) (Simulator.ONE_SECOND * .2);
-    static double GROUP_INFO_BROADCAST_REPEAT_TIME = (long) (Simulator.ONE_SECOND * 5);
-    static long RESTART_GROUP_MERGE_BOUND_TIME = (long) (Simulator.ONE_SECOND * 3);
-    static long FLOODING_NEIGHBOR_INFO_BOUND_TIME = (long) (Simulator.ONE_SECOND * 3);
-    static long MERGE_WAITING_BOUND_TIME= (long) (Simulator.ONE_SECOND * 3);;
-    static double NEIGHBOR_SIGNAL_THRESHOLD=0.0;
+    static double NEIGHBOR_SIGNAL_THRESHOLD = 0.0;
+    static short BOOT_STATE = 0;
+    static short NEIGHBOR_DISCOVERY_STATE = 1;
+    static short MERGE_PROPOSAL_STATE = 2;
+    static short MERGE_WAITING_STATE = 3;
 
     public static byte[] getNAPrivateKey() {
         return NAPrivateKey;

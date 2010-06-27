@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.mei.securesim.components.crypto.CryptoFunctions;
-import org.mei.securesim.core.engine.DefaultMessage;
+import org.mei.securesim.core.engine.BaseMessage;
 import org.mei.securesim.test.cleanslate.messages.CleanSlateMsg;
 import org.mei.securesim.test.cleanslate.utils.NeighborInfo;
 import org.mei.securesim.test.common.ByteArrayDataOutputStream;
@@ -96,7 +96,7 @@ public class CleanSlateFunctions {
 
     public static byte[] cloneMessage(Object message) {
         try {
-            DefaultMessage m = (DefaultMessage) message;
+            BaseMessage m = (BaseMessage) message;
             ByteArrayDataOutputStream bados = new ByteArrayDataOutputStream();
             bados.write(m.getPayload());
             bados.flush();
@@ -105,5 +105,23 @@ public class CleanSlateFunctions {
             Logger.getLogger(CleanSlateFunctions.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    /**
+     *
+     */
+    public static long computeNewGroupId(long mygid, short mysize, long gid, short size) {
+        long newGroupID = 0;
+        if (mygid > gid) {
+            newGroupID = CleanSlateFunctions.groupIdHash(mygid, mysize, gid, size);
+        } else {
+            newGroupID = CleanSlateFunctions.groupIdHash(gid, size, mygid, mysize);
+        }
+        return newGroupID;
+    }
+
+    public static String networkAddressBit(long myGroupId, long otherGroupId) {
+        return (myGroupId < otherGroupId ? "0" : "1");
+
     }
 }

@@ -3,17 +3,17 @@
  * and open the template in the editor.
  */
 
-package org.mei.securesim.test.cleanslate.messages;
+package org.mei.securesim.test.CS.messages;
 
 import org.mei.securesim.core.engine.BaseMessage;
 
 /**
  *
- * @author CIAdmin
+ * @author Pedro Marques da Silva
  */
-public class CleanSlateMsg extends BaseMessage{
+public class CSMessage extends BaseMessage{
 
-    public CleanSlateMsg(byte[] payload) {
+    public CSMessage(byte[] payload) {
         super(payload);
     }
 

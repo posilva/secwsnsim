@@ -1,12 +1,27 @@
 package org.mei.securesim.test.cleanslate;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.PriorityQueue;
+import java.util.Set;
+import java.util.Vector;
+
 import org.mei.securesim.core.application.Application;
-import org.mei.securesim.core.engine.*;
+import org.mei.securesim.core.engine.BaseMessage;
+import org.mei.securesim.core.engine.Event;
+import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.layers.routing.RoutingLayer;
+import org.mei.securesim.events.Timer;
 import org.mei.securesim.test.cleanslate.messages.CleanSlateMsg;
-import org.mei.securesim.test.cleanslate.messages.data.*;
-import org.mei.securesim.test.cleanslate.utils.*;
+import org.mei.securesim.test.cleanslate.messages.data.BaseMessageData;
+import org.mei.securesim.test.cleanslate.messages.data.HELLOMsgData;
+import org.mei.securesim.test.cleanslate.messages.data.MergeProposalAgreementData;
+import org.mei.securesim.test.cleanslate.messages.data.MergeProposalData;
+import org.mei.securesim.test.cleanslate.messages.data.MergeProposalRefuseData;
+import org.mei.securesim.test.cleanslate.messages.data.NeighborGroupAnnounceData;
+import org.mei.securesim.test.cleanslate.messages.data.PostMergeData;
+import org.mei.securesim.test.cleanslate.utils.MergeTableEntry;
+import org.mei.securesim.test.cleanslate.utils.NeighborInfo;
 import org.mei.securesim.test.common.events.DelayedMessageEvent;
 
 /**
@@ -15,32 +30,33 @@ import org.mei.securesim.test.common.events.DelayedMessageEvent;
  */
 public class CleanSlateRoutingLayer extends RoutingLayer {
 
-    public static final byte DEBUG_LEVEL_NONE = 0;
-    public static final byte DEBUG_LEVEL_NORMAL = 1;
-    public static final byte DEBUG_LEVEL_FINE = 2;
-    public static final byte DEBUG_LEVEL_FINNEST = 3;
-    public static final byte DEBUG_LEVEL_ALL = 9;
-    private byte debug_level = DEBUG_LEVEL_ALL;        // controls the debug level output
+    private byte debug_level = CleanSlateConstants.DEBUG_LEVEL_ALL;        // controls the debug level output
     protected long myGroupId;         // group ID were this node belongs
     protected short myGroupSize;          // group size were this node belongs
+    private String networkAddress = "";
     protected Hashtable listNeighboringGroups = new Hashtable();
     protected Hashtable listNeighbors = new Hashtable();
     protected short mergeCounter = 0;  // counts the number of group merges
-    private long waitingMergeProposalFrom;
     private Vector mergeTable = new Vector(); // table of merging info
     private Vector routingTable = new Vector();   // routing table
-    private String networkAddress = "";
-    private Set groupInfoAnnouncements = new HashSet();
-    private boolean inMergingProcess = false;
-    private int groupMergeRefuseMessafeSeqNumber = 0;
-    private boolean secureNeighborDiscovery = false;
-    private boolean recursiveGroupingInitiated = false;
+    private Long waitingMergeProposalFrom = null;
+    private boolean inMergingProcess = false, inSecureNeighborDiscovery = false;
+    private Set neighborsGroupInformationAnnounces = new HashSet();
+    private boolean waitingMergeProposal = false;
+    private int mergeAgreementSEQNUM = 0;
+    private int mergeRefuseSEQNUM = 0;
+    private int mergeNeighborAnnouncesSEQNUM = 0;
+    private Hashtable forwardGroupMergeAgreementMessages = new Hashtable();
+    private Hashtable forwardGroupMergeRefuseMessages = new Hashtable();
+    private Hashtable forwardGroupAnnouncesMessages = new Hashtable();
+    public static final byte MAX_MERGE_TRIES = 3;
+    private byte mergeTriesCounter = 0;
+    short nodeState = CleanSlateConstants.BOOT_STATE;
+    Timer networkDiscoveryTimer;
+    Timer mergeCheckTimer;
 
-    //TODO: Com 3 nós eles conseguem se juntar, verificar porque não ficam os grupos actualizados
-    //TODO: Trabalhar no broadcast para o grupo
     /**************************************************************************
      * ROUTING LAYER SPECIFIC OPERATIONS
-     * 
      **************************************************************************/
     /**
      * Invoqued when the simulation starts
@@ -49,7 +65,12 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
     public void autostart() {
         myGroupId = getNode().getId();
         myGroupSize = 1;
-        runSecureNeighboringDiscovery();
+        configureTimers();
+        if (nodeState == CleanSlateConstants.BOOT_STATE) {
+            nodeState = CleanSlateConstants.NEIGHBOR_DISCOVERY_STATE;
+            runSecureNeighboringDiscovery();
+        }
+
     }
 
     /**
@@ -57,38 +78,37 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
      * @param message
      */
     @Override
-    public void receiveMessage(Object message) {
+    public void receiveMessage(Object m) {
 
-        BaseMessageData data = new BaseMessageData(((CleanSlateMsg) message).getPayload());
+        BaseMessageData data = new BaseMessageData(((CleanSlateMsg) m).getPayload());
+        // verify if I received a message from a legal neighbor
         if (data.type != CleanSlateConstants.MSG_HELLO) {
-            if (!isMyNeighbor(data.sourceId)) {
-                System.out.println(getInfo() + " - received a message from a non neighbor: " + data.sourceId);
+            if (!isMyNeighbor(data.forwardId)) {
                 return;
             }
         }
+
         // saves neihgbors data to evaluate my edge node state
-        updateNodeNeighbors(data.sourceId, data.sourceGroupId);
+        updateNodeNeighbors(data.forwardId, data.forwardGroupId);
+        CleanSlateMsg message = (CleanSlateMsg) m;
         switch (data.type) {
             case CleanSlateConstants.MSG_HELLO:
                 receiveHelloMessage(message);
                 break;
-            case CleanSlateConstants.MSG_MERGE_PROPOSAL_REQUEST:
+            case CleanSlateConstants.MSG_MERGE_PROPOSAL:
                 receiveMergeProposalMessage(message);
                 break;
-            case CleanSlateConstants.MSG_KNOWNED_GROUP_INFO:
-                receiveGroupInfoMessage(message);
+            case CleanSlateConstants.MSG_MERGE_PROPOSAL_AGREEMENT:
+                receiveMergeProposalAgreementMessage(message);
+                break;
+            case CleanSlateConstants.MSG_MERGE_PROPOSAL_REFUSE:
+                receiveMergeProposalRefuseMessage(message);
                 break;
             case CleanSlateConstants.MSG_POST_MERGE:
-                receivePostMergeInfoMessage(message);
+                receivePostMergeMessage(message);
                 break;
-            case CleanSlateConstants.MSG_BROADCAST_MERGE_PROPOSAL_REFUSE:
-                receiveBroadcastMergeProposalRefuseMessage(message);
-                break;
-            case CleanSlateConstants.MSG_GROUP_NEIGHBORING_INFO:
-                receiveGroupNeighboringInfoMessage(message);
-                break;
-            case CleanSlateConstants.MSG_GROUP_MERGE:
-                receiveGroupMergeMessage(message);
+            case CleanSlateConstants.MSG_NEIGHBOR_GROUP_ANNOUNCE:
+                receiveNeighborsGroupAnnounceMessage(message);
                 break;
         }
     }
@@ -109,13 +129,6 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
     @Override
     public boolean sendMessage(Object message, Application app) {
         return true;
-    }
-
-    private void addToNeighborsList(HELLOMsgData helloData) {
-        if (debug_level > DEBUG_LEVEL_FINNEST) {
-            System.out.println(getInfo() + " Added Neighbor " + helloData.sourceId);
-        }
-        listNeighbors.put(helloData.sourceId, new Long(-1));
     }
 
     /************************** END OF ROUTING SPECIFIC OPERATIONS ************/
@@ -139,196 +152,306 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
     }
 
     /**
-     * 
+     * Uses Hello message information to update neighbors list
+     * @param helloData
+     */
+    private void addToNeighborsList(HELLOMsgData helloData) {
+        listNeighbors.put(helloData.sourceId, helloData.sourceGroupId);
+    }
+
+    /************************** END OF UTILS FUNCTIONS ************/
+    /**
+     * All Edge Nodes have at least one neighbor that belongs to other group
+     * diferent from mine
+     * @return
+     */
+    private boolean iAmEdgeNode() {
+        // one node is edge if has a neighbor node that not belongs to the same group
+        for (Object object : listNeighbors.keySet()) {
+            short s = (Short) object;
+            Long g = (Long) listNeighbors.get(s);
+            if (g != null) {
+                if (g != myGroupId) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Check if a node belongs to my neighbors list
+     * @param id
+     * @return
+     */
+    private boolean isMyNeighbor(short id) {
+        return (listNeighbors.get(id) != null);
+    }
+
+    /**
+     * Sends a message without reliability to the air
      * @param message
      */
-    private void sendMessageToAir(DefaultMessage message) {
-        boolean reliable = false;
+    private void sendMessageToAir(BaseMessage message) {
+        sendMessageToAir(message, false);
+    }
+
+    /**
+     * Sent the message to the air, if send fail then try again
+     * @see DelayedMessageEvent
+     * @param message
+     */
+    private void sendMessageToAir(BaseMessage message, boolean reliable) {
+
         long time = (long) (getNode().getSimulator().getSimulationTime()
                 + Simulator.randomGenerator.nextDoubleBetween((int) CleanSlateConstants.MIN_DELAYED_MESSAGE_BOUND, (int) CleanSlateConstants.MAX_DELAYED_MESSAGE_BOUND));
         DelayedMessageEvent delayMessageEvent = new DelayedMessageEvent(time, message, getNode());
+        delayMessageEvent.setReliable(reliable);
         getNode().getSimulator().addEvent(delayMessageEvent);
-        if (reliable) {
-            DelayedMessageEvent delayMessageEvent1 = new DelayedMessageEvent(time + 200, message, getNode());
-            getNode().getSimulator().addEvent(delayMessageEvent1);
-            DelayedMessageEvent delayMessageEvent2 = new DelayedMessageEvent(time + 200, message, getNode());
-            getNode().getSimulator().addEvent(delayMessageEvent2);
-        }
     }
 
+    /**
+     * Update neighbors information based on messages received.
+     * This must be keeptd updated because the edge status probe
+     * @param sourceNodeID
+     * @param groupId
+     */
     private void updateNodeNeighbors(short sourceNodeID, long groupId) {
         listNeighbors.put(sourceNodeID, groupId);
     }
-    
-    /**
-     * 
-     * @param message
-     */
-    private void receiveGroupMergeMessage(Object message) {
-        if (inMergingProcess) {
-            return;
-        }
-        GroupMergeData groupMergeData = new GroupMergeData(((CleanSlateMsg) message).getPayload());
-        if (groupMergeData.sourceGroupId == myGroupId) { // intra group message
-            MergeProposalData mergeProposalData = new MergeProposalData(groupMergeData.mergeProposalData);
-            if (debug_level > DEBUG_LEVEL_FINNEST) {
-                System.out.println(getInfo() + " - Start intra group merge with " + mergeProposalData.sourceGroupId);
-            }
-            startMergingProcess(mergeProposalData);
-        }
-    }
 
     /**
      * 
      * @param message
      */
-    private void receiveHelloMessage(Object message) {
-        if (secureNeighborDiscovery) {
+    private void receiveHelloMessage(CleanSlateMsg message) {
+        if (inSecureNeighborDiscovery) {
             HELLOMsgData helloData = new HELLOMsgData(((CleanSlateMsg) message).getPayload());
             if (getNode().getMacLayer().getSignalStrength() > CleanSlateConstants.NEIGHBOR_SIGNAL_THRESHOLD) {
-                if (debug_level > DEBUG_LEVEL_FINNEST) {
-                    System.out.println(getInfo() + " - Received Hello message from " + helloData.sourceId + " With RSSI: " + getNode().getMacLayer().getSignalStrength());
-                }
                 // verifify signature
+                //    System.out.println("getNode().getMacLayer().getSignalStrength(): " + getNode().getMacLayer().getSignalStrength());
                 if (CleanSlateFunctions.verifySignature((CleanSlateMsg) message)) {
                     addToNeighborsList(helloData);
                 }
-
             }
-
         }
     }
 
     /**
-     * 
+     * Handles the message Merge Proposal Refuse
+     * This messages is sent by edge nodes when detects that a merge candidate
+     * node proposes a merge with other node.
+     * This message is used Intra Group comunication
      * @param message
      */
-    private void receiveMergeProposalMessage(Object message) {
+    private void receiveMergeProposalRefuseMessage(CleanSlateMsg message) {
+        MergeProposalRefuseData messageData = new MergeProposalRefuseData(message.getPayload());
         if (inMergingProcess) {
             return;
         }
+        if (messageData.sourceGroupId == myGroupId) { // its a group comunication message
+            forwardGroupMergeRefuseMessage(messageData);
+            if (iAmEdgeNode()) {
+                waitingMergeProposal = false;
+                startMergeProposal(); // start a new merge proposal phase
+            }
+        }
+    }
 
-        MergeProposalData mergeProposalData = new MergeProposalData(((DefaultMessage) message).getPayload());
-        if (mergeProposalData.targetGroup == myGroupId) { // se for para mim ?
-            if (mergeProposalData.sourceGroupId == waitingMergeProposalFrom) { // se estou à espera?
-                sendMergeProposalTo(mergeProposalData.sourceGroupId);
-                if (debug_level > DEBUG_LEVEL_NORMAL) {
-                    System.out.println(getInfo() + " - Received MergeProposal message from " + (long) mergeProposalData.sourceGroupId + " Notify group");
+    /**
+     * Handles the post merge messages
+     * This messages are sent by edge nodes to inform about new group info
+     * This is a message for neighboring groups not for intra group coordination
+     * @param message
+     */
+    private void receivePostMergeMessage(CleanSlateMsg message) {
+        PostMergeData messageData = new PostMergeData(message.getPayload());
+
+        if (messageData.sourceGroupId != myGroupId && messageData.oldGroupId != myGroupId) {
+            // esta mensagem não é intra group então deverá vir de um edge node de outro grupo
+            // update my list of group neighbors
+            listNeighboringGroups.remove(messageData.oldGroupId);
+            listNeighboringGroups.remove(messageData.targetGroup);
+
+            NeighborInfo ni = new NeighborInfo(messageData.sourceGroupId, messageData.sourceGroupSize);
+            listNeighboringGroups.put(messageData.sourceGroupId, ni);
+            System.out.print(getInfo() + " - Received a Post Merge UPDATE " + messageData.oldGroupId + " with " + ni + " - ");
+
+            CleanSlateFunctions.printNeighborsGroupInfo(listNeighboringGroups.values(), "");
+            if (messageData.oldGroupId == waitingMergeProposalFrom && waitingMergeProposal) {
+                if (messageData.targetGroup == myGroupId && !inMergingProcess) {
+                    // it will come a new message proposal in near future
+                    System.out.println(getInfo() + " - I AM WAITING FOR A MERGE PROPOSAL FROM " + messageData.oldGroupId);
+                    waitingMergeProposal = true;
+                } else {
+                    mergeTriesCounter = 0;
+                    // my merge candidate already merge with other group
+                    // lets notify group and restart merge process
+                    System.out.println(getInfo() + " - old group " + messageData.oldGroupId + " was my candidate to merge notfy group");
+                    waitingMergeProposal = false; // if my propose was refuse I am no longer wait for a proposal
+                    // notify my group
+                    startNewMergeProposalRefuseGroupFlooding(messageData.oldGroupId);
+                    // lets start again
+                    startMergeProposal();
                 }
-                notifyGroup2Merge(mergeProposalData);
-                startMergingProcess(mergeProposalData);
+            }
+        }
+    }
+
+    /**
+     * Handles the neighbors group announce message
+     * This is a periodic message that enables a edge node to initiate the merge
+     * proposal. This is a intra group coordination message
+     * @param message
+     */
+    private void receiveNeighborsGroupAnnounceMessage(CleanSlateMsg message) {
+        if (waitingMergeProposal) {
+            return;
+        }
+        NeighborGroupAnnounceData messageData = new NeighborGroupAnnounceData(message.getPayload());
+        if (messageData.sourceGroupId == myGroupId) {
+            // its a group message and is from my group
+            if (messageData.sourceId != getNode().getId()) {
+                // if it was not initiated for me
+                updateNeighborsGroupsInformation(messageData);
+
+                forwardNeighborsGroupsAnnouncesMessage(messageData);
+                for (int i = 0; i < messageData.sourceNeighborsListSize; i++) {
+                    NeighborInfo ni = new NeighborInfo(messageData.sourceNeighborsListGroupID[i], messageData.sourceNeighborsListGroupSize[i]);
+                    neighborsGroupInformationAnnounces.add(ni);
+                }
+                startMergeProposal();
+            }// else discard it
+        }
+    }
+
+    /**
+     * Handles the merge proposal messages
+     * This must only be handled for a edge node, if not a edge node discard
+     * Just the edge nodes receive merge proposals
+     * @param message
+     */
+    private void receiveMergeProposalMessage(CleanSlateMsg message) {
+        // just edge nodes can receive merge proposals, internal nodes cannot
+        if (inMergingProcess || !iAmEdgeNode()) {
+            return;
+        }
+        // read message data
+        MergeProposalData messageData = new MergeProposalData(message.getPayload()); // TODO: Pode passar para depois
+        if (messageData.targetGroup == myGroupId) {
+            // if is destinated to my group
+            System.out.print(getInfo() + " - Received a Merge Proposal from " + messageData.sourceGroupId);
+            if (waitingMergeProposal) {
+                System.out.print(" I am waiting for it: ");
+                // if i am waiting for a proposal response
+                if (messageData.sourceGroupId == waitingMergeProposalFrom) {
+                    // repeat the merge proposal to enforce connectivity
+                    // TODO: may be deleted in future for now is commented
+                    System.out.println(" Is from my last Proposal : " + waitingMergeProposalFrom);
+                    //PMS        sendMergeProposalTo(waitingMergeProposalFrom);
+                } else {
+                    return;
+                }
             } else {
-                if (mergeProposalData.sourceGroupId == chooseSmallestNeighborGroup()) { // é candidato a merge?
-                    sendMergeProposalTo(mergeProposalData.sourceGroupId);
-                    if (debug_level > DEBUG_LEVEL_NORMAL) {
-                        System.out.println(getInfo() + " - Received MergeProposal message from " + (long) mergeProposalData.sourceGroupId + " Notify group");
+                System.out.print(" Verify if is a candidate to me: ");
+
+                // verify if can be my candidate (I don't send the proposal yet)
+                Long candidateGroupId = chooseSmallestNeighborGroup(); // i want the first
+                if (candidateGroupId != null) {
+                    if (messageData.sourceGroupId == candidateGroupId) {
+                        sendMergeProposalTo(candidateGroupId);
+                        System.out.print(" Yes. Sent a proposal");
+                        mergeTriesCounter = 0;
+                    } else {
+                        System.out.println();
+                        return; // discards
                     }
-                    notifyGroup2Merge(mergeProposalData);
-                    startMergingProcess(mergeProposalData);
                 }
+            }
+            System.out.println(" Notify group for the merge agreement. ");
+            startNewMergeProposalAgreementGroupFlooding(messageData);
+
+            initiateMergeOperations(messageData);
+        } else {
+
+            if (messageData.sourceGroupId == waitingMergeProposalFrom) {
+                // my proposal candidate group decided to join with other group
+                // so I have to notify my group with a merge proposal refuse and
+                // I could restart the merge again
+//                System.out.println(getInfo() + " - Received a merge proposal from my candidate " + messageData.sourceGroupId + " With " + messageData.targetGroup + " is a refuse merge");
+//                startNewMergeProposalRefuseGroupFlooding(messageData.sourceGroupId);
+//                waitingMergeProposal = false;
+//                startMergeProposal(); // let's try again
             }
         }
     }
 
     /**
-     * 
+     * Handle Merge Proposal Agreement Messages
+     * This messages are group messages to notify all group about the merge 
+     * agreement done by one of the edge nodes
      * @param message
      */
-    private void receiveGroupNeighboringInfoMessage(Object message) {
-        //TODO: Verificar a informação dos grupos que estou a receber 
-        GroupInfoBroadcastData groupInfoData = new GroupInfoBroadcastData(((DefaultMessage) message).getPayload());
-        if (groupInfoData.sourceId == getNode().getId()) {
-            return; // descarta se a mensagem vier de mim
-        }
-        if (groupInfoData.sourceGroupId == myGroupId) { // its a group message
-            if (isEdgeNode()) {
-                if (debug_level > DEBUG_LEVEL_FINNEST) {
-                    System.out.println(getInfo() + " - Receive Group: " + groupInfoData.sourceGroupId + " Neighboring Info Message from " + (long) groupInfoData.sourceId);
-                }
-                groupInfoAnnouncements.add(new NeighborInfo(groupInfoData.sourceGroupId, groupInfoData.sourceGroupSize));
-                if (groupInfoAnnouncements.size() == listNeighboringGroups.size()) {
-                    if (debug_level > DEBUG_LEVEL_FINE) {
-                        System.out.println(getInfo() + " - Number of Announcements reached the group size");
-                    }
-                    initiateMergeProposals();
-                }
-            }
-        }
-    }
-
-    private void startMergeProposalRefuseBroadcast(long sourceGroupID) {
-        if (debug_level > DEBUG_LEVEL_NORMAL) {
-            System.out.println(getInfo() + " - Propagate Merge Proposal Refuse To Group Message From " + sourceGroupID + " my merge is: "+waitingMergeProposalFrom);
-        }
-        byte[] payload = CleanSlateMessageFactory.createBroadcastMergeRefuseMessageToGroup(this, sourceGroupID, CleanSlateConstants.MSG_BROADCAST_MERGE_PROPOSAL_REFUSE, groupMergeRefuseMessafeSeqNumber++);
-        CleanSlateMsg message = new CleanSlateMsg(payload);
-        sendMessageToAir(message);
-
-        waitingMergeProposalFrom = -1;
-        if (isEdgeNode()) {
-            scheduleSelectionNewGroupToMergeTimeBound();
-        }
-    }
-
-    /**
-     * 
-     */
-    private void scheduleSelectionNewGroupToMergeTimeBound() {
-        long time = getNode().getSimulator().getSimulationTime() + CleanSlateConstants.RESTART_GROUP_MERGE_BOUND_TIME;
-        getNode().getSimulator().addEvent(
-                new Event(time) {
-
-                    @Override
-                    public void execute() {
-                        startNeighborInfoCollection();
-                    }
-                });
-    }
-
-    /**
-     *
-     */
-    private void startMergingProcess(MergeProposalData mergeProposalData) {
+    private void receiveMergeProposalAgreementMessage(CleanSlateMsg message) {
+        // I am merging so I' dont do anything
         if (inMergingProcess) {
             return;
+        }
+        MergeProposalAgreementData messageData = new MergeProposalAgreementData(message.getPayload());
+        System.out.println(getInfo() + "Received a merge proposal agreement frrom " + messageData.sourceId);
+        if (messageData.sourceGroupId == myGroupId) {
+            // its from my group
+            System.out.println(getInfo() + " - Received a Merge Proposal Agreement from " + messageData.sourceId);
+            forwardGroupMergeAgreementMessage(messageData);
+
+            initiateMergeOperations(new MergeProposalData(messageData.mergeProposalPayload));
+        } // else discard message
+    }
+
+    /**
+     * Initiate the merging process in a asynchronous manner
+     * @param messageData
+     */
+    private void initiateMergeOperations(MergeProposalData messageData) {
+        waitingMergeProposal = false;
+        if (inMergingProcess) {
+            return; // i'm allready started a merge
         }
         inMergingProcess = true;
-        if (debug_level > DEBUG_LEVEL_NORMAL) {
-            System.out.println(getInfo() + " - Starting merging with " + (long) mergeProposalData.sourceGroupId);
-        }
-        long newGroupID = computeNewGroupId(myGroupId, myGroupSize, mergeProposalData.sourceGroupId, mergeProposalData.sourceGroupSize);
-        if (debug_level > DEBUG_LEVEL_FINE) {
-            System.out.println(getInfo() + " - New Group ID " + newGroupID);
-        }
-        mergeCounter++;
-        updateMergeTable(mergeProposalData);
-        updateNetworkAddress(mergeProposalData);
-        updateRoutingTable(mergeProposalData);
-        updateMergeNeighborsList(mergeProposalData);
+        System.out.println(getInfo() + " - INITIATED Merge Operations for merge proposal with  " + messageData.sourceGroupId);
+        long newGroupID = CleanSlateFunctions.computeNewGroupId(myGroupId, myGroupSize, messageData.sourceGroupId, messageData.sourceGroupSize);
+        networkAddress = CleanSlateFunctions.networkAddressBit(myGroupId, messageData.sourceGroupId) + networkAddress;
+        mergeTable.add(new MergeTableEntry(messageData.sourceGroupId, messageData.sourceGroupSize));
+        routingTable.add(messageData.sourceId);
+        updateMergeNeighborsList(messageData);
+        myGroupSize += messageData.sourceGroupSize;
         myGroupId = newGroupID;
-        if (isEdgeNode()) {
-            broadcastPostMergeInfo(mergeProposalData);
-        }
+        mergeCounter++;
+        listNeighboringGroups.remove(myGroupId);
+        postMergeOperations(messageData);
+        System.out.println(getInfo() + " - MERGE DONE with " + messageData.sourceGroupId);
+        waitingMergeProposal = false;
+        startMergeProposal();
+        mergeTriesCounter = 0;
     }
 
     /**
-     *
+     * Execute Post Merge Operations
+     * This must be done only by edge nodes 
+     * Intended to inform all neighboring groups about the new group info
      */
-    private void broadcastPostMergeInfo(MergeProposalData mergeProposalData) {
-        // este broadcast pode ser desencadeado a partir de uma mensagem delayed
-        if (isEdgeNode()) {
-            if (debug_level > DEBUG_LEVEL_NORMAL) {
-                System.out.println(getInfo() + "- Broadcast Post Merge Info To Neighbors");
-            }
-            byte[] payload = CleanSlateMessageFactory.createPostMergeMessagePayload(this, mergeProposalData.sourceGroupId);
-            CleanSlateMsg message = new CleanSlateMsg(payload);
-            sendMessageToAir(message);
+    private void postMergeOperations(MergeProposalData messageData) {
+        if (iAmEdgeNode()) {
+            System.out.println(getInfo() + " - Send Post Merge Message");
+            byte[] payload = CleanSlateMessageFactory.createPostMergeMessagePayload(this, messageData.sourceGroupId, messageData.targetGroup);
+            broadcast(new CleanSlateMsg(payload));
         }
-        scheduleSelectionNewGroupToMergeTimeBound();
+        startNewNeighborsGroupsAnnounceGroupFlooding();
+        inMergingProcess = false;
     }
 
     /**
-     *
+     * Merge the neighbor group information from the merge proposal
      * @param mergeProposalData
      */
     private void updateMergeNeighborsList(MergeProposalData mergeProposalData) {
@@ -336,203 +459,21 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
             NeighborInfo ni = new NeighborInfo(mergeProposalData.sourceNeighborsListGroupID[i],
                     mergeProposalData.sourceNeighborsListGroupSize[i]);
             listNeighboringGroups.put(ni.getGroupID(), ni);
-
         }
         listNeighboringGroups.remove(mergeProposalData.sourceGroupId);
         listNeighboringGroups.remove(myGroupId);
-        myGroupSize += mergeProposalData.sourceGroupSize;
-
-        if (debug_level > DEBUG_LEVEL_FINE) {
-            CleanSlateFunctions.printNeighborsGroupInfo(listNeighboringGroups.values(), getInfo());
-        }
-    }
-
-    /**
-     * 
-     * @param mergeProposalData
-     */
-    private void updateRoutingTable(MergeProposalData mergeProposalData) {
-        // adds the node id from were he learned about group
-        routingTable.add(mergeProposalData.sourceId);
-    }
-
-    /**
-     * 
-     * @param mergeProposalData
-     */
-    private void updateNetworkAddress(MergeProposalData mergeProposalData) {
-        networkAddress += (myGroupId < mergeProposalData.sourceGroupId ? "0" : "1");
-        if (debug_level > DEBUG_LEVEL_FINE) {
-            System.out.println(getInfo() + " - Address: " + networkAddress);
-        }
-    }
-
-    /**
-     * 
-     * @param mergeProposalData
-     */
-    private void updateMergeTable(MergeProposalData mergeProposalData) {
-        mergeTable.add(new MergeTableEntry(mergeProposalData.sourceGroupId, mergeProposalData.sourceGroupSize));
-    }
-
-    /**
-     *
-     */
-    private long computeNewGroupId(long mygid, short mysize, long gid, short size) {
-        long newGroupID = 0;
-        if (mygid > gid) {
-            newGroupID = CleanSlateFunctions.groupIdHash(mygid, mysize, gid, size);
-        } else {
-            newGroupID = CleanSlateFunctions.groupIdHash(gid, size, mygid, mysize);
-        }
-        return newGroupID;
-    }
-
-    /**
-     * Receives the messages with de groups information
-     * @param message
-     */
-    private void receiveGroupInfoMessage(Object message) {
-        byte[] payload = ((DefaultMessage) message).getPayload();
-        GroupInfoBroadcastData groupInfoBroadcastData = new GroupInfoBroadcastData(payload);
-        if (listNeighbors.keySet().contains(groupInfoBroadcastData.sourceId)) {
-            listNeighbors.put(groupInfoBroadcastData.sourceId, groupInfoBroadcastData.sourceGroupId);
-            if (debug_level > DEBUG_LEVEL_FINNEST) {
-                System.out.println(getInfo() + " - Received Group Info from " + groupInfoBroadcastData.sourceId);
-            }
-            listNeighboringGroups.put(groupInfoBroadcastData.sourceGroupId, new NeighborInfo(groupInfoBroadcastData.sourceGroupId, groupInfoBroadcastData.sourceGroupSize));
-        } else {
-            if (debug_level > DEBUG_LEVEL_FINNEST) {
-                System.out.println(getInfo() + " - MESSAGE SENT FROM NON NEIGHBOR NODE: " + groupInfoBroadcastData.sourceId);
-            }
-        }
-    }
-
-    /**
-     * 
-     * @param message
-     */
-    private void receivePostMergeInfoMessage(Object message) {
-        //TODO: Rever este metodo alterei a mensagem de postMerge
-        PostMergeData postMergeData = new PostMergeData(((DefaultMessage) message).getPayload());
-        //Se estiver a fazer merge tenho q ter em atenção q tenho de descartar
-        // as mensagens que vêm do nó a quem me estou a juntar
-        if (inMergingProcess || postMergeData.sourceGroupId == waitingMergeProposalFrom) {
-            return;
-        }
-        short nodeId = postMergeData.sourceId; // quem se esta a juntar
-        Long oldGid = postMergeData.sourceGroupId; // com quem se esta a juntar
-
-        NeighborInfo ni = new NeighborInfo(postMergeData.sourceGroupId, postMergeData.sourceGroupSize);
-        listNeighboringGroups.remove(oldGid);
-        listNeighbors.put(nodeId, postMergeData.sourceGroupId);
-
-        if (debug_level > DEBUG_LEVEL_FINNEST) {//TODO: Alterar o nivel de debug
-            System.out.print(getInfo() + " - Received Post Merge info from " + postMergeData.sourceId);
-            System.out.print(" - Old Group: " + oldGid);
-            System.out.println(" - New Group " + postMergeData.sourceGroupId);
-            for (Object object : listNeighboringGroups.values()) {
-                System.out.print(" " + object + " ");
-            }
-            System.out.println();
-        }
-
-        if (postMergeData.sourceGroupId != myGroupId) { // it comes from my group
-            listNeighboringGroups.put(postMergeData.sourceGroupId, ni); // update new group
-            if (waitingMergeProposalFrom == oldGid && !inMergingProcess) {
-                startMergeProposalRefuseBroadcast(oldGid);
-            }
-        }
-
-    }
-
-    /**
-     * 
-     * @param message
-     */
-    private void receiveBroadcastMergeProposalRefuseMessage(Object message) {
-        if (inMergingProcess) {
-            return;
-        }
-        BroadcastMergeProposalRefuseData broadcastMergeProposalRefuseData = new BroadcastMergeProposalRefuseData(((DefaultMessage) message).getPayload());
-        if (myGroupId == broadcastMergeProposalRefuseData.sourceGroupId) {
-            if (broadcastMergeProposalRefuseData.sequenceNumber > groupMergeRefuseMessafeSeqNumber) {
-                groupMergeRefuseMessafeSeqNumber = broadcastMergeProposalRefuseData.sequenceNumber;
-                if (debug_level > DEBUG_LEVEL_NONE) {
-                    System.out.println(getInfo() + " - Received a Broadcast Merge Proposal Refuse from " + broadcastMergeProposalRefuseData.sourceId + " forward to neighbors");
-                }
-                startMergeProposalRefuseBroadcast(broadcastMergeProposalRefuseData.sourceGroupId);
-
-            }
-        }
-    }
-
-    /**
-     *
-     */
-    private void startNeighborInfoCollection() {
-        if (debug_level > DEBUG_LEVEL_FINE) {
-            System.out.println(getInfo() + " - Start new Merge");
-        }
-        if (isEdgeNode()) {
-            floodGroupWithNeighborsInfo(); // TODO: algumas duvidas em relação à existência desta função
-        }
-        long time = getNode().getSimulator().getSimulationTime() + CleanSlateConstants.COLLECT_NEIGHBOR_INFO_BOUND_TIME;
-        Event e = new Event(time) {
-
-            @Override
-            public void execute() {
-                initiateMergeProposals();
-            }
-        };
-        getNode().getSimulator().addEvent(e);
-    }
-
-    /**
-     *
-     */
-    private void initiateMergeProposals() {
-        inMergingProcess = false;
-        waitingMergeProposalFrom = -1;
-        long gid = chooseSmallestNeighborGroup();
-        if (gid > -1) {
-            sendMergeProposalTo(gid);
-        }
-    }
-
-    /**
-     *
-     */
-    private void startRecursiveGroupingPhase() {
-        recursiveGroupingInitiated = true;
-        if (debug_level > DEBUG_LEVEL_FINNEST) {
-            System.out.println(getInfo() + " - Starting RecursiveGroupingAlgorithm");
-            CleanSlateFunctions.printNeighborsGroupInfo(listNeighboringGroups.values(), getInfo());
-        }
-        runRecursiveGroupingAlgorithm();
     }
 
     /**************************************************************************
      *  OPERATION METHODS
      **************************************************************************/
     private void runSecureNeighboringDiscovery() {
-        secureNeighborDiscovery = true;
-        sendMessageToAir(new CleanSlateMsg(CleanSlateMessageFactory.createHELLOMessagePayload(this)));
-        sendMessageToAir(new CleanSlateMsg(CleanSlateMessageFactory.createHELLOMessagePayload(this)));
-        sendMessageToAir(new CleanSlateMsg(CleanSlateMessageFactory.createHELLOMessagePayload(this)));
+        inSecureNeighborDiscovery = true;
+        // substitui a as mensagens periodicas por 3 chamadas a hello
+
+
+        networkDiscoveryTimer.start(CleanSlateConstants.MAX_DISCOVERY_MESSAGES_SENT, CleanSlateConstants.DISCOVERY_MESSAGES_INTERVAL);
         scheduleSecureNetworkDiscoveryTimeBound();
-
-
-    }
-
-    /**
-     *
-     */
-    private void runRecursiveGroupingAlgorithm() {
-        if (debug_level > DEBUG_LEVEL_FINNEST) {
-            System.out.println(getInfo() + " - Running RecursiveGroupingAlgorithm");
-        }
-        startNeighborInfoCollection();
     }
 
     /**
@@ -544,88 +485,57 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
 
             @Override
             public void execute() {
-                startGroupInfoBroadcast();
-
-
+                updateNeighborsGroupWithNeighborsHello();
+                startMergeProposal();
             }
         };
         getNode().getSimulator().addEvent(e);
-
-
     }
 
     /**
-     *
+     * Starting merge proposal procedure
+     * Just for Edge Nodes
      */
-    private void startGroupInfoBroadcast() {
-        periodicGroupInfoMessageBroadcast();
-        scheduleGroupInfoBroadcastTimeBound();
-    }
-
-    /**
-     * 
-     */
-    private void scheduleGroupInfoBroadcastTimeBound() {
-        long time = getNode().getSimulator().getSimulationTime() + CleanSlateConstants.COLLECT_NEIGHBOR_INFO_BOUND_TIME;
-        Event e = new Event(time) {
-
-            @Override
-            public void execute() {
-                startRecursiveGroupingPhase();
-
-
-            }
-        };
-        getNode().getSimulator().addEvent(e);
-
-
-    }
-
-    /**
-     *
-     */
-    private void periodicGroupInfoMessageBroadcast() {
-        if (recursiveGroupingInitiated) {
+    private void startMergeProposal() {
+        if (!iAmEdgeNode()) {
             return;
         }
-        if (debug_level > DEBUG_LEVEL_FINNEST) {
-            System.out.println(getInfo() + " - Sent Group info message");
+        
+        int neighborsGroupInformationAnnouncesSize = neighborsGroupInformationAnnounces.size();
+        boolean conditionToStartMergeProposal = (myGroupSize == 1) || (neighborsGroupInformationAnnouncesSize == listNeighboringGroups.size());
+        if (conditionToStartMergeProposal && !waitingMergeProposal) {
+            Long candidateGroupID = chooseSmallestNeighborGroup(); // gets the next one
+            if (candidateGroupID != null) {
+                sendMergeProposalTo(candidateGroupID);
+                nodeState = CleanSlateConstants.MERGE_PROPOSAL_STATE;
+            } else {
+                System.out.println(getInfo() + "- NO CANDIDATE");
+                printRoutingTable();
+            }
         }
-        sendMessageToAir(new CleanSlateMsg(CleanSlateMessageFactory.createGroupInfoBroadcastMessagePayload(this, myGroupId, myGroupSize, CleanSlateConstants.MSG_KNOWNED_GROUP_INFO)));
-        initBroadcastGroupInfoTimer();
     }
 
-    /**
-     * Create a event to send  a hello message
-     */
-    private void initBroadcastGroupInfoTimer() {
-        long time = (long) (getNode().getSimulator().getSimulationTime() + Simulator.randomGenerator.random().nextDouble() * CleanSlateConstants.GROUP_INFO_BROADCAST_REPEAT_TIME);
-        Event e = new Event(time) {
-
-            @Override
-            public void execute() {
-                periodicGroupInfoMessageBroadcast();
-
-
-            }
-        };
-        getNode().getSimulator().addEvent(e);
-
-
+    private void updateNeighborsGroupWithNeighborsHello() {
+        for (Object key : listNeighbors.keySet()) {
+            short nodeId = (Short) key;
+            Long groupId = (Long) listNeighbors.get(nodeId);
+            listNeighboringGroups.put(groupId, new NeighborInfo(groupId, (short) 1));
+        }
     }
 
     /**
      * Choose the smallest knowned neighbor
      * @return
      */
-    private long chooseSmallestNeighborGroup() {
-        PriorityQueue queue = new PriorityQueue(listNeighboringGroups.values());
-        Object o = queue.peek();
-
-
-        return (o == null) ? -1 : (Long) ((NeighborInfo) o).getGroupID();
-
-
+    private Long chooseSmallestNeighborGroup() {
+        PriorityQueue queue = new PriorityQueue();
+        for (Object o : listNeighboringGroups.values()) {
+            NeighborInfo ni = (NeighborInfo) o;
+            if (waitingMergeProposalFrom == null || waitingMergeProposalFrom != ni.getGroupID()) {
+                queue.add(ni);
+            }
+        }
+        return (queue.peek() == null) ? null : ((NeighborInfo) queue.peek()).getGroupID();
     }
 
     /**
@@ -634,68 +544,177 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
      */
     private void sendMergeProposalTo(long gid) {
         waitingMergeProposalFrom = gid;
-        if (debug_level > DEBUG_LEVEL_FINE) {
-            System.out.println(getInfo() + " - Send MergeProposal message TO " + (long) gid + " Round: " + mergeCounter);
+        waitingMergeProposal = true;
+        if (debug_level > CleanSlateConstants.DEBUG_LEVEL_FINE) {
+            System.out.print(getInfo() + " - Send MergeProposal message TO " + (long) gid + " Round: " + mergeCounter + " ");
+            CleanSlateFunctions.printNeighborsGroupInfo(listNeighboringGroups.values(), "");
         }
-        byte[] payload = CleanSlateMessageFactory.createMergeProposalMessagePayload(this, gid, CleanSlateConstants.MSG_MERGE_PROPOSAL_REQUEST);
+        byte[] payload = CleanSlateMessageFactory.createMergeProposalMessagePayload(this, gid, CleanSlateConstants.MSG_MERGE_PROPOSAL);
         CleanSlateMsg message = new CleanSlateMsg(payload);
         sendMessageToAir(message);
     }
 
     /**
-     * All Edge Nodes have at least one neighbor that belongs to other group
-     * diferent from mine
-     * @return
+     *  Broadcast to group 
+     * @param mergeProposalRefuseMessage
      */
-    private boolean isEdgeNode() {
-        // one node is edge if has a neighbor node that not belongs to the same group
-        for (Object object : listNeighbors.keySet()) {
-            short s = (Short) object;
-            Long g = (Long) listNeighbors.get(s);
-            if (g != -1) {
-                if (g != myGroupId) {
-                    return true;
-                }
-            }
-        }
-        return false;
+    private void broadcastToGroup(CleanSlateMsg message) {
+        sendMessageToAir(message, true);
     }
 
     /**
-     *
+     * Broadcast to the air
+     * @param message
      */
-    private void floodGroupWithNeighborsInfo() {
-        if (debug_level > DEBUG_LEVEL_FINE) {
-            System.out.print(getInfo() + " - Flooding My Group: " + myGroupId + " With Neighbors Info ");
-            CleanSlateFunctions.printNeighborsGroupInfo(listNeighboringGroups.values(), "");
+    private void broadcast(CleanSlateMsg message) {
+        sendMessageToAir(message);
+    }
+
+    /**
+     * Updates my neighbors group information
+     * @param messageData
+     */
+    private void updateNeighborsGroupsInformation(NeighborGroupAnnounceData messageData) {
+        System.out.println(getInfo() + " - updating neighbors info using the announce from " + messageData.forwardGroupId);
+        for (int i = 0; i < messageData.sourceNeighborsListSize; i++) {
+            NeighborInfo ni = new NeighborInfo(messageData.sourceNeighborsListGroupID[i], messageData.sourceNeighborsListGroupSize[i]);
+            listNeighboringGroups.put(ni.getGroupID(), ni);
         }
-        if (isEdgeNode()) {
-            for (Object object : listNeighboringGroups.values()) { // acrescentei o values
-                NeighborInfo ni = (NeighborInfo) object;
-                sendFloodingNeighborsInfo(
-                        ni.getGroupID(), ni.getSize());
+    }
+
+    private void printRoutingTable() {
+        System.out.println(getInfo() + " - ROUTING TABLE -");
+        System.out.println("| \t");
+    }
+
+    private void forwardGroupMergeAgreementMessage(MergeProposalAgreementData messageData) {
+        Integer seqNum = (Integer) forwardGroupMergeAgreementMessages.get(messageData.sourceId);
+        if (seqNum == null) {
+            forwardGroupMergeAgreementMessages.put(messageData.sourceId, messageData.sequenceNumber);
+        } else {
+            if (messageData.sequenceNumber > seqNum) {
+                forwardGroupMergeAgreementMessages.put(messageData.sourceId, messageData.sequenceNumber);
+            } else {
+                return; // not a fresh message discard it
             }
         }
+        System.out.println(getInfo() + "  - forwardGroupMergeAgreementMessage SN:" + messageData.sequenceNumber + " Sent by " + messageData.sourceGroupId);
+        byte[] payload = CleanSlateMessageFactory.createMergeProposalAgreementMessagePayload(this,
+                new MergeProposalData(messageData.mergeProposalPayload),
+                messageData.sequenceNumber,
+                messageData.sourceId,
+                messageData.sourceGroupId);
+        broadcastToGroup(new CleanSlateMsg(payload));
+    }
+
+    private void forwardGroupMergeRefuseMessage(MergeProposalRefuseData messageData) {
+        Integer seqNum = (Integer) forwardGroupMergeRefuseMessages.get(messageData.sourceId);
+        if (seqNum == null) {
+            forwardGroupMergeRefuseMessages.put(messageData.sourceId, messageData.sequenceNumber);
+        } else {
+            if (messageData.sequenceNumber > seqNum) {
+                forwardGroupMergeRefuseMessages.put(messageData.sourceId, messageData.sequenceNumber);
+            } else {
+                return; // not a fresh message discard it
+            }
+        }
+        System.out.println(getInfo() + "  - forwardGroupMergeRefuseMessage SN:" + messageData.sequenceNumber + " Sent by " + messageData.sourceGroupId);
+
+        byte[] payload = CleanSlateMessageFactory.createMergeProposalRefuseMessagePayload(this, messageData.refusedGroupId,
+                messageData.sequenceNumber,
+                messageData.sourceId,
+                messageData.sourceGroupId);
+        broadcastToGroup(new CleanSlateMsg(payload));
+    }
+
+    private void forwardNeighborsGroupsAnnouncesMessage(NeighborGroupAnnounceData messageData) {
+        Integer seqNum = (Integer) forwardGroupAnnouncesMessages.get(messageData.sourceId);
+        if (seqNum == null) {
+            forwardGroupAnnouncesMessages.put(messageData.sourceId, messageData.sequenceNumber);
+        } else {
+            if (messageData.sequenceNumber > seqNum) {
+                forwardGroupAnnouncesMessages.put(messageData.sourceId, messageData.sequenceNumber);
+            } else {
+                return; // not a fresh message discard it
+            }
+        }
+        System.out.println(getInfo() + "  - forwardNeighborsGroupsAnnouncesMessage SN:" + messageData.sequenceNumber + " Sent by " + messageData.sourceGroupId);
+        byte[] payload = CleanSlateMessageFactory.createNeighborGroupAnnounceMessagePayload(this,
+                messageData.sequenceNumber,
+                messageData.sourceId,
+                messageData.sourceGroupId);
+        broadcastToGroup(new CleanSlateMsg(payload));
+    }
+
+    /**
+     * Starting group flooding of the merge proposal refuse
+     * @param messageData
+     */
+    private void startNewMergeProposalRefuseGroupFlooding(long refusedGroupId) {
+        System.out.println(getInfo() + " -  startNewMergeProposalRefuseGroupFlooding  by " + refusedGroupId);
+        byte[] payload = CleanSlateMessageFactory.createMergeProposalRefuseMessagePayload(this, refusedGroupId, mergeRefuseSEQNUM++, getNode().getId(), myGroupId);
+        broadcastToGroup(new CleanSlateMsg(payload));
+    }
+
+    /**
+     * Initiate a merge agreement message flooding to group
+     * @param messageData
+     */
+    private void startNewMergeProposalAgreementGroupFlooding(MergeProposalData messageData) {
+        System.out.println(getInfo() + " -  Send a Merge Proposal Agreement to Group SEQ: " + mergeAgreementSEQNUM);
+        byte[] payload = CleanSlateMessageFactory.createMergeProposalAgreementMessagePayload(this, messageData, mergeAgreementSEQNUM++, getNode().getId(), myGroupId);
+        broadcastToGroup(new CleanSlateMsg(payload));
+    }
+
+    /**
+     * Start a neighbors group announce flooding to group
+     * @param messageData
+     */
+    private void startNewNeighborsGroupsAnnounceGroupFlooding() {
+        System.out.println(getInfo() + " -  Start New Neighbors Groups Announce Group Flooding SEQ: " + mergeNeighborAnnouncesSEQNUM);
+
+        byte[] payload = CleanSlateMessageFactory.createNeighborGroupAnnounceMessagePayload(this,
+                mergeNeighborAnnouncesSEQNUM++,
+                getNode().getId(),
+                myGroupId);
+        broadcastToGroup(new CleanSlateMsg(payload));
+    }
+
+    /**
+     * Node timers can be set here
+     */
+    private void configureTimers() {
+        networkDiscoveryTimer = new Timer() {
+
+            @Override
+            public void executeAction() {
+                sendMessageToAir(new CleanSlateMsg(CleanSlateMessageFactory.createHELLOMessagePayload(CleanSlateRoutingLayer.this)));
+            }
+        };
+
+        mergeCheckTimer = new Timer() {
+
+            @Override
+            public void executeAction() {
+                if (nodeState == CleanSlateConstants.MERGE_WAITING_STATE) {
+                    mergeTriesCounter++;
+                    if (mergeTriesCounter > MAX_MERGE_TRIES) {
+                        mergeTriesCounter = 0;
+                        switchToMergeProposalState();
+                    }
+                }
+            }
+        };
     }
 
     /**
      * 
      */
-    private void sendFloodingNeighborsInfo(long gid, short size) {
-        byte[] payload = CleanSlateMessageFactory.createGroupInfoBroadcastMessagePayload(this, gid, size, CleanSlateConstants.MSG_GROUP_NEIGHBORING_INFO);
-        CleanSlateMsg message = new CleanSlateMsg(payload);
-        sendMessageToAir(message);
+    private void switchToMergeProposalState() {
+       nodeState=CleanSlateConstants.MERGE_PROPOSAL_STATE;
+       startMergeProposal();
     }
 
-    private boolean isMyNeighbor(short id) {
-        return (listNeighbors.get(id) != null);
-    }
 
-    private void broadcastToGroup() {
-    }
 
-    private void notifyGroup2Merge(MergeProposalData mergeProposalData) {
-        byte[] payload = CleanSlateMessageFactory.createGroupMergeMessagePayload(this, mergeProposalData);
-        sendMessageToAir(new CleanSlateMsg(payload));
-    }
 }

@@ -3,21 +3,22 @@
  */
 package org.mei.securesim.test.flooding;
 
-import org.mei.securesim.test.pingpong.*;
 import java.util.HashSet;
+import org.mei.securesim.components.instruments.coverage.ICoverageHandler;
+import org.mei.securesim.components.instruments.coverage.CoverageController;
 import org.mei.securesim.core.application.Application;
 import org.mei.securesim.core.energy.EnergyConsumptionAction;
-import org.mei.securesim.core.engine.DefaultMessage;
+import org.mei.securesim.core.engine.BaseMessage;
 import org.mei.securesim.core.layers.routing.RoutingLayer;
-import org.mei.securesim.core.nodes.Node;
+import org.mei.securesim.test.flooding.messages.FloodingMessage;
+import org.mei.securesim.test.flooding.tests.FloodingComparator;
 
 /**
  * @author posilva
  *
  */
-public class FloodingRoutingLayer extends RoutingLayer {
+public class FloodingRoutingLayer extends RoutingLayer implements ICoverageHandler {
 
-    private Node parent;
     protected HashSet<Long> receivedMessages = new HashSet<Long>();
 
     public FloodingRoutingLayer() {
@@ -30,19 +31,29 @@ public class FloodingRoutingLayer extends RoutingLayer {
      */
     @Override
     public void receiveMessage(Object message) {
-        final DefaultMessage msg = (DefaultMessage) message;
-        getNode().getCPU().execute(new EnergyConsumptionAction(){
 
+        final BaseMessage msg = (BaseMessage) message;
+        getNode().getCPU().execute(new EnergyConsumptionAction() {
+
+            /**
+             * 
+             */
             public void execute() {
-                DefaultMessage m = (DefaultMessage) msg;
-                // if not received the message handle it 
-                if (!receivedMessages.contains(getMessageID(m))) {
-                    receivedMessages.add(getMessageID(m));
-                    Application app = getNode().getApplication();
-                    if (app != null) {
-                        app.receiveMessage(msg);
+
+                FloodingMessage m = (FloodingMessage) msg;
+                if (!receivedMessages.contains(m.getMessageNumber())) {
+                    receivedMessages.add(m.getMessageNumber());
+
+
+                    if (m.getDestin() == (int) getNode().getId()) {
+//                        instrumentationNotifyMessageReception(msg);
+                        Application app = getNode().getApplication();
+                        if (app != null) {
+                            app.receiveMessage(msg);
+                        }
+                    } else {
+                        getNode().getMacLayer().sendMessage(msg, FloodingRoutingLayer.this);
                     }
-                } else {
                 }
             }
 
@@ -55,7 +66,7 @@ public class FloodingRoutingLayer extends RoutingLayer {
     @Override
     public boolean sendMessage(Object message, Application app) {
         application = app;
-        receivedMessages.add(getMessageID((DefaultMessage) message));
+        receivedMessages.add(((BaseMessage) message).getMessageNumber());
         return getNode().getMacLayer().sendMessage(message, this);
     }
 
@@ -64,19 +75,27 @@ public class FloodingRoutingLayer extends RoutingLayer {
      */
     @Override
     public void sendMessageDone() {
-        application.sendMessageDone();
+        if (application != null) {
+            application.sendMessageDone();
+        }
         application = null;
-    }
-
-
-    protected long getMessageID(DefaultMessage m ){
-        PingPongMessageWrapper w = new PingPongMessageWrapper();
-        w.wrap(m);
-        return w.getId();
     }
 
     @Override
     public void autostart() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        /**
+         * configure the coverage controller
+         */
+        if (CoverageController.getInstance().getTotalCoverageTestMessageClass() == null) {
+            CoverageController.getInstance().setTotalCoverageMessageClass(FloodingMessage.class);
+        }
+
+        if (CoverageController.getInstance().getNodeIdComparator() == null) {
+            CoverageController.getInstance().setNodeIdComparator(new FloodingComparator());
+        }
+    }
+
+    public Object getCoverageId() {
+        return getNode().getId();
     }
 }

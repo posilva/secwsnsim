@@ -7,7 +7,7 @@ import org.mei.securesim.core.application.Application;
 import org.mei.securesim.core.energy.EnergyConsumptionAction;
 import org.mei.securesim.core.engine.Event;
 import org.mei.securesim.core.engine.Simulator;
-import org.mei.securesim.core.engine.DefaultMessage;
+import org.mei.securesim.core.engine.BaseMessage;
 
 /**
  * This extension of the {@link Application} baseclass does everything we expect
@@ -24,7 +24,7 @@ public class PingPongApplication extends Application implements Serializable {
 
 
     static Logger LOGGER = Logger.getLogger(PingPongApplication.class.getName());
-    public void handleMessage(DefaultMessage msg) {
+    public void handleMessage(BaseMessage msg) {
 
         PingPongMessageWrapper m = new PingPongMessageWrapper();
         m.wrap(msg);
@@ -82,7 +82,7 @@ public class PingPongApplication extends Application implements Serializable {
         getHostNode().getCPU().execute(new EnergyConsumptionAction() {
 
             public void execute() {
-                DefaultMessage m = (DefaultMessage) msg;
+                BaseMessage m = (BaseMessage) msg;
                 handleMessage(m);
 
             }
@@ -114,14 +114,14 @@ public class PingPongApplication extends Application implements Serializable {
     public boolean sendPingMessage(int to) {
         PingPongMessageWrapper w = new PingPongMessageWrapper();
         byte[] payload = w.createPayload(PING, countMessages++, getNode().getId(), to, NO_REPLY);
-        sendPPMessage(new DefaultMessage(payload));
+        sendPPMessage(new BaseMessage(payload));
         return true;
     }
 
     private boolean sendPongMessage(int to, long replyID) {
         PingPongMessageWrapper w = new PingPongMessageWrapper();
         byte[] payload = w.createPayload(PONG, countMessages++, getNode().getId(), to, replyID);
-        sendPPMessage(new DefaultMessage(payload));
+        sendPPMessage(new BaseMessage(payload));
         return true;
 
 
@@ -129,9 +129,9 @@ public class PingPongApplication extends Application implements Serializable {
 
     class SendPingPongMessageEvent extends Event {
 
-        DefaultMessage message;
+        BaseMessage message;
 
-        public SendPingPongMessageEvent(long time, DefaultMessage message) {
+        public SendPingPongMessageEvent(long time, BaseMessage message) {
             super(time);
             this.message = message;
         }
@@ -143,7 +143,7 @@ public class PingPongApplication extends Application implements Serializable {
         }
     }
 
-    private void sendPPMessage(DefaultMessage m) {
+    private void sendPPMessage(BaseMessage m) {
         getHostNode().getSimulator().addEvent(new SendPingPongMessageEvent(getHostNode().getSimulator().getSimulationTime() + (10000 + (int) Simulator.randomGenerator.random().nextDouble() * CLOCK_TICK), m));
     }
 
@@ -166,7 +166,7 @@ public class PingPongApplication extends Application implements Serializable {
         public void execute() {
             PingPongMessageWrapper w = new PingPongMessageWrapper();
             byte[] payload = w.createPayload(PING, countMessages++, getNode().getId(), to, NO_REPLY);
-            DefaultMessage m = new DefaultMessage(payload);
+            BaseMessage m = new BaseMessage(payload);
             this.setTime(getTime() + 10 * Simulator.ONE_SECOND);
             sendPPMessage(m);
             getHostNode().getSimulator().addEvent(this);
