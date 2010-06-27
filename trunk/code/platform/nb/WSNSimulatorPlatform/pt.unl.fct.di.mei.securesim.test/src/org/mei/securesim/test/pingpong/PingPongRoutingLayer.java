@@ -6,7 +6,7 @@ package org.mei.securesim.test.pingpong;
 import java.util.HashSet;
 import org.mei.securesim.core.application.Application;
 import org.mei.securesim.core.energy.EnergyConsumptionAction;
-import org.mei.securesim.core.engine.DefaultMessage;
+import org.mei.securesim.core.engine.BaseMessage;
 import org.mei.securesim.core.layers.routing.RoutingLayer;
 import org.mei.securesim.core.nodes.Node;
 
@@ -29,11 +29,11 @@ public class PingPongRoutingLayer extends RoutingLayer {
      */
     @Override
     public void receiveMessage(Object message) {
-        final DefaultMessage msg = (DefaultMessage) message;
+        final BaseMessage msg = (BaseMessage) message;
         getNode().getCPU().execute(new EnergyConsumptionAction(){
 
             public void execute() {
-                DefaultMessage m = (DefaultMessage) msg;
+                BaseMessage m = (BaseMessage) msg;
                 // se não recebi a mensagem trato
                 if (!receivedMessages.contains(getMessageID(m))) {
                     receivedMessages.add(getMessageID(m));
@@ -54,7 +54,7 @@ public class PingPongRoutingLayer extends RoutingLayer {
     @Override
     public boolean sendMessage(Object message, Application app) {
         application = app;
-        receivedMessages.add(getMessageID((DefaultMessage) message));
+        receivedMessages.add(getMessageID((BaseMessage) message));
         return getNode().getMacLayer().sendMessage(message, this);
     }
 
@@ -68,7 +68,7 @@ public class PingPongRoutingLayer extends RoutingLayer {
     }
 
 
-    protected long getMessageID(DefaultMessage m ){
+    protected long getMessageID(BaseMessage m ){
         PingPongMessageWrapper w = new PingPongMessageWrapper();
         w.wrap(m);
         return w.getId();

@@ -4,13 +4,13 @@
  */
 package org.mei.securesim.test.insens.messages.first;
 
-import org.mei.securesim.core.engine.DefaultMessage;
+import org.mei.securesim.core.engine.BaseMessage;
 
 /**
  *
  * @author pedro
  */
-public class INSENSMessage extends DefaultMessage {
+public class INSENSMessage extends BaseMessage {
 
     protected int type;
     protected int OWS;
@@ -27,7 +27,7 @@ public class INSENSMessage extends DefaultMessage {
 
     protected class Wrapper {
 
-        public void wrap(DefaultMessage m) {
+        public void wrap(BaseMessage m) {
             throw new UnsupportedOperationException("Must be implemented in derived classes");
         }
 

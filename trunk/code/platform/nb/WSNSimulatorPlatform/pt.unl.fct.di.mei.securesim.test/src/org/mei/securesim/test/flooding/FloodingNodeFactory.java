@@ -8,7 +8,6 @@ package org.mei.securesim.test.flooding;
 import org.mei.securesim.core.layers.mac.Mica2MACLayer;
 import org.mei.securesim.core.nodes.factories.NodeFactory;
 import org.mei.securesim.test.common.BasicNode;
-import org.mei.securesim.test.pingpong.PingPongApplication;
 
 /**
  *
@@ -16,10 +15,9 @@ import org.mei.securesim.test.pingpong.PingPongApplication;
  */
 public class FloodingNodeFactory extends NodeFactory{
 
-  
-
     public void setup() {
-        setApplicationClass(PingPongApplication.class);
+       
+        setApplicationClass(HelloApplication.class);
         setRoutingLayerClass(FloodingRoutingLayer.class);
         setNodeClass(BasicNode.class);
         setMacLayer(Mica2MACLayer.class);

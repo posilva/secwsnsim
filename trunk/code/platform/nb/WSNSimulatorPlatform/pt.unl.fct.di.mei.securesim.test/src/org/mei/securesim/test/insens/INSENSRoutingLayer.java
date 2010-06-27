@@ -212,7 +212,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
     private void startNetworkOrganization() {
         /* create a initial route request message */
         INSENSMessage m = new INSENSMessage(createPayloadRREQ(currentOWS, (short) 0, null, null));
-        m.setOrigin(getNode().getId());
+        m.setSourceNodeId(getNode().getId());
         myMACR = extractMACFromPayload(m.getPayload());
         sendDelayedMessage(m);
 //        waitToCalculateRoutingTables();
@@ -235,7 +235,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
         resetNeighboorSet();
         setState(ProtocolState.BUILD_ROUTING_INFO);
         INSENSMessage m = new INSENSMessage(createPayloadRREQ(reqMsg.ows, reqMsg.size, reqMsg.path, reqMsg.mac));
-        m.setOrigin(getNode().getId());
+        m.setSourceNodeId(getNode().getId());
         myMACR = extractMACFromPayload(m.getPayload());
         sendDelayedMessage(m);
         waitToSendFeedBack();
@@ -263,7 +263,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
      */
     private void sendFeedbackMessage() {
         INSENSMessage message = new INSENSMessage(createPayloadFDBK());
-        message.setOrigin(getNode().getId());
+        message.setSourceNodeId(getNode().getId());
         sendDelayedMessage(message);
     }
 
@@ -285,7 +285,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
      */
     private void forwardMessage2BaseStation(INSENSMessage m) {
         INSENSMessage message = new INSENSMessage(createPayloadForForwardFDBK(m));
-        message.setOrigin(m.getOrigin());
+        message.setSourceNodeId(m.getSourceNodeId());
         message.setForwardBy(getNode().getId());
         sendDelayedMessage(message);
     }
@@ -328,7 +328,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
             debugMessage(m, "Saved");
             feedbackMessagesSet.add(m);
         } else {
-            System.out.println("NOT VERIFIED:" + getTimeAndNodeId() + " from" + m.getOrigin() + " forward by " + m.getForwardBy());
+            System.out.println("NOT VERIFIED:" + getTimeAndNodeId() + " from" + m.getSourceNodeId() + " forward by " + m.getForwardBy());
         }
     }
 
@@ -833,10 +833,6 @@ public class INSENSRoutingLayer extends RoutingLayer {
         return getTime() + " " + getNodeID();
     }
 
-    private void debugMessage(INSENSMessage message) {
-        debugMessage(message, "");
-    }
-
     private void debugMessage(INSENSMessage message, String text) {
         String messageType = "";
         byte type = getMessageType(message.getPayload());
@@ -851,7 +847,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
                 messageType = "FDBK";
                 break;
         }
-        System.out.println("[" + message.getOrigin() + "]=>" + getNodeID() + " - " + messageType + "(" + message.getMessageNumber() + ")" + " - " + text);
+        System.out.println("[" + message.getSourceNodeId() + "]=>" + getNodeID() + " - " + messageType + "(" + message.getMessageNumber() + ")" + " - " + text);
     }
     @Override
     public void autostart() {

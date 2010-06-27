@@ -4,13 +4,13 @@
  */
 package org.mei.securesim.test.insens.messages;
 
-import org.mei.securesim.core.engine.DefaultMessage;
+import org.mei.securesim.core.engine.BaseMessage;
 
 /**
  *
  * @author posilva
  */
-public abstract class INSENSMsg extends DefaultMessage implements Cloneable{
+public abstract class INSENSMsg extends BaseMessage implements Cloneable{
 
     protected int type ;
     protected long OWS;
