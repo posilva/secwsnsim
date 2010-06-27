@@ -25,7 +25,7 @@ package org.mei.securesim.core.radio;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import org.mei.securesim.components.instruments.CoverageController;
+import org.mei.securesim.components.instruments.coverage.CoverageController;
 
 import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.nodes.Node;
@@ -97,6 +97,7 @@ public class GaussianRadioModel extends RadioModel {
      * This operation is extremely expensive and should be used sparsely.
      */
     public void updateNeighborhoods() {
+
         
         /**
          * Clear neighborhood information
@@ -258,9 +259,9 @@ public class GaussianRadioModel extends RadioModel {
             while (--i >= 0) {
                 if (neighbors.get(i).isTurnedOn()) {
                     double dynamicStrength = getDynamicStrength(strength, staticFadings.get(i));
-//                    if (dynamicStrengths.get(i) == null) {
-//                        dynamicStrengths.add(dynamicStrength);
-//                    }
+                    if (dynamicStrengths.get(i) == null) {
+                        dynamicStrengths.add(dynamicStrength);
+                    }
                     dynamicStrengths.set(i, dynamicStrength);
 //                    System.out.println("Send >"+ node.getId()  + ": "+ node.getMessage() + " to  "+ neighbors.get(i).getId());
                     neighbors.get(i).getMacLayer().receptionBegin(dynamicStrength, stream);

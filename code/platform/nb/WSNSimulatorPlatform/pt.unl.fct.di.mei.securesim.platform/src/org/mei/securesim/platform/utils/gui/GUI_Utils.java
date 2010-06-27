@@ -4,7 +4,6 @@
  */
 package org.mei.securesim.platform.utils.gui;
 
-import com.jidesoft.icons.IconSet.File;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -84,5 +83,12 @@ public class GUI_Utils {
             return null;
         }
         return jf.getSelectedFile().getAbsolutePath();
+    }
+    /**
+     * 
+     * @param ex
+     */
+    public static void showException(Exception ex) {
+        JOptionPane.showMessageDialog(null, ex , "Error occured",JOptionPane.ERROR_MESSAGE);
     }
 }

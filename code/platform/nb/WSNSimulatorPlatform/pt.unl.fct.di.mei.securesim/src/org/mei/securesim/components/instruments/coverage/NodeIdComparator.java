@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package org.mei.securesim.components.instruments.utils;
+package org.mei.securesim.components.instruments.coverage;
 
 /**
  *

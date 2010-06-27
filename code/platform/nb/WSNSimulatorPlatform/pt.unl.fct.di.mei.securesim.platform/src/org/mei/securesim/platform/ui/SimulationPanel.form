@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.1" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <NonVisualComponents>
@@ -197,17 +197,6 @@
                 <EventHandler event="menuSelected" listener="javax.swing.event.MenuListener" parameters="javax.swing.event.MenuEvent" handler="selNodesInstrumentsCoverageMenuSelected"/>
               </Events>
               <SubComponents>
-                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodesInstrumentsCoverageEnable">
-                  <Properties>
-                    <Property name="selected" type="boolean" value="true"/>
-                    <Property name="text" type="java.lang.String" resourceKey="selNodesInstrumentsCoverageEnable.text"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesInstrumentsCoverageEnableActionPerformed"/>
-                  </Events>
-                </MenuItem>
-                <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator2">
-                </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="selNodesInstrumentsCoverageSelSources">
                   <Properties>
                     <Property name="text" type="java.lang.String" resourceKey="selNodesInstrumentsCoverageSelSources.text"/>
@@ -249,15 +238,6 @@
                 <Property name="text" type="java.lang.String" resourceKey="selNodesInstrumentsReliability.text"/>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodesInstrumentsReliabilityEnable">
-                  <Properties>
-                    <Property name="selected" type="boolean" value="true"/>
-                    <Property name="text" type="java.lang.String" resourceKey="selNodesInstrumentsReliabilityEnable.text"/>
-                    <Property name="focusPainted" type="boolean" value="true"/>
-                  </Properties>
-                </MenuItem>
-                <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator3">
-                </MenuItem>
                 <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodesInstrumentsReliabilitySelSources">
                   <Properties>
                     <Property name="selected" type="boolean" value="true"/>
@@ -277,15 +257,6 @@
                 <Property name="text" type="java.lang.String" value="Reliability"/>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodesInstrumentsLatencyEnable">
-                  <Properties>
-                    <Property name="selected" type="boolean" value="true"/>
-                    <Property name="text" type="java.lang.String" value="Enable"/>
-                    <Property name="focusPainted" type="boolean" value="true"/>
-                  </Properties>
-                </MenuItem>
-                <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator4">
-                </MenuItem>
                 <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodesInstrumentsLatencySelSources">
                   <Properties>
                     <Property name="selected" type="boolean" value="true"/>
@@ -357,6 +328,22 @@
             </MenuItem>
           </SubComponents>
         </Menu>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPopupMenu" name="deployNodePopupMenu">
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+        <Property name="useNullLayout" type="boolean" value="true"/>
+      </Layout>
+      <SubComponents>
+        <MenuItem class="javax.swing.JMenuItem" name="depNodeDeployOneNode">
+          <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="org.mei.securesim.platform.ui.SimulationPanel" id="PlaceNodeHereAction" methodName="PlaceNodeHereAction"/>
+            </Property>
+            <Property name="text" type="java.lang.String" resourceKey="depNodeDeployOneNode.text"/>
+          </Properties>
+        </MenuItem>
       </SubComponents>
     </Container>
   </NonVisualComponents>

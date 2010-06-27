@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.1" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <NonVisualComponents>
@@ -198,7 +198,9 @@
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="SelectionBG"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="S"/>
+            <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/org/mei/securesim/platform/ui/resources/arrow_expand.png"/>
+            </Property>
             <Property name="toolTipText" type="java.lang.String" value="Selection Area Tool"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -226,7 +228,7 @@
               <ComponentRef name="SelectionBG"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/mei/securesim/platform/ui/resources/Arrow16.png"/>
+              <Image iconType="3" name="/org/mei/securesim/platform/ui/resources/018.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Select Node"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -288,6 +290,24 @@
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
               <action class="org.mei.securesim.platform.ui.WorkbenchPanel" id="RandomNodeSelection" methodName="RandomNodeSelection"/>
             </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/org/mei/securesim/platform/ui/resources/random.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="selRandomNodes.toolTipText"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnSnapshot">
+          <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="org.mei.securesim.platform.ui.WorkbenchPanel" id="TakeSnapshot" methodName="TakeSnapshot"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/org/mei/securesim/platform/ui/resources/snapshot.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="btnSnapshot.toolTipText"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>

@@ -5,7 +5,7 @@
 package org.mei.securesim.components.instruments.listeners;
 
 import java.util.EventObject;
-import org.mei.securesim.components.instruments.CoverageController.CoverageModelEnum;
+import org.mei.securesim.components.instruments.coverage.CoverageController.CoverageModelEnum;
 
 /**
  *

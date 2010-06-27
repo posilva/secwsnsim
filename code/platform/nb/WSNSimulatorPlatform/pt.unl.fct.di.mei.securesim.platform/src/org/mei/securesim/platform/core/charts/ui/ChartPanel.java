@@ -43,8 +43,18 @@ public class ChartPanel extends JPanel implements IChartDisplay {
         updateUI();
     }
 
+    public ChartPanel(String title, String xLabel, String yLabel) {
+        chartName = title;
+        this.xLabel = xLabel;
+        this.yLabel = yLabel;
+        initComponents();
+        init();
+        updateUI();
+
+    }
+
     public void init() {
-        this.chart = new XYLineChart(getChartName(), 5.0,  getyLabel(),getxLabel());
+        this.chart = new XYLineChart(getChartName(), 5.0, getyLabel(), getxLabel());
         this.chart.setSeriesLinesAndShapes(getChartName(), true, false);
     }
 
@@ -89,8 +99,8 @@ public class ChartPanel extends JPanel implements IChartDisplay {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        if (evt.getButton()==MouseEvent.BUTTON3){
-             exportMenu.show(this, evt.getX(), evt.getY());
+        if (evt.getButton() == MouseEvent.BUTTON3) {
+            exportMenu.show(this, evt.getX(), evt.getY());
         }
     }//GEN-LAST:event_formMouseClicked
 
@@ -115,7 +125,9 @@ public class ChartPanel extends JPanel implements IChartDisplay {
     }
 
     public void updateChart(double x, double y) {
-        if (chart==null) return;
+        if (chart == null) {
+            return;
+        }
         chart.getSeries(CHART_NAME).add(x, y);
         updateUI();
     }
@@ -150,11 +162,11 @@ public class ChartPanel extends JPanel implements IChartDisplay {
 
     @Action
     public void ExportChartToPDF() {
-           try {
-        JFileChooser fc = new JFileChooser(".");
-        int returnVal = fc.showSaveDialog(this);
+        try {
+            JFileChooser fc = new JFileChooser(".");
+            int returnVal = fc.showSaveDialog(this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
-              getChartObject().saveChartToPDF(fc.getSelectedFile().getAbsolutePath(), 800, 600);
+                getChartObject().saveChartToPDF(fc.getSelectedFile().getAbsolutePath(), 800, 600);
             }
         } catch (Exception ex) {
             Logger.getLogger(ChartFrame.class.getName()).log(Level.SEVERE, null, ex);

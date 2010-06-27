@@ -150,4 +150,11 @@ public abstract class Simulation extends ConfigurableObject {
     public void resume() {
         simulator.resume();
     }
+
+    public long getTime() {
+        return getSimulator().getSimulationTime();
+    }
+    public long getTimeInMilliseconds() {
+        return getSimulator().getSimulationTimeInMillisec();
+    }
 }

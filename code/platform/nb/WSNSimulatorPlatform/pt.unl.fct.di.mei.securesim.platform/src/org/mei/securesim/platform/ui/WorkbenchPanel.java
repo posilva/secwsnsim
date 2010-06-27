@@ -59,6 +59,7 @@ public class WorkbenchPanel extends javax.swing.JPanel  {
         viewNodesInfo = new javax.swing.JToggleButton();
         jSeparator5 = new javax.swing.JToolBar.Separator();
         selRandomNodes = new javax.swing.JButton();
+        btnSnapshot = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -174,7 +175,7 @@ public class WorkbenchPanel extends javax.swing.JPanel  {
         jToolBar1.add(btnDeployNodesMode);
 
         SelectionBG.add(btnSelectionTool);
-        btnSelectionTool.setText("S");
+        btnSelectionTool.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/arrow_expand.png"))); // NOI18N
         btnSelectionTool.setToolTipText("Selection Area Tool");
         btnSelectionTool.setFocusable(false);
         btnSelectionTool.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -191,7 +192,7 @@ public class WorkbenchPanel extends javax.swing.JPanel  {
         jToolBar1.add(btnSelectionTool);
 
         SelectionBG.add(selectionPointerTool);
-        selectionPointerTool.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/Arrow16.png"))); // NOI18N
+        selectionPointerTool.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/018.png"))); // NOI18N
         selectionPointerTool.setToolTipText("Select Node");
         selectionPointerTool.setFocusable(false);
         selectionPointerTool.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -242,11 +243,20 @@ public class WorkbenchPanel extends javax.swing.JPanel  {
         jToolBar1.add(jSeparator5);
 
         selRandomNodes.setAction(actionMap.get("RandomNodeSelection")); // NOI18N
-        selRandomNodes.setText("R");
+        selRandomNodes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/random.png"))); // NOI18N
+        selRandomNodes.setToolTipText(resourceMap.getString("selRandomNodes.toolTipText")); // NOI18N
         selRandomNodes.setFocusable(false);
         selRandomNodes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         selRandomNodes.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(selRandomNodes);
+
+        btnSnapshot.setAction(actionMap.get("TakeSnapshot")); // NOI18N
+        btnSnapshot.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/snapshot.png"))); // NOI18N
+        btnSnapshot.setToolTipText(resourceMap.getString("btnSnapshot.toolTipText")); // NOI18N
+        btnSnapshot.setFocusable(false);
+        btnSnapshot.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnSnapshot.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(btnSnapshot);
 
         add(jToolBar1, java.awt.BorderLayout.LINE_START);
     }// </editor-fold>//GEN-END:initComponents
@@ -303,6 +313,7 @@ public class WorkbenchPanel extends javax.swing.JPanel  {
     private javax.swing.JButton btnSimulationReset;
     private javax.swing.JToggleButton btnSimulationStart;
     private javax.swing.JToggleButton btnSimulationStop;
+    private javax.swing.JButton btnSnapshot;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
@@ -402,5 +413,10 @@ public class WorkbenchPanel extends javax.swing.JPanel  {
     public void RandomNodeSelection() {
         simulationPanel1.selectRandomNodes(10);
 
+    }
+
+    @Action
+    public void TakeSnapshot() {
+        simulationPanel1.takeSnapshot();
     }
 }

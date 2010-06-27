@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.1" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.7">
   <NonVisualComponents>
@@ -73,6 +73,11 @@
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
             </Component>
+            <Component class="javax.swing.JToolBar$Separator" name="jSeparator7">
+              <Properties>
+                <Property name="name" type="java.lang.String" value="jSeparator7" noResource="true"/>
+              </Properties>
+            </Component>
             <Container class="javax.swing.JPanel" name="jPanel1">
               <Properties>
                 <Property name="name" type="java.lang.String" value="jPanel1" noResource="true"/>
@@ -84,7 +89,7 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="1008" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="1003" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -141,6 +146,16 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
           <SubComponents>
+            <Component class="org.mei.securesim.platform.ui.WorkbenchPanel" name="workbenchPanel1">
+              <Properties>
+                <Property name="name" type="java.lang.String" value="workbenchPanel1" noResource="true"/>
+              </Properties>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
+                  <JSplitPaneConstraints position="left"/>
+                </Constraint>
+              </Constraints>
+            </Component>
             <Container class="org.mei.securesim.platform.ui.uiextended.BestTabbedPane" name="tabbedTools">
               <Properties>
                 <Property name="name" type="java.lang.String" value="tabbedTools" noResource="true"/>
@@ -153,16 +168,6 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
             </Container>
-            <Component class="org.mei.securesim.platform.ui.WorkbenchPanel" name="workbenchPanel1">
-              <Properties>
-                <Property name="name" type="java.lang.String" value="workbenchPanel1" noResource="true"/>
-              </Properties>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
-                  <JSplitPaneConstraints position="left"/>
-                </Constraint>
-              </Constraints>
-            </Component>
           </SubComponents>
         </Container>
       </SubComponents>
@@ -290,33 +295,19 @@
                 <Property name="name" type="java.lang.String" value="coverageCtlMenu" noResource="true"/>
               </Properties>
               <Events>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="coverageCtlMenuMouseEntered"/>
+                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="coverageCtlMenuMousePressed"/>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="coverageCtlMenuActionPerformed"/>
               </Events>
               <SubComponents>
-                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="coverageCtlStatusMenu">
+                <MenuItem class="javax.swing.JMenuItem" name="coverageCtlPanelMenu">
                   <Properties>
-                    <Property name="selected" type="boolean" value="true"/>
-                    <Property name="text" type="java.lang.String" resourceKey="coverageCtlStatusMenu.text"/>
-                    <Property name="name" type="java.lang.String" value="coverageCtlStatusMenu" noResource="true"/>
+                    <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                      <action class="org.mei.securesim.platform.PlatformView" id="ShowCoverageControllerInfo" methodName="ShowCoverageControllerInfo"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" resourceKey="coverageCtlPanelMenu.text"/>
+                    <Property name="name" type="java.lang.String" value="coverageCtlPanelMenu" noResource="true"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="coverageCtlStatusMenuActionPerformed"/>
-                  </Events>
-                </MenuItem>
-                <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator5">
-                  <Properties>
-                    <Property name="name" type="java.lang.String" value="jSeparator5" noResource="true"/>
-                  </Properties>
-                </MenuItem>
-                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="coverageCtlConfigMenu">
-                  <Properties>
-                    <Property name="selected" type="boolean" value="true"/>
-                    <Property name="text" type="java.lang.String" resourceKey="coverageCtlConfigMenu.text"/>
-                    <Property name="name" type="java.lang.String" value="coverageCtlConfigMenu" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="coverageCtlConfigMenuActionPerformed"/>
-                  </Events>
                 </MenuItem>
               </SubComponents>
             </Menu>
@@ -350,6 +341,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="instrumentsConfigMenu">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Shift+Ctrl+C"/>
+                </Property>
                 <Property name="text" type="java.lang.String" resourceKey="instrumentsConfigMenu.text"/>
                 <Property name="name" type="java.lang.String" value="instrumentsConfigMenu" noResource="true"/>
               </Properties>

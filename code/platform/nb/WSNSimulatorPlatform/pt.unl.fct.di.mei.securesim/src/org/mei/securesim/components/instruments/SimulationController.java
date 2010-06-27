@@ -24,13 +24,14 @@ public class SimulationController {
     protected ISimulationPlatform simulationPlatform;
     protected Simulation simulation;
     private String simulationState;
-   
+    private int mode = FAST;
+    public final static int FAST = 0;
+    public final static int REAL = 1;
 
     public SimulationController() {
         EnergyController.getInstance().setEnergyLogger(new EnergyRawFileLogger());
         EnergyController.getInstance().getEnergyLogger().open();
     }
-
 
     public Simulation getSimulation() {
         return simulation;
@@ -42,13 +43,11 @@ public class SimulationController {
     }
 
     public void registerSimulation(Simulation simulation) {
-        this.simulation=simulation;
+        this.simulation = simulation;
     }
 
     public void resetSimulation() {
-
     }
-
 
     /**
      *
@@ -155,6 +154,7 @@ public class SimulationController {
     public ISimulationPlatform getSimulationPlatform() {
         return simulationPlatform;
     }
+
     public void enterPlatform() {
         System.out.println("PLATFORM OPENED");
     }
@@ -163,11 +163,20 @@ public class SimulationController {
 
         EnergyController.getInstance().stop();
     }
-    public void setSimulationState(String state){
-        simulationState=state;
+
+    public void setSimulationState(String state) {
+        simulationState = state;
     }
 
     public String getSimulationState() {
         return simulationState;
+    }
+
+    public int getMode() {
+        return mode;
+    }
+
+    public void setMode(int mode) {
+        this.mode = mode;
     }
 }
