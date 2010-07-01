@@ -14,13 +14,18 @@ import java.util.Arrays;
 public class BaseMessage implements Cloneable {
 
     static long numberOfTotalMessage = 0; // global message counter
-    private final long messageNumber;     // global number of the message
+    private long messageNumber=0;    // global number of the message
     private byte[] payload;               // payload of the message
     private short sourceNodeId;           // node that create the message
     private short destinationNodeId;      // message was sent to
     private short forwardBy;              // last node that forward message
     protected Color color = Color.green;  // message color for de ui
     protected boolean showColor = false;  // message color flag
+
+    public BaseMessage() {
+        messageNumber = numberOfTotalMessage++;
+    }
+
 
     /**
      * Contructor

@@ -308,7 +308,7 @@ public abstract class Node {
      *
      * @see net.tinyos.prowler.INode#display(net.tinyos.prowler.Display)
      */
-    public void displayOn(ISimulationDisplay disp) {
+    public synchronized void displayOn(ISimulationDisplay disp) {
         application.display(disp);
     }
 

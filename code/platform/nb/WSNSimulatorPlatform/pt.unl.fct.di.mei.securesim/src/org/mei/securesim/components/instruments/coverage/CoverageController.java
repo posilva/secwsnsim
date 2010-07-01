@@ -54,6 +54,7 @@ public class CoverageController {
     private SignalHandler routingModelNeighbors = new SignalHandler();
     protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
     private Class totalCoverageMessageClass;
+    private Class partialCoverageMessageClass;
     private NodeIdComparator nodeIdComparator;
     private boolean debug = true;
     private IControlPanel controlPanel;
@@ -84,55 +85,94 @@ public class CoverageController {
 
     }
 
+    public class ListMessageEntry {
+
+        ITotalCoverageMessage message;
+
+        public ListMessageEntry(ITotalCoverageMessage message) {
+            this.message = message;
+           
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (!(obj instanceof ListMessageEntry)) {
+                return false;
+            }
+            ListMessageEntry other = (ListMessageEntry) obj;
+            return other.message.getUniqueId() == message.getUniqueId();
+        }
+
+        @Override
+        public int hashCode() {
+            int hash = 5;
+            hash = 97 * hash + (this.message != null ? this.message.hashCode() : 0);
+            return hash;
+        }
+    }
+
     public class StatisticEntry {
 
-        int sentMessages;
-        int receivedMessages;
+        List sentMessages;
+        List receivedMessages;
+        boolean valid = true;
 
         public StatisticEntry() {
-            this.sentMessages = 0;
-            this.receivedMessages = 0;
+            this.sentMessages = new ArrayList();
+            this.receivedMessages = new ArrayList();
 
         }
 
-        public int getReceivedMessages() {
+        public void reset() {
+            this.sentMessages = new ArrayList();
+            this.receivedMessages = new ArrayList();
+            valid = true;
+        }
+
+        public List getReceivedMessages() {
             return receivedMessages;
         }
 
-        public void setReceivedMessages(int receivedMessages) {
+        public void setReceivedMessages(List receivedMessages) {
             this.receivedMessages = receivedMessages;
         }
 
-        public int getSentMessages() {
+        public List getSentMessages() {
             return sentMessages;
         }
 
-        public void setSentMessages(int sentMessages) {
+        public void setSentMessages(List sentMessages) {
             this.sentMessages = sentMessages;
         }
     }
     // TODO: Arranjar uma semantica para o ID por forma a poder implementar um ID adequado
 
-    public void notifyMessageSent(Object message, Node node) {
-//        log("Message sent notification");
-        if (message instanceof ICoverageMessage) { // é mensagem de cobertura
-            ICoverageMessage msg = (ICoverageMessage) message;
-
-            if (getNodeIdComparator().isEqual(msg.getSourceId(), node.getId())) { // primeiro envio
-                if (sourcesNodes.contains(node)) { // o nó é de source
-                    totalMessagesSent++;
-                    addToDestinationBox(msg);
-                    refreshControlPanel();
+    public synchronized  void notifyMessageSent(Object message, Node node) {
+        if (message instanceof ITotalCoverageMessage) { // é mensagem de cobertura
+            if (node instanceof ITotalCoverageHandler) {
+                ITotalCoverageHandler coverageNode = (ITotalCoverageHandler) node;
+                ITotalCoverageMessage msg = (ITotalCoverageMessage) message;
+                if (getNodeIdComparator().isEqual(msg.getSourceId(), coverageNode.getCoverageId())) { // primeiro envio
+                    if (sourcesNodes.contains(node)) { // o nó é de source
+                        totalMessagesSent++;
+                        addToDestinationBox(msg);
+                        refreshControlPanel();
+                    }
                 }
             }
+        } else {
+//            throw new IllegalArgumentException("Node must be a instance of ICoverageHandler");
         }
+
     }
 
-    public void notifyMessageReception(Object message, Node node) {
-//        log("Message received notification");
-        if (message instanceof ICoverageMessage) { // é mensagem de cobertura
-            ICoverageMessage msg = (ICoverageMessage) message;
-            if (getNodeIdComparator().isEqual(msg.getDestinationId(), node.getId())) { // chegou ao destino
+    public synchronized  void notifyMessageReception(Object message, Node node) {
+
+        if (message instanceof ITotalCoverageMessage) { // é mensagem de cobertura total
+            ITotalCoverageMessage msg = (ITotalCoverageMessage) message;
+            ITotalCoverageHandler n = (ITotalCoverageHandler) node;
+
+            if (getNodeIdComparator().isEqual(msg.getDestinationId(), n.getCoverageId())) { // chegou ao destino
                 if (destinationNodes.contains(node)) { // o nó é de destino
                     updateStatistics(msg);
                     refreshControlPanel();
@@ -157,15 +197,12 @@ public class CoverageController {
      *
      * @param msg
      */
-    private synchronized void addToDestinationBox(ICoverageMessage msg) {
-//        log("Adicionei à destination box de "+msg.getDestinationNodeId());
+    private synchronized void addToDestinationBox(ITotalCoverageMessage msg) {
         StatisticEntry se = (StatisticEntry) statistics.get(msg.getDestinationId());
         if (se == null) {
             se = new StatisticEntry();
         }
-
-        se.setSentMessages(se.getSentMessages() + repetitionsPerNode);
-        //    log(se.getSentMessages() + " Messages sent to " + msg.getDestinationNodeId());
+        se.getSentMessages().add(new ListMessageEntry(msg));
         statistics.put(msg.getDestinationId(), se);
     }
 
@@ -173,16 +210,16 @@ public class CoverageController {
      * 
      * @param msg
      */
-    private synchronized void updateStatistics(ICoverageMessage msg) {
-
-
+    private synchronized void updateStatistics(ITotalCoverageMessage msg) {
         StatisticEntry se = (StatisticEntry) statistics.get(msg.getDestinationId());
         if (se == null) {
             return;
         }
-        //log("Recebi mensagens [" + msg.getDestinationNodeId() + "]: " + (se.getReceivedMessages() + repetitionsPerNode));
-        se.setReceivedMessages(se.getReceivedMessages() + repetitionsPerNode);
-        statistics.put(msg.getDestinationId(), se);
+        ListMessageEntry lme = new ListMessageEntry(msg);
+        if (!se.getReceivedMessages().contains(lme)) {
+            se.getReceivedMessages().add(lme);
+            statistics.put(msg.getDestinationId(), se);
+        }
     }
 
     /**
@@ -226,6 +263,9 @@ public class CoverageController {
     public void registerSourceNode(Node srcNode) {
 
         if (!sourcesNodes.contains(srcNode)) {
+            if (destinationNodes.contains(srcNode)) {
+                throw new IllegalArgumentException("Source node cannot be destination node at same time!");
+            }
             //      log("Registered a new node " + srcNode);
             sourcesNodes.add(srcNode);
             srcNode.getGraphicNode().setSource(true);
@@ -238,8 +278,10 @@ public class CoverageController {
      * @param dstNode
      */
     public void registerDestinationNode(Node dstNode) {
-        //log("Node " + dstNode.getId() + " registred");
         if (!destinationNodes.contains(dstNode)) {
+            if (sourcesNodes.contains(dstNode)) {
+                throw new IllegalArgumentException("Destination node cannot be source node at same time!");
+            }
             destinationNodes.add(dstNode);
             dstNode.getGraphicNode().setDestination(true);
             refreshControlPanel();
@@ -366,7 +408,7 @@ public class CoverageController {
             for (Object dstNode : destinationNodes) {
                 Node n = (Node) srcNode;
                 long delay = ct++ * messageIntervalPerNode * Simulator.ONE_SECOND;
-                TotalCoverageEvent evt = (TotalCoverageEvent) InstrumentsEventsFactory.createTotalCoverageEvent((short) repetitionsPerNode, delay, messageIntervalPerNode * Simulator.ONE_SECOND, getTotalCoverageTestMessageClass());
+                TotalCoverageEvent evt = (TotalCoverageEvent) InstrumentsEventsFactory.createTotalCoverageEvent((short) repetitionsPerNode, delay, messageIntervalPerNode * Simulator.ONE_SECOND, getTotalCoverageTestMessageClass(),ct);
                 evt.setSourceNode(n);
                 evt.setDestinationNode((Node) dstNode);
                 SimulationController.getInstance().getSimulation().getSimulator().addEvent(evt);
@@ -415,6 +457,16 @@ public class CoverageController {
     public void setRepetitionsPerNode(int repetitionsPerNode) {
         this.repetitionsPerNode = repetitionsPerNode;
     }
+
+    public Class getPartialCoverageMessageClass() {
+        return partialCoverageMessageClass;
+    }
+
+    public void setPartialCoverageMessageClass(Class partialCoverageMessageClass) {
+        this.partialCoverageMessageClass = partialCoverageMessageClass;
+    }
+
+    
 
     private synchronized void refreshControlPanel() {
 //        if (controlPanel != null) {

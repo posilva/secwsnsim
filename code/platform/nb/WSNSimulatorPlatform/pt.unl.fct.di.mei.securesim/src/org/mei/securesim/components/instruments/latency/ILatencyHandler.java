@@ -3,12 +3,12 @@
  * and open the template in the editor.
  */
 
-package org.mei.securesim.components.instruments.coverage;
+package org.mei.securesim.components.instruments.latency;
 
 /**
  *
  * @author CIAdmin
  */
-public interface ICoverageHandler {
-    Object getCoverageId();
+public interface ILatencyHandler {
+Object getLatencyUniqueId();
 }

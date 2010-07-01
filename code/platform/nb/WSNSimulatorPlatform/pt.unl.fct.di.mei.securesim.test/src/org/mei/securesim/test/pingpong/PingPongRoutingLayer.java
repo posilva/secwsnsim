@@ -78,4 +78,9 @@ public class PingPongRoutingLayer extends RoutingLayer {
     public void autostart() {
         
     }
+
+    @Override
+    public void routeMessage(Object message) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

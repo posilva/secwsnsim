@@ -14,7 +14,6 @@ import org.mei.securesim.test.CS.messages.CSMessage;
  * @author Pedro Marques da Silva
  */
 public class CSRoutingLayer extends RoutingLayer {
-
     long myGroupId;
     short myGroupSize;
     long oldGroupId;
@@ -28,8 +27,6 @@ public class CSRoutingLayer extends RoutingLayer {
         } else {
             log("Received Message Must be a CSMessage Instance");
         }
-
-
     }
 
     @Override
@@ -59,6 +56,9 @@ public class CSRoutingLayer extends RoutingLayer {
     private void log(String message) {
         System.out.println("<" + getNode().getSimulator().getSimulationTime() + "> - [" + getNode().getId() + "] - " + message);
     }
-    
-    
+
+    @Override
+    public void routeMessage(Object message) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

@@ -4,10 +4,13 @@
  */
 package org.mei.securesim.components.instruments;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 import org.mei.securesim.components.logging.file.EnergyRawFileLogger;
 import org.mei.securesim.components.simulation.ISimulationPlatform;
 import org.mei.securesim.components.simulation.Simulation;
+import org.mei.securesim.core.nodes.Node;
 
 /**
  *
@@ -47,6 +50,27 @@ public class SimulationController {
     }
 
     public void resetSimulation() {
+    }
+
+    public List selectRandomNodes(int nroNodes) {
+        return selectRandomNodes(nroNodes, new ArrayList());
+    }
+
+    public List selectRandomNodes(int nroNodes, List excludeNodes) {
+
+        if (nroNodes > simulation.getSimulator().getNodes().size()) {
+            throw new IllegalArgumentException("Cannot select more nodes than the number of nodes in the network ");
+        }
+
+
+        List randomNodes = new ArrayList();
+        while (randomNodes.size() < nroNodes) {
+            Node node = simulation.getSimulator().getNetwork().getNodeDB().randomNode();
+            if (!(randomNodes.contains(node) || excludeNodes.contains(node))) {
+                randomNodes.add(node);
+            }
+        }
+        return randomNodes;
     }
 
     /**

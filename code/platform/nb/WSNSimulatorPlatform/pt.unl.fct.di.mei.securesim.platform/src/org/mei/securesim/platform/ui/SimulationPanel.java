@@ -878,6 +878,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             }
 
         }
+        update();
     }//GEN-LAST:event_selNodesInstrumentsCoverageSelSourcesActionPerformed
 
     private void selNodesInstrumentsCoverageDelSourcesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selNodesInstrumentsCoverageDelSourcesActionPerformed
@@ -888,6 +889,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             }
 
         }
+        update();
     }//GEN-LAST:event_selNodesInstrumentsCoverageDelSourcesActionPerformed
 
     private void selNodesInstrumentsCoverageSelDestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selNodesInstrumentsCoverageSelDestActionPerformed
@@ -895,7 +897,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             for (GraphicNode graphicNode : selectedNodes) {
                 CoverageController.getInstance().registerDestinationNode(graphicNode.getPhysicalNode());
             }
-
+            update();
         }
 
     }//GEN-LAST:event_selNodesInstrumentsCoverageSelDestActionPerformed
@@ -905,7 +907,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             for (GraphicNode graphicNode : selectedNodes) {
                 CoverageController.getInstance().unregisterDestinationNode(graphicNode.getPhysicalNode());
             }
-
+            update();
         }
     }//GEN-LAST:event_selNodesInstrumentsCoverageDelDestActionPerformed
 
@@ -984,7 +986,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         return OFFSET_NETWORK + (int) ((getSize().getHeight() - (OFFSET_NETWORK * 2)) * y / getSize().getHeight());
     }
 
-    public void update() {
+    public synchronized void update() {
         JComponent parent = (JComponent) getParent();
         if (parent != null) {
             ((JComponent) getParent()).revalidate();
@@ -1208,7 +1210,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
                 JOptionPane.showMessageDialog(SimulationPanel.this, "Invalid value!");
             }
         }
-
+        update();
         if (!ok) {
             return;
         }
@@ -1225,6 +1227,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             if (!selectedNodes.contains(node.getGraphicNode())) {
                 selNodesCount++;
                 selectedNodes.add(node.getGraphicNode());
+                update();
             }
 
         }
@@ -1671,10 +1674,12 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         String savefile = "";
         JFileChooser fc = new JFileChooser();
         fc.addChoosableFileFilter(new FileFilter() {
+
             @Override
             public boolean accept(File f) {
                 return f.getName().toLowerCase().endsWith(".jpg") || f.getName().toLowerCase().endsWith(".jpeg");
             }
+
             @Override
             public String getDescription() {
                 return "Jpeg Image Files";
@@ -1713,4 +1718,3 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         }
     }
 }
-

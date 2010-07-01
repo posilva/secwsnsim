@@ -1,9 +1,12 @@
 package org.mei.securesim.core.layers.routing;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.mei.securesim.components.instruments.coverage.CoverageController;
-import org.mei.securesim.components.instruments.LatencyController;
+import org.mei.securesim.components.instruments.latency.LatencyController;
 import org.mei.securesim.components.instruments.ReliabilityController;
 import org.mei.securesim.core.application.Application;
+import org.mei.securesim.core.engine.BaseMessage;
 import org.mei.securesim.core.layers.Layer;
 
 public abstract class RoutingLayer extends Layer {
@@ -46,8 +49,13 @@ public abstract class RoutingLayer extends Layer {
      * @param object
      */
     public void receiveMessageHandler(Object message) {
-        instrumentationNotifyMessageReception(message);
-        receiveMessage(message);
+        try {
+            BaseMessage m = (BaseMessage) ((BaseMessage) message).clone();
+            instrumentationNotifyMessageReception(m);
+            receiveMessage(m);
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(RoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -79,4 +87,6 @@ public abstract class RoutingLayer extends Layer {
     public abstract boolean sendMessage(Object message, Application app);
 
     public abstract void autostart();
+
+    public abstract void routeMessage(Object message);
 }

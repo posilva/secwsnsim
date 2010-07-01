@@ -715,6 +715,11 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
        startMergeProposal();
     }
 
+    @Override
+    public void routeMessage(Object message) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 
 
 }

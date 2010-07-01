@@ -8,7 +8,7 @@ package org.mei.securesim.components.instruments.coverage;
  *
  * @author Pedro Marques da Silva
  */
-public interface ICoverageMessage {
+public interface ITotalCoverageMessage {
 
     public Object getSourceId();
 
@@ -19,4 +19,6 @@ public interface ICoverageMessage {
     public void setSourceId(Object id);
 
     public void setDestinationId(Object id);
+
+    public void setUniqueId(Object id);
 }
