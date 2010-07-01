@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mei.securesim.components.instruments.coverage;
+package org.mei.securesim.components.instruments.latency;
 
+import org.mei.securesim.components.instruments.coverage.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.mei.securesim.core.engine.Event;
@@ -13,7 +14,7 @@ import org.mei.securesim.core.nodes.Node;
  *
  * @author Pedro Marques da Silva
  */
-public class TotalCoverageEvent extends Event {
+public class LatencyEvent extends Event {
 
     Node sourceNode;
     Node destinationNode;
@@ -48,17 +49,17 @@ public class TotalCoverageEvent extends Event {
         try {
         
             Object c = messageClass.newInstance();
-            ITotalCoverageMessage ctm= (ITotalCoverageMessage) c;
-            ITotalCoverageHandler srcId= (ITotalCoverageHandler) sourceNode;
-            ITotalCoverageHandler dstId= (ITotalCoverageHandler) destinationNode;
-            ctm.setSourceId(srcId.getCoverageId());
-            ctm.setDestinationId(dstId.getCoverageId());
+            ILatencyMessage ctm= (ILatencyMessage)  c;
+            ILatencyHandler srcId= (ILatencyHandler)sourceNode;
+            ILatencyHandler dstId= (ILatencyHandler)destinationNode;
+            ctm.setSourceId(srcId.getLatencyUniqueId());
+            ctm.setDestinationId(dstId.getLatencyUniqueId());
             ctm.setUniqueId(getMessageUniqueId());
             sourceNode.sendMessage(ctm);
         } catch (InstantiationException ex) {
-            Logger.getLogger(TotalCoverageEvent.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LatencyEvent.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(TotalCoverageEvent.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LatencyEvent.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -3,7 +3,6 @@
  */
 package org.mei.securesim.platform;
 
-import java.awt.event.ComponentEvent;
 import java.util.EventObject;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.SingleFrameApplication;
@@ -11,7 +10,6 @@ import org.jdesktop.application.FrameView;
 import org.jdesktop.application.TaskMonitor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,6 +27,7 @@ import org.mei.securesim.components.instruments.coverage.CoverageController;
 import org.mei.securesim.components.instruments.ReliabilityController;
 import org.mei.securesim.components.instruments.SimulationController;
 import org.mei.securesim.components.instruments.coverage.CoverageListener;
+import org.mei.securesim.components.instruments.latency.LatencyController;
 import org.mei.securesim.components.instruments.listeners.SignalUpdateEvent;
 import org.mei.securesim.components.simulation.ISimulationPlatform;
 import org.mei.securesim.platform.core.PlatformController;
@@ -169,16 +168,18 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
         instrumentsMenu = new javax.swing.JMenu();
+        coverageCtlPanelMenu = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
         energyCtlMenu = new javax.swing.JMenu();
         energyCtlStatusMenu = new javax.swing.JCheckBoxMenuItem();
-        jSeparator4 = new javax.swing.JPopupMenu.Separator();
         coverageCtlMenu = new javax.swing.JMenu();
-        coverageCtlPanelMenu = new javax.swing.JMenuItem();
         reliabilityCtlMenu = new javax.swing.JMenu();
         reliabilityCtlStatusMenu = new javax.swing.JCheckBoxMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         instrumentsConfigMenu = new javax.swing.JMenuItem();
+        latencyCtlMenu = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         statusPanel = new javax.swing.JPanel();
@@ -336,7 +337,16 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         instrumentsMenu.setText(resourceMap.getString("instrumentsMenu.text")); // NOI18N
         instrumentsMenu.setName("instrumentsMenu"); // NOI18N
 
+        coverageCtlPanelMenu.setAction(actionMap.get("ShowCoverageControllerInfo")); // NOI18N
+        coverageCtlPanelMenu.setText(resourceMap.getString("coverageCtlPanelMenu.text")); // NOI18N
+        coverageCtlPanelMenu.setName("coverageCtlPanelMenu"); // NOI18N
+        instrumentsMenu.add(coverageCtlPanelMenu);
+
+        jSeparator4.setName("jSeparator4"); // NOI18N
+        instrumentsMenu.add(jSeparator4);
+
         energyCtlMenu.setText(resourceMap.getString("energyCtlMenu.text")); // NOI18N
+        energyCtlMenu.setEnabled(false);
         energyCtlMenu.setName("energyCtlMenu"); // NOI18N
         energyCtlMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -354,12 +364,10 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         });
         energyCtlMenu.add(energyCtlStatusMenu);
 
-        jSeparator4.setName("jSeparator4"); // NOI18N
-        energyCtlMenu.add(jSeparator4);
-
         instrumentsMenu.add(energyCtlMenu);
 
         coverageCtlMenu.setText(resourceMap.getString("coverageCtlMenu.text")); // NOI18N
+        coverageCtlMenu.setEnabled(false);
         coverageCtlMenu.setName("coverageCtlMenu"); // NOI18N
         coverageCtlMenu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -374,15 +382,10 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
                 coverageCtlMenuActionPerformed(evt);
             }
         });
-
-        coverageCtlPanelMenu.setAction(actionMap.get("ShowCoverageControllerInfo")); // NOI18N
-        coverageCtlPanelMenu.setText(resourceMap.getString("coverageCtlPanelMenu.text")); // NOI18N
-        coverageCtlPanelMenu.setName("coverageCtlPanelMenu"); // NOI18N
-        coverageCtlMenu.add(coverageCtlPanelMenu);
-
         instrumentsMenu.add(coverageCtlMenu);
 
         reliabilityCtlMenu.setText(resourceMap.getString("reliabilityCtlMenu.text")); // NOI18N
+        reliabilityCtlMenu.setEnabled(false);
         reliabilityCtlMenu.setName("reliabilityCtlMenu"); // NOI18N
 
         reliabilityCtlStatusMenu.setSelected(true);
@@ -407,6 +410,16 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         instrumentsConfigMenu.setText(resourceMap.getString("instrumentsConfigMenu.text")); // NOI18N
         instrumentsConfigMenu.setName("instrumentsConfigMenu"); // NOI18N
         instrumentsMenu.add(instrumentsConfigMenu);
+
+        latencyCtlMenu.setText(resourceMap.getString("latencyCtlMenu.text")); // NOI18N
+        latencyCtlMenu.setName("latencyCtlMenu"); // NOI18N
+
+        jMenuItem1.setAction(actionMap.get("RunLatency")); // NOI18N
+        jMenuItem1.setText(resourceMap.getString("jMenuItem1.text")); // NOI18N
+        jMenuItem1.setName("jMenuItem1"); // NOI18N
+        latencyCtlMenu.add(jMenuItem1);
+
+        instrumentsMenu.add(latencyCtlMenu);
 
         menuBar.add(instrumentsMenu);
 
@@ -619,6 +632,7 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
     protected javax.swing.JMenu instrumentsMenu;
     protected javax.swing.JMenu jMenu1;
     protected javax.swing.JMenu jMenu2;
+    protected javax.swing.JMenuItem jMenuItem1;
     protected javax.swing.JPanel jPanel1;
     protected javax.swing.JPopupMenu jPopupMenu1;
     protected javax.swing.JPopupMenu.Separator jSeparator1;
@@ -627,6 +641,7 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
     protected javax.swing.JPopupMenu.Separator jSeparator4;
     protected javax.swing.JPopupMenu.Separator jSeparator6;
     protected javax.swing.JToolBar.Separator jSeparator7;
+    protected javax.swing.JMenu latencyCtlMenu;
     protected javax.swing.JLabel lblRadioCoverageValue;
     protected javax.swing.JPanel mainPanel;
     protected javax.swing.JSplitPane mainSplitPane;
@@ -803,5 +818,10 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
             }
         }
         return false;
+    }
+
+    @Action
+    public void RunLatency() {
+        LatencyController.getInstance().startAnalysis();
     }
 }

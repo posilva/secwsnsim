@@ -13,7 +13,7 @@ import org.mei.securesim.core.nodes.Node;
  *
  * @author Pedro Marques da Silva
  */
-public class TotalCoverageEvent extends Event {
+public class PartiallCoverageEvent extends Event {
 
     Node sourceNode;
     Node destinationNode;
@@ -56,9 +56,9 @@ public class TotalCoverageEvent extends Event {
             ctm.setUniqueId(getMessageUniqueId());
             sourceNode.sendMessage(ctm);
         } catch (InstantiationException ex) {
-            Logger.getLogger(TotalCoverageEvent.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PartiallCoverageEvent.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(TotalCoverageEvent.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PartiallCoverageEvent.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

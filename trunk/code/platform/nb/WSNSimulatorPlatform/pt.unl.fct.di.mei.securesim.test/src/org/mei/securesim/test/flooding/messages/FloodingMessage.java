@@ -7,7 +7,7 @@ package org.mei.securesim.test.flooding.messages;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.mei.securesim.components.instruments.coverage.ICoverageMessage;
+import org.mei.securesim.components.instruments.coverage.ITotalCoverageMessage;
 import org.mei.securesim.core.engine.BaseMessage;
 import org.mei.securesim.test.common.ByteArrayDataInputStream;
 import org.mei.securesim.test.common.ByteArrayDataOutputStream;
@@ -16,7 +16,8 @@ import org.mei.securesim.test.common.ByteArrayDataOutputStream;
  *
  * @author CIAdmin
  */
-public class FloodingMessage extends BaseMessage implements ICoverageMessage, Cloneable{
+public class FloodingMessage extends BaseMessage implements Cloneable {
+
     private byte type;
     private short source;
     private short destin;
@@ -57,7 +58,7 @@ public class FloodingMessage extends BaseMessage implements ICoverageMessage, Cl
         this.data = data;
     }
 
-    public int getDestin() {
+    public short getDestin() {
         return destin;
     }
 
@@ -65,7 +66,7 @@ public class FloodingMessage extends BaseMessage implements ICoverageMessage, Cl
         this.destin = destin;
     }
 
-    public int getSource() {
+    public short getSource() {
         return source;
     }
 
@@ -81,7 +82,7 @@ public class FloodingMessage extends BaseMessage implements ICoverageMessage, Cl
         this.type = type;
     }
 
-    void marshalling(){
+    void marshalling() {
         try {
             ByteArrayDataOutputStream bados = new ByteArrayDataOutputStream();
             bados.writeByte(type);
@@ -94,31 +95,8 @@ public class FloodingMessage extends BaseMessage implements ICoverageMessage, Cl
         }
     }
 
-    public Object getSourceId() {
-        return getSource();
-    }
-
-    public Object getDestinationId() {
-        return getDestin();
-    }
-
-    public Object getUniqueId() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public void setSourceId(Object id) {
-       source=(Short)id;
-    }
-
-    public void setDestinationId(Object id) {
-        destin=(Short)id;
-    }
-
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
-    }
-    public static void main(String[] args) {
-        
     }
 }

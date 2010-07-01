@@ -54,4 +54,9 @@ public class AODVRoutingLayer extends RoutingLayer {
     public void autostart() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public void routeMessage(Object message) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

@@ -19,7 +19,7 @@ public class FloodingNodeFactory extends NodeFactory{
        
         setApplicationClass(HelloApplication.class);
         setRoutingLayerClass(FloodingRoutingLayer.class);
-        setNodeClass(BasicNode.class);
+        setNodeClass(FloodingNode.class);
         setMacLayer(Mica2MACLayer.class);
         setSetup(true);
     }

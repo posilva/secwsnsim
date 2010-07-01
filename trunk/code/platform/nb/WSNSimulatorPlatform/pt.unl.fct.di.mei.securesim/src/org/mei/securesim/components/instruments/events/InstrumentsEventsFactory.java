@@ -19,12 +19,11 @@ public class InstrumentsEventsFactory {
      * @param interval
      * @return
      */
-    public static Event createTotalCoverageEvent(short repetitions, long delay, long interval, Class messageClass) {
+    public static Event createTotalCoverageEvent(short repetitions, long delay, long interval, Class messageClass, int messageUI) {
         if (messageClass==null)
             throw  new IllegalArgumentException("Message Class cannot be null");
         TotalCoverageEvent coverageEvent = new TotalCoverageEvent();
-        coverageEvent.setNumberOfRepetitions(repetitions);
-        coverageEvent.setInterval(interval);
+        coverageEvent.setMessageUniqueId(""+messageUI);
         coverageEvent.setMessageClass(messageClass);
         coverageEvent.setTime(SimulationController.getInstance().getCurrentSimulationTime()+ delay);
         return coverageEvent;

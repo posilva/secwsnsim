@@ -36,6 +36,11 @@ public class INSENSRoutingLayer extends RoutingLayer {
 
     private int countMessages = 0;
 
+    @Override
+    public void routeMessage(Object message) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 
     public enum TimeoutAction {
 

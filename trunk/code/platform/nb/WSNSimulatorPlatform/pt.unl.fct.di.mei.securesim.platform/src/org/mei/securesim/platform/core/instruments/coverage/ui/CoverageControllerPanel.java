@@ -11,6 +11,7 @@
 package org.mei.securesim.platform.core.instruments.coverage.ui;
 
 import java.util.Hashtable;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -21,8 +22,6 @@ import org.mei.securesim.components.instruments.coverage.CoverageController.Stat
 import org.mei.securesim.core.nodes.Node;
 import org.mei.securesim.components.instruments.IControlPanel;
 import org.mei.securesim.components.instruments.SimulationController;
-import org.mei.securesim.components.simulation.Simulation;
-import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.platform.utils.gui.GUI_Utils;
 
 /**
@@ -48,7 +47,8 @@ public class CoverageControllerPanel extends javax.swing.JPanel implements ICont
         CoverageController.getInstance().setControlPanel(this);
         chartPanel1.setChartName("Total Coverage");
         chartPanel1.setxLabel("Seconds");
-        chartPanel1.setyLabel("Coverage Rate");
+        chartPanel1.setyLabel("Coverage Rate (%)");
+        chartPanel1.init();
     }
 
     /** This method is called from within the constructor to
@@ -74,16 +74,21 @@ public class CoverageControllerPanel extends javax.swing.JPanel implements ICont
         destinationNodesTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        lblNrSourceNodes = new javax.swing.JLabel();
-        lblNrDestNodes = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        nrMsgRepetitions = new javax.swing.JFormattedTextField();
-        btnApply = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        intervalBetweenMsg = new javax.swing.JFormattedTextField();
         jPanel1 = new javax.swing.JPanel();
         chartPanel1 = new org.mei.securesim.platform.core.charts.ui.ChartPanel();
+        jPanel4 = new javax.swing.JPanel();
+        btnApply = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        txtNumberOfSourceNodes = new javax.swing.JFormattedTextField();
+        jLabel7 = new javax.swing.JLabel();
+        txtNumberOfDestinationNodes = new javax.swing.JFormattedTextField();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        nrMsgRepetitions = new javax.swing.JFormattedTextField();
+        intervalBetweenMsg = new javax.swing.JFormattedTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(416, 100));
         setMinimumSize(new java.awt.Dimension(416, 100));
@@ -142,11 +147,15 @@ public class CoverageControllerPanel extends javax.swing.JPanel implements ICont
 
         jPanel2.add(jToolBar1, java.awt.BorderLayout.NORTH);
 
-        jTabbedPane1.setMaximumSize(new java.awt.Dimension(59, 44));
+        jTabbedPane1.setMaximumSize(new java.awt.Dimension(410, 250));
+        jTabbedPane1.setMinimumSize(new java.awt.Dimension(410, 250));
         jTabbedPane1.setName("jTabbedPane1"); // NOI18N
-        jTabbedPane1.setPreferredSize(new java.awt.Dimension(59, 44));
+        jTabbedPane1.setPreferredSize(new java.awt.Dimension(410, 250));
 
+        jPanel3.setMaximumSize(new java.awt.Dimension(410, 250));
+        jPanel3.setMinimumSize(new java.awt.Dimension(410, 250));
         jPanel3.setName("jPanel3"); // NOI18N
+        jPanel3.setPreferredSize(new java.awt.Dimension(410, 250));
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
@@ -202,66 +211,119 @@ public class CoverageControllerPanel extends javax.swing.JPanel implements ICont
         jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
         jLabel3.setName("jLabel3"); // NOI18N
 
-        lblNrSourceNodes.setFont(resourceMap.getFont("lblNrDestNodes.font")); // NOI18N
-        lblNrSourceNodes.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblNrSourceNodes.setText(resourceMap.getString("lblNrSourceNodes.text")); // NOI18N
-        lblNrSourceNodes.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        lblNrSourceNodes.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        lblNrSourceNodes.setName("lblNrSourceNodes"); // NOI18N
-
-        lblNrDestNodes.setFont(resourceMap.getFont("lblNrDestNodes.font")); // NOI18N
-        lblNrDestNodes.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblNrDestNodes.setText(resourceMap.getString("lblNrDestNodes.text")); // NOI18N
-        lblNrDestNodes.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        lblNrDestNodes.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        lblNrDestNodes.setName("lblNrDestNodes"); // NOI18N
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblNrSourceNodes, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 182, Short.MAX_VALUE)
-                .addComponent(lblNrDestNodes, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel2)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel3)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE))
-                    .addContainerGap()))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(331, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNrSourceNodes, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNrDestNodes, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14))
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(jLabel3))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE))
-                    .addGap(43, 43, 43)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE))
+                .addGap(43, 43, 43))
         );
 
         jTabbedPane1.addTab(resourceMap.getString("jPanel3.TabConstraints.tabTitle"), jPanel3); // NOI18N
 
+        jPanel1.setName("jPanel1"); // NOI18N
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        chartPanel1.setMaximumSize(new java.awt.Dimension(410, 250));
+        chartPanel1.setMinimumSize(new java.awt.Dimension(410, 250));
+        chartPanel1.setName("chartPanel1"); // NOI18N
+        chartPanel1.setPreferredSize(new java.awt.Dimension(410, 250));
+
+        javax.swing.GroupLayout chartPanel1Layout = new javax.swing.GroupLayout(chartPanel1);
+        chartPanel1.setLayout(chartPanel1Layout);
+        chartPanel1Layout.setHorizontalGroup(
+            chartPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 425, Short.MAX_VALUE)
+        );
+        chartPanel1Layout.setVerticalGroup(
+            chartPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 283, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(chartPanel1, java.awt.BorderLayout.CENTER);
+
+        jTabbedPane1.addTab(resourceMap.getString("jPanel1.TabConstraints.tabTitle"), jPanel1); // NOI18N
+
+        jPanel4.setMaximumSize(new java.awt.Dimension(410, 250));
+        jPanel4.setMinimumSize(new java.awt.Dimension(410, 250));
         jPanel4.setName("jPanel4"); // NOI18N
+        jPanel4.setPreferredSize(new java.awt.Dimension(410, 250));
+
+        btnApply.setAction(actionMap.get("updateDataFromController")); // NOI18N
+        btnApply.setText(resourceMap.getString("btnApply.text")); // NOI18N
+        btnApply.setName("btnApply"); // NOI18N
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, resourceMap.getString("jPanel5.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, resourceMap.getFont("jPanel5.border.titleFont"))); // NOI18N
+        jPanel5.setName("jPanel5"); // NOI18N
+
+        jLabel6.setText(resourceMap.getString("jLabel6.text")); // NOI18N
+        jLabel6.setName("jLabel6"); // NOI18N
+
+        txtNumberOfSourceNodes.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        txtNumberOfSourceNodes.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtNumberOfSourceNodes.setName("txtNumberOfSourceNodes"); // NOI18N
+
+        jLabel7.setText(resourceMap.getString("jLabel7.text")); // NOI18N
+        jLabel7.setName("jLabel7"); // NOI18N
+
+        txtNumberOfDestinationNodes.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        txtNumberOfDestinationNodes.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtNumberOfDestinationNodes.setName("txtNumberOfDestinationNodes"); // NOI18N
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                        .addComponent(txtNumberOfSourceNodes, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                        .addComponent(txtNumberOfDestinationNodes, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtNumberOfSourceNodes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtNumberOfDestinationNodes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, resourceMap.getString("jPanel6.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, resourceMap.getFont("jPanel6.border.titleFont"))); // NOI18N
+        jPanel6.setName("jPanel6"); // NOI18N
 
         jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
         jLabel4.setName("jLabel4"); // NOI18N
@@ -271,77 +333,105 @@ public class CoverageControllerPanel extends javax.swing.JPanel implements ICont
         nrMsgRepetitions.setText(resourceMap.getString("nrMsgRepetitions.text")); // NOI18N
         nrMsgRepetitions.setName("nrMsgRepetitions"); // NOI18N
 
-        btnApply.setAction(actionMap.get("updateDataFromController")); // NOI18N
-        btnApply.setText(resourceMap.getString("btnApply.text")); // NOI18N
-        btnApply.setName("btnApply"); // NOI18N
+        intervalBetweenMsg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        intervalBetweenMsg.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        intervalBetweenMsg.setName("intervalBetweenMsg"); // NOI18N
 
         jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
         jLabel5.setName("jLabel5"); // NOI18N
 
-        intervalBetweenMsg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-        intervalBetweenMsg.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        intervalBetweenMsg.setName("intervalBetweenMsg"); // NOI18N
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 393, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel6Layout.createSequentialGroup()
+                    .addGap(7, 7, 7)
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel6Layout.createSequentialGroup()
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(intervalBetweenMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
+                            .addGap(18, 18, 18)
+                            .addComponent(nrMsgRepetitions, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGap(7, 7, 7)))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 73, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel6Layout.createSequentialGroup()
+                    .addGap(13, 13, 13)
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(nrMsgRepetitions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel5)
+                        .addComponent(intervalBetweenMsg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(14, Short.MAX_VALUE)))
+        );
+
+        jButton2.setAction(actionMap.get("RandomTotalCoverageSetup")); // NOI18N
+        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
+        jButton2.setName("jButton2"); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnApply)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(intervalBetweenMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(nrMsgRepetitions, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnApply)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(nrMsgRepetitions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(intervalBetweenMsg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 279, Short.MAX_VALUE)
-                .addComponent(btnApply)
+                    .addComponent(btnApply)
+                    .addComponent(jButton2))
                 .addContainerGap())
         );
 
         jTabbedPane1.addTab(resourceMap.getString("jPanel4.TabConstraints.tabTitle"), jPanel4); // NOI18N
 
-        jPanel1.setName("jPanel1"); // NOI18N
-        jPanel1.setLayout(new java.awt.BorderLayout());
-
-        chartPanel1.setName("chartPanel1"); // NOI18N
-
-        javax.swing.GroupLayout chartPanel1Layout = new javax.swing.GroupLayout(chartPanel1);
-        chartPanel1.setLayout(chartPanel1Layout);
-        chartPanel1Layout.setHorizontalGroup(
-            chartPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 411, Short.MAX_VALUE)
-        );
-        chartPanel1Layout.setVerticalGroup(
-            chartPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 370, Short.MAX_VALUE)
-        );
-
-        jPanel1.add(chartPanel1, java.awt.BorderLayout.CENTER);
-
-        jTabbedPane1.addTab(resourceMap.getString("jPanel1.TabConstraints.tabTitle"), jPanel1); // NOI18N
-
         jPanel2.add(jTabbedPane1, java.awt.BorderLayout.CENTER);
 
         add(jPanel2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+
+    void refreshChart() {
+        Hashtable t = CoverageController.getInstance().getStatistics();
+        long sent = 0;
+        long received = 0;
+        for (Object object : CoverageController.getInstance().getDestinationNodes()) {
+            Node n = (Node) object;
+            CoverageController.StatisticEntry e = (StatisticEntry) t.get(n.getId());
+            if (e == null) {
+            } else {
+                sent = e.getSentMessages().size();
+                received = e.getReceivedMessages().size();
+                long rate = received * 100 / sent;
+                chartPanel1.updateChart(SimulationController.getInstance().getCurrentSimulationTime(), rate);
+            }
+        }
+
+    }
 
     @Action
     public void RefreshCoverageControllerInfoAction() {
@@ -370,16 +460,14 @@ public class CoverageControllerPanel extends javax.swing.JPanel implements ICont
             if (e == null) {
                 destinationModel.addRow(new Object[]{(Short) n.getId(), 0, 0});
             } else {
-                sent = e.getSentMessages();
-                received = e.getReceivedMessages();
+                sent = e.getSentMessages().size();
+                received = e.getReceivedMessages().size();
                 destinationModel.addRow(new Object[]{(Short) n.getId(), sent, received});
                 long rate = received * 100 / sent;
-                chartPanel1.updateChart(SimulationController.getInstance().getCurrentSimulationTime() , rate);
+                chartPanel1.updateChart(SimulationController.getInstance().getCurrentSimulationTime(), rate);
             }
 
         }
-        lblNrDestNodes.setText(CoverageController.getInstance().getDestinationNodes().size() + " Nodes");
-        lblNrSourceNodes.setText(CoverageController.getInstance().getSourcesNodes().size() + " Nodes");
     }
 
     @Action
@@ -401,14 +489,17 @@ public class CoverageControllerPanel extends javax.swing.JPanel implements ICont
                 public void run() {
                     while (true) {
                         try {
-                            RefreshCoverageControllerInfoAction();
-                            Thread.sleep(1000);
+                            refreshChart();
+                            Thread.sleep(5000);
                         } catch (InterruptedException ex) {
                             Logger.getLogger(CoverageControllerPanel.class.getName()).log(Level.SEVERE, null, ex);
                         }
+                        if (!CoverageController.getInstance().isEnable()) {
+                            return;
+                        }
                     }
 
-                    
+
                 }
             });
             chartThread.start();
@@ -424,25 +515,30 @@ public class CoverageControllerPanel extends javax.swing.JPanel implements ICont
     private javax.swing.JTable destinationNodesTable;
     private javax.swing.JFormattedTextField intervalBetweenMsg;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JLabel lblNrDestNodes;
-    private javax.swing.JLabel lblNrSourceNodes;
     private javax.swing.JFormattedTextField nrMsgRepetitions;
     private javax.swing.JTable sourceNodesTable;
     private javax.swing.JToggleButton tbtnEnable;
     private javax.swing.JButton tbtnRun;
+    private javax.swing.JFormattedTextField txtNumberOfDestinationNodes;
+    private javax.swing.JFormattedTextField txtNumberOfSourceNodes;
     // End of variables declaration//GEN-END:variables
 
     private void loadDataFromController() {
@@ -458,5 +554,35 @@ public class CoverageControllerPanel extends javax.swing.JPanel implements ICont
 
     public synchronized void refresh() {
         RefreshCoverageControllerInfoAction();
+    }
+
+    @Action
+    public void RandomTotalCoverageSetup() {
+        try {
+
+            if (txtNumberOfSourceNodes.getText().equals("")) {
+                txtNumberOfSourceNodes.selectAll();
+            }
+            if (txtNumberOfDestinationNodes.getText().equals("")) {
+                txtNumberOfDestinationNodes.selectAll();
+            }
+            int nroSourceNodes = Integer.valueOf(txtNumberOfSourceNodes.getText());
+            int nroDestinationNodes = Integer.valueOf(txtNumberOfDestinationNodes.getText());
+
+
+            List sourceNodes = SimulationController.getInstance().selectRandomNodes(nroSourceNodes);
+            List destinationNodes = SimulationController.getInstance().selectRandomNodes(nroDestinationNodes, sourceNodes);
+
+
+            for (Object object : destinationNodes) {
+                CoverageController.getInstance().registerDestinationNode((Node) object);
+            }
+            for (Object object : sourceNodes) {
+                CoverageController.getInstance().registerSourceNode((Node) object);
+            }
+            SimulationController.getInstance().getSimulation().getSimulator().getDisplay().update();
+        } catch (Exception e) {
+            GUI_Utils.showException(e);
+        }
     }
 }

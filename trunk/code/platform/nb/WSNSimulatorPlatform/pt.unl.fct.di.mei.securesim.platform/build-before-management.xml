@@ -11,7 +11,6 @@
     <description>Builds, tests, and runs the project pt.unl.fct.di.mei.securesim.platform.</description>
     <import file="nbproject/build-impl.xml"/>
 
-    <import file="nbproject/management-build-impl.xml"/>
     <import file="nbproject/profiler-build-impl.xml"/>
     <import file="nbproject/profiler-build-impl.xml"/>    <!--
 
@@ -75,4 +74,3 @@
 
     -->
 </project>
-
