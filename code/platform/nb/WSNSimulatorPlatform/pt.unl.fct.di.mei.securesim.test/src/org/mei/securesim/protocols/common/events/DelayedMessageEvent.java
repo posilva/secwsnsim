@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mei.securesim.test.common.events;
+package org.mei.securesim.protocols.common.events;
 
 import org.mei.securesim.core.engine.Event;
 import org.mei.securesim.core.engine.Simulator;

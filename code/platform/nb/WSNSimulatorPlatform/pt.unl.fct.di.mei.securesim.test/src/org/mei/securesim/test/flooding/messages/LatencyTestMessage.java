@@ -30,7 +30,7 @@ public class LatencyTestMessage extends FloodingMessage implements ILatencyMessa
     }
 
     public Object getUniqueId() {
-        return getData();
+        return getMessageData();
     }
 
     public void setSourceId(Object id) {
@@ -42,7 +42,7 @@ public class LatencyTestMessage extends FloodingMessage implements ILatencyMessa
     }
 
     public void setUniqueId(Object id) {
-        setData(id.toString());
+        setMessageData(id.toString());
     }
 
     public void incrementHop() {

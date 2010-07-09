@@ -23,7 +23,7 @@ public class InstrumentsEventsFactory {
         if (messageClass==null)
             throw  new IllegalArgumentException("Message Class cannot be null");
         TotalCoverageEvent coverageEvent = new TotalCoverageEvent();
-        coverageEvent.setMessageUniqueId(""+messageUI);
+        coverageEvent.setMessageUniqueId(messageUI);
         coverageEvent.setMessageClass(messageClass);
         coverageEvent.setTime(SimulationController.getInstance().getCurrentSimulationTime()+ delay);
         return coverageEvent;

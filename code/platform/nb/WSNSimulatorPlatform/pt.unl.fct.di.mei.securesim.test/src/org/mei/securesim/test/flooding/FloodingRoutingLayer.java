@@ -85,7 +85,7 @@ public class FloodingRoutingLayer extends RoutingLayer {
     }
 
     @Override
-    public void autostart() {
+    public void setup() {
         /**
          * configure the coverage controller
          */

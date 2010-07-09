@@ -11,7 +11,7 @@ import org.mei.securesim.core.radio.RadioModel.Neighborhood;
  * @author posilva
  */
 public abstract class MACLayer extends Layer {
-
+   
     protected static long totalMessagesSent = 0;
     protected static long totalMessagesNotSent = 0;
     protected static long totalMessagesCorrupted = 0;
@@ -83,6 +83,7 @@ public abstract class MACLayer extends Layer {
         this.radioModel = radioModel;
     }
 
+    
     protected final void beginTransmission(final double strength, Object stream) {
         Node n = (Node) stream;
         neighborhood.beginTransmission(strength, n);
@@ -184,4 +185,7 @@ public abstract class MACLayer extends Layer {
     public void setSignalStrength(double signalStrength) {
         this.signalStrength = signalStrength;
     }
+
+  
+
 }

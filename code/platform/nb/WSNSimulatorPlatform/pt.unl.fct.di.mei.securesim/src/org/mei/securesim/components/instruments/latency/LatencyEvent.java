@@ -4,7 +4,6 @@
  */
 package org.mei.securesim.components.instruments.latency;
 
-import org.mei.securesim.components.instruments.coverage.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.mei.securesim.core.engine.Event;
@@ -19,13 +18,13 @@ public class LatencyEvent extends Event {
     Node sourceNode;
     Node destinationNode;
     private Class messageClass;
-    private String messageUniqueId;
+    private long  messageUniqueId;
 
-    public String getMessageUniqueId() {
+    public long  getMessageUniqueId() {
         return messageUniqueId;
     }
 
-    public void setMessageUniqueId(String messageUniqueId) {
+    public void setMessageUniqueId(long messageUniqueId) {
         this.messageUniqueId = messageUniqueId;
     }
 
@@ -47,14 +46,15 @@ public class LatencyEvent extends Event {
 
     protected void doActions() {
         try {
-        
+
             Object c = messageClass.newInstance();
-            ILatencyMessage ctm= (ILatencyMessage)  c;
-            ILatencyHandler srcId= (ILatencyHandler)sourceNode;
-            ILatencyHandler dstId= (ILatencyHandler)destinationNode;
+            ILatencyMessage ctm = (ILatencyMessage) c;
+            ILatencyHandler srcId = (ILatencyHandler) sourceNode;
+            ILatencyHandler dstId = (ILatencyHandler) destinationNode;
             ctm.setSourceId(srcId.getLatencyUniqueId());
             ctm.setDestinationId(dstId.getLatencyUniqueId());
             ctm.setUniqueId(getMessageUniqueId());
+
             sourceNode.sendMessage(ctm);
         } catch (InstantiationException ex) {
             Logger.getLogger(LatencyEvent.class.getName()).log(Level.SEVERE, null, ex);
@@ -64,7 +64,7 @@ public class LatencyEvent extends Event {
     }
 
     public void setMessageClass(Class messageClass) {
-        this.messageClass=messageClass;
+        this.messageClass = messageClass;
     }
 
     @Override

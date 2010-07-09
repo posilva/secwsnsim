@@ -36,6 +36,7 @@ import org.mei.securesim.core.engine.events.SimulatorEvent;
 import org.mei.securesim.core.nodes.Node;
 import org.mei.securesim.core.radio.RadioModel;
 import org.mei.securesim.core.network.Network;
+import org.mei.securesim.core.ui.Display;
 import org.mei.securesim.utils.RandomGenerator;
 
 /**
@@ -51,7 +52,7 @@ public class Simulator {
     public static final int RUNTIME_NUM_STEPS = 100;
     public static final Integer SIMULATION_SPEED_DEFAULT = 80000;
     public static Integer ONE_SECOND = SIMULATION_SPEED_DEFAULT;
-    static Logger LOGGER = Logger.getLogger(Simulator.class.getName());
+    final static Logger LOGGER = Logger.getLogger(Simulator.class.getName());
     /**
      * This is a static reference to a Random instance.
      * This makes experiments repeatable, all you have to do is to set
@@ -70,6 +71,7 @@ public class Simulator {
     private RadioModel radioModel;
     private final Object monitor = new Object();
     private Simulation simulation;
+    private Thread runningThread;
 
     public enum RunMode {
 
@@ -129,6 +131,8 @@ public class Simulator {
     }
 
     public void reset() {
+        if (runningThread!=null)
+        runningThread.interrupt();
     }
 
     public void pause() {
@@ -146,7 +150,7 @@ public class Simulator {
     public void start() {
 
         SimulationController.getInstance().begin();
-        autostartRoutingLayer();
+        setupRoutingLayer();
         if (SimulationController.getInstance().getMode() == SimulationController.FAST) {
             runWithDisplay();
         } else {
@@ -278,8 +282,7 @@ public class Simulator {
      * @param timeInSec the time in seconds until the simulation is to run
      */
     public void run(final double timeInSec) {
-
-        new Thread(new Runnable() {
+        runningThread = new Thread(new Runnable() {
 
             public void run() {
                 long tmax = lastEventTime + (int) (Simulator.ONE_SECOND * timeInSec);
@@ -296,7 +299,8 @@ public class Simulator {
 
                 }
             }
-        }).start();
+        });
+        runningThread.start();
     }
 
     /**
@@ -305,7 +309,7 @@ public class Simulator {
      * experiment!
      */
     public void runWithDisplay() {
-        new Thread(new Runnable() {
+        runningThread = new Thread(new Runnable() {
 
             public void run() {
                 while (true) {
@@ -313,7 +317,8 @@ public class Simulator {
                     display.update();
                 }
             }
-        }).start();
+        });
+        runningThread.start();
     }
 
     /**
@@ -325,7 +330,7 @@ public class Simulator {
      * Fazer a simulação andar mais depressa
      */
     public void runWithDisplayInRealTime() {
-        Thread t = new Thread() {
+        runningThread = new Thread() {
 
             @Override
             public void run() {
@@ -354,7 +359,7 @@ public class Simulator {
                 }
             }
         };
-        t.start();
+        runningThread.start();
     }
 
     /**
@@ -456,10 +461,10 @@ public class Simulator {
         this.simulation = simulation;
     }
 
-    private void autostartRoutingLayer() {
+    private void setupRoutingLayer() {
         for (Object object : getNodes()) {
             Node n = (Node) object;
-            n.getRoutingLayer().autostart();
+            n.getRoutingLayer().setup();
         }
     }
 }

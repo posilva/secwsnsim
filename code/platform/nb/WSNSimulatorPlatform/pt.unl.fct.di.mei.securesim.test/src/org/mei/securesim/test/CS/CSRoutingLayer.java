@@ -14,6 +14,7 @@ import org.mei.securesim.test.CS.messages.CSMessage;
  * @author Pedro Marques da Silva
  */
 public class CSRoutingLayer extends RoutingLayer {
+
     long myGroupId;
     short myGroupSize;
     long oldGroupId;
@@ -40,21 +41,13 @@ public class CSRoutingLayer extends RoutingLayer {
     }
 
     @Override
-    public void autostart() {
+    public void setup() {
         neighborsGroupsTable = new Hashtable();
         neighborsTable = new Hashtable();
 
         oldGroupId = myGroupId = getNode().getId();
         oldGroupSize = myGroupSize = 1;
 
-    }
-
-    /**
-     * Facilitator message for log
-     * @param message
-     */
-    private void log(String message) {
-        System.out.println("<" + getNode().getSimulator().getSimulationTime() + "> - [" + getNode().getId() + "] - " + message);
     }
 
     @Override

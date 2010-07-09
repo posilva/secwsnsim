@@ -17,7 +17,7 @@ public class HelloApplication extends Application {
     @Override
     public void receiveMessage(Object message) {
         FloodingMessage m = (FloodingMessage) message;
-        //JOptionPane.showMessageDialog(null, "Node: " + getNode().getId() +"\n" + "Data: "+ m.getData() + "\nFrom: " + m.getSource());
+        //JOptionPane.showMessageDialog(null, "Node: " + getNode().getId() +"\n" + "Data: "+ m.getMessageData() + "\nFrom: " + m.getSource());
     }
 
     @Override
@@ -46,7 +46,7 @@ public class HelloApplication extends Application {
         m.setType((byte)1);
         m.setSource(getNode().getId());
         m.setDestin(id);
-        m.setData("HELLO");
+        m.setMessageData("HELLO");
         sendMessage(m);
     }
 }

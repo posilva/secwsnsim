@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package org.mei.securesim.test.common;
+package org.mei.securesim.protocols.common;
 import java.lang.reflect.Array;
 
 /**

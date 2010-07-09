@@ -93,26 +93,24 @@ public class LatencyController {
     }
 
     public void startAnalysis() {
-        Node s1 = SimulationController.getInstance().getSimulation().getSimulator().getNetwork().getNodeDB().randomNode();
-        Node s2 = SimulationController.getInstance().getSimulation().getSimulator().getNetwork().getNodeDB().randomNode();
-        Node s3 = SimulationController.getInstance().getSimulation().getSimulator().getNetwork().getNodeDB().randomNode();
-        Node r1 = SimulationController.getInstance().getSimulation().getSimulator().getNetwork().getNodeDB().randomNode();
-        senders.add(s1);
-        senders.add(s2);
-        senders.add(s3);
-        receivers.add(r1);
+        if (receivers.isEmpty()) {
+            throw new IllegalStateException("No receivers defined");
+        }
+        if (senders.isEmpty()) {
+            throw new IllegalStateException("No senders defined");
+        }
+
         Simulator sim = SimulationController.getInstance().getSimulation().getSimulator();
-        
-        int ct =0;
+        int ct = 0;
         for (Node node : senders) {
-             LatencyEvent le= new LatencyEvent();
-             le.setSourceNode(node);
-             le.setDestinationNode(r1);
-             le.setMessageUniqueId(""+ct);
-             long time=ct*Simulator.ONE_SECOND*3+sim.getSimulationTime();
-             le.setTime(time);
-             ct++;
-             le.setMessageClass(latencyMessageClass);
+            LatencyEvent le = new LatencyEvent();
+            le.setSourceNode(node);
+            le.setDestinationNode(receivers.iterator().next());
+            le.setMessageUniqueId(ct);
+            long time = ct * Simulator.ONE_SECOND * 3 + sim.getSimulationTime();
+            le.setTime(time);
+            ct++;
+            le.setMessageClass(latencyMessageClass);
             sim.addEvent(le);
 
         }
@@ -124,5 +122,14 @@ public class LatencyController {
 
     public void setLatencyMessageClass(Class latencyMessageClass) {
         this.latencyMessageClass = latencyMessageClass;
+    }
+
+    public void unregisterSender(Node physicalNode) {
+        senders.remove(physicalNode);
+
+    }
+
+    public void unregisterReceiver(Node physicalNode) {
+        receivers.remove(physicalNode);
     }
 }

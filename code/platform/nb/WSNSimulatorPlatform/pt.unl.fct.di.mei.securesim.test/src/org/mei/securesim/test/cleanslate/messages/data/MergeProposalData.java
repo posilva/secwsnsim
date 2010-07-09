@@ -7,7 +7,7 @@ package org.mei.securesim.test.cleanslate.messages.data;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.mei.securesim.test.common.ByteArrayDataOutputStream;
+import org.mei.securesim.protocols.common.ByteArrayDataOutputStream;
 
 /**
  *

@@ -98,7 +98,7 @@ public class GaussianRadioModel extends RadioModel {
      */
     public void updateNeighborhoods() {
 
-        
+        CoverageController.getInstance().signalNeighborDetectionReset(CoverageController.CoverageModelEnum.RADIO);
         /**
          * Clear neighborhood information
          */

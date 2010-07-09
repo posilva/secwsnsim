@@ -44,6 +44,7 @@ import org.mei.securesim.core.nodes.Node;
  */
 public class CoverageController {
 
+    private static int uniqueMessagesID = 0;
     private int messageIntervalPerNode = 3;
     private int repetitionsPerNode = 1;
     private List sourcesNodes = new ArrayList();
@@ -85,13 +86,26 @@ public class CoverageController {
 
     }
 
+    public void signalNeighborDetectionReset(CoverageModelEnum model) {
+        switch (model) {
+            case RADIO:
+                radioModelNeighbors.clear();
+                break;
+            case ROUTING:
+                routingModelNeighbors.clear();
+                break;
+        }
+
+
+    }
+
     public class ListMessageEntry {
 
         ITotalCoverageMessage message;
 
         public ListMessageEntry(ITotalCoverageMessage message) {
             this.message = message;
-           
+
         }
 
         @Override
@@ -147,7 +161,7 @@ public class CoverageController {
     }
     // TODO: Arranjar uma semantica para o ID por forma a poder implementar um ID adequado
 
-    public synchronized  void notifyMessageSent(Object message, Node node) {
+    public synchronized void notifyMessageSent(Object message, Node node) {
         if (message instanceof ITotalCoverageMessage) { // é mensagem de cobertura
             if (node instanceof ITotalCoverageHandler) {
                 ITotalCoverageHandler coverageNode = (ITotalCoverageHandler) node;
@@ -166,7 +180,7 @@ public class CoverageController {
 
     }
 
-    public synchronized  void notifyMessageReception(Object message, Node node) {
+    public synchronized void notifyMessageReception(Object message, Node node) {
 
         if (message instanceof ITotalCoverageMessage) { // é mensagem de cobertura total
             ITotalCoverageMessage msg = (ITotalCoverageMessage) message;
@@ -408,7 +422,7 @@ public class CoverageController {
             for (Object dstNode : destinationNodes) {
                 Node n = (Node) srcNode;
                 long delay = ct++ * messageIntervalPerNode * Simulator.ONE_SECOND;
-                TotalCoverageEvent evt = (TotalCoverageEvent) InstrumentsEventsFactory.createTotalCoverageEvent((short) repetitionsPerNode, delay, messageIntervalPerNode * Simulator.ONE_SECOND, getTotalCoverageTestMessageClass(),ct);
+                TotalCoverageEvent evt = (TotalCoverageEvent) InstrumentsEventsFactory.createTotalCoverageEvent((short) repetitionsPerNode, delay, messageIntervalPerNode * Simulator.ONE_SECOND, getTotalCoverageTestMessageClass(), uniqueMessagesID++);
                 evt.setSourceNode(n);
                 evt.setDestinationNode((Node) dstNode);
                 SimulationController.getInstance().getSimulation().getSimulator().addEvent(evt);
@@ -465,8 +479,6 @@ public class CoverageController {
     public void setPartialCoverageMessageClass(Class partialCoverageMessageClass) {
         this.partialCoverageMessageClass = partialCoverageMessageClass;
     }
-
-    
 
     private synchronized void refreshControlPanel() {
 //        if (controlPanel != null) {

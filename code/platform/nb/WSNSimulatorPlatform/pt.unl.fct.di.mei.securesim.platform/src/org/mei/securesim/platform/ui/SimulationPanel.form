@@ -254,7 +254,7 @@
             </Menu>
             <Menu class="javax.swing.JMenu" name="selNodesInstrumentsLatency">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Reliability"/>
+                <Property name="text" type="java.lang.String" value="Latency"/>
               </Properties>
               <SubComponents>
                 <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodesInstrumentsLatencySelSources">
@@ -262,17 +262,49 @@
                     <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="Add to source nodes"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesInstrumentsLatencySelSourcesActionPerformed"/>
+                  </Events>
                 </MenuItem>
                 <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodesInstrumentsLatencyDelSources">
                   <Properties>
                     <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="Remove from source nodes"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesInstrumentsLatencyDelSourcesActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator6">
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="selNodesInstrumentsLatencySelDest">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Add to destination nodes"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesInstrumentsLatencySelDestActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="selNodesInstrumentsLatencyDelDest">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Remove from destination nodes"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesInstrumentsLatencyDelDestActionPerformed"/>
+                  </Events>
                 </MenuItem>
               </SubComponents>
             </Menu>
           </SubComponents>
         </Menu>
+        <MenuItem class="javax.swing.JMenuItem" name="selNodesRunEvent">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Run application"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesRunEventActionPerformed"/>
+          </Events>
+        </MenuItem>
         <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
         </Component>
         <MenuItem class="javax.swing.JMenuItem" name="selNodesShowProperties">

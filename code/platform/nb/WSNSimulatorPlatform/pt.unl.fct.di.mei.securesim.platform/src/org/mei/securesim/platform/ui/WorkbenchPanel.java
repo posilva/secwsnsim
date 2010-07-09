@@ -11,19 +11,22 @@ import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 import org.mei.securesim.components.instruments.SimulationController;
 import org.mei.securesim.components.simulation.SimulationFactory;
+import org.mei.securesim.platform.PlatformView;
+import org.mei.securesim.platform.ui.frames.ApplicationOutputPanel;
+import org.mei.securesim.platform.utils.gui.GUI_Utils;
 import org.mei.securesim.utils.DebugConsole;
 
 /**
  *
  * @author posilva
  */
-public class WorkbenchPanel extends javax.swing.JPanel  {
+public class WorkbenchPanel extends javax.swing.JPanel {
 
     /** Creates new form WorkbenchPanel */
     public WorkbenchPanel() {
         initComponents();
-        
-                jScrollPane1.setPreferredSize(new Dimension(1280,800));
+
+        jScrollPane1.setPreferredSize(new Dimension(1280, 800));
         jScrollPane1.setAutoscrolls(true);
         btnDeployNodesMode.setSelected(true);
         updateSelectionGroup();
@@ -60,6 +63,8 @@ public class WorkbenchPanel extends javax.swing.JPanel  {
         jSeparator5 = new javax.swing.JToolBar.Separator();
         selRandomNodes = new javax.swing.JButton();
         btnSnapshot = new javax.swing.JButton();
+        jSeparator6 = new javax.swing.JToolBar.Separator();
+        showApplicationOutput = new javax.swing.JToggleButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -257,6 +262,19 @@ public class WorkbenchPanel extends javax.swing.JPanel  {
         btnSnapshot.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSnapshot.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(btnSnapshot);
+        jToolBar1.add(jSeparator6);
+
+        showApplicationOutput.setAction(actionMap.get("ShowApplicationOutput")); // NOI18N
+        showApplicationOutput.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/terminal-icon.png"))); // NOI18N
+        showApplicationOutput.setFocusable(false);
+        showApplicationOutput.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        showApplicationOutput.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        showApplicationOutput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showApplicationOutputActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(showApplicationOutput);
 
         add(jToolBar1, java.awt.BorderLayout.LINE_START);
     }// </editor-fold>//GEN-END:initComponents
@@ -303,6 +321,10 @@ public class WorkbenchPanel extends javax.swing.JPanel  {
     private void selectionPointerToolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectionPointerToolActionPerformed
         updateSelectionGroup();
     }//GEN-LAST:event_selectionPointerToolActionPerformed
+
+    private void showApplicationOutputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showApplicationOutputActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_showApplicationOutputActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup OperationBG;
     private javax.swing.ButtonGroup SelectionBG;
@@ -320,10 +342,12 @@ public class WorkbenchPanel extends javax.swing.JPanel  {
     private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JToolBar.Separator jSeparator5;
+    private javax.swing.JToolBar.Separator jSeparator6;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JButton searchNode;
     private javax.swing.JButton selRandomNodes;
     private javax.swing.JToggleButton selectionPointerTool;
+    private javax.swing.JToggleButton showApplicationOutput;
     private javax.swing.JToggleButton showDebugWindow;
     private javax.swing.JToggleButton showMouseCoordinates;
     private org.mei.securesim.platform.ui.SimulationPanel simulationPanel1;
@@ -340,40 +364,81 @@ public class WorkbenchPanel extends javax.swing.JPanel  {
     }
 
     public void setSimulationFactory(SimulationFactory simulationFactory) {
-    simulationPanel1.settingSimulation(simulationFactory);
+        simulationPanel1.settingSimulation(simulationFactory);
     }
 
     @Action
     public void StartSimulation() {
-        simulationPanel1.startSimulation();
-        SimulationController.getInstance().getSimulationPlatform().updateSimulationState("START");
+        try {
+            if (SimulationController.getInstance().getSimulation().getSimulator().getNodes().size() > 0) {
+                simulationPanel1.startSimulation();
+                SimulationController.getInstance().getSimulationPlatform().updateSimulationState("START");
+            } else {
+                GUI_Utils.showMessage("Cannot start simulation without nodes deployed", JOptionPane.WARNING_MESSAGE);
+                btnSimulationStart.setSelected(false);
+            }
+        } catch (Exception e) {
+        }
     }
 
     @Action
     public void PauseSimulation() {
-        simulationPanel1.pauseSimulation();
-        SimulationController.getInstance().getSimulationPlatform().updateSimulationState("PAUSE");
+        try {
+            if (SimulationController.getInstance().getSimulation().getSimulator().getNodes().size() > 0) {
+                simulationPanel1.pauseSimulation();
+                SimulationController.getInstance().getSimulationPlatform().updateSimulationState("PAUSE");
+            } else {
+                GUI_Utils.showMessage("Cannot pause simulation without nodes deployed", JOptionPane.WARNING_MESSAGE);
+                btnSimulationPause.setSelected(false);
+            }
+        } catch (Exception e) {
+        }
     }
 
     @Action
     public void StopSimulation() {
-        simulationPanel1.stopSimulation();
-        SimulationController.getInstance().getSimulationPlatform().updateSimulationState("STOP");
+        try {
+            if (SimulationController.getInstance().getSimulation().getSimulator().getNodes().size() > 0) {
+                simulationPanel1.stopSimulation();
+                SimulationController.getInstance().getSimulationPlatform().updateSimulationState("STOP");
+            } else {
+                GUI_Utils.showMessage("Cannot stop simulation without nodes deployed", JOptionPane.WARNING_MESSAGE);
+                btnSimulationStop.setSelected(false);
+            }
+        } catch (Exception e) {
+        }
 
     }
 
     @Action
     public void ResetSimulation() {
-        simulationPanel1.clearSimulation();
-        SimulationController.getInstance().getSimulationPlatform().updateSimulationState("RESET");
+        try {
+            if (SimulationController.getInstance().getSimulation().getSimulator().getNodes().size() > 0) {
+                simulationPanel1.clearSimulation();
+                SimulationController.getInstance().getSimulationPlatform().updateSimulationState("RESET");
+            } else {
+//                GUI_Utils.showMessage("Cannot reset simulation without nodes deployed", JOptionPane.WARNING_MESSAGE);
+//                btnSimulationReset.setSelected(false);
+            }
+            btnSimulationStart.setSelected(false);
+            btnSimulationPause.setSelected(false);
+            btnSimulationStop.setSelected(false);
+        } catch (Exception e) {
+        }
     }
 
     @Action(block = Task.BlockingScope.COMPONENT)
     public Task RebuildNetwork() {
+
         return new RebuildNetworkTask(org.jdesktop.application.Application.getInstance(org.mei.securesim.platform.PlatformApp.class));
 
 
 
+    }
+
+    public void buildSimulationNetwork() {
+        simulationPanel1.buildNetwork();
+        simulationPanel1.update();
     }
 
     private class RebuildNetworkTask extends org.jdesktop.application.Task<Object, Void> {
@@ -390,10 +455,12 @@ public class WorkbenchPanel extends javax.swing.JPanel  {
 
         @Override
         protected Object doInBackground() {
-            long start = System.currentTimeMillis();
-            setMessage("Building Network...");
-            simulationPanel1.buildNetwork();
-            setMessage("Building Network... done in " +(System.currentTimeMillis() -start ) + " milliseconds");
+            if (!SimulationController.getInstance().isStarted()) {
+                long start = System.currentTimeMillis();
+                setMessage("Building Network...");
+                buildSimulationNetwork();
+                setMessage("Building Network... done in " + (System.currentTimeMillis() - start) + " milliseconds");
+            }
             return null;  // return your result
         }
 
@@ -407,6 +474,7 @@ public class WorkbenchPanel extends javax.swing.JPanel  {
     @Action
     public void selectedNodeDeployMode() {
         updateSelectionGroup();
+
     }
 
     @Action
@@ -418,5 +486,10 @@ public class WorkbenchPanel extends javax.swing.JPanel  {
     @Action
     public void TakeSnapshot() {
         simulationPanel1.takeSnapshot();
+    }
+
+    @Action
+    public void ShowApplicationOutput() {
+        PlatformView.getInstance().addTab("Application Output", ApplicationOutputPanel.getInstance());
     }
 }

@@ -9,8 +9,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.mei.securesim.components.instruments.coverage.ITotalCoverageMessage;
 import org.mei.securesim.core.engine.BaseMessage;
-import org.mei.securesim.test.common.ByteArrayDataInputStream;
-import org.mei.securesim.test.common.ByteArrayDataOutputStream;
+import org.mei.securesim.protocols.common.ByteArrayDataInputStream;
+import org.mei.securesim.protocols.common.ByteArrayDataOutputStream;
 
 /**
  *
@@ -50,11 +50,11 @@ public class FloodingMessage extends BaseMessage implements Cloneable {
         }
     }
 
-    public String getData() {
+    public String getMessageData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setMessageData(String data) {
         this.data = data;
     }
 

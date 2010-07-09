@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.mei.securesim.test.flooding.messages;
 
 import org.mei.securesim.components.instruments.coverage.ITotalCoverageMessage;
@@ -29,19 +28,26 @@ public class PartialCoverageTestMessage extends FloodingMessage implements ITota
     }
 
     public Object getUniqueId() {
-        return getData();
+        return getMessageData();
     }
 
     public void setSourceId(Object id) {
-        setSource((Short)id);
+        setSource((Short) id);
     }
 
     public void setDestinationId(Object id) {
-        setDestin((Short)id);
+        setDestin((Short) id);
     }
 
     public void setUniqueId(Object id) {
-        setData(id.toString());
+        setMessageData(id.toString());
     }
 
+    public void setData(byte[] data) {
+        setPayload(data);
+    }
+
+    public byte[] getData() {
+        return getPayload();
+    }
 }

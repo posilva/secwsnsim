@@ -8,7 +8,7 @@ import org.mei.securesim.components.instruments.coverage.ITotalCoverageHandler;
 import org.mei.securesim.components.instruments.latency.ILatencyHandler;
 import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.radio.RadioModel;
-import org.mei.securesim.test.common.BasicNode;
+import org.mei.securesim.protocols.common.BasicNode;
 
 /**
  *
