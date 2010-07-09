@@ -6,7 +6,6 @@ package org.mei.securesim.components.instruments.latency;
 
 import java.util.Hashtable;
 import org.mei.securesim.components.instruments.SimulationController;
-import org.mei.securesim.components.simulation.Simulation;
 
 /**
  *
@@ -58,6 +57,9 @@ public class LatencyStatisticsTable extends Hashtable<LatencyStatisticsTableKey,
             entry.setMaxHops(Math.max(numberOfHops, entry.getMaxHops()));
             entry.setMinHops(Math.min(numberOfHops, entry.getMinHops()));
             entry.setAverageHops(numberOfHops);
+
+            //TODO:ACRESCENTAR O MIN MAX E AVG DO TEMPO
+
         }
         put(key, entry);
     }

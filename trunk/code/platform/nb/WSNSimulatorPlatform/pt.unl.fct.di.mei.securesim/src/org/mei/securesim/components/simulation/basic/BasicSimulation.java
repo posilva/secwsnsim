@@ -24,7 +24,7 @@ public class BasicSimulation extends Simulation {
     public void start() {
         if (!getSimulator().isPaused()) {
             getSimulator().start();
-        
+
         } else {
             getSimulator().resume();
         }

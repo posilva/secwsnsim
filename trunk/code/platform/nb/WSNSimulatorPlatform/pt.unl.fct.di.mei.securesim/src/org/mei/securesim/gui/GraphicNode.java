@@ -23,7 +23,7 @@ public class GraphicNode {
     protected int y = 0;
     protected int z = 0;
     protected GraphicPoint center = new GraphicPoint(x, y);
-    protected int radius = 2;
+    protected int radius = 1;
     protected boolean filled = false;
     protected boolean selected = false;
     protected Color selectedBackcolor = Color.RED;

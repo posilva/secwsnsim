@@ -220,7 +220,7 @@ public abstract class Node {
      *
      * @see net.tinyos.prowler.INode#setId(short)
      */
-    public void setId(short id) {
+    public final void setId(short id) {
         this.id = id;
     }
 
@@ -465,17 +465,23 @@ public abstract class Node {
         } catch (Exception e) {
         }
 
-        return new String[]{"ID: " + getId(),
+
+        String[] nodeInfo = new String[]{"ID: " + getId(),
                     "Sink:  " + (isSinkNode() ? "True" : "False"),
-                    "Position:  (" + (int) getX() + "," + (int) getY() + "," + (int) getZ() + ")",
+                    "Position:  (" + (int) getX() + " , " + (int) getY() + " , " + (int) getZ() + ")",
                     "Node:  " + this.getClass().getSimpleName(),
                     "Application:  " + this.getApplication().getClass().getSimpleName(),
                     "Routing:  " + this.getRoutingLayer().getClass().getSimpleName(),
                     "MAC:  " + this.getMacLayer().getClass().getSimpleName(),
                     "Nro. Neighbors:  " + nroNeighbors,
-                    "",
-                    "Remaining Power:  " + twoPlaces.format(remainingPower <= 0.0 ? 0 : remainingPower) + "%"
+                    "Remaining Power:  " + twoPlaces.format(remainingPower <= 0.0 ? 0 : remainingPower) + "%",
+                    "Routing Stable: "  + getRoutingLayer().isStable(),
+                    "RSS: "  + getMacLayer().getSignalStrength(),
+                    "MRS: "  + getConfig().getMaximumRadioStrength(),
+
                 };
+        
+        return nodeInfo;
     }
 
     public CPU getCPU() {

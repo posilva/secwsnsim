@@ -13,8 +13,8 @@ import org.mei.securesim.components.crypto.CryptoFunctions;
 import org.mei.securesim.core.engine.BaseMessage;
 import org.mei.securesim.test.cleanslate.messages.CleanSlateMsg;
 import org.mei.securesim.test.cleanslate.utils.NeighborInfo;
-import org.mei.securesim.test.common.ByteArrayDataOutputStream;
-import org.mei.securesim.test.common.GeneralHashFunctions;
+import org.mei.securesim.protocols.common.ByteArrayDataOutputStream;
+import org.mei.securesim.protocols.common.GeneralHashFunctions;
 
 /**
  *

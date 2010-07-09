@@ -13,7 +13,6 @@ import org.mei.securesim.core.nodes.factories.NodeFactory;
 public abstract class Simulation extends ConfigurableObject {
 
     public final static Logger LOG = Logger.getLogger(Simulation.class.getName());
-    
     protected String name;
     private String description;
     protected Simulator simulator;
@@ -84,7 +83,17 @@ public abstract class Simulation extends ConfigurableObject {
 
     public abstract void start();
 
-    public abstract void reset();
+    public void reset() {
+        this.name="";
+        this.bPreInit=false;
+        this.description="";
+        this.network=null;
+        this.nodeRange=0;
+        this.radioModel=null;
+        this.seed=0;
+        this.simpleNodeFactory=null;
+        this.simulator=null;
+    }
 
     public abstract void pause();
 
@@ -134,7 +143,7 @@ public abstract class Simulation extends ConfigurableObject {
         radioModel.reset();
         network.reset();
         simulator.setNetwork(network);
-        
+
         simulator.setDisplay(display);
 
     }
@@ -154,6 +163,7 @@ public abstract class Simulation extends ConfigurableObject {
     public long getTime() {
         return getSimulator().getSimulationTime();
     }
+
     public long getTimeInMilliseconds() {
         return getSimulator().getSimulationTimeInMillisec();
     }

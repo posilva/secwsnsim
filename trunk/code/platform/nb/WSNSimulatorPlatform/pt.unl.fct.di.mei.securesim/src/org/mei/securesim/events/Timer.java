@@ -58,7 +58,7 @@ public abstract class Timer extends Event {
     }
 
     private void reschedule() {
-        setTime(SimulationController.getInstance().getSimulation().getTime() + delay);
+        setTime(getTime() + delay);
         SimulationController.getInstance().getSimulation().getSimulator().addEvent(this);
     }
 

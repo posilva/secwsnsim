@@ -7,7 +7,7 @@ package org.mei.securesim.test.flooding;
 
 import org.mei.securesim.core.layers.mac.Mica2MACLayer;
 import org.mei.securesim.core.nodes.factories.NodeFactory;
-import org.mei.securesim.test.common.BasicNode;
+import org.mei.securesim.protocols.common.BasicNode;
 
 /**
  *

@@ -47,7 +47,7 @@ public class BroadcastNoRepetitionRoutingLayer extends RoutingLayer {
 	}
 
     @Override
-    public void autostart() {
+    public void setup() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

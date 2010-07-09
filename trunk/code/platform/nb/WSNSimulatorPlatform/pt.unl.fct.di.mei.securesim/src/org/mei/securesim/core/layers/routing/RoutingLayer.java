@@ -13,6 +13,32 @@ public abstract class RoutingLayer extends Layer {
 
     protected Application application = null;
     protected boolean autostarted;
+    protected boolean stable = false;
+    protected RoutingLayerController routingController;
+
+    public boolean isStable() {
+        return stable;
+    }
+
+    public RoutingLayerController getRoutingController() {
+        return routingController;
+    }
+
+    public void setRoutingController(RoutingLayerController routingController) {
+        this.routingController = routingController;
+    }
+
+    
+    public void setStable(boolean stable) {
+        this.stable = stable;
+        if (routingController != null) {
+            if (stable) {
+                routingController.registerAsStable(this);
+            } else {
+                routingController.unregisterAsStable(this);
+            }
+        }
+    }
 
     public Application getApplication() {
         return application;
@@ -20,27 +46,36 @@ public abstract class RoutingLayer extends Layer {
 
     public void setApplication(Application application) {
         this.application = application;
+
+
     }
 
     public RoutingLayer() {
         super();
 
+
+
     }
 
     public void init() {
+
     }
 
     /**
-     * if a routing layer is marked as autostart when the simulator start the
+     * if a routing layer is marked as setup when the simulator start the
      * routing layer begins to operate
      * @return
      */
     public boolean isAutostarted() {
         return autostarted;
+
+
     }
 
     public void setAutostarted(boolean autostarted) {
         this.autostarted = autostarted;
+
+
     }
 
     /**
@@ -51,11 +86,18 @@ public abstract class RoutingLayer extends Layer {
     public void receiveMessageHandler(Object message) {
         try {
             BaseMessage m = (BaseMessage) ((BaseMessage) message).clone();
-            instrumentationNotifyMessageReception(m);
-            receiveMessage(m);
+            instrumentationNotifyMessageReception(
+                    m);
+            receiveMessage(
+                    m);
+
+
+
         } catch (CloneNotSupportedException ex) {
             Logger.getLogger(RoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+
     }
 
     /**
@@ -65,19 +107,27 @@ public abstract class RoutingLayer extends Layer {
      */
     public boolean sendMessageHandler(Object message, Application app) {
         instrumentationNotifyMessageSent(message);
+
+
         return sendMessage(message, app);
+
+
     }
 
     protected void instrumentationNotifyMessageReception(Object message) {
         CoverageController.getInstance().notifyMessageReception(message, getNode());
         LatencyController.getInstance().notifyMessageReception(message, getNode());
         ReliabilityController.getInstance().notifyMessageReception(message, getNode());
+
+
     }
 
     private void instrumentationNotifyMessageSent(Object message) {
         CoverageController.getInstance().notifyMessageSent(message, getNode());
         LatencyController.getInstance().notifyMessageSent(message, getNode());
         ReliabilityController.getInstance().notifyMessageSent(message, getNode());
+
+
     }
 
     public abstract void receiveMessage(Object message);
@@ -86,7 +136,7 @@ public abstract class RoutingLayer extends Layer {
 
     public abstract boolean sendMessage(Object message, Application app);
 
-    public abstract void autostart();
+    public abstract void setup();
 
     public abstract void routeMessage(Object message);
 }

@@ -26,6 +26,7 @@ public abstract class Network extends ConfigurableObject {
      *
      */
     private Simulator simulator = null;
+    NetworkField field = new NetworkField(300, 300, 0);
 
     /**
      * @param nodeDB
@@ -99,5 +100,13 @@ public abstract class Network extends ConfigurableObject {
      */
     public void reset() {
         nodeDB.clear();
+    }
+
+    public NetworkField getField() {
+        return field;
+    }
+
+    public void setField(NetworkField field) {
+        this.field = field;
     }
 }

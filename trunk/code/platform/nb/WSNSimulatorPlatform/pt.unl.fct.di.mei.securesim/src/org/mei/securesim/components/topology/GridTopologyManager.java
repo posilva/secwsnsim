@@ -3,11 +3,9 @@
  */
 package org.mei.securesim.components.topology;
 
-
 import org.mei.securesim.utils.annotation.Annotated;
 import java.awt.Rectangle;
-import java.util. Vector;
-import org.mei.securesim.utils.annotation.Parameter;
+import java.util.Vector;
 
 
 
@@ -18,29 +16,40 @@ import org.mei.securesim.core.nodes.Node;
  * 
  */
 public class GridTopologyManager extends TopologyManager implements Annotated {
-	/**
-	 * 
-	 */
-    @Parameter(label="Indique a largura da quadricula",value="50")
-    public String gridW; 
-    @Parameter(label="Indique a altura da quadricula",value="50")
-    public String gridH;
+
+    /**
+     *
+     */
+    private int distance = 30;
+    private Node node;
 
     public GridTopologyManager() {
-
-	}
+    }
 
     @Override
-    public  Vector<Node> apply(Rectangle rect,  Vector<Node> nodes) {
+    public Vector<Node> apply(Rectangle rect, Vector<Node> nodes) {
+        double posX = rect.getX();
+        double posY = rect.getY();
+        int rows = (int) rect.getHeight() / distance;
+        int cols = (int) (rect.getWidth() / distance);
+        int total_nodes=0;
+        for (int i = 0; i < rows; i++) {
+            posX = rect.getX();
+            for (int j = 0; j < cols; j++) {
 
-     int h= Integer.valueOf(gridH);
-     int w= Integer.valueOf(gridW);
+                nodes.get(total_nodes).setPosition(posX, posY, 0);
+                posX += distance;
+                total_nodes++;
+            }
+            posY += distance;
+        }
 
 
-     if (rect.width<w || rect.height<h){
-         
-     }
 
-     return nodes;
+        return nodes;
+    }
+
+    public void setDistance(int nDistance) {
+        distance = nDistance;
     }
 }

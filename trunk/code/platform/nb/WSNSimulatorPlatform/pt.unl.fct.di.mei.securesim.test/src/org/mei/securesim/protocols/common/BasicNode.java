@@ -1,4 +1,4 @@
-package org.mei.securesim.test.common;
+package org.mei.securesim.protocols.common;
 
 
 import java.awt.Color;

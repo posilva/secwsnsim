@@ -21,4 +21,8 @@ public interface ITotalCoverageMessage {
     public void setDestinationId(Object id);
 
     public void setUniqueId(Object id);
+
+    public void setData(byte[] data);
+
+    public byte[] getData();
 }

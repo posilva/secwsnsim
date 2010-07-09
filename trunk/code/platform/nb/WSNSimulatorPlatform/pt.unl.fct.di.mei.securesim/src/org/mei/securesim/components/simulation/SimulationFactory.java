@@ -10,22 +10,24 @@ import org.mei.securesim.core.nodes.factories.NodeFactory;
 import org.mei.securesim.core.radio.RadioModel;
 import org.mei.securesim.core.network.Network;
 import org.mei.securesim.components.simulation.basic.BasicSimulation;
+import org.mei.securesim.core.network.NetworkField;
 
 /**
  *
  * @author posilva
  */
 public class SimulationFactory {
-    public static final int DEFAULT_NODE_RANGE = 30;
 
+    public static final int DEFAULT_NODE_RANGE = 30;
     Class radioModelClass = null;
     Class simulatorClass = null;
     Class networkClass = null;
     Class nodeFactoryClass = null;
     String simulationName = "none";
     String simulationdescription = "none";
-    int nodeRange=DEFAULT_NODE_RANGE;
+    int nodeRange = DEFAULT_NODE_RANGE;
     private EnergyModel energyModel;
+    private NetworkField field = null;
 
     public Class getNetworkClass() {
         return networkClass;
@@ -100,6 +102,7 @@ public class SimulationFactory {
     public Simulation getNewInstance() throws InstantiationException, IllegalAccessException {
         BasicSimulation s = new BasicSimulation();
         s.setNetwork((Network) networkClass.newInstance());
+        s.getNetwork().setField(field);
         s.setSimulator((Simulator) (Simulator) simulatorClass.newInstance());
         Simulator.randomGenerator.reset(); //TODO  Carregar com uma seed
         s.setRadioModel((RadioModel) radioModelClass.newInstance());
@@ -109,6 +112,7 @@ public class SimulationFactory {
         s.getNodeFactory().setSimulator(s.getSimulator());
         s.setNodeRange(nodeRange);
         s.setName(simulationName);
+
 
         s.setDescription(simulationdescription);
         return s;
@@ -126,4 +130,7 @@ public class SimulationFactory {
         this.nodeRange = nodeRange;
     }
 
+    public void setField(Double w, Double h, Double l) {
+        field = new NetworkField(w, h, l);
+    }
 }

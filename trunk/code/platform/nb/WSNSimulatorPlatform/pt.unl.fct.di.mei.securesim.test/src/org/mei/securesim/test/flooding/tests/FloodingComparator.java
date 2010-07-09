@@ -5,7 +5,7 @@
 package org.mei.securesim.test.flooding.tests;
 
 import org.mei.securesim.components.instruments.coverage.NodeIdComparator;
-import org.mei.securesim.test.common.BasicNode;
+import org.mei.securesim.protocols.common.BasicNode;
 
 /**
  *

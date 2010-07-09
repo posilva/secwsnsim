@@ -4,12 +4,15 @@
  */
 package org.mei.securesim.components.instruments;
 
+import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Stack;
 import org.mei.securesim.components.logging.file.EnergyRawFileLogger;
 import org.mei.securesim.components.simulation.ISimulationPlatform;
 import org.mei.securesim.components.simulation.Simulation;
+import org.mei.securesim.core.layers.routing.RoutingLayerController;
 import org.mei.securesim.core.nodes.Node;
 
 /**
@@ -30,6 +33,8 @@ public class SimulationController {
     private int mode = FAST;
     public final static int FAST = 0;
     public final static int REAL = 1;
+    private boolean applyingRadioStrength = false;
+    private boolean started;
 
     public SimulationController() {
         EnergyController.getInstance().setEnergyLogger(new EnergyRawFileLogger());
@@ -71,6 +76,53 @@ public class SimulationController {
             }
         }
         return randomNodes;
+    }
+
+    public void applyRadioStrength(long radioStrenght) {
+        if (applyingRadioStrength) {
+            return;
+        }
+        try {
+            applyingRadioStrength = true;
+            if (canApplyRadioStrength()) {
+                for (Node node : simulation.getNetwork().getNodeDB().nodes()) {
+                    node.getConfig().setMaximumRadioStrength(radioStrenght);
+                }
+            }
+        } catch (Exception e) {
+        } finally {
+            applyingRadioStrength = false;
+
+        }
+    }
+
+    private boolean canApplyRadioStrength() {
+        return simulation != null;
+    }
+
+    public int getAverageNeighborsPerNode() {
+        try {
+            if (simulation == null) {
+                return -1;
+            }
+            Collection nodes = simulation.getNetwork().getNodeDB().nodes();
+            int total = 0;
+            for (Object n : nodes) {
+                Node node = (Node) n;
+                total += node.getMacLayer().getNeighborhood().neighbors.size();
+            }
+            return total / nodes.size();
+
+        } catch (Exception e) {
+        }
+        return 0;
+    }
+
+    public void reset() {
+        getSimulation().getSimulator().reset();
+        getSimulation().reset();
+
+        RoutingLayerController.getInstance().reset();
     }
 
     /**
@@ -120,6 +172,7 @@ public class SimulationController {
     public void begin() {
         startRealTime = System.currentTimeMillis();
         simulationPlatform.onStartSimulation();
+        started = true;
     }
 
     /**
@@ -129,6 +182,7 @@ public class SimulationController {
         stopRealTime = System.currentTimeMillis();
         executionRealtime = stopRealTime - startRealTime;
         simulationPlatform.onStopSimulation();
+        started = false;
     }
 
     /**
@@ -202,5 +256,38 @@ public class SimulationController {
 
     public void setMode(int mode) {
         this.mode = mode;
+    }
+
+    public boolean isStarted() {
+        return started;
+    }
+
+    public Dimension fieldSize() {
+        int maxX = Integer.MIN_VALUE;
+        int minX = Integer.MAX_VALUE;
+        int maxY = Integer.MIN_VALUE;
+        int minY = Integer.MAX_VALUE;
+        int h, w;
+        if (simulation != null) {
+            if (simulation.getSimulator() != null) {
+                if (simulation.getSimulator().getNodes().size() > 0) {
+                    for (Node node : simulation.getSimulator().getNodes()) {
+                        maxX = Math.max(maxX, node.getGraphicNode().getX());
+                        minX = Math.min(minX, node.getGraphicNode().getX());
+                        maxY = Math.max(maxY, node.getGraphicNode().getY());
+                        minY = Math.min(minY, node.getGraphicNode().getY());
+                    }
+                    h = maxY - minY;
+                    w = maxX - minX;
+                    return new Dimension(w, h);
+
+                }
+            }
+        }
+        return new Dimension(0, 0);
+    }
+
+    public RoutingLayerController getRoutingLayerController() {
+        return RoutingLayerController.getInstance();
     }
 }

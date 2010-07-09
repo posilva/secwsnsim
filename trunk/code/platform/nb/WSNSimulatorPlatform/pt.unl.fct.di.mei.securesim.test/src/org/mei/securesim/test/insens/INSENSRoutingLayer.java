@@ -19,8 +19,8 @@ import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.layers.routing.RoutingLayer;
 import org.mei.securesim.test.insens.messages.INSENSMsg;
 import org.mei.securesim.test.insens.messages.INSENSMessage;
-import org.mei.securesim.test.common.ByteArrayDataInputStream;
-import org.mei.securesim.test.common.ByteArrayDataOutputStream;
+import org.mei.securesim.protocols.common.ByteArrayDataInputStream;
+import org.mei.securesim.protocols.common.ByteArrayDataOutputStream;
 
 import org.mei.securesim.test.insens.utils.INSENSFunctions;
 import org.mei.securesim.test.insens.utils.MACS;
@@ -82,6 +82,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
 
     @Override
     public synchronized void receiveMessage(Object message) {
+        
         if (message instanceof INSENSMsg) {
             INSENSMessage msg = (INSENSMessage) message;
             handleMessageReceive(msg);
@@ -117,6 +118,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
     private void handleMessageSend(Object message) {
         if (message instanceof APPMsg) {
             handleAPPSend(message);
+
         }
     }
 
@@ -132,6 +134,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
     }
 
     private void handleRUPDReceive(Object message) {
+
     }
 
     /**
@@ -855,7 +858,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
         System.out.println("[" + message.getSourceNodeId() + "]=>" + getNodeID() + " - " + messageType + "(" + message.getMessageNumber() + ")" + " - " + text);
     }
     @Override
-    public void autostart() {
+    public void setup() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

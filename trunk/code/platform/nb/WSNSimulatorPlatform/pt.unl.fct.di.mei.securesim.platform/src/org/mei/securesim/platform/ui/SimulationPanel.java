@@ -35,6 +35,7 @@ import javax.swing.filechooser.FileFilter;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.math.stat.descriptive.SummaryStatistics;
 import org.mei.securesim.components.instruments.coverage.CoverageController;
+import org.mei.securesim.components.instruments.latency.LatencyController;
 import org.mei.securesim.core.energy.Batery;
 import org.mei.securesim.core.energy.listeners.EnergyListener;
 import org.mei.securesim.core.nodes.factories.NodeFactory;
@@ -43,6 +44,7 @@ import org.mei.securesim.platform.core.instruments.energy.EnergyWatcherThread;
 import org.mei.securesim.components.simulation.Simulation;
 import org.mei.securesim.components.simulation.SimulationFactory;
 import org.mei.securesim.components.simulation.basic.BasicSimulation;
+import org.mei.securesim.components.topology.GridTopologyManager;
 import org.mei.securesim.components.topology.RandomTopologyManager;
 import org.mei.securesim.platform.PlatformView;
 import org.mei.securesim.platform.core.PlatformController;
@@ -96,6 +98,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     BufferedImage backImage = null;
     private boolean mouseDrag;
     private boolean mousePressed;
+    private Dimension dim = new Dimension(300, 300);
 
     /**
      * CONSTRUCTORS
@@ -184,6 +187,10 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         selNodesInstrumentsLatency = new javax.swing.JMenu();
         selNodesInstrumentsLatencySelSources = new javax.swing.JCheckBoxMenuItem();
         selNodesInstrumentsLatencyDelSources = new javax.swing.JCheckBoxMenuItem();
+        jSeparator6 = new javax.swing.JPopupMenu.Separator();
+        selNodesInstrumentsLatencySelDest = new javax.swing.JMenuItem();
+        selNodesInstrumentsLatencyDelDest = new javax.swing.JMenuItem();
+        selNodesRunEvent = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         selNodesShowProperties = new javax.swing.JMenuItem();
         selNodesRemove = new javax.swing.JMenuItem();
@@ -397,19 +404,54 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
 
         selNodesInstruments.add(selNodesInstrumentsReliability);
 
-        selNodesInstrumentsLatency.setText("Reliability");
+        selNodesInstrumentsLatency.setText("Latency");
 
         selNodesInstrumentsLatencySelSources.setSelected(true);
         selNodesInstrumentsLatencySelSources.setText("Add to source nodes");
+        selNodesInstrumentsLatencySelSources.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selNodesInstrumentsLatencySelSourcesActionPerformed(evt);
+            }
+        });
         selNodesInstrumentsLatency.add(selNodesInstrumentsLatencySelSources);
 
         selNodesInstrumentsLatencyDelSources.setSelected(true);
         selNodesInstrumentsLatencyDelSources.setText("Remove from source nodes");
+        selNodesInstrumentsLatencyDelSources.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selNodesInstrumentsLatencyDelSourcesActionPerformed(evt);
+            }
+        });
         selNodesInstrumentsLatency.add(selNodesInstrumentsLatencyDelSources);
+        selNodesInstrumentsLatency.add(jSeparator6);
+
+        selNodesInstrumentsLatencySelDest.setText("Add to destination nodes");
+        selNodesInstrumentsLatencySelDest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selNodesInstrumentsLatencySelDestActionPerformed(evt);
+            }
+        });
+        selNodesInstrumentsLatency.add(selNodesInstrumentsLatencySelDest);
+
+        selNodesInstrumentsLatencyDelDest.setText("Remove from destination nodes");
+        selNodesInstrumentsLatencyDelDest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selNodesInstrumentsLatencyDelDestActionPerformed(evt);
+            }
+        });
+        selNodesInstrumentsLatency.add(selNodesInstrumentsLatencyDelDest);
 
         selNodesInstruments.add(selNodesInstrumentsLatency);
 
         selectionToolPopupMenu.add(selNodesInstruments);
+
+        selNodesRunEvent.setText("Run application");
+        selNodesRunEvent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selNodesRunEventActionPerformed(evt);
+            }
+        });
+        selectionToolPopupMenu.add(selNodesRunEvent);
         selectionToolPopupMenu.add(jSeparator1);
 
         selNodesShowProperties.setAction(actionMap.get("ShowNodesProperties")); // NOI18N
@@ -525,8 +567,10 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
                         }
                     }
                     PlatformController.getInstance().getPlatformView().setSelectedNodes(selectedNodes.size() + "");
+
                 }
                 update();
+
             }
         } else if (selectionPointerToolSelected) {
             if (!mousePressed) {
@@ -588,7 +632,17 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     @Override
     public void paintComponent(Graphics grphcs) {
         super.paintComponent(grphcs);
-        mainPaintLoop(grphcs);
+        //        dim = getSize();
+        //        Image offscreen = createImage(dim.width, dim.height);
+        //        Graphics b = offscreen.getGraphics();
+        //
+        //        currentGraphics = b;
+        // paint background
+        //        b.setColor(Color.white);
+        //        b.fillRect(0, 0, dim.width, dim.height);
+        Graphics b = grphcs;
+        mainPaintLoop(b);
+//        grphcs.drawImage(offscreen, 0, 0, this);
     }//GEN-LAST:event_formMouseMoved
 
     /**
@@ -911,6 +965,57 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         }
     }//GEN-LAST:event_selNodesInstrumentsCoverageDelDestActionPerformed
 
+    private void selNodesRunEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selNodesRunEventActionPerformed
+        if (selectedNodes.size() > 0) {
+            for (GraphicNode graphicNode : selectedNodes) {
+                graphicNode.getPhysicalNode().getApplication().run();
+            }
+            update();
+        }
+    }//GEN-LAST:event_selNodesRunEventActionPerformed
+
+    private void selNodesInstrumentsLatencySelDestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selNodesInstrumentsLatencySelDestActionPerformed
+        // TODO add your handling code here:
+        if (selectedNodes.size() > 0) {
+            for (GraphicNode graphicNode : selectedNodes) {
+                LatencyController.getInstance().registerReceiver(graphicNode.getPhysicalNode());
+            }
+            update();
+        }
+
+    }//GEN-LAST:event_selNodesInstrumentsLatencySelDestActionPerformed
+
+    private void selNodesInstrumentsLatencyDelDestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selNodesInstrumentsLatencyDelDestActionPerformed
+        // TODO add your handling code here:
+        if (selectedNodes.size() > 0) {
+            for (GraphicNode graphicNode : selectedNodes) {
+                LatencyController.getInstance().unregisterReceiver(graphicNode.getPhysicalNode());
+            }
+            update();
+        }
+
+    }//GEN-LAST:event_selNodesInstrumentsLatencyDelDestActionPerformed
+
+    private void selNodesInstrumentsLatencySelSourcesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selNodesInstrumentsLatencySelSourcesActionPerformed
+        if (selectedNodes.size() > 0) {
+            for (GraphicNode graphicNode : selectedNodes) {
+                LatencyController.getInstance().registerSender(graphicNode.getPhysicalNode());
+            }
+            update();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_selNodesInstrumentsLatencySelSourcesActionPerformed
+
+    private void selNodesInstrumentsLatencyDelSourcesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selNodesInstrumentsLatencyDelSourcesActionPerformed
+        if (selectedNodes.size() > 0) {
+            for (GraphicNode graphicNode : selectedNodes) {
+                LatencyController.getInstance().unregisterSender(graphicNode.getPhysicalNode());
+            }
+            update();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_selNodesInstrumentsLatencyDelSourcesActionPerformed
+
     protected boolean isMousePressed() {
         return pressedPoint != null;
     }
@@ -924,6 +1029,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     private javax.swing.JPopupMenu deployNodesPopupMenu;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator5;
+    private javax.swing.JPopupMenu.Separator jSeparator6;
     private javax.swing.JCheckBoxMenuItem selNodeMarcar;
     private javax.swing.JMenuItem selNodeMonitEnergia;
     private javax.swing.JMenu selNodeMonitorizacao;
@@ -943,7 +1049,9 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     private javax.swing.JMenuItem selNodesInstrumentsCoverageSelDest;
     private javax.swing.JMenuItem selNodesInstrumentsCoverageSelSources;
     private javax.swing.JMenu selNodesInstrumentsLatency;
+    private javax.swing.JMenuItem selNodesInstrumentsLatencyDelDest;
     private javax.swing.JCheckBoxMenuItem selNodesInstrumentsLatencyDelSources;
+    private javax.swing.JMenuItem selNodesInstrumentsLatencySelDest;
     private javax.swing.JCheckBoxMenuItem selNodesInstrumentsLatencySelSources;
     private javax.swing.JMenu selNodesInstrumentsReliability;
     private javax.swing.JCheckBoxMenuItem selNodesInstrumentsReliabilityDelSources;
@@ -953,6 +1061,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     private javax.swing.JCheckBoxMenuItem selNodesOnOff;
     private javax.swing.JMenu selNodesOperacao;
     private javax.swing.JMenuItem selNodesRemove;
+    private javax.swing.JMenuItem selNodesRunEvent;
     private javax.swing.JMenuItem selNodesShowProperties;
     private javax.swing.JCheckBoxMenuItem selNodesVerID;
     private javax.swing.JCheckBoxMenuItem selNodesVerOsQueMeConhecem;
@@ -1068,7 +1177,11 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             simulation.getSimulator().init();
             networkBuilded = true;
             PlatformView.getInstance().setSimulationNrNodes(getSimulation().getSimulator().getNodes().size());
+            PlatformController.getInstance().getPlatformView().updateSimulationFieldSize();
+            PlatformController.getInstance().getPlatformView().updateAverageNeighborsPerNode();
             update();
+
+            //JOptionPane.showMessageDialog(this, "Average Neighbors Per Node: " + SimulationController.getInstance().updateAverageNeighborsPerNode());
         }
     }
 
@@ -1315,9 +1428,110 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         return (selectionTool || deployNodeToolSelected);
     }
 
-    @Action
-    public void deployNodesGridTopology() {
-        JOptionPane.showMessageDialog(this, "Feature not implemented yet!", "", JOptionPane.WARNING_MESSAGE);
+    @Action(block = Task.BlockingScope.ACTION)
+    public Task deployNodesGridTopology() {
+        return new DeployNodesGridTopologyTask(org.jdesktop.application.Application.getInstance(org.mei.securesim.platform.PlatformApp.class));
+
+
+
+    }
+
+    private class DeployNodesGridTopologyTask extends org.jdesktop.application.Task<Object, Void> {
+
+        boolean ok = false;
+        int nDistance = 0;
+        GridTopologyManager tm = new GridTopologyManager();
+        NodeFactory nf = simulation.getNodeFactory();
+        int nRange = simulation.getNodeRange();
+        private long start;
+        Rectangle deployArea;
+
+        DeployNodesGridTopologyTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to DeployNodesGridTopologyTask fields, here.
+            super(app);
+            if (selectedArea == null) {
+                deployArea = getBounds();
+            } else {
+                deployArea = ((GeneralPath) selectedArea.clone()).getBounds();
+            }
+            while (!ok) {
+                String distance = JOptionPane.showInputDialog("Distance Between Nodes:");
+                if (distance != null) {
+                    if (NumberUtils.isNumber(distance)) {
+                        nDistance = Integer.parseInt(distance);
+                        if (nDistance > 0) {
+                            ok = true;
+                        }
+                    }
+                } else {
+                    return;
+                }
+                if (!ok) {
+                    JOptionPane.showMessageDialog(SimulationPanel.this, "Invalid value!");
+                }
+            }
+
+
+        }
+
+        @Override
+        protected Object doInBackground() {
+            if (!ok) {
+                return null;
+            }
+            int status = 0;
+            start = System.currentTimeMillis();
+            try {
+
+                int nNodes = 0;
+
+
+
+                GUI_Utils.mouseWait(SimulationPanel.this);
+                this.setMessage("Generating nodes using factory");
+
+
+                int nNodesLine = (int) (deployArea.getWidth() / nDistance);
+                int nNodesrow = (int) (deployArea.getHeight() / nDistance);
+                nNodes = nNodesLine * nNodesrow;
+                Vector<Node> nodes = (Vector<Node>) nf.createNodes(nNodes);
+                tm.setDistance(nDistance);
+                nodes = tm.apply(deployArea, nodes);
+                this.setProgress(status, 0, 1);
+
+                for (Node node : nodes) {
+                    status++;
+                    node.getConfig().setSetRadioRange(nRange);
+                    simulation.getNetwork().addNode((SensorNode) node);
+                    this.setProgress(status, 0, nodes.size());
+                }
+            } catch (Exception ex) {
+                GUI_Utils.mouseDefault(SimulationPanel.this);
+                Logger.getLogger(SimulationPanel.class.getName()).log(Level.SEVERE, null, ex);
+                networkDeployed = false;
+                update();
+                return false;
+            }
+
+            networkDeployed = true;
+            update();
+            this.setMessage("Building Network using radio");
+            this.setProgress(0, 0, 1);
+            GUI_Utils.mouseWait(SimulationPanel.this);
+            buildNetwork();
+
+            update();
+            return true;  // return your result
+        }
+
+        @Override
+        protected void succeeded(Object result) {
+            setMessage("Building Network... done in " + (System.currentTimeMillis() - start) + " milliseconds");
+            this.setProgress(1, 0, 1);
+            GUI_Utils.mouseDefault(SimulationPanel.this);
+        }
     }
 
     @Action(block = Task.BlockingScope.COMPONENT)
@@ -1371,6 +1585,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
                 GUI_Utils.mouseWait(SimulationPanel.this);
                 this.setMessage("Generating nodes using factory");
                 Vector<Node> nodes = (Vector<Node>) nf.createNodes(nNodes);
+                tm.setRandom(Simulator.randomGenerator.random());
                 nodes = tm.apply(deployArea, nodes);
                 this.setProgress(status, 0, 1);
 
@@ -1490,7 +1705,12 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         this.paintMouseCoordinates = paintMouseCoordinates;
     }
 
-    public void mainPaintLoop(Graphics grphcs) {
+    public synchronized void mainPaintLoop(Graphics g) {
+//        Image offscreen = createImage(getWidth(), getHeight());
+//        Graphics b = offscreen.getGraphics();
+//        currentGraphics = g;
+        Graphics grphcs = g;
+
         paintNetwork(grphcs);
         if (canPaintSelectionArea()) {
             paintSelectedArea(grphcs);
@@ -1509,6 +1729,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
                 GUI.showSimulationEvents(0);
             }
         }
+//        g.drawImage(offscreen,0,0,this);
     }
 
     private void paintImage(Graphics g) {

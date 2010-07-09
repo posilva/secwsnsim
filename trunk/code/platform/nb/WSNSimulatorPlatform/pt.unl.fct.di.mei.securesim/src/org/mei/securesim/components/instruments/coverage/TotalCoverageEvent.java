@@ -18,13 +18,13 @@ public class TotalCoverageEvent extends Event {
     Node sourceNode;
     Node destinationNode;
     private Class messageClass;
-    private String messageUniqueId;
+    private long messageUniqueId;
 
-    public String getMessageUniqueId() {
+    public long getMessageUniqueId() {
         return messageUniqueId;
     }
 
-    public void setMessageUniqueId(String messageUniqueId) {
+    public void setMessageUniqueId(long messageUniqueId) {
         this.messageUniqueId = messageUniqueId;
     }
 
@@ -49,6 +49,7 @@ public class TotalCoverageEvent extends Event {
         
             Object c = messageClass.newInstance();
             ITotalCoverageMessage ctm= (ITotalCoverageMessage) c;
+            ctm.setData("TCE".getBytes());
             ITotalCoverageHandler srcId= (ITotalCoverageHandler) sourceNode;
             ITotalCoverageHandler dstId= (ITotalCoverageHandler) destinationNode;
             ctm.setSourceId(srcId.getCoverageId());

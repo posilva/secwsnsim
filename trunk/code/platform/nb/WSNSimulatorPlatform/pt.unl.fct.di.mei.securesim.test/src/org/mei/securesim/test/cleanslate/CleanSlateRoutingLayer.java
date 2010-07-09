@@ -22,7 +22,7 @@ import org.mei.securesim.test.cleanslate.messages.data.NeighborGroupAnnounceData
 import org.mei.securesim.test.cleanslate.messages.data.PostMergeData;
 import org.mei.securesim.test.cleanslate.utils.MergeTableEntry;
 import org.mei.securesim.test.cleanslate.utils.NeighborInfo;
-import org.mei.securesim.test.common.events.DelayedMessageEvent;
+import org.mei.securesim.protocols.common.events.DelayedMessageEvent;
 
 /**
  *
@@ -62,7 +62,7 @@ public class CleanSlateRoutingLayer extends RoutingLayer {
      * Invoqued when the simulation starts
      */
     @Override
-    public void autostart() {
+    public void setup() {
         myGroupId = getNode().getId();
         myGroupSize = 1;
         configureTimers();

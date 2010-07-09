@@ -75,7 +75,7 @@ public class PingPongRoutingLayer extends RoutingLayer {
     }
 
     @Override
-    public void autostart() {
+    public void setup() {
         
     }
 

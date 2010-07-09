@@ -40,7 +40,7 @@ public abstract class SensorNode extends Node {
     protected abstract void configureMACLayer(RadioModel radioModel);
 
     @Override
-    public void displayOn(ISimulationDisplay disp) {
+    public synchronized  void displayOn(ISimulationDisplay disp) {
         Graphics g = disp.getGraphics();
         Color oldColor = g.getColor();
         int x = disp.x2ScreenX(this.getX());

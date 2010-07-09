@@ -32,6 +32,9 @@ public class BaseMessage implements Cloneable {
      * @param payload
      */
     public BaseMessage(byte[] payload) {
+        if (payload== null){
+            throw  new IllegalArgumentException("Payload cannot be null");
+        }
         this.payload = payload;
         messageNumber = numberOfTotalMessage++;
     }
