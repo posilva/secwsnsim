@@ -441,6 +441,10 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         simulationPanel1.update();
     }
 
+    public SimulationPanel getSimulationPanel() {
+        return simulationPanel1;
+    }
+
     private class RebuildNetworkTask extends org.jdesktop.application.Task<Object, Void> {
 
         RebuildNetworkTask(org.jdesktop.application.Application app) {

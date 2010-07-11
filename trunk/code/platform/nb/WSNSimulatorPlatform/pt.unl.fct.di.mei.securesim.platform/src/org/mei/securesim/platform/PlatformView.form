@@ -143,15 +143,71 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="847" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="showInstrumentPanel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="tgbMarkStableNodes" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="tgbSelectStableNodes" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="showRoutingInfo" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="391" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="25" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="showInstrumentPanel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="tgbMarkStableNodes" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="tgbSelectStableNodes" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="showRoutingInfo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JButton" name="showInstrumentPanel">
+                  <Properties>
+                    <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                      <action class="org.mei.securesim.platform.PlatformView" id="ShowInstrumentsPanel" methodName="ShowInstrumentsPanel"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" resourceKey="showInstrumentPanel.text"/>
+                    <Property name="name" type="java.lang.String" value="showInstrumentPanel" noResource="true"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JToggleButton" name="tgbMarkStableNodes">
+                  <Properties>
+                    <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                      <action class="org.mei.securesim.platform.PlatformView" id="MarkStableNodes" methodName="MarkStableNodes"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" resourceKey="tgbMarkStableNodes.text"/>
+                    <Property name="name" type="java.lang.String" value="tgbMarkStableNodes" noResource="true"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JToggleButton" name="tgbSelectStableNodes">
+                  <Properties>
+                    <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                      <action class="org.mei.securesim.platform.PlatformView" id="SelectStableNodes" methodName="SelectStableNodes"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" resourceKey="tgbSelectStableNodes.text"/>
+                    <Property name="name" type="java.lang.String" value="tgbSelectStableNodes" noResource="true"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JButton" name="showRoutingInfo">
+                  <Properties>
+                    <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                      <action class="org.mei.securesim.platform.PlatformView" id="ShowRoutingInfo" methodName="ShowRoutingInfo"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" resourceKey="showRoutingInfo.text"/>
+                    <Property name="name" type="java.lang.String" value="showRoutingInfo" noResource="true"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
             </Container>
             <Component class="javax.swing.JLabel" name="lblRadioCoverageValue">
               <Properties>
