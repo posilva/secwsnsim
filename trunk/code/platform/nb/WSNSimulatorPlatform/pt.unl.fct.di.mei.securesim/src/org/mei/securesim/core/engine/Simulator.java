@@ -131,8 +131,9 @@ public class Simulator {
     }
 
     public void reset() {
-        if (runningThread!=null)
-        runningThread.interrupt();
+        if (runningThread != null) {
+            runningThread.interrupt();
+        }
     }
 
     public void pause() {
@@ -238,27 +239,23 @@ public class Simulator {
      *
      * @param e the event to be added to the queue
      */
-    public void addEvent(Event e) {
+    public synchronized void addEvent(Event e) {
         eventQueue.add(e);
     }
 
     /**
      * Processes and executes the next event.
      */
-    public void step() {
+    public synchronized void step() {
 
         Event event = (Event) eventQueue.getAndRemoveFirst();
-        //Event event = (Event)eventQueue.poll();
-
         if (event != null) {
             lastEventTime = event.time;
             event.execute();
-//            System.out.println("Executado um evento: "+ event);
             handlePause();
         } else {
-
             if (!finished) {
-                fireOnFinishSimulation(new SimulatorEvent(new String("EXIT")));
+                fireOnFinishSimulation(new SimulatorEvent("EXIT"));
             }
             finished = true;
         }

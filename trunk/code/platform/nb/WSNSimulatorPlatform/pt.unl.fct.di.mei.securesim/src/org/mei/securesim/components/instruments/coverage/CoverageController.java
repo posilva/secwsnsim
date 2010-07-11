@@ -7,7 +7,7 @@ package org.mei.securesim.components.instruments.coverage;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
-import org.mei.securesim.components.instruments.IControlPanel;
+import org.mei.securesim.components.instruments.IInstrumentControlPanel;
 import org.mei.securesim.components.instruments.SimulationController;
 import org.mei.securesim.components.instruments.events.InstrumentsEventsFactory;
 import org.mei.securesim.components.instruments.listeners.SignalUpdateEvent;
@@ -37,10 +37,10 @@ import org.mei.securesim.core.nodes.Node;
  * se estes receberem pelo menos um threshold de mensagens então tem cobertura que deve
  * ser comparada com a cobertura fisica de radio.
  *
- */
-/**
- *
- * @author posilva
+ * =============================================================================
+ * A definição de cobertura assume que enviando n mensagens terá de chegar pelo
+ * menos 1.
+ * 
  */
 public class CoverageController {
 
@@ -58,9 +58,9 @@ public class CoverageController {
     private Class partialCoverageMessageClass;
     private NodeIdComparator nodeIdComparator;
     private boolean debug = true;
-    private IControlPanel controlPanel;
+    private IInstrumentControlPanel controlPanel;
 
-    public IControlPanel getControlPanel() {
+    public IInstrumentControlPanel getControlPanel() {
         return controlPanel;
     }
 
@@ -81,7 +81,7 @@ public class CoverageController {
     public void runTest() {
     }
 
-    public void setControlPanel(IControlPanel controlPanel) {
+    public void setControlPanel(IInstrumentControlPanel controlPanel) {
         this.controlPanel = controlPanel;
 
     }

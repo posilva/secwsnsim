@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.mei.securesim.components.instruments.latency;
 
 /**
@@ -10,6 +9,7 @@ package org.mei.securesim.components.instruments.latency;
  * @author CIAdmin
  */
 public class LatencyStatisticsTableKey {
+
     private ILatencyMessage message;
 
     LatencyStatisticsTableKey(ILatencyMessage message) {
@@ -35,15 +35,11 @@ public class LatencyStatisticsTableKey {
         }
 
         final LatencyStatisticsTableKey other = (LatencyStatisticsTableKey) obj;
-        other.getMessage().getUniqueId().equals(getMessage().getUniqueId());
-        return true;
+        return other.getMessage().getUniqueId() == getMessage().getUniqueId();
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 17 * hash + (this.message.getUniqueId() != null ? this.message.getUniqueId().hashCode() : 0);
-        return hash;
+        return (int) message.getUniqueId();
     }
-
 }

@@ -3,13 +3,13 @@
  * and open the template in the editor.
  */
 
-package org.mei.securesim.components.instruments;
-
 /**
  *
  * @author CIAdmin
  */
-public interface IControlPanel {
-    void refresh();
+public class NewClass {
+
+
+
 
 }
