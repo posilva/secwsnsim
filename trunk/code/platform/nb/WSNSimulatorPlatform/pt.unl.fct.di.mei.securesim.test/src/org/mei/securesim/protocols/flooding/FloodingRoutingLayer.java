@@ -8,13 +8,13 @@ import org.mei.securesim.components.instruments.coverage.CoverageController;
 import org.mei.securesim.components.instruments.latency.LatencyController;
 import org.mei.securesim.core.application.Application;
 import org.mei.securesim.core.energy.EnergyConsumptionAction;
-import org.mei.securesim.core.engine.BaseMessage;
+import org.mei.securesim.core.engine.Message;
 import org.mei.securesim.core.layers.routing.RoutingLayer;
-import org.mei.securesim.test.flooding.messages.FloodingMessage;
-import org.mei.securesim.test.flooding.messages.LatencyTestMessage;
-import org.mei.securesim.test.flooding.messages.PartialCoverageTestMessage;
-import org.mei.securesim.test.flooding.messages.TotalCoverageTestMessage;
-import org.mei.securesim.test.flooding.tests.FloodingComparator;
+import org.mei.securesim.protocols.flooding.messages.FloodingMessage;
+import org.mei.securesim.protocols.flooding.messages.LatencyTestMessage;
+import org.mei.securesim.protocols.flooding.messages.PartialCoverageTestMessage;
+import org.mei.securesim.protocols.flooding.messages.TotalCoverageTestMessage;
+import org.mei.securesim.protocols.flooding.tests.FloodingComparator;
 
 /**
  * @author posilva
@@ -33,9 +33,9 @@ public class FloodingRoutingLayer extends RoutingLayer {
      * the message.
      */
     @Override
-    public void receiveMessage(Object message) {
+    public void onReceiveMessage(Object message) {
 
-        final BaseMessage msg = (BaseMessage) message;
+        final FloodingMessage msg = (FloodingMessage) message;
         getNode().getCPU().execute(new EnergyConsumptionAction() {
 
             /**
@@ -43,7 +43,7 @@ public class FloodingRoutingLayer extends RoutingLayer {
              */
             public void execute() {
 
-                FloodingMessage m = (FloodingMessage) msg;
+                FloodingMessage m = msg;
                 if (!receivedMessages.contains(m.getMessageNumber())) {
                     receivedMessages.add(m.getMessageNumber());
 
@@ -66,10 +66,10 @@ public class FloodingRoutingLayer extends RoutingLayer {
     }
 
     @Override
-    public boolean sendMessage(Object message, Application app) {
-        System.out.println("Message Number: " + ((BaseMessage) message).getMessageNumber());
+    public boolean onSendMessage(Object message, Application app) {
+        System.out.println("Message Number: " + ((Message) message).getMessageNumber());
         application = app;
-        receivedMessages.add(((BaseMessage) message).getMessageNumber());
+        receivedMessages.add(((Message) message).getMessageNumber());
         return getNode().getMacLayer().sendMessage(message, this);
     }
 
@@ -99,14 +99,14 @@ public class FloodingRoutingLayer extends RoutingLayer {
         if (CoverageController.getInstance().getNodeIdComparator() == null) {
             CoverageController.getInstance().setNodeIdComparator(new FloodingComparator());
         }
-        
-         if (LatencyController.getInstance().getLatencyMessageClass() == null) {
+
+        if (LatencyController.getInstance().getLatencyMessageClass() == null) {
             LatencyController.getInstance().setLatencyMessageClass(LatencyTestMessage.class);
         }
     }
 
     @Override
-    public void routeMessage(Object message) {
+    public void onRouteMessage(Object message) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

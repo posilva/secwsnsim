@@ -7,7 +7,7 @@ package org.mei.securesim.protocols.flooding.messages;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.mei.securesim.core.engine.BaseMessage;
+import org.mei.securesim.core.engine.Message;
 import org.mei.securesim.protocols.common.ByteArrayDataInputStream;
 import org.mei.securesim.protocols.common.ByteArrayDataOutputStream;
 
@@ -15,7 +15,7 @@ import org.mei.securesim.protocols.common.ByteArrayDataOutputStream;
  *
  * @author CIAdmin
  */
-public class FloodingMessage extends BaseMessage implements Cloneable {
+public class FloodingMessage extends Message implements Cloneable {
 
     private byte type;
     private short source;
