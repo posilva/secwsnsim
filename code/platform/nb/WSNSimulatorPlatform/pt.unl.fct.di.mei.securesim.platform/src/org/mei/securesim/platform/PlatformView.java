@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.TimeZone;
 import javax.swing.Timer;
@@ -25,14 +26,17 @@ import javax.swing.JOptionPane;
 import org.jdesktop.application.Application.ExitListener;
 import org.jdesktop.application.ResourceMap;
 import org.mei.securesim.components.instruments.coverage.CoverageController;
-import org.mei.securesim.components.instruments.ReliabilityController;
+import org.mei.securesim.components.instruments.ReliabilityInstrument;
 import org.mei.securesim.components.instruments.SimulationController;
 import org.mei.securesim.components.instruments.coverage.CoverageListener;
 import org.mei.securesim.components.instruments.latency.LatencyController;
 import org.mei.securesim.components.instruments.listeners.SignalUpdateEvent;
 import org.mei.securesim.components.simulation.ISimulationPlatform;
+import org.mei.securesim.core.nodes.Node;
 import org.mei.securesim.platform.core.PlatformController;
+import org.mei.securesim.platform.core.instruments.InstrumentsControlPanel;
 import org.mei.securesim.platform.core.instruments.coverage.ui.CoverageControllerPanel;
+import org.mei.securesim.platform.ui.WorkbenchPanel;
 import org.mei.securesim.platform.ui.frames.RoutingInfoPanel;
 
 import org.mei.securesim.platform.ui.frames.SimulationWizardDialog;
@@ -159,6 +163,10 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         adjustRadioStrengthButton = new javax.swing.JButton();
         adjustRadioStrengthSlider = new javax.swing.JSpinner();
         jPanel1 = new javax.swing.JPanel();
+        showInstrumentPanel = new javax.swing.JButton();
+        tgbMarkStableNodes = new javax.swing.JToggleButton();
+        tgbSelectStableNodes = new javax.swing.JToggleButton();
+        showRoutingInfo = new javax.swing.JButton();
         lblRadioCoverageValue = new javax.swing.JLabel();
         lblRoutingCoverageValue = new javax.swing.JLabel();
         lblAverageNeighborsPerNode = new javax.swing.JLabel();
@@ -282,15 +290,46 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         jPanel1.setName("jPanel1"); // NOI18N
         jPanel1.setPreferredSize(new java.awt.Dimension(1085, 10));
 
+        showInstrumentPanel.setAction(actionMap.get("ShowInstrumentsPanel")); // NOI18N
+        showInstrumentPanel.setText(resourceMap.getString("showInstrumentPanel.text")); // NOI18N
+        showInstrumentPanel.setName("showInstrumentPanel"); // NOI18N
+
+        tgbMarkStableNodes.setAction(actionMap.get("MarkStableNodes")); // NOI18N
+        tgbMarkStableNodes.setText(resourceMap.getString("tgbMarkStableNodes.text")); // NOI18N
+        tgbMarkStableNodes.setName("tgbMarkStableNodes"); // NOI18N
+
+        tgbSelectStableNodes.setAction(actionMap.get("SelectStableNodes")); // NOI18N
+        tgbSelectStableNodes.setText(resourceMap.getString("tgbSelectStableNodes.text")); // NOI18N
+        tgbSelectStableNodes.setName("tgbSelectStableNodes"); // NOI18N
+
+        showRoutingInfo.setAction(actionMap.get("ShowRoutingInfo")); // NOI18N
+        showRoutingInfo.setText(resourceMap.getString("showRoutingInfo.text")); // NOI18N
+        showRoutingInfo.setName("showRoutingInfo"); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 847, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(showInstrumentPanel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tgbMarkStableNodes)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tgbSelectStableNodes)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(showRoutingInfo)
+                .addContainerGap(391, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 25, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(showInstrumentPanel)
+                    .addComponent(tgbMarkStableNodes)
+                    .addComponent(tgbSelectStableNodes)
+                    .addComponent(showRoutingInfo))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         mainToolbar.add(jPanel1);
@@ -652,7 +691,7 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
 
     private void reliabilityCtlStatusMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reliabilityCtlStatusMenuActionPerformed
         // TODO add your handling code here:
-        ReliabilityController.getInstance().setEnable(reliabilityCtlStatusMenu.isSelected());
+        ReliabilityInstrument.getInstance().setEnable(reliabilityCtlStatusMenu.isSelected());
     }//GEN-LAST:event_reliabilityCtlStatusMenuActionPerformed
 
     private void coverageCtlMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coverageCtlMenuActionPerformed
@@ -740,11 +779,15 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
     private javax.swing.JProgressBar progressBar;
     protected javax.swing.JMenu reliabilityCtlMenu;
     protected javax.swing.JCheckBoxMenuItem reliabilityCtlStatusMenu;
+    protected javax.swing.JButton showInstrumentPanel;
+    protected javax.swing.JButton showRoutingInfo;
     protected javax.swing.JMenuItem simPropertiesSubMenu;
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
     protected javax.swing.JPanel statusPanel;
     protected org.mei.securesim.platform.ui.uiextended.BestTabbedPane tabbedTools;
+    protected javax.swing.JToggleButton tgbMarkStableNodes;
+    protected javax.swing.JToggleButton tgbSelectStableNodes;
     protected org.mei.securesim.platform.ui.WorkbenchPanel workbenchPanel1;
     // End of variables declaration//GEN-END:variables
     private final Timer messageTimer;
@@ -924,7 +967,9 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         if (SimulationController.getInstance().getSimulation().getSimulator().getNodes().size() > 0) {
             long radioStrenght = (Integer) adjustRadioStrengthSlider.getModel().getValue();
             SimulationController.getInstance().applyRadioStrength(radioStrenght);
-        } else GUI_Utils.showMessage("Must deploy nodes before apply new radio strength", JOptionPane.WARNING_MESSAGE);
+        } else {
+            GUI_Utils.showMessage("Must deploy nodes before apply new radio strength", JOptionPane.WARNING_MESSAGE);
+        }
     }
 
     public void updateAverageNeighborsPerNode() {
@@ -937,5 +982,40 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
 
 
 
+    }
+
+    public WorkbenchPanel getWorkbenchPanel() {
+        return workbenchPanel1;
+    }
+
+    @Action
+    public void ShowInstrumentsPanel() {
+        addTab("instruments", new InstrumentsControlPanel());
+    }
+
+    @Action
+    public void MarkStableNodes() {
+        Collection<Node> nodes = SimulationController.getInstance().getSimulation().getSimulator().getNodes();
+        for (Node node : nodes) {
+            if (node.getRoutingLayer().isStable()) {
+                if (tgbMarkStableNodes.isSelected()) {
+                    node.getGraphicNode().mark();
+                } else {
+                    node.getGraphicNode().unmark();
+                }
+            }
+        }
+    }
+
+    @Action
+    public void SelectStableNodes() {
+        Collection<Node> nodes = SimulationController.getInstance().getSimulation().getSimulator().getNodes();
+        for (Node node : nodes) {
+            if (node.getRoutingLayer().isStable()) {
+                if (!node.isSinkNode()) {
+                    node.getGraphicNode().select(tgbSelectStableNodes.isSelected());
+                }
+            }
+        }
     }
 }

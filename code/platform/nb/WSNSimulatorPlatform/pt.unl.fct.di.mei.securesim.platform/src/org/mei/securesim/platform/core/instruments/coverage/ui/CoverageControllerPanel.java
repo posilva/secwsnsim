@@ -20,7 +20,8 @@ import org.jdesktop.application.Action;
 import org.mei.securesim.components.instruments.coverage.CoverageController;
 import org.mei.securesim.components.instruments.coverage.CoverageController.StatisticEntry;
 import org.mei.securesim.core.nodes.Node;
-import org.mei.securesim.components.instruments.IControlPanel;
+import org.mei.securesim.components.instruments.IInstrumentControlPanel;
+import org.mei.securesim.components.instruments.Instrument;
 import org.mei.securesim.components.instruments.SimulationController;
 import org.mei.securesim.platform.utils.gui.GUI_Utils;
 
@@ -28,7 +29,7 @@ import org.mei.securesim.platform.utils.gui.GUI_Utils;
  *
  * @author CIAdmin
  */
-public class CoverageControllerPanel extends javax.swing.JPanel implements IControlPanel {
+public class CoverageControllerPanel extends javax.swing.JPanel implements IInstrumentControlPanel {
 
     static CoverageControllerPanel instance;
     Thread chartThread;
@@ -552,7 +553,7 @@ public class CoverageControllerPanel extends javax.swing.JPanel implements ICont
         CoverageController.getInstance().setMessageIntervalPerNode(Integer.valueOf(intervalBetweenMsg.getText()));
     }
 
-    public synchronized void refresh() {
+    public synchronized void refresh(Instrument controller) {
         RefreshCoverageControllerInfoAction();
     }
 
