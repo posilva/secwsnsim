@@ -29,4 +29,6 @@ public class LatencyTestMessage extends EvaluationINSENSDATAMessage implements I
     public int getNumberOfHops() {
         return hops;
     }
+
+
 }

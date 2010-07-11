@@ -27,8 +27,8 @@ public class TotalCoverageTestMessage extends FloodingMessage implements ITotalC
         return getDestin();
     }
 
-    public Object getUniqueId() {
-        return getMessageData();
+    public long getUniqueId() {
+        return Long.valueOf(getMessageData());
     }
 
     public void setSourceId(Object id) {

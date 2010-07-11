@@ -1,12 +1,12 @@
 package org.mei.securesim.protocols.insens.messages;
 
-import org.mei.securesim.core.engine.BaseMessage;
+import org.mei.securesim.core.engine.Message;
 
 /**
  *
  * @author CIAdmin
  */
-public class INSENSMessage extends BaseMessage {
+public class INSENSMessage extends Message {
 
     public INSENSMessage(byte[] payload) {
         super(payload);

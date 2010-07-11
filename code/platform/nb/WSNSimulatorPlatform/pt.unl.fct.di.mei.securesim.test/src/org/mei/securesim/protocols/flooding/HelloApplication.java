@@ -6,7 +6,7 @@ package org.mei.securesim.protocols.flooding;
 
 import javax.swing.JOptionPane;
 import org.mei.securesim.core.application.Application;
-import org.mei.securesim.test.flooding.messages.FloodingMessage;
+import org.mei.securesim.protocols.flooding.messages.FloodingMessage;
 
 /**
  *

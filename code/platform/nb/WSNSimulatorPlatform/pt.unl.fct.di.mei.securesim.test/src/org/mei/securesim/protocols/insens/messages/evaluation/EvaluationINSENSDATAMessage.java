@@ -4,16 +4,17 @@
  */
 package org.mei.securesim.protocols.insens.messages.evaluation;
 
+import org.mei.securesim.components.instruments.IInstrumentMessage;
 import org.mei.securesim.protocols.insens.messages.INSENSDATAMessage;
 
 /**
  *
  * @author CIAdmin
  */
-public class EvaluationINSENSDATAMessage extends INSENSDATAMessage {
+public class EvaluationINSENSDATAMessage extends INSENSDATAMessage implements IInstrumentMessage {
 
     public EvaluationINSENSDATAMessage() {
-        super();
+        super("".getBytes());
     }
 
     public EvaluationINSENSDATAMessage(byte[] payload) {
@@ -40,7 +41,14 @@ public class EvaluationINSENSDATAMessage extends INSENSDATAMessage {
         setID((Long) id);
     }
 
-    public Object getUniqueId() {
+//    public Object getUniqueId() {
+//        return getID();
+//    }
+    public long getUniqueId() {
         return getID();
+    }
+
+    public void setUniqueId(long id) {
+        setID(id);
     }
 }

@@ -15,11 +15,13 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.mei.securesim.components.crypto.CryptoFunctions;
+import org.mei.securesim.components.instruments.CoverageInstrument;
+import org.mei.securesim.components.instruments.IInstrumentHandler;
+import org.mei.securesim.components.instruments.IInstrumentMessage;
 import org.mei.securesim.components.instruments.SimulationController;
 import org.mei.securesim.components.instruments.coverage.CoverageController;
-import org.mei.securesim.components.instruments.latency.LatencyController;
 import org.mei.securesim.core.application.Application;
-import org.mei.securesim.core.engine.BaseMessage;
+import org.mei.securesim.core.engine.Message;
 import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.layers.routing.RoutingLayer;
 import org.mei.securesim.events.Timer;
@@ -34,15 +36,12 @@ import org.mei.securesim.protocols.insens.messages.data.DATAPayload;
 import org.mei.securesim.protocols.insens.messages.data.FDBKPayload;
 import org.mei.securesim.protocols.insens.messages.data.RREQPayload;
 import org.mei.securesim.protocols.insens.messages.data.RUPDPayload;
-import org.mei.securesim.protocols.insens.messages.evaluation.INSENSComparator;
-import org.mei.securesim.protocols.insens.messages.evaluation.LatencyTestMessage;
-import org.mei.securesim.protocols.insens.messages.evaluation.PartialCoverageTestMessage;
-import org.mei.securesim.protocols.insens.messages.evaluation.TotalCoverageTestMessage;
+import org.mei.securesim.protocols.insens.messages.evaluation.EvaluationINSENSDATAMessage;
 import org.mei.securesim.protocols.insens.utils.NeighborInfo;
 import org.mei.securesim.protocols.insens.utils.NetworkKeyStore;
 import org.mei.securesim.protocols.insens.utils.OneWaySequenceNumbersChain;
-//TODO: Ter em conta que é preciso ter um determinado numero de vizinhos para grantir q o protocolo funciona
-//TODO: É necessário que se avalie a força do sinal por forma a aceitar ou não os RREQ
+//TODO: Ter em conta que Ã© preciso ter um determinado numero de vizinhos para grantir q o protocolo funciona
+//TODO: Ã‰ necessÃ¡rio que se avalie a forÃ§a do sinal por forma a aceitar ou nÃ£o os RREQ
 //TODO: Verificar porque se tem tantas vezes a transmitir quando se recebe e o q
 //se pode fazer para minimizar esse impacto
 
@@ -50,7 +49,7 @@ import org.mei.securesim.protocols.insens.utils.OneWaySequenceNumbersChain;
  *
  * @author CIAdmin
  */
-public class INSENSRoutingLayer extends RoutingLayer {
+public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandler {
 
     /**
      * Node info attributes
@@ -72,7 +71,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
      * Control structures
      */
     private BaseStationController baseStationController = null;
-    private boolean reliableMode = false;
+    private boolean reliableMode = true;
     private LinkedList messagesQueue = new LinkedList();
     private boolean sendingMessage;
     /**
@@ -84,7 +83,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
     private Hashtable tableOfNodesByHops;
 
     @Override
-    public void receiveMessage(Object message) {
+    public void onReceiveMessage(Object message) {
         if (message instanceof INSENSMessage) {
             try {
                 INSENSMessage m = (INSENSMessage) message;
@@ -121,11 +120,12 @@ public class INSENSRoutingLayer extends RoutingLayer {
     @Override
     public void sendMessageDone() {
         sendingMessage = false;
-        dispatchNextMessage();
+        messagesQueue.poll();
+//        dispatchNextMessage();
     }
 
     @Override
-    public boolean sendMessage(Object message, Application app) {
+    public boolean onSendMessage(Object message, Application app) {
         if (message instanceof INSENSDATAMessage) {
             if (isStable()) {
                 return sendDATAMessage((INSENSDATAMessage) message);
@@ -163,7 +163,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
     }
 
     @Override
-    public void routeMessage(Object message) {
+    public void onRouteMessage(Object message) {
         try {
             INSENSMessage m = (INSENSMessage) message;
             byte type = INSENSFunctions.getMessageType(m);
@@ -178,7 +178,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
                         if (new_payload != null) {
                             m.setPayload(new_payload);
                             routingController.addMessageSentCounter(INSENSConstants.MSG_ROUTE_UPDATE);
-                            sendMessageToAir((BaseMessage) m.clone(), reliableMode);
+                            sendMessageToAir((Message) m.clone(), reliableMode);
                             log("Forward Message from " + payload.source + " to " + payload.destination);
                         }
                     } else {
@@ -193,7 +193,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
                         if (new_payload != null) {
                             m.setPayload(new_payload);
                             routingController.addMessageSentCounter(INSENSConstants.MSG_DATA);
-                            sendMessageToAir((BaseMessage) m.clone(), reliableMode);
+                            sendMessageToAir((Message) m.clone(), reliableMode);
                             log("Forward Message from " + payloadData.source + " to " + payloadData.destination);
                         }
                     }
@@ -209,14 +209,13 @@ public class INSENSRoutingLayer extends RoutingLayer {
 
     }
 
-    private void broadcastMessage(BaseMessage message, boolean reliable) {
+    private void broadcastMessage(Message message, boolean reliable) {
         sendingMessage = true;
         long time = (long) (getNode().getSimulator().getSimulationTime()
                 + Simulator.randomGenerator.nextDoubleBetween((int) INSENSConstants.MIN_DELAYED_MESSAGE_BOUND, (int) INSENSConstants.MAX_DELAYED_MESSAGE_BOUND));
         DelayedMessageEvent delayMessageEvent = new DelayedMessageEvent(time, message, getNode());
         delayMessageEvent.setReliable(reliable);
         getNode().getSimulator().addEvent(delayMessageEvent);
-
     }
 
     private Hashtable buildLisOfNodestByHops(Vector allpaths) {
@@ -299,7 +298,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
         /**
          * Devo verificar se o numero de mensagens alterou
          * se alterou entao actualizo e reinicio as tentativas
-         * se nao alterou depois de 3 checks então posso iniciar a recepção
+         * se nao alterou depois de 3 checks entÃ£o posso iniciar a recepÃ§Ã£o
          */
         if (feedbackMessagesReceived <= lastFeedbackMessagesReceivedCheck) {
             if (feedbackMessageRetries >= INSENSConstants.FEEDBACK_MSG_RECEIVED_RETRIES) {
@@ -374,14 +373,14 @@ public class INSENSRoutingLayer extends RoutingLayer {
      * @see DelayedMessageEvent
      * @param message
      */
-    private void sendMessageToAir(BaseMessage message, boolean reliable) {
+    private void sendMessageToAir(Message message, boolean reliable) {
 
         messagesQueue.addLast(message);
-        dispatchNextMessage();
+//        dispatchNextMessage();
     }
 
     /**
-     * Processes a Route Request message 
+     * Processes a Route Request message
      * @param m
      */
     private void processRREQMessage(INSENSMessage m) throws INSENSException {
@@ -447,7 +446,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
     }
 
     /**
-     * Process a Feedback message message 
+     * Process a Feedback message message
      * @param m
      */
     private void processFDBKMessage(INSENSMessage m) throws INSENSException {
@@ -466,7 +465,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
     }
 
     /**
-     * Modify the parentMAC 
+     * Modify the parentMAC
      * @param old_payload
      * @return
      */
@@ -493,7 +492,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
     private void dispatchNextMessage() {
         if (!sendingMessage) {
             if (!messagesQueue.isEmpty()) {
-                broadcastMessage((BaseMessage) messagesQueue.poll(), reliableMode);
+                broadcastMessage((Message) messagesQueue.peek(), reliableMode);
             }
         }
     }
@@ -602,7 +601,7 @@ public class INSENSRoutingLayer extends RoutingLayer {
             byte[] new_payload = encapsulateDataPayload(message);
             message.setPayload(new_payload);
             routingController.addMessageSentCounter(INSENSConstants.MSG_DATA);
-            sendMessageToAir((BaseMessage) message.clone(), reliableMode);
+            sendMessageToAir((Message) message.clone(), reliableMode);
             return true;
         } catch (CloneNotSupportedException ex) {
             Logger.getLogger(INSENSRoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
@@ -633,24 +632,33 @@ public class INSENSRoutingLayer extends RoutingLayer {
     }
 
     private void setupEvaluationClasses() {
-        if (CoverageController.getInstance().getTotalCoverageTestMessageClass() == null) {
-            CoverageController.getInstance().setTotalCoverageMessageClass(TotalCoverageTestMessage.class);
-        }
-        if (CoverageController.getInstance().getPartialCoverageMessageClass() == null) {
-            CoverageController.getInstance().setPartialCoverageMessageClass(PartialCoverageTestMessage.class);
-        }
-
-        if (CoverageController.getInstance().getNodeIdComparator() == null) {
-            CoverageController.getInstance().setNodeIdComparator(new INSENSComparator());
-        }
-
-        if (LatencyController.getInstance().getLatencyMessageClass() == null) {
-            LatencyController.getInstance().setLatencyMessageClass(LatencyTestMessage.class);
-        }
+        CoverageInstrument.getInstance().setMessageClass(EvaluationINSENSDATAMessage.class);
+//        if (CoverageController.getInstance().getTotalCoverageTestMessageClass() == null) {
+//            CoverageController.getInstance().setTotalCoverageMessageClass(TotalCoverageTestMessage.class);
+//        }
+//        if (CoverageController.getInstance().getPartialCoverageMessageClass() == null) {
+//            CoverageController.getInstance().setPartialCoverageMessageClass(PartialCoverageTestMessage.class);
+//        }
+//
+//        if (CoverageController.getInstance().getNodeIdComparator() == null) {
+//            CoverageController.getInstance().setNodeIdComparator(new INSENSComparator());
+//        }
+//
+//        if (LatencyController.getInstance().getLatencyMessageClass() == null) {
+//            LatencyController.getInstance().setLatencyMessageClass(LatencyTestMessage.class);
+//        }
     }
 
     @Override
     public String toString() {
         return forwardingTable.toString();
+    }
+
+    public Object getUniqueId() {
+        return getNode().getId();
+    }
+
+    public void probing(IInstrumentMessage message) {
+        getNode().sendMessage(message);
     }
 }
