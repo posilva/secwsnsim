@@ -2,13 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mei.securesim.components.instruments.coverage;
+package org.mei.securesim.components.instruments;
 
 /**
  *
  * @author Pedro Marques da Silva
  */
-public interface ITotalCoverageMessage {
+public interface IInstrumentMessage {
 
     public Object getSourceId();
 
@@ -20,9 +20,5 @@ public interface ITotalCoverageMessage {
 
     public void setDestinationId(Object id);
 
-    public void setUniqueId(Object id);
-
-    public void setData(byte[] data);
-
-    public byte[] getData();
+    public void setUniqueId(long id);
 }

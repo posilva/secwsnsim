@@ -1,12 +1,16 @@
 package org.mei.securesim.core.layers.routing;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.mei.securesim.components.instruments.CoverageInstrument;
+import org.mei.securesim.components.instruments.IInstrumentHandler;
+import org.mei.securesim.components.instruments.IInstrumentMessage;
 import org.mei.securesim.components.instruments.coverage.CoverageController;
 import org.mei.securesim.components.instruments.latency.LatencyController;
-import org.mei.securesim.components.instruments.ReliabilityController;
 import org.mei.securesim.core.application.Application;
-import org.mei.securesim.core.engine.BaseMessage;
+import org.mei.securesim.core.engine.Message;
 import org.mei.securesim.core.layers.Layer;
 
 public abstract class RoutingLayer extends Layer {
@@ -28,7 +32,6 @@ public abstract class RoutingLayer extends Layer {
         this.routingController = routingController;
     }
 
-    
     public void setStable(boolean stable) {
         this.stable = stable;
         if (routingController != null) {
@@ -58,7 +61,6 @@ public abstract class RoutingLayer extends Layer {
     }
 
     public void init() {
-
     }
 
     /**
@@ -85,7 +87,7 @@ public abstract class RoutingLayer extends Layer {
      */
     public void receiveMessageHandler(Object message) {
         try {
-            BaseMessage m = (BaseMessage) ((BaseMessage) message).clone();
+            Message m = (Message) ((Message) message).clone();
             instrumentationNotifyMessageReception(
                     m);
             receiveMessage(
@@ -117,7 +119,6 @@ public abstract class RoutingLayer extends Layer {
     protected void instrumentationNotifyMessageReception(Object message) {
         CoverageController.getInstance().notifyMessageReception(message, getNode());
         LatencyController.getInstance().notifyMessageReception(message, getNode());
-        ReliabilityController.getInstance().notifyMessageReception(message, getNode());
 
 
     }
@@ -125,18 +126,53 @@ public abstract class RoutingLayer extends Layer {
     private void instrumentationNotifyMessageSent(Object message) {
         CoverageController.getInstance().notifyMessageSent(message, getNode());
         LatencyController.getInstance().notifyMessageSent(message, getNode());
-        ReliabilityController.getInstance().notifyMessageSent(message, getNode());
 
 
     }
 
-    public abstract void receiveMessage(Object message);
+    public void routeMessage(Object message) {
 
-    public abstract void sendMessageDone();
+        onRouteMessage(message);
+    }
 
-    public abstract boolean sendMessage(Object message, Application app);
+    public void receiveMessage(Object message) {
+        if (this instanceof IInstrumentHandler) {
+            if (message instanceof IInstrumentMessage) {
+                CoverageInstrument.getInstance().notifyMessageReceived((IInstrumentMessage) message, (IInstrumentHandler) this);
+            }
+        }
+
+        onReceiveMessage(message);
+    }
+
+    public boolean sendMessage(Object message, Application app) {
+        if (this instanceof IInstrumentHandler) {
+            if (message instanceof IInstrumentMessage) {
+                CoverageInstrument.getInstance().notifyMessageSent((IInstrumentMessage) message, (IInstrumentHandler) this);
+            }
+        }
+        boolean result = onSendMessage(message, app);
+        return result;
+    }
+
+    protected abstract void onReceiveMessage(Object message);
+
+    protected abstract boolean onSendMessage(Object message, Application app);
 
     public abstract void setup();
 
-    public abstract void routeMessage(Object message);
+    protected abstract void onRouteMessage(Object message);
+
+    public abstract void sendMessageDone();
+
+    public static void main(String[] args) {
+        Short s1 = (short) 1;
+        Short s2 = (short) 1;
+        Set set = new HashSet();
+        set.add(s1);
+        if (set.contains(s2)) {
+            System.out.println("são ");
+        }
+
+    }
 }

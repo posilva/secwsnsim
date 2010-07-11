@@ -21,13 +21,11 @@
  * Author: Gyorgy Balogh, Gabor Pap, Miklos Maroti
  * Date last modified: 02/09/04
  */
- 
 package org.mei.securesim.core.application;
 
 import org.mei.securesim.core.ui.ISimulationDisplay;
 import org.mei.securesim.core.nodes.Node;
-
-
+import org.mei.securesim.core.ui.Display;
 
 /**
  * This class represents one application that sends and receives
@@ -42,83 +40,82 @@ import org.mei.securesim.core.nodes.Node;
  * @author Gyorgy Balogh, Gabor Pap, Miklos Maroti
  */
 public abstract class Application {
-	
-	/** The parent {@link Node} this application belongs to. */
-	private Node node;
 
-	/** Returns the {@link Node} this application belongs to. */
-	public Node getNode(){
-		return node;
-	}
+    /** The parent {@link Node} this application belongs to. */
+    private Node node;
 
-	/**
-	 * The constructor for applications. Makes both the application and the Node
-	 * reference to each other.
-	 * 
-	 * @param node The parent {@link Node} of this application
-	 */
-	public Application(){
-	}
+    /** Returns the {@link Node} this application belongs to. */
+    public Node getNode() {
+        return node;
+    }
 
-	/**
-	 * Fired when a new message is arrived for this application.
-	 * The semantics is as of the ReceiveMsg.receive() event
-	 * of TinyOS, except we do not manage the lifecycle of messages.
-	 * It is important to note that the received message is simply
-	 * a reference to the message that has been sent by the sender
-	 * node, so it should not be modified.  
-	 *
-	 * @param message The message that arrived.
-	 */
-	public void receiveMessage(Object message){
-	}
-	
-	/**
-	 * Sends a message via the radio to neighboring nodes where
-	 * the {@link Application#receiveMessage} method will be fired in the 
-	 * application instance of the same derived type.
-	 * This method has the same semantics as SendMsg.send() in TinyOS.
-	 * 
-	 * @param message The message to be sent.
-	 * @return Returns <code>true</code> if the message is accepted for 
-	 * 	transmissions, in which case {@link Application#sendMessageDone}
-	 * 	will be called eventually, or <code>false</code> if a message 
-	 * (maybe from another Application) is under transmission and
-	 *  this message is not accepted.
-	 * @see #sendMessageDone 
-	 */
+    /**
+     * The constructor for applications. Makes both the application and the Node
+     * reference to each other.
+     *
+     * @param node The parent {@link Node} of this application
+     */
+    public Application() {
+    }
 
-	public synchronized  final boolean sendMessage(Object message){
-		return getNode().getRoutingLayer().sendMessageHandler(message, this);
-	}
-	
-	/**
-	 * Signaled when the message posted is sent. This method
-	 * is called only if {@link Application#sendMessage} returned <code>true</code>. 
-	 * This has the same semantics as SendMsg.sendDone() in TinyOS.
-	 * 
-	 * @see #sendMessage
-	 */
-	public void sendMessageDone(){
-	}
-	
-	/**
-	 * Every application has the ability to display its status, though it is not
-	 * constrained in any way. Using the {@link Node#getX()}, {@link Node#getY()}
-	 * {@link Display#x2ScreenX(double)} and {@link Display#y2ScreenY(double)} functions 
-	 * might help positioning a sign.
-	 * 
-	 * @param disp
-	 */
-	public void display(ISimulationDisplay disp){
-	}
+    /**
+     * Fired when a new message is arrived for this application.
+     * The semantics is as of the ReceiveMsg.receive() event
+     * of TinyOS, except we do not manage the lifecycle of messages.
+     * It is important to note that the received message is simply
+     * a reference to the message that has been sent by the sender
+     * node, so it should not be modified.
+     *
+     * @param message The message that arrived.
+     */
+    public void receiveMessage(Object message) {
+    }
 
-	/**
-	 * @param node the node to set
-	 */
-	public void setNode(Node node) {
-		this.node = node;
-	}
+    /**
+     * Sends a message via the radio to neighboring nodes where
+     * the {@link Application#receiveMessage} method will be fired in the
+     * application instance of the same derived type.
+     * This method has the same semantics as SendMsg.send() in TinyOS.
+     *
+     * @param message The message to be sent.
+     * @return Returns <code>true</code> if the message is accepted for
+     * 	transmissions, in which case {@link Application#sendMessageDone}
+     * 	will be called eventually, or <code>false</code> if a message
+     * (maybe from another Application) is under transmission and
+     *  this message is not accepted.
+     * @see #sendMessageDone
+     */
+    public synchronized final boolean sendMessage(Object message) {
+        return getNode().getRoutingLayer().sendMessageHandler(message, this);
+    }
 
-    public abstract void run() ;
+    /**
+     * Signaled when the message posted is sent. This method
+     * is called only if {@link Application#sendMessage} returned <code>true</code>.
+     * This has the same semantics as SendMsg.sendDone() in TinyOS.
+     *
+     * @see #sendMessage
+     */
+    public void sendMessageDone() {
+    }
+
+    /**
+     * Every application has the ability to display its status, though it is not
+     * constrained in any way. Using the {@link Node#getX()}, {@link Node#getY()}
+     * {@link Display#x2ScreenX(double)} and {@link Display#y2ScreenY(double)} functions
+     * might help positioning a sign.
+     *
+     * @param disp
+     */
+    public void display(ISimulationDisplay disp) {
+    }
+
+    /**
+     * @param node the node to set
+     */
+    public void setNode(Node node) {
+        this.node = node;
+    }
+
+    public abstract void run();
 }

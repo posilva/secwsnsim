@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.mei.securesim.core.engine;
 
 import java.awt.Color;
@@ -11,29 +7,25 @@ import java.util.Arrays;
  *
  * @author posilva
  */
-public class BaseMessage implements Cloneable {
+public class Message implements Cloneable {
 
     static long numberOfTotalMessage = 0; // global message counter
-    private long messageNumber=0;    // global number of the message
+    private long messageNumber = 0;    // global number of the message
     private byte[] payload;               // payload of the message
-    private short sourceNodeId;           // node that create the message
-    private short destinationNodeId;      // message was sent to
-    private short forwardBy;              // last node that forward message
     protected Color color = Color.green;  // message color for de ui
     protected boolean showColor = false;  // message color flag
 
-    public BaseMessage() {
+    public Message() {
         messageNumber = numberOfTotalMessage++;
     }
-
 
     /**
      * Contructor
      * @param payload
      */
-    public BaseMessage(byte[] payload) {
-        if (payload== null){
-            throw  new IllegalArgumentException("Payload cannot be null");
+    public Message(byte[] payload) {
+        if (payload == null) {
+            throw new IllegalArgumentException("Payload cannot be null");
         }
         this.payload = payload;
         messageNumber = numberOfTotalMessage++;
@@ -83,45 +75,13 @@ public class BaseMessage implements Cloneable {
     }
 
     /**
-     * Gets ID of destination Node
-     * @return
-     */
-    public short getDestinationNodeId() {
-        return destinationNodeId;
-    }
-
-    /**
-     * Sets ID of destination node
-     * @param destination
-     */
-    public void setDestinationNodeId(short destination) {
-        this.destinationNodeId = destination;
-    }
-
-    /**
-     * Get ID for sourcenode
-     * @return
-     */
-    public short getSourceNodeId() {
-        return sourceNodeId;
-    }
-
-    /**
-     * Set Id of source node
-     * @param origin
-     */
-    public void setSourceNodeId(short origin) {
-        this.sourceNodeId = origin;
-    }
-    
-    /**
      * Clone  this message
      * @return
      * @throws CloneNotSupportedException
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
-        BaseMessage m = (BaseMessage) super.clone();
+        Message m = (Message) super.clone();
         byte[] c = null;
         if (payload != null) {
             c = Arrays.copyOf(payload, payload.length);
@@ -144,13 +104,5 @@ public class BaseMessage implements Cloneable {
 
     public void setShowColor(boolean showColor) {
         this.showColor = showColor;
-    }
-
-    public short getForwardBy() {
-        return forwardBy;
-    }
-
-    public void setForwardBy(short forwardBy) {
-        this.forwardBy = forwardBy;
     }
 }

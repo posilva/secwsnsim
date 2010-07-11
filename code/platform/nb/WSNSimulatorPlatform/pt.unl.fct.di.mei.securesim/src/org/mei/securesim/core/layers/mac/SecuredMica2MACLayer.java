@@ -4,7 +4,7 @@
  */
 package org.mei.securesim.core.layers.mac;
 
-import org.mei.securesim.core.engine.BaseMessage;
+import org.mei.securesim.core.engine.Message;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -26,10 +26,10 @@ public class SecuredMica2MACLayer extends Mica2MACLayer {
 
 
 
-    protected BaseMessage decryptMessage(Object message) {
+    protected Message decryptMessage(Object message) {
 
         try {
-            BaseMessage cm = (BaseMessage) message;
+            Message cm = (Message) message;
             //            System.out.println("Decrypt message: "+ message + " Size: "+ cm.getPayload().length);
             DataInputStream dis = DataUtils.createDataFromByteArray(cm.getPayload());
             int c = dis.readInt();
@@ -42,7 +42,7 @@ public class SecuredMica2MACLayer extends Mica2MACLayer {
             if (CryptoFunctions.verifyMessageIntegrity(data, mic, keyData)) {
                 byte[] cdata = CryptoFunctions.decipherData(data, keyData, iv);
                 getNode().getBateryEnergy().consumeDecryption(cdata.length);
-                return new BaseMessage(cdata);
+                return new Message(cdata);
 
             }
         } catch (IOException ex) {
@@ -53,7 +53,7 @@ public class SecuredMica2MACLayer extends Mica2MACLayer {
 
     protected boolean encryptMessage() {
         try {
-            byte[] data = ((BaseMessage) getNode().getMessage()).getPayload();
+            byte[] data = ((Message) getNode().getMessage()).getPayload();
             byte[] cipherData;
             cipherData = CryptoFunctions.cipherData(data, keyData, iv);
             getNode().getBateryEnergy().consumeEncryption(data.length);
@@ -67,7 +67,7 @@ public class SecuredMica2MACLayer extends Mica2MACLayer {
             dos.write(mic);
             dos.flush();
             byte[] payload = byteArrayOutputStream.toByteArray();
-            ((BaseMessage) getNode().getMessage()).setPayload(payload);
+            ((Message) getNode().getMessage()).setPayload(payload);
             return true;
         } catch (IOException ex) {
             Logger.getLogger(SecuredMica2MACLayer.class.getName()).log(Level.SEVERE, null, ex);
@@ -87,7 +87,7 @@ public class SecuredMica2MACLayer extends Mica2MACLayer {
     @Override
     public boolean deliverMessage(Object message) {
 //        DefaultMessage m = (DefaultMessage) message;
-        BaseMessage m = decryptMessage(message);
+        Message m = decryptMessage(message);
         if (m == null) {
             return false;
         } else {

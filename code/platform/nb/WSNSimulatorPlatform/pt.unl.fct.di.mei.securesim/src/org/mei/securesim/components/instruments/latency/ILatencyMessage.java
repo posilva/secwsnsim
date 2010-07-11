@@ -14,7 +14,7 @@ public interface ILatencyMessage {
 
     public Object getDestinationId();
 
-    public Object getUniqueId();
+    public long getUniqueId();
 
     public void setSourceId(Object id);
 
