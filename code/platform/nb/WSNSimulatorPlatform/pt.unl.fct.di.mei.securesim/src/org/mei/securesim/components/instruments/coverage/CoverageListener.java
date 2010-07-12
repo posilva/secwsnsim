@@ -5,7 +5,7 @@
 package org.mei.securesim.components.instruments.coverage;
 
 import java.util.EventListener;
-import org.mei.securesim.components.instruments.listeners.SignalUpdateEvent;
+import org.mei.securesim.components.instruments.coverage.listeners.SignalUpdateEvent;
 
 /**
  *

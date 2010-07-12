@@ -8,7 +8,7 @@ import java.util.HashSet;
 import org.mei.securesim.components.ApplicationOutput;
 import org.mei.securesim.core.application.Application;
 import org.mei.securesim.core.engine.Simulator;
-import org.mei.securesim.events.Timer;
+import org.mei.securesim.core.events.Timer;
 import org.mei.securesim.protocols.insens.messages.INSENSDATAMessage;
 
 /**

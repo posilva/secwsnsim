@@ -4,11 +4,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.mei.securesim.components.instruments.CoverageInstrument;
+import org.mei.securesim.components.instruments.coverage.CoverageInstrument;
 import org.mei.securesim.components.instruments.IInstrumentHandler;
 import org.mei.securesim.components.instruments.IInstrumentMessage;
-import org.mei.securesim.components.instruments.coverage.CoverageController;
-import org.mei.securesim.components.instruments.latency.LatencyController;
+import org.mei.securesim.components.instruments.reliability.ReliabilityInstrument;
 import org.mei.securesim.core.application.Application;
 import org.mei.securesim.core.engine.Message;
 import org.mei.securesim.core.layers.Layer;
@@ -88,18 +87,10 @@ public abstract class RoutingLayer extends Layer {
     public void receiveMessageHandler(Object message) {
         try {
             Message m = (Message) ((Message) message).clone();
-            instrumentationNotifyMessageReception(
-                    m);
-            receiveMessage(
-                    m);
-
-
-
+            receiveMessage(m);
         } catch (CloneNotSupportedException ex) {
             Logger.getLogger(RoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-
     }
 
     /**
@@ -108,26 +99,7 @@ public abstract class RoutingLayer extends Layer {
      * @param object
      */
     public boolean sendMessageHandler(Object message, Application app) {
-        instrumentationNotifyMessageSent(message);
-
-
         return sendMessage(message, app);
-
-
-    }
-
-    protected void instrumentationNotifyMessageReception(Object message) {
-        CoverageController.getInstance().notifyMessageReception(message, getNode());
-        LatencyController.getInstance().notifyMessageReception(message, getNode());
-
-
-    }
-
-    private void instrumentationNotifyMessageSent(Object message) {
-        CoverageController.getInstance().notifyMessageSent(message, getNode());
-        LatencyController.getInstance().notifyMessageSent(message, getNode());
-
-
     }
 
     public void routeMessage(Object message) {
@@ -139,6 +111,7 @@ public abstract class RoutingLayer extends Layer {
         if (this instanceof IInstrumentHandler) {
             if (message instanceof IInstrumentMessage) {
                 CoverageInstrument.getInstance().notifyMessageReceived((IInstrumentMessage) message, (IInstrumentHandler) this);
+                ReliabilityInstrument.getInstance().notifyMessageReceived((IInstrumentMessage) message, (IInstrumentHandler) this);
             }
         }
 
@@ -149,6 +122,7 @@ public abstract class RoutingLayer extends Layer {
         if (this instanceof IInstrumentHandler) {
             if (message instanceof IInstrumentMessage) {
                 CoverageInstrument.getInstance().notifyMessageSent((IInstrumentMessage) message, (IInstrumentHandler) this);
+                ReliabilityInstrument.getInstance().notifyMessageSent((IInstrumentMessage) message, (IInstrumentHandler) this);
             }
         }
         boolean result = onSendMessage(message, app);

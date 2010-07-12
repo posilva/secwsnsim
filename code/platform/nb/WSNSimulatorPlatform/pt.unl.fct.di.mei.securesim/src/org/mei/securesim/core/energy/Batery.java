@@ -1,6 +1,6 @@
 package org.mei.securesim.core.energy;
 
-import org.mei.securesim.components.instruments.EnergyController;
+import org.mei.securesim.components.instruments.energy.EnergyController;
 import org.mei.securesim.core.energy.listeners.EnergyEvent;
 import org.mei.securesim.core.energy.listeners.EnergyListener;
 import org.mei.securesim.core.nodes.Node;

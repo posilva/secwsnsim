@@ -4,15 +4,15 @@
  */
 
 /*
- * InstrumentsControlPanel.java
+ * CoverageInstrumentControlPanel.java
  *
  * Created on 10/Jul/2010, 1:40:28
  */
 package org.mei.securesim.platform.core.instruments;
 
 import java.util.Collection;
-import org.mei.securesim.components.instruments.CoverageInstrument;
-import org.mei.securesim.components.instruments.CoverageInstrument.CoverageProbingResult;
+import org.mei.securesim.components.instruments.coverage.CoverageInstrument;
+import org.mei.securesim.components.instruments.coverage.CoverageInstrument.CoverageProbingResult;
 import org.mei.securesim.components.instruments.IInstrumentControlPanel;
 import org.mei.securesim.components.instruments.IInstrumentHandler;
 import org.mei.securesim.components.instruments.Instrument;
@@ -23,10 +23,10 @@ import org.mei.securesim.core.nodes.Node;
  *
  * @author CIAdmin
  */
-public class InstrumentsControlPanel extends javax.swing.JPanel implements IInstrumentControlPanel {
+public class CoverageInstrumentControlPanel extends javax.swing.JPanel implements IInstrumentControlPanel {
 
-    /** Creates new form InstrumentsControlPanel */
-    public InstrumentsControlPanel() {
+    /** Creates new form CoverageInstrumentControlPanel */
+    public CoverageInstrumentControlPanel() {
         initComponents();
         CoverageInstrument.getInstance().registerControlPanel(this);
         CoverageInstrument.getInstance().setDebugEnabled(true);
@@ -72,7 +72,7 @@ public class InstrumentsControlPanel extends javax.swing.JPanel implements IInst
         txtaResult = new javax.swing.JTextArea();
         cmdClearResult = new javax.swing.JButton();
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(org.mei.securesim.platform.PlatformApp.class).getContext().getResourceMap(InstrumentsControlPanel.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(org.mei.securesim.platform.PlatformApp.class).getContext().getResourceMap(CoverageInstrumentControlPanel.class);
         jCheckBox1.setText(resourceMap.getString("jCheckBox1.text")); // NOI18N
         jCheckBox1.setName("jCheckBox1"); // NOI18N
 

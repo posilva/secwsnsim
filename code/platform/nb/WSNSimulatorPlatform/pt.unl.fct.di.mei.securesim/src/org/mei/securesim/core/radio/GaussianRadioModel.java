@@ -25,7 +25,7 @@ package org.mei.securesim.core.radio;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import org.mei.securesim.components.instruments.coverage.CoverageController;
+import org.mei.securesim.components.instruments.coverage.CoverageInstrument;
 
 import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.nodes.Node;
@@ -98,7 +98,7 @@ public class GaussianRadioModel extends RadioModel {
      */
     public void updateNeighborhoods() {
 
-        CoverageController.getInstance().signalNeighborDetectionReset(CoverageController.CoverageModelEnum.RADIO);
+        ((CoverageInstrument) CoverageInstrument.getInstance()).signalNeighborDetectionReset(CoverageInstrument.CoverageModelEnum.RADIO);
         /**
          * Clear neighborhood information
          */
@@ -125,7 +125,7 @@ public class GaussianRadioModel extends RadioModel {
                         /**
                          * Signals the coverage radio model that have a neighbor
                          */
-                        CoverageController.getInstance().signalNeighborDetection(CoverageController.CoverageModelEnum.RADIO, srcNode);
+                        ((CoverageInstrument) CoverageInstrument.getInstance()).signalNeighborDetection(CoverageInstrument.CoverageModelEnum.RADIO, srcNode);
 
                     }
                 }

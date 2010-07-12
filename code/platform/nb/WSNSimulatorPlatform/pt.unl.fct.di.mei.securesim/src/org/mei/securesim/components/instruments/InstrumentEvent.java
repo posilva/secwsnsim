@@ -10,7 +10,7 @@ import org.mei.securesim.core.engine.Event;
  *
  * @author CIAdmin
  */
-class InstrumentEvent extends Event {
+public class InstrumentEvent extends Event {
 
     private IInstrumentMessage message;
     private final IInstrumentHandler sender;
@@ -18,7 +18,7 @@ class InstrumentEvent extends Event {
     private final long interval;
     private int timesCt = 0;
 
-    InstrumentEvent(IInstrumentMessage message, IInstrumentHandler sender, int times, long delay, long interval) {
+    public InstrumentEvent(IInstrumentMessage message, IInstrumentHandler sender, int times, long delay, long interval) {
         this.message = message;
         this.sender = sender;
         this.times = times;

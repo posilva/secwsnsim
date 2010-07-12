@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mei.securesim.components.instruments.listeners;
+package org.mei.securesim.components.instruments.coverage.listeners;
 
 import java.util.EventObject;
-import org.mei.securesim.components.instruments.coverage.CoverageController.CoverageModelEnum;
+import org.mei.securesim.components.instruments.coverage.CoverageInstrument.CoverageModelEnum;
 
 /**
  *
@@ -35,5 +35,4 @@ public class SignalUpdateEvent extends EventObject {
     public void setModel(CoverageModelEnum model) {
         this.model = model;
     }
-    
 }

@@ -17,7 +17,6 @@ public abstract class Instrument {
     protected boolean debugEnabled = true;
     protected int probingTests = 0;
     protected boolean notifyPanel = false;
-    protected static Instrument instance = null;
     protected static int messageUniqueId = 0;
     protected boolean autonumber = false;
     protected Vector senders = new Vector();
@@ -146,7 +145,7 @@ public abstract class Instrument {
 
     protected void onMessageSent(IInstrumentMessage message, IInstrumentHandler handler) {
         if (senders.contains(handler)) { // sent by a sender
-            saveMessage(message,handler);
+            saveMessage(message, handler);
         }
     }
 

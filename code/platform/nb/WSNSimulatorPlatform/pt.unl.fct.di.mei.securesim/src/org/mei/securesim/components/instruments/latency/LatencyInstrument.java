@@ -1,29 +1,35 @@
-package org.mei.securesim.components.instruments;
+package org.mei.securesim.components.instruments.latency;
 
 import java.util.Hashtable;
 
-import java.util.Vector;
+import org.mei.securesim.components.instruments.IInstrumentHandler;
+import org.mei.securesim.components.instruments.IInstrumentMessage;
+import org.mei.securesim.components.instruments.IProbingResult;
+import org.mei.securesim.components.instruments.Instrument;
+import org.mei.securesim.components.instruments.InstrumentEvent;
+import org.mei.securesim.components.instruments.SimulationController;
 import org.mei.securesim.core.engine.Simulator;
 
 /**
- *
+ * NEsta classe a intenção é registar o numero de mensagens enviadas e verificar se
+ * são todas recebidas
  * @author posilva
  */
-public class CoverageInstrument extends Instrument {
+public class LatencyInstrument extends Instrument {
 
-    protected Hashtable senderNode = new Hashtable();
-    protected Hashtable receivedMessages = new Hashtable();
-
-    public static Instrument getInstance() {
-        if (instance == null) {
-            instance = new CoverageInstrument();
-        }
-        return instance;
-    }
+    private static LatencyInstrument instance;
+    protected Hashtable sendingObject = new Hashtable();
     private long delayToSentMessages;
     private long intervalToSentMessages;
     private int timesToSentMessages;
     private int howManyMessagesToSentPerSender;
+
+    public static LatencyInstrument getInstance() {
+        if (instance == null) {
+            instance = new LatencyInstrument();
+        }
+        return instance;
+    }
 
     @Override
     public void probe() {
@@ -36,8 +42,7 @@ public class CoverageInstrument extends Instrument {
         if (messageClass == null) {
             throw new IllegalStateException("No message class definition");
         }
-        senderNode.clear();
-        receivedMessages.clear();
+        sendingObject.clear();
         int numberOfMessagesToSend = 0;
         for (Object s : senders) {
             IInstrumentHandler sender = (IInstrumentHandler) s;
@@ -52,7 +57,7 @@ public class CoverageInstrument extends Instrument {
                     }
                     numberOfMessagesToSend += getTimesToSentMessages();
                     final long interval = getIntervalToSentMessages() * Simulator.ONE_SECOND;
-                    final long messageDelay = (numberOfMessagesToSend * interval) + getDelayToSentMessages() * Simulator.ONE_SECOND;
+                    final long messageDelay = getDelayToSentMessages() * Simulator.ONE_SECOND;
 //                    sender.probing(message);
                     SimulationController.getInstance().getSimulation().getSimulator().addEvent(new InstrumentEvent(message, sender, getTimesToSentMessages(), messageDelay, interval));
                 }
@@ -71,10 +76,9 @@ public class CoverageInstrument extends Instrument {
          * Se ainda não se deu o registo do nó
          */
         if (handler.getUniqueId() == message.getSourceId()) {
-            if (!senderNode.containsKey(handler.getUniqueId())) {
+            if (!sendingObject.containsKey(message.getUniqueId())) {
                 log("Saved Message: " + message.getUniqueId() + " from " + message.getSourceId() + " to " + message.getDestinationId());
-                senderNode.put(message.getSourceId(), 0);
-                receivedMessages.put(message.getDestinationId(), new Vector());
+                sendingObject.put(message.getUniqueId(), 0);
             }
         }
         refreshPanel();
@@ -82,23 +86,13 @@ public class CoverageInstrument extends Instrument {
 
     @Override
     protected void computeMessageReception(IInstrumentMessage message, IInstrumentHandler handler) {
-        if (senderNode.containsKey(message.getSourceId())) { // se foi registado o envio
-            if (handler.getUniqueId().equals(message.getDestinationId())) { // se quem está a receber é o destino
+        if (handler.getUniqueId().equals(message.getDestinationId())) { // é tratado pelo destino
+            if (sendingObject.containsKey(message.getUniqueId())) { // se foi registado o envio
                 log("Received Message: " + message.getUniqueId() + " from " + message.getSourceId() + " to " + message.getDestinationId());
-                Vector messages = (Vector) receivedMessages.get(handler.getUniqueId()); // ler as mensagens recebidas
-                if (messages != null) {
-                    if (messages.contains(message.getUniqueId())) { // se já esta na lista das recebidas pelo destino
-                        Integer c = (Integer) senderNode.get(message.getUniqueId()); // adicionar ao contador
-                        c = c != null ? c + 1 : 1;
-                        senderNode.put(message.getSourceId(), c);
-                    } else { // registar a primeira recepção
-                        messages.add(message.getSourceId());
-                        senderNode.put(message.getSourceId(), 1);
-                    }
-                    receivedMessages.put(handler.getUniqueId(), messages);
-                } else {
-                    System.err.println("This cannot ever happen: computeMessageReception::receivedMessages.get(handler.getUniqueId())==null");
-                }
+                Integer c = (Integer) sendingObject.get(message.getUniqueId());
+                // adicionar ao contador
+                c = c != null ? c + 1 : 1;
+                sendingObject.put(message.getUniqueId(), c);
             }
         }
         refreshPanel();
@@ -106,22 +100,20 @@ public class CoverageInstrument extends Instrument {
 
     @Override
     public void reset() {
-        senderNode.clear();
-        receivedMessages.clear();
+        sendingObject.clear();
         senders.clear();
         receivers.clear();
         refreshPanel();
     }
 
     public double getPerformance() {
-        int numberOfMessagesSent = senderNode.size();
+        int numberOfMessagesSent = sendingObject.size();
         int numberOfMessagesReceived = 0;
-        for (Object v : senderNode.values()) {
+        for (Object v : sendingObject.values()) {
             Integer i = (Integer) v;
             if (i != null && i > 0) {
                 numberOfMessagesReceived++;
             }
-
         }
         return (numberOfMessagesSent == 0) ? 0 : (numberOfMessagesReceived * 100 / numberOfMessagesSent);
     }
@@ -161,28 +153,30 @@ public class CoverageInstrument extends Instrument {
 
     @Override
     public IProbingResult getLastProbeResult() {
-        CoverageProbingResult result = new CoverageProbingResult();
+        LatencyProbingResult result = new LatencyProbingResult();
 
         return result;
     }
 
-    public class CoverageProbingResult implements IProbingResult {
+    public class LatencyProbingResult implements IProbingResult {
 
-        public int getNumberOfRegistredSenderNodes() {
-            log("" + senderNode.size());
-            return senderNode.size();
+        public int getNumberOfRegistredSendingObjects() {
+            return sendingObject.size();
         }
 
-        public int getNumberOfRegistredReceivedNodes() {
+        public int getNumberOfRegistredReceivedObjects() {
             int result = 0;
-            for (Object r : senderNode.values()) {
+            for (Object r : sendingObject.values()) {
                 Integer v = (Integer) r;
                 if (v > 0) {
                     result++;
                 }
             }
             return result;
+        }
 
+        public double getResultValue() {
+            return getPerformance();
         }
     }
 }

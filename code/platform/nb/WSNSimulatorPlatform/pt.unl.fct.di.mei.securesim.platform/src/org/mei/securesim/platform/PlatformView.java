@@ -25,17 +25,17 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.jdesktop.application.Application.ExitListener;
 import org.jdesktop.application.ResourceMap;
-import org.mei.securesim.components.instruments.coverage.CoverageController;
-import org.mei.securesim.components.instruments.ReliabilityInstrument;
+import org.mei.securesim.components.instruments.reliability.ReliabilityInstrument;
 import org.mei.securesim.components.instruments.SimulationController;
+import org.mei.securesim.components.instruments.coverage.CoverageInstrument;
 import org.mei.securesim.components.instruments.coverage.CoverageListener;
 import org.mei.securesim.components.instruments.latency.LatencyController;
-import org.mei.securesim.components.instruments.listeners.SignalUpdateEvent;
+import org.mei.securesim.components.instruments.coverage.listeners.SignalUpdateEvent;
 import org.mei.securesim.components.simulation.ISimulationPlatform;
 import org.mei.securesim.core.nodes.Node;
 import org.mei.securesim.platform.core.PlatformController;
-import org.mei.securesim.platform.core.instruments.InstrumentsControlPanel;
-import org.mei.securesim.platform.core.instruments.coverage.ui.CoverageControllerPanel;
+import org.mei.securesim.platform.core.instruments.CoverageInstrumentControlPanel;
+import org.mei.securesim.platform.core.instruments.reliability.ReliabilityInstrumentControlPanel;
 import org.mei.securesim.platform.ui.WorkbenchPanel;
 import org.mei.securesim.platform.ui.frames.RoutingInfoPanel;
 
@@ -70,7 +70,7 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         getApplication().addExitListener(this);
 
         SimulationController.getInstance().registerPlatform(this);
-        CoverageController.getInstance().addCoverageListener(this);
+        ((CoverageInstrument) CoverageInstrument.getInstance()).addCoverageListener(this);
 
         // status bar initialization - message timeout, idle icon and busy animation, etc
         ResourceMap resourceMap = getResourceMap();
@@ -727,7 +727,7 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
             mainSplitPane.setDividerLocation(1280);
             PlatformController.getInstance().setNewSimulation(true);
             PlatformController.getInstance().showSimulationName("");
-            CoverageController.getInstance().updateNetworkSize();
+            ((CoverageInstrument) CoverageInstrument.getInstance()).updateNetworkSize();
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -927,23 +927,15 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
 
     @Action
     public void ShowRadioCoverageValue() {
-        double value = CoverageController.getInstance().getCoverageValueByModel(CoverageController.CoverageModelEnum.RADIO);
+        double value = ((CoverageInstrument) CoverageInstrument.getInstance()).getCoverageValueByModel(CoverageInstrument.CoverageModelEnum.RADIO);
         JOptionPane.showMessageDialog(this.getFrame(), value);
     }
 
     public void onSignalUpdate(SignalUpdateEvent event) {
-        if (event.getModel() == CoverageController.CoverageModelEnum.RADIO) {
-            lblRadioCoverageValue.setText("" + CoverageController.getInstance().getCoverageValueByModel(CoverageController.CoverageModelEnum.RADIO) + "%");
-        } else if (event.getModel() == CoverageController.CoverageModelEnum.ROUTING) {
-            lblRoutingCoverageValue.setText("" + CoverageController.getInstance().getCoverageValueByModel(CoverageController.CoverageModelEnum.ROUTING) + "%");
-        }
-    }
-
-    @Action
-    public void ShowCoverageControllerInfo() {
-        if (!tabShowned(TAB_COVERAGE_CONTROLLER_INFO_TITLE)) {
-            addTab(TAB_COVERAGE_CONTROLLER_INFO_TITLE, CoverageControllerPanel.getInstance());
-            mainSplitPane.setDividerLocation(.8);
+        if (event.getModel() == CoverageInstrument.CoverageModelEnum.RADIO) {
+            lblRadioCoverageValue.setText("" + ((CoverageInstrument) CoverageInstrument.getInstance()).getCoverageValueByModel(CoverageInstrument.CoverageModelEnum.RADIO) + "%");
+        } else if (event.getModel() == CoverageInstrument.CoverageModelEnum.ROUTING) {
+            lblRoutingCoverageValue.setText("" + ((CoverageInstrument) CoverageInstrument.getInstance()).getCoverageValueByModel(CoverageInstrument.CoverageModelEnum.ROUTING) + "%");
         }
     }
 
@@ -990,7 +982,8 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
 
     @Action
     public void ShowInstrumentsPanel() {
-        addTab("instruments", new InstrumentsControlPanel());
+        addTab("Coverage Instrument", new CoverageInstrumentControlPanel());
+        addTab("Reliability", new ReliabilityInstrumentControlPanel());
     }
 
     @Action
