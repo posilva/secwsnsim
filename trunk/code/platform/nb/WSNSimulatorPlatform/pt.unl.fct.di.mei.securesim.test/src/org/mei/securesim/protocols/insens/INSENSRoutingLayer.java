@@ -15,16 +15,16 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.mei.securesim.components.crypto.CryptoFunctions;
-import org.mei.securesim.components.instruments.CoverageInstrument;
+import org.mei.securesim.components.instruments.coverage.CoverageInstrument;
 import org.mei.securesim.components.instruments.IInstrumentHandler;
 import org.mei.securesim.components.instruments.IInstrumentMessage;
 import org.mei.securesim.components.instruments.SimulationController;
-import org.mei.securesim.components.instruments.coverage.CoverageController;
+import org.mei.securesim.components.instruments.reliability.ReliabilityInstrument;
 import org.mei.securesim.core.application.Application;
 import org.mei.securesim.core.engine.Message;
 import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.layers.routing.RoutingLayer;
-import org.mei.securesim.events.Timer;
+import org.mei.securesim.core.events.Timer;
 import org.mei.securesim.protocols.common.ByteArrayDataOutputStream;
 import org.mei.securesim.protocols.common.events.DelayedMessageEvent;
 import org.mei.securesim.protocols.insens.basestation.BaseStationController;
@@ -140,7 +140,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
 
     @Override
     public void setup() {
-        CoverageController.getInstance().signalNeighborDetectionReset(CoverageController.CoverageModelEnum.ROUTING);
+        ((CoverageInstrument) CoverageInstrument.getInstance()).signalNeighborDetectionReset(CoverageInstrument.CoverageModelEnum.ROUTING);
         setupEvaluationClasses();
         setRoutingController(SimulationController.getInstance().getRoutingLayerController());
         getNode().getMacLayer().setDebugEnabled(false);
@@ -405,7 +405,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
             }
         }
         if (!neighborInfo.containsKey(payload.sourceId)) {
-            CoverageController.getInstance().signalNeighborDetection(CoverageController.CoverageModelEnum.ROUTING, this.getNode());
+            ((CoverageInstrument) CoverageInstrument.getInstance()).signalNeighborDetection(CoverageInstrument.CoverageModelEnum.ROUTING, this.getNode());
         }
         neighborInfo.addNeighbor(payload.sourceId, payload.mac, isParent);
     }
@@ -633,20 +633,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
 
     private void setupEvaluationClasses() {
         CoverageInstrument.getInstance().setMessageClass(EvaluationINSENSDATAMessage.class);
-//        if (CoverageController.getInstance().getTotalCoverageTestMessageClass() == null) {
-//            CoverageController.getInstance().setTotalCoverageMessageClass(TotalCoverageTestMessage.class);
-//        }
-//        if (CoverageController.getInstance().getPartialCoverageMessageClass() == null) {
-//            CoverageController.getInstance().setPartialCoverageMessageClass(PartialCoverageTestMessage.class);
-//        }
-//
-//        if (CoverageController.getInstance().getNodeIdComparator() == null) {
-//            CoverageController.getInstance().setNodeIdComparator(new INSENSComparator());
-//        }
-//
-//        if (LatencyController.getInstance().getLatencyMessageClass() == null) {
-//            LatencyController.getInstance().setLatencyMessageClass(LatencyTestMessage.class);
-//        }
+        ReliabilityInstrument.getInstance().setMessageClass(EvaluationINSENSDATAMessage.class);
     }
 
     @Override

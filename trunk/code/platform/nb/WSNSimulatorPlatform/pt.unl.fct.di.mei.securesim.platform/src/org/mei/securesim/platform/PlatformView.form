@@ -303,9 +303,6 @@
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
             </Container>
             <Component class="org.mei.securesim.platform.ui.WorkbenchPanel" name="workbenchPanel1">
-              <Properties>
-                <Property name="name" type="java.lang.String" value="workbenchPanel1" noResource="true"/>
-              </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
                   <JSplitPaneConstraints position="left"/>

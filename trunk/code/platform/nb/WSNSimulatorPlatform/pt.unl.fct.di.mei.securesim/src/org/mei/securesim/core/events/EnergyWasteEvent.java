@@ -1,4 +1,4 @@
-package org.mei.securesim.events;
+package org.mei.securesim.core.events;
 
 import org.mei.securesim.core.engine.Event;
 import org.mei.securesim.core.engine.Simulator;

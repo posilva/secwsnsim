@@ -4,7 +4,6 @@
  */
 package org.mei.securesim.protocols.flooding;
 
-import org.mei.securesim.components.instruments.coverage.ITotalCoverageHandler;
 import org.mei.securesim.components.instruments.latency.ILatencyHandler;
 import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.radio.RadioModel;
@@ -14,7 +13,7 @@ import org.mei.securesim.protocols.common.BasicNode;
  *
  * @author CIAdmin
  */
-public class FloodingNode extends BasicNode implements ITotalCoverageHandler, ILatencyHandler {
+public class FloodingNode extends BasicNode implements ILatencyHandler {
 
     public FloodingNode(Simulator sim, RadioModel radioModel) {
         super(sim, radioModel);

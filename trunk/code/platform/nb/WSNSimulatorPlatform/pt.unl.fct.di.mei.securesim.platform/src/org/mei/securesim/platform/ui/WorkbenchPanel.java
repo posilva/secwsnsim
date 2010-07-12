@@ -6,6 +6,7 @@
 package org.mei.securesim.platform.ui;
 
 import java.awt.Dimension;
+import javax.print.PrintService;
 import javax.swing.JOptionPane;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -378,6 +379,7 @@ public class WorkbenchPanel extends javax.swing.JPanel {
                 btnSimulationStart.setSelected(false);
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

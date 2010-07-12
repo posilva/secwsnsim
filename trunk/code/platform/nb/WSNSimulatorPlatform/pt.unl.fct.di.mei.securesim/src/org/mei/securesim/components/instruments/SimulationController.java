@@ -4,6 +4,7 @@
  */
 package org.mei.securesim.components.instruments;
 
+import org.mei.securesim.components.instruments.energy.EnergyController;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Collection;
