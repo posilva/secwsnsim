@@ -30,6 +30,6 @@ public class INSENSConstants {
     /**
      * Helpers
      */
-    public static double SIGNAL_STRENGH_THRESHOLD = 0.5;
+    public static double SIGNAL_STRENGH_THRESHOLD = .8;
     public static double SIGNAL_NOISE_THRESHOLD = 1000.0;
 }

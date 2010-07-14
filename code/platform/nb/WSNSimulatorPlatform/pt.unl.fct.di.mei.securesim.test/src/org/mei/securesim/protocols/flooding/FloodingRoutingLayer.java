@@ -4,13 +4,11 @@
 package org.mei.securesim.protocols.flooding;
 
 import java.util.HashSet;
-import org.mei.securesim.components.instruments.latency.LatencyController;
 import org.mei.securesim.core.application.Application;
 import org.mei.securesim.core.energy.EnergyConsumptionAction;
 import org.mei.securesim.core.engine.Message;
 import org.mei.securesim.core.layers.routing.RoutingLayer;
 import org.mei.securesim.protocols.flooding.messages.FloodingMessage;
-import org.mei.securesim.protocols.flooding.messages.LatencyTestMessage;
 
 /**
  * @author posilva
@@ -84,13 +82,17 @@ public class FloodingRoutingLayer extends RoutingLayer {
     public void setup() {
 
 
-        if (LatencyController.getInstance().getLatencyMessageClass() == null) {
-            LatencyController.getInstance().setLatencyMessageClass(LatencyTestMessage.class);
-        }
+//        if (LatencyController.getInstance().getLatencyMessageClass() == null) {
+//            LatencyController.getInstance().setLatencyMessageClass(LatencyTestMessage.class);
+//        }
     }
 
     @Override
     public void onRouteMessage(Object message) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    protected String getRoutingTable() {
+        return "";
     }
 }

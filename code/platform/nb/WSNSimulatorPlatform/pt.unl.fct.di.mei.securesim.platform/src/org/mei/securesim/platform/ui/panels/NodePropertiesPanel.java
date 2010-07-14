@@ -8,7 +8,7 @@
  *
  * Created on Apr 12, 2010, 11:25:58 PM
  */
-package org.mei.securesim.platform.ui.frames;
+package org.mei.securesim.platform.ui.panels;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;

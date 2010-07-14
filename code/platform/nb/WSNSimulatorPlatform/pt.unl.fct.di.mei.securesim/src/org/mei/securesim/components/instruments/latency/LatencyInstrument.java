@@ -24,6 +24,25 @@ public class LatencyInstrument extends Instrument {
     private int timesToSentMessages;
     private int howManyMessagesToSentPerSender;
 
+    /**
+     * 
+     */
+    class LatencyEntry {
+
+        int numberOfHops = 0;
+        int maxNumberOfHops = Integer.MIN_VALUE;
+        int minNumberOfHops = Integer.MAX_VALUE;
+        int avgNumberOfHops = 0;
+        long sendRealTime;
+        long receiveRealTime;
+        long sendSimTime;
+        long receiveSimTime;
+    }
+
+    /**
+     *
+     * @return
+     */
     public static LatencyInstrument getInstance() {
         if (instance == null) {
             instance = new LatencyInstrument();
@@ -31,6 +50,17 @@ public class LatencyInstrument extends Instrument {
         return instance;
     }
 
+    @Override
+    public void notifyMessageReceived(IInstrumentMessage message, IInstrumentHandler handler) {
+        if (sendingObject.containsKey(message.getUniqueId())) {
+            LatencyEntry entry = (LatencyEntry) sendingObject.get(message.getUniqueId());
+
+        }
+    }
+
+    /**
+     * 
+     */
     @Override
     public void probe() {
         if (senders.isEmpty()) {
@@ -58,13 +88,16 @@ public class LatencyInstrument extends Instrument {
                     numberOfMessagesToSend += getTimesToSentMessages();
                     final long interval = getIntervalToSentMessages() * Simulator.ONE_SECOND;
                     final long messageDelay = getDelayToSentMessages() * Simulator.ONE_SECOND;
-//                    sender.probing(message);
-                    SimulationController.getInstance().getSimulation().getSimulator().addEvent(new InstrumentEvent(message, sender, getTimesToSentMessages(), messageDelay, interval));
+                    SimulationController.getInstance().getSimulation().getSimulator().addEvent(new InstrumentEvent(
+                            message,
+                            sender,
+                            getTimesToSentMessages(),
+                            messageDelay,
+                            interval));
                 }
             }
         }
         log("Probing: Number of messages sent for probing:" + numberOfMessagesToSend);
-
     }
 
     /**
@@ -84,6 +117,11 @@ public class LatencyInstrument extends Instrument {
         refreshPanel();
     }
 
+    /**
+     *
+     * @param message
+     * @param handler
+     */
     @Override
     protected void computeMessageReception(IInstrumentMessage message, IInstrumentHandler handler) {
         if (handler.getUniqueId().equals(message.getDestinationId())) { // é tratado pelo destino
@@ -98,6 +136,9 @@ public class LatencyInstrument extends Instrument {
         refreshPanel();
     }
 
+    /**
+     * 
+     */
     @Override
     public void reset() {
         sendingObject.clear();
@@ -106,6 +147,10 @@ public class LatencyInstrument extends Instrument {
         refreshPanel();
     }
 
+    /**
+     *
+     * @return
+     */
     public double getPerformance() {
         int numberOfMessagesSent = sendingObject.size();
         int numberOfMessagesReceived = 0;
@@ -118,10 +163,18 @@ public class LatencyInstrument extends Instrument {
         return (numberOfMessagesSent == 0) ? 0 : (numberOfMessagesReceived * 100 / numberOfMessagesSent);
     }
 
+    /**
+     * 
+     * @return
+     */
     public long getDelayToSentMessages() {
         return delayToSentMessages;
     }
 
+    /**
+     *
+     * @param delayToSentMessages
+     */
     public void setDelayToSentMessages(long delayToSentMessages) {
         this.delayToSentMessages = delayToSentMessages;
     }

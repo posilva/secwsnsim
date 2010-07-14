@@ -8,7 +8,7 @@
  *
  * Created on 7/Jul/2010, 0:53:33
  */
-package org.mei.securesim.platform.ui.frames;
+package org.mei.securesim.platform.ui.panels;
 
 import org.mei.securesim.components.ApplicationOutput;
 import org.mei.securesim.components.IApplicationOutputDisplay;
@@ -17,21 +17,21 @@ import org.mei.securesim.components.IApplicationOutputDisplay;
  *
  * @author CIAdmin
  */
-public class ApplicationOutputPanel extends javax.swing.JPanel implements IApplicationOutputDisplay{
+public class ApplicationOutputPanel1 extends javax.swing.JPanel implements IApplicationOutputDisplay{
     static boolean hasInstance=false;
     /** Creates new form RoutingInfoPanel */
-    public ApplicationOutputPanel() {
+    public ApplicationOutputPanel1() {
         if (hasInstance)
             throw new IllegalStateException("Only one instance of ApplicationOutputPanel can exist");
         initComponents();
         ApplicationOutput.getInstance().subscribe(this);
         hasInstance=true;
     }
-    private static ApplicationOutputPanel instance;
+    private static ApplicationOutputPanel1 instance;
 
-    public static ApplicationOutputPanel getInstance() {
+    public static ApplicationOutputPanel1 getInstance() {
         if (instance == null) {
-            instance = new ApplicationOutputPanel();
+            instance = new ApplicationOutputPanel1();
         }
         return instance;
     }
@@ -51,7 +51,7 @@ public class ApplicationOutputPanel extends javax.swing.JPanel implements IAppli
         setName("Form"); // NOI18N
         setLayout(new java.awt.BorderLayout());
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(org.mei.securesim.platform.PlatformApp.class).getContext().getResourceMap(ApplicationOutputPanel.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(org.mei.securesim.platform.PlatformApp.class).getContext().getResourceMap(ApplicationOutputPanel1.class);
         jLabel1.setBackground(resourceMap.getColor("jLabel1.background")); // NOI18N
         jLabel1.setFont(resourceMap.getFont("jLabel1.font")); // NOI18N
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N

@@ -42,4 +42,20 @@ public class AnnotationUtils {
         return inputParameters;
     }
 
+    public static Vector readParametersFields(Object o, Class aClass) {
+        Vector inputParameters = new Vector();
+        if (isAnnotated(o.getClass())) {
+
+            for (Field f : o.getClass().getDeclaredFields()) {
+                Object p = f.getAnnotation(aClass);
+                if (p != null) {
+                    inputParameters.add(f);
+                }
+
+            }
+
+        }
+        return inputParameters;
+
+    }
 }

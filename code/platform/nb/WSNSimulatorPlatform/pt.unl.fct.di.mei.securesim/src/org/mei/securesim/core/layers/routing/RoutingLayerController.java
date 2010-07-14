@@ -14,6 +14,7 @@ import java.util.Set;
  */
 public class RoutingLayerController {
 
+    RoutingLayerProperties properties = new RoutingLayerProperties();
     Set stableNodesSet = new HashSet();
     Hashtable<Short, Long> messageReceivedByTypeCounter = new Hashtable<Short, Long>();
     Hashtable<Short, Long> messageSentByTypeCounter = new Hashtable<Short, Long>();
@@ -80,5 +81,13 @@ public class RoutingLayerController {
         messageReceivedByTypeCounter.clear();
         messageSentByTypeCounter.clear();
         stableNodesSet.clear();
+    }
+
+    public RoutingLayerProperties getProperties() {
+        return properties;
+    }
+
+    public void setProperties(RoutingLayerProperties properties) {
+        this.properties = properties;
     }
 }

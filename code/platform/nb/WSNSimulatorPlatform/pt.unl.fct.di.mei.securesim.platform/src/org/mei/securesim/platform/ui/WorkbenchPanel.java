@@ -13,7 +13,7 @@ import org.jdesktop.application.Task;
 import org.mei.securesim.components.instruments.SimulationController;
 import org.mei.securesim.components.simulation.SimulationFactory;
 import org.mei.securesim.platform.PlatformView;
-import org.mei.securesim.platform.ui.frames.ApplicationOutputPanel;
+import org.mei.securesim.platform.ui.panels.ApplicationOutputPanel;
 import org.mei.securesim.platform.utils.gui.GUI_Utils;
 import org.mei.securesim.utils.DebugConsole;
 

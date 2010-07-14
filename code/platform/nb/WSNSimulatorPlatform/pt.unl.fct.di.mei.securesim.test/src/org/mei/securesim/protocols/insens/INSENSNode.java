@@ -8,7 +8,6 @@ import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.mei.securesim.components.instruments.latency.ILatencyHandler;
 import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.nodes.basic.Mica2SensorNode;
 import org.mei.securesim.core.radio.RadioModel;
@@ -19,7 +18,7 @@ import org.mei.securesim.gui.IDisplayable;
  *
  * @author pedro
  */
-public class INSENSNode extends Mica2SensorNode implements IDisplayable, ILatencyHandler {
+public class INSENSNode extends Mica2SensorNode implements IDisplayable {
 
     public INSENSNode(Simulator sim, RadioModel radioModel) {
         super(sim, radioModel);
