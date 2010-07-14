@@ -29,7 +29,6 @@ import org.mei.securesim.components.instruments.reliability.ReliabilityInstrumen
 import org.mei.securesim.components.instruments.SimulationController;
 import org.mei.securesim.components.instruments.coverage.CoverageInstrument;
 import org.mei.securesim.components.instruments.coverage.CoverageListener;
-import org.mei.securesim.components.instruments.latency.LatencyController;
 import org.mei.securesim.components.instruments.coverage.listeners.SignalUpdateEvent;
 import org.mei.securesim.components.simulation.ISimulationPlatform;
 import org.mei.securesim.core.nodes.Node;
@@ -37,7 +36,7 @@ import org.mei.securesim.platform.core.PlatformController;
 import org.mei.securesim.platform.core.instruments.CoverageInstrumentControlPanel;
 import org.mei.securesim.platform.core.instruments.reliability.ReliabilityInstrumentControlPanel;
 import org.mei.securesim.platform.ui.WorkbenchPanel;
-import org.mei.securesim.platform.ui.frames.RoutingInfoPanel;
+import org.mei.securesim.platform.ui.panels.RoutingInfoPanel;
 
 import org.mei.securesim.platform.ui.frames.SimulationWizardDialog;
 import org.mei.securesim.platform.ui.uiextended.BestTabbedPane;
@@ -951,7 +950,7 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
 
     @Action
     public void RunLatency() {
-        LatencyController.getInstance().startAnalysis();
+//        LatencyController.getInstance().startAnalysis();
     }
 
     @Action

@@ -4,20 +4,17 @@
  */
 package org.mei.securesim.core.layers.routing;
 
+import org.mei.securesim.utils.annotation.Annotated;
 import org.mei.securesim.utils.annotation.Parameter;
 
 /**
  *
  * @author CIAdmin
  */
-public class RoutingLayerProperties {
+public class RoutingLayerProperties implements Annotated {
 
     @Parameter(className = "java.lang.Double", label = "Radio Strenght Threshold", value = "0.8")
-    protected Double radioStrenghtThreshold;
-    @Parameter(className = "java.lang.Long", label = "Message Dispatch Rate (Second)", value = "3")
-    protected Double messageDispatchRate ;
-
-    public static  void main(){
-        
-    }
+    public static Double radioStrenghtThreshold = 0.8;
+    @Parameter(className = "java.lang.Integer", label = "Message Queue Dispatch Rate (Second)", value = "3")
+    public static Integer messageQueueDispatchRate = 3;
 }

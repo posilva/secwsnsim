@@ -128,7 +128,8 @@ public abstract class RoutingLayer extends Layer {
         boolean result = onSendMessage(message, app);
         return result;
     }
-
+    protected abstract String getRoutingTable();
+    
     protected abstract void onReceiveMessage(Object message);
 
     protected abstract boolean onSendMessage(Object message, Application app);
@@ -138,15 +139,4 @@ public abstract class RoutingLayer extends Layer {
     protected abstract void onRouteMessage(Object message);
 
     public abstract void sendMessageDone();
-
-    public static void main(String[] args) {
-        Short s1 = (short) 1;
-        Short s2 = (short) 1;
-        Set set = new HashSet();
-        set.add(s1);
-        if (set.contains(s2)) {
-            System.out.println("são ");
-        }
-
-    }
 }

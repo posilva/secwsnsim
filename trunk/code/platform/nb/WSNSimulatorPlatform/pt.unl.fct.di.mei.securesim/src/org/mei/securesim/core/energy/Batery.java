@@ -1,6 +1,6 @@
 package org.mei.securesim.core.energy;
 
-import org.mei.securesim.components.instruments.energy.EnergyController;
+import org.mei.securesim.components.instruments.energy.EnergyInstrument;
 import org.mei.securesim.core.energy.listeners.EnergyEvent;
 import org.mei.securesim.core.energy.listeners.EnergyListener;
 import org.mei.securesim.core.nodes.Node;
@@ -194,7 +194,7 @@ public class Batery {
     }
 
     private void init() {
-        addEnergyListener(EnergyController.getInstance());
+        addEnergyListener(EnergyInstrument.getInstance());
     }
 
     public double getAverageConsumption() {

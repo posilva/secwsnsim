@@ -1,7 +1,6 @@
 package org.mei.securesim.components.instruments.energy;
 
 import org.mei.securesim.components.instruments.SimulationController;
-import org.mei.securesim.components.instruments.SimulationController;
 import org.mei.securesim.components.logging.EnergyLogger;
 import org.mei.securesim.core.energy.listeners.EnergyEvent;
 import org.mei.securesim.core.energy.listeners.EnergyListener;
@@ -10,27 +9,27 @@ import org.mei.securesim.core.energy.listeners.EnergyListener;
  *
  * @author posilva
  */
-public class EnergyController implements EnergyListener {
+public class EnergyInstrument implements EnergyListener {
 
-    protected static EnergyController instance = null;
+    protected static EnergyInstrument instance = null;
 
-    public static EnergyController getInstance() {
+    public static EnergyInstrument getInstance() {
         if (instance == null) {
-            instance = new EnergyController();
+            instance = new EnergyInstrument();
         }
         return instance;
 
     }
     protected EnergyLogger energyLogger;
 
-    public EnergyController() {
+    public EnergyInstrument() {
     }
 
     public synchronized void onConsume(EnergyEvent evt) {
         String ev;
         if (SimulationController.getInstance().isLogEnergyEnable()) {
             if (energyLogger != null) {
-                ev=evt.getEvent();
+                ev = evt.getEvent();
                 energyLogger.update(evt.getNodeid(), ev, evt.getRealTime(), 0, evt.getValue(), "nostate");
             }
         }

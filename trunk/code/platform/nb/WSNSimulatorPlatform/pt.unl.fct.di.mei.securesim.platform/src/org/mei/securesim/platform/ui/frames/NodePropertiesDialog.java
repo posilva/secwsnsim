@@ -4,6 +4,7 @@
  */
 package org.mei.securesim.platform.ui.frames;
 
+import org.mei.securesim.platform.ui.panels.NodePropertiesPanel;
 import com.jidesoft.dialog.BannerPanel;
 import com.jidesoft.dialog.ButtonPanel;
 import com.jidesoft.dialog.ButtonResources;

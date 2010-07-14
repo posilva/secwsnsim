@@ -9,7 +9,7 @@
  * Created on 10/Jul/2010, 3:09:18
  */
 
-package org.mei.securesim.platform.ui.frames;
+package org.mei.securesim.platform.ui.panels;
 
 /**
  *

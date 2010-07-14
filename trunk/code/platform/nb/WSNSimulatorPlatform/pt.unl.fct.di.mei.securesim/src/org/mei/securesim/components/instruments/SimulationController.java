@@ -4,7 +4,7 @@
  */
 package org.mei.securesim.components.instruments;
 
-import org.mei.securesim.components.instruments.energy.EnergyController;
+import org.mei.securesim.components.instruments.energy.EnergyInstrument;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,8 +38,8 @@ public class SimulationController {
     private boolean started;
 
     public SimulationController() {
-        EnergyController.getInstance().setEnergyLogger(new EnergyRawFileLogger());
-        EnergyController.getInstance().getEnergyLogger().open();
+        EnergyInstrument.getInstance().setEnergyLogger(new EnergyRawFileLogger());
+        EnergyInstrument.getInstance().getEnergyLogger().open();
     }
 
     public Simulation getSimulation() {
@@ -240,7 +240,7 @@ public class SimulationController {
 
     public void exitPlatform() {
 
-        EnergyController.getInstance().stop();
+        EnergyInstrument.getInstance().stop();
     }
 
     public void setSimulationState(String state) {

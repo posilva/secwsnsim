@@ -8,7 +8,7 @@
  *
  * Created on 7/Jul/2010, 0:53:33
  */
-package org.mei.securesim.platform.ui.frames;
+package org.mei.securesim.platform.ui.panels;
 
 import java.util.Collection;
 import org.jdesktop.application.Action;

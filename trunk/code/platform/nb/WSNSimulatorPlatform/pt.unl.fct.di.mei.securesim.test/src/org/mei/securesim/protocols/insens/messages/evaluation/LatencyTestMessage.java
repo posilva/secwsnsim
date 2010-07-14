@@ -4,13 +4,11 @@
  */
 package org.mei.securesim.protocols.insens.messages.evaluation;
 
-import org.mei.securesim.components.instruments.latency.ILatencyMessage;
-
 /**
  *
  * @author CIAdmin
  */
-public class LatencyTestMessage extends EvaluationINSENSDATAMessage implements ILatencyMessage {
+public class LatencyTestMessage extends EvaluationINSENSDATAMessage {
 
     private int hops;
 
@@ -29,6 +27,4 @@ public class LatencyTestMessage extends EvaluationINSENSDATAMessage implements I
     public int getNumberOfHops() {
         return hops;
     }
-
-
 }

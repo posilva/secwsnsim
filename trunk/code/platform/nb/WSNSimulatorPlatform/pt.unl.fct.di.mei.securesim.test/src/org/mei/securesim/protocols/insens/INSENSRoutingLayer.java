@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.mei.securesim.protocols.insens;
 
 import java.io.IOException;
@@ -647,5 +643,10 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
 
     public void probing(IInstrumentMessage message) {
         getNode().sendMessage(message);
+    }
+
+    @Override
+    protected String getRoutingTable() {
+        return forwardingTable.toString();
     }
 }
