@@ -27,7 +27,7 @@ public class SimulationController {
     private long stopRealTime = 0;
     private long executionRealtime;
     private Stack timepoints = new Stack();
-    protected boolean logEnergyEnable = true;
+    protected boolean logEnergyEnable = false;
     protected ISimulationPlatform simulationPlatform;
     protected Simulation simulation;
     private String simulationState;
@@ -56,10 +56,28 @@ public class SimulationController {
     }
 
     public void resetSimulation() {
+        if (this.simulation != null) {
+            this.simulation.reset();
+        }
     }
 
     public List selectRandomNodes(int nroNodes) {
         return selectRandomNodes(nroNodes, new ArrayList());
+    }
+
+    public List selectRandomNodes(int nroNodes, NodeSelectionCondition condition) {
+        if (nroNodes > simulation.getSimulator().getNodes().size()) {
+            throw new IllegalArgumentException("Cannot select more nodes than the number of nodes in the network ");
+        }
+        List randomNodes = new ArrayList();
+        while (randomNodes.size() < nroNodes) {
+            Node node = simulation.getSimulator().getNetwork().getNodeDB().randomNode();
+            if (condition.select(node)) {
+                randomNodes.add(node);
+            }
+        }
+        return randomNodes;
+
     }
 
     public List selectRandomNodes(int nroNodes, List excludeNodes) {
@@ -122,8 +140,23 @@ public class SimulationController {
     public void reset() {
         getSimulation().getSimulator().reset();
         getSimulation().reset();
-
         RoutingLayerController.getInstance().reset();
+    }
+
+    public void buildNetwork() {
+        if (!SimulationController.getInstance().isNetworkDeployed()) {
+            return;
+        }
+        if (simulation.getSimulator() != null) {
+            simulation.getSimulator().init();
+            simulationPlatform.setSimulationNrNodes(getSimulation().getSimulator().getNodes().size());
+            simulationPlatform.updateSimulationFieldSize();
+            simulationPlatform.updateAverageNeighborsPerNode();
+            simulationPlatform.update();
+
+            //JOptionPane.showMessageDialog(this, "Average Neighbors Per Node: " + SimulationController.getInstance().updateAverageNeighborsPerNode());
+        }
+
     }
 
     /**
@@ -290,5 +323,14 @@ public class SimulationController {
 
     public RoutingLayerController getRoutingLayerController() {
         return RoutingLayerController.getInstance();
+    }
+
+    public boolean isNetworkDeployed() {
+        if (getSimulation() != null) {
+            if (getSimulation().getSimulator() != null) {
+                return (getSimulation().getSimulator().getNodes().size() > 0);
+            }
+        }
+        return false;
     }
 }

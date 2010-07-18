@@ -22,19 +22,23 @@ public class ApplicationOutput {
         }
         return instance;
     }
-    Set<IApplicationOutputDisplay> subscribers = new HashSet<IApplicationOutputDisplay>();
+    Set<IOutputDisplay> subscribers = new HashSet<IOutputDisplay>();
 
     public void output(Application app, String message) {
         displayOnSubscribers("<" + app.getClass().getSimpleName() + "> [" + app.getNode().getId() + "]\t" + message);
     }
 
     private synchronized void displayOnSubscribers(String output) {
-        for (IApplicationOutputDisplay iApplicationOutputDisplay : subscribers) {
+        for (IOutputDisplay iApplicationOutputDisplay : subscribers) {
             iApplicationOutputDisplay.showOutput(output);
         }
     }
 
-    public void subscribe(IApplicationOutputDisplay display) {
+    public void subscribe(IOutputDisplay display) {
         subscribers.add(display);
+    }
+
+    public void unsubscribe(IOutputDisplay display) {
+        subscribers.remove(display);
     }
 }

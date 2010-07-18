@@ -32,7 +32,7 @@ public class Transceiver extends NodeComponent{
         switchON();
         action.execute();
         int rate= action.getNumberOfUnits();
-        getNode().getBateryEnergy().consumeTransmission(rate);//end-start
+        getNode().getBateryEnergy().consumeReceiving(rate);//end-start
         switchOFF();
     }
 }

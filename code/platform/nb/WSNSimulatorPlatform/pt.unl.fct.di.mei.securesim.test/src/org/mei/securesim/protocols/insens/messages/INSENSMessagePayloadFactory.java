@@ -7,11 +7,10 @@ package org.mei.securesim.protocols.insens.messages;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.mei.securesim.components.crypto.CryptoFunctions;
-import org.mei.securesim.core.energy.EnergyConsumptionAction;
 import org.mei.securesim.core.nodes.Node;
 import org.mei.securesim.protocols.common.ByteArrayDataOutputStream;
 import org.mei.securesim.protocols.insens.INSENSConstants;
+import org.mei.securesim.protocols.insens.INSENSFunctions;
 import org.mei.securesim.protocols.insens.basestation.ForwardingTable;
 import org.mei.securesim.protocols.insens.utils.NeighborInfo;
 
@@ -40,7 +39,7 @@ public class INSENSMessagePayloadFactory {
             bados.writeShort(imt);  // Este tem de mudar de lugar tem q ir cifrado mas se for alterado tem um problema de ataque
             bados.writeLong(ows);
             table.write(bados);
-            byte[] mac = createMAC(bados.toByteArray(), key, node);
+            byte[] mac = INSENSFunctions.createMAC(bados.toByteArray(), key, node);
             bados.write(mac);
             return bados.toByteArray();
         } catch (IOException ex) {
@@ -71,7 +70,7 @@ public class INSENSMessagePayloadFactory {
                 System.arraycopy(bados.toByteArray(), 0, data, 0, bados.toByteArray().length);
                 System.arraycopy(parent_mac, 0, data, bados.toByteArray().length, parent_mac.length);
             }
-            byte[] mac = createMAC(data, key, node);
+            byte[] mac = INSENSFunctions.createMAC(data, key, node);
             bados.write(mac);
             return bados.toByteArray();
         } catch (IOException ex) {
@@ -95,10 +94,11 @@ public class INSENSMessagePayloadFactory {
             bados.writeShort(id);
             //TODO: Encrypt neighbor info
             byte[] neighborInfoData = neighborInfo.toByteArray();
-            bados.writeInt(neighborInfoData.length); // size of neighbor info data
-            bados.write(neighborInfoData);
+            byte[] cipherNeighborInfoData = INSENSFunctions.encryptData(node, neighborInfoData, key);
+            bados.writeInt(cipherNeighborInfoData.length); // size of neighbor info data
+            bados.write(cipherNeighborInfoData);
             byte[] data = bados.toByteArray();
-            byte[] mac = createMAC(data, key, node);
+            byte[] mac = INSENSFunctions.createMAC(data, key, node);
             bados.write(parent_mac);
             bados.write(mac);
             return bados.toByteArray();
@@ -115,10 +115,11 @@ public class INSENSMessagePayloadFactory {
             bados.writeShort(src);
             bados.writeShort(dst);
             bados.writeShort(imt);
-            bados.writeInt(payload.length);
+            byte[] cipherPayload = INSENSFunctions.encryptData(node, payload, key);
+            bados.writeInt(cipherPayload.length); // size of neighbor info data
+            bados.write(cipherPayload);
             bados.write(payload);
-
-            byte[] mac = createMAC(bados.toByteArray(), key, node);
+            byte[] mac = INSENSFunctions.createMAC(bados.toByteArray(), key, node);
 
             bados.write(mac);
             return bados.toByteArray();
@@ -126,18 +127,6 @@ public class INSENSMessagePayloadFactory {
             Logger.getLogger(INSENSMessagePayloadFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-    }
-
-    private static byte[] createMAC(final byte[] data, final byte[] key, Node node) {
-        byte []  mac=  CryptoFunctions.createMAC(data, key);
-        node.getCPU().executeSignature(new EnergyConsumptionAction() {
-            public void execute() {
-            }
-            public int getNumberOfUnits() {
-             return data.length;
-            }
-        });
-        return mac;
     }
 
     public static byte[] updateRUPDPayload(short src, short dst, short imt, long ows, ForwardingTable table, byte[] mac, Node node) {

@@ -23,9 +23,6 @@ public class SecuredMica2MACLayer extends Mica2MACLayer {
     protected byte[] keyData = CryptoFunctions.MACLayerGlobalKey();
     protected byte[] iv = CryptoFunctions.MACLayerGlobalIV();
 
-
-
-
     protected Message decryptMessage(Object message) {
 
         try {
@@ -75,13 +72,12 @@ public class SecuredMica2MACLayer extends Mica2MACLayer {
         return false;
     }
 
-
-
     @Override
     protected void transmitMessage() {
-            logger().log(Level.FINE,getNode().getId() +": Trasmit Message");
-            if(encryptMessage())
-                super.transmitMessage();
+        logger().log(Level.FINE, getNode().getId() + ": Trasmit Message");
+        if (encryptMessage()) {
+            super.transmitMessage();
+        }
     }
 
     @Override
@@ -91,11 +87,12 @@ public class SecuredMica2MACLayer extends Mica2MACLayer {
         if (m == null) {
             return false;
         } else {
-            logger().log(Level.FINE,getNode().getId() +": Deliver Message");
+            logger().log(Level.FINE, getNode().getId() + ": Deliver Message");
             return super.deliverMessage(m);
         }
     }
-    static Logger logger(){
+
+    static Logger logger() {
         return Logger.getLogger(SecuredMica2MACLayer.class.getName());
     }
 }

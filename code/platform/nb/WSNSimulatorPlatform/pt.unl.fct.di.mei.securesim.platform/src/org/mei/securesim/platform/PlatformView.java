@@ -25,7 +25,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.jdesktop.application.Application.ExitListener;
 import org.jdesktop.application.ResourceMap;
-import org.mei.securesim.components.instruments.reliability.ReliabilityInstrument;
 import org.mei.securesim.components.instruments.SimulationController;
 import org.mei.securesim.components.instruments.coverage.CoverageInstrument;
 import org.mei.securesim.components.instruments.coverage.CoverageListener;
@@ -33,12 +32,17 @@ import org.mei.securesim.components.instruments.coverage.listeners.SignalUpdateE
 import org.mei.securesim.components.simulation.ISimulationPlatform;
 import org.mei.securesim.core.nodes.Node;
 import org.mei.securesim.platform.core.PlatformController;
-import org.mei.securesim.platform.core.instruments.CoverageInstrumentControlPanel;
+import org.mei.securesim.platform.core.instruments.coverage.CoverageInstrumentControlPanel;
 import org.mei.securesim.platform.core.instruments.reliability.ReliabilityInstrumentControlPanel;
 import org.mei.securesim.platform.ui.WorkbenchPanel;
+import org.mei.securesim.platform.ui.frames.InstrumentDialog;
+import org.mei.securesim.platform.ui.frames.InstrumentFrame;
 import org.mei.securesim.platform.ui.panels.RoutingInfoPanel;
 
 import org.mei.securesim.platform.ui.frames.SimulationWizardDialog;
+import org.mei.securesim.platform.ui.panels.EnergyEvaluationPanel;
+import org.mei.securesim.platform.ui.panels.EvaluationPanel;
+import org.mei.securesim.platform.ui.panels.SimulationPropertiesPanel;
 import org.mei.securesim.platform.ui.uiextended.BestTabbedPane;
 import org.mei.securesim.platform.utils.PlatformUtils;
 import org.mei.securesim.platform.utils.gui.ClockCounter;
@@ -50,9 +54,14 @@ import org.mei.securesim.platform.utils.gui.IClockDisplay;
  */
 public class PlatformView extends FrameView implements ISimulationPlatform, ExitListener, IClockDisplay, CoverageListener {
 
-    public static final String TAB_COVERAGE_CONTROLLER_INFO_TITLE = "Coverage Controller Info";
     private boolean workbenchVisible;
     protected ClockCounter clockCounter;
+    private InstrumentFrame energyControlPanelFrame;
+    private InstrumentDialog evaluationSettingsDialog;
+    private InstrumentDialog simulationPropertiesDialog;
+    private InstrumentFrame reliabilityControlPanelFrame;
+    private InstrumentFrame coverageControlPanelFrame;
+    private InstrumentFrame showRoutingInfoFrame;
 
     public PlatformView(SingleFrameApplication app) {
         super(app);
@@ -162,7 +171,6 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         adjustRadioStrengthButton = new javax.swing.JButton();
         adjustRadioStrengthSlider = new javax.swing.JSpinner();
         jPanel1 = new javax.swing.JPanel();
-        showInstrumentPanel = new javax.swing.JButton();
         tgbMarkStableNodes = new javax.swing.JToggleButton();
         tgbSelectStableNodes = new javax.swing.JToggleButton();
         showRoutingInfo = new javax.swing.JButton();
@@ -181,21 +189,24 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         simPropertiesSubMenu = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
-        instrumentsMenu = new javax.swing.JMenu();
-        coverageCtlPanelMenu = new javax.swing.JMenuItem();
-        jSeparator4 = new javax.swing.JPopupMenu.Separator();
-        energyCtlMenu = new javax.swing.JMenu();
-        energyCtlStatusMenu = new javax.swing.JCheckBoxMenuItem();
-        coverageCtlMenu = new javax.swing.JMenu();
-        reliabilityCtlMenu = new javax.swing.JMenu();
-        reliabilityCtlStatusMenu = new javax.swing.JCheckBoxMenuItem();
-        jSeparator6 = new javax.swing.JPopupMenu.Separator();
-        jSeparator2 = new javax.swing.JPopupMenu.Separator();
-        instrumentsConfigMenu = new javax.swing.JMenuItem();
-        latencyCtlMenu = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
         ViewMenu = new javax.swing.JMenu();
-        SimInfoMenu = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        Output = new javax.swing.JMenu();
+        viewApplicationOutput = new javax.swing.JMenuItem();
+        viewRoutingOutput = new javax.swing.JMenuItem();
+        viewInstruments = new javax.swing.JMenu();
+        viewReliabilityControlPanel = new javax.swing.JMenuItem();
+        viewCoverageControlPanel = new javax.swing.JMenuItem();
+        viewEnergyControlPanel = new javax.swing.JMenuItem();
+        viewLatencyControlPanel = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
+        evaluationMenu = new javax.swing.JMenu();
+        evalSettingsMenu = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         statusPanel = new javax.swing.JPanel();
@@ -289,10 +300,6 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         jPanel1.setName("jPanel1"); // NOI18N
         jPanel1.setPreferredSize(new java.awt.Dimension(1085, 10));
 
-        showInstrumentPanel.setAction(actionMap.get("ShowInstrumentsPanel")); // NOI18N
-        showInstrumentPanel.setText(resourceMap.getString("showInstrumentPanel.text")); // NOI18N
-        showInstrumentPanel.setName("showInstrumentPanel"); // NOI18N
-
         tgbMarkStableNodes.setAction(actionMap.get("MarkStableNodes")); // NOI18N
         tgbMarkStableNodes.setText(resourceMap.getString("tgbMarkStableNodes.text")); // NOI18N
         tgbMarkStableNodes.setName("tgbMarkStableNodes"); // NOI18N
@@ -311,20 +318,17 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(showInstrumentPanel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tgbMarkStableNodes)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(tgbSelectStableNodes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(showRoutingInfo)
-                .addContainerGap(391, Short.MAX_VALUE))
+                .addContainerGap(501, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(showInstrumentPanel)
                     .addComponent(tgbMarkStableNodes)
                     .addComponent(tgbSelectStableNodes)
                     .addComponent(showRoutingInfo))
@@ -374,8 +378,6 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
 
         tabbedTools.setName("tabbedTools"); // NOI18N
         mainSplitPane.setRightComponent(tabbedTools);
-
-        workbenchPanel1.setName("workbenchPanel1"); // NOI18N
         mainSplitPane.setLeftComponent(workbenchPanel1);
 
         mainPanel.add(mainSplitPane, java.awt.BorderLayout.CENTER);
@@ -408,7 +410,7 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         jSeparator3.setName("jSeparator3"); // NOI18N
         simulationMenu.add(jSeparator3);
 
-        simPropertiesSubMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        simPropertiesSubMenu.setAction(actionMap.get("ShowSimulationProperties")); // NOI18N
         simPropertiesSubMenu.setText(resourceMap.getString("simPropertiesSubMenu.text")); // NOI18N
         simPropertiesSubMenu.setName("simPropertiesSubMenu"); // NOI18N
         simulationMenu.add(simPropertiesSubMenu);
@@ -423,104 +425,87 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
 
         menuBar.add(simulationMenu);
 
-        instrumentsMenu.setText(resourceMap.getString("instrumentsMenu.text")); // NOI18N
-        instrumentsMenu.setName("instrumentsMenu"); // NOI18N
-
-        coverageCtlPanelMenu.setAction(actionMap.get("ShowCoverageControllerInfo")); // NOI18N
-        coverageCtlPanelMenu.setText(resourceMap.getString("coverageCtlPanelMenu.text")); // NOI18N
-        coverageCtlPanelMenu.setName("coverageCtlPanelMenu"); // NOI18N
-        instrumentsMenu.add(coverageCtlPanelMenu);
-
-        jSeparator4.setName("jSeparator4"); // NOI18N
-        instrumentsMenu.add(jSeparator4);
-
-        energyCtlMenu.setText(resourceMap.getString("energyCtlMenu.text")); // NOI18N
-        energyCtlMenu.setEnabled(false);
-        energyCtlMenu.setName("energyCtlMenu"); // NOI18N
-        energyCtlMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                energyCtlMenuActionPerformed(evt);
-            }
-        });
-
-        energyCtlStatusMenu.setSelected(true);
-        energyCtlStatusMenu.setText(resourceMap.getString("energyCtlStatusMenu.text")); // NOI18N
-        energyCtlStatusMenu.setName("energyCtlStatusMenu"); // NOI18N
-        energyCtlStatusMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                energyCtlStatusMenuActionPerformed(evt);
-            }
-        });
-        energyCtlMenu.add(energyCtlStatusMenu);
-
-        instrumentsMenu.add(energyCtlMenu);
-
-        coverageCtlMenu.setText(resourceMap.getString("coverageCtlMenu.text")); // NOI18N
-        coverageCtlMenu.setEnabled(false);
-        coverageCtlMenu.setName("coverageCtlMenu"); // NOI18N
-        coverageCtlMenu.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                coverageCtlMenuMouseEntered(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                coverageCtlMenuMousePressed(evt);
-            }
-        });
-        coverageCtlMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                coverageCtlMenuActionPerformed(evt);
-            }
-        });
-        instrumentsMenu.add(coverageCtlMenu);
-
-        reliabilityCtlMenu.setText(resourceMap.getString("reliabilityCtlMenu.text")); // NOI18N
-        reliabilityCtlMenu.setEnabled(false);
-        reliabilityCtlMenu.setName("reliabilityCtlMenu"); // NOI18N
-
-        reliabilityCtlStatusMenu.setSelected(true);
-        reliabilityCtlStatusMenu.setText(resourceMap.getString("reliabilityCtlStatusMenu.text")); // NOI18N
-        reliabilityCtlStatusMenu.setName("reliabilityCtlStatusMenu"); // NOI18N
-        reliabilityCtlStatusMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                reliabilityCtlStatusMenuActionPerformed(evt);
-            }
-        });
-        reliabilityCtlMenu.add(reliabilityCtlStatusMenu);
-
-        jSeparator6.setName("jSeparator6"); // NOI18N
-        reliabilityCtlMenu.add(jSeparator6);
-
-        instrumentsMenu.add(reliabilityCtlMenu);
-
-        jSeparator2.setName("jSeparator2"); // NOI18N
-        instrumentsMenu.add(jSeparator2);
-
-        instrumentsConfigMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        instrumentsConfigMenu.setText(resourceMap.getString("instrumentsConfigMenu.text")); // NOI18N
-        instrumentsConfigMenu.setName("instrumentsConfigMenu"); // NOI18N
-        instrumentsMenu.add(instrumentsConfigMenu);
-
-        latencyCtlMenu.setText(resourceMap.getString("latencyCtlMenu.text")); // NOI18N
-        latencyCtlMenu.setName("latencyCtlMenu"); // NOI18N
-
-        jMenuItem1.setAction(actionMap.get("RunLatency")); // NOI18N
-        jMenuItem1.setText(resourceMap.getString("jMenuItem1.text")); // NOI18N
-        jMenuItem1.setName("jMenuItem1"); // NOI18N
-        latencyCtlMenu.add(jMenuItem1);
-
-        instrumentsMenu.add(latencyCtlMenu);
-
-        menuBar.add(instrumentsMenu);
-
         ViewMenu.setText(resourceMap.getString("ViewMenu.text")); // NOI18N
         ViewMenu.setName("ViewMenu"); // NOI18N
 
-        SimInfoMenu.setAction(actionMap.get("ShowRoutingInfo")); // NOI18N
-        SimInfoMenu.setText(resourceMap.getString("SimInfoMenu.text")); // NOI18N
-        SimInfoMenu.setName("SimInfoMenu"); // NOI18N
-        ViewMenu.add(SimInfoMenu);
+        jMenu3.setText(resourceMap.getString("jMenu3.text")); // NOI18N
+        jMenu3.setName("jMenu3"); // NOI18N
+
+        jMenuItem2.setText(resourceMap.getString("jMenuItem2.text")); // NOI18N
+        jMenuItem2.setName("jMenuItem2"); // NOI18N
+        jMenu3.add(jMenuItem2);
+
+        jMenuItem3.setText(resourceMap.getString("jMenuItem3.text")); // NOI18N
+        jMenuItem3.setName("jMenuItem3"); // NOI18N
+        jMenu3.add(jMenuItem3);
+
+        ViewMenu.add(jMenu3);
+
+        Output.setText(resourceMap.getString("Output.text")); // NOI18N
+        Output.setName("Output"); // NOI18N
+
+        viewApplicationOutput.setText(resourceMap.getString("viewApplicationOutput.text")); // NOI18N
+        viewApplicationOutput.setName("viewApplicationOutput"); // NOI18N
+        Output.add(viewApplicationOutput);
+
+        viewRoutingOutput.setText(resourceMap.getString("viewRoutingOutput.text")); // NOI18N
+        viewRoutingOutput.setName("viewRoutingOutput"); // NOI18N
+        Output.add(viewRoutingOutput);
+
+        ViewMenu.add(Output);
+
+        viewInstruments.setText(resourceMap.getString("viewInstruments.text")); // NOI18N
+        viewInstruments.setName("viewInstruments"); // NOI18N
+
+        viewReliabilityControlPanel.setAction(actionMap.get("viewReliabilityControlPanelAction")); // NOI18N
+        viewReliabilityControlPanel.setText(resourceMap.getString("viewReliabilityControlPanel.text")); // NOI18N
+        viewReliabilityControlPanel.setName("viewReliabilityControlPanel"); // NOI18N
+        viewInstruments.add(viewReliabilityControlPanel);
+
+        viewCoverageControlPanel.setAction(actionMap.get("viewCoverageControlPanelAction")); // NOI18N
+        viewCoverageControlPanel.setText(resourceMap.getString("viewCoverageControlPanel.text")); // NOI18N
+        viewCoverageControlPanel.setName("viewCoverageControlPanel"); // NOI18N
+        viewInstruments.add(viewCoverageControlPanel);
+
+        viewEnergyControlPanel.setAction(actionMap.get("viewEnergyControlPanelAction")); // NOI18N
+        viewEnergyControlPanel.setText(resourceMap.getString("viewEnergyControlPanel.text")); // NOI18N
+        viewEnergyControlPanel.setName("viewEnergyControlPanel"); // NOI18N
+        viewInstruments.add(viewEnergyControlPanel);
+
+        viewLatencyControlPanel.setAction(actionMap.get("viewLatencyControlPanelAction")); // NOI18N
+        viewLatencyControlPanel.setText(resourceMap.getString("viewLatencyControlPanel.text")); // NOI18N
+        viewLatencyControlPanel.setName("viewLatencyControlPanel"); // NOI18N
+        viewInstruments.add(viewLatencyControlPanel);
+
+        ViewMenu.add(viewInstruments);
+
+        jSeparator2.setName("jSeparator2"); // NOI18N
+        ViewMenu.add(jSeparator2);
+
+        jMenu5.setText(resourceMap.getString("jMenu5.text")); // NOI18N
+        jMenu5.setName("jMenu5"); // NOI18N
+
+        jMenuItem10.setText(resourceMap.getString("jMenuItem10.text")); // NOI18N
+        jMenuItem10.setName("jMenuItem10"); // NOI18N
+        jMenu5.add(jMenuItem10);
+
+        jMenuItem11.setText(resourceMap.getString("jMenuItem11.text")); // NOI18N
+        jMenuItem11.setName("jMenuItem11"); // NOI18N
+        jMenu5.add(jMenuItem11);
+
+        ViewMenu.add(jMenu5);
 
         menuBar.add(ViewMenu);
+
+        evaluationMenu.setText(resourceMap.getString("evaluationMenu.text")); // NOI18N
+        evaluationMenu.setName("evaluationMenu"); // NOI18N
+
+        evalSettingsMenu.setAction(actionMap.get("ShowEvaluationPanel")); // NOI18N
+        evalSettingsMenu.setText(resourceMap.getString("evalSettingsMenu.text")); // NOI18N
+        evalSettingsMenu.setName("evalSettingsMenu"); // NOI18N
+        evaluationMenu.add(evalSettingsMenu);
+
+        menuBar.add(evaluationMenu);
 
         helpMenu.setText(resourceMap.getString("helpMenu.text")); // NOI18N
         helpMenu.setName("helpMenu"); // NOI18N
@@ -680,31 +665,6 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         setToolBar(mainToolbar);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void energyCtlMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_energyCtlMenuActionPerformed
-        // TODO add your handling code here:
-        //CoverageController.getInstance().setEnable(ener);
-    }//GEN-LAST:event_energyCtlMenuActionPerformed
-
-    private void energyCtlStatusMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_energyCtlStatusMenuActionPerformed
-    }//GEN-LAST:event_energyCtlStatusMenuActionPerformed
-
-    private void reliabilityCtlStatusMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reliabilityCtlStatusMenuActionPerformed
-        // TODO add your handling code here:
-        ReliabilityInstrument.getInstance().setEnable(reliabilityCtlStatusMenu.isSelected());
-    }//GEN-LAST:event_reliabilityCtlStatusMenuActionPerformed
-
-    private void coverageCtlMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coverageCtlMenuActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_coverageCtlMenuActionPerformed
-
-    private void coverageCtlMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_coverageCtlMenuMousePressed
-        // TODO add your handling code here:
-}//GEN-LAST:event_coverageCtlMenuMousePressed
-
-    private void coverageCtlMenuMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_coverageCtlMenuMouseEntered
-        // TODO add your handling code here:
-}//GEN-LAST:event_coverageCtlMenuMouseEntered
-
     @Action
     public void newSimulation() {
         SimulationWizardDialog sw = new SimulationWizardDialog(null, true);
@@ -734,7 +694,7 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
     protected javax.swing.JLabel NrEvents;
     protected javax.swing.JLabel NrSelectedNodes;
     protected javax.swing.JLabel NrSimulationNodes;
-    protected javax.swing.JMenuItem SimInfoMenu;
+    protected javax.swing.JMenu Output;
     protected javax.swing.JLabel SimulationRealTime;
     protected javax.swing.JLabel SimulationStatus;
     protected javax.swing.JLabel SimulationTime;
@@ -746,25 +706,23 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
     protected javax.swing.JButton btnOpen;
     protected javax.swing.JButton btnProperties;
     protected javax.swing.JButton btnSave;
-    protected javax.swing.JMenu coverageCtlMenu;
-    protected javax.swing.JMenuItem coverageCtlPanelMenu;
-    protected javax.swing.JMenu energyCtlMenu;
-    protected javax.swing.JCheckBoxMenuItem energyCtlStatusMenu;
-    protected javax.swing.JMenuItem instrumentsConfigMenu;
-    protected javax.swing.JMenu instrumentsMenu;
+    protected javax.swing.JMenuItem evalSettingsMenu;
+    protected javax.swing.JMenu evaluationMenu;
     protected javax.swing.JMenu jMenu1;
     protected javax.swing.JMenu jMenu2;
-    protected javax.swing.JMenuItem jMenuItem1;
+    protected javax.swing.JMenu jMenu3;
+    protected javax.swing.JMenu jMenu5;
+    protected javax.swing.JMenuItem jMenuItem10;
+    protected javax.swing.JMenuItem jMenuItem11;
+    protected javax.swing.JMenuItem jMenuItem2;
+    protected javax.swing.JMenuItem jMenuItem3;
     protected javax.swing.JPanel jPanel1;
     protected javax.swing.JPanel jPanel2;
     protected javax.swing.JPopupMenu jPopupMenu1;
     protected javax.swing.JPopupMenu.Separator jSeparator1;
     protected javax.swing.JPopupMenu.Separator jSeparator2;
     protected javax.swing.JPopupMenu.Separator jSeparator3;
-    protected javax.swing.JPopupMenu.Separator jSeparator4;
-    protected javax.swing.JPopupMenu.Separator jSeparator6;
     protected javax.swing.JToolBar.Separator jSeparator7;
-    protected javax.swing.JMenu latencyCtlMenu;
     protected javax.swing.JLabel lblAverageNeighborsPerNode;
     protected javax.swing.JLabel lblRadioCoverageValue;
     protected javax.swing.JLabel lblRoutingCoverageValue;
@@ -776,9 +734,6 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
     protected javax.swing.JMenuItem menuOpenSImulation;
     protected javax.swing.JMenuItem menuSaveSimulation;
     private javax.swing.JProgressBar progressBar;
-    protected javax.swing.JMenu reliabilityCtlMenu;
-    protected javax.swing.JCheckBoxMenuItem reliabilityCtlStatusMenu;
-    protected javax.swing.JButton showInstrumentPanel;
     protected javax.swing.JButton showRoutingInfo;
     protected javax.swing.JMenuItem simPropertiesSubMenu;
     private javax.swing.JLabel statusAnimationLabel;
@@ -787,6 +742,13 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
     protected org.mei.securesim.platform.ui.uiextended.BestTabbedPane tabbedTools;
     protected javax.swing.JToggleButton tgbMarkStableNodes;
     protected javax.swing.JToggleButton tgbSelectStableNodes;
+    protected javax.swing.JMenuItem viewApplicationOutput;
+    protected javax.swing.JMenuItem viewCoverageControlPanel;
+    protected javax.swing.JMenuItem viewEnergyControlPanel;
+    protected javax.swing.JMenu viewInstruments;
+    protected javax.swing.JMenuItem viewLatencyControlPanel;
+    protected javax.swing.JMenuItem viewReliabilityControlPanel;
+    protected javax.swing.JMenuItem viewRoutingOutput;
     protected org.mei.securesim.platform.ui.WorkbenchPanel workbenchPanel1;
     // End of variables declaration//GEN-END:variables
     private final Timer messageTimer;
@@ -1009,5 +971,71 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
                 }
             }
         }
+    }
+
+    @Action
+    public void ShowSimulationProperties() {
+        if (simulationPropertiesDialog == null) {
+            simulationPropertiesDialog = new InstrumentDialog("Simulation Properties");
+        }
+        simulationPropertiesDialog.addContentPanel(new SimulationPropertiesPanel());
+        simulationPropertiesDialog.display();
+    }
+
+    @Action
+    public void ShowEvaluationPanel() {
+        if (evaluationSettingsDialog == null) {
+            evaluationSettingsDialog = new InstrumentDialog("Evaluation Settings");
+        }
+        evaluationSettingsDialog.addContentPanel(EvaluationPanel.getInstance());
+        evaluationSettingsDialog.display();
+
+//        addTab("Evaluation Panel", EvaluationPanel.getInstance());
+    }
+
+    @Action
+    public void viewReliabilityControlPanelAction() {
+        if (reliabilityControlPanelFrame == null) {
+            reliabilityControlPanelFrame = new InstrumentFrame("Reliability Control Panel");
+        }
+        reliabilityControlPanelFrame.addContentPanel(new ReliabilityInstrumentControlPanel());
+        reliabilityControlPanelFrame.display();
+    }
+
+    @Action
+    public void viewCoverageControlPanelAction() {
+        if (coverageControlPanelFrame == null) {
+            coverageControlPanelFrame = new InstrumentFrame("Coverage Control Panel");
+        }
+        coverageControlPanelFrame.addContentPanel(new CoverageInstrumentControlPanel());
+        coverageControlPanelFrame.display();
+    }
+
+    @Action
+    public void viewLatencyControlPanelAction() {
+    }
+
+    @Action
+    public void viewEnergyControlPanelAction() {
+        if (energyControlPanelFrame == null) {
+            energyControlPanelFrame = new InstrumentFrame("Energy Evaluation ");
+        }
+        energyControlPanelFrame.addContentPanel(new EnergyEvaluationPanel());
+        energyControlPanelFrame.display();
+    }
+
+    public void update() {
+        getWorkbenchPanel().getSimulationPanel().update();
+    }
+
+    @Action
+    public void ShowRoutingInfoPanelAction() {
+
+        if (showRoutingInfoFrame == null) {
+            showRoutingInfoFrame = new InstrumentFrame("Routing Information");
+        }
+        showRoutingInfoFrame.addContentPanel(new RoutingInfoPanel());
+        showRoutingInfoFrame.display();
+
     }
 }

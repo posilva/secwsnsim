@@ -80,7 +80,7 @@ public class BaseStationController {
      * @return
      */
     public boolean verifyTopology() {
-        return true;
+        return true; //TODO: Verify Topology
     }
 
     /**
@@ -89,7 +89,7 @@ public class BaseStationController {
      * @return
      */
     public boolean verifyFeedbackMessage(FDBKPayload message) {
-        return true;
+        return true; // TODO: verifyFeedbackMessage
     }
 
     /**

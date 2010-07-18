@@ -4,8 +4,8 @@
  */
 package org.mei.securesim.protocols.common.events;
 
-import org.mei.securesim.core.engine.Event;
 import org.mei.securesim.core.engine.Simulator;
+import org.mei.securesim.core.events.DelayedEvent;
 import org.mei.securesim.core.nodes.Node;
 
 /**
@@ -16,7 +16,7 @@ import org.mei.securesim.core.nodes.Node;
  * Class que possibilita o envio de uma mensagens usando
  * um temporizador
  */
-public class DelayedMessageEvent extends Event {
+public class DelayedMessageEvent extends DelayedEvent {
 
     Object message;
     Node node;
@@ -42,27 +42,28 @@ public class DelayedMessageEvent extends Event {
         this.reliable = reliable;
     }
 
-    public DelayedMessageEvent(long time, Object message, Node node) {
-        super(time);
+    public DelayedMessageEvent(long time, long delay, Object message, Node node) {
+        super(time, delay);
         this.message = message;
         this.node = node;
     }
-    public DelayedMessageEvent(long time, Object message, Node node, boolean  reliable) {
-        super(time);
+
+    public DelayedMessageEvent(long time, long delay, Object message, Node node, boolean reliable) {
+        super(time, delay);
         this.message = message;
         this.node = node;
-        this.reliable=reliable;
+        this.reliable = reliable;
     }
 
     public void execute() {
-        if (reliable){
-            if (!getNode().getMacLayer().sendMessage(getMessage(), getNode().getRoutingLayer())){
-                this.setTime(getTime()+Simulator.ONE_SECOND);
+        if (reliable) {
+            if (!getNode().getMacLayer().sendMessage(getMessage(), getNode().getRoutingLayer())) {
+                this.setTime(getTime() + Simulator.ONE_SECOND);
                 System.out.println("Retrie send reliable message");
                 getNode().getSimulator().addEvent(this);
             }
 
-        }else{
+        } else {
             // just sends the messages
             getNode().getMacLayer().sendMessage(getMessage(), getNode().getRoutingLayer());
         }

@@ -8,8 +8,6 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.mei.securesim.components.crypto.CryptoFunctions;
 import org.mei.securesim.components.instruments.coverage.CoverageInstrument;
 import org.mei.securesim.components.instruments.IInstrumentHandler;
@@ -17,6 +15,7 @@ import org.mei.securesim.components.instruments.IInstrumentMessage;
 import org.mei.securesim.components.instruments.SimulationController;
 import org.mei.securesim.components.instruments.reliability.ReliabilityInstrument;
 import org.mei.securesim.core.application.Application;
+import org.mei.securesim.core.attacks.IBlackHoleAttack;
 import org.mei.securesim.core.engine.Message;
 import org.mei.securesim.core.engine.Simulator;
 import org.mei.securesim.core.layers.routing.RoutingLayer;
@@ -45,8 +44,13 @@ import org.mei.securesim.protocols.insens.utils.OneWaySequenceNumbersChain;
  *
  * @author CIAdmin
  */
-public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandler {
+public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandler, IBlackHoleAttack {
 
+    public static final String PHASE_FORWARD_DATA = "FORWARD_DATA";
+    public static final String PHASE_ROUTE_FEEDBACK = "ROUTE_FEEDBACK";
+    public static final String PHASE_ROUTE_REQUEST = "ROUTE_REQUEST";
+    public static final String PHASE_ROUTE_UPDATE = "ROUTE_UPDATE";
+    public static final String PHASE_SETUP = "SETUP";
     /**
      * Node info attributes
      */
@@ -84,31 +88,36 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
             try {
                 INSENSMessage m = (INSENSMessage) message;
                 byte type = INSENSFunctions.getMessageType(m);
-                switch (type) {
-                    case INSENSConstants.MSG_ROUTE_REQUEST:
-                        routingController.addMessageReceivedCounter(INSENSConstants.MSG_ROUTE_REQUEST);
-                        processRREQMessage(m);
-                        break;
-                    case INSENSConstants.MSG_FEEDBACK:
-                        routingController.addMessageReceivedCounter(INSENSConstants.MSG_FEEDBACK);
-                        processFDBKMessage(m);
-                        break;
-                    case INSENSConstants.MSG_ROUTE_UPDATE:
-                        routingController.addMessageReceivedCounter(INSENSConstants.MSG_ROUTE_UPDATE);
-                        processRUPDMessage(m);
-                        break;
-                    case INSENSConstants.MSG_ROUTE_UPDATE_ACK:
-                        routingController.addMessageReceivedCounter(INSENSConstants.MSG_ROUTE_UPDATE_ACK);
-                        processRUPDACKMessage(m);
-                        break;
-                    case INSENSConstants.MSG_DATA:
-                        routingController.addMessageReceivedCounter(INSENSConstants.MSG_DATA);
-                        processDATAMessage(m);
-                        break;
+                if (INSENSFunctions.verifyMAC(m.getPayload(), type)) {
+                    switch (type) {
+                        case INSENSConstants.MSG_ROUTE_REQUEST:
+                            setCurrentPhase(PHASE_ROUTE_REQUEST);
+                            routingController.addMessageReceivedCounter(INSENSConstants.MSG_ROUTE_REQUEST);
+                            processRREQMessage(m);
+                            break;
+                        case INSENSConstants.MSG_FEEDBACK:
+                            setCurrentPhase(PHASE_ROUTE_FEEDBACK);
+                            routingController.addMessageReceivedCounter(INSENSConstants.MSG_FEEDBACK);
+                            processFDBKMessage(m);
+                            break;
+                        case INSENSConstants.MSG_ROUTE_UPDATE:
+                            setCurrentPhase(PHASE_ROUTE_UPDATE);
+                            routingController.addMessageReceivedCounter(INSENSConstants.MSG_ROUTE_UPDATE);
+                            processRUPDMessage(m);
+                            break;
+                        case INSENSConstants.MSG_ROUTE_UPDATE_ACK:
+                            routingController.addMessageReceivedCounter(INSENSConstants.MSG_ROUTE_UPDATE_ACK);
+                            processRUPDACKMessage(m);
+                            break;
+                        case INSENSConstants.MSG_DATA:
+                            setCurrentPhase(PHASE_FORWARD_DATA);
+                            routingController.addMessageReceivedCounter(INSENSConstants.MSG_DATA);
+                            processDATAMessage(m);
+                            break;
+                    }
                 }
             } catch (INSENSException ex) {
-                Logger.getLogger(INSENSRoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
-                log("INSENS Exception: " + ex.getMessage());
+                log(ex);
             }
         }
     }
@@ -117,7 +126,6 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     public void sendMessageDone() {
         sendingMessage = false;
         messagesQueue.poll();
-//        dispatchNextMessage();
     }
 
     @Override
@@ -136,6 +144,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
 
     @Override
     public void setup() {
+        setCurrentPhase(PHASE_SETUP);
         ((CoverageInstrument) CoverageInstrument.getInstance()).signalNeighborDetectionReset(CoverageInstrument.CoverageModelEnum.ROUTING);
         setupEvaluationClasses();
         setRoutingController(SimulationController.getInstance().getRoutingLayerController());
@@ -166,9 +175,6 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
             switch (type) {
                 case INSENSConstants.MSG_ROUTE_UPDATE:
                     RUPDPayload payload = new RUPDPayload(m.getPayload());
-                    if (forwardingTable == null) {
-                        System.out.println("test");
-                    }
                     if (forwardingTable.haveRoute(payload.destination, payload.source, payload.immediate)) {
                         byte[] new_payload = INSENSMessagePayloadFactory.updateRUPDPayload(payload.source, payload.destination, getNode().getId(), payload.ows, payload.forwardingTable, payload.mac, this.getNode());
                         if (new_payload != null) {
@@ -184,8 +190,6 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
                     DATAPayload payloadData = new DATAPayload(m.getPayload());
                     if (forwardingTable.haveRoute(payloadData.destination, payloadData.source, payloadData.immediate)) {
                         byte[] new_payload = INSENSMessagePayloadFactory.updateDATAPayload(payloadData.source, payloadData.destination, getNode().getId(), payloadData.data, payloadData.mac, this.getNode());
-
-
                         if (new_payload != null) {
                             m.setPayload(new_payload);
                             routingController.addMessageSentCounter(INSENSConstants.MSG_DATA);
@@ -198,18 +202,22 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
                     break;
             }
         } catch (CloneNotSupportedException ex) {
-            Logger.getLogger(INSENSRoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
+            log(ex);
         } catch (INSENSException ex) {
-            Logger.getLogger(INSENSRoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
+            log(ex);
         }
-
     }
 
+    /**
+     * 
+     * @param message
+     * @param reliable
+     */
     private void broadcastMessage(Message message, boolean reliable) {
         sendingMessage = true;
-        long time = (long) (getNode().getSimulator().getSimulationTime()
-                + Simulator.randomGenerator.nextDoubleBetween((int) INSENSConstants.MIN_DELAYED_MESSAGE_BOUND, (int) INSENSConstants.MAX_DELAYED_MESSAGE_BOUND));
-        DelayedMessageEvent delayMessageEvent = new DelayedMessageEvent(time, message, getNode());
+        long delay = (long) Simulator.randomGenerator.nextDoubleBetween((int) INSENSConstants.MIN_DELAYED_MESSAGE_BOUND, (int) INSENSConstants.MAX_DELAYED_MESSAGE_BOUND);
+        long time = (long) (getNode().getSimulator().getSimulationTime());
+        DelayedMessageEvent delayMessageEvent = new DelayedMessageEvent(time, delay, message, getNode());
         delayMessageEvent.setReliable(reliable);
         getNode().getSimulator().addEvent(delayMessageEvent);
     }
@@ -262,9 +270,6 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
                 startComputeRoutingInfo();
             }
         };
-
-
-
         this.queueMessageDispatchTimer = new Timer(INSENSConstants.MESSAGE_DISPATCH_RATE) {
 
             @Override
@@ -309,8 +314,6 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
             feedbackMessageRetries = 0;
             return false;
         }
-
-
     }
 
     /**
@@ -318,9 +321,9 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
      */
     private void startComputeRoutingInfo() {
         if (canStartComputeRoutingInfo()) {
-
             log("Started to compute routing info");
             baseStationController.calculateForwardingTables();
+            log("Number of Forwarding Tables:  " + baseStationController.getForwardingTables().size());
             sendRouteUpdateMessages(baseStationController.getForwardingTables());
         }
     }
@@ -329,6 +332,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
      * Start the protocol execution, must be initiated by a node a base station
      */
     private void startProtocol() {
+        setCurrentPhase(PHASE_ROUTE_REQUEST);
         queueMessageDispatchTimer.start();
         if (getNode().isSinkNode()) {
             newRoutingDiscover();
@@ -353,14 +357,13 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
             /* create a initial route request message */
             byte[] payload = INSENSMessagePayloadFactory.createREQPayload(getNode().getId(), roundOWS, privateKey, null, this.getNode());
             INSENSMessage m = new INSENSMessage(payload);
-
             RREQPayload dummy = new RREQPayload(payload);
             myRoundMAC = dummy.mac;
             routingController.addMessageSentCounter(INSENSConstants.MSG_ROUTE_REQUEST);
             sendMessageToAir(m, reliableMode);
             startForwardTablesCalculesTimer.start();
         } catch (INSENSException ex) {
-            Logger.getLogger(INSENSRoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
+            log(ex);
         }
     }
 
@@ -372,7 +375,10 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     private void sendMessageToAir(Message message, boolean reliable) {
 
         messagesQueue.addLast(message);
-//        dispatchNextMessage();
+        if (queueMessageDispatchTimer.isStop()) {
+            sendingMessage = false;
+            queueMessageDispatchTimer.start();
+        }
     }
 
     /**
@@ -382,6 +388,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     private void processRREQMessage(INSENSMessage m) throws INSENSException {
         boolean isParent = false;
         RREQPayload payload = new RREQPayload(m.getPayload());
+
         if (!getNode().isSinkNode()) {
             if (isFirstTime(payload)) {
                 log("SIGNAL STRENGTH: " + getNode().getMacLayer().getSignalStrength() + "\tSIGNAL NOISE: " + getNode().getMacLayer().getNoiseStrength());
@@ -476,10 +483,9 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
             bados.write(old_payload.mac);
             return bados.toByteArray();
         } catch (IOException ex) {
-            Logger.getLogger(INSENSRoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
+            log(ex);
         }
         return null;
-
     }
 
     /**
@@ -489,6 +495,8 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         if (!sendingMessage) {
             if (!messagesQueue.isEmpty()) {
                 broadcastMessage((Message) messagesQueue.peek(), reliableMode);
+            } else {
+                queueMessageDispatchTimer.stop();
             }
         }
     }
@@ -538,7 +546,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
                 }
             }
         } catch (INSENSException ex) {
-            Logger.getLogger(INSENSRoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
+            log(ex);
         }
     }
 
@@ -547,7 +555,6 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         List orderedByHops = new LinkedList(tableOfNodesByHops.keySet());
         Collections.sort(orderedByHops);
         byte[] payload;
-
         for (Object key : orderedByHops) {
             LinkedList nodes = (LinkedList) tableOfNodesByHops.get(key);
             for (Object n : nodes) {
@@ -577,16 +584,13 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     private void processDATAMessage(INSENSMessage m) {
         if (isStable()) {
             if (!itsForMe(m)) {
-//                System.out.println("ROUTE MESSAGE");
                 routeMessage(m);
             } else {
                 try {
                     DATAPayload payload = new DATAPayload(m.getPayload());
-//                    System.out.println("ITS FOR ME:" + new String(payload.data));
                     getNode().getApplication().receiveMessage(payload.data);
                 } catch (INSENSException ex) {
-
-                    Logger.getLogger(INSENSRoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
+                    log(ex);
                 }
             }
         }
@@ -600,7 +604,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
             sendMessageToAir((Message) message.clone(), reliableMode);
             return true;
         } catch (CloneNotSupportedException ex) {
-            Logger.getLogger(INSENSRoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
+            log(ex);
         }
         return false;
     }
@@ -621,7 +625,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
                 return true;
             }
         } catch (INSENSException ex) {
-            Logger.getLogger(INSENSRoutingLayer.class.getName()).log(Level.SEVERE, null, ex);
+            log(ex);
         }
         return false;
 
@@ -648,5 +652,22 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     @Override
     protected String getRoutingTable() {
         return forwardingTable.toString();
+    }
+
+    @Override
+    protected void setupAttacks() {
+        getAttacksLabels().add("Blackhole");
+        getAttacksLabels().add("Wormhole");
+        getAttacksLabels().add("Sybil");
+        getAttacksStatus().add(false);
+        getAttacksStatus().add(false);
+        getAttacksStatus().add(false);
+    }
+
+    @Override
+    public void newRound() {
+        if (getNode().isSinkNode()) {
+            newRoutingDiscover();
+        }
     }
 }

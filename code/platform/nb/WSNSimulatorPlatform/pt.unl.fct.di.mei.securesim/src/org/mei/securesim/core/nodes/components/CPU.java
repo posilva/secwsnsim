@@ -30,16 +30,16 @@ public class CPU extends NodeComponent {
     public void executeEncryption(EnergyConsumptionAction action) {
         switchON();
         action.execute();
-        long rate = action.getNumberOfUnits();
-        getNode().getBateryEnergy().consumeProcessing(rate);
+        int rate = action.getNumberOfUnits();
+        getNode().getBateryEnergy().consumeEncryption(rate);
         switchOFF();
     }
 
     public void executeDecryption(EnergyConsumptionAction action) {
         switchON();
         action.execute();
-        long rate = action.getNumberOfUnits();
-        getNode().getBateryEnergy().consumeProcessing(rate);
+        int rate = action.getNumberOfUnits();
+        getNode().getBateryEnergy().consumeDecryption(rate);
         switchOFF();
     }
 

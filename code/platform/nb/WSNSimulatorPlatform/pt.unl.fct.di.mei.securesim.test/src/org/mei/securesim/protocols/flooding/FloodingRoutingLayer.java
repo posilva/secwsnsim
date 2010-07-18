@@ -80,8 +80,6 @@ public class FloodingRoutingLayer extends RoutingLayer {
 
     @Override
     public void setup() {
-
-
 //        if (LatencyController.getInstance().getLatencyMessageClass() == null) {
 //            LatencyController.getInstance().setLatencyMessageClass(LatencyTestMessage.class);
 //        }
@@ -94,5 +92,13 @@ public class FloodingRoutingLayer extends RoutingLayer {
     @Override
     protected String getRoutingTable() {
         return "";
+    }
+
+    @Override
+    protected void setupAttacks() {
+    }
+
+    @Override
+    public void newRound() {
     }
 }

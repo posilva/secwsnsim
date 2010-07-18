@@ -9,4 +9,7 @@ package org.mei.securesim.components.instruments;
  * @author CIAdmin
  */
 public interface IProbingResult {
+
+    @Override
+    String toString();
 }

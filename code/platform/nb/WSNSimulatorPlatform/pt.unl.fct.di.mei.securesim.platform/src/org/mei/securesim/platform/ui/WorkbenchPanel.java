@@ -6,14 +6,14 @@
 package org.mei.securesim.platform.ui;
 
 import java.awt.Dimension;
-import javax.print.PrintService;
 import javax.swing.JOptionPane;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 import org.mei.securesim.components.instruments.SimulationController;
 import org.mei.securesim.components.simulation.SimulationFactory;
-import org.mei.securesim.platform.PlatformView;
+import org.mei.securesim.platform.core.PlatformController;
 import org.mei.securesim.platform.ui.panels.ApplicationOutputPanel;
+import org.mei.securesim.platform.ui.panels.RoutingOutputPanel;
 import org.mei.securesim.platform.utils.gui.GUI_Utils;
 import org.mei.securesim.utils.DebugConsole;
 
@@ -439,7 +439,7 @@ public class WorkbenchPanel extends javax.swing.JPanel {
     }
 
     public void buildSimulationNetwork() {
-        simulationPanel1.buildNetwork();
+        SimulationController.getInstance().buildNetwork();
         simulationPanel1.update();
     }
 
@@ -496,6 +496,12 @@ public class WorkbenchPanel extends javax.swing.JPanel {
 
     @Action
     public void ShowApplicationOutput() {
-        PlatformView.getInstance().addTab("Application Output", ApplicationOutputPanel.getInstance());
+        PlatformController.getInstance().getPlatformView().addTab("Application Output", ApplicationOutputPanel.getInstance());
+        ShowRoutingOutput();
+    }
+
+    @Action
+    public void ShowRoutingOutput() {
+        PlatformController.getInstance().getPlatformView().addTab("Routing Layer Output", RoutingOutputPanel.getInstance());
     }
 }
