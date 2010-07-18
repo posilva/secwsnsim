@@ -1,5 +1,6 @@
 package org.mei.securesim.platform.ui.panels;
 
+import java.awt.Window;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -13,19 +14,13 @@ public class SingletonPanel extends javax.swing.JPanel {
 
     /** Creates new form RoutingInfoPanel */
     public SingletonPanel() {
-        if (hasInstance) {
-            throw new IllegalStateException("Only one instance of Panel can exist");
-        }
         initComponents();
         hasInstance = true;
     }
-    protected static SingletonPanel instance;
 
     public static SingletonPanel getInstance() {
-        if (instance == null) {
-            instance = new SingletonPanel();
-        }
-        return instance;
+        throw new IllegalStateException("Must implement a getInstance");
+
     }
 
     /** This method is called from within the constructor to
@@ -39,6 +34,7 @@ public class SingletonPanel extends javax.swing.JPanel {
 
         titleArea = new javax.swing.JLabel();
         buttonArea = new javax.swing.JPanel();
+        tgbOnTop = new javax.swing.JToggleButton();
         contentArea = new javax.swing.JPanel();
 
         setName("Form"); // NOI18N
@@ -61,15 +57,46 @@ public class SingletonPanel extends javax.swing.JPanel {
         buttonArea.setMinimumSize(new java.awt.Dimension(14, 40));
         buttonArea.setName("buttonArea"); // NOI18N
         buttonArea.setPreferredSize(new java.awt.Dimension(100, 40));
+
+        tgbOnTop.setText(resourceMap.getString("tgbOnTop.text")); // NOI18N
+        tgbOnTop.setName("tgbOnTop"); // NOI18N
+        tgbOnTop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tgbOnTopActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout buttonAreaLayout = new javax.swing.GroupLayout(buttonArea);
+        buttonArea.setLayout(buttonAreaLayout);
+        buttonAreaLayout.setHorizontalGroup(
+            buttonAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(buttonAreaLayout.createSequentialGroup()
+                .addComponent(tgbOnTop)
+                .addContainerGap(273, Short.MAX_VALUE))
+        );
+        buttonAreaLayout.setVerticalGroup(
+            buttonAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(tgbOnTop, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+        );
+
         add(buttonArea, java.awt.BorderLayout.PAGE_END);
 
         contentArea.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         contentArea.setName("contentArea"); // NOI18N
         add(contentArea, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tgbOnTopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgbOnTopActionPerformed
+        // TODO add your handling code here:
+
+        if (getParent() instanceof Window) {
+            ((Window) getParent()).setAlwaysOnTop(tgbOnTop.isSelected());
+        }
+    }//GEN-LAST:event_tgbOnTopActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel buttonArea;
     private javax.swing.JPanel contentArea;
+    private javax.swing.JToggleButton tgbOnTop;
     private javax.swing.JLabel titleArea;
     // End of variables declaration//GEN-END:variables
 
@@ -96,6 +123,4 @@ public class SingletonPanel extends javax.swing.JPanel {
     public void setTitleArea(JLabel titleArea) {
         this.titleArea = titleArea;
     }
-
-
 }

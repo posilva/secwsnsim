@@ -20,8 +20,9 @@ import org.mei.securesim.components.RoutingOutput;
  *
  * @author CIAdmin
  */
-public class RoutingOutputPanel extends OutputPanel implements IOutputDisplay {
+public class RoutingOutputPanel extends SingletonPanel implements IOutputDisplay {
 
+    private static RoutingOutputPanel instance;
     private JTextArea txtAreaOutput = new JTextArea();
     private final JScrollPane jScrollPane1 = new JScrollPane();
 
@@ -54,8 +55,8 @@ public class RoutingOutputPanel extends OutputPanel implements IOutputDisplay {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setName("Form"); // NOI18N
-        setLayout(new java.awt.BorderLayout());
+        setMinimumSize(new java.awt.Dimension(200, 200));
+        setPreferredSize(new java.awt.Dimension(200, 200));
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

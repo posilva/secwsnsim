@@ -19,7 +19,6 @@ import java.util.TimeZone;
 import javax.swing.Timer;
 import java.util.TimerTask;
 import javax.swing.Icon;
-import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -35,15 +34,15 @@ import org.mei.securesim.platform.core.PlatformController;
 import org.mei.securesim.platform.core.instruments.coverage.CoverageInstrumentControlPanel;
 import org.mei.securesim.platform.core.instruments.reliability.ReliabilityInstrumentControlPanel;
 import org.mei.securesim.platform.ui.WorkbenchPanel;
+import org.mei.securesim.platform.ui.panels.ApplicationOutputPanel;
 import org.mei.securesim.platform.ui.frames.InstrumentDialog;
 import org.mei.securesim.platform.ui.frames.InstrumentFrame;
 import org.mei.securesim.platform.ui.panels.RoutingInfoPanel;
-
 import org.mei.securesim.platform.ui.frames.SimulationWizardDialog;
 import org.mei.securesim.platform.ui.panels.EnergyEvaluationPanel;
 import org.mei.securesim.platform.ui.panels.EvaluationPanel;
+import org.mei.securesim.platform.ui.panels.RoutingOutputPanel;
 import org.mei.securesim.platform.ui.panels.SimulationPropertiesPanel;
-import org.mei.securesim.platform.ui.uiextended.BestTabbedPane;
 import org.mei.securesim.platform.utils.PlatformUtils;
 import org.mei.securesim.platform.utils.gui.ClockCounter;
 import org.mei.securesim.platform.utils.gui.GUI_Utils;
@@ -62,6 +61,8 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
     private InstrumentFrame reliabilityControlPanelFrame;
     private InstrumentFrame coverageControlPanelFrame;
     private InstrumentFrame showRoutingInfoFrame;
+    private InstrumentFrame showRoutingOutputFrame;
+    private InstrumentFrame showAplicationOutputFrame;
 
     public PlatformView(SingleFrameApplication app) {
         super(app);
@@ -161,6 +162,7 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
+        workbenchPanel1 = new org.mei.securesim.platform.ui.WorkbenchPanel();
         mainToolbar = new javax.swing.JToolBar();
         btnNew = new javax.swing.JButton();
         btnOpen = new javax.swing.JButton();
@@ -173,13 +175,9 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         jPanel1 = new javax.swing.JPanel();
         tgbMarkStableNodes = new javax.swing.JToggleButton();
         tgbSelectStableNodes = new javax.swing.JToggleButton();
-        showRoutingInfo = new javax.swing.JButton();
         lblRadioCoverageValue = new javax.swing.JLabel();
         lblRoutingCoverageValue = new javax.swing.JLabel();
         lblAverageNeighborsPerNode = new javax.swing.JLabel();
-        mainSplitPane = new javax.swing.JSplitPane();
-        tabbedTools = new org.mei.securesim.platform.ui.uiextended.BestTabbedPane();
-        workbenchPanel1 = new org.mei.securesim.platform.ui.WorkbenchPanel();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu simulationMenu = new javax.swing.JMenu();
         menuNewSimulation = new javax.swing.JMenuItem();
@@ -191,8 +189,8 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
         ViewMenu = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        chkRoutingLayerDebug = new javax.swing.JCheckBoxMenuItem();
+        chkMACLayerDebug = new javax.swing.JCheckBoxMenuItem();
         Output = new javax.swing.JMenu();
         viewApplicationOutput = new javax.swing.JMenuItem();
         viewRoutingOutput = new javax.swing.JMenuItem();
@@ -203,8 +201,8 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         viewLatencyControlPanel = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenu5 = new javax.swing.JMenu();
-        jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
+        viewRoutingInfo = new javax.swing.JMenuItem();
+        viewNodeInfo = new javax.swing.JMenuItem();
         evaluationMenu = new javax.swing.JMenu();
         evalSettingsMenu = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
@@ -227,6 +225,7 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
 
         mainPanel.setName("mainPanel"); // NOI18N
         mainPanel.setLayout(new java.awt.BorderLayout());
+        mainPanel.add(workbenchPanel1, java.awt.BorderLayout.CENTER);
 
         mainToolbar.setFloatable(false);
         mainToolbar.setRollover(true);
@@ -266,6 +265,7 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         btnProperties.setIcon(resourceMap.getIcon("btnProperties.icon")); // NOI18N
         btnProperties.setText(resourceMap.getString("btnProperties.text")); // NOI18N
         btnProperties.setToolTipText(resourceMap.getString("btnProperties.toolTipText")); // NOI18N
+        btnProperties.setEnabled(workbenchPanel1.isVisible());
         btnProperties.setFocusable(false);
         btnProperties.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnProperties.setName("btnProperties"); // NOI18N
@@ -292,11 +292,13 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         adjustRadioStrengthSlider.setModel(new javax.swing.SpinnerNumberModel(100, 100, 100000, 100));
         adjustRadioStrengthSlider.setToolTipText(resourceMap.getString("adjustRadioStrengthSlider.toolTipText")); // NOI18N
         adjustRadioStrengthSlider.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        adjustRadioStrengthSlider.setEnabled(workbenchPanel1.isVisible());
         adjustRadioStrengthSlider.setName("adjustRadioStrengthSlider"); // NOI18N
         adjustRadioStrengthPanel.add(adjustRadioStrengthSlider, java.awt.BorderLayout.CENTER);
 
         mainToolbar.add(adjustRadioStrengthPanel);
 
+        jPanel1.setEnabled(workbenchPanel1.isVisible());
         jPanel1.setName("jPanel1"); // NOI18N
         jPanel1.setPreferredSize(new java.awt.Dimension(1085, 10));
 
@@ -308,10 +310,6 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         tgbSelectStableNodes.setText(resourceMap.getString("tgbSelectStableNodes.text")); // NOI18N
         tgbSelectStableNodes.setName("tgbSelectStableNodes"); // NOI18N
 
-        showRoutingInfo.setAction(actionMap.get("ShowRoutingInfo")); // NOI18N
-        showRoutingInfo.setText(resourceMap.getString("showRoutingInfo.text")); // NOI18N
-        showRoutingInfo.setName("showRoutingInfo"); // NOI18N
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -319,19 +317,16 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(tgbMarkStableNodes)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tgbSelectStableNodes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(showRoutingInfo)
-                .addContainerGap(501, Short.MAX_VALUE))
+                .addComponent(tgbSelectStableNodes)
+                .addContainerGap(657, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tgbMarkStableNodes)
-                    .addComponent(tgbSelectStableNodes)
-                    .addComponent(showRoutingInfo))
+                    .addComponent(tgbSelectStableNodes))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -367,20 +362,7 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         lblAverageNeighborsPerNode.setPreferredSize(new java.awt.Dimension(100, 20));
         mainToolbar.add(lblAverageNeighborsPerNode);
 
-        mainPanel.add(mainToolbar, java.awt.BorderLayout.PAGE_START);
-
-        mainSplitPane.setDividerLocation(200);
-        mainSplitPane.setDividerSize(10);
-        mainSplitPane.setAutoscrolls(true);
-        mainSplitPane.setMinimumSize(new java.awt.Dimension(0, 0));
-        mainSplitPane.setName("mainSplitPane"); // NOI18N
-        mainSplitPane.setOneTouchExpandable(true);
-
-        tabbedTools.setName("tabbedTools"); // NOI18N
-        mainSplitPane.setRightComponent(tabbedTools);
-        mainSplitPane.setLeftComponent(workbenchPanel1);
-
-        mainPanel.add(mainSplitPane, java.awt.BorderLayout.CENTER);
+        mainPanel.add(mainToolbar, java.awt.BorderLayout.NORTH);
 
         menuBar.setName("menuBar"); // NOI18N
 
@@ -431,23 +413,29 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         jMenu3.setText(resourceMap.getString("jMenu3.text")); // NOI18N
         jMenu3.setName("jMenu3"); // NOI18N
 
-        jMenuItem2.setText(resourceMap.getString("jMenuItem2.text")); // NOI18N
-        jMenuItem2.setName("jMenuItem2"); // NOI18N
-        jMenu3.add(jMenuItem2);
+        chkRoutingLayerDebug.setAction(actionMap.get("EnableRoutingLayerDebug")); // NOI18N
+        chkRoutingLayerDebug.setSelected(true);
+        chkRoutingLayerDebug.setText(resourceMap.getString("chkRoutingLayerDebug.text")); // NOI18N
+        chkRoutingLayerDebug.setName("chkRoutingLayerDebug"); // NOI18N
+        jMenu3.add(chkRoutingLayerDebug);
 
-        jMenuItem3.setText(resourceMap.getString("jMenuItem3.text")); // NOI18N
-        jMenuItem3.setName("jMenuItem3"); // NOI18N
-        jMenu3.add(jMenuItem3);
+        chkMACLayerDebug.setAction(actionMap.get("EnableMacLayerDebug")); // NOI18N
+        chkMACLayerDebug.setSelected(true);
+        chkMACLayerDebug.setText(resourceMap.getString("chkMACLayerDebug.text")); // NOI18N
+        chkMACLayerDebug.setName("chkMACLayerDebug"); // NOI18N
+        jMenu3.add(chkMACLayerDebug);
 
         ViewMenu.add(jMenu3);
 
         Output.setText(resourceMap.getString("Output.text")); // NOI18N
         Output.setName("Output"); // NOI18N
 
+        viewApplicationOutput.setAction(actionMap.get("ShowApplicationOutputPanelAction")); // NOI18N
         viewApplicationOutput.setText(resourceMap.getString("viewApplicationOutput.text")); // NOI18N
         viewApplicationOutput.setName("viewApplicationOutput"); // NOI18N
         Output.add(viewApplicationOutput);
 
+        viewRoutingOutput.setAction(actionMap.get("ShowRoutingOutputPanelAction")); // NOI18N
         viewRoutingOutput.setText(resourceMap.getString("viewRoutingOutput.text")); // NOI18N
         viewRoutingOutput.setName("viewRoutingOutput"); // NOI18N
         Output.add(viewRoutingOutput);
@@ -485,13 +473,14 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         jMenu5.setText(resourceMap.getString("jMenu5.text")); // NOI18N
         jMenu5.setName("jMenu5"); // NOI18N
 
-        jMenuItem10.setText(resourceMap.getString("jMenuItem10.text")); // NOI18N
-        jMenuItem10.setName("jMenuItem10"); // NOI18N
-        jMenu5.add(jMenuItem10);
+        viewRoutingInfo.setAction(actionMap.get("ShowRoutingInfoPanelAction")); // NOI18N
+        viewRoutingInfo.setText(resourceMap.getString("viewRoutingInfo.text")); // NOI18N
+        viewRoutingInfo.setName("viewRoutingInfo"); // NOI18N
+        jMenu5.add(viewRoutingInfo);
 
-        jMenuItem11.setText(resourceMap.getString("jMenuItem11.text")); // NOI18N
-        jMenuItem11.setName("jMenuItem11"); // NOI18N
-        jMenu5.add(jMenuItem11);
+        viewNodeInfo.setText(resourceMap.getString("viewNodeInfo.text")); // NOI18N
+        viewNodeInfo.setName("viewNodeInfo"); // NOI18N
+        jMenu5.add(viewNodeInfo);
 
         ViewMenu.add(jMenu5);
 
@@ -588,9 +577,9 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
                 .addComponent(statusMessageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 458, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(SimulationStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(2, 2, 2)
                 .addComponent(NrSimulationNodes, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(NrSelectedNodes, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(NrEvents, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -618,21 +607,21 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
                     .addComponent(statusAnimationLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
                     .addGroup(statusPanelLayout.createSequentialGroup()
                         .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(SimulationStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
-                            .addComponent(NrSimulationNodes)
                             .addComponent(NrSelectedNodes, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(NrEvents, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
                             .addComponent(SimulationRealTime)
-                            .addComponent(SimulationTime))
+                            .addComponent(SimulationTime)
+                            .addComponent(SimulationStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
+                            .addComponent(NrSimulationNodes))
                         .addGap(1, 1, 1))
-                    .addGroup(statusPanelLayout.createSequentialGroup()
+                    .addComponent(FieldSize, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statusPanelLayout.createSequentialGroup()
                         .addComponent(statusMessageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
-                        .addGap(3, 3, 3))
-                    .addComponent(FieldSize, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE))
+                        .addGap(4, 4, 4)))
                 .addContainerGap())
         );
 
-        statusPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {NrEvents, NrSimulationNodes, SimulationStatus, statusMessageLabel});
+        statusPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {NrEvents, NrSimulationNodes, SimulationStatus});
 
         statusPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {SimulationRealTime, SimulationTime});
 
@@ -681,9 +670,7 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
             getComponent().setVisible(true);
             workbenchVisible = true;
             workbenchPanel1.setVisible(true);
-            mainSplitPane.setVisible(true);
             mainPanel.setVisible(true);
-            mainSplitPane.setDividerLocation(1280);
             PlatformController.getInstance().setNewSimulation(true);
             PlatformController.getInstance().showSimulationName("");
             ((CoverageInstrument) CoverageInstrument.getInstance()).updateNetworkSize();
@@ -706,16 +693,14 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
     protected javax.swing.JButton btnOpen;
     protected javax.swing.JButton btnProperties;
     protected javax.swing.JButton btnSave;
+    protected javax.swing.JCheckBoxMenuItem chkMACLayerDebug;
+    protected javax.swing.JCheckBoxMenuItem chkRoutingLayerDebug;
     protected javax.swing.JMenuItem evalSettingsMenu;
     protected javax.swing.JMenu evaluationMenu;
     protected javax.swing.JMenu jMenu1;
     protected javax.swing.JMenu jMenu2;
     protected javax.swing.JMenu jMenu3;
     protected javax.swing.JMenu jMenu5;
-    protected javax.swing.JMenuItem jMenuItem10;
-    protected javax.swing.JMenuItem jMenuItem11;
-    protected javax.swing.JMenuItem jMenuItem2;
-    protected javax.swing.JMenuItem jMenuItem3;
     protected javax.swing.JPanel jPanel1;
     protected javax.swing.JPanel jPanel2;
     protected javax.swing.JPopupMenu jPopupMenu1;
@@ -727,19 +712,16 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
     protected javax.swing.JLabel lblRadioCoverageValue;
     protected javax.swing.JLabel lblRoutingCoverageValue;
     protected javax.swing.JPanel mainPanel;
-    protected javax.swing.JSplitPane mainSplitPane;
     protected javax.swing.JToolBar mainToolbar;
     protected javax.swing.JMenuBar menuBar;
     protected javax.swing.JMenuItem menuNewSimulation;
     protected javax.swing.JMenuItem menuOpenSImulation;
     protected javax.swing.JMenuItem menuSaveSimulation;
     private javax.swing.JProgressBar progressBar;
-    protected javax.swing.JButton showRoutingInfo;
     protected javax.swing.JMenuItem simPropertiesSubMenu;
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
     protected javax.swing.JPanel statusPanel;
-    protected org.mei.securesim.platform.ui.uiextended.BestTabbedPane tabbedTools;
     protected javax.swing.JToggleButton tgbMarkStableNodes;
     protected javax.swing.JToggleButton tgbSelectStableNodes;
     protected javax.swing.JMenuItem viewApplicationOutput;
@@ -747,7 +729,9 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
     protected javax.swing.JMenuItem viewEnergyControlPanel;
     protected javax.swing.JMenu viewInstruments;
     protected javax.swing.JMenuItem viewLatencyControlPanel;
+    protected javax.swing.JMenuItem viewNodeInfo;
     protected javax.swing.JMenuItem viewReliabilityControlPanel;
+    protected javax.swing.JMenuItem viewRoutingInfo;
     protected javax.swing.JMenuItem viewRoutingOutput;
     protected org.mei.securesim.platform.ui.WorkbenchPanel workbenchPanel1;
     // End of variables declaration//GEN-END:variables
@@ -774,19 +758,18 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         this.workbenchVisible = workbenchVisible;
     }
 
-    public void addTab(String title, JComponent component) {
-        tabbedTools.setTabPlacement(BestTabbedPane.RIGHT);
-        tabbedTools.addTab(title, component);
-        tabbedTools.setTabEditingAllowed(true);
-        tabbedTools.setShowCloseButton(true);
-        tabbedTools.setShowCloseButtonOnSelectedTab(true);
-        tabbedTools.setShowCloseButtonOnTab(true);
-        tabbedTools.setBoldActiveTab(true);
-
-
-
-    }
-
+//    public void addTab(String title, JComponent component) {
+//        tabbedTools.setTabPlacement(BestTabbedPane.RIGHT);
+//        tabbedTools.addTab(title, component);
+//        tabbedTools.setTabEditingAllowed(true);
+//        tabbedTools.setShowCloseButton(true);
+//        tabbedTools.setShowCloseButtonOnSelectedTab(true);
+//        tabbedTools.setShowCloseButtonOnTab(true);
+//        tabbedTools.setBoldActiveTab(true);
+//
+//
+//
+//    }
     public void setSimulationNrNodes(int value) {
         NrSimulationNodes.setText(value + " nodes");
 
@@ -900,16 +883,15 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         }
     }
 
-    boolean tabShowned(String title) {
-        for (int i = 0; i < tabbedTools.getTabCount(); i++) {
-            String sTitle = tabbedTools.getTitleAt(i);
-            if (sTitle.equals(title)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
+//    boolean tabShowned(String title) {
+//        for (int i = 0; i < tabbedTools.getTabCount(); i++) {
+//            String sTitle = tabbedTools.getTitleAt(i);
+//            if (sTitle.equals(title)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
     @Action
     public void RunLatency() {
 //        LatencyController.getInstance().startAnalysis();
@@ -917,34 +899,26 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
 
     @Action
     public void ApplyRadioStrength() {
-        if (SimulationController.getInstance().getSimulation().getSimulator().getNodes().size() > 0) {
-            long radioStrenght = (Integer) adjustRadioStrengthSlider.getModel().getValue();
-            SimulationController.getInstance().applyRadioStrength(radioStrenght);
-        } else {
-            GUI_Utils.showMessage("Must deploy nodes before apply new radio strength", JOptionPane.WARNING_MESSAGE);
+        if (isSimulationValid()) {
+            if (SimulationController.getInstance().getSimulation().getSimulator().getNodes().size() > 0) {
+                long radioStrenght = (Integer) adjustRadioStrengthSlider.getModel().getValue();
+                SimulationController.getInstance().applyRadioStrength(radioStrenght);
+            } else {
+                GUI_Utils.showMessage("Must deploy nodes before apply new radio strength", JOptionPane.WARNING_MESSAGE);
+            }
         }
+    }
+
+    private boolean isSimulationValid() {
+        return SimulationController.getInstance().getSimulation() != null ;
     }
 
     public void updateAverageNeighborsPerNode() {
         lblAverageNeighborsPerNode.setText("" + SimulationController.getInstance().getAverageNeighborsPerNode());
     }
 
-    @Action
-    public void ShowRoutingInfo() {
-        PlatformController.getInstance().getPlatformView().addTab("Routing Info", RoutingInfoPanel.getInstance());
-
-
-
-    }
-
     public WorkbenchPanel getWorkbenchPanel() {
         return workbenchPanel1;
-    }
-
-    @Action
-    public void ShowInstrumentsPanel() {
-        addTab("Coverage Instrument", new CoverageInstrumentControlPanel());
-        addTab("Reliability", new ReliabilityInstrumentControlPanel());
     }
 
     @Action
@@ -989,8 +963,6 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         }
         evaluationSettingsDialog.addContentPanel(EvaluationPanel.getInstance());
         evaluationSettingsDialog.display();
-
-//        addTab("Evaluation Panel", EvaluationPanel.getInstance());
     }
 
     @Action
@@ -1013,6 +985,7 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
 
     @Action
     public void viewLatencyControlPanelAction() {
+        GUI_Utils.showMessage("Feature not implemented yet!", GUI_Utils.WARNING_MESSAGE);
     }
 
     @Action
@@ -1030,12 +1003,44 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
 
     @Action
     public void ShowRoutingInfoPanelAction() {
-
         if (showRoutingInfoFrame == null) {
             showRoutingInfoFrame = new InstrumentFrame("Routing Information");
         }
         showRoutingInfoFrame.addContentPanel(new RoutingInfoPanel());
         showRoutingInfoFrame.display();
 
+    }
+
+    @Action
+    public void ShowNodeInfo() {
+        GUI_Utils.showMessage("Feature not implemented yet!", GUI_Utils.WARNING_MESSAGE);
+    }
+
+    @Action
+    public void ShowApplicationOutputPanelAction() {
+        if (showAplicationOutputFrame == null) {
+            showAplicationOutputFrame = new InstrumentFrame("Application Layer Output");
+        }
+        showAplicationOutputFrame.addContentPanel(new ApplicationOutputPanel());
+        showAplicationOutputFrame.display();
+    }
+
+    @Action
+    public void ShowRoutingOutputPanelAction() {
+        if (showRoutingOutputFrame == null) {
+            showRoutingOutputFrame = new InstrumentFrame("Routing Layer Output");
+        }
+        showRoutingOutputFrame.addContentPanel(new RoutingOutputPanel());
+        showRoutingOutputFrame.display();
+    }
+
+    @Action
+    public void EnableRoutingLayerDebug() {
+        SimulationController.getInstance().enableRoutingLayerDebug(chkRoutingLayerDebug.isSelected());
+    }
+
+    @Action
+    public void EnableMacLayerDebug() {
+        SimulationController.getInstance().enableMACLayerDebug(chkMACLayerDebug.isSelected());
     }
 }

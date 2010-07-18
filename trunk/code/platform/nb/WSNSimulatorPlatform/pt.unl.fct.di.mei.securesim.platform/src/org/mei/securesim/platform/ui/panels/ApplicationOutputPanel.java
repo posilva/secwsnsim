@@ -20,8 +20,9 @@ import org.mei.securesim.components.IOutputDisplay;
  *
  * @author CIAdmin
  */
-public class ApplicationOutputPanel extends OutputPanel implements IOutputDisplay {
+public class ApplicationOutputPanel extends SingletonPanel implements IOutputDisplay {
 
+    private static ApplicationOutputPanel instance;
     private JTextArea txtAreaOutput = new JTextArea();
     private final JScrollPane jScrollPane1 = new JScrollPane();
 

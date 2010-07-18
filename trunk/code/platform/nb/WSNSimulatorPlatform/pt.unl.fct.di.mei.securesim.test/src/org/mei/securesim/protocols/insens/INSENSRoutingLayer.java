@@ -457,6 +457,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         if (Arrays.equals(myRoundMAC, payload.parent_mac)) {
             if (getNode().isSinkNode()) { // if i'm a sink node keep the information
                 baseStationController.addFeedbackMessages(payload);
+                INSENSFunctions.decryptData(getNode(), payload.neighborInfo, null);
                 feedbackMessagesReceived++;
             } else { // forward the message if is from my child
                 byte[] new_payload = modifiedParentMAC(payload);
@@ -588,6 +589,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
             } else {
                 try {
                     DATAPayload payload = new DATAPayload(m.getPayload());
+                    INSENSFunctions.decryptData(getNode(), payload.data, null);
                     getNode().getApplication().receiveMessage(payload.data);
                 } catch (INSENSException ex) {
                     log(ex);

@@ -159,6 +159,30 @@ public class SimulationController {
 
     }
 
+    public void enableRoutingLayerDebug(boolean selected) {
+        Collection<Node> nodes;
+        if (getSimulation() != null) {
+            if (getSimulation().getSimulator() != null) {
+                nodes = getSimulation().getSimulator().getNodes();
+                for (Node node : nodes) {
+                    node.getRoutingLayer().setDebugEnabled(selected);
+                }
+            }
+        }
+    }
+
+    public void enableMACLayerDebug(boolean selected) {
+        Collection<Node> nodes;
+        if (getSimulation() != null) {
+            if (getSimulation().getSimulator() != null) {
+                nodes = getSimulation().getSimulator().getNodes();
+                for (Node node : nodes) {
+                    node.getMacLayer().setDebugEnabled(selected);
+                }
+            }
+        }
+    }
+
     /**
      *
      */

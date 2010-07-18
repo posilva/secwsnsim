@@ -52,7 +52,6 @@ public class InstrumentFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("Form"); // NOI18N
-        setResizable(false);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
