@@ -6,6 +6,7 @@ package org.mei.securesim.components.logging.file;
 
 import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -18,6 +19,7 @@ import java.util.logging.Logger;
  */
 public class EnergyRawFileLogger extends EnergyFileLogger {
 
+    public static final String LOGS_DIR = "logs";
     private boolean updating;
     private final Object writeMonitor = new Object();
     private boolean exiting;
@@ -25,7 +27,8 @@ public class EnergyRawFileLogger extends EnergyFileLogger {
     @Override
     public void init() {
         try {
-            this.filename = "Energy_" + System.currentTimeMillis() + ".dat";
+            createLogDir();
+            this.filename = LOGS_DIR + "\\" + "Energy_" + System.currentTimeMillis() + ".dat";
             FileOutputStream fos = new FileOutputStream(filename);
             outputStream = new DataOutputStream(new BufferedOutputStream(fos));
         } catch (FileNotFoundException ex) {
@@ -34,7 +37,7 @@ public class EnergyRawFileLogger extends EnergyFileLogger {
     }
 
     @Override
-    public synchronized void update(short id, String event, long realTime, long simTime, double value, String state) {
+    public void update(short id, String event, long realTime, long simTime, double value, String state) {
         updating = true;
         if (exiting) {
             return;
@@ -72,10 +75,17 @@ public class EnergyRawFileLogger extends EnergyFileLogger {
                 System.out.print("Gracefull log exit...");
                 ((DataOutputStream) getOutputStream()).close();
                 exiting = true;
-                                System.out.println("done");
+                System.out.println("done");
 
             }
         } catch (Exception e) {
+        }
+    }
+
+    private void createLogDir() {
+        File logDir = new File("logs");
+        if (!logDir.exists()) {
+            logDir.mkdir();
         }
     }
 }

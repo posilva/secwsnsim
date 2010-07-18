@@ -11,9 +11,6 @@ import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 import org.mei.securesim.components.instruments.SimulationController;
 import org.mei.securesim.components.simulation.SimulationFactory;
-import org.mei.securesim.platform.core.PlatformController;
-import org.mei.securesim.platform.ui.panels.ApplicationOutputPanel;
-import org.mei.securesim.platform.ui.panels.RoutingOutputPanel;
 import org.mei.securesim.platform.utils.gui.GUI_Utils;
 import org.mei.securesim.utils.DebugConsole;
 
@@ -65,7 +62,6 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         selRandomNodes = new javax.swing.JButton();
         btnSnapshot = new javax.swing.JButton();
         jSeparator6 = new javax.swing.JToolBar.Separator();
-        showApplicationOutput = new javax.swing.JToggleButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -84,6 +80,7 @@ public class WorkbenchPanel extends javax.swing.JPanel {
 
         add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
+        jToolBar1.setFloatable(false);
         jToolBar1.setOrientation(1);
         jToolBar1.setRollover(true);
 
@@ -265,18 +262,6 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         jToolBar1.add(btnSnapshot);
         jToolBar1.add(jSeparator6);
 
-        showApplicationOutput.setAction(actionMap.get("ShowApplicationOutput")); // NOI18N
-        showApplicationOutput.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/mei/securesim/platform/ui/resources/terminal-icon.png"))); // NOI18N
-        showApplicationOutput.setFocusable(false);
-        showApplicationOutput.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        showApplicationOutput.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        showApplicationOutput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                showApplicationOutputActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(showApplicationOutput);
-
         add(jToolBar1, java.awt.BorderLayout.LINE_START);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -323,9 +308,6 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         updateSelectionGroup();
     }//GEN-LAST:event_selectionPointerToolActionPerformed
 
-    private void showApplicationOutputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showApplicationOutputActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_showApplicationOutputActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup OperationBG;
     private javax.swing.ButtonGroup SelectionBG;
@@ -348,7 +330,6 @@ public class WorkbenchPanel extends javax.swing.JPanel {
     private javax.swing.JButton searchNode;
     private javax.swing.JButton selRandomNodes;
     private javax.swing.JToggleButton selectionPointerTool;
-    private javax.swing.JToggleButton showApplicationOutput;
     private javax.swing.JToggleButton showDebugWindow;
     private javax.swing.JToggleButton showMouseCoordinates;
     private org.mei.securesim.platform.ui.SimulationPanel simulationPanel1;
@@ -492,16 +473,5 @@ public class WorkbenchPanel extends javax.swing.JPanel {
     @Action
     public void TakeSnapshot() {
         simulationPanel1.takeSnapshot();
-    }
-
-    @Action
-    public void ShowApplicationOutput() {
-        PlatformController.getInstance().getPlatformView().addTab("Application Output", ApplicationOutputPanel.getInstance());
-        ShowRoutingOutput();
-    }
-
-    @Action
-    public void ShowRoutingOutput() {
-        PlatformController.getInstance().getPlatformView().addTab("Routing Layer Output", RoutingOutputPanel.getInstance());
     }
 }

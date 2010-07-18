@@ -8,7 +8,9 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.mei.securesim.components.crypto.CryptoFunctions;
+import org.mei.securesim.core.nodes.Node;
 import org.mei.securesim.protocols.insens.INSENSException;
+import org.mei.securesim.protocols.insens.INSENSFunctions;
 
 /**
  *

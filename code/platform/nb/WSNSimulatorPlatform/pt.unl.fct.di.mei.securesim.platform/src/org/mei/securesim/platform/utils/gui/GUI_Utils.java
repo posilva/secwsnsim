@@ -20,6 +20,11 @@ import org.mei.securesim.platform.core.PlatformController;
  * @author posilva
  */
 public class GUI_Utils {
+    public static int WARNING_MESSAGE=JOptionPane.WARNING_MESSAGE;
+    public static int INFO_MESSAGE=JOptionPane.INFORMATION_MESSAGE;
+    public static int ERROR_MESSAGE=JOptionPane.ERROR_MESSAGE;
+    public static int SIMPLE_MESSAGE=JOptionPane.PLAIN_MESSAGE;
+    public static int ASK_MESSAGE=JOptionPane.QUESTION_MESSAGE;
 
     public static void mouseWait(Component c) {
         Cursor hourglassCursor = new Cursor(Cursor.WAIT_CURSOR);
@@ -48,7 +53,7 @@ public class GUI_Utils {
     public static boolean confirm(String message) {
         Object[] o = {"Yes", "No"};
 
-        return JOptionPane.showOptionDialog(null, message, "Confirm...", -1, JOptionPane.QUESTION_MESSAGE, null, o, o[1]) == JOptionPane.YES_OPTION;
+        return JOptionPane.showOptionDialog(null, message, "Confirm...", -1, ASK_MESSAGE, null, o, o[1]) == JOptionPane.YES_OPTION;
     }
 //    public static String InputBox(String title) {
 //        return JOptionPane.showInputDialog(title)
@@ -89,6 +94,6 @@ public class GUI_Utils {
      * @param ex
      */
     public static void showException(Exception ex) {
-        JOptionPane.showMessageDialog(null, ex , "Error occured",JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, ex , "Error occured",ERROR_MESSAGE);
     }
 }
