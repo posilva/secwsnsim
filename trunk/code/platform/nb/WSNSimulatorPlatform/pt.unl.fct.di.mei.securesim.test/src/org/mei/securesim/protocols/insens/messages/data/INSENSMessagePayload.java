@@ -21,8 +21,9 @@ public class INSENSMessagePayload {
 
     public INSENSMessagePayload(byte[] payload) throws INSENSException {
         try {
-            if (payload==null)
-                throw  new INSENSException("Invalid payload: cannot be null");
+            if (payload == null) {
+                throw new INSENSException("Invalid payload: cannot be null");
+            }
             badis = new ByteArrayDataInputStream(payload);
             type = badis.readByte();
         } catch (IOException ex) {

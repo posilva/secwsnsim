@@ -28,7 +28,6 @@ public class LatencyInstrument extends Instrument {
      * 
      */
     class LatencyEntry {
-
         int numberOfHops = 0;
         int maxNumberOfHops = Integer.MIN_VALUE;
         int minNumberOfHops = Integer.MAX_VALUE;
@@ -54,7 +53,6 @@ public class LatencyInstrument extends Instrument {
     public void notifyMessageReceived(IInstrumentMessage message, IInstrumentHandler handler) {
         if (sendingObject.containsKey(message.getUniqueId())) {
             LatencyEntry entry = (LatencyEntry) sendingObject.get(message.getUniqueId());
-
         }
     }
 

@@ -3,12 +3,12 @@
  * and open the template in the editor.
  */
 
-package org.mei.securesim.components;
+package org.mei.securesim.components.evaluation;
 
 /**
  *
  * @author CIAdmin
  */
-public interface IApplicationOutputDisplay {
-    public void showOutput(String text);
+public enum EvaluationDeployModeEnum {
+    RANDOM, GRID
 }

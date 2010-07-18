@@ -8,7 +8,7 @@
  *
  * Created on 10/Jul/2010, 1:40:28
  */
-package org.mei.securesim.platform.core.instruments;
+package org.mei.securesim.platform.core.instruments.coverage;
 
 import java.util.Collection;
 import org.mei.securesim.components.instruments.coverage.CoverageInstrument;

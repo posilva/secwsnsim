@@ -17,6 +17,7 @@ import org.mei.securesim.core.engine.Simulator;
  */
 public class ReliabilityInstrument extends Instrument {
     // TODO: Ver para mais de 100 nós
+
     private static ReliabilityInstrument instance;
     protected Hashtable sendingObject = new Hashtable();
     private long delayToSentMessages;
@@ -178,6 +179,11 @@ public class ReliabilityInstrument extends Instrument {
 
         public double getResultValue() {
             return getPerformance();
+        }
+
+        @Override
+        public String toString() {
+            return "" + (getNumberOfRegistredReceivedObjects() * 100 / getNumberOfRegistredSendingObjects());
         }
     }
 }

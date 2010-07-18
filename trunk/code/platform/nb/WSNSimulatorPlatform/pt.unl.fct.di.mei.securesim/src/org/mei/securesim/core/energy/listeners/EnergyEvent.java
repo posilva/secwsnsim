@@ -16,9 +16,18 @@ public class EnergyEvent extends EventObject {
     private long simTime;
     private String event;
     private short nodeid;
+    private String state;
 
     public String getEvent() {
         return event;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     public void setEvent(String event) {
@@ -58,13 +67,14 @@ public class EnergyEvent extends EventObject {
         this.simTime = simTime;
     }
 
-    public EnergyEvent(Object source, double value, long realTime, long simTime, String event, short nodeid) {
+    public EnergyEvent(Object source, double value, long realTime, long simTime, String event, short nodeid, String state) {
         super(source);
         this.value = value;
         this.realTime = realTime;
         this.simTime = simTime;
         this.event = event;
         this.nodeid = nodeid;
+        this.state = state;
     }
 
 

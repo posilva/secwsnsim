@@ -74,6 +74,7 @@
                   <action class="org.mei.securesim.platform.ui.SimulationPanel" id="SetNodeAsSink" methodName="SetNodeAsSink"/>
                 </Property>
                 <Property name="selected" type="boolean" value="true"/>
+                <Property name="text" type="java.lang.String" value="Is Sink Node "/>
               </Properties>
             </MenuItem>
           </SubComponents>
@@ -110,6 +111,19 @@
             <Property name="toolTipText" type="java.lang.String" resourceKey="selNodeShowProperties.toolTipText"/>
           </Properties>
         </MenuItem>
+        <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator3">
+        </Component>
+        <Menu class="javax.swing.JMenu" name="selNodeAttacks">
+          <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="org.mei.securesim.platform.ui.SimulationPanel" id="NodeAttackOptions" methodName="NodeAttackOptions"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Attacks"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodeAttacksActionPerformed"/>
+          </Events>
+        </Menu>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPopupMenu" name="selectionToolPopupMenu">
@@ -118,41 +132,41 @@
         <Property name="useNullLayout" type="boolean" value="true"/>
       </Layout>
       <SubComponents>
-        <Menu class="javax.swing.JMenu" name="selNodesVisualizacao">
+        <Menu class="javax.swing.JMenu" name="selNodesVisualization">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="selNodesVisualizacao.text"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodesVerVizinhos">
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodesShowNeighbors">
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" resourceKey="selNodesVerVizinhos.text"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesVerVizinhosActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesShowNeighborsActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodesVerID">
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodesShowID">
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" resourceKey="selNodesVerID.text"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesVerIDActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesShowIDActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodesVerOsQueMeConhecem">
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodesShowNodesThatKnownme">
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" resourceKey="selNodesVerOsQueMeConhecem.text"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesVerOsQueMeConhecemActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesShowNodesThatKnownmeActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="selNodesOperacao">
+        <Menu class="javax.swing.JMenu" name="selNodesOperations">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="selNodesOperacao.text"/>
           </Properties>
@@ -168,17 +182,17 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="selNodesMonitorizacao">
+        <Menu class="javax.swing.JMenu" name="selNodesMonitoring">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="selNodesMonitorizacao.text"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="selNodesMonitEnergia">
+            <MenuItem class="javax.swing.JMenuItem" name="selNodesMonitEnergy">
               <Properties>
                 <Property name="text" type="java.lang.String" resourceKey="selNodesMonitEnergia.text"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesMonitEnergiaActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesMonitEnergyActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -191,6 +205,16 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesRunEventActionPerformed"/>
           </Events>
         </MenuItem>
+        <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator2">
+        </Component>
+        <Menu class="javax.swing.JMenu" name="selNodesAttack">
+          <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="org.mei.securesim.platform.ui.SimulationPanel" id="ShowAttackOptions" methodName="ShowAttackOptions"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Attacks"/>
+          </Properties>
+        </Menu>
         <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
         </Component>
         <MenuItem class="javax.swing.JMenuItem" name="selNodesShowProperties">

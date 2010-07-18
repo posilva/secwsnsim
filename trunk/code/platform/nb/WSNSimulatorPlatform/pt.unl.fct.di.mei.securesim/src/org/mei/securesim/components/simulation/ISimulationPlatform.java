@@ -13,7 +13,7 @@ public interface ISimulationPlatform {
     void showLogMessage(String message);
 
     void onStartPlatform();
-    
+
     void onExitPlatform();
 
     void onStartSimulation();
@@ -22,8 +22,13 @@ public interface ISimulationPlatform {
 
     void onStopSimulation();
 
-    void updateSimulationState (String state);
+    void updateSimulationState(String state);
 
+    public void setSimulationNrNodes(int size);
 
-    
+    public void updateSimulationFieldSize();
+
+    public void updateAverageNeighborsPerNode();
+
+    public void update();
 }

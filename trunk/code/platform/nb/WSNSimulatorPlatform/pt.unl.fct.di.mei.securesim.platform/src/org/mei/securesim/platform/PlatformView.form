@@ -145,14 +145,12 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="showInstrumentPanel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="tgbMarkStableNodes" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="tgbSelectStableNodes" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="showRoutingInfo" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="391" max="32767" attributes="0"/>
+                          <EmptySpace pref="501" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -160,7 +158,6 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="showInstrumentPanel" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="tgbMarkStableNodes" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="tgbSelectStableNodes" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="showRoutingInfo" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -171,15 +168,6 @@
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JButton" name="showInstrumentPanel">
-                  <Properties>
-                    <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                      <action class="org.mei.securesim.platform.PlatformView" id="ShowInstrumentsPanel" methodName="ShowInstrumentsPanel"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" resourceKey="showInstrumentPanel.text"/>
-                    <Property name="name" type="java.lang.String" value="showInstrumentPanel" noResource="true"/>
-                  </Properties>
-                </Component>
                 <Component class="javax.swing.JToggleButton" name="tgbMarkStableNodes">
                   <Properties>
                     <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
@@ -371,8 +359,8 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="simPropertiesSubMenu">
               <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Ctrl+Alt+P"/>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="org.mei.securesim.platform.PlatformView" id="ShowSimulationProperties" methodName="ShowSimulationProperties"/>
                 </Property>
                 <Property name="text" type="java.lang.String" resourceKey="simPropertiesSubMenu.text"/>
                 <Property name="name" type="java.lang.String" value="simPropertiesSubMenu" noResource="true"/>
@@ -398,80 +386,92 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="instrumentsMenu">
+        <Menu class="javax.swing.JMenu" name="ViewMenu">
           <Properties>
-            <Property name="text" type="java.lang.String" resourceKey="instrumentsMenu.text"/>
-            <Property name="name" type="java.lang.String" value="instrumentsMenu" noResource="true"/>
+            <Property name="text" type="java.lang.String" resourceKey="ViewMenu.text"/>
+            <Property name="name" type="java.lang.String" value="ViewMenu" noResource="true"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="coverageCtlPanelMenu">
+            <Menu class="javax.swing.JMenu" name="jMenu3">
               <Properties>
-                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                  <action class="org.mei.securesim.platform.PlatformView" id="ShowCoverageControllerInfo" methodName="ShowCoverageControllerInfo"/>
-                </Property>
-                <Property name="text" type="java.lang.String" resourceKey="coverageCtlPanelMenu.text"/>
-                <Property name="name" type="java.lang.String" value="coverageCtlPanelMenu" noResource="true"/>
+                <Property name="text" type="java.lang.String" resourceKey="jMenu3.text"/>
+                <Property name="name" type="java.lang.String" value="jMenu3" noResource="true"/>
               </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator4">
-              <Properties>
-                <Property name="name" type="java.lang.String" value="jSeparator4" noResource="true"/>
-              </Properties>
-            </MenuItem>
-            <Menu class="javax.swing.JMenu" name="energyCtlMenu">
-              <Properties>
-                <Property name="text" type="java.lang.String" resourceKey="energyCtlMenu.text"/>
-                <Property name="enabled" type="boolean" value="false"/>
-                <Property name="name" type="java.lang.String" value="energyCtlMenu" noResource="true"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="energyCtlMenuActionPerformed"/>
-              </Events>
               <SubComponents>
-                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="energyCtlStatusMenu">
+                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
                   <Properties>
-                    <Property name="selected" type="boolean" value="true"/>
-                    <Property name="text" type="java.lang.String" resourceKey="energyCtlStatusMenu.text"/>
-                    <Property name="name" type="java.lang.String" value="energyCtlStatusMenu" noResource="true"/>
+                    <Property name="text" type="java.lang.String" resourceKey="jMenuItem2.text"/>
+                    <Property name="name" type="java.lang.String" value="jMenuItem2" noResource="true"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="energyCtlStatusMenuActionPerformed"/>
-                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="jMenuItem3.text"/>
+                    <Property name="name" type="java.lang.String" value="jMenuItem3" noResource="true"/>
+                  </Properties>
                 </MenuItem>
               </SubComponents>
             </Menu>
-            <Menu class="javax.swing.JMenu" name="coverageCtlMenu">
+            <Menu class="javax.swing.JMenu" name="Output">
               <Properties>
-                <Property name="text" type="java.lang.String" resourceKey="coverageCtlMenu.text"/>
-                <Property name="enabled" type="boolean" value="false"/>
-                <Property name="name" type="java.lang.String" value="coverageCtlMenu" noResource="true"/>
-              </Properties>
-              <Events>
-                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="coverageCtlMenuMouseEntered"/>
-                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="coverageCtlMenuMousePressed"/>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="coverageCtlMenuActionPerformed"/>
-              </Events>
-            </Menu>
-            <Menu class="javax.swing.JMenu" name="reliabilityCtlMenu">
-              <Properties>
-                <Property name="text" type="java.lang.String" resourceKey="reliabilityCtlMenu.text"/>
-                <Property name="enabled" type="boolean" value="false"/>
-                <Property name="name" type="java.lang.String" value="reliabilityCtlMenu" noResource="true"/>
+                <Property name="text" type="java.lang.String" resourceKey="Output.text"/>
+                <Property name="name" type="java.lang.String" value="Output" noResource="true"/>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="reliabilityCtlStatusMenu">
+                <MenuItem class="javax.swing.JMenuItem" name="viewApplicationOutput">
                   <Properties>
-                    <Property name="selected" type="boolean" value="true"/>
-                    <Property name="text" type="java.lang.String" resourceKey="reliabilityCtlStatusMenu.text"/>
-                    <Property name="name" type="java.lang.String" value="reliabilityCtlStatusMenu" noResource="true"/>
+                    <Property name="text" type="java.lang.String" resourceKey="viewApplicationOutput.text"/>
+                    <Property name="name" type="java.lang.String" value="viewApplicationOutput" noResource="true"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="reliabilityCtlStatusMenuActionPerformed"/>
-                  </Events>
                 </MenuItem>
-                <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator6">
+                <MenuItem class="javax.swing.JMenuItem" name="viewRoutingOutput">
                   <Properties>
-                    <Property name="name" type="java.lang.String" value="jSeparator6" noResource="true"/>
+                    <Property name="text" type="java.lang.String" resourceKey="viewRoutingOutput.text"/>
+                    <Property name="name" type="java.lang.String" value="viewRoutingOutput" noResource="true"/>
+                  </Properties>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
+            <Menu class="javax.swing.JMenu" name="viewInstruments">
+              <Properties>
+                <Property name="text" type="java.lang.String" resourceKey="viewInstruments.text"/>
+                <Property name="name" type="java.lang.String" value="viewInstruments" noResource="true"/>
+              </Properties>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="viewReliabilityControlPanel">
+                  <Properties>
+                    <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                      <action class="org.mei.securesim.platform.PlatformView" id="viewReliabilityControlPanelAction" methodName="viewReliabilityControlPanelAction"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" resourceKey="viewReliabilityControlPanel.text"/>
+                    <Property name="name" type="java.lang.String" value="viewReliabilityControlPanel" noResource="true"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="viewCoverageControlPanel">
+                  <Properties>
+                    <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                      <action class="org.mei.securesim.platform.PlatformView" id="viewCoverageControlPanelAction" methodName="viewCoverageControlPanelAction"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" resourceKey="viewCoverageControlPanel.text"/>
+                    <Property name="name" type="java.lang.String" value="viewCoverageControlPanel" noResource="true"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="viewEnergyControlPanel">
+                  <Properties>
+                    <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                      <action class="org.mei.securesim.platform.PlatformView" id="viewEnergyControlPanelAction" methodName="viewEnergyControlPanelAction"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" resourceKey="viewEnergyControlPanel.text"/>
+                    <Property name="name" type="java.lang.String" value="viewEnergyControlPanel" noResource="true"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="viewLatencyControlPanel">
+                  <Properties>
+                    <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                      <action class="org.mei.securesim.platform.PlatformView" id="viewLatencyControlPanelAction" methodName="viewLatencyControlPanelAction"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" resourceKey="viewLatencyControlPanel.text"/>
+                    <Property name="name" type="java.lang.String" value="viewLatencyControlPanel" noResource="true"/>
                   </Properties>
                 </MenuItem>
               </SubComponents>
@@ -481,47 +481,41 @@
                 <Property name="name" type="java.lang.String" value="jSeparator2" noResource="true"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="instrumentsConfigMenu">
+            <Menu class="javax.swing.JMenu" name="jMenu5">
               <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Shift+Ctrl+C"/>
-                </Property>
-                <Property name="text" type="java.lang.String" resourceKey="instrumentsConfigMenu.text"/>
-                <Property name="name" type="java.lang.String" value="instrumentsConfigMenu" noResource="true"/>
-              </Properties>
-            </MenuItem>
-            <Menu class="javax.swing.JMenu" name="latencyCtlMenu">
-              <Properties>
-                <Property name="text" type="java.lang.String" resourceKey="latencyCtlMenu.text"/>
-                <Property name="name" type="java.lang.String" value="latencyCtlMenu" noResource="true"/>
+                <Property name="text" type="java.lang.String" resourceKey="jMenu5.text"/>
+                <Property name="name" type="java.lang.String" value="jMenu5" noResource="true"/>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem10">
                   <Properties>
-                    <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                      <action class="org.mei.securesim.platform.PlatformView" id="RunLatency" methodName="RunLatency"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" resourceKey="jMenuItem1.text"/>
-                    <Property name="name" type="java.lang.String" value="jMenuItem1" noResource="true"/>
+                    <Property name="text" type="java.lang.String" resourceKey="jMenuItem10.text"/>
+                    <Property name="name" type="java.lang.String" value="jMenuItem10" noResource="true"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem11">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="jMenuItem11.text"/>
+                    <Property name="name" type="java.lang.String" value="jMenuItem11" noResource="true"/>
                   </Properties>
                 </MenuItem>
               </SubComponents>
             </Menu>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="ViewMenu">
+        <Menu class="javax.swing.JMenu" name="evaluationMenu">
           <Properties>
-            <Property name="text" type="java.lang.String" resourceKey="ViewMenu.text"/>
-            <Property name="name" type="java.lang.String" value="ViewMenu" noResource="true"/>
+            <Property name="text" type="java.lang.String" resourceKey="evaluationMenu.text"/>
+            <Property name="name" type="java.lang.String" value="evaluationMenu" noResource="true"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="SimInfoMenu">
+            <MenuItem class="javax.swing.JMenuItem" name="evalSettingsMenu">
               <Properties>
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                  <action class="org.mei.securesim.platform.PlatformView" id="ShowRoutingInfo" methodName="ShowRoutingInfo"/>
+                  <action class="org.mei.securesim.platform.PlatformView" id="ShowEvaluationPanel" methodName="ShowEvaluationPanel"/>
                 </Property>
-                <Property name="text" type="java.lang.String" resourceKey="SimInfoMenu.text"/>
-                <Property name="name" type="java.lang.String" value="SimInfoMenu" noResource="true"/>
+                <Property name="text" type="java.lang.String" resourceKey="evalSettingsMenu.text"/>
+                <Property name="name" type="java.lang.String" value="evalSettingsMenu" noResource="true"/>
               </Properties>
             </MenuItem>
           </SubComponents>

@@ -2,17 +2,25 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.mei.securesim.core.energy;
 
 /**
  *
  * @author posilva
  */
-public interface EnergyConsumptionAction {
+public abstract class EnergyConsumptionAction {
 
-    public void execute();
+    Object result;
 
-    public int getNumberOfUnits();
+    public Object getResult() {
+        return result;
+    }
 
+    public void setResult(Object result) {
+        this.result = result;
+    }
+
+    public abstract void execute();
+
+    public abstract int getNumberOfUnits();
 }

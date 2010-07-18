@@ -110,8 +110,10 @@ public class Batery {
         totalconsumptions++;
         averageConsumption = tot / totalconsumptions;
 
-        fireOnEnergyConsume(new EnergyEvent(this, value, System.currentTimeMillis(), getHostNode().getSimulator().getSimulationTime(), event, getHostNode().getId()));
-        if (currentPower<=0) getHostNode().shutdown();
+        fireOnEnergyConsume(new EnergyEvent(this, value, System.currentTimeMillis(), getHostNode().getSimulator().getSimulationTime(), event, getHostNode().getId(), getHostNode().getRoutingLayer().getCurrentPhase()));
+        if (currentPower <= 0) {
+            getHostNode().shutdown();
+        }
         lastConsume = value;
     }
 
@@ -125,9 +127,11 @@ public class Batery {
         tot += value;
         totalconsumptions++;
         averageConsumption = tot / totalconsumptions;
-        fireOnEnergyConsume(new EnergyEvent(this, value, System.currentTimeMillis(), getHostNode().getSimulator().getSimulationTime(), UNKNOWNED_EVENT, getHostNode().getId()));
+        fireOnEnergyConsume(new EnergyEvent(this, value, System.currentTimeMillis(), getHostNode().getSimulator().getSimulationTime(), UNKNOWNED_EVENT, getHostNode().getId(), getHostNode().getRoutingLayer().getCurrentPhase()));
         lastConsume = value;
-        if (currentPower<=0) getHostNode().shutdown();
+        if (currentPower <= 0) {
+            getHostNode().shutdown();
+        }
     }
 
     private void fireOnEnergyConsume(EnergyEvent energyEvent) {

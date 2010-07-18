@@ -14,13 +14,13 @@ import java.awt.BorderLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import org.mei.securesim.components.ApplicationOutput;
-import org.mei.securesim.components.IApplicationOutputDisplay;
+import org.mei.securesim.components.IOutputDisplay;
 
 /**
  *
  * @author CIAdmin
  */
-public class ApplicationOutputPanel extends OutputPanel implements IApplicationOutputDisplay {
+public class ApplicationOutputPanel extends OutputPanel implements IOutputDisplay {
 
     private JTextArea txtAreaOutput = new JTextArea();
     private final JScrollPane jScrollPane1 = new JScrollPane();

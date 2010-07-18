@@ -1,11 +1,13 @@
 package org.mei.securesim.core.layers;
 
+import org.mei.securesim.components.LayerOutput;
 import org.mei.securesim.core.nodes.Node;
 
 public abstract class Layer {
 
+    protected LayerOutput output;
     private Node node;
-    protected boolean debugEnabled = false;
+    protected boolean debugEnabled = true;
 
     public Layer() {
         super();
@@ -39,7 +41,43 @@ public abstract class Layer {
      */
     protected void log(String message) {
         if (isDebugEnabled()) {
-            System.out.println("{" + getClass().getSimpleName() + "} <" + getNode().getSimulator().getSimulationTime() + "> - [" + getNode().getId() + "] - " + message);
+            if (output != null) {
+                output.output(this, message);
+            } else {
+                System.out.println("{" + getClass().getSimpleName() + "} <" + getNode().getSimulator().getSimulationTime() + "> - [" + getNode().getId() + "] - " + message);
+            }
+        }
+    }
+    protected void log(String message, Throwable ex) {
+
+        String error = "";
+        if (isDebugEnabled()) {
+            error += ex.getMessage() + "\n";
+            for (int i = 0; i < ex.getStackTrace().length; i++) {
+                StackTraceElement stackTraceElement = ex.getStackTrace()[i];
+                error += stackTraceElement.toString() + "\n";
+            }
+            if (output != null) {
+                output.output(this, "["+message +"]\n"+error);
+            } else {
+                System.out.println("{" + getClass().getSimpleName() + "} <" + getNode().getSimulator().getSimulationTime() + "> - [" + getNode().getId() + "] - " + "["+message +"]\n"+error);
+            }
+        }
+    }
+
+    protected void log(Throwable ex) {
+        String message = "";
+        if (isDebugEnabled()) {
+            message += ex.getMessage() + "\n";
+            for (int i = 0; i < ex.getStackTrace().length; i++) {
+                StackTraceElement stackTraceElement = ex.getStackTrace()[i];
+                message += stackTraceElement.toString() + "\n";
+            }
+            if (output != null) {
+                output.output(this, message);
+            } else {
+                System.out.println("{" + getClass().getSimpleName() + "} <" + getNode().getSimulator().getSimulationTime() + "> - [" + getNode().getId() + "] - " + message);
+            }
         }
     }
 }

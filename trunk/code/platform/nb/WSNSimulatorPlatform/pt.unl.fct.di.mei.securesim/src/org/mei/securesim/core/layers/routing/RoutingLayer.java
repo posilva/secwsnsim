@@ -1,7 +1,8 @@
 package org.mei.securesim.core.layers.routing;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.mei.securesim.components.instruments.coverage.CoverageInstrument;
@@ -14,10 +15,39 @@ import org.mei.securesim.core.layers.Layer;
 
 public abstract class RoutingLayer extends Layer {
 
+    protected List<String> protocolPhase = new LinkedList<String>();
+    protected String currentPhase = null;
+    protected boolean inAttackMode = false;
     protected Application application = null;
     protected boolean autostarted;
     protected boolean stable = false;
     protected RoutingLayerController routingController;
+    protected List<String> attacksLabels = new ArrayList<String>();
+    protected List<Boolean> attacksStatus = new ArrayList<Boolean>();
+
+    public String getCurrentPhase() {
+        return currentPhase;
+    }
+
+    public void setCurrentPhase(String currentPhase) {
+        this.currentPhase = currentPhase;
+    }
+
+    public List<String> getAttacksLabels() {
+        return attacksLabels;
+    }
+
+    public List<Boolean> getAttacksStatus() {
+        return attacksStatus;
+    }
+
+    public boolean isInAttackMode() {
+        return inAttackMode;
+    }
+
+    public void setInAttackMode(boolean inAttackMode) {
+        this.inAttackMode = inAttackMode;
+    }
 
     public boolean isStable() {
         return stable;
@@ -128,8 +158,9 @@ public abstract class RoutingLayer extends Layer {
         boolean result = onSendMessage(message, app);
         return result;
     }
+
     protected abstract String getRoutingTable();
-    
+
     protected abstract void onReceiveMessage(Object message);
 
     protected abstract boolean onSendMessage(Object message, Application app);
@@ -139,4 +170,8 @@ public abstract class RoutingLayer extends Layer {
     protected abstract void onRouteMessage(Object message);
 
     public abstract void sendMessageDone();
+
+    protected abstract void setupAttacks();
+
+    public abstract void newRound();
 }

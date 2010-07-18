@@ -14,7 +14,7 @@ public class Message implements Cloneable {
     private byte[] payload;               // payload of the message
     protected Color color = Color.green;  // message color for de ui
     protected boolean showColor = false;  // message color flag
-
+    protected long totalHops;             // number of hops (must be updated outside
     public Message() {
         messageNumber = numberOfTotalMessage++;
     }
@@ -104,5 +104,15 @@ public class Message implements Cloneable {
 
     public void setShowColor(boolean showColor) {
         this.showColor = showColor;
+    }
+
+    public long getTotalHops() {
+        return totalHops;
+    }
+    /**
+     * Increment a hop in the total hops counter
+     */
+    public void hop(){
+        totalHops++;
     }
 }

@@ -11,6 +11,7 @@ import org.mei.securesim.core.energy.listeners.EnergyListener;
  */
 public class EnergyInstrument implements EnergyListener {
 
+    protected GlobalEnergyDatabase database = new GlobalEnergyDatabase();
     protected static EnergyInstrument instance = null;
 
     public static EnergyInstrument getInstance() {
@@ -25,14 +26,20 @@ public class EnergyInstrument implements EnergyListener {
     public EnergyInstrument() {
     }
 
+    public GlobalEnergyDatabase getDatabase() {
+        return database;
+    }
+
     public synchronized void onConsume(EnergyEvent evt) {
         String ev;
+        final long simTime = SimulationController.getInstance().getSimulation().getTime();
+        ev = evt.getEvent();
         if (SimulationController.getInstance().isLogEnergyEnable()) {
             if (energyLogger != null) {
-                ev = evt.getEvent();
-                energyLogger.update(evt.getNodeid(), ev, evt.getRealTime(), 0, evt.getValue(), "nostate");
+                energyLogger.update(evt.getNodeid(), ev, evt.getRealTime(), simTime, evt.getValue(), evt.getState());
             }
         }
+        database.addConsumption(evt.getNodeid(), ev, evt.getRealTime(), simTime, evt.getValue(), evt.getState());
     }
 
     public EnergyLogger getEnergyLogger() {

@@ -32,11 +32,11 @@ import org.mei.securesim.components.instruments.SimulationController;
 import org.mei.securesim.components.simulation.Simulation;
 import org.mei.securesim.core.ui.ISimulationDisplay;
 import org.mei.securesim.core.engine.events.SimulatorEvent;
+import org.mei.securesim.core.events.DelayedEvent;
 
 import org.mei.securesim.core.nodes.Node;
 import org.mei.securesim.core.radio.RadioModel;
 import org.mei.securesim.core.network.Network;
-import org.mei.securesim.core.ui.Display;
 import org.mei.securesim.utils.RandomGenerator;
 
 /**
@@ -247,10 +247,13 @@ public class Simulator {
      * Processes and executes the next event.
      */
     public synchronized void step() {
-
         Event event = (Event) eventQueue.getAndRemoveFirst();
         if (event != null) {
-            lastEventTime = event.time;
+            if (event instanceof DelayedEvent) {
+                lastEventTime = event.time - ((DelayedEvent) event).getDelay();
+            } else {
+                lastEventTime = event.time;
+            }
             event.execute();
             handlePause();
         } else {
