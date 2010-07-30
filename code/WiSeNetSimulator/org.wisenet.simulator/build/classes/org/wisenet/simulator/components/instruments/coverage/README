@@ -1,0 +1,33 @@
+===========================================================
+- USO DOS INTRUMENTOS DO SIMULADOR
+===========================================================
+-------- MODULO DE COBERTURA ----------
+Para o uso do modulo de cobertura foram definadas algumas especificações.
+Estas especificações passam pela implementação de um conjunto de interfaces que
+fornecem ao Instrumento de Medição de cobertura da rede a informação que se
+pretende avaliar.
+
+Para iniciar definimos o que se entende por cobertura da rede. A cobertura
+de uma rede pode ser definida de duas formas: Total e Parcial. Com a cobertura
+Total pretende-se medir a capacidade de uma mensagem chegar de um ponto da
+rede a qualquer outro onde esta informação seja necessária, permitindo estabele-
+cer um ponto de comparação com o melhor caso que será o flooding. A cobertura
+parcial caracteriza-se pela capacidade de um nó conseguir enviar para os seus
+vizinhos uma mensagens e receber dele o ACK, permitindo comparar com cobertura
+fisica definada pela componente radio. A caracterização do módulo visa a
+extrapolação destes valores de cobertura a partir de uma amostra da rede e não
+da totalidade da rede, ainda que isto possa ser conseguido escolhendo N - 1 nós
+como geradores de informação e 1 nó como colector de informação.
+Note-se que estes módulos foram concebidos para serem utilizados na avaliação de
+protocolos de encaminhamento de dados em RSSF
+...................
+Como Funciona
+...................
+Ao nível do Interface Gráfico, selecciona-se um conjunto de nós como geradores
+de informação (pode ser feito de modo aleatório).
+
+
+
+
+
+
