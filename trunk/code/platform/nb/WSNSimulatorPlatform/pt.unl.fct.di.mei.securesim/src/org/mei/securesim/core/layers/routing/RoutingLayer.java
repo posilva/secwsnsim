@@ -84,12 +84,6 @@ public abstract class RoutingLayer extends Layer {
 
     public RoutingLayer() {
         super();
-
-
-
-    }
-
-    public void init() {
     }
 
     /**
@@ -137,15 +131,17 @@ public abstract class RoutingLayer extends Layer {
         onRouteMessage(message);
     }
 
-    public void receiveMessage(Object message) {
+    public final void receiveMessage(Object message) {
         if (this instanceof IInstrumentHandler) {
             if (message instanceof IInstrumentMessage) {
                 CoverageInstrument.getInstance().notifyMessageReceived((IInstrumentMessage) message, (IInstrumentHandler) this);
                 ReliabilityInstrument.getInstance().notifyMessageReceived((IInstrumentMessage) message, (IInstrumentHandler) this);
             }
         }
-
-        onReceiveMessage(message);
+        if (beforeReceiveMessage(message)) {
+            onReceiveMessage(message);
+            afterReceiveMessage();
+        }
     }
 
     public boolean sendMessage(Object message, Application app) {
@@ -158,6 +154,17 @@ public abstract class RoutingLayer extends Layer {
         boolean result = onSendMessage(message, app);
         return result;
     }
+
+    protected void sendMessageDown(Object message){
+
+        if (beforeSendMessageToAir(message)){
+            sendMessageToAir(message);
+        }
+
+
+
+    }
+
 
     protected abstract String getRoutingTable();
 
@@ -174,4 +181,14 @@ public abstract class RoutingLayer extends Layer {
     protected abstract void setupAttacks();
 
     public abstract void newRound();
+
+    public abstract void sendMessageToAir(Object message);
+
+    protected boolean beforeSendMessageToAir(Object message) {
+        return true;
+    }
+
+
+
+
 }

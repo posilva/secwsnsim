@@ -63,6 +63,7 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
     private InstrumentFrame showRoutingInfoFrame;
     private InstrumentFrame showRoutingOutputFrame;
     private InstrumentFrame showAplicationOutputFrame;
+    private java.util.Timer simulationTimer;
 
     public PlatformView(SingleFrameApplication app) {
         super(app);
@@ -661,6 +662,8 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
         boolean status = sw.isOk();
         if (status) //           sw.getSimulationFactory();
         {
+            resetWorkbench();
+            mainPanel.add(workbenchPanel1, java.awt.BorderLayout.CENTER);
             workbenchPanel1.setSimulationFactory(sw.getSimulationFactory());
         }
         sw.dispose();
@@ -675,6 +678,22 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
             PlatformController.getInstance().showSimulationName("");
             ((CoverageInstrument) CoverageInstrument.getInstance()).updateNetworkSize();
         }
+    }
+
+    private void resetWorkbench() {
+        SimulationController.getInstance().reset();
+        workbenchPanel1.setVisible(false);
+        workbenchPanel1 = null;
+        workbenchPanel1 = new WorkbenchPanel();
+        clockCounter.stop();
+        setSelectedNodes("0");
+        setSimulationEvents(0);
+        setSimulationTime("0");
+        setSimulationNrNodes(0);
+        updateAverageNeighborsPerNode();
+        updateClock("0");
+        updateSimulationFieldSize();
+        updateSimulationState("DEPLOY");
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected javax.swing.JLabel FieldSize;
@@ -801,7 +820,8 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
 
     public void onStartSimulation() {
         clockCounter.start();
-        (new java.util.Timer()).schedule(new TimerTask() {
+        simulationTimer =new java.util.Timer();
+        (simulationTimer).schedule(new TimerTask() {
 
             @Override
             public void run() {
@@ -910,7 +930,7 @@ public class PlatformView extends FrameView implements ISimulationPlatform, Exit
     }
 
     private boolean isSimulationValid() {
-        return SimulationController.getInstance().getSimulation() != null ;
+        return SimulationController.getInstance().getSimulation() != null;
     }
 
     public void updateAverageNeighborsPerNode() {
