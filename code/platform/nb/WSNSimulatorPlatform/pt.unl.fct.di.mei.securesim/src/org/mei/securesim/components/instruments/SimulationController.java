@@ -138,9 +138,13 @@ public class SimulationController {
     }
 
     public void reset() {
-        getSimulation().getSimulator().reset();
-        getSimulation().reset();
-        RoutingLayerController.getInstance().reset();
+        try {
+            getSimulation().getSimulator().reset();
+            getSimulation().reset();
+            RoutingLayerController.getInstance().reset();
+
+        } catch (Exception e) {
+        }
     }
 
     public void buildNetwork() {
