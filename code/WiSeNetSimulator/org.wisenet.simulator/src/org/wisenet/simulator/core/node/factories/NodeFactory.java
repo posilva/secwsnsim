@@ -3,10 +3,10 @@ package org.wisenet.simulator.core.nodes.factories;
 import java.lang.reflect.Constructor;
 import java.util. Vector;
 import java.util.List;
-import org.wisenet.simulator.core.application.Application;
+import org.wisenet.simulator.core.Application;
 import org.wisenet.simulator.core.energy.Batery;
 
-import org.wisenet.simulator.core.engine.Simulator;
+import org.wisenet.simulator.core.Simulator;
 import org.wisenet.simulator.core.energy.EnergyModel;
 import org.wisenet.simulator.core.layers.mac.MACLayer;
 import org.wisenet.simulator.core.layers.routing.RoutingLayer;

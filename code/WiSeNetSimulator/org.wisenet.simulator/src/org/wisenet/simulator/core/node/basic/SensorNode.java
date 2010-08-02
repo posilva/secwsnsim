@@ -8,7 +8,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 
 import org.wisenet.simulator.core.ui.ISimulationDisplay;
-import org.wisenet.simulator.core.engine.Simulator;
+import org.wisenet.simulator.core.Simulator;
 import org.wisenet.simulator.core.nodes.Node;
 import org.wisenet.simulator.core.radio.RadioModel;
 
