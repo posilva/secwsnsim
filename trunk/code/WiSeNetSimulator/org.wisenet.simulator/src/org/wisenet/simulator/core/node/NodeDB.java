@@ -1,4 +1,4 @@
-package org.wisenet.simulator.core.network;
+package org.wisenet.simulator.core.nodes;
 
 import java.util.Collection;
 
