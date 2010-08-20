@@ -1,6 +1,6 @@
 package org.wisenet.simulator.core.ui;
 
-import org.wisenet.simulator.core.engine.Simulator;
+import org.wisenet.simulator.core.Simulator;
 import java.awt.Graphics;
 
 public interface ISimulationDisplay {

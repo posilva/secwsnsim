@@ -7,7 +7,7 @@ import java.awt.Rectangle;
 import java.util. Vector;
 import java.util.Random;
 
-import org.wisenet.simulator.core.nodes.Node;
+import org.wisenet.simulator.core.node.Node;
 
 /**
  * @author posilva

@@ -6,11 +6,10 @@ package org.wisenet.simulator.core.energy;
 
 import java.lang.reflect.Field;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.wisenet.simulator.utils.AnnotationUtils;
-import org.wisenet.simulator.utils.annotation.Annotated;
-import org.wisenet.simulator.utils.annotation.EnergyModelParameter;
+import org.wisenet.simulator.utilities.Utilities;
+import org.wisenet.simulator.utilities.annotation.AnnotationUtils;
+import org.wisenet.simulator.utilities.annotation.Annotated;
+import org.wisenet.simulator.utilities.annotation.EnergyModelParameter;
 
 /**
  *
@@ -18,6 +17,22 @@ import org.wisenet.simulator.utils.annotation.EnergyModelParameter;
  */
 public class EnergyModel implements Annotated {
 
+    private static void getEnergyModelDefaultValues(EnergyModel energyModel) throws SecurityException {
+        Vector fields = AnnotationUtils.readEnergyModelParametersFields(energyModel);
+        for (Object object : fields) {
+            try {
+                Field field = (Field) object;
+                EnergyModelParameter p = field.getAnnotation(EnergyModelParameter.class);
+                double v = p.value();
+                field.setAccessible(true);
+                field.set(energyModel, v);
+            } catch (IllegalArgumentException ex) {
+                Utilities.handleException(ex);
+            } catch (IllegalAccessException ex) {
+                Utilities.handleException(ex);
+            }
+        }
+    }
     /**
      * Valores Baseados em
      */
@@ -164,23 +179,14 @@ public class EnergyModel implements Annotated {
         this.verifySignatureEnergy = verifySignatureEnergy;
     }
 
-    public static EnergyModel getDefaultInstance() {
-        EnergyModel energyModel=new EnergyModel();
-        Vector fields = AnnotationUtils.readEnergyModelParametersFields(energyModel);
+    public EnergyModel getInstanceWithDefaultValues() {
+        getEnergyModelDefaultValues(this);
+        return this;
+    }
 
-        for (Object object : fields) {
-            try {
-                Field field = (Field) object;
-                EnergyModelParameter p = field.getAnnotation(EnergyModelParameter.class);
-                double v = p.value();
-                field.setAccessible(true);
-                field.set(energyModel, v);
-            } catch (IllegalArgumentException ex) {
-                Logger.getLogger(EnergyModel.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IllegalAccessException ex) {
-                Logger.getLogger(EnergyModel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+    public static EnergyModel getDefaultInstance() {
+        EnergyModel energyModel = new EnergyModel();
+        getEnergyModelDefaultValues(energyModel);
         return energyModel;
     }
 }

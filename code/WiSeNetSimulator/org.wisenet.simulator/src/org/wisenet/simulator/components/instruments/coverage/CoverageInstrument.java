@@ -5,21 +5,24 @@ import java.util.Hashtable;
 import org.wisenet.simulator.components.instruments.IInstrumentHandler;
 import org.wisenet.simulator.components.instruments.IInstrumentMessage;
 import org.wisenet.simulator.components.instruments.IProbingResult;
-import org.wisenet.simulator.components.instruments.Instrument;
+import org.wisenet.simulator.components.instruments.AbstractInstrument;
 import org.wisenet.simulator.components.instruments.InstrumentEvent;
-import org.wisenet.simulator.components.instruments.SimulationController;
 import org.wisenet.simulator.components.instruments.coverage.listeners.SignalUpdateEvent;
 import org.wisenet.simulator.components.instruments.utils.SignalHandler;
-import org.wisenet.simulator.core.engine.Simulator;
-import org.wisenet.simulator.core.nodes.Node;
+import org.wisenet.simulator.components.simulation.Simulation;
+import org.wisenet.simulator.core.Simulator;
+import org.wisenet.simulator.core.node.Node;
 
 /**
  *
  * @author posilva
  */
-public class CoverageInstrument extends Instrument {
+public class CoverageInstrument extends AbstractInstrument {
 // TODO: Ver para mais de 100 nós
-    private static CoverageInstrument instance;
+
+    public CoverageInstrument(Simulation simulation) {
+        super(simulation);
+    }
 
     /**
      * There 2 types of converage models
@@ -40,13 +43,6 @@ public class CoverageInstrument extends Instrument {
     private SignalHandler routingModelNeighbors = new SignalHandler();
     protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
 
-    public static CoverageInstrument getInstance() {
-        if (instance == null) {
-            instance = new CoverageInstrument();
-        }
-        return instance;
-    }
-
     public void signalNeighborDetectionReset(CoverageModelEnum model) {
         switch (model) {
             case RADIO:
@@ -62,8 +58,8 @@ public class CoverageInstrument extends Instrument {
      * Controls the state of the controller
      */
     public void updateNetworkSize() {
-        radioModelNeighbors.setTotalOfNodes(SimulationController.getInstance().getSimulation().getSimulator().getNodes().size());
-        routingModelNeighbors.setTotalOfNodes(SimulationController.getInstance().getSimulation().getSimulator().getNodes().size());
+        radioModelNeighbors.setTotalOfNodes(getSimulation().getSimulator().getNodes().size());
+        routingModelNeighbors.setTotalOfNodes(getSimulation().getSimulator().getNodes().size());
 
     }
 
@@ -97,8 +93,10 @@ public class CoverageInstrument extends Instrument {
      */
     public synchronized double getCoverageValueByModel(CoverageModelEnum model) {
         if (model == CoverageModelEnum.RADIO) {
+            radioModelNeighbors.setTotalOfNodes(getSimulation().getSimulator().getNodes().size());
             return radioModelNeighbors.calculateGlobalThreshold();
         } else if (model == CoverageModelEnum.ROUTING) {
+            routingModelNeighbors.setTotalOfNodes(getSimulation().getSimulator().getNodes().size());
             return routingModelNeighbors.calculateGlobalThreshold();
         } else {
             throw new IllegalArgumentException("Only radio and routing model can be calculated using this method");
@@ -176,7 +174,7 @@ public class CoverageInstrument extends Instrument {
                     final long interval = getIntervalToSentMessages() * Simulator.ONE_SECOND;
                     final long messageDelay = (numberOfMessagesToSend * interval) + getDelayToSentMessages() * Simulator.ONE_SECOND;
 //                    sender.probing(message);
-                    SimulationController.getInstance().getSimulation().getSimulator().addEvent(new InstrumentEvent(message, sender, getTimesToSentMessages(), messageDelay, interval));
+                    getSimulation().getSimulator().addEvent(new InstrumentEvent(getSimulation().getTime(), message, sender, getTimesToSentMessages(), messageDelay, interval));
                 }
             }
         }
@@ -296,5 +294,9 @@ public class CoverageInstrument extends Instrument {
         public double getResultValue() {
             return getPerformance();
         }
+    }
+
+    public CoverageInstrument() {
+        super();
     }
 }

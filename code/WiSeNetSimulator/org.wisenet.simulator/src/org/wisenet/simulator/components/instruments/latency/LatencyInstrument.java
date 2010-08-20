@@ -5,17 +5,17 @@ import java.util.Hashtable;
 import org.wisenet.simulator.components.instruments.IInstrumentHandler;
 import org.wisenet.simulator.components.instruments.IInstrumentMessage;
 import org.wisenet.simulator.components.instruments.IProbingResult;
-import org.wisenet.simulator.components.instruments.Instrument;
+import org.wisenet.simulator.components.instruments.AbstractInstrument;
 import org.wisenet.simulator.components.instruments.InstrumentEvent;
-import org.wisenet.simulator.components.instruments.SimulationController;
-import org.wisenet.simulator.core.engine.Simulator;
+import org.wisenet.simulator.components.simulation.Simulation;
+import org.wisenet.simulator.core.Simulator;
 
 /**
  * NEsta classe a intenção é registar o numero de mensagens enviadas e verificar se
  * são todas recebidas
  * @author posilva
  */
-public class LatencyInstrument extends Instrument {
+public class LatencyInstrument extends AbstractInstrument {
 
     private static LatencyInstrument instance;
     protected Hashtable sendingObject = new Hashtable();
@@ -28,6 +28,7 @@ public class LatencyInstrument extends Instrument {
      * 
      */
     class LatencyEntry {
+
         int numberOfHops = 0;
         int maxNumberOfHops = Integer.MIN_VALUE;
         int minNumberOfHops = Integer.MAX_VALUE;
@@ -86,7 +87,7 @@ public class LatencyInstrument extends Instrument {
                     numberOfMessagesToSend += getTimesToSentMessages();
                     final long interval = getIntervalToSentMessages() * Simulator.ONE_SECOND;
                     final long messageDelay = getDelayToSentMessages() * Simulator.ONE_SECOND;
-                    SimulationController.getInstance().getSimulation().getSimulator().addEvent(new InstrumentEvent(
+                    getSimulation().getSimulator().addEvent(new InstrumentEvent(getSimulation().getTime(),
                             message,
                             sender,
                             getTimesToSentMessages(),
@@ -229,5 +230,13 @@ public class LatencyInstrument extends Instrument {
         public double getResultValue() {
             return getPerformance();
         }
+    }
+
+    public LatencyInstrument(Simulation simulation) {
+        super(simulation);
+    }
+
+    public LatencyInstrument() {
+        super();
     }
 }

@@ -10,8 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.wisenet.simulator.utilities.Utilities;
 
 /**
  *
@@ -32,7 +31,7 @@ public class EnergyRawFileLogger extends EnergyFileLogger {
             FileOutputStream fos = new FileOutputStream(filename);
             outputStream = new DataOutputStream(new BufferedOutputStream(fos));
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(EnergyRawFileLogger.class.getName()).log(Level.SEVERE, null, ex);
+            Utilities.handleException(ex);
         }
     }
 
@@ -55,7 +54,7 @@ public class EnergyRawFileLogger extends EnergyFileLogger {
             }
 
         } catch (IOException ex) {
-            Logger.getLogger(EnergyRawFileLogger.class.getName()).log(Level.SEVERE, null, ex);
+            Utilities.handleException(ex);
         }
         updating = false;
     }
@@ -79,6 +78,7 @@ public class EnergyRawFileLogger extends EnergyFileLogger {
 
             }
         } catch (Exception e) {
+            Utilities.handleException(e);
         }
     }
 

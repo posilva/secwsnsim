@@ -2,17 +2,18 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.wisenet.simulator.core.nodes.components;
+package org.wisenet.simulator.core.node.components;
 
 import java.util.Random;
-import org.wisenet.simulator.core.nodes.Node;
+import org.wisenet.simulator.core.node.Node;
 
 /**
  *
  * @author posilva
  */
 public abstract class NodeComponent {
-    protected static Random onOff=new Random() ;
+
+    protected static Random onOff = new Random();
     protected Node node;
     protected boolean on;
 
@@ -29,7 +30,7 @@ public abstract class NodeComponent {
     }
 
     public boolean isOn() {
-       // implements some kind of random state in the component
+        // implements some kind of random state in the component
         return onOff.nextBoolean();
     }
 
