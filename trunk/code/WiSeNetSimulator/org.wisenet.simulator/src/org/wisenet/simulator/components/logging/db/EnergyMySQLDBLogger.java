@@ -8,8 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.concurrent.ArrayBlockingQueue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.wisenet.simulator.utilities.Utilities;
 
 /**
  *
@@ -18,7 +17,7 @@ import java.util.logging.Logger;
 public class EnergyMySQLDBLogger extends EnergyDBLogger {
 
     ArrayBlockingQueue<Record> recordsQueue = new ArrayBlockingQueue<Record>(5000);
-    private boolean closed=false;
+    private boolean closed = false;
 
     class Record {
 
@@ -69,9 +68,9 @@ public class EnergyMySQLDBLogger extends EnergyDBLogger {
             this.connection = DriverManager.getConnection(url);
 
         } catch (SQLException ex) {
-            Logger.getLogger(EnergyMySQLDBLogger.class.getName()).log(Level.SEVERE, null, ex);
+            Utilities.handleException(ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(EnergyMySQLDBLogger.class.getName()).log(Level.SEVERE, null, ex);
+            Utilities.handleException(ex);
         }
     }
 
@@ -80,7 +79,7 @@ public class EnergyMySQLDBLogger extends EnergyDBLogger {
         try {
             addRecord2Queue(id, event, realTime, simTime, value, state);
         } catch (SQLException ex) {
-            Logger.getLogger(EnergyMySQLDBLogger.class.getName()).log(Level.SEVERE, null, ex);
+            Utilities.handleException(ex);
         }
     }
 
@@ -123,9 +122,9 @@ public class EnergyMySQLDBLogger extends EnergyDBLogger {
                         Record r = recordsQueue.take();
                         addRecord(r.id, r.event, r.realTime, r.simTime, r.value, r.state);
                     } catch (InterruptedException ex) {
-                        Logger.getLogger(EnergyMySQLDBLogger.class.getName()).log(Level.SEVERE, null, ex);
+                        Utilities.handleException(ex);
                     } catch (SQLException ex) {
-                        Logger.getLogger(EnergyMySQLDBLogger.class.getName()).log(Level.SEVERE, null, ex);
+                        Utilities.handleException(ex);
                     }
                 }
             }

@@ -3,13 +3,13 @@
  */
 package org.wisenet.simulator.components.topology;
 
-import org.wisenet.simulator.utils.annotation.Annotated;
+import org.wisenet.simulator.utilities.annotation.Annotated;
 import java.awt.Rectangle;
 import java.util.Vector;
 
 
 
-import org.wisenet.simulator.core.nodes.Node;
+import org.wisenet.simulator.core.node.Node;
 
 /**
  * @author posilva

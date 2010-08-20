@@ -1,170 +1,556 @@
 package org.wisenet.simulator.components.simulation;
 
+import org.wisenet.simulator.components.instruments.coverage.CoverageInstrument;
+import org.wisenet.simulator.components.instruments.energy.EnergyController;
+import org.wisenet.simulator.components.instruments.latency.LatencyInstrument;
+import org.wisenet.simulator.components.instruments.reliability.ReliabilityInstrument;
+import org.wisenet.simulator.components.simulation.listeners.SimulationListener;
+import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.logging.Logger;
-import org.wisenet.simulator.components.instruments.SimulationController;
+import javax.swing.event.EventListenerList;
+import org.wisenet.simulator.components.instruments.NodeSelectionCondition;
+import org.wisenet.simulator.components.simulation.listeners.SimulationEvent;
+import org.wisenet.simulator.core.listeners.SimulatorEvent;
+import org.wisenet.simulator.core.listeners.SimulatorListener;
+import org.wisenet.simulator.core.node.layers.routing.RoutingLayerController;
+import org.wisenet.simulator.core.node.Node;
 
-import org.wisenet.simulator.components.configuration.ConfigurableObject;
-import org.wisenet.simulator.core.ui.ISimulationDisplay;
-import org.wisenet.simulator.core.engine.Simulator;
-import org.wisenet.simulator.core.radio.RadioModel;
-import org.wisenet.simulator.core.network.Network;
-import org.wisenet.simulator.core.nodes.factories.NodeFactory;
+/**
+ *
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
+ */
+public class Simulation extends AbstractSimulation implements SimulatorListener {
 
-public abstract class Simulation extends ConfigurableObject {
+    /**
+     * Logger object
+     */
+    private static final Logger LOGGER = Logger.getLogger(Simulation.class.getName());
+    /**
+     * The simulations registered listeners
+     */
+    EventListenerList simulationListeners = new EventListenerList();
+    /**
+     * Control flag for radio strength apply moment
+     */
+    protected boolean applyingRadioStrength;
+    /**
+     * Control flag for start state
+     */
+    protected boolean started;
+    /**
+     * Start timestamp for real time
+     */
+    protected long startRealTime;
+    /**
+     * 
+     */
+    protected long stopRealTime;
+    /**
+     * 
+     */
+    protected long executionRealtime;
+    /**
+     * If has a SimulationGUI registered then keep a reference
+     * for notification
+     */
+    protected ISimulationGUI simulationGUI;
+    /**
+     *
+     */
+    protected CoverageInstrument coverageInstrument;
+    /**
+     *
+     */
+    protected ReliabilityInstrument reliabilityInstrument;
+    /**
+     *
+     */
+    protected LatencyInstrument latencyInstrument;
+    /**
+     *
+     */
+    protected EnergyController energyController;
+    /**
+     *
+     */
+    protected boolean logEnergyEnable;
+    /**
+     *
+     */
+    protected String simulationState;
+    /**
+     *
+     */
+    protected RoutingLayerController routingLayerController;
 
-    public final static Logger LOG = Logger.getLogger(Simulation.class.getName());
-    protected String name;
-    private String description;
-    protected Simulator simulator;
-    protected RadioModel radioModel;
-    protected NodeFactory simpleNodeFactory;
-    protected Network network;
-    protected ISimulationDisplay display;
-    protected int nodeRange;
-    protected long seed;
-    private boolean bPreInit = false;
-
+    /**
+     *
+     */
     public Simulation() {
-        super();
-        SimulationController.getInstance().registerSimulation(this);
-
+        setupInstruments();
+        routingLayerController = new RoutingLayerController();
     }
 
-    public void setup() {
-        if (!bPreInit) {
-            preInit();
+    /**
+     * Initialize instruments
+     */
+    private void setupInstruments() {
+        this.coverageInstrument = new CoverageInstrument(this);
+        this.coverageInstrument.setRadioModelThreshold(1);
+
+        this.reliabilityInstrument = new ReliabilityInstrument(this);
+        this.latencyInstrument = new LatencyInstrument(this);
+        this.energyController = new EnergyController(this);
+    }
+
+    @Override
+    public void stop() {
+        SimulationEvent event = new SimulationEvent(this);
+        fireBeforeStop(event);
+        if (event.isCancel()) {
+            event.setReason("Cancelled by user");
+            fireOnStopFailure(event);
+            return;
         }
-        if (simpleNodeFactory == null) {
-            throw new IllegalStateException("Não existe um Simple NodeFactory instanciado");
+        doStop();
+        event = new SimulationEvent(this);
+        fireAfterStop(event);
+    }
+
+    @Override
+    public void start() {
+        SimulationEvent event = new SimulationEvent(this);
+        fireBeforeStart(event);
+        if (event.isCancel()) {
+            event.setReason("Cancelled by user");
+            fireOnStartFailure(event);
+            return;
+        }
+        doStart();
+        event = new SimulationEvent(this);
+        fireAfterStart(event);
+    }
+
+    @Override
+    public void pause() {
+        if (!isValid()) {
+            return;
+        }
+        getSimulator().pause();
+    }
+
+    /**
+     * Apply radio strength for each node in the platform
+     * @param radioStrenght
+     */
+    public void applyRadioStrength(long radioStrenght) {
+        if (!isValid()) {
+            return;
+        }
+        if (applyingRadioStrength) {
+            return;
+        }
+        try {
+            applyingRadioStrength = true;
+            for (Node node : getSimulator().getNodes()) {
+                node.getConfig().setMaximumRadioStrength(radioStrenght);
+            }
+        } catch (Exception e) {
+        } finally {
+            applyingRadioStrength = false;
+
+        }
+
+    }
+
+    public void buildNetwork() {
+        if (!isValid()) {
+            return;
+        }
+        SimulationEvent event = new SimulationEvent(this);
+        fireBeforeBuildNetwork(event);
+        if (!event.isCancel()) {
+            if (isNetworkDeployed()) {
+                getSimulator().init();
+                fireAfterBuildNetwork(event);
+            }
+
         }
     }
 
-    public int getNodeRange() {
-        return nodeRange;
-    }
-
-    public void setNodeRange(int nodeRange) {
-        this.nodeRange = nodeRange;
-    }
-
-    public long getSeed() {
-        return seed;
-    }
-
-    public void setSeed(long seed) {
-        this.seed = seed;
-    }
-
-    public ISimulationDisplay getDisplay() {
-        return display;
-    }
-
-    public void setDisplay(ISimulationDisplay display) {
-        this.display = display;
-    }
-
-    public Simulator getSimulator() {
-        return this.simulator;
-    }
-
-    public void setSimulator(Simulator simulator) {
-        this.simulator = simulator;
-    }
-
-    public Network getNetwork() {
-        return this.network;
-    }
-
-    public void setNetwork(Network network) {
-        this.network = network;
-    }
-
-    public abstract void stop();
-
-    public abstract void start();
-
-    public void reset() {
-        this.name="";
-        this.bPreInit=false;
-        this.description="";
-        this.network=null;
-        this.nodeRange=0;
-        this.radioModel=null;
-        this.seed=0;
-        this.simpleNodeFactory=null;
-        this.simulator=null;
-    }
-
-    public abstract void pause();
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public RadioModel getRadioModel() {
-        return radioModel;
-    }
-
-    public void setRadioModel(RadioModel radioModel) {
-        this.radioModel = radioModel;
-    }
-
-    public NodeFactory getNodeFactory() {
-        return simpleNodeFactory;
-    }
-
-    public void setNodeFactory(NodeFactory simpleNodeFactory) {
-        this.simpleNodeFactory = simpleNodeFactory;
-    }
-
-    protected void init() {
-    }
-
-    public void preInit() {
-        SimulationController.getInstance().resetSimulation();
-        bPreInit = true;
-        if (simulator == null) {
-            throw new IllegalStateException("Não existe um simulador instanciado");
+    public void enableMACLayerDebug(boolean selected) {
+        if (!isValid()) {
+            return;
         }
-        if (radioModel == null) {
-            throw new IllegalStateException("Não existe um radiomodel instanciado");
+        Collection<Node> nodes;
+        nodes = getSimulator().getNodes();
+        for (Node node : nodes) {
+            node.getMacLayer().setDebugEnabled(selected);
         }
-        if (network == null) {
-            throw new IllegalStateException("Não existe uma network instanciada");
+    }
+
+    public void enableRoutingLayerDebug(boolean selected) {
+        if (!isValid()) {
+            return;
         }
-        if (display == null) {
-            throw new IllegalStateException("Não existe um display instanciado");
+        Collection<Node> nodes;
+        nodes = getSimulator().getNodes();
+        for (Node node : nodes) {
+            node.getRoutingLayer().setDebugEnabled(selected);
         }
-        simulator.setRadioModel(radioModel);
-        radioModel.reset();
-        network.reset();
-        simulator.setNetwork(network);
+    }
 
-        simulator.setDisplay(display);
+    public void enterPlatform() {
+        System.out.println("Platform Enter");
+    }
+
+    public void exitPlatform() {
+        System.out.println("Platform Exit");
+    }
+
+    public int getAverageNeighborsPerNode() {
+        try {
+            if (!isValid()) {
+                return -1;
+            }
+            Collection nodes = getSimulator().getNodes();
+            int total = 0;
+            for (Object n : nodes) {
+                Node node = (Node) n;
+                total += node.getMacLayer().getNeighborhood().neighbors.size();
+            }
+            return total / nodes.size();
+
+        } catch (Exception e) {
+        }
+        return 0;
+    }
+
+    public Dimension fieldSize() {
+
+        int maxX = Integer.MIN_VALUE;
+        int minX = Integer.MAX_VALUE;
+        int maxY = Integer.MIN_VALUE;
+        int minY = Integer.MAX_VALUE;
+        int h, w;
+        if (isValid()) {
+
+            if (getSimulator().getNodes().size() > 0) {
+                for (Node node : getSimulator().getNodes()) {
+                    maxX = Math.max(maxX, node.getGraphicNode().getX());
+                    minX = Math.min(minX, node.getGraphicNode().getX());
+                    maxY = Math.max(maxY, node.getGraphicNode().getY());
+                    minY = Math.min(minY, node.getGraphicNode().getY());
+                }
+                h = maxY - minY;
+                w = maxX - minX;
+                return new Dimension(w, h);
+            }
+            return new Dimension(0, 0);
+        } else {
+            return new Dimension(0, 0);
+        }
+    }
+
+    public RoutingLayerController getRoutingLayerController() {
+        return routingLayerController;
+    }
+
+    public ISimulationGUI getSimulationPlatform() {
+        throw new UnsupportedOperationException("Not supported yet.");
+
+
+
 
     }
 
-    public String getDescription() {
-        return description;
+    /**
+     * Verify if the field has some sensor deployed
+     * @return
+     */
+    public boolean isNetworkDeployed() {
+        return (isValid() && (getSimulator().getNodes().size() > 0));
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    /**
+     * Returns if the simulation is started
+     * @return
+     */
+    public boolean isStarted() {
+        return started;
     }
 
-    public void resume() {
-        simulator.resume();
+    /**
+     * Register AbstractSimulation GUI control
+     * @param gui
+     */
+    public void registerGUI(ISimulationGUI gui) {
+        simulationGUI = gui;
     }
 
-    public long getTime() {
-        return getSimulator().getSimulationTime();
+    /**
+     * Select a number of random nodes
+     * @param nroNodes
+     * @return a list with nodes
+     */
+    public List selectRandomNodes(int nroNodes) {
+        return selectRandomNodes(nroNodes, new ArrayList());
     }
 
-    public long getTimeInMilliseconds() {
-        return getSimulator().getSimulationTimeInMillisec();
+    /**
+     * Select a number of random nodes based on a condition
+     * @param nroNodes
+     * @param condition
+     * @return a list with nodes
+     */
+    public List selectRandomNodes(int nroNodes, NodeSelectionCondition condition) {
+        if (nroNodes > getSimulator().getNodes().size()) {
+            throw new IllegalArgumentException("Cannot select more nodes than the number of nodes in the network ");
+        }
+        List randomNodes = new ArrayList();
+        while (randomNodes.size() < nroNodes) {
+            Node node = getSimulator().getRandomNode();
+            if (condition.select(node)) {
+                randomNodes.add(node);
+            }
+        }
+        return randomNodes;
+    }
+
+    /**
+     * The some result can be returned using {@link NodeSelectionCondition}
+     *
+     * @param nroNodes
+     * @param excludeNodes
+     * @return
+     * @deprecated
+     */
+    public List selectRandomNodes(int nroNodes, List excludeNodes) {
+        if (nroNodes > getSimulator().getNodes().size()) {
+            throw new IllegalArgumentException("Cannot select more nodes than the number of nodes in the network ");
+        }
+        List randomNodes = new ArrayList();
+        while (randomNodes.size() < nroNodes) {
+            Node node = getSimulator().getRandomNode();
+            if (!(randomNodes.contains(node) || excludeNodes.contains(node))) {
+                randomNodes.add(node);
+            }
+        }
+        return randomNodes;
+    }
+
+    public void setSimulationState(String state) {
+        simulationState = state;
+    }
+
+    public String getSimulationState() {
+        return simulationState;
+    }
+
+    private void fireAfterStart(SimulationEvent event) {
+        Object[] listeners = simulationListeners.getListenerList();
+        // loop through each listener and pass on the event if needed
+        int numListeners = listeners.length;
+        for (int i = 0; i
+                < numListeners; i += 2) {
+            if (listeners[i] == SimulationListener.class) {
+                // pass the event to the listeners event dispatch method
+                ((SimulationListener) listeners[i + 1]).afterStart(event);
+            }
+        }
+    }
+
+    public void addSimulationListener(SimulationListener listener) {
+        simulationListeners.add(SimulationListener.class, listener);
+    }
+
+    public void removeSimulationListener(SimulationListener listener) {
+        simulationListeners.remove(SimulationListener.class, listener);
+    }
+
+    private void fireBeforeStop(SimulationEvent event) {
+        Object[] listeners = simulationListeners.getListenerList();
+        // loop through each listener and pass on the event if needed
+        int numListeners = listeners.length;
+        for (int i = 0; i
+                < numListeners; i += 2) {
+            if (listeners[i] == SimulationListener.class) {
+                // pass the event to the listeners event dispatch method
+                ((SimulationListener) listeners[i + 1]).beforeStop(event);
+            }
+        }
+    }
+
+    private void fireAfterStop(SimulationEvent event) {
+        Object[] listeners = simulationListeners.getListenerList();
+        // loop through each listener and pass on the event if needed
+        int numListeners = listeners.length;
+        for (int i = 0; i
+                < numListeners; i += 2) {
+            if (listeners[i] == SimulationListener.class) {
+                // pass the event to the listeners event dispatch method
+                ((SimulationListener) listeners[i + 1]).afterStop(event);
+            }
+        }
+    }
+
+    private void fireBeforeStart(SimulationEvent event) {
+        LOGGER.entering(this.getClass().getName(), "fireBeforeStart");
+        Object[] listeners = simulationListeners.getListenerList();
+        // loop through each listener and pass on the event if needed
+        int numListeners = listeners.length;
+        for (int i = 0; i
+                < numListeners; i += 2) {
+            if (listeners[i] == SimulationListener.class) {
+                // pass the event to the listeners event dispatch method
+                ((SimulationListener) listeners[i + 1]).beforeStart(event);
+            }
+        }
+        LOGGER.exiting(this.getClass().getName(), "fireBeforeStart");
+    }
+
+    private void doStart() {
+        startRealTime = System.currentTimeMillis();
+        simulator.start();
+        started = true;
+    }
+
+    private void doStop() {
+        stopRealTime = System.currentTimeMillis();
+        executionRealtime = stopRealTime - startRealTime;
+        started = false;
+    }
+
+    protected boolean isValid() {
+        return getSimulator() != null;
+    }
+
+    protected boolean isSimulationPlatformRegistered() {
+        return simulationGUI != null;
+    }
+
+    public ISimulationGUI getSimulationGUI() {
+        return simulationGUI;
+    }
+
+    public CoverageInstrument getCoverageInstrument() {
+        return coverageInstrument;
+    }
+
+    public EnergyController getEnergyController() {
+        return energyController;
+    }
+
+    public LatencyInstrument getLatencyInstrument() {
+        return latencyInstrument;
+    }
+
+    public ReliabilityInstrument getReliabilityInstrument() {
+        return reliabilityInstrument;
+    }
+
+    public long getExecutionRealtime() {
+        return executionRealtime;
+    }
+
+    public long getCurrentSimulationTime() {
+        return System.currentTimeMillis() - startRealTime;
+    }
+
+    public boolean isLogEnergyEnable() {
+        return logEnergyEnable;
+    }
+
+    public void setLogEnergyEnable(boolean logEnergyEnable) {
+        this.logEnergyEnable = logEnergyEnable;
+    }
+
+    private void fireAfterBuildNetwork(SimulationEvent event) {
+        Object[] listeners = simulationListeners.getListenerList();
+        // loop through each listener and pass on the event if needed
+        int numListeners = listeners.length;
+        for (int i = 0; i
+                < numListeners; i += 2) {
+            if (listeners[i] == SimulationListener.class) {
+                // pass the event to the listeners event dispatch method
+                ((SimulationListener) listeners[i + 1]).afterBuildNetwork(event);
+            }
+        }
+    }
+
+    private void fireBeforeBuildNetwork(SimulationEvent event) {
+        Object[] listeners = simulationListeners.getListenerList();
+        // loop through each listener and pass on the event if needed
+        int numListeners = listeners.length;
+        for (int i = 0; i
+                < numListeners; i += 2) {
+            if (listeners[i] == SimulationListener.class) {
+                // pass the event to the listeners event dispatch method
+                ((SimulationListener) listeners[i + 1]).beforeBuildNetwork(event);
+            }
+        }
+    }
+
+    private void fireOnStartFailure(SimulationEvent event) {
+        Object[] listeners = simulationListeners.getListenerList();
+        // loop through each listener and pass on the event if needed
+        int numListeners = listeners.length;
+        for (int i = 0; i
+                < numListeners; i += 2) {
+            if (listeners[i] == SimulationListener.class) {
+                // pass the event to the listeners event dispatch method
+                ((SimulationListener) listeners[i + 1]).onStartFailure(event);
+            }
+        }
+    }
+
+    private void fireOnStopFailure(SimulationEvent event) {
+        Object[] listeners = simulationListeners.getListenerList();
+        // loop through each listener and pass on the event if needed
+        int numListeners = listeners.length;
+        for (int i = 0; i
+                < numListeners; i += 2) {
+            if (listeners[i] == SimulationListener.class) {
+                // pass the event to the listeners event dispatch method
+                ((SimulationListener) listeners[i + 1]).onStopFailure(event);
+            }
+        }
+    }
+
+    private void fireOnEmptyQueue(SimulationEvent event) {
+        Object[] listeners = simulationListeners.getListenerList();
+        // loop through each listener and pass on the event if needed
+        int numListeners = listeners.length;
+        for (int i = 0; i
+                < numListeners; i += 2) {
+            if (listeners[i] == SimulationListener.class) {
+                // pass the event to the listeners event dispatch method
+                ((SimulationListener) listeners[i + 1]).onEmptyQueue(event);
+            }
+        }
+    }
+
+    public void onEmptyQueue(SimulatorEvent event) {
+        fireOnEmptyQueue(new SimulationEvent(this));
+    }
+
+    public void onNewStepRound(SimulatorEvent event) {
+        fireOnNewSimulatorRound(new SimulationEvent(this));
+    }
+
+    private void fireOnNewSimulatorRound(SimulationEvent event) {
+        Object[] listeners = simulationListeners.getListenerList();
+        // loop through each listener and pass on the event if needed
+        int numListeners = listeners.length;
+        for (int i = 0; i
+                < numListeners; i += 2) {
+            if (listeners[i] == SimulationListener.class) {
+                // pass the event to the listeners event dispatch method
+                ((SimulationListener) listeners[i + 1]).onNewSimulatorRound(event);
+            }
+        }
     }
 }

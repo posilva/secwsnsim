@@ -4,7 +4,7 @@
  */
 package org.wisenet.simulator.components.instruments;
 
-import org.wisenet.simulator.core.nodes.Node;
+import org.wisenet.simulator.core.node.Node;
 
 /**
  *

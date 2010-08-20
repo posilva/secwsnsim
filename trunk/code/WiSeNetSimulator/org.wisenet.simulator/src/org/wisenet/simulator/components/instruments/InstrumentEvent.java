@@ -4,7 +4,7 @@
  */
 package org.wisenet.simulator.components.instruments;
 
-import org.wisenet.simulator.core.engine.Event;
+import org.wisenet.simulator.core.Event;
 
 /**
  *
@@ -18,12 +18,12 @@ public class InstrumentEvent extends Event {
     private final long interval;
     private int timesCt = 0;
 
-    public InstrumentEvent(IInstrumentMessage message, IInstrumentHandler sender, int times, long delay, long interval) {
+    public InstrumentEvent(long time, IInstrumentMessage message, IInstrumentHandler sender, int times, long delay, long interval) {
         this.message = message;
         this.sender = sender;
         this.times = times;
         this.interval = interval;
-        setTime(SimulationController.getInstance().getSimulation().getTime() + delay);
+        setTime(time + delay);
     }
 
     @Override

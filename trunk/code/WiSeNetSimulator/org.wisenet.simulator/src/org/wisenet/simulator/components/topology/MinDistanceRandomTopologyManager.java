@@ -4,7 +4,7 @@
 package org.wisenet.simulator.components.topology;
 
 import java.util.List;
-import org.wisenet.simulator.core.nodes.Node;
+import org.wisenet.simulator.core.node.Node;
 
 /**
  * @author posilva

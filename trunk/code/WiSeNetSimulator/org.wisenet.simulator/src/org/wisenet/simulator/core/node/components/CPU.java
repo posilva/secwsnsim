@@ -1,7 +1,7 @@
-package org.wisenet.simulator.core.nodes.components;
+package org.wisenet.simulator.core.node.components;
 
 import org.wisenet.simulator.core.energy.EnergyConsumptionAction;
-import org.wisenet.simulator.core.nodes.Node;
+import org.wisenet.simulator.core.node.Node;
 
 /**
  *

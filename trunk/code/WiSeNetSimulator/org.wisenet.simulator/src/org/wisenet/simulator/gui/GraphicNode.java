@@ -8,14 +8,16 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import org.wisenet.simulator.core.ui.ISimulationDisplay;
-import org.wisenet.simulator.core.nodes.Node;
+import org.wisenet.simulator.core.node.Node;
 
 /**
  *
  * @author posilva
  */
 public class GraphicNode {
-
+    public final static int UNDER_ATTACK=1;
+    public final static int SINK_NODE=2;
+    
     protected Node physicalNode;
     int id;
     static int count = 0;
@@ -37,9 +39,10 @@ public class GraphicNode {
     private boolean marked;
     private boolean source;
     private boolean destination;
+    private int mode=-1;
 
     public GraphicNode(int x, int y) {
-        moveTo(x, y);
+        moveNode(x, y);
         this.id = count++;
     }
 
@@ -185,8 +188,9 @@ public class GraphicNode {
         paintMark(display);
         paintAsDestination(display);
         paintAsSource(display);
-        fill(display);
+        paintMode(display);
 
+        fill(display);
         paintBorder(display);
         paintSelectionBorder(display);
 
@@ -344,6 +348,33 @@ public class GraphicNode {
 
     public void setSourceColor(Color sourceColor) {
         this.sourceColor = sourceColor;
+    }
+
+    private void moveNode(int x, int y) {
+        moveTo(x, y);
+    }
+
+    public void setMode(int mode) {
+        this.mode = mode;
+    }
+
+    private void paintMode(ISimulationDisplay display) {
+        Graphics g = display.getGraphics();
+        int _x = display.x2ScreenX(x);
+        int _y = display.y2ScreenY(y);
+        saveOldColor(g);
+        
+        if (this.mode==-1) return ;
+        switch (this.mode)
+        {
+            case UNDER_ATTACK:
+                g.setColor(Color.RED);
+                g.fillRect(_x - radius, _y - radius, radius * 3, radius * 3);
+                break;
+            case SINK_NODE:
+                break;
+        }
+        restoreOldColor(g);
     }
 
 }

@@ -4,7 +4,7 @@
  */
 package org.wisenet.simulator.core.events;
 
-import org.wisenet.simulator.core.engine.Event;
+import org.wisenet.simulator.core.Event;
 
 /**
  *

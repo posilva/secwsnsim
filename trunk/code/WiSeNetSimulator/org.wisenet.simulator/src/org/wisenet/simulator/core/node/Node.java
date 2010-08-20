@@ -1,17 +1,17 @@
-package org.wisenet.simulator.core.nodes;
+package org.wisenet.simulator.core.node;
 
 import java.awt.Color;
 import java.text.DecimalFormat;
-import org.wisenet.simulator.core.nodes.components.CPU;
 import org.wisenet.simulator.core.Application;
 import org.wisenet.simulator.core.Event;
 import org.wisenet.simulator.core.ui.ISimulationDisplay;
 import org.wisenet.simulator.core.Simulator;
 import org.wisenet.simulator.core.energy.Batery;
 import org.wisenet.simulator.core.Message;
-import org.wisenet.simulator.core.layers.mac.MACLayer;
-import org.wisenet.simulator.core.layers.routing.RoutingLayer;
-import org.wisenet.simulator.core.nodes.components.Transceiver;
+import org.wisenet.simulator.core.node.components.CPU;
+import org.wisenet.simulator.core.node.layers.mac.MACLayer;
+import org.wisenet.simulator.core.node.layers.routing.RoutingLayer;
+import org.wisenet.simulator.core.node.components.Transceiver;
 import org.wisenet.simulator.core.radio.RadioModel;
 import org.wisenet.simulator.core.radio.RadioModel.Neighborhood;
 import org.wisenet.simulator.gui.GraphicNode;

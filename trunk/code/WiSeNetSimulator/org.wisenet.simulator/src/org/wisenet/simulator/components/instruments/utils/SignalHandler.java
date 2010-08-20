@@ -1,8 +1,7 @@
 package org.wisenet.simulator.components.instruments.utils;
 
 import java.util.Hashtable;
-import org.wisenet.simulator.components.instruments.SimulationController;
-import org.wisenet.simulator.core.nodes.Node;
+import org.wisenet.simulator.core.node.Node;
 
 /**
  *
@@ -69,7 +68,6 @@ public class SignalHandler extends Hashtable<Node, Integer> {
                 total++;
             }
         }
-        totalOfNodes=SimulationController.getInstance().getSimulation().getSimulator().getNodes().size();
         // returns a average value for 
         lastResult = (total * 100 )/ totalOfNodes;
         dirty=false;

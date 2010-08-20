@@ -27,8 +27,8 @@ package org.wisenet.simulator.core.radio;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import org.wisenet.simulator.core.engine.Simulator;
-import org.wisenet.simulator.core.nodes.Node;
+import org.wisenet.simulator.core.Simulator;
+import org.wisenet.simulator.core.node.Node;
 
 /**
  * This class is the abstract baseclass of all radio models.

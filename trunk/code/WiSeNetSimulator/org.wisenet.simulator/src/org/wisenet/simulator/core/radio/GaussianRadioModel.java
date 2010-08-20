@@ -27,9 +27,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import org.wisenet.simulator.components.instruments.coverage.CoverageInstrument;
 
-import org.wisenet.simulator.core.engine.Simulator;
-import org.wisenet.simulator.core.nodes.Node;
-import org.wisenet.simulator.utils.DebugUtils;
+import org.wisenet.simulator.core.Simulator;
+import org.wisenet.simulator.core.node.Node;
 
 /**
  * This radio model uses the assumption that nodes are mainly static, they don't
@@ -98,7 +97,7 @@ public class GaussianRadioModel extends RadioModel {
      */
     public void updateNeighborhoods() {
 
-        ((CoverageInstrument) CoverageInstrument.getInstance()).signalNeighborDetectionReset(CoverageInstrument.CoverageModelEnum.RADIO);
+        getCoverageInstrument().signalNeighborDetectionReset(CoverageInstrument.CoverageModelEnum.RADIO);
         /**
          * Clear neighborhood information
          */
@@ -125,7 +124,7 @@ public class GaussianRadioModel extends RadioModel {
                         /**
                          * Signals the coverage radio model that have a neighbor
                          */
-                        ((CoverageInstrument) CoverageInstrument.getInstance()).signalNeighborDetection(CoverageInstrument.CoverageModelEnum.RADIO, srcNode);
+                        getCoverageInstrument().signalNeighborDetection(CoverageInstrument.CoverageModelEnum.RADIO, srcNode);
 
                     }
                 }
@@ -251,8 +250,6 @@ public class GaussianRadioModel extends RadioModel {
                 throw new IllegalStateException("No nested transmissions are allowed");
             }
 
-            DebugUtils.debugMessage("beginTransmission", stream);
-
             this.stream = stream;
 
             int i = neighbors.size();
@@ -276,7 +273,7 @@ public class GaussianRadioModel extends RadioModel {
          * {@link RadioModel.Neighborhood#beginTransmission} method.
          */
         public void endTransmission() {
-            DebugUtils.debugMessage("endTransmission", stream);
+
             int i = neighbors.size();
             while (--i >= 0) {
                 neighbors.get(i).getMacLayer().receptionEnd(dynamicStrengths.get(i), stream);
@@ -288,5 +285,9 @@ public class GaussianRadioModel extends RadioModel {
          * @param source
          * @param msg
          */
+    }
+
+    protected CoverageInstrument getCoverageInstrument() {
+        return getSimulator().getSimulation().getCoverageInstrument();
     }
 }

@@ -1,9 +1,8 @@
 package org.wisenet.simulator.core.energy;
 
-import org.wisenet.simulator.components.instruments.energy.EnergyInstrument;
 import org.wisenet.simulator.core.energy.listeners.EnergyEvent;
 import org.wisenet.simulator.core.energy.listeners.EnergyListener;
-import org.wisenet.simulator.core.nodes.Node;
+import org.wisenet.simulator.core.node.Node;
 
 public class Batery {
 
@@ -198,7 +197,7 @@ public class Batery {
     }
 
     private void init() {
-        addEnergyListener(EnergyInstrument.getInstance());
+//        addEnergyListener(getHostNode().getSimulator().getSimulation().getManager().getEnergyInstrument());
     }
 
     public double getAverageConsumption() {

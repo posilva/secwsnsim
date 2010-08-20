@@ -4,8 +4,8 @@
  */
 package org.wisenet.simulator.core.events;
 
-import org.wisenet.simulator.components.instruments.SimulationController;
-import org.wisenet.simulator.core.engine.Event;
+import org.wisenet.simulator.core.Event;
+import org.wisenet.simulator.core.Simulator;
 
 /**
  *
@@ -17,6 +17,7 @@ public abstract class Timer extends Event {
     int timesCount = 1;
     long delay = 1;
     boolean stop = false;
+    Simulator simulator;
 
     public long getDelay() {
         return delay;
@@ -34,16 +35,19 @@ public abstract class Timer extends Event {
         this.stop = stop;
     }
 
-    public Timer() {
+    public Timer(Simulator simulator) {
         times = -1;
         delay = 1;
+        this.simulator = simulator;
     }
 
-    public Timer(long delay) {
+    public Timer(Simulator simulator, long delay) {
+        this.simulator = simulator;
         this.delay = delay;
     }
 
-    public Timer(int times, long delay) {
+    public Timer(Simulator simulator, int times, long delay) {
+        this.simulator = simulator;
         this.times = times;
         this.delay = delay;
     }
@@ -59,7 +63,7 @@ public abstract class Timer extends Event {
 
     public void reschedule() {
         setTime(getTime() + delay);
-        SimulationController.getInstance().getSimulation().getSimulator().addEvent(this);
+        getSimulator().addEvent(this);
     }
 
     public void stop() {
@@ -68,7 +72,7 @@ public abstract class Timer extends Event {
 
     public void start() {
         stop = false;
-        setTime(SimulationController.getInstance().getSimulation().getTime());
+        setTime(getSimulator().getSimulationTime());
         reschedule();
     }
 
@@ -87,5 +91,13 @@ public abstract class Timer extends Event {
         if (times > -1 && timesCount > times) {
             stop();
         }
+    }
+
+    public Simulator getSimulator() {
+        return simulator;
+    }
+
+    public void setSimulator(Simulator simulator) {
+        this.simulator = simulator;
     }
 }
