@@ -4,8 +4,8 @@
  */
 package org.wisenet.protocols.insens;
 
-import org.wisenet.simulator.components.crypto.CryptoFunctions;
-import org.wisenet.simulator.core.engine.Simulator;
+import org.wisenet.simulator.utilities.CryptoFunctions;
+import org.wisenet.simulator.core.Simulator;
 
 /**
  *

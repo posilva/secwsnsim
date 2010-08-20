@@ -5,10 +5,10 @@ package org.wisenet.protocols.flooding;
 
 import java.util.HashSet;
 import org.wisenet.protocols.flooding.messages.FloodingMessage;
-import org.wisenet.simulator.core.application.Application;
+import org.wisenet.simulator.core.Application;
 import org.wisenet.simulator.core.energy.EnergyConsumptionAction;
-import org.wisenet.simulator.core.engine.Message;
-import org.wisenet.simulator.core.layers.routing.RoutingLayer;
+import org.wisenet.simulator.core.Message;
+import org.wisenet.simulator.core.node.layers.routing.RoutingLayer;
 
 /**
  * @author posilva
@@ -48,7 +48,8 @@ public class FloodingRoutingLayer extends RoutingLayer {
                             app.receiveMessage(msg);
                         }
                     } else {
-                        getNode().getMacLayer().sendMessage(msg, FloodingRoutingLayer.this);
+                        send(msg);
+
                     }
                 }
             }
@@ -64,7 +65,8 @@ public class FloodingRoutingLayer extends RoutingLayer {
         System.out.println("Message Number: " + ((Message) message).getMessageNumber());
         application = app;
         receivedMessages.add(((Message) message).getMessageNumber());
-        return getNode().getMacLayer().sendMessage(message, this);
+        send(message);
+        return true;
     }
 
     /**
@@ -104,5 +106,11 @@ public class FloodingRoutingLayer extends RoutingLayer {
 
     @Override
     public void sendMessageToAir(Object message) {
+        getNode().getMacLayer().sendMessage(message, FloodingRoutingLayer.this);
+    }
+
+    @Override
+    protected void onStable(boolean oldValue) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

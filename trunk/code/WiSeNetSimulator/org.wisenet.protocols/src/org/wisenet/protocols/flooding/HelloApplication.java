@@ -6,7 +6,7 @@ package org.wisenet.protocols.flooding;
 
 import javax.swing.JOptionPane;
 import org.wisenet.protocols.flooding.messages.FloodingMessage;
-import org.wisenet.simulator.core.application.Application;
+import org.wisenet.simulator.core.Application;
 
 /**
  *

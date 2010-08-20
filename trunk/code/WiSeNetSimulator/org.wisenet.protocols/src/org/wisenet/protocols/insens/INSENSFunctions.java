@@ -7,9 +7,9 @@ package org.wisenet.protocols.insens;
 import org.wisenet.protocols.insens.messages.INSENSMessage;
 import org.wisenet.protocols.insens.messages.data.INSENSMessagePayload;
 import org.wisenet.protocols.insens.utils.OneWaySequenceNumbersChain;
-import org.wisenet.simulator.components.crypto.CryptoFunctions;
+import org.wisenet.simulator.utilities.CryptoFunctions;
 import org.wisenet.simulator.core.energy.EnergyConsumptionAction;
-import org.wisenet.simulator.core.nodes.Node;
+import org.wisenet.simulator.core.node.Node;
 
 /**
  *

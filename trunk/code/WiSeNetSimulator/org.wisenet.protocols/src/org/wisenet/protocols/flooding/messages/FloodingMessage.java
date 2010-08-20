@@ -9,7 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.wisenet.protocols.common.ByteArrayDataInputStream;
 import org.wisenet.protocols.common.ByteArrayDataOutputStream;
-import org.wisenet.simulator.core.engine.Message;
+import org.wisenet.simulator.core.Message;
 
 /**
  *

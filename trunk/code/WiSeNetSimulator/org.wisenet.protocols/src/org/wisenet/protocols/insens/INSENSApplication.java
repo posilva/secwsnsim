@@ -6,8 +6,8 @@ package org.wisenet.protocols.insens;
 
 import javax.swing.JOptionPane;
 import org.wisenet.protocols.insens.messages.INSENSDATAMessage;
-import org.wisenet.simulator.components.ApplicationOutput;
-import org.wisenet.simulator.core.application.Application;
+import org.wisenet.simulator.components.output.ApplicationOutput;
+import org.wisenet.simulator.core.Application;
 
 /**
  *

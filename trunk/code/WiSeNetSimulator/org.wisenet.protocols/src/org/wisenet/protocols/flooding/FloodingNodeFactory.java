@@ -4,14 +4,14 @@
  */
 package org.wisenet.protocols.flooding;
 
-import org.wisenet.simulator.core.layers.mac.Mica2MACLayer;
-import org.wisenet.simulator.core.nodes.factories.NodeFactory;
+import org.wisenet.simulator.core.node.layers.mac.Mica2MACLayer;
+import org.wisenet.simulator.core.node.factories.AbstractNodeFactory;
 
 /**
  *
  * @author posilva
  */
-public class FloodingNodeFactory extends NodeFactory {
+public class FloodingNodeFactory extends AbstractNodeFactory {
 
     public void setup() {
 

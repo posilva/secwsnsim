@@ -4,9 +4,9 @@
  */
 package org.wisenet.protocols.common.events;
 
-import org.wisenet.simulator.core.engine.Simulator;
+import org.wisenet.simulator.core.Simulator;
 import org.wisenet.simulator.core.events.DelayedEvent;
-import org.wisenet.simulator.core.nodes.Node;
+import org.wisenet.simulator.core.node.Node;
 
 /**
  *

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Vector;
 import org.wisenet.protocols.common.ByteArrayDataOutputStream;
 import org.wisenet.protocols.common.events.DelayedMessageEvent;
+import org.wisenet.protocols.insens.attacks.BlackholeRoutingAttack;
 import org.wisenet.protocols.insens.basestation.BaseStationController;
 import org.wisenet.protocols.insens.basestation.ForwardingTable;
 import org.wisenet.protocols.insens.messages.INSENSDATAMessage;
@@ -23,18 +24,16 @@ import org.wisenet.protocols.insens.messages.evaluation.EvaluationINSENSDATAMess
 import org.wisenet.protocols.insens.utils.NeighborInfo;
 import org.wisenet.protocols.insens.utils.NetworkKeyStore;
 import org.wisenet.protocols.insens.utils.OneWaySequenceNumbersChain;
-import org.wisenet.simulator.components.crypto.CryptoFunctions;
+import org.wisenet.simulator.utilities.CryptoFunctions;
 import org.wisenet.simulator.components.instruments.IInstrumentHandler;
 import org.wisenet.simulator.components.instruments.IInstrumentMessage;
-import org.wisenet.simulator.components.instruments.SimulationController;
 import org.wisenet.simulator.components.instruments.coverage.CoverageInstrument;
-import org.wisenet.simulator.components.instruments.reliability.ReliabilityInstrument;
-import org.wisenet.simulator.core.application.Application;
-import org.wisenet.simulator.core.attacks.IBlackHoleAttack;
-import org.wisenet.simulator.core.engine.Message;
-import org.wisenet.simulator.core.engine.Simulator;
+import org.wisenet.simulator.core.Application;
+import org.wisenet.simulator.core.Message;
+import org.wisenet.simulator.core.Simulator;
 import org.wisenet.simulator.core.events.Timer;
-import org.wisenet.simulator.core.layers.routing.RoutingLayer;
+import org.wisenet.simulator.core.node.layers.routing.RoutingLayer;
+import org.wisenet.simulator.core.node.layers.routing.attacks.AttacksEntry;
 //TODO: Ter em conta que Ã© preciso ter um determinado numero de vizinhos para grantir q o protocolo funciona
 //TODO: Ã‰ necessÃ¡rio que se avalie a forÃ§a do sinal por forma a aceitar ou nÃ£o os RREQ
 //TODO: Verificar porque se tem tantas vezes a transmitir quando se recebe e o q
@@ -44,7 +43,7 @@ import org.wisenet.simulator.core.layers.routing.RoutingLayer;
  *
  * @author CIAdmin
  */
-public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandler, IBlackHoleAttack {
+public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandler {
 
     public static final String PHASE_FORWARD_DATA = "FORWARD_DATA";
     public static final String PHASE_ROUTE_FEEDBACK = "ROUTE_FEEDBACK";
@@ -71,7 +70,6 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
      * Control structures
      */
     private BaseStationController baseStationController = null;
-    private boolean reliableMode = true;
     private LinkedList messagesQueue = new LinkedList();
     private boolean sendingMessage;
     /**
@@ -81,6 +79,8 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     private short lastFeedbackMessagesReceivedCheck = 0;
     private byte feedbackMessageRetries;
     private Hashtable tableOfNodesByHops;
+    private boolean reliableMode = false;
+    private boolean blackholeAttackActive;
 
     @Override
     public void onReceiveMessage(Object message) {
@@ -139,15 +139,14 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         } else {
             return false;
         }
-
     }
 
     @Override
     public void setup() {
         setCurrentPhase(PHASE_SETUP);
-        ((CoverageInstrument) CoverageInstrument.getInstance()).signalNeighborDetectionReset(CoverageInstrument.CoverageModelEnum.ROUTING);
+        ((CoverageInstrument) getCoverageInstrument()).signalNeighborDetectionReset(CoverageInstrument.CoverageModelEnum.ROUTING);
         setupEvaluationClasses();
-        setRoutingController(SimulationController.getInstance().getRoutingLayerController());
+        setRoutingController(getNode().getSimulator().getSimulation().getRoutingLayerController());
         getNode().getMacLayer().setDebugEnabled(false);
         getNode().getRoutingLayer().setDebugEnabled(false);
         if (getNode().isSinkNode()) {
@@ -180,7 +179,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
                         if (new_payload != null) {
                             m.setPayload(new_payload);
                             routingController.addMessageSentCounter(INSENSConstants.MSG_ROUTE_UPDATE);
-                            sendMessageToAir((Message) m.clone(), reliableMode);
+                            send((Message) m.clone());
                             log("Forward Message from " + payload.source + " to " + payload.destination);
                         }
                     } else {
@@ -193,7 +192,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
                         if (new_payload != null) {
                             m.setPayload(new_payload);
                             routingController.addMessageSentCounter(INSENSConstants.MSG_DATA);
-                            sendMessageToAir((Message) m.clone(), reliableMode);
+                            send((Message) m.clone());
                             log("Forward Message from " + payloadData.source + " to " + payloadData.destination);
                         }
                     }
@@ -213,12 +212,12 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
      * @param message
      * @param reliable
      */
-    private void broadcastMessage(Message message, boolean reliable) {
+    private void broadcastMessage(Message message) {
         sendingMessage = true;
         long delay = (long) Simulator.randomGenerator.nextDoubleBetween((int) INSENSConstants.MIN_DELAYED_MESSAGE_BOUND, (int) INSENSConstants.MAX_DELAYED_MESSAGE_BOUND);
         long time = (long) (getNode().getSimulator().getSimulationTime());
         DelayedMessageEvent delayMessageEvent = new DelayedMessageEvent(time, delay, message, getNode());
-        delayMessageEvent.setReliable(reliable);
+        delayMessageEvent.setReliable(reliableMode);
         getNode().getSimulator().addEvent(delayMessageEvent);
     }
 
@@ -255,7 +254,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
      * Create the timers needed for operation
      */
     private void createTimers() {
-        this.feedbackMessageStartTimer = new Timer(1, INSENSConstants.FEEDBACK_START_TIME_BOUND + getNode().getId() * 100) {
+        this.feedbackMessageStartTimer = new Timer(getNode().getSimulator(), 1, INSENSConstants.FEEDBACK_START_TIME_BOUND + getNode().getId() * 100) {
 
             @Override
             public void executeAction() {
@@ -263,14 +262,14 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
 
             }
         };
-        this.startForwardTablesCalculesTimer = new Timer(INSENSConstants.FEEDBACK_MSG_RECEIVED_TIME_BOUND) {
+        this.startForwardTablesCalculesTimer = new Timer(getNode().getSimulator(), INSENSConstants.FEEDBACK_MSG_RECEIVED_TIME_BOUND) {
 
             @Override
             public void executeAction() {
                 startComputeRoutingInfo();
             }
         };
-        this.queueMessageDispatchTimer = new Timer(INSENSConstants.MESSAGE_DISPATCH_RATE) {
+        this.queueMessageDispatchTimer = new Timer(getNode().getSimulator(), INSENSConstants.MESSAGE_DISPATCH_RATE) {
 
             @Override
             public void executeAction() {
@@ -288,7 +287,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
                 privateKey, neighborInfo, neighborInfo.getParentMac(), this.getNode());
         INSENSMessage message = new INSENSMessage(payload);
         routingController.addMessageSentCounter(INSENSConstants.MSG_FEEDBACK);
-        sendMessageToAir(message, reliableMode);
+        send(message);
     }
 
     /**
@@ -360,24 +359,10 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
             RREQPayload dummy = new RREQPayload(payload);
             myRoundMAC = dummy.mac;
             routingController.addMessageSentCounter(INSENSConstants.MSG_ROUTE_REQUEST);
-            sendMessageToAir(m, reliableMode);
+            send(m);
             startForwardTablesCalculesTimer.start();
         } catch (INSENSException ex) {
             log(ex);
-        }
-    }
-
-    /**
-     * Sent the message to the air, if send fail then try again
-     * @see DelayedMessageEvent
-     * @param message
-     */
-    private void sendMessageToAir(Message message, boolean reliable) {
-
-        messagesQueue.addLast(message);
-        if (queueMessageDispatchTimer.isStop()) {
-            sendingMessage = false;
-            queueMessageDispatchTimer.start();
         }
     }
 
@@ -408,7 +393,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
             }
         }
         if (!neighborInfo.containsKey(payload.sourceId)) {
-            ((CoverageInstrument) CoverageInstrument.getInstance()).signalNeighborDetection(CoverageInstrument.CoverageModelEnum.ROUTING, this.getNode());
+            ((CoverageInstrument) getCoverageInstrument()).signalNeighborDetection(CoverageInstrument.CoverageModelEnum.ROUTING, this.getNode());
         }
         neighborInfo.addNeighbor(payload.sourceId, payload.mac, isParent);
     }
@@ -445,7 +430,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         RREQPayload dummy = new RREQPayload(payload);
         myRoundMAC = Arrays.copyOf(dummy.mac, dummy.mac.length);
         routingController.addMessageSentCounter(INSENSConstants.MSG_ROUTE_REQUEST);
-        sendMessageToAir(message, reliableMode);
+        send(message);
     }
 
     /**
@@ -462,7 +447,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
             } else { // forward the message if is from my child
                 byte[] new_payload = modifiedParentMAC(payload);
                 routingController.addMessageSentCounter(INSENSConstants.MSG_FEEDBACK);
-                sendMessageToAir(new INSENSMessage(new_payload), reliableMode);
+                send(new INSENSMessage(new_payload));
                 log("Forward FDBK Message From Child " + payload.sourceId);
             }
         }// else drop it
@@ -495,7 +480,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     private void dispatchNextMessage() {
         if (!sendingMessage) {
             if (!messagesQueue.isEmpty()) {
-                broadcastMessage((Message) messagesQueue.peek(), reliableMode);
+                broadcastMessage((Message) messagesQueue.peek());
             } else {
                 queueMessageDispatchTimer.stop();
             }
@@ -564,7 +549,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
                 if (forwardingTables.containsKey(id)) {
                     payload = INSENSMessagePayloadFactory.createRUPDPayload(getNode().getId(), (Short) n, getNode().getId(), OWS, forwardingTables.get(id), privateKey, this.getNode());
                     routingController.addMessageSentCounter(INSENSConstants.MSG_ROUTE_UPDATE);
-                    sendMessageToAir(new INSENSMessage(payload), reliableMode);
+                    send(new INSENSMessage(payload));
                 }
             }
         }
@@ -603,7 +588,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
             byte[] new_payload = encapsulateDataPayload(message);
             message.setPayload(new_payload);
             routingController.addMessageSentCounter(INSENSConstants.MSG_DATA);
-            sendMessageToAir((Message) message.clone(), reliableMode);
+            send((Message) message.clone());
             return true;
         } catch (CloneNotSupportedException ex) {
             log(ex);
@@ -616,7 +601,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     }
 
     /**
-     * Verify if the message its for me
+     * Verify if the message its for me 
      * @param m
      * @return
      */
@@ -634,8 +619,8 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     }
 
     private void setupEvaluationClasses() {
-        CoverageInstrument.getInstance().setMessageClass(EvaluationINSENSDATAMessage.class);
-        ReliabilityInstrument.getInstance().setMessageClass(EvaluationINSENSDATAMessage.class);
+        getCoverageInstrument().setMessageClass(EvaluationINSENSDATAMessage.class);
+        getReliabilityInstrument().setMessageClass(EvaluationINSENSDATAMessage.class);
     }
 
     @Override
@@ -658,12 +643,9 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
 
     @Override
     protected void setupAttacks() {
-        getAttacksLabels().add("Blackhole");
-        getAttacksLabels().add("Wormhole");
-        getAttacksLabels().add("Sybil");
-        getAttacksStatus().add(false);
-        getAttacksStatus().add(false);
-        getAttacksStatus().add(false);
+        boolean attackStatus = getNode().getId() % 5 == 0;
+
+        attacks.addEntry(new AttacksEntry(attackStatus, "Blackhole Attack", new BlackholeRoutingAttack(this)));
     }
 
     @Override
@@ -674,6 +656,20 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     }
 
     @Override
-    public void sendMessageToAir(Object message) {
+    protected void sendMessageToAir(Object message) {
+        messagesQueue.addLast((Message) message);
+        if (queueMessageDispatchTimer.isStop()) {
+            sendingMessage = false;
+            queueMessageDispatchTimer.start();
+        }
+    }
+
+    @Override
+    protected void onStable(boolean oldValue) {
+        if (oldValue == false) {
+            boolean attackStatus = getNode().getId() % 5 == 0;
+            setUnderAttack(attackStatus);
+        }
+
     }
 }
