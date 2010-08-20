@@ -6,9 +6,9 @@ package org.wisenet.protocols.insens;
 
 import java.util.HashSet;
 import org.wisenet.protocols.insens.messages.INSENSDATAMessage;
-import org.wisenet.simulator.components.ApplicationOutput;
-import org.wisenet.simulator.core.application.Application;
-import org.wisenet.simulator.core.engine.Simulator;
+import org.wisenet.simulator.components.output.ApplicationOutput;
+import org.wisenet.simulator.core.Application;
+import org.wisenet.simulator.core.Simulator;
 import org.wisenet.simulator.core.events.Timer;
 
 /**
@@ -23,7 +23,7 @@ public class EvaluateINSENSApplication extends Application {
     Timer reliabilityEvaluationTimer;
 
     Timer createNewEvaluationTimer() {
-        return new Timer(100, Simulator.ONE_SECOND * 5) {
+        return new Timer(getNode().getSimulator(),100, Simulator.ONE_SECOND * 5) {
 
             @Override
             public void executeAction() {

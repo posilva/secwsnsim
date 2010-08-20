@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.wisenet.protocols.common.ByteArrayDataInputStream;
 import org.wisenet.protocols.common.ByteArrayDataOutputStream;
-import org.wisenet.simulator.components.crypto.CryptoFunctions;
+import org.wisenet.simulator.utilities.CryptoFunctions;
 
 /**
  *  Neighbor info storage class

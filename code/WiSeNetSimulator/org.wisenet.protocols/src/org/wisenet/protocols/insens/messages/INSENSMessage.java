@@ -1,6 +1,6 @@
 package org.wisenet.protocols.insens.messages;
 
-import org.wisenet.simulator.core.engine.Message;
+import org.wisenet.simulator.core.Message;
 
 /**
  *

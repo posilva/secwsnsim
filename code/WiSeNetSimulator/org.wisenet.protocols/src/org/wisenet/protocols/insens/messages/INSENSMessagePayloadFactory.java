@@ -12,7 +12,7 @@ import org.wisenet.protocols.insens.INSENSConstants;
 import org.wisenet.protocols.insens.INSENSFunctions;
 import org.wisenet.protocols.insens.basestation.ForwardingTable;
 import org.wisenet.protocols.insens.utils.NeighborInfo;
-import org.wisenet.simulator.core.nodes.Node;
+import org.wisenet.simulator.core.node.Node;
 
 /**
  *

@@ -5,7 +5,7 @@
 package org.wisenet.protocols.flooding;
 
 import org.wisenet.protocols.common.BasicNode;
-import org.wisenet.simulator.core.engine.Simulator;
+import org.wisenet.simulator.core.Simulator;
 import org.wisenet.simulator.core.radio.RadioModel;
 
 /**

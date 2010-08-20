@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.wisenet.protocols.insens.INSENSRoutingLayer;
 import org.wisenet.protocols.insens.basestation.dijkstra.engine.Calculator;
+import org.wisenet.protocols.insens.basestation.dijkstra.engine.CalculatorException;
 import org.wisenet.protocols.insens.messages.data.FDBKPayload;
 import org.wisenet.protocols.insens.utils.NeighborInfo;
 
@@ -108,7 +109,7 @@ public class BaseStationController {
      * @param firstpath
      * @return
      */
-    public LinkedList calculateSecondPath(LinkedList firstpath) {
+    public LinkedList calculateSecondPath(LinkedList firstpath) throws CalculatorException {
         LinkedList path = new LinkedList();
         HashSet S1 = new HashSet();
         HashSet S2 = new HashSet();
@@ -166,7 +167,7 @@ public class BaseStationController {
      * @param to
      * @return
      */
-    private LinkedList calculatePathWithOutFromTo(HashSet S1, Short from, Short to) {
+    private LinkedList calculatePathWithOutFromTo(HashSet S1, Short from, Short to) throws CalculatorException {
         List lst1;
         GraphManager g1 = createNetworkGraphWithOut(S1);
         Calculator c1 = new Calculator();
@@ -291,12 +292,16 @@ public class BaseStationController {
             do {
                 key = getNextKey();
                 if (key != null) {
-                    List value = (List) firstPaths.get(key);
-                    LinkedList new_path = calculateSecondPath((LinkedList) value);
-                    if (new_path != null) {
-                        if (!new_path.isEmpty()) {
-                            updateSecondPath(key, new_path);
+                    try {
+                        List value = (List) firstPaths.get(key);
+                        LinkedList new_path = calculateSecondPath((LinkedList) value);
+                        if (new_path != null) {
+                            if (!new_path.isEmpty()) {
+                                updateSecondPath(key, new_path);
+                            }
                         }
+                    } catch (CalculatorException ex) {
+                        Logger.getLogger(BaseStationController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             } while (key != null);
@@ -378,13 +383,17 @@ public class BaseStationController {
         }
 
         public void run() {
-            Calculator c = new Calculator();
-            c.addVertexs(networkGraph.vertices);
-            c.addEdges(networkGraph.edges);
-            c.prepare();
-            Set s = new HashSet(networkGraph.vertices.subList(from, to));
-            h = c.calculateAllPathsFromTo(start, s);
-            updatePaths(h);
+            try {
+                Calculator c = new Calculator();
+                c.addVertexs(networkGraph.vertices);
+                c.addEdges(networkGraph.edges);
+                c.prepare();
+                Set s = new HashSet(networkGraph.vertices.subList(from, to));
+                h = c.calculateAllPathsFromTo(start, s);
+                updatePaths(h);
+            } catch (CalculatorException ex) {
+                Logger.getLogger(BaseStationController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

@@ -8,8 +8,8 @@ import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.wisenet.simulator.core.engine.Simulator;
-import org.wisenet.simulator.core.nodes.basic.Mica2SensorNode;
+import org.wisenet.simulator.core.Simulator;
+import org.wisenet.simulator.core.node.Mica2SensorNode;
 import org.wisenet.simulator.core.radio.RadioModel;
 import org.wisenet.simulator.core.ui.ISimulationDisplay;
 import org.wisenet.simulator.gui.IDisplayable;

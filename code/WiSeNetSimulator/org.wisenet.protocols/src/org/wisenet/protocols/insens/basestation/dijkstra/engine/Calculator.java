@@ -57,12 +57,12 @@ public class Calculator {
         this.edges.addAll(edges);
     }
 
-    public Calculator prepare() {
+    public Calculator prepare() throws CalculatorException {
         if (nodes.isEmpty()) {
-            throw new RuntimeException("Nodes cannot be empty");
+            throw new CalculatorException("Nodes cannot be empty");
         }
         if (edges.isEmpty()) {
-            throw new RuntimeException("Edges cannot be empty");
+            throw new CalculatorException("Edges cannot be empty");
         }
 //        graph = new Graph(nodes, edges);
         graph = new Graph(new LinkedList<Short>(nodes), edges);
