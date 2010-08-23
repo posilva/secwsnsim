@@ -1,6 +1,0 @@
-Manifest-Version: 1.0
-OpenIDE-Module: pt.unl.fct.di.mei.securesim.wsnplatform
-OpenIDE-Module-Layer: pt/unl/fct/di/mei/securesim/wsnplatform/layer.xml
-OpenIDE-Module-Localizing-Bundle: pt/unl/fct/di/mei/securesim/wsnplatform/Bundle.properties
-OpenIDE-Module-Specification-Version: 1.0
-

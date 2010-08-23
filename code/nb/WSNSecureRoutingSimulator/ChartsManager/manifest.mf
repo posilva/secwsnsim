@@ -1,6 +1,0 @@
-Manifest-Version: 1.0
-OpenIDE-Module: org.sensorsim.chartsmanager
-OpenIDE-Module-Layer: org/sensorsim/chartsmanager/layer.xml
-OpenIDE-Module-Localizing-Bundle: org/sensorsim/chartsmanager/Bundle.properties
-OpenIDE-Module-Specification-Version: 1.0
-
