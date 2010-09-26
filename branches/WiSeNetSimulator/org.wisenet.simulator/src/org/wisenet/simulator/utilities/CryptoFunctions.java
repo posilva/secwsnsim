@@ -2,7 +2,7 @@ package org.wisenet.simulator.utilities;
 
 /**
  *
- * @author posilva
+* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;

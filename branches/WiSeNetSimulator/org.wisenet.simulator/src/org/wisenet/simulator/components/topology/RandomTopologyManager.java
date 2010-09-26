@@ -4,13 +4,14 @@
 package org.wisenet.simulator.components.topology;
 
 import java.awt.Rectangle;
-import java.util. Vector;
+import java.util.List;
+import java.util.Vector;
 import java.util.Random;
 
 import org.wisenet.simulator.core.node.Node;
 
 /**
- * @author posilva
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  *
  */
 public class RandomTopologyManager extends TopologyManager {
@@ -21,6 +22,7 @@ public class RandomTopologyManager extends TopologyManager {
      *
      */
     public RandomTopologyManager() {
+        this.parameters = new RandomTopologyParameters();
     }
 
     /**
@@ -37,8 +39,7 @@ public class RandomTopologyManager extends TopologyManager {
         return random;
     }
 
-    @Override
-    public  Vector<Node> apply(Rectangle rect,  Vector<Node> nodes) {
+    public Vector<Node> apply(Rectangle rect, Vector<Node> nodes) {
         int px = rect.x;
         int py = rect.y;
         if (random == null) {
@@ -52,5 +53,39 @@ public class RandomTopologyManager extends TopologyManager {
             node.setPosition(x, y, z);
         }
         return nodes;
+    }
+
+    @Override
+    protected List<Node> createTopologyImpl() {
+        try {
+            int px = (Integer) parameters.get("x");
+            int py = (Integer) parameters.get("y");
+            int pw = (Integer) parameters.get("width");
+            int ph = (Integer) parameters.get("height");
+            int pz = (Integer) parameters.get("maxelevation");
+            int nNodes = (Integer) parameters.get("nodes");
+            if (random == null) {
+                random = new Random();
+            }
+            List<Node> nodes = nodeFactory.createNodes(nNodes);
+            for (Node node : nodes) {
+                final double x = px + (random.nextDouble() * pw);
+                final double y = py + (random.nextDouble() * ph);
+                final double z = (random.nextDouble() * pz);
+
+                System.out.println(this.getClass().getName() + ": FALTA O MIN E O MAX Z");
+
+                node.setPosition(x, y, z);
+            }
+            return nodes;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+
+    }
+
+    @Override
+    public Vector<Node> apply(Vector<Node> nodes, TopologyParameters parameters) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

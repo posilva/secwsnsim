@@ -6,7 +6,7 @@ import org.wisenet.simulator.core.node.Node;
 
 /**
  *
- * @author posilva
+* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class EnergyWasteEvent extends Event {
 

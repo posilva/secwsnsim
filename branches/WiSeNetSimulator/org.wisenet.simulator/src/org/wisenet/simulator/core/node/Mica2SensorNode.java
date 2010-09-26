@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ ***  Wireless Sensor Network Simulator
+ * The next generation for WSN Simulations
  */
 package org.wisenet.simulator.core.node;
 
@@ -12,12 +12,14 @@ import org.wisenet.simulator.core.ui.ISimulationDisplay;
 
 /**
  *
- * @author posilva
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public abstract class Mica2SensorNode extends SensorNode {
-    private Color paintingPathColor = Color.LIGHT_GRAY;;
 
-    private boolean paintingPaths=true;
+    private Color paintingPathColor = Color.LIGHT_GRAY;
+
+    ;
+    private boolean paintingPaths = true;
 
     public Mica2SensorNode(Simulator sim, RadioModel radioModel) {
         super(sim, radioModel);
@@ -79,6 +81,7 @@ public abstract class Mica2SensorNode extends SensorNode {
         Color oldcolor = g.getColor();
         if (getParentNode() != null) {
             Color c = getMessageColor();
+            g.setColor(c);
             int x1 = getParentNode().getGraphicNode().getX();
             int y1 = getParentNode().getGraphicNode().getY();
             g.drawLine(_x, _y, x1, y1);
@@ -101,5 +104,4 @@ public abstract class Mica2SensorNode extends SensorNode {
     public void setPaintingPathColor(Color paintingPathColor) {
         this.paintingPathColor = paintingPathColor;
     }
-    
 }

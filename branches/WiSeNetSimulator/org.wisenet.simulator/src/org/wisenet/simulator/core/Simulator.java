@@ -24,10 +24,13 @@
 package org.wisenet.simulator.core;
 
 import java.util.Collection;
+import java.util.List;
 
 import java.util.TreeSet;
 import java.util.logging.Logger;
 import javax.swing.event.EventListenerList;
+import org.wisenet.simulator.components.evaluation.tests.AbstractTest;
+import org.wisenet.simulator.components.evaluation.tests.TestTypeEnum;
 import org.wisenet.simulator.components.simulation.AbstractSimulation;
 import org.wisenet.simulator.core.ui.ISimulationDisplay;
 import org.wisenet.simulator.core.events.DelayedEvent;
@@ -49,6 +52,7 @@ import org.wisenet.simulator.utilities.Utilities;
 @SuppressWarnings({"deprecation", "unchecked"})
 public class Simulator {
 
+    final static Logger LOGGER = Logger.getLogger(Simulator.class.getName());
     public static final int SIMULATOR_STEPS = 200;
     public static final int RUNTIME_NUM_STEPS = 1;
     public static final Integer SIMULATION_SPEED_DEFAULT = 80000;
@@ -59,7 +63,6 @@ public class Simulator {
      * List of event simulatorListeners
      */
     protected EventListenerList simulatorListeners = new EventListenerList();
-    final static Logger LOGGER = Logger.getLogger(Simulator.class.getName());
     /**
      * This is a static reference to a Random instance.
      * This makes experiments repeatable, all you have to do is to set
@@ -84,7 +87,7 @@ public class Simulator {
     /** Holds the events */
     public PriorityQueue eventQueue = new PriorityQueue();
     /** The time of the last event using the given resolution */
-    long lastEventTime = 0;
+    protected long lastEventTime = 0;
     /** Needed for the display, stores the maximum of both the x and y coordinates */
     protected double maxCoordinate = 0;
     private ISimulationDisplay display;
@@ -154,18 +157,42 @@ public class Simulator {
 
     private void fireOnNewStepRound(SimulatorEvent event) {
         Object[] listeners = simulatorListeners.getListenerList();
-        // loop through each listener and pass on the event if needed
         int numListeners = listeners.length;
         for (int i = 0; i < numListeners; i += 2) {
             if (listeners[i] == SimulatorListener.class) {
-                // pass the event to the simulatorListeners event dispatch method
                 ((SimulatorListener) listeners[i + 1]).onNewStepRound(event);
             }
         }
     }
 
-    public int getNrEvents() {
+    public int getNumberOfRemainEvents() {
         return eventQueue.size();
+    }
+
+    private void scheduleTemporizedTests() {
+        List<AbstractTest> list = getSimulation().getTestByType(TestTypeEnum.Temporized);
+        if (list != null) {
+            for (AbstractTest abstractTest : list) {
+                if (!abstractTest.isExecuted() && !abstractTest.isExecuting()) {
+                    abstractTest.execute();
+                }
+            }
+        }
+    }
+
+    private void scheduleOnEmptyQueueTests() {
+        List<AbstractTest> list = getSimulation().getTestByType(TestTypeEnum.Temporized);
+        if (list != null) {
+            for (AbstractTest abstractTest : list) {
+                if (!abstractTest.isExecuted() && !abstractTest.isExecuting()) {
+                    abstractTest.execute();
+                }
+            }
+        }
+    }
+
+    public boolean isEmpty() {
+        return getNodes().isEmpty();
     }
 
     /**
@@ -253,19 +280,23 @@ public class Simulator {
     public synchronized void step() {
         Event event = (Event) eventQueue.getAndRemoveFirst();
         if (event != null) {
+            // try to get more accurate event time
             if (event instanceof DelayedEvent) {
                 lastEventTime = event.time - ((DelayedEvent) event).getDelay();
             } else {
                 lastEventTime = event.time;
             }
             event.execute();
+            scheduleTemporizedTests();
             handlePause();
             if (queueWasEmpty) {
                 queueWasEmpty = false;
             }
         } else {
             if (!queueWasEmpty) { // sent only one time per occurrency
+
                 fireOnEmptyQueue(new SimulatorEvent(this));
+                scheduleOnEmptyQueueTests();
             }
             queueWasEmpty = true;
         }
@@ -281,7 +312,6 @@ public class Simulator {
         for (int i = 0; i < n; ++i) {
             step();
         }
-        //System.out.println("Faltam tratar "+ eventQueue.size()+ "eventos") ;
     }
 
     /**
@@ -296,14 +326,13 @@ public class Simulator {
                 long tmax = lastEventTime + (int) (Simulator.ONE_SECOND * timeInSec);
                 while (lastEventTime < tmax) {
                     Event event = (Event) eventQueue.getAndRemoveFirst();
-                    //Event event = (Event)eventQueue.poll();
                     if (event != null) {
                         lastEventTime = event.time;
                         event.execute();
                     } else {
                         break;
                     }
-                    // getDisplay().update();
+                    // getDisplay().updateDisplay();
 
                 }
             }
@@ -322,7 +351,7 @@ public class Simulator {
             public void run() {
                 while (!reset) {
                     step(SIMULATOR_STEPS);
-                    display.update();
+                    display.updateDisplay();
                 }
             }
         });
@@ -342,7 +371,7 @@ public class Simulator {
                 long initDiff = System.currentTimeMillis() - getSimulationTimeInMillisec();
                 while (!reset) {
                     step(RUNTIME_NUM_STEPS);
-                    display.update();
+                    display.updateDisplay();
                     long diff = System.currentTimeMillis() - getSimulationTimeInMillisec();
 
                     if (diff < initDiff) {

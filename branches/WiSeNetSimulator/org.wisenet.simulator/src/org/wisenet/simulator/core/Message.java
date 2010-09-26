@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.util.Arrays;
 
 /**
- *
- * @author posilva
+ * This class represents a network message send by the nodes
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class Message implements Cloneable {
 
@@ -13,14 +13,15 @@ public class Message implements Cloneable {
     private long messageNumber = 0;    // global number of the message
     private byte[] payload;               // payload of the message
     protected Color color = Color.green;  // message color for de ui
-    protected boolean showColor = false;  // message color flag
-    protected long totalHops;             // number of hops (must be updated outside
+    protected boolean showColor = true;  // message color flag
+    protected long totalHops;             // number of hops (must be updated outside)
+
     public Message() {
         messageNumber = numberOfTotalMessage++;
     }
 
     /**
-     * Contructor
+     * Constructor
      * @param payload
      */
     public Message(byte[] payload) {
@@ -109,10 +110,11 @@ public class Message implements Cloneable {
     public long getTotalHops() {
         return totalHops;
     }
+
     /**
      * Increment a hop in the total hops counter
      */
-    public void hop(){
+    public void hop() {
         totalHops++;
     }
 }

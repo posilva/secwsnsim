@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ ***  Wireless Sensor Network Simulator
+ * The next generation for WSN Simulations
  */
 package org.wisenet.simulator.components.logging.db;
 
@@ -12,7 +12,7 @@ import org.wisenet.simulator.utilities.Utilities;
 
 /**
  *
- * @author posilva
+* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class EnergyMySQLDBLogger extends EnergyDBLogger {
 

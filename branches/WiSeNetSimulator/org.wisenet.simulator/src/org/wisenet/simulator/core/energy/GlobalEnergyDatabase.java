@@ -1,14 +1,14 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ ***  Wireless Sensor Network Simulator
+ * The next generation for WSN Simulations
  */
-package org.wisenet.simulator.components.instruments.energy;
+package org.wisenet.simulator.core.energy;
 
 import java.util.Hashtable;
 
 /**
  *
- * @author CIAdmin
+* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class GlobalEnergyDatabase {
 
@@ -38,6 +38,8 @@ public class GlobalEnergyDatabase {
 
     public void reset() {
         eventsEnergy.clear();
+        statesEnergy.clear();
+        nodesEnergy.clear();
     }
 
     private void saveEventEnergy(String event, double value) {
@@ -63,5 +65,12 @@ public class GlobalEnergyDatabase {
 
     private void updateNetworkEnergyConsumption(double value) {
         networkEnergyConsumption += value;
+    }
+    /**
+     * 
+     * @return
+     */
+    public double getTotalEnergySpent() {
+        return networkEnergyConsumption;
     }
 }

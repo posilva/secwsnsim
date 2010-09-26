@@ -10,6 +10,7 @@ public class Batery {
     public static final String DECRYPTION_EVENT = "Decryption";
     public static final String ENCRYPTION_EVENT = "Encryption";
     public static final String IDLE_EVENT = "Idle";
+    public static final int INFINIT_POWER = -1;
     public static final String MACVERIFICATION_EVENT = "MACVerification";
     public static final String MAC_EVENT = "MAC";
     public static final String PROCESSING_EVENT = "Processing";
@@ -22,15 +23,31 @@ public class Batery {
     /**
      * 
      */
+    protected static EnergyController controller = new EnergyController();
+    /**
+     *
+     */
     public boolean enable = true;
-    public static final double INFINIT = -1;
+    /*
+     *
+     */
+    public boolean infinit = false;
+    /**
+     * 
+     */
     EnergyModel energyModel;
+    /**
+     *
+     */
     protected double averageConsumption = 0;
+    /**
+     *
+     */
     protected double totalconsumptions = 0;
     /**
      * 
      */
-    private double currentPower = INFINIT;
+    private double currentPower = INFINIT_POWER;
     /**
      * 
      */
@@ -43,15 +60,6 @@ public class Batery {
      * 
      */
     protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
-    private double lastConsume;
-
-    public double getLastConsume() {
-        return lastConsume;
-    }
-
-    public void setLastConsume(double lastConsume) {
-        this.lastConsume = lastConsume;
-    }
 
     /**
      * 
@@ -70,8 +78,8 @@ public class Batery {
     }
 
     public Batery() {
-        this.initialPower = INFINIT;
-        this.currentPower = INFINIT;
+        this.initialPower = INFINIT_POWER;
+        this.currentPower = INFINIT_POWER;
         init();
     }
 
@@ -89,6 +97,10 @@ public class Batery {
         return currentPower;
     }
 
+    /**
+     * 
+     * @return
+     */
     public boolean off() {
         if (currentPower <= 0) {
             return true;
@@ -97,46 +109,69 @@ public class Batery {
         }
     }
 
+    /**
+     * 
+     * @param value
+     * @param event
+     */
     protected synchronized void consume(double value, String event) {
         if (!enable) {
             return;
         }
+        consumeEvent(value, event);
+    }
 
+    /**
+     * 
+     * @param value
+     * @param event
+     */
+    private void consumeEvent(double value, String event) {
+        reducePower(value);
+        updateInternalCounters(value);
+        EnergyEvent ev = new EnergyEvent(this, value, System.currentTimeMillis(), getHostNode().getSimulator().getSimulationTime(), event, getHostNode().getId(), getHostNode().getRoutingLayer().getCurrentPhase());
+        fireOnEnergyConsume(ev);
+        if (currentPower <= 0) {
+            getHostNode().shutdown();
+        }
+    }
+
+    /**
+     * 
+     * @param value
+     */
+    private void reducePower(double value) {
         currentPower -= value;
+    }
 
+    /**
+     * 
+     * @param value
+     */
+    private void updateInternalCounters(double value) {
         double tot = averageConsumption * totalconsumptions;
         tot += value;
         totalconsumptions++;
         averageConsumption = tot / totalconsumptions;
-
-        fireOnEnergyConsume(new EnergyEvent(this, value, System.currentTimeMillis(), getHostNode().getSimulator().getSimulationTime(), event, getHostNode().getId(), getHostNode().getRoutingLayer().getCurrentPhase()));
-        if (currentPower <= 0) {
-            getHostNode().shutdown();
-        }
-        lastConsume = value;
     }
 
+    /**
+     * 
+     * @param value
+     */
     protected synchronized void consume(double value) {
         if (!enable) {
             return;
         }
-        currentPower -= value;
-
-        double tot = averageConsumption * totalconsumptions;
-        tot += value;
-        totalconsumptions++;
-        averageConsumption = tot / totalconsumptions;
-        fireOnEnergyConsume(new EnergyEvent(this, value, System.currentTimeMillis(), getHostNode().getSimulator().getSimulationTime(), UNKNOWNED_EVENT, getHostNode().getId(), getHostNode().getRoutingLayer().getCurrentPhase()));
-        lastConsume = value;
-        if (currentPower <= 0) {
-            getHostNode().shutdown();
-        }
+        consumeEvent(value, UNKNOWNED_EVENT);
     }
 
+    /**
+     *
+     * @param energyEvent
+     */
     private void fireOnEnergyConsume(EnergyEvent energyEvent) {
         Object[] listeners = listenerList.getListenerList();
-        // Each listener occupies two elements - the first is the listener class
-        // and the second is the listener instance
         for (int i = 0; i < listeners.length; i += 2) {
             if (listeners[i] == EnergyListener.class) {
                 ((EnergyListener) listeners[i + 1]).onConsume(energyEvent);
@@ -144,89 +179,175 @@ public class Batery {
         }
     }
 
+    /**
+     * 
+     * @param length
+     */
     public void consumeTransmission(double length) {
         consume(energyModel.getTransmissionEnergy() * length, TRANSMISSION_EVENT);
     }
 
+    /**
+     *
+     * @param length
+     */
     public void consumeReceiving(int length) {
         consume(energyModel.getReceptionEnergy(), RECEIVING_EVENT);
     }
 
+    /**
+     *
+     * @return
+     */
     public Node getHostNode() {
         return hostNode;
     }
 
+    /**
+     *
+     * @param hostNode
+     */
     public void setHostNode(Node hostNode) {
         this.hostNode = hostNode;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getInitialPower() {
         return initialPower;
     }
 
+    /**
+     *
+     */
     public void consumeCPUTransitionToON() {
         consume(energyModel.getCpuTransitionToActiveEnergy(), CPUTRANSITIONTOON_EVENT);
     }
 
+    /**
+     *
+     * @param rate
+     */
     public void consumeProcessing(long rate) {
         consume(energyModel.processingEnergy * rate, PROCESSING_EVENT);
     }
 
+    /**
+     *
+     * @return
+     */
     public EnergyModel getEnergyModel() {
         return energyModel;
     }
 
+    /**
+     *
+     * @param energyModel
+     */
     public void setEnergyModel(EnergyModel energyModel) {
         this.energyModel = energyModel;
     }
 
+    /**
+     *
+     * @param length
+     */
     public void consumeEncryption(int length) {
         consume(energyModel.getEncryptEnergy() * length, ENCRYPTION_EVENT);
     }
 
+    /**
+     *
+     * @param length
+     */
     public void consumeMAC(int length) {
         consume(energyModel.getDigestEnergy() * length, MAC_EVENT);
     }
 
+    /**
+     *
+     * @param length
+     */
     public void consumeMACVerification(int length) {
         consume(energyModel.getVerifyDigestEnergy() * length, MACVERIFICATION_EVENT);
     }
 
+    /**
+     *
+     * @param length
+     */
     public void consumeDecryption(int length) {
         consume(energyModel.getDecryptEnergy() * length, DECRYPTION_EVENT);
     }
 
+    /**
+     *
+     */
     private void init() {
-//        addEnergyListener(getHostNode().getSimulator().getSimulation().getManager().getEnergyInstrument());
     }
 
+    /**
+     *
+     * @return
+     */
     public double getAverageConsumption() {
         return averageConsumption;
     }
 
+    /**
+     *
+     */
     public void consumeTXTransitionToON() {
         consume(energyModel.getTxTransitionToActiveEnergy(), TXTRANSITIONTOON_EVENT);
 
     }
 
+    /**
+     *
+     */
     public void consumeIdle() {
         consume(energyModel.getIdleEnergy(), IDLE_EVENT);
-
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isEnable() {
         return enable;
     }
 
+    /**
+     *
+     * @param enable
+     */
     public void setEnable(boolean enable) {
         this.enable = enable;
     }
 
+    /**
+     *
+     * @param rate
+     */
     public void consumeSignature(long rate) {
         consume(energyModel.getSignatureEnergy(), SIGNATURE_EVENT);
     }
 
+    /**
+     *
+     * @param rate
+     */
     public void consumeSignatureVerify(long rate) {
         consume(energyModel.getVerifySignatureEnergy(), SIGNATUREVERIFY_EVENT);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public static EnergyController getController() {
+        return controller;
     }
 }

@@ -5,7 +5,7 @@ import org.wisenet.simulator.core.node.Node;
 
 /**
  *
- * @author POSilva
+* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class CPU extends NodeComponent {
 

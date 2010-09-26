@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ ***  Wireless Sensor Network Simulator
+ * The next generation for WSN Simulations
  */
 
 package org.wisenet.simulator.utilities.annotation;
@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 
 /**
  *
- * @author CIAdmin
+* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)

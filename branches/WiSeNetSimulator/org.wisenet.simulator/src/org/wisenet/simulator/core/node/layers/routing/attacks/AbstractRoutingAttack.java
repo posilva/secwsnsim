@@ -1,5 +1,5 @@
 /*
- *  Wireless Sensor Network Simulator
+ **  Wireless Sensor Network Simulator
  *  The next generation for WSN Simulations
  */
 package org.wisenet.simulator.core.node.layers.routing.attacks;
@@ -15,6 +15,7 @@ public abstract class AbstractRoutingAttack implements IRoutingAttack {
     protected RoutingLayer routingLayer = null;
 
     public AbstractRoutingAttack() {
+        
     }
 
     public AbstractRoutingAttack(RoutingLayer routingLayer) {

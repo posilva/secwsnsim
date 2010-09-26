@@ -1,5 +1,5 @@
 /*
- *  Wireless Sensor Network Simulator
+ **  Wireless Sensor Network Simulator
  *  The next generation for WSN Simulations
  */
 package org.wisenet.simulator.services;

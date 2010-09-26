@@ -4,7 +4,7 @@
 package org.wisenet.simulator.utilities;
 
 /**
- * @author posilva
+* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  *
  */
 public class RandomGeneratorNotInitiatedException extends Exception {

@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ ***  Wireless Sensor Network Simulator
+ * The next generation for WSN Simulations
  */
 package org.wisenet.simulator.components.instruments;
 
@@ -10,14 +10,14 @@ import org.wisenet.simulator.utilities.Utilities;
 
 /**
  *
- * @author CIAdmin
+* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public abstract class AbstractInstrument {
 
     protected boolean debugEnabled = true;
     protected int probingTests = 0;
     protected boolean notifyPanel = false;
-    protected static int messageUniqueId = 0;
+    protected static int messageUniqueId = 0; 
     protected boolean autonumber = false;
     protected Vector senders = new Vector();
     protected Vector receivers = new Vector();
@@ -236,5 +236,5 @@ public abstract class AbstractInstrument {
         return simulation;
     }
 
-    public abstract IProbingResult getLastProbeResult();
+    public abstract IResult getLastProbeResult();
 }

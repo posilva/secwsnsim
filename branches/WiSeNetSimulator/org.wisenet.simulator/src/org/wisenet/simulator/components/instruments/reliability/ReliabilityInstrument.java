@@ -4,7 +4,7 @@ import java.util.Hashtable;
 
 import org.wisenet.simulator.components.instruments.IInstrumentHandler;
 import org.wisenet.simulator.components.instruments.IInstrumentMessage;
-import org.wisenet.simulator.components.instruments.IProbingResult;
+import org.wisenet.simulator.components.instruments.IResult;
 import org.wisenet.simulator.components.instruments.AbstractInstrument;
 import org.wisenet.simulator.components.instruments.InstrumentEvent;
 import org.wisenet.simulator.components.simulation.Simulation;
@@ -13,12 +13,13 @@ import org.wisenet.simulator.core.Simulator;
 /**
  * NEsta classe a intenção é registar o numero de mensagens enviadas e verificar se
  * são todas recebidas
- * @author posilva
+* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class ReliabilityInstrument extends AbstractInstrument {
     // TODO: Ver para mais de 100 nós
 
-    protected Hashtable sendingObject = new Hashtable();
+    protected Hashtable sendingObject = new Hashtable()
+            ;
     private long delayToSentMessages;
     private long intervalToSentMessages;
     private int timesToSentMessages;
@@ -146,13 +147,13 @@ public class ReliabilityInstrument extends AbstractInstrument {
     }
 
     @Override
-    public IProbingResult getLastProbeResult() {
+    public IResult getLastProbeResult() {
         ReliabilityProbingResult result = new ReliabilityProbingResult();
 
         return result;
     }
 
-    public class ReliabilityProbingResult implements IProbingResult {
+    public class ReliabilityProbingResult implements IResult {
 
         public int getNumberOfRegistredSendingObjects() {
             return sendingObject.size();

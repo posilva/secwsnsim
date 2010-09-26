@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuration>
+    <simulation>
+        <settings>
+            <seed>1285375774971</seed>
+            <fastmode>true</fastmode>
+            <nodeFactoryClassName>org.wisenet.simulator.temp.insens.INSENSNodeFactory</nodeFactoryClassName>
+            <simulatorClassName>org.wisenet.simulator.core.Simulator</simulatorClassName>
+            <radioModelClassName>org.wisenet.simulator.core.radio.GaussianRadioModel</radioModelClassName>
+            <maxNodeRadioStrength>2300</maxNodeRadioStrength>
+            <energyModelClassName>org.wisenet.simulator.core.energy.EnergyModel</energyModelClassName>
+            <staticz>true</staticz>
+            <minz>0.0</minz>
+            <maxz>0.0</maxz>
+            <environAttenuation>0.0</environAttenuation>
+        </settings>
+    </simulation>
+</configuration>

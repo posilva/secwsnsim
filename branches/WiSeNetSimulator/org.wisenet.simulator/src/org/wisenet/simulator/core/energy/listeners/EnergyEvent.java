@@ -7,7 +7,7 @@ import java.util.EventObject;
 import org.wisenet.simulator.core.energy.Batery;
 
 /**
- * @author posilva
+* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  *
  */
 public class EnergyEvent extends EventObject {

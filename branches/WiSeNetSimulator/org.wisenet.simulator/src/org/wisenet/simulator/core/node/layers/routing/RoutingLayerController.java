@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.wisenet.simulator.core.node.layers.routing;
 
 import java.util.HashSet;
@@ -10,7 +6,7 @@ import java.util.Set;
 
 /**
  *
- * @author CIAdmin
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class RoutingLayerController {
 

@@ -13,7 +13,7 @@ import org.wisenet.simulator.core.radio.RadioModel;
 import org.wisenet.simulator.gui.GraphicNode;
 
 /**
- * @author posilva
+* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  * 
  */
 public abstract class SensorNode extends Node {
@@ -26,6 +26,8 @@ public abstract class SensorNode extends Node {
     protected boolean paintNeighborhoodOrg = false;
     protected boolean showID = false;
     protected static Font monoFont = new Font("Courier", Font.BOLD, 8);
+    private Color neighborsLinkColor=Color.GREEN;
+    private Color othersLinkColor=Color.BLUE;
 
     /**
      * @param sim
@@ -56,11 +58,11 @@ public abstract class SensorNode extends Node {
                     int y2 = disp.y2ScreenY(n.getY());
                     // tem os dois sentidos
                     if (getMacLayer().getNeighborhood().neighborsThatKnowMeSet.contains(n)) {
-                        g.setColor(Color.GREEN);
+                        g.setColor(neighborsLinkColor);
                         g.drawLine(x, y, x2, y2);
                     } else {
                         if (isPaintNeighborhoodDst()) {
-                            g.setColor(Color.BLUE);
+                            g.setColor(othersLinkColor);
                             g.drawLine(x, y, x2, y2);
                         }
                     }
@@ -190,5 +192,21 @@ public abstract class SensorNode extends Node {
 
     public void setSendingColor(Color sendingColor) {
         this.sendingColor = sendingColor;
+    }
+
+    public Color getNeighborsLinkColor() {
+        return neighborsLinkColor;
+    }
+
+    public void setNeighborsLinkColor(Color neighborsLinkColor) {
+        this.neighborsLinkColor = neighborsLinkColor;
+    }
+
+    public Color getOthersLinkColor() {
+        return othersLinkColor;
+    }
+
+    public void setOthersLinkColor(Color othersLinkColor) {
+        this.othersLinkColor = othersLinkColor;
     }
 }

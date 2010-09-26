@@ -6,6 +6,7 @@ import java.util.List;
 import org.wisenet.simulator.components.instruments.coverage.CoverageInstrument;
 import org.wisenet.simulator.components.instruments.IInstrumentHandler;
 import org.wisenet.simulator.components.instruments.IInstrumentMessage;
+import org.wisenet.simulator.components.instruments.latency.LatencyInstrument;
 import org.wisenet.simulator.components.instruments.reliability.ReliabilityInstrument;
 import org.wisenet.simulator.core.Application;
 import org.wisenet.simulator.core.Message;
@@ -15,6 +16,8 @@ import org.wisenet.simulator.core.node.layers.routing.attacks.IRoutingAttack;
 import org.wisenet.simulator.utilities.Utilities;
 
 public abstract class RoutingLayer extends Layer {
+
+    protected static RoutingLayerController routingController = new RoutingLayerController();
     /**
      * List of the attacks implementation
      */
@@ -22,7 +25,7 @@ public abstract class RoutingLayer extends Layer {
     /**
      * This list keeps the multiple routing layer phases
      */
-    protected List<String> protocolPhase = new LinkedList<String>();
+    protected List<String> protocolPhases = new LinkedList<String>();
     /**
      * Current phase
      */
@@ -35,26 +38,14 @@ public abstract class RoutingLayer extends Layer {
      * Flag for controlling routing stability (ready for routing)
      */
     private boolean stable = false;
-    //TODO: verify is its really necessary to have this controller
-    protected RoutingLayerController routingController;
 
     /**
      * Default constructor
      */
     public RoutingLayer() {
         super();
-        attacks = new AttacksList(this);
-
-    }
-
-    /**
-     * Constructor passing controller reference
-     * @deprecated  it's possible to remove this constructor
-     * @param routingController
-     */
-    public RoutingLayer(RoutingLayerController routingController) {
-        this.routingController = routingController;
-        attacks = new AttacksList(this);
+        prepareRouting();
+        prepareAttacks();
     }
 
     /**
@@ -82,30 +73,13 @@ public abstract class RoutingLayer extends Layer {
     }
 
     /**
-     * Gets the routing layer controller 
-     * @return
-     */
-    public RoutingLayerController getRoutingController() {
-        return routingController;
-    }
-
-    /**
-     * Sets the routing layer controller
-     * @param routingController
-     */
-    public void setRoutingController(RoutingLayerController routingController) {
-        this.routingController = routingController;
-    }
-
-    /**
      * Sets if the routing protocol is stable (ready to route messages)
      * @param stable
      */
     public final void setStable(boolean stable) {
-        boolean changed = this.stable!=stable;
-        boolean oldValue=this.stable;
+        boolean changed = this.stable != stable;
+        boolean oldValue = this.stable;
         this.stable = stable;
-
         if (routingController != null) {
             if (stable) {
                 routingController.registerAsStable(this);
@@ -113,7 +87,12 @@ public abstract class RoutingLayer extends Layer {
                 routingController.unregisterAsStable(this);
             }
         }
-        if(changed) onStable(oldValue);
+        /**
+         * Notify stable handlers
+         */
+        if (changed) {
+            onStable(oldValue);
+        }
     }
 
     /**
@@ -130,8 +109,14 @@ public abstract class RoutingLayer extends Layer {
      */
     public void setApplication(Application application) {
         this.application = application;
+    }
 
-
+    /**
+     * Execute procedures for enable routing attacks handler
+     */
+    private void prepareAttacks() {
+        attacks = new AttacksList(this);
+        initAttacks();
     }
 
     /**
@@ -139,22 +124,14 @@ public abstract class RoutingLayer extends Layer {
      * controllers notification
      * @param object
      */
-    public void receiveMessageHandler(Object message) {
+    public void receivedMessageHandler(Object message) {
         try {
+            ((Message) message).hop(); // increment one hop
             Message m = (Message) ((Message) message).clone();
             receiveMessage(m);
         } catch (CloneNotSupportedException ex) {
             Utilities.handleException(ex);
         }
-    }
-
-    /**
-     * This method enables the instrumentation to perform the
-     * controllers notification
-     * @param object
-     */
-    public boolean sendMessageHandler(Object message, Application app) {
-        return sendMessage(message, app);
     }
 
     /**
@@ -174,6 +151,7 @@ public abstract class RoutingLayer extends Layer {
             if (message instanceof IInstrumentMessage) {
                 getCoverageInstrument().notifyMessageReceived((IInstrumentMessage) message, (IInstrumentHandler) this);
                 getReliabilityInstrument().notifyMessageReceived((IInstrumentMessage) message, (IInstrumentHandler) this);
+                getLatencyInstrument().notifyMessageReceived((IInstrumentMessage) message, (IInstrumentHandler) this);
             }
         }
         onReceiveMessage(message);
@@ -190,6 +168,7 @@ public abstract class RoutingLayer extends Layer {
             if (message instanceof IInstrumentMessage) {
                 getCoverageInstrument().notifyMessageSent((IInstrumentMessage) message, (IInstrumentHandler) this);
                 getReliabilityInstrument().notifyMessageSent((IInstrumentMessage) message, (IInstrumentHandler) this);
+                getLatencyInstrument().notifyMessageSent((IInstrumentMessage) message, (IInstrumentHandler) this);
             }
         }
         boolean result = onSendMessage(message, app);
@@ -226,12 +205,24 @@ public abstract class RoutingLayer extends Layer {
     }
 
     /**
+     * Utility method
+     * @return
+     */
+    protected LatencyInstrument getLatencyInstrument() {
+        return getNode().getSimulator().getSimulation().getLatencyInstrument();
+    }
+
+    public AttacksList getAttacks() {
+        return attacks;
+    }
+
+    /**
      * Sent message to the mac layer ( MUST BE used in every routing
      * implementation because enables to intercept routing attacks feature)
      * @param message
      */
     protected final void send(Object message) {
-        if (beforeSendMessageToAir(message)!=null) {
+        if (beforeSendMessageToAir(message) != null) {
             sendMessageToAir(message);
         }
     }
@@ -241,17 +232,21 @@ public abstract class RoutingLayer extends Layer {
      * @param message
      * @return
      */
-    protected Object doAttack(Object message){
-        if (!isUnderAttack()) return message;
-        Object attackedMessage=null;
+    protected Object doAttack(Object message) {
+        if (!isUnderAttack()) {
+            return message;
+        }
+        Object attackedMessage = null;
         // TODO: maybe we only considered the first enabled attack (MUST REVIEW)
         for (AttacksEntry ae : attacks.getAttacksList()) {
-            attackedMessage=message;
-            if (ae.isEnable()){
+            attackedMessage = message;
+            if (ae.isEnable()) {
                 IRoutingAttack attack = (IRoutingAttack) ae.getAttack();
-                attackedMessage=attack.attack(attackedMessage);
-                if (attackedMessage==null) // once the message was disapear
+                attackedMessage = attack.attack(attackedMessage);
+                if (attackedMessage == null) // once the message was disapear
+                {
                     break;                 // we dont keep doing attacks
+                }
             }
         }
         return attackedMessage;
@@ -307,15 +302,31 @@ public abstract class RoutingLayer extends Layer {
     /**
      * Setup stuff for routing protocol
      */
-    public abstract void setup();
+    protected abstract void setup();
 
     public final void startup() {
         setup();
-        setupAttacks();
+
     }
+
+    private void prepareRouting() {
+    }
+
+    public List<String> getProtocolPhases() {
+        return protocolPhases;
+    }
+
+    public static RoutingLayerController getController() {
+        return routingController;
+    }
+
     /**
      * Do some action after switch to stable
      */
-    protected abstract void onStable(boolean oldValue) ;
+    protected abstract void onStable(boolean oldValue);
 
+    /**
+     * Initialize attacks in each node
+     */
+    protected abstract void initAttacks();
 }

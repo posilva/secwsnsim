@@ -21,7 +21,6 @@
  * Author: Gyorgy Balogh, Gabor Pap, Miklos Maroti
  * Date last modified: 02/09/04
  */
-
 package org.wisenet.simulator.core.radio;
 
 import java.util.ArrayList;
@@ -38,81 +37,78 @@ import org.wisenet.simulator.core.node.Node;
  * 
  * @author Gabor Pap, Gyorgy Balogh, Miklos Maroti
  */
-public abstract class RadioModel{
-	private Simulator simulator; 
-	/**
-	 * Radio models must implement this method to create
-	 * a radio model dependent Neighborhood object. 
-	 * One {@link RadioModel.Neighborhood} object is created for
-	 * each {@link Node} object. The newly created
-	 * neighborhood object should be empty, because
-	 * the {@link RadioModel#updateNeighborhoods}
-	 * 
-	 * @return a new Neighborhood object
-	 */	
-	public abstract Neighborhood createNeighborhood();
+public abstract class RadioModel {
 
-	/**
-	 * (Re)calculates the neighborhoods of every transciver 
-	 * in the network. This operation should be called 
-	 * whenever the location of the transcivers changed.  
-	 * This operation is extremely expensive and should 
-	 * be used sparsely.
-	 */
-	public abstract void updateNeighborhoods();
-	
-	/**
-	 * @param simulator the simulator to set
-	 */
-	public void setSimulator(Simulator simulator) {
-		this.simulator = simulator;
-	}
+    private Simulator simulator;
 
-	/**
-	 * @return the simulator
-	 */
-	public Simulator getSimulator() {
-		return simulator;
-	}
+    /**
+     * Radio models must implement this method to create
+     * a radio model dependent Neighborhood object.
+     * One {@link RadioModel.Neighborhood} object is created for
+     * each {@link Node} object. The newly created
+     * neighborhood object should be empty, because
+     * the {@link RadioModel#updateNeighborhoods}
+     *
+     * @return a new Neighborhood object
+     */
+    public abstract Neighborhood createNeighborhood();
 
-    public void reset() {
-        
+    /**
+     * (Re)calculates the neighborhoods of every transciver
+     * in the network. This operation should be called
+     * whenever the location of the transcivers changed.
+     * This operation is extremely expensive and should
+     * be used sparsely.
+     */
+    public abstract void updateNeighborhoods();
+
+    /**
+     * @param simulator the simulator to set
+     */
+    public void setSimulator(Simulator simulator) {
+        this.simulator = simulator;
     }
 
-	/**
-	 * The Neighborhood class represents the set of neighboring nodes of a given
-	 * node. This class is radio model specific and must be derived in the 
-	 * specific radio model.
-	 */
-	public abstract static class Neighborhood{
+    /**
+     * @return the simulator
+     */
+    public Simulator getSimulator() {
+        return simulator;
+    }
+
+    public void reset() {
+    }
+
+    /**
+     * The Neighborhood class represents the set of neighboring nodes of a given
+     * node. This class is radio model specific and must be derived in the
+     * specific radio model.
+     */
+    public abstract static class Neighborhood {
         // vector of neighbors that knowme
-        public ArrayList<Node> neighborsThatKnowMe=new ArrayList<Node>();
 
+        public ArrayList<Node> neighborsThatKnowMe = new ArrayList<Node>();
         /** The vector of the neighboring nodes. */
-		public ArrayList<Node> neighbors=new ArrayList<Node>();
-
-
-        public HashSet<Node> neighborsThatKnowMeSet=new HashSet<Node>();
-
+        public ArrayList<Node> neighbors = new ArrayList<Node>();
+        public HashSet<Node> neighborsThatKnowMeSet = new HashSet<Node>();
         /** The vector of the neighboring nodes. */
-		public HashSet<Node> neighborsSet=new HashSet<Node>();
+        public HashSet<Node> neighborsSet = new HashSet<Node>();
 
+        /**
+         * This method must call the {@link Node#receptionBegin} method of
+         * each of the neighboring nodes.
+         *
+         * @param strength The diminished radio strength of the received
+         * 	signal
+         * @param stream The object represented the data stream.
+         */
+        public abstract void beginTransmission(double strength, Object stream);
 
-		/**
-		 * This method must call the {@link Node#receptionBegin} method of
-		 * each of the neighboring nodes. 
-		 * 
-		 * @param strength The diminished radio strength of the received 
-		 * 	signal
-		 * @param stream The object represented the data stream.
-		 */
-		public abstract void beginTransmission(double strength, Object stream);
-
-		/**
-		 * It must guarantee that each {@link Node#receptionBegin} call is 
-		 * matched with a {@link Node#receptionEnd} call with the exact same 
-		 * parameters.
-		 */
-		public abstract void endTransmission();
-	}
+        /**
+         * It must guarantee that each {@link Node#receptionBegin} call is
+         * matched with a {@link Node#receptionEnd} call with the exact same
+         * parameters.
+         */
+        public abstract void endTransmission();
+    }
 }
