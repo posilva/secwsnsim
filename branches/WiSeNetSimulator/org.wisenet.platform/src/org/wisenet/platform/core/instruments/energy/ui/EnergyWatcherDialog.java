@@ -10,7 +10,7 @@ import org.wisenet.platform.core.charts.ui.ChartPanel;
 
 /**
  *
- * @author posilva
+* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class EnergyWatcherDialog extends javax.swing.JDialog {
     ChartPanel chartPanel1 = new ChartPanel();

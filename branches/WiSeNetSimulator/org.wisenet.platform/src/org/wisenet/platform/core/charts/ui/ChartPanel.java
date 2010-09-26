@@ -16,11 +16,11 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import org.wisenet.platform.core.charts.IChartDisplay;
-import org.wisenet.platform.ui.ChartFrame;
+import org.wisenet.platform.gui.frames.ChartFrame;
 
 /**
  *
- * @author posilva
+* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class ChartPanel extends JPanel implements IChartDisplay {
 
