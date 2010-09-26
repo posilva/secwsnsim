@@ -15,7 +15,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Date;
 import java.util.TimeZone;
 import javax.swing.Timer;
@@ -30,23 +29,23 @@ import org.jdesktop.application.ResourceMap;
 import org.wisenet.platform.core.PlatformManager;
 import org.wisenet.platform.core.instruments.coverage.CoverageInstrumentControlPanel;
 import org.wisenet.platform.core.instruments.reliability.ReliabilityInstrumentControlPanel;
-import org.wisenet.platform.ui.WorkbenchPanel;
-import org.wisenet.platform.ui.listeners.DeployEvent;
-import org.wisenet.platform.ui.panels.ApplicationOutputPanel;
-import org.wisenet.platform.ui.frames.InstrumentDialog;
-import org.wisenet.platform.ui.frames.InstrumentFrame;
-import org.wisenet.platform.ui.panels.RoutingInfoPanel;
-import org.wisenet.platform.ui.frames.SimulationWizardDialog;
-import org.wisenet.platform.ui.listeners.SimulationPanelEventListener;
-import org.wisenet.platform.ui.panels.EnergyEvaluationPanel;
-import org.wisenet.platform.ui.panels.EvaluationPanel;
-import org.wisenet.platform.ui.panels.RoutingOutputPanel;
-import org.wisenet.platform.ui.panels.SimulationPropertiesPanel;
+import org.wisenet.platform.gui.WorkbenchPanel;
+import org.wisenet.platform.gui.listeners.DeployEvent;
+import org.wisenet.platform.gui.panels.ApplicationOutputPanel;
+import org.wisenet.platform.common.ui.PlatformDialog;
+import org.wisenet.platform.common.ui.PlatformFrame;
+import org.wisenet.platform.gui.panels.RoutingInfoPanel;
+import org.wisenet.platform.gui.frames.SimulationWizardDialog;
+import org.wisenet.platform.gui.listeners.SimulationPanelEventListener;
+import org.wisenet.platform.gui.panels.EnergyEvaluationPanel;
+import org.wisenet.platform.gui.panels.RoutingOutputPanel;
+import org.wisenet.platform.gui.panels.SimulationPropertiesPanel;
 import org.wisenet.platform.utils.PlatformUtils;
 import org.wisenet.platform.utils.gui.ClockCounter;
 import org.wisenet.platform.utils.GUI_Utils;
 import org.wisenet.platform.utils.gui.IClockDisplay;
 import org.wisenet.platform.utils.gui.LookAndFeelPrefs;
+import org.wisenet.simulator.components.instruments.NodeSelectionCondition;
 import org.wisenet.simulator.components.instruments.coverage.CoverageInstrument;
 import org.wisenet.simulator.components.instruments.coverage.CoverageListener;
 import org.wisenet.simulator.components.instruments.coverage.listeners.SignalUpdateEvent;
@@ -65,20 +64,13 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
 
     private boolean workbenchVisible;
     protected ClockCounter clockCounter;
-    private InstrumentFrame energyControlPanelFrame;
-    private InstrumentDialog evaluationSettingsDialog;
-    private InstrumentDialog simulationPropertiesDialog;
-    private InstrumentFrame reliabilityControlPanelFrame;
-    private InstrumentFrame coverageControlPanelFrame;
-    private InstrumentFrame showRoutingInfoFrame;
-    private InstrumentFrame showRoutingOutputFrame;
-    private InstrumentFrame showAplicationOutputFrame;
     private java.util.Timer simulationTimer;
 
     public PlatformView(SingleFrameApplication app) {
         super(app);
         initComponents();
         Utilities.addExceptionListener(this);
+
 
         getComponent().setVisible(false);
         PlatformManager.getInstance().setPlatformView(this);
@@ -141,7 +133,7 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
             }
         });
 
-       getMenuBar().add(LookAndFeelPrefs.createLookAndFeelMenu(this.getClass(), new ActionListener() {
+        getMenuBar().add(LookAndFeelPrefs.createLookAndFeelMenu(this.getClass(), new ActionListener() {
 
             public void actionPerformed(ActionEvent arg0) {
                 SwingUtilities.updateComponentTreeUI(PlatformView.this.getFrame());
@@ -172,7 +164,7 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
-        workbenchPanel1 = new org.wisenet.platform.ui.WorkbenchPanel();
+        workbenchPanel1 = new org.wisenet.platform.gui.WorkbenchPanel();
         mainToolbar = new javax.swing.JToolBar();
         btnNew = new javax.swing.JButton();
         btnOpen = new javax.swing.JButton();
@@ -183,8 +175,6 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         adjustRadioStrengthButton = new javax.swing.JButton();
         adjustRadioStrengthSlider = new javax.swing.JSpinner();
         jPanel1 = new javax.swing.JPanel();
-        tgbMarkStableNodes = new javax.swing.JToggleButton();
-        tgbSelectStableNodes = new javax.swing.JToggleButton();
         lblRadioCoverageValue = new javax.swing.JLabel();
         lblRoutingCoverageValue = new javax.swing.JLabel();
         lblAverageNeighborsPerNode = new javax.swing.JLabel();
@@ -215,6 +205,9 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         viewNodeInfo = new javax.swing.JMenuItem();
         evaluationMenu = new javax.swing.JMenu();
         evalSettingsMenu = new javax.swing.JMenuItem();
+        mnuActions = new javax.swing.JMenu();
+        mnuActionSelectStable = new javax.swing.JMenuItem();
+        mnuActionMarkStable = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         statusPanel = new javax.swing.JPanel();
@@ -241,9 +234,9 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         mainToolbar.setRollover(true);
         mainToolbar.setName("mainToolbar"); // NOI18N
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(org.wisenet.platform.PlatformApp.class).getContext().getActionMap(PlatformView.class, this);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance().getContext().getActionMap(PlatformView.class, this);
         btnNew.setAction(actionMap.get("newSimulation")); // NOI18N
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(org.wisenet.platform.PlatformApp.class).getContext().getResourceMap(PlatformView.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(PlatformView.class);
         btnNew.setIcon(resourceMap.getIcon("btnNew.icon")); // NOI18N
         btnNew.setText(resourceMap.getString("btnNew.text")); // NOI18N
         btnNew.setToolTipText(resourceMap.getString("btnNew.toolTipText")); // NOI18N
@@ -311,34 +304,17 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
 
         jPanel1.setEnabled(workbenchPanel1.isVisible());
         jPanel1.setName("jPanel1"); // NOI18N
-        jPanel1.setPreferredSize(new java.awt.Dimension(1085, 10));
-
-        tgbMarkStableNodes.setAction(actionMap.get("MarkStableNodes")); // NOI18N
-        tgbMarkStableNodes.setText(resourceMap.getString("tgbMarkStableNodes.text")); // NOI18N
-        tgbMarkStableNodes.setName("tgbMarkStableNodes"); // NOI18N
-
-        tgbSelectStableNodes.setAction(actionMap.get("SelectStableNodes")); // NOI18N
-        tgbSelectStableNodes.setText(resourceMap.getString("tgbSelectStableNodes.text")); // NOI18N
-        tgbSelectStableNodes.setName("tgbSelectStableNodes"); // NOI18N
+        jPanel1.setPreferredSize(new java.awt.Dimension(1085, 25));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tgbMarkStableNodes)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tgbSelectStableNodes)
-                .addContainerGap(924, Short.MAX_VALUE))
+            .addGap(0, 1085, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tgbMarkStableNodes)
-                    .addComponent(tgbSelectStableNodes))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 25, Short.MAX_VALUE)
         );
 
         mainToolbar.add(jPanel1);
@@ -506,6 +482,21 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
 
         menuBar.add(evaluationMenu);
 
+        mnuActions.setText(resourceMap.getString("mnuActions.text")); // NOI18N
+        mnuActions.setName("mnuActions"); // NOI18N
+
+        mnuActionSelectStable.setAction(actionMap.get("SelectStableNodes")); // NOI18N
+        mnuActionSelectStable.setText(resourceMap.getString("mnuActionSelectStable.text")); // NOI18N
+        mnuActionSelectStable.setName("mnuActionSelectStable"); // NOI18N
+        mnuActions.add(mnuActionSelectStable);
+
+        mnuActionMarkStable.setAction(actionMap.get("MarkStableNodes")); // NOI18N
+        mnuActionMarkStable.setText(resourceMap.getString("mnuActionMarkStable.text")); // NOI18N
+        mnuActionMarkStable.setName("mnuActionMarkStable"); // NOI18N
+        mnuActions.add(mnuActionMarkStable);
+
+        menuBar.add(mnuActions);
+
         helpMenu.setText(resourceMap.getString("helpMenu.text")); // NOI18N
         helpMenu.setName("helpMenu"); // NOI18N
 
@@ -613,27 +604,22 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(statusPanelLayout.createSequentialGroup()
                 .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
-                    .addComponent(statusAnimationLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
-                    .addGroup(statusPanelLayout.createSequentialGroup()
-                        .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(NrSelectedNodes, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(NrEvents, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
-                            .addComponent(SimulationRealTime)
-                            .addComponent(SimulationTime)
-                            .addComponent(SimulationStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
-                            .addComponent(NrSimulationNodes))
-                        .addGap(1, 1, 1))
-                    .addComponent(FieldSize, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                    .addComponent(statusAnimationLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
+                    .addComponent(FieldSize, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
+                    .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statusPanelLayout.createSequentialGroup()
-                        .addComponent(statusMessageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 18, Short.MAX_VALUE)
-                        .addGap(4, 4, 4)))
+                        .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(statusMessageLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+                            .addComponent(NrSimulationNodes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+                            .addComponent(NrSelectedNodes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(NrEvents, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+                                .addComponent(SimulationRealTime)
+                                .addComponent(SimulationTime)
+                                .addComponent(SimulationStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)))
+                        .addGap(1, 1, 1)))
                 .addContainerGap())
         );
-
-        statusPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {NrEvents, NrSimulationNodes, SimulationStatus});
-
-        statusPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {SimulationRealTime, SimulationTime});
 
         jPopupMenu1.setName("jPopupMenu1"); // NOI18N
 
@@ -669,7 +655,7 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         SimulationWizardDialog sw = new SimulationWizardDialog(null, true);
         sw.setVisible(true);
         boolean status = sw.isOk();
-        if (status) //           sw.getSimulationFactory();
+        if (status) 
         {
             resetWorkbench();
             mainPanel.add(workbenchPanel1, java.awt.BorderLayout.CENTER);
@@ -745,13 +731,14 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
     protected javax.swing.JMenuItem menuNewSimulation;
     protected javax.swing.JMenuItem menuOpenSImulation;
     protected javax.swing.JMenuItem menuSaveSimulation;
+    protected javax.swing.JMenuItem mnuActionMarkStable;
+    protected javax.swing.JMenuItem mnuActionSelectStable;
+    protected javax.swing.JMenu mnuActions;
     private javax.swing.JProgressBar progressBar;
     protected javax.swing.JMenuItem simPropertiesSubMenu;
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
     protected javax.swing.JPanel statusPanel;
-    protected javax.swing.JToggleButton tgbMarkStableNodes;
-    protected javax.swing.JToggleButton tgbSelectStableNodes;
     protected javax.swing.JMenuItem viewApplicationOutput;
     protected javax.swing.JMenuItem viewCoverageControlPanel;
     protected javax.swing.JMenuItem viewEnergyControlPanel;
@@ -761,7 +748,7 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
     protected javax.swing.JMenuItem viewReliabilityControlPanel;
     protected javax.swing.JMenuItem viewRoutingInfo;
     protected javax.swing.JMenuItem viewRoutingOutput;
-    protected org.wisenet.platform.ui.WorkbenchPanel workbenchPanel1;
+    protected org.wisenet.platform.gui.WorkbenchPanel workbenchPanel1;
     // End of variables declaration//GEN-END:variables
     private final Timer messageTimer;
     private final Timer busyIconTimer;
@@ -876,71 +863,23 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
     }
 
     @Action
-    public void MarkStableNodes() {
-        if (isActiveSimulationValid()) {
-            Collection<Node> nodes = PlatformManager.getInstance().getActiveSimulation().getSimulator().getNodes();
-
-            for (Node node : nodes) {
-                if (node.getRoutingLayer().isStable()) {
-                    if (tgbMarkStableNodes.isSelected()) {
-                        node.getGraphicNode().mark();
-                    } else {
-                        node.getGraphicNode().unmark();
-                    }
-                }
-            }
-        }
-    }
-
-    @Action
-    public void SelectStableNodes() {
-        if (isActiveSimulationValid()) {
-
-            Collection<Node> nodes = PlatformManager.getInstance().getActiveSimulation().getSimulator().getNodes();
-            for (Node node : nodes) {
-                if (node.getRoutingLayer().isStable()) {
-                    if (!node.isSinkNode()) {
-                        node.getGraphicNode().select(tgbSelectStableNodes.isSelected());
-                    }
-                }
-            }
-        }
-    }
-
-    @Action
     public void ShowSimulationProperties() {
-        if (simulationPropertiesDialog == null) {
-            simulationPropertiesDialog = new InstrumentDialog("Simulation Properties");
-        }
-        simulationPropertiesDialog.addContentPanel(new SimulationPropertiesPanel());
-        simulationPropertiesDialog.display();
+        PlatformDialog.display(this.getFrame(), new SimulationPropertiesPanel(), "Simulation Properties", PlatformDialog.OK_MODE);
     }
 
     @Action
     public void ShowEvaluationPanel() {
-        if (evaluationSettingsDialog == null) {
-            evaluationSettingsDialog = new InstrumentDialog("Evaluation Settings");
-        }
-        evaluationSettingsDialog.addContentPanel(EvaluationPanel.getInstance());
-        evaluationSettingsDialog.display();
+//        PlatformFrame.display(EvaluationPanel.getInstance(), "Evaluation Settings", PlatformFrame.OK_MODE);
     }
 
     @Action
     public void viewReliabilityControlPanelAction() {
-        if (reliabilityControlPanelFrame == null) {
-            reliabilityControlPanelFrame = new InstrumentFrame("Reliability Control Panel");
-        }
-        reliabilityControlPanelFrame.addContentPanel(new ReliabilityInstrumentControlPanel());
-        reliabilityControlPanelFrame.display();
+        PlatformFrame.display(new ReliabilityInstrumentControlPanel(), "Reliability Control Panel", PlatformFrame.OK_MODE);
     }
 
     @Action
     public void viewCoverageControlPanelAction() {
-        if (coverageControlPanelFrame == null) {
-            coverageControlPanelFrame = new InstrumentFrame("Coverage Control Panel");
-        }
-        coverageControlPanelFrame.addContentPanel(new CoverageInstrumentControlPanel());
-        coverageControlPanelFrame.display();
+        PlatformFrame.display(new CoverageInstrumentControlPanel(), "Coverage Control Panel", PlatformFrame.OK_MODE);
     }
 
     @Action
@@ -950,24 +889,16 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
 
     @Action
     public void viewEnergyControlPanelAction() {
-        if (energyControlPanelFrame == null) {
-            energyControlPanelFrame = new InstrumentFrame("Energy Evaluation ");
-        }
-        energyControlPanelFrame.addContentPanel(new EnergyEvaluationPanel());
-        energyControlPanelFrame.display();
+        PlatformFrame.display(new EnergyEvaluationPanel(), "Energy Evaluation ", PlatformFrame.OK_MODE);
     }
 
     public void update() {
-        getWorkbenchPanel().getSimulationPanel().update();
+        getWorkbenchPanel().getSimulationPanel().updateDisplay();
     }
 
     @Action
     public void ShowRoutingInfoPanelAction() {
-        if (showRoutingInfoFrame == null) {
-            showRoutingInfoFrame = new InstrumentFrame("Routing Information");
-        }
-        showRoutingInfoFrame.addContentPanel(new RoutingInfoPanel());
-        showRoutingInfoFrame.display();
+        PlatformFrame.display(new RoutingInfoPanel(), "Routing Information", PlatformFrame.OK_MODE);
 
     }
 
@@ -978,20 +909,12 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
 
     @Action
     public void ShowApplicationOutputPanelAction() {
-        if (showAplicationOutputFrame == null) {
-            showAplicationOutputFrame = new InstrumentFrame("Application Layer Output");
-        }
-        showAplicationOutputFrame.addContentPanel(new ApplicationOutputPanel());
-        showAplicationOutputFrame.display();
+        PlatformFrame.display(new ApplicationOutputPanel(), "Application Layer Output", PlatformFrame.OK_MODE);
     }
 
     @Action
     public void ShowRoutingOutputPanelAction() {
-        if (showRoutingOutputFrame == null) {
-            showRoutingOutputFrame = new InstrumentFrame("Routing Layer Output");
-        }
-        showRoutingOutputFrame.addContentPanel(new RoutingOutputPanel());
-        showRoutingOutputFrame.display();
+        PlatformFrame.display(new RoutingOutputPanel(), "Routing Layer Output", PlatformFrame.OK_MODE);
     }
 
     @Action
@@ -1098,7 +1021,7 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
     }
 
     public void onNewSimulatorRound(SimulationEvent event) {
-        updateSimulationEvents(event.getSimulation().getSimulator().getNrEvents());
+        updateSimulationEvents(event.getSimulation().getSimulator().getNumberOfRemainEvents());
     }
 
     public void onError(ExceptionEvent event) {
@@ -1110,5 +1033,29 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         System.out.println(sw.toString());
 
 
+    }
+
+    @Action
+    public void SelectStableNodes() {
+        if (PlatformManager.getInstance().haveActiveSimulation()) {
+            PlatformManager.getInstance().getActiveSimulation().selectNodes(true, new NodeSelectionCondition() {
+
+                public boolean select(Node node) {
+                    return node.getRoutingLayer().isStable();
+                }
+            });
+        }
+    }
+
+    @Action
+    public void MarkStableNodes() {
+        if (PlatformManager.getInstance().haveActiveSimulation()) {
+            PlatformManager.getInstance().getActiveSimulation().markNodes(true, new NodeSelectionCondition() {
+
+                public boolean select(Node node) {
+                    return node.getRoutingLayer().isStable();
+                }
+            });
+        }
     }
 }
