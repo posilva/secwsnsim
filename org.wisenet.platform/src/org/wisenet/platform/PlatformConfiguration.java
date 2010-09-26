@@ -1,5 +1,5 @@
 /*
- *  Wireless Sensor Network Simulator
+ **  Wireless Sensor Network Simulator
  *  The next generation for WSN Simulations
  */
 package org.wisenet.platform;
@@ -27,6 +27,8 @@ public class PlatformConfiguration {
     public static final String CFG_OUTPUT_DIR_KEY = "main.output.dir";
     public static final String CFG_LOGS_DIR_KEY_DEFAULT = "logs";
     public static final String CFG_LOGS_DIR_KEY = "main.logs.dir";
+    public static final String CFG_GOOGLE_MAPS_KEY_KEY_DEFAULT = "ABQIAAAAXg0F4Zi2pcwHeCjCvk7LRhSoSGvlWgPKK04fS0Rib--DYJNIihQASC7FQc_5lQHTrrgdlZoWfL-eZg";
+    public static final String CFG_GOOGLE_MAPS_KEY_KEY = "google.maps.key";
     public static final String CFG_OUTPUT_DIR_KEY_DEFAULT = "output"    ;
     public static final String CFG_CLASSPATH_DIRS_KEY = "extra.classpath.dirs";
     /**
@@ -41,6 +43,7 @@ public class PlatformConfiguration {
     private String configDirectory;
     private String outputDirectory;
     private String logsDirectory;
+    private String googleMapsKey;
 
     /**
      * Default constructor
@@ -75,7 +78,6 @@ public class PlatformConfiguration {
             throw new FileNotFoundException("Platform configuration file <" + PLATFORM_CONFIGURATION_FILE + "> doesn't exists ");
         }
         plataformProperties.load(new FileInputStream(configFile));
-
         return loadConfigurations();
     }
 
@@ -112,6 +114,7 @@ public class PlatformConfiguration {
         configDirectory = getPlataformProperties().getProperty(CFG_CONFIG_DIR_KEY, CFG_CONFIG_DIR_KEY_DEFAULT);
         outputDirectory = getPlataformProperties().getProperty(CFG_OUTPUT_DIR_KEY, CFG_OUTPUT_DIR_KEY_DEFAULT);
         logsDirectory = getPlataformProperties().getProperty(CFG_LOGS_DIR_KEY, CFG_LOGS_DIR_KEY_DEFAULT);
+        googleMapsKey = getPlataformProperties().getProperty(CFG_GOOGLE_MAPS_KEY_KEY, CFG_GOOGLE_MAPS_KEY_KEY_DEFAULT);
         return PlatformConfiguration.getInstance().createDefaults();
     }
 
@@ -121,6 +124,10 @@ public class PlatformConfiguration {
 
     public String getConfigDirectory() {
         return configDirectory;
+    }
+
+    public String getGoogleMapsKey() {
+        return googleMapsKey;
     }
 
     public String getSourcesDirectory() {
