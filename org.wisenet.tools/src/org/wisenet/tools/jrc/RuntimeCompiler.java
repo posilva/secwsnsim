@@ -22,7 +22,6 @@ import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
-import javax.swing.JOptionPane;
 
 import org.wisenet.tools.jrc.editor.SourceEditor;
 
@@ -33,9 +32,10 @@ import org.wisenet.tools.jrc.editor.SourceEditor;
 public class RuntimeCompiler {
 
     File sourceFile = null;
-    File classDir = new File(".");
+    File classDir = new File("./");
     private Object compiledObject = null;
     private ClassLoader parentLoader = RuntimeCompiler.class.getClassLoader();
+    private String className;
 
     /**
      * @return the compiledObject
@@ -89,17 +89,19 @@ public class RuntimeCompiler {
     public boolean compile() throws Exception {
         File sourceCode = getSourceFile();
 
-        String filename = sourceCode.getName();
-        String classname = filename.substring(0, filename.length() - 5);
+//        String filename = sourceCode.getName();
+//        String classname = filename.substring(0, filename.length() - 5);
         String classpath = getClassPath();
         String[] args2 = new String[]{"-classpath", classpath, "-d",
-            getClassDir().getAbsolutePath(), filename};
+            getClassDir().getAbsolutePath(), sourceCode.getAbsolutePath()};
 
         StringWriter sw = new StringWriter();
         PrintWriter printWriter = new PrintWriter(sw);
         int status = com.sun.tools.javac.Main.compile(args2, printWriter);
+
         if (status == 0) {
-            compiledObject = loadClass(classname, getClassDir());
+            System.getProperties().setProperty("java.class.path", getClassPath() + ":" + getClassDir().getAbsolutePath());
+            compiledObject = loadClass(getFullClassName(), getClassDir());
             return true;
         } else {
             throw new RuntimeCompilationException(sw.toString());
@@ -132,8 +134,10 @@ public class RuntimeCompiler {
         if (parentLoader == null) {
             parentLoader = RuntimeCompiler.class.getClassLoader();
         }
+//        FileClassLoader classloader = new FileClassLoader(classesDir.getAbsolutePath());
 
         URLClassLoader classloader = new URLClassLoader(new URL[]{classesDir.toURI().toURL()}, parentLoader);
+
         Class cls1 = classloader.loadClass(classname);
         return cls1.newInstance();
     }
@@ -148,25 +152,11 @@ public class RuntimeCompiler {
 
     }
 
-    public static void main(String[] args) throws Exception {
-        try {
-            RuntimeCompiler rc = new RuntimeCompiler();
-            rc.setClassDir(new File(System.getProperty("user.dir")));
-            rc.setSourceFile(new File("Source.java"));
-            rc.edit();
-            if (rc.compile()) {
-                Class[] parameters = new Class[]{Object.class};
-                Object arguments[] = {"Hello teste"};
-                String method = "executeAttack";
-                Object result = rc.invokeMethod(method, parameters, arguments);
-                System.out.println("SOURCE: " + result);
-            } else {
-                System.out.println("Error compiling");
-            }
-        } catch (Exception e) {
-            StringWriter sw = new StringWriter();
-            e.printStackTrace(new PrintWriter(sw));
-            JOptionPane.showMessageDialog(null, sw.toString(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
+    public String getFullClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
     }
 }
