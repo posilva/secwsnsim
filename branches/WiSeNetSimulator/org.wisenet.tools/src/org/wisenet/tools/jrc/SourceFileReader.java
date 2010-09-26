@@ -1,19 +1,18 @@
 /*
- *  Wireless Sensor Network Simulator
+ **  Wireless Sensor Network Simulator
  *  The next generation for WSN Simulations
  */
 package org.wisenet.tools.jrc;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class SourceFileReader {
+    public static final String JAVA_EXTENSIONS = ".java";
 
     String classFileName;
     String sourcesDir = "." + File.separator + "src";
@@ -45,7 +44,7 @@ public class SourceFileReader {
             newClassName = className;
         }
         if (newClassName != null) {
-            newClassName += ".java";
+            newClassName += JAVA_EXTENSIONS;
         }
 
         return newClassName;
@@ -58,13 +57,5 @@ public class SourceFileReader {
             throw new FileNotFoundException(fullPath + " File not found!");
         }
         return fullPath;
-    }
-
-    public static void main(String[] args) {
-        try {
-            System.out.println(SourceFileReader.getInstance().getFullPathSourceFile(RuntimeCompiler.class.getName()) + " Exists!");
-        } catch (Exception ex) {
-            Logger.getLogger(SourceFileReader.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 }
