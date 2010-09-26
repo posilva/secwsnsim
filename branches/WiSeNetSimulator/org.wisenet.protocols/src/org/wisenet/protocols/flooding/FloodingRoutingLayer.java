@@ -11,7 +11,7 @@ import org.wisenet.simulator.core.Message;
 import org.wisenet.simulator.core.node.layers.routing.RoutingLayer;
 
 /**
- * @author posilva
+* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  *
  */
 public class FloodingRoutingLayer extends RoutingLayer {
@@ -111,6 +111,9 @@ public class FloodingRoutingLayer extends RoutingLayer {
 
     @Override
     protected void onStable(boolean oldValue) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    protected void initAttacks() {
     }
 }

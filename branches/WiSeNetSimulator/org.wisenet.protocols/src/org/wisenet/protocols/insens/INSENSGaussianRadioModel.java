@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ ***  Wireless Sensor Network Simulator
+ * The next generation for WSN Simulations
  */
 package org.wisenet.protocols.insens;
 
@@ -11,7 +11,7 @@ import org.wisenet.simulator.core.radio.GaussianRadioModel;
 
 /**
  *
- * @author CIAdmin
+* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class INSENSGaussianRadioModel extends GaussianRadioModel {
 //org.mei.securesim.core.radio.INSENSGaussianRadioModel

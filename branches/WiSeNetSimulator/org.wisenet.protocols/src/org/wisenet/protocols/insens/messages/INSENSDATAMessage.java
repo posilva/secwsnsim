@@ -2,7 +2,7 @@ package org.wisenet.protocols.insens.messages;
 
 /**
  *
- * @author CIAdmin
+* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class INSENSDATAMessage extends INSENSMessage {
     short destination;

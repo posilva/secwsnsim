@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ ***  Wireless Sensor Network Simulator
+ * The next generation for WSN Simulations
  */
 package org.wisenet.protocols.insens;
 
@@ -13,7 +13,7 @@ import org.wisenet.simulator.core.node.Node;
 
 /**
  *
- * @author CIAdmin
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class INSENSFunctions {
 
@@ -42,6 +42,11 @@ public class INSENSFunctions {
      */
     public static byte getMessageType(INSENSMessage m) throws INSENSException {
         INSENSMessagePayload payload = new INSENSMessagePayload(m.getPayload());
+        return payload.type;
+    }
+
+    public static byte getMessageType(byte[] p) throws INSENSException {
+        INSENSMessagePayload payload = new INSENSMessagePayload(p);
         return payload.type;
     }
 

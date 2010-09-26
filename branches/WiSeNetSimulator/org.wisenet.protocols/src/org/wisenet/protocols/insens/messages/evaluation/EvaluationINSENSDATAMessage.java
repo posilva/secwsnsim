@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ ***  Wireless Sensor Network Simulator
+ * The next generation for WSN Simulations
  */
 package org.wisenet.protocols.insens.messages.evaluation;
 
@@ -9,12 +9,12 @@ import org.wisenet.simulator.components.instruments.IInstrumentMessage;
 
 /**
  *
- * @author CIAdmin
+* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class EvaluationINSENSDATAMessage extends INSENSDATAMessage implements IInstrumentMessage {
 
     public EvaluationINSENSDATAMessage() {
-        super("".getBytes());
+        super("A".getBytes());
     }
 
     public EvaluationINSENSDATAMessage(byte[] payload) {

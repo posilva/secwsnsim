@@ -1,5 +1,5 @@
 /*
- *  Wireless Sensor Network Simulator
+ **  Wireless Sensor Network Simulator
  *  The next generation for WSN Simulations
  */
 package org.wisenet.protocols.insens.attacks;
@@ -13,6 +13,10 @@ import org.wisenet.simulator.core.node.layers.routing.attacks.AbstractRoutingAtt
  */
 public class BlackholeRoutingAttack extends AbstractRoutingAttack implements IRuntimeEditable {
 
+    public BlackholeRoutingAttack() {
+        super();
+    }
+
     public BlackholeRoutingAttack(RoutingLayer routingLayer) {
         super(routingLayer);
     }
@@ -20,11 +24,11 @@ public class BlackholeRoutingAttack extends AbstractRoutingAttack implements IRu
     @Override
     public Object attack(Object message) {
         if (getRoutingLayer().isStable()) {
-            System.out.println("BlackholeAttack: Drop Message at node " + getRoutingLayer().getNode().getId());
+	System.out.println("Message suppressed at node CHANGED");	
             return null; // Supress message
         } else {
+System.out.println("Message NOT suppressed at node CHANGED");	
             return message;
         }
-
     }
 }
