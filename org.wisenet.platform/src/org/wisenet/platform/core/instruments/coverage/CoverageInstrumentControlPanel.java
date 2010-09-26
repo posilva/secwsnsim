@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ ***  Wireless Sensor Network Simulator
+ * The next generation for WSN Simulations
  */
 
 /*
@@ -11,6 +11,7 @@
 package org.wisenet.platform.core.instruments.coverage;
 
 import java.util.Collection;
+import org.wisenet.platform.common.ui.PlatformPanel;
 import org.wisenet.platform.core.PlatformManager;
 
 import org.wisenet.simulator.components.instruments.IInstrumentControlPanel;
@@ -22,9 +23,9 @@ import org.wisenet.simulator.core.node.Node;
 
 /**
  *
- * @author CIAdmin
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
-public class CoverageInstrumentControlPanel extends javax.swing.JPanel implements IInstrumentControlPanel {
+public class CoverageInstrumentControlPanel extends PlatformPanel implements IInstrumentControlPanel {
 
     /** Creates new form CoverageInstrumentControlPanel */
     public CoverageInstrumentControlPanel() {
@@ -529,5 +530,25 @@ public class CoverageInstrumentControlPanel extends javax.swing.JPanel implement
         } else {
             return null;
         }
+    }
+
+    @Override
+    public boolean onCancel() {
+       return true;
+    }
+
+    @Override
+    public boolean onOK() {
+        return true;
+    }
+
+    @Override
+    public boolean onApply() {
+        return true;
+    }
+
+    @Override
+    protected boolean isDataValid() {
+        return true;
     }
 }

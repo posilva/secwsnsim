@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ ***  Wireless Sensor Network Simulator
+ * The next generation for WSN Simulations
  */
 
 /*
@@ -13,7 +13,7 @@ package org.wisenet.platform.core.instruments.latency;
 
 /**
  *
- * @author CIAdmin
+* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class LatencyControlPanel extends javax.swing.JPanel {
 

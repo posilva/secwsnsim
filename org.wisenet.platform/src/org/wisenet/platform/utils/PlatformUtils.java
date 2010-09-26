@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ ***  Wireless Sensor Network Simulator
+ * The next generation for WSN Simulations
  */
 package org.wisenet.platform.utils;
 
@@ -72,9 +72,9 @@ public class PlatformUtils {
             AbstractSimulation simulation = new Simulation();
             simulation.readFromFile(file);
             PlatformManager.getInstance().setActiveSimulation(simulation);
-//            simulation.getSimulator().setDisplay(PlatformView.getInstance().getWorkbenchPanel().getSimulationPanel());
-//            PlatformView.getInstance().getWorkbenchPanel().getSimulationPanel().setSimulation((Simulation) simulation);
-//            PlatformView.getInstance().showWorkbench();
+            simulation.getSimulator().setDisplay(PlatformManager.getInstance().getPlatformView().getWorkbenchPanel().getSimulationPanel());
+            PlatformManager.getInstance().getPlatformView().getWorkbenchPanel().getSimulationPanel().setSimulation((Simulation) simulation);
+            PlatformManager.getInstance().getPlatformView().showWorkbench();
 
             return true;
         } catch (Exception ex) {
@@ -139,13 +139,14 @@ public class PlatformUtils {
     private static String createBackupFromFile(File sf) {
         try {
             File tFile = File.createTempFile(".sim_", ".bkp");
-            System.out.println("FALTA IMPLEMENTAR A COPIA DE BACKUP");
+//            System.out.println("FALTA IMPLEMENTAR A COPIA DE BACKUP");
             return tFile.getAbsolutePath();
         } catch (IOException ex) {
             Logger.getLogger(PlatformUtils.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
+
     /**
      * Extension filter for simulation files
      */
@@ -160,8 +161,4 @@ public class PlatformUtils {
             return PlatformConstants.SIMULATION_FILE_DESCRIPTION;
         }
     }
-
-
-
-    
 }

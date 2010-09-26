@@ -6,7 +6,9 @@
 package org.wisenet.platform.core.instruments.reliability;
 
 import java.util.Collection;
+import org.wisenet.platform.common.ui.PlatformPanel;
 import org.wisenet.platform.core.PlatformManager;
+import org.wisenet.platform.utils.GUI_Utils;
 import org.wisenet.simulator.components.instruments.IInstrumentControlPanel;
 import org.wisenet.simulator.components.instruments.IInstrumentHandler;
 import org.wisenet.simulator.components.instruments.AbstractInstrument;
@@ -16,13 +18,18 @@ import org.wisenet.simulator.core.node.Node;
 
 /**
  *
- * @author CIAdmin
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
-public class ReliabilityInstrumentControlPanel extends javax.swing.JPanel implements IInstrumentControlPanel {
+public class ReliabilityInstrumentControlPanel extends PlatformPanel implements IInstrumentControlPanel {
 
     /** Creates new form ReliabilityInstrumentControlPanel */
     public ReliabilityInstrumentControlPanel() {
         initComponents();
+        if (getReliabilityInstrument() == null) {
+            GUI_Utils.showWarningMessage("Cannot instanciate the instrument without a active simulation");
+            return;
+        }
+
         getReliabilityInstrument().registerControlPanel(this);
         getReliabilityInstrument().setDebugEnabled(true);
 
@@ -465,7 +472,12 @@ public class ReliabilityInstrumentControlPanel extends javax.swing.JPanel implem
         if (!PlatformManager.getInstance().haveActiveSimulation()) {
             return;
         }
-        getReliabilityInstrument().probe();
+        try {
+            getReliabilityInstrument().probe();
+        } catch (Exception e) {
+            GUI_Utils.showException(e);
+        }
+
     }//GEN-LAST:event_cmdProbeActionPerformed
 
     private void cmdApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdApplyActionPerformed
@@ -561,5 +573,25 @@ public class ReliabilityInstrumentControlPanel extends javax.swing.JPanel implem
         }
         return PlatformManager.getInstance().getActiveSimulation().getReliabilityInstrument();
 
+    }
+
+    @Override
+    public boolean onCancel() {
+        return true;
+    }
+
+    @Override
+    public boolean onOK() {
+        return true;
+    }
+
+    @Override
+    public boolean onApply() {
+        return true;
+    }
+
+    @Override
+    protected boolean isDataValid() {
+        return true;
     }
 }

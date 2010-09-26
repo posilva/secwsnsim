@@ -22,7 +22,7 @@ import org.wisenet.simulator.utilities.annotation.EnergyModelParameter;
 
 /**
  *
- * @author posilva
+* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 @SuppressWarnings("unchecked")
 public class EnergyModelPanel extends javax.swing.JPanel {

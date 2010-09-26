@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ ***  Wireless Sensor Network Simulator
+ * The next generation for WSN Simulations
  */
 package org.wisenet.platform.utils;
 
@@ -15,11 +15,10 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import org.wisenet.platform.core.PlatformManager;
 import org.wisenet.platform.utils.gui.ErrorHandler;
-import org.wisenet.simulator.utilities.Utilities;
 
 /**
  *
- * @author posilva
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class GUI_Utils {
 
@@ -44,7 +43,7 @@ public class GUI_Utils {
         Dimension screenSize = tk.getScreenSize();
         int screenHeight = screenSize.height;
         int screenWidth = screenSize.width;
-        f.setLocation(screenWidth / 4, screenHeight / 4);
+        f.setLocation((screenWidth - f.getWidth()) / 2, (screenHeight - f.getHeight()) / 2);
     }
 
     public static void showMessage(String message, int type) {
@@ -58,17 +57,6 @@ public class GUI_Utils {
 
         return JOptionPane.showOptionDialog(null, message, "Confirm...", -1, ASK_MESSAGE, null, o, o[1]) == JOptionPane.YES_OPTION;
     }
-//    public static String InputBox(String title) {
-//        return JOptionPane.showInputDialog(title)
-//    }
-//
-//    public static void MessageBox(String title, String message) {
-//        JOptionPane.showInputDialog(title)
-//    }
-//
-//    public static boolean AskBox(String title, String message) {
-//        return JOptionPane.OK_OPTION==JOptionPane.showConfirmDialog(null,title,);
-//    }
 
     /**
      * If any 0 is the default file filter
@@ -99,8 +87,6 @@ public class GUI_Utils {
      * @param ex
      */
     public static void showException(Exception ex) {
-//
-//        JOptionPane.showMessageDialog(null, Utilities.getStackTrace(ex), "Error occured", ERROR_MESSAGE);
         ErrorHandler.displayThrowable(ex, "Platform Error ", null, null);
     }
 
@@ -125,6 +111,7 @@ public class GUI_Utils {
     public static void showWarningMessage(String msg) {
         showMessage(msg, JOptionPane.WARNING_MESSAGE);
     }
+
     public static void showMessage(String msg) {
         showMessage(msg, JOptionPane.PLAIN_MESSAGE);
     }
