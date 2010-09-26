@@ -21,9 +21,9 @@ public interface ISimulationDisplay {
 	public abstract int y2ScreenY(double y);
 
 	/* (non-Javadoc)
-	 * @see net.tinyos.prowler.IDisplay#update()
+	 * @see net.tinyos.prowler.IDisplay#updateDisplay()
 	 */
-	public abstract void update();
+	public abstract void updateDisplay();
 
 
     public Simulator getSimulator();

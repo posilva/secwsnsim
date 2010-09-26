@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ ***  Wireless Sensor Network Simulator
+ * The next generation for WSN Simulations
  */
 package org.wisenet.simulator.components.simulation;
 
@@ -11,13 +11,14 @@ import org.wisenet.simulator.core.radio.RadioModel;
 import org.wisenet.simulator.core.node.factories.AbstractNodeFactory;
 import org.wisenet.simulator.core.node.factories.CustomNodeFactory;
 import org.wisenet.simulator.core.radio.GaussianRadioModel;
-import org.wisenet.simulator.utilities.Utilities;
+import org.wisenet.simulator.utilities.Utilities; 
 
 /**
  *
- * @author posilva
+* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
-public class SimulationFactory {
+ public class SimulationFactory {
+     
 
     public static final int DEFAULT_NODE_RANGE = 30;
     Class radioModelClass = null;
@@ -112,7 +113,6 @@ public class SimulationFactory {
         sim.addListener(simulation);
         simulation.setSimulator(sim);
         Simulator.randomGenerator.reset(); //TODO  Carregar com uma seed
-
         simulation.setRadioModel(rm);
         simulation.setNodeFactory(nf);
         simulation.getNodeFactory().setEnergyModel(em);

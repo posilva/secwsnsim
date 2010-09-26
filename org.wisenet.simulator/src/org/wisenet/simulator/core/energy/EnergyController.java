@@ -1,36 +1,36 @@
-package org.wisenet.simulator.components.instruments.energy;
+package org.wisenet.simulator.core.energy;
 
 import org.wisenet.simulator.components.logging.EnergyLogger;
-import org.wisenet.simulator.components.simulation.Simulation;
 import org.wisenet.simulator.core.energy.listeners.EnergyEvent;
 import org.wisenet.simulator.core.energy.listeners.EnergyListener;
 
 /**
  *
- * @author posilva
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class EnergyController implements EnergyListener {
 
     protected GlobalEnergyDatabase database = new GlobalEnergyDatabase();
     protected EnergyLogger energyLogger;
-    private Simulation simulation = null;
+    private boolean logEnergyEnable = false;
 
     public EnergyController() {
-    }
-
-    public EnergyController(Simulation simulationManager) {
-        this.simulation = simulationManager;
+        System.err.println("Energy Controller - TODO: Access the simulator time");
     }
 
     public GlobalEnergyDatabase getDatabase() {
         return database;
     }
 
+    /**
+     * Consumption event 
+     * @param evt
+     */
     public synchronized void onConsume(EnergyEvent evt) {
         String ev;
-        final long simTime = getSimulation().getTime();
+        final long simTime = 0;//Simulator.getSimulationTime(); //TODO Access the simulator time
         ev = evt.getEvent();
-        if (getSimulation().isLogEnergyEnable()) {
+        if (isLogEnergyEnable()) {
             if (energyLogger != null) {
                 energyLogger.update(evt.getNodeid(), ev, evt.getRealTime(), simTime, evt.getValue(), evt.getState());
             }
@@ -48,24 +48,24 @@ public class EnergyController implements EnergyListener {
     }
 
     public void start() {
-        if (energyLogger != null) {
-            energyLogger.open();
+        if (isLogEnergyEnable()) {
+            if (energyLogger != null) {
+                energyLogger.open();
+            }
         }
-
     }
 
     public void stop() {
         if (energyLogger != null) {
             energyLogger.close();
         }
-
     }
 
-    public void setSimulation(Simulation simualtion) {
-        this.simulation = simualtion;
+    public boolean isLogEnergyEnable() {
+        return logEnergyEnable;
     }
 
-    public Simulation getSimulation() {
-        return simulation;
+    public void setLogEnergyEnable(boolean logEnergyEnable) {
+        this.logEnergyEnable = logEnergyEnable;
     }
 }

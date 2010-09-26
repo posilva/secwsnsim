@@ -1,5 +1,5 @@
 /*
- *  Wireless Sensor Network Simulator
+ **  Wireless Sensor Network Simulator
  *  The next generation for WSN Simulations
  */
 package org.wisenet.simulator.core.node.factories;
@@ -19,6 +19,10 @@ import org.wisenet.simulator.core.Simulator;
  * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class CustomNodeFactory extends AbstractNodeFactory {
+
+    public CustomNodeFactory() {
+        super();
+    }
 
     public CustomNodeFactory(Simulator s) {
         super(s);

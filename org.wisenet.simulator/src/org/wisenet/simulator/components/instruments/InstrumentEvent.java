@@ -1,14 +1,15 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ ***  Wireless Sensor Network Simulator
+ * The next generation for WSN Simulations
  */
 package org.wisenet.simulator.components.instruments;
 
 import org.wisenet.simulator.core.Event;
 
 /**
- *
- * @author CIAdmin
+ * This class represents a Instrument event that enable the evaluation
+ * procedure 
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class InstrumentEvent extends Event {
 

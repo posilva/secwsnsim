@@ -1,7 +1,7 @@
 package org.wisenet.simulator.core.node.factories;
 
 import java.lang.reflect.Constructor;
-import java.util. Vector;
+import java.util.Vector;
 import java.util.List;
 import org.wisenet.simulator.core.Application;
 import org.wisenet.simulator.core.energy.Batery;
@@ -16,6 +16,8 @@ import org.wisenet.simulator.core.radio.RadioModel;
 @SuppressWarnings("unchecked")
 public abstract class AbstractNodeFactory {
 
+    public static final int INITIAL_NODE_MAXRADIOSTRENGTH = 100;
+    protected int nodeMaxRadioStregth = INITIAL_NODE_MAXRADIOSTRENGTH;
     protected Class classOfNodes = null;
     protected Simulator simulator;
     protected Class application;
@@ -23,6 +25,10 @@ public abstract class AbstractNodeFactory {
     protected EnergyModel energyModel;
     protected boolean setup = false;
     protected Class macLayer;
+    protected boolean staticZ = true;
+    protected double minZ = 0;
+    protected double maxZ = 0;
+    protected double environmentAttenuation = 0;
 
     public AbstractNodeFactory(Simulator simulator) {
         super();
@@ -46,7 +52,7 @@ public abstract class AbstractNodeFactory {
     }
 
     public List<Node> createNodes(int nodeNum, double areaWidth, double maxElevation) throws Exception {
-         Vector<Node> nodes = new  Vector<Node>();
+        Vector<Node> nodes = new Vector<Node>();
         for (int i = 0; i < nodeNum; ++i) {
             Node node = nodeCreation();
             node.setPosition(areaWidth * Simulator.randomGenerator.random().nextDouble(),
@@ -58,7 +64,7 @@ public abstract class AbstractNodeFactory {
     }
 
     public List<Node> createNodes(int startNodeId, int nodeNum, double areaWidth, double maxElevation) throws Exception {
-         Vector<Node> nodes = new  Vector<Node>();
+        Vector<Node> nodes = new Vector<Node>();
         for (int i = 0; i < nodeNum; ++i) {
             Node node = nodeCreation((short) (startNodeId + i));
             node.setPosition(areaWidth * Simulator.randomGenerator.random().nextDouble(),
@@ -73,8 +79,12 @@ public abstract class AbstractNodeFactory {
         return nodeCreation(nodeId);
     }
 
+    public Node createNode() throws Exception {
+        return nodeCreation();
+    }
+
     public List<Node> createNodes(int startNodeId, int nodeNum) throws Exception {
-         Vector<Node> nodes = new  Vector<Node>();
+        Vector<Node> nodes = new Vector<Node>();
         for (int i = 0; i < nodeNum; ++i) {
             Node node = nodeCreation((short) (startNodeId + i));
             nodes.add(node);
@@ -83,7 +93,7 @@ public abstract class AbstractNodeFactory {
     }
 
     public List<Node> createNodes(int nodeNum) throws Exception {
-         Vector<Node> nodes = new  Vector<Node>();
+        Vector<Node> nodes = new Vector<Node>();
         for (int i = 0; i < nodeNum; ++i) {
             Node node = nodeCreation();
             nodes.add(node);
@@ -91,7 +101,7 @@ public abstract class AbstractNodeFactory {
         return nodes;
     }
 
-    protected Node nodeCreation() throws Exception{
+    protected Node nodeCreation() throws Exception {
         if (!setup) {
             throw new IllegalStateException("Factory is not setted up!");
         }
@@ -102,11 +112,13 @@ public abstract class AbstractNodeFactory {
         node.setRoutingLayer((RoutingLayer) routingLayer.newInstance());
         /* assign application */
         node.setApplication((Application) application.newInstance());
+        node.getConfig().setMaximumRadioStrength(getNodeMaxRadioStregth());
         /* assign MAC layer */
         node.setMacLayer(getMacLayerInstance());
         /* assign energy model */
         node.setBateryEnergy(new Batery(getEnergyModelInstance()));
         node.getBateryEnergy().setHostNode(node);
+        node.setEnvironmentAttenuation(getEnvironmentAttenuation());
         node.init();
         return node;
     }
@@ -192,5 +204,45 @@ public abstract class AbstractNodeFactory {
     public AbstractNodeFactory() {
         super();
         setup();
+    }
+
+    public int getNodeMaxRadioStregth() {
+        return nodeMaxRadioStregth;
+    }
+
+    public void setNodeMaxRadioStregth(int nodeMaxRadioStregth) {
+        this.nodeMaxRadioStregth = nodeMaxRadioStregth;
+    }
+
+    public double getEnvironmentAttenuation() {
+        return environmentAttenuation;
+    }
+
+    public void setEnvironmentAttenuation(double environmentAttenuation) {
+        this.environmentAttenuation = environmentAttenuation;
+    }
+
+    public double getMaxZ() {
+        return maxZ;
+    }
+
+    public void setMaxZ(double maxZ) {
+        this.maxZ = maxZ;
+    }
+
+    public double getMinZ() {
+        return minZ;
+    }
+
+    public void setMinZ(double minZ) {
+        this.minZ = minZ;
+    }
+
+    public boolean isStaticZ() {
+        return staticZ;
+    }
+
+    public void setStaticZ(boolean staticZ) {
+        this.staticZ = staticZ;
     }
 }

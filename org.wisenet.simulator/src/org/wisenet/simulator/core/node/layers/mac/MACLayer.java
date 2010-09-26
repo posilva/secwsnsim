@@ -8,13 +8,11 @@ import org.wisenet.simulator.core.radio.RadioModel.Neighborhood;
 
 /**
  *
- * @author posilva
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public abstract class MACLayer extends Layer {
-   
-    protected static long totalMessagesSent = 0;
-    protected static long totalMessagesNotSent = 0;
-    protected static long totalMessagesCorrupted = 0;
+
+    protected static MACLayerController controller = new MACLayerController();
     RadioModel radioModel;
     RadioModel.Neighborhood neighborhood;
     // //////////////////////////////
@@ -83,7 +81,6 @@ public abstract class MACLayer extends Layer {
         this.radioModel = radioModel;
     }
 
-    
     protected final void beginTransmission(final double strength, Object stream) {
         Node n = (Node) stream;
         neighborhood.beginTransmission(strength, n);
@@ -153,21 +150,16 @@ public abstract class MACLayer extends Layer {
      */
     public abstract boolean sendMessage(Object message, RoutingLayer layer);
 
-    /**
-     * initialize procedure
-     */
-    public abstract void init();
-
     public static long getTotalMessagesCorrupted() {
-        return totalMessagesCorrupted;
+        return controller.getTotalMessagesCorrupted();
     }
 
     public static long getTotalMessagesNotSent() {
-        return totalMessagesNotSent;
+        return controller.getTotalMessagesNotSent();
     }
 
     public static long getTotalMessagesSent() {
-        return totalMessagesSent;
+        return controller.getTotalMessagesSent();
     }
 
     public double getNoiseStrength() {
@@ -186,6 +178,8 @@ public abstract class MACLayer extends Layer {
         this.signalStrength = signalStrength;
     }
 
-  
+    public static MACLayerController getController() {
+        return controller;
+    }
 
 }

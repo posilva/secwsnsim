@@ -130,7 +130,7 @@ public class GaussianRadioModel extends RadioModel {
                 }
 
             }
-            getSimulator().getDisplay().update();
+            getSimulator().getDisplay().updateDisplay();
             for (int i = 0; i < neighborhood.neighbors.size(); i++) {
                 // TODO Optimizar
                 neighborhood.dynamicStrengths.add(0.0);

@@ -5,6 +5,8 @@ package org.wisenet.simulator.components.topology;
 
 import org.wisenet.simulator.utilities.annotation.Annotated;
 import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 
@@ -12,7 +14,7 @@ import java.util.Vector;
 import org.wisenet.simulator.core.node.Node;
 
 /**
- * @author posilva
+* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  * 
  */
 public class GridTopologyManager extends TopologyManager implements Annotated {
@@ -21,18 +23,16 @@ public class GridTopologyManager extends TopologyManager implements Annotated {
      *
      */
     private int distance = 30;
-    private Node node;
 
     public GridTopologyManager() {
     }
 
-    @Override
     public Vector<Node> apply(Rectangle rect, Vector<Node> nodes) {
         double posX = rect.getX();
         double posY = rect.getY();
         int rows = (int) rect.getHeight() / distance;
         int cols = (int) (rect.getWidth() / distance);
-        int total_nodes=0;
+        int total_nodes = 0;
         for (int i = 0; i < rows; i++) {
             posX = rect.getX();
             for (int j = 0; j < cols; j++) {
@@ -51,5 +51,46 @@ public class GridTopologyManager extends TopologyManager implements Annotated {
 
     public void setDistance(int nDistance) {
         distance = nDistance;
+    }
+
+    @Override
+    protected List<Node> createTopologyImpl() {
+        int total_nodes = 0;
+        List<Node> nodes = new ArrayList<Node>();
+        try {
+
+            int px = (Integer) parameters.get("x");
+            int pxIni = px;
+            int py = (Integer) parameters.get("y");
+            int pw = (Integer) parameters.get("width");
+            int ph = (Integer) parameters.get("height");
+            int pz = (Integer) parameters.get("maxelevation");
+
+            int d = (Integer) parameters.get("distance");
+            int r = (int) ph / d;
+            int c = (int) pw / d;
+
+            Node node = nodeFactory.createNode();
+            for (int i = 0; i < r; i++) {
+                px = pxIni;
+                for (int j = 0; j < c; j++) {
+                    node.setPosition(px, py, pz);
+                    nodes.add(node);
+
+                    px += d;
+                    total_nodes++;
+                }
+                py += d;
+            }
+            return nodes;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+
+    }
+
+    @Override
+    public Vector<Node> apply(Vector<Node> nodes, TopologyParameters parameters) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

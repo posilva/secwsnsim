@@ -1,7 +1,8 @@
 package org.wisenet.simulator.components.simulation;
 
+import java.util.logging.Level;
+import org.apache.commons.configuration.ConfigurationException;
 import org.wisenet.simulator.components.instruments.coverage.CoverageInstrument;
-import org.wisenet.simulator.components.instruments.energy.EnergyController;
 import org.wisenet.simulator.components.instruments.latency.LatencyInstrument;
 import org.wisenet.simulator.components.instruments.reliability.ReliabilityInstrument;
 import org.wisenet.simulator.components.simulation.listeners.SimulationListener;
@@ -11,12 +12,22 @@ import java.util.Collection;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.swing.event.EventListenerList;
+import org.apache.commons.configuration.XMLConfiguration;
 import org.wisenet.simulator.components.instruments.NodeSelectionCondition;
+import org.wisenet.simulator.components.output.IOutputDisplay;
 import org.wisenet.simulator.components.simulation.listeners.SimulationEvent;
+import org.wisenet.simulator.core.Simulator;
+import org.wisenet.simulator.core.energy.EnergyModel;
 import org.wisenet.simulator.core.listeners.SimulatorEvent;
 import org.wisenet.simulator.core.listeners.SimulatorListener;
+import org.wisenet.simulator.core.node.factories.AbstractNodeFactory;
 import org.wisenet.simulator.core.node.layers.routing.RoutingLayerController;
 import org.wisenet.simulator.core.node.Node;
+import org.wisenet.simulator.core.node.layers.routing.RoutingLayer;
+import org.wisenet.simulator.core.radio.RadioModel;
+import org.wisenet.simulator.utilities.RandomGenerator;
+import org.wisenet.simulator.utilities.Utilities;
+import org.wisenet.simulator.utilities.console.SimulationSettings;
 
 /**
  *
@@ -60,19 +71,15 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
     /**
      *
      */
-    protected CoverageInstrument coverageInstrument;
+    protected CoverageInstrument coverageInstrument = new CoverageInstrument(this);
     /**
      *
      */
-    protected ReliabilityInstrument reliabilityInstrument;
+    protected ReliabilityInstrument reliabilityInstrument = new ReliabilityInstrument(this);
     /**
      *
      */
-    protected LatencyInstrument latencyInstrument;
-    /**
-     *
-     */
-    protected EnergyController energyController;
+    protected LatencyInstrument latencyInstrument = new LatencyInstrument(this);
     /**
      *
      */
@@ -85,13 +92,30 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
      *
      */
     protected RoutingLayerController routingLayerController;
+    /**
+     * 
+     */
+    protected IOutputDisplay macOutputDisplay;
+    /**
+     *
+     */
+    protected IOutputDisplay routingOutputDisplay;
+    /**
+     * 
+     */
+    protected IOutputDisplay applicationOutputDisplay;
+    /**
+     * 
+     */
+    private boolean networkBuilded = false;
+    private SimulationSettings settings;
 
     /**
      *
      */
     public Simulation() {
         setupInstruments();
-        routingLayerController = new RoutingLayerController();
+
     }
 
     /**
@@ -100,10 +124,8 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
     private void setupInstruments() {
         this.coverageInstrument = new CoverageInstrument(this);
         this.coverageInstrument.setRadioModelThreshold(1);
-
         this.reliabilityInstrument = new ReliabilityInstrument(this);
         this.latencyInstrument = new LatencyInstrument(this);
-        this.energyController = new EnergyController(this);
     }
 
     @Override
@@ -122,6 +144,9 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
 
     @Override
     public void start() {
+        if (!networkBuilded) {
+            buildNetwork();
+        }
         SimulationEvent event = new SimulationEvent(this);
         fireBeforeStart(event);
         if (event.isCancel()) {
@@ -176,8 +201,11 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
             if (isNetworkDeployed()) {
                 getSimulator().init();
                 fireAfterBuildNetwork(event);
+                networkBuilded = true;
             }
 
+        } else {
+            networkBuilded = false;
         }
     }
 
@@ -204,11 +232,9 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
     }
 
     public void enterPlatform() {
-        System.out.println("Platform Enter");
     }
 
     public void exitPlatform() {
-        System.out.println("Platform Exit");
     }
 
     public int getAverageNeighborsPerNode() {
@@ -253,10 +279,6 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         } else {
             return new Dimension(0, 0);
         }
-    }
-
-    public RoutingLayerController getRoutingLayerController() {
-        return routingLayerController;
     }
 
     public ISimulationGUI getSimulationPlatform() {
@@ -440,10 +462,6 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         return coverageInstrument;
     }
 
-    public EnergyController getEnergyController() {
-        return energyController;
-    }
-
     public LatencyInstrument getLatencyInstrument() {
         return latencyInstrument;
     }
@@ -533,6 +551,30 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         }
     }
 
+    public IOutputDisplay getApplicationOutputDisplay() {
+        return applicationOutputDisplay;
+    }
+
+    public void setApplicationOutputDisplay(IOutputDisplay applicationOutputDisplay) {
+        this.applicationOutputDisplay = applicationOutputDisplay;
+    }
+
+    public IOutputDisplay getMacOutputDisplay() {
+        return macOutputDisplay;
+    }
+
+    public void setMacOutputDisplay(IOutputDisplay macOutputDisplay) {
+        this.macOutputDisplay = macOutputDisplay;
+    }
+
+    public IOutputDisplay getRoutingOutputDisplay() {
+        return routingOutputDisplay;
+    }
+
+    public void setRoutingOutputDisplay(IOutputDisplay routingOutputDisplay) {
+        this.routingOutputDisplay = routingOutputDisplay;
+    }
+
     public void onEmptyQueue(SimulatorEvent event) {
         fireOnEmptyQueue(new SimulationEvent(this));
     }
@@ -551,6 +593,113 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
                 // pass the event to the listeners event dispatch method
                 ((SimulationListener) listeners[i + 1]).onNewSimulatorRound(event);
             }
+        }
+    }
+
+    /**
+     * Set selection state based on a selection condition
+     * @param status
+     * @param condition
+     */
+    public void selectNodes(boolean status, NodeSelectionCondition condition) {
+        if (getSimulator().getNodes().size() > 0) {
+            for (Node node : getSimulator().getNodes()) {
+                if (condition.select(node)) {
+                    node.getGraphicNode().select(status);
+                }
+            }
+        }
+    }
+
+    /**
+     * Set the nodes marked based on a condition
+     * @param status
+     * @param condition
+     */
+    public void markNodes(boolean status, NodeSelectionCondition condition) {
+        if (getSimulator().getNodes().size() > 0) {
+            for (Node node : getSimulator().getNodes()) {
+                if (condition.select(node)) {
+                    if (status) {
+                        node.getGraphicNode().mark();
+                    } else {
+                        node.getGraphicNode().unmark();
+                    }
+                }
+
+            }
+        }
+    }
+
+    @Override
+    public void initialSetup() {
+        super.initialSetup();
+        getSimulator().addListener(this);
+    }
+
+    @Override
+    public int getNumberOfStableNodes() {
+        int stableCount = 0;
+        Collection<Node> nodes = getSimulator().getNodes();
+        for (Node node : nodes) {
+            if (node.getRoutingLayer().isStable()) {
+                stableCount++;
+            }
+        }
+        return stableCount;
+    }
+
+    public void saveNetworkTopology(String filename) throws Exception {
+        if (this.isValid()) {
+            saveNT(filename);
+        } else {
+            throw new Exception("Simulation isn't valid");
+        }
+    }
+
+    public void loadNetworkTopology(String filename) throws Exception {
+        XMLConfiguration file = new XMLConfiguration();
+        file.load(filename);
+
+    }
+
+    private void saveNT(String filename) throws ConfigurationException {
+
+        Collection<Node> nodes = getSimulator().getNodes();
+        XMLConfiguration file = new XMLConfiguration();
+        file.addProperty("simulation.topology.nodes.size", nodes.size());
+        for (Node node : nodes) {
+            file.addProperty("simulation.topology.nodes.node(-1).id", node.getId());
+            file.addProperty("simulation.topology.nodes.node.x", node.getX());
+            file.addProperty("simulation.topology.nodes.node.y", node.getY());
+            file.addProperty("simulation.topology.nodes.node.z", node.getZ());
+        }
+        file.save(filename);
+    }
+
+    public RoutingLayerController getRoutingLayerController() {
+        return RoutingLayer.getController();
+    }
+
+    public void setSettings(SimulationSettings settings) {
+        this.settings = settings;
+    }
+
+    @Override
+    public void create(SimulationSettings settings) {
+        try {
+            this.settings = settings; // save settings
+            setSimulator((Simulator) Utilities.loadClassInstance(settings.getSimulatorClassName()));
+            setNodeFactory((AbstractNodeFactory) Utilities.loadClassInstance(settings.getNodeFactoryClassName()));
+            getNodeFactory().setNodeMaxRadioStregth(settings.getMaxNodeRadioStrength());
+            setRadioModel((RadioModel) Utilities.loadClassInstance(settings.getRadioModelClassName()));
+            setEnergyModel((EnergyModel) Utilities.loadClassInstance(settings.getEnergyModelClassName()));
+            setMode(settings.isFastMode() ? Simulator.FAST : Simulator.REAL);
+            Simulator.randomGenerator = new RandomGenerator(settings.getSeed());
+            initialSetup();
+            
+        } catch (Exception ex) {
+            Logger.getLogger(Simulation.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

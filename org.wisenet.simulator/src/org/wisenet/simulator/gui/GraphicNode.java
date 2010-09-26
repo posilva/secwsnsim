@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ ***  Wireless Sensor Network Simulator
+ * The next generation for WSN Simulations
  */
 package org.wisenet.simulator.gui;
 
@@ -12,19 +12,15 @@ import org.wisenet.simulator.core.node.Node;
 
 /**
  *
- * @author posilva
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class GraphicNode {
-    public final static int UNDER_ATTACK=1;
-    public final static int SINK_NODE=2;
-    
+
+    public final static int UNDER_ATTACK = 1;
+    public final static int SINK_NODE = 2;
     protected Node physicalNode;
     int id;
     static int count = 0;
-    protected int x = 0;
-    protected int y = 0;
-    protected int z = 0;
-    protected GraphicPoint center = new GraphicPoint(x, y);
     protected int radius = 1;
     protected boolean filled = false;
     protected boolean selected = false;
@@ -34,21 +30,15 @@ public class GraphicNode {
     protected Color oldColor = Color.WHITE;
     protected Color markColor = Color.ORANGE;
     protected Color sourceColor = Color.GREEN;
-    protected Color destinationColor = Color.BLUE ;
+    protected Color stableColor = Color.ORANGE;
+    protected Color destinationColor = Color.BLUE;
+    protected Color attackMarkColor = Color.RED;
     protected Rectangle rectangle;
-    private boolean marked;
-    private boolean source;
-    private boolean destination;
-    private int mode=-1;
-
-    public GraphicNode(int x, int y) {
-        moveNode(x, y);
-        this.id = count++;
-    }
-
-    public GraphicNode() {
-        this.id = count++;
-    }
+    protected boolean marked;
+    protected boolean source;
+    protected boolean destination;
+    protected int mode = -1;
+    protected boolean stable;
 
     public GraphicNode(Node aPhysicalNode) {
         this.id = count++;
@@ -69,14 +59,6 @@ public class GraphicNode {
 
     public void setSelectedBackcolor(Color selectedBackcolor) {
         this.selectedBackcolor = selectedBackcolor;
-    }
-
-    public GraphicPoint getCenter() {
-        return center;
-    }
-
-    public void setCenter(GraphicPoint center) {
-        this.center = center;
     }
 
     public boolean isFilled() {
@@ -104,19 +86,20 @@ public class GraphicNode {
     }
 
     public int getX() {
-        return x;
+        return (int) getPhysicalNode().getX();
     }
 
     public void setX(int x) {
-        this.x = x;
+        this.getPhysicalNode().setX(x);
     }
 
     public int getY() {
-        return y;
+        return (int) getPhysicalNode().getY();
     }
 
     public void setY(int y) {
-        this.y = y;
+        this.getPhysicalNode().setY(y);
+
     }
 
     public Node getPhysicalNode() {
@@ -141,8 +124,8 @@ public class GraphicNode {
 
     protected void paintCenter(ISimulationDisplay display) {
         Graphics g = display.getGraphics();
-        int _x = display.x2ScreenX(x);
-        int _y = display.y2ScreenY(y);
+        int _x = display.x2ScreenX(getX());
+        int _y = display.y2ScreenY(getY());
         saveOldColor(g);
         g.setColor(Color.BLACK);
         g.drawLine(_x, _y, _x, _y);
@@ -152,8 +135,8 @@ public class GraphicNode {
 
     protected void fill(ISimulationDisplay display) {
         Graphics g = display.getGraphics();
-        int _x = display.x2ScreenX(x);
-        int _y = display.y2ScreenY(y);
+        int _x = display.x2ScreenX(getX());
+        int _y = display.y2ScreenY(getY());
         saveOldColor(g);
         g.setColor(backcolor);
         g.fillOval(_x - radius, _y - radius, radius * 2, radius * 2);
@@ -162,8 +145,8 @@ public class GraphicNode {
 
     protected void paintSelectionBorder(ISimulationDisplay display) {
         Graphics g = display.getGraphics();
-        int _x = display.x2ScreenX(x);
-        int _y = display.y2ScreenY(y);
+        int _x = display.x2ScreenX(getX());
+        int _y = display.y2ScreenY(getY());
         if (!selected) {
             return;
 
@@ -176,8 +159,8 @@ public class GraphicNode {
 
     protected void paintBorder(ISimulationDisplay display) {
         Graphics g = display.getGraphics();
-        int _x = display.x2ScreenX(x);
-        int _y = display.y2ScreenY(y);
+        int _x = display.x2ScreenX(getX());
+        int _y = display.y2ScreenY(getY());
         saveOldColor(g);
         g.setColor(linecolor);
         g.drawOval(_x - radius, _y - radius, radius * 2, radius * 2);
@@ -189,33 +172,29 @@ public class GraphicNode {
         paintAsDestination(display);
         paintAsSource(display);
         paintMode(display);
-
+        paintStable(display);
         fill(display);
         paintBorder(display);
         paintSelectionBorder(display);
-
-        //paintCenter(g);
     }
 
-    public boolean contains(GraphicPoint p) {
-        return p.distanceTo(center) <= radius;
+    public boolean contains(double _x, double _y) {
+        return distanceTo(_x, _y) <= radius;
     }
 
     public boolean contains(int x, int y) {
-        GraphicPoint p = new GraphicPoint(x, y);
-        return p.distanceTo(center) <= radius;
+
+        return distanceTo(x, y) <= radius;
     }
 
     public void moveTo(int x, int y, int z) {
-        this.z = z;
+        this.getPhysicalNode().setPosition(x, y, z);
         moveTo(x, y);
     }
 
     public void moveTo(int x, int y) {
-        this.x = x;
-        this.y = y;
+        this.getPhysicalNode().setPosition(x, y, getZ());
         rectangle = new Rectangle(x - radius, y - radius, radius + radius, radius + radius);
-        this.center = new GraphicPoint(x, y);
     }
 
     public void select(boolean b) {
@@ -235,7 +214,7 @@ public class GraphicNode {
     }
 
     public boolean intersects(GraphicNode c) {
-        return center.distanceTo(c.center) <= radius + c.radius;
+        return distanceTo(c.getX(), c.getY()) <= radius + c.radius;
     }
 
     @Override
@@ -244,11 +223,11 @@ public class GraphicNode {
     }
 
     public int getZ() {
-        return z;
+        return (int) this.getPhysicalNode().getZ();
     }
 
     public void setZ(int z) {
-        this.z = z;
+        this.getPhysicalNode().setZ(z);
     }
 
     public void mark() {
@@ -268,8 +247,8 @@ public class GraphicNode {
             return;
         }
         Graphics g = display.getGraphics();
-        int _x = display.x2ScreenX(x);
-        int _y = display.y2ScreenY(y);
+        int _x = display.x2ScreenX(getX());
+        int _y = display.y2ScreenY(getY());
 
         saveOldColor(g);
         g.setColor(destinationColor);
@@ -278,13 +257,14 @@ public class GraphicNode {
         g.fillOval(_x - r, _y - r, r * 2, r * 2);
         restoreOldColor(g);
     }
+
     private void paintAsSource(ISimulationDisplay display) {
         if (!isSource()) {
             return;
         }
         Graphics g = display.getGraphics();
-        int _x = display.x2ScreenX(x);
-        int _y = display.y2ScreenY(y);
+        int _x = display.x2ScreenX(getX());
+        int _y = display.y2ScreenY(getY());
 
         saveOldColor(g);
         g.setColor(sourceColor);
@@ -299,12 +279,29 @@ public class GraphicNode {
             return;
         }
         Graphics g = display.getGraphics();
-        int _x = display.x2ScreenX(x);
-        int _y = display.y2ScreenY(y);
+        int _x = display.x2ScreenX(getX());
+        int _y = display.y2ScreenY(getY());
 
         saveOldColor(g);
         g.setColor(markColor);
         int r = (int) (radius * 3);
+        g.drawOval(_x - r, _y - r, r * 2, r * 2);
+        g.fillOval(_x - r, _y - r, r * 2, r * 2);
+        restoreOldColor(g);
+    }
+
+    private void paintStable(ISimulationDisplay display) {
+        if (!isStable()) {
+            return;
+        }
+
+        Graphics g = display.getGraphics();
+        int _x = display.x2ScreenX(getX());
+        int _y = display.y2ScreenY(getY());
+
+        saveOldColor(g);
+        g.setColor(getStableColor());
+        int r = (int) (radius * 4);
         g.drawOval(_x - r, _y - r, r * 2, r * 2);
         g.fillOval(_x - r, _y - r, r * 2, r * 2);
         restoreOldColor(g);
@@ -350,25 +347,23 @@ public class GraphicNode {
         this.sourceColor = sourceColor;
     }
 
-    private void moveNode(int x, int y) {
-        moveTo(x, y);
-    }
-
     public void setMode(int mode) {
         this.mode = mode;
     }
 
     private void paintMode(ISimulationDisplay display) {
         Graphics g = display.getGraphics();
-        int _x = display.x2ScreenX(x);
-        int _y = display.y2ScreenY(y);
+        int _x = display.x2ScreenX(getX());
+        int _y = display.y2ScreenY(getY());
         saveOldColor(g);
-        
-        if (this.mode==-1) return ;
-        switch (this.mode)
-        {
+
+        if (this.mode == -1) {
+            return;
+        }
+
+        switch (this.mode) {
             case UNDER_ATTACK:
-                g.setColor(Color.RED);
+                g.setColor(getAttackMarkColor());
                 g.fillRect(_x - radius, _y - radius, radius * 3, radius * 3);
                 break;
             case SINK_NODE:
@@ -377,4 +372,42 @@ public class GraphicNode {
         restoreOldColor(g);
     }
 
+    public boolean isStable() {
+        return stable && getPhysicalNode().getRoutingLayer().isStable();
+    }
+
+    public void setStable(boolean stable) {
+        this.stable = stable;
+    }
+
+    public Color getStableColor() {
+        return stableColor;
+    }
+
+    public void setStableColor(Color stableColor) {
+        this.stableColor = stableColor;
+    }
+
+    public Color getAttackMarkColor() {
+        return attackMarkColor;
+    }
+
+    public void setAttackMarkColor(Color attackMarkColor) {
+        this.attackMarkColor = attackMarkColor;
+    }
+
+    public double r() {
+        return Math.sqrt(getX() * getX() + getY() * getY());
+    }
+
+    public double theta() {
+        return Math.atan2(getY(), getX());
+    }
+
+    // Euclidean distance between this point and that point
+    public double distanceTo(double _x, double _y) {
+        double dx = this.getX() - _x;
+        double dy = this.getY() - _y;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
 }

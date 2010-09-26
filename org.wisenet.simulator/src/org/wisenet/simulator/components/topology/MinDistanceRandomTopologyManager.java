@@ -7,7 +7,7 @@ import java.util.List;
 import org.wisenet.simulator.core.node.Node;
 
 /**
- * @author posilva
+* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  *
  */
 public class MinDistanceRandomTopologyManager extends RandomTopologyManager {

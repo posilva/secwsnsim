@@ -1,19 +1,21 @@
 package org.wisenet.simulator.components.instruments.latency;
 
 import java.util.Hashtable;
+import org.apache.commons.math.stat.descriptive.SummaryStatistics;
 
 import org.wisenet.simulator.components.instruments.IInstrumentHandler;
 import org.wisenet.simulator.components.instruments.IInstrumentMessage;
-import org.wisenet.simulator.components.instruments.IProbingResult;
+import org.wisenet.simulator.components.instruments.IResult;
 import org.wisenet.simulator.components.instruments.AbstractInstrument;
 import org.wisenet.simulator.components.instruments.InstrumentEvent;
 import org.wisenet.simulator.components.simulation.Simulation;
+import org.wisenet.simulator.core.Message;
 import org.wisenet.simulator.core.Simulator;
 
 /**
  * NEsta classe a intenção é registar o numero de mensagens enviadas e verificar se
  * são todas recebidas
- * @author posilva
+* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class LatencyInstrument extends AbstractInstrument {
 
@@ -24,19 +26,26 @@ public class LatencyInstrument extends AbstractInstrument {
     private int timesToSentMessages;
     private int howManyMessagesToSentPerSender;
 
+    private void updateEntry(LatencyEntry entry, IInstrumentMessage message) {
+        long rTime = System.currentTimeMillis();
+        long sTime = getSimulation().getTimeInMilliseconds();
+        long rRTT = rTime - entry.sendRealTime;
+        long sRTT = sTime - entry.sendSimTime;
+        entry.hops.addValue(((Message)message).getTotalHops());
+        entry.realTimeRoundTrip.addValue(rRTT);
+        entry.simTimeRoundTrip.addValue(sRTT);
+    }
+
     /**
      * 
      */
     class LatencyEntry {
 
-        int numberOfHops = 0;
-        int maxNumberOfHops = Integer.MIN_VALUE;
-        int minNumberOfHops = Integer.MAX_VALUE;
-        int avgNumberOfHops = 0;
+        SummaryStatistics hops = new SummaryStatistics();
+        SummaryStatistics realTimeRoundTrip = new SummaryStatistics();
+        SummaryStatistics simTimeRoundTrip = new SummaryStatistics();
         long sendRealTime;
-        long receiveRealTime;
         long sendSimTime;
-        long receiveSimTime;
     }
 
     /**
@@ -52,8 +61,12 @@ public class LatencyInstrument extends AbstractInstrument {
 
     @Override
     public void notifyMessageReceived(IInstrumentMessage message, IInstrumentHandler handler) {
-        if (sendingObject.containsKey(message.getUniqueId())) {
-            LatencyEntry entry = (LatencyEntry) sendingObject.get(message.getUniqueId());
+        if (handler.getUniqueId() == message.getDestinationId()) {
+            if (sendingObject.containsKey(message.getUniqueId())) {
+                LatencyEntry entry = (LatencyEntry) sendingObject.get(message.getUniqueId());
+                updateEntry(entry, message);
+
+            }
         }
     }
 
@@ -104,13 +117,15 @@ public class LatencyInstrument extends AbstractInstrument {
      * @param message
      */
     protected void saveMessage(IInstrumentMessage message, IInstrumentHandler handler) {
-        /**
-         * Se ainda não se deu o registo do nó
-         */
+        // se o nó que regista é o mesmo do source da mensagem
         if (handler.getUniqueId() == message.getSourceId()) {
+            // se ainda n se registou
             if (!sendingObject.containsKey(message.getUniqueId())) {
                 log("Saved Message: " + message.getUniqueId() + " from " + message.getSourceId() + " to " + message.getDestinationId());
-                sendingObject.put(message.getUniqueId(), 0);
+                LatencyEntry entry = new LatencyEntry();
+                entry.sendRealTime = System.currentTimeMillis();
+                entry.sendSimTime = getSimulation().getTimeInMilliseconds();
+                sendingObject.put(message.getUniqueId(), entry);
             }
         }
         refreshPanel();
@@ -204,13 +219,13 @@ public class LatencyInstrument extends AbstractInstrument {
     }
 
     @Override
-    public IProbingResult getLastProbeResult() {
+    public IResult getLastProbeResult() {
         LatencyProbingResult result = new LatencyProbingResult();
 
         return result;
     }
 
-    public class LatencyProbingResult implements IProbingResult {
+    public class LatencyProbingResult implements IResult {
 
         public int getNumberOfRegistredSendingObjects() {
             return sendingObject.size();

@@ -4,22 +4,22 @@ import java.util.Hashtable;
 
 import org.wisenet.simulator.components.instruments.IInstrumentHandler;
 import org.wisenet.simulator.components.instruments.IInstrumentMessage;
-import org.wisenet.simulator.components.instruments.IProbingResult;
+import org.wisenet.simulator.components.instruments.IResult;
 import org.wisenet.simulator.components.instruments.AbstractInstrument;
 import org.wisenet.simulator.components.instruments.InstrumentEvent;
 import org.wisenet.simulator.components.instruments.coverage.listeners.SignalUpdateEvent;
 import org.wisenet.simulator.components.instruments.utils.SignalHandler;
 import org.wisenet.simulator.components.simulation.Simulation;
-import org.wisenet.simulator.core.Simulator;
+import org.wisenet.simulator.core.Simulator; 
 import org.wisenet.simulator.core.node.Node;
 
 /**
  *
- * @author posilva
+* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class CoverageInstrument extends AbstractInstrument {
 // TODO: Ver para mais de 100 nós
-
+ 
     public CoverageInstrument(Simulation simulation) {
         super(simulation);
     }
@@ -268,13 +268,13 @@ public class CoverageInstrument extends AbstractInstrument {
     }
 
     @Override
-    public IProbingResult getLastProbeResult() {
+    public IResult getLastProbeResult() {
         CoverageProbingResult result = new CoverageProbingResult();
 
         return result;
     }
 
-    public class CoverageProbingResult implements IProbingResult {
+    public class CoverageProbingResult implements IResult {
 
         public int getNumberOfRegistredSenderNodes() {
             return sendingObject.size();

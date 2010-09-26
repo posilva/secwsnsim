@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ ***  Wireless Sensor Network Simulator
+ * The next generation for WSN Simulations
  */
 package org.wisenet.simulator.core.node.layers.mac;
 
@@ -13,7 +13,7 @@ import org.wisenet.simulator.core.node.Node;
 
 /**
  *
- * @author posilva
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class Mica2MACLayer extends MACLayer {
 
@@ -24,13 +24,6 @@ public class Mica2MACLayer extends MACLayer {
      * sender application which runs on this very mote.
      */
     RoutingLayer senderRoutingLayer;
-    /**
-     * This node is the one that sent the last message or the one this node is
-     * receiving a message from right now. It is mainly used for display
-     * purposes, as you know this information is not embedded into any TinyOS
-     * message.
-     */
-    //protected Node parentNode = null;
     /**
      * State variable, true if radio failed to transmit a message do to high
      * radio traffic, this means it has to retry it later, which is done using
@@ -74,14 +67,14 @@ public class Mica2MACLayer extends MACLayer {
      * The maximum noise level that is allowed on sending. This is actually a
      * multiplicator of the {@link Mica2MACLayer#noiseVariance}.
      */
-    public double maxAllowedNoiseOnSending = 5;//5;
+    public double maxAllowedNoiseOnSending = 50;//5;
     /** The minimum signal to noise ratio required to spot a message in the air. */
-    public double receivingStartSNR = 4.0; //4.0
+    public double receivingStartSNR = 1.0; //4.0
     /**
      * The maximum signal to noise ratio below which a message is marked
      * corrupted.
      */
-    public double corruptionSNR = 2.0;//2.0
+    public double corruptionSNR = 1.0;//2.0
 
     public boolean deliverMessage(Object message) {
         setMessageColor(message);
@@ -89,12 +82,8 @@ public class Mica2MACLayer extends MACLayer {
          * Deliver the message to the handler we can intercept this handler to
          * notify controllers 
          */
-        getNode().getRoutingLayer().receiveMessageHandler(message);
+        getNode().getRoutingLayer().receivedMessageHandler(message);
         return true;
-    }
-
-    @Override
-    public void init() {
     }
 
     private String getSimData() {
@@ -206,11 +195,11 @@ public class Mica2MACLayer extends MACLayer {
      * @return If the node is in sending state it returns false otherwise true.
      */
     public synchronized boolean sendMessage(Object message, RoutingLayer app) {
-        totalMessagesSent++;
+        controller.incrementTotalMessagesSent();
         if (sending) {
-            totalMessagesNotSent++;
+            controller.incrementTotalMessagesNotSent();
             if (isDebugEnabled()) {
-                System.out.println(getSimData() + " - Messages not Sent: " + totalMessagesNotSent);
+                System.out.println(getSimData() + " - Messages not Sent: " + controller.getTotalMessagesNotSent());
             }
             return false;
         } else {
@@ -374,9 +363,9 @@ public class Mica2MACLayer extends MACLayer {
                     }
                 });
             } else {
-                totalMessagesCorrupted++;
+                controller.incrementTotalMessagesCorrupted();
                 if (isDebugEnabled()) {
-                    System.out.println(getSimData() + " - Corrupted message: " + totalMessagesCorrupted);
+                    System.out.println(getSimData() + " - Corrupted message: " + controller.getTotalMessagesCorrupted());
                 }
             }
 
@@ -391,6 +380,8 @@ public class Mica2MACLayer extends MACLayer {
         } else {
             noiseStrength -= level;
         }
+    }
 
+    public static void main(String[] args) {
     }
 }

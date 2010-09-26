@@ -1,5 +1,5 @@
 /*
- *  Wireless Sensor Network Simulator
+ **  Wireless Sensor Network Simulator
  *  The next generation for WSN Simulations
  */
 package org.wisenet.simulator.core.node.layers.routing.attacks;
@@ -33,7 +33,7 @@ public class AttacksList {
     }
 
     public void addEntry(AttacksEntry entry) {
-    if (!attacksList.contains(entry)) {
+        if (!attacksList.contains(entry)) {
             attacksList.add(entry);
         } else {
             throw new IllegalStateException("Entry already exists");
@@ -42,5 +42,13 @@ public class AttacksList {
 
     public void removeEntry(AttacksEntry entry) {
         attacksList.remove(entry);
+    }
+
+    public void updateAttack(Object newAttack) {
+        for (AttacksEntry attacksEntry : attacksList) {
+            if (attacksEntry.getAttack().getClass().getName().equals(newAttack.getClass().getName())) {
+                attacksEntry.attack = (IRoutingAttack) newAttack;
+            }
+        }
     }
 }

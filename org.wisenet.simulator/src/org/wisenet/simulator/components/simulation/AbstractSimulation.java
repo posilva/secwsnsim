@@ -4,22 +4,32 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.wisenet.simulator.components.instruments.ISimulationOperations;
+import org.wisenet.simulator.components.evaluation.tests.TestSet;
+import org.wisenet.simulator.components.evaluation.tests.TestTypeEnum;
+import org.wisenet.simulator.core.energy.EnergyController;
+import org.wisenet.simulator.components.topology.TopologyManager;
 
 import org.wisenet.simulator.core.ui.ISimulationDisplay;
 import org.wisenet.simulator.core.Simulator;
+import org.wisenet.simulator.core.energy.Batery;
 import org.wisenet.simulator.core.energy.EnergyModel;
 import org.wisenet.simulator.core.node.factories.AbstractNodeFactory;
 import org.wisenet.simulator.core.radio.RadioModel;
 import org.wisenet.simulator.utilities.Utilities;
+import org.wisenet.simulator.utilities.console.SimulationSettings;
 import org.wisenet.simulator.utilities.xml.XMLFileReader;
-
 
 public abstract class AbstractSimulation implements ISimulationOperations {
 
+    /**
+     * Energy model for this simulation
+     */
+    int mode = Simulator.FAST;
+    EnergyModel energyModel; //TODO: uma vez que passou para dentro da node factory deve-se poder tirar
     protected String name;
     private String description;
     protected Simulator simulator;
@@ -29,6 +39,8 @@ public abstract class AbstractSimulation implements ISimulationOperations {
     protected int initialMaxNodeRange;
     protected long seed;
     private boolean bPreInit = false;
+    private TestSet testSet = new TestSet();
+    protected SimulationSettings settings;
 
     public AbstractSimulation() {
         super();
@@ -193,7 +205,7 @@ public abstract class AbstractSimulation implements ISimulationOperations {
      * @return
      * @throws SimulationBuilderException
      */
-    public AbstractSimulation readFromFile(String file) throws  SimulationException {
+    public AbstractSimulation readFromFile(String file) throws SimulationException {
         try {
             AbstractSimulation sim = this;
             Properties props = new Properties();
@@ -206,7 +218,7 @@ public abstract class AbstractSimulation implements ISimulationOperations {
             String simulatorClass = props.getProperty("simulation.simulator.class");
             String nodeFactoryClass = props.getProperty("simulation.nodefactory.class");
             String radioModelClass = props.getProperty("simulation.radiomodel.class");
-            String energyModel = props.getProperty("simulation.energymodel.class");
+            String energyModelClass = props.getProperty("simulation.energymodel.class");
             int nrNodes = Integer.valueOf(props.getProperty("simulation.nodes.count"));
 
             Object instance = Utilities.loadClassInstance(simulatorClass);
@@ -215,7 +227,7 @@ public abstract class AbstractSimulation implements ISimulationOperations {
             sim.setNodeFactory((AbstractNodeFactory) instance);
             instance = Utilities.loadClassInstance(radioModelClass);
             sim.setRadioModel((RadioModel) instance);
-            instance = Utilities.loadClassInstance(energyModel);
+            instance = Utilities.loadClassInstance(energyModelClass);
             sim.getNodeFactory().setEnergyModel(((EnergyModel) instance).getInstanceWithDefaultValues());
 
             sim.getSimulator().setRadioModel(sim.getRadioModel());
@@ -241,8 +253,6 @@ public abstract class AbstractSimulation implements ISimulationOperations {
             throw new SimulationException(ex);
         }
     }
-
-    
 
     /**
      * Save this simulation settings
@@ -285,4 +295,60 @@ public abstract class AbstractSimulation implements ISimulationOperations {
         }
 
     }
+
+    public EnergyModel getEnergyModel() {
+        return energyModel;
+    }
+
+    public void setEnergyModel(EnergyModel energyModel) {
+        this.energyModel = energyModel;
+    }
+
+    /**
+     * Initial phase for simulation setup
+     */
+    public void initialSetup() {
+        if (simulator == null) {
+            throw new IllegalStateException("Must set a simulator instance");
+        }
+        if (radioModel == null) {
+            throw new IllegalStateException("Must set a radiomodel instance");
+        }
+        if (display == null) {
+            throw new IllegalStateException("Must set a display instance");
+        }
+        simulator.setRadioModel(radioModel);
+        simulator.setMode(mode);
+        nodeFactory.setEnergyModel(energyModel);
+        nodeFactory.setSimulator(simulator);
+        radioModel.reset();
+        simulator.setDisplay(display);
+        bPreInit = true;
+    }
+
+    public int getMode() {
+        return mode;
+    }
+
+    public void setMode(int mode) {
+        this.mode = mode;
+    }
+
+    public void appendNodes(TopologyManager topologyManager) throws Exception {
+        topologyManager.setNodeFactory(getNodeFactory());
+        List<org.wisenet.simulator.core.node.Node> nodes = topologyManager.createTopology();
+        for (org.wisenet.simulator.core.node.Node node : nodes) {
+            getSimulator().addNode(node);
+        }
+    }
+
+    public EnergyController getEnergyController() {
+        return Batery.getController();
+    }
+
+    public List getTestByType(TestTypeEnum testType) {
+        return testSet.getTestByType(testType);
+    }
+
+    public abstract void create(SimulationSettings settings);
 }

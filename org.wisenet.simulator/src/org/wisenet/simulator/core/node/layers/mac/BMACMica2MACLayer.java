@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ ***  Wireless Sensor Network Simulator
+ * The next generation for WSN Simulations
  */
 
 package org.wisenet.simulator.core.node.layers.mac;
@@ -10,7 +10,7 @@ import org.wisenet.simulator.core.Event;
 
 /**
  *
- * @author posilva
+* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class BMACMica2MACLayer extends Mica2MACLayer {
 

@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 
 /**
  *
- * @author posilva
+* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)

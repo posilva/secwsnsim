@@ -35,6 +35,13 @@ public abstract class Node {
     public static final double DEFAULT_POWER_CONSUMING = 1.0E-2;
     private static long CLOCK_TICK = Simulator.ONE_SECOND;// /100;
     /**
+     * Coordinates
+     */
+    protected double x = 0;
+    protected double y = 0;
+    protected double z = 0;
+
+    /**
      * Attributes
      */
     protected boolean sinkNode = false;
@@ -48,6 +55,7 @@ public abstract class Node {
     protected CPU cpu = null;
     protected Transceiver transceiver = null;
     protected Color messageColor = Color.BLUE;
+    protected double environmentAttenuation=0;
     /**
      * This is the message being sent, on reception it is extracted and the
      * message part is forwarded to the appropriate application, see
@@ -230,9 +238,9 @@ public abstract class Node {
      * @see net.tinyos.prowler.INode#setPosition(double, double, double)
      */
     public void setPosition(double x, double y, double z) {
-        getGraphicNode().moveTo((int) x, (int) y);
-        getGraphicNode().setZ((int) z);
-
+          this.x=x;
+          this.y=y;
+          this.z=z;
     }
 
     /*
@@ -241,7 +249,7 @@ public abstract class Node {
      * @see net.tinyos.prowler.INode#getX()
      */
     public double getX() {
-        return getGraphicNode().getX();
+        return this.x;
     }
 
     /*
@@ -250,7 +258,7 @@ public abstract class Node {
      * @see net.tinyos.prowler.INode#getY()
      */
     public double getY() {
-        return getGraphicNode().getY();
+        return this.y;
     }
 
     /*
@@ -259,7 +267,7 @@ public abstract class Node {
      * @see net.tinyos.prowler.INode#getZ()
      */
     public double getZ() {
-        return getGraphicNode().getZ();
+        return this.z;
     }
 
     /*
@@ -529,4 +537,27 @@ public abstract class Node {
     public void setMessageColor(Color messageColor) {
         this.messageColor = messageColor;
     }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    public void setZ(double z) {
+        this.z = z;
+    }
+
+    public double getEnvironmentAttenuation() {
+        return environmentAttenuation;
+    }
+
+    public void setEnvironmentAttenuation(double environmentAttenuation) {
+        this.environmentAttenuation = environmentAttenuation;
+    }
+
+
+    
 }
