@@ -2,7 +2,7 @@ package org.wisenet.protocols.insens.utils;
 
 /**
  *
- * @author CIAdmin
+* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class NetworkKeyStoreException extends Exception{
 

@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ ***  Wireless Sensor Network Simulator
+ * The next generation for WSN Simulations
  */
 package org.wisenet.protocols.insens;
 
@@ -23,7 +23,7 @@ public class INSENSNode extends Mica2SensorNode implements IDisplayable {
     public INSENSNode(Simulator sim, RadioModel radioModel) {
         super(sim, radioModel);
         setEnableFunctioningEnergyConsumption(false);
-        setRadius(2);
+        setRadius(3);
         setPaintingPaths(true);
         setBaseColor(Color.magenta);
     }

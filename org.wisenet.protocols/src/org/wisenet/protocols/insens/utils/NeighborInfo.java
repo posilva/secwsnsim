@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ ***  Wireless Sensor Network Simulator
+ * The next generation for WSN Simulations
  */
 package org.wisenet.protocols.insens.utils;
 
@@ -15,7 +15,7 @@ import org.wisenet.simulator.utilities.CryptoFunctions;
 
 /**
  *  Neighbor info storage class
- * @author CIAdmin
+* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class NeighborInfo extends Hashtable<Short, byte[]> {
 

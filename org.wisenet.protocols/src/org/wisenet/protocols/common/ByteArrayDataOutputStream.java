@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ ***  Wireless Sensor Network Simulator
+ * The next generation for WSN Simulations
  */
 package org.wisenet.protocols.common;
 
@@ -10,7 +10,7 @@ import java.io.OutputStream;
 
 /**
  *
- * @author CIAdmin
+* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class ByteArrayDataOutputStream extends DataOutputStream {
 

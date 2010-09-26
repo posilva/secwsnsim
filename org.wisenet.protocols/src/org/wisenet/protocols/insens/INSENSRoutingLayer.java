@@ -41,7 +41,7 @@ import org.wisenet.simulator.core.node.layers.routing.attacks.AttacksEntry;
 
 /**
  *
- * @author CIAdmin
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandler {
 
@@ -80,7 +80,6 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     private byte feedbackMessageRetries;
     private Hashtable tableOfNodesByHops;
     private boolean reliableMode = false;
-    private boolean blackholeAttackActive;
 
     @Override
     public void onReceiveMessage(Object message) {
@@ -129,7 +128,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     }
 
     @Override
-    public boolean onSendMessage(Object message, Application app) {
+    protected boolean onSendMessage(Object message, Application app) {
         if (message instanceof INSENSDATAMessage) {
             if (isStable()) {
                 return sendDATAMessage((INSENSDATAMessage) message);
@@ -142,11 +141,10 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     }
 
     @Override
-    public void setup() {
+    protected void setup() {
         setCurrentPhase(PHASE_SETUP);
         ((CoverageInstrument) getCoverageInstrument()).signalNeighborDetectionReset(CoverageInstrument.CoverageModelEnum.ROUTING);
         setupEvaluationClasses();
-        setRoutingController(getNode().getSimulator().getSimulation().getRoutingLayerController());
         getNode().getMacLayer().setDebugEnabled(false);
         getNode().getRoutingLayer().setDebugEnabled(false);
         if (getNode().isSinkNode()) {
@@ -167,7 +165,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     }
 
     @Override
-    public void onRouteMessage(Object message) {
+    protected void onRouteMessage(Object message) {
         try {
             INSENSMessage m = (INSENSMessage) message;
             byte type = INSENSFunctions.getMessageType(m);
@@ -645,7 +643,6 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     protected void setupAttacks() {
         boolean attackStatus = getNode().getId() % 5 == 0;
 
-        attacks.addEntry(new AttacksEntry(attackStatus, "Blackhole Attack", new BlackholeRoutingAttack(this)));
     }
 
     @Override
@@ -664,12 +661,20 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         }
     }
 
+    /**
+     * 
+     * @param oldValue
+     */
     @Override
     protected void onStable(boolean oldValue) {
         if (oldValue == false) {
-            boolean attackStatus = getNode().getId() % 5 == 0;
+            boolean attackStatus = getNode().getId() % 3 == 0;
             setUnderAttack(attackStatus);
         }
+    }
 
+    @Override
+    protected void initAttacks() {
+        attacks.addEntry(new AttacksEntry(false, "Blackhole Attack", new BlackholeRoutingAttack(this)));
     }
 }
