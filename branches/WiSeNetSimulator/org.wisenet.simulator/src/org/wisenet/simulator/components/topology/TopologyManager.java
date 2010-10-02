@@ -2,6 +2,7 @@ package org.wisenet.simulator.components.topology;
 
 import java.util.List;
 import java.util.Vector;
+import org.wisenet.simulator.common.ObjectParameters;
 import org.wisenet.simulator.common.Parameterizable;
 import org.wisenet.simulator.core.node.Node;
 import org.wisenet.simulator.core.node.factories.AbstractNodeFactory;
@@ -16,8 +17,8 @@ public abstract class TopologyManager implements Parameterizable {
         return parameters;
     }
 
-    public void setParameters(TopologyParameters parameters) {
-        this.parameters = parameters;
+    public void setParameters(ObjectParameters parameters) {
+        this.parameters = (TopologyParameters) parameters;
     }
 
     public AbstractNodeFactory getNodeFactory() {

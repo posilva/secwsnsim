@@ -6,12 +6,14 @@ package org.wisenet.simulator.utilities.console;
 
 import java.io.Serializable;
 import org.apache.commons.configuration.XMLConfiguration;
+import org.wisenet.simulator.common.PersistantException;
+import org.wisenet.simulator.common.PersistantObject;
 
 /**
  *
  * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
-public class SimulationSettings implements Serializable {
+public class SimulationSettings extends PersistantObject implements Serializable {
 
     String name;
     boolean fastMode = true;
@@ -75,37 +77,11 @@ public class SimulationSettings implements Serializable {
     }
 
     public void load(String filename) throws Exception {
-        XMLConfiguration file = new XMLConfiguration();
-        file.load(filename);
-        setName((String) file.getProperty("simulation.settings.name"));
-        setSeed((Long) file.getProperty("simulation.settings.seed"));
-        setFastMode((Boolean) file.getProperty("simulation.settings.fastmode"));
-        setMaxNodeRadioStrength((Integer) file.getProperty("simulation.settings.maxNodeRadioStrength"));
-        setEnergyModelClassName((String) file.getProperty("simulation.settings.energyModelClassName"));
-        setSimulatorClassName((String) file.getProperty("simulation.settings.simulatorClassName"));
-        setNodeFactoryClassName((String) file.getProperty("simulation.settings.nodeFactoryClassName"));
-        setRadioModelClassName((String) file.getProperty("simulation.settings.radioModelClassName"));
-        setStaticZ((Boolean) file.getProperty("simulation.settings.staticz"));
-        setMinZ((Double) file.getProperty("simulation.settings.minz"));
-        setMaxZ((Double) file.getProperty("simulation.settings.maxz"));
-        setEnvironAttenuation((Double) file.getProperty("simulation.settings.environAttenuation"));
+        loadFromXML(filename);
     }
 
     public void save(String filename) throws Exception {
-        XMLConfiguration file = new XMLConfiguration();
-        file.addProperty("simulation.settings.name", getName());
-        file.addProperty("simulation.settings.seed", getSeed());
-        file.addProperty("simulation.settings.fastmode", isFastMode());
-        file.addProperty("simulation.settings.nodeFactoryClassName", getNodeFactoryClassName());
-        file.addProperty("simulation.settings.simulatorClassName", getSimulatorClassName());
-        file.addProperty("simulation.settings.radioModelClassName", getRadioModelClassName());
-        file.addProperty("simulation.settings.maxNodeRadioStrength", getMaxNodeRadioStrength());
-        file.addProperty("simulation.settings.energyModelClassName", getEnergyModelClassName());
-        file.addProperty("simulation.settings.staticz", isStaticZ());
-        file.addProperty("simulation.settings.minz", getMinZ());
-        file.addProperty("simulation.settings.maxz", getMaxZ());
-        file.addProperty("simulation.settings.environAttenuation", getEnvironAttenuation());
-        file.save(filename);
+        saveToXML(filename);
     }
 
     public long getSeed() {
@@ -154,5 +130,35 @@ public class SimulationSettings implements Serializable {
 
     public void setStaticZ(boolean staticZ) {
         this.staticZ = staticZ;
+    }
+
+    public void saveToXML(XMLConfiguration configuration) throws PersistantException {
+        configuration.addProperty("simulation.settings.name", getName());
+        configuration.addProperty("simulation.settings.seed", getSeed());
+        configuration.addProperty("simulation.settings.fastmode", isFastMode());
+        configuration.addProperty("simulation.settings.nodeFactoryClassName", getNodeFactoryClassName());
+        configuration.addProperty("simulation.settings.simulatorClassName", getSimulatorClassName());
+        configuration.addProperty("simulation.settings.radioModelClassName", getRadioModelClassName());
+        configuration.addProperty("simulation.settings.maxNodeRadioStrength", getMaxNodeRadioStrength());
+        configuration.addProperty("simulation.settings.energyModelClassName", getEnergyModelClassName());
+        configuration.addProperty("simulation.settings.staticz", isStaticZ());
+        configuration.addProperty("simulation.settings.minz", getMinZ());
+        configuration.addProperty("simulation.settings.maxz", getMaxZ());
+        configuration.addProperty("simulation.settings.environAttenuation", getEnvironAttenuation());
+    }
+
+    public void loadFromXML(XMLConfiguration file) throws PersistantException {
+        setName((String) file.getString("simulation.settings.name"));
+        setSeed((Long) file.getLong("simulation.settings.seed"));
+        setFastMode((Boolean) file.getBoolean("simulation.settings.fastmode"));
+        setMaxNodeRadioStrength((Integer) file.getInt("simulation.settings.maxNodeRadioStrength"));
+        setEnergyModelClassName((String) file.getString("simulation.settings.energyModelClassName"));
+        setSimulatorClassName((String) file.getString("simulation.settings.simulatorClassName"));
+        setNodeFactoryClassName((String) file.getString("simulation.settings.nodeFactoryClassName"));
+        setRadioModelClassName((String) file.getString("simulation.settings.radioModelClassName"));
+        setStaticZ((Boolean) file.getBoolean("simulation.settings.staticz"));
+        setMinZ((Double) file.getDouble("simulation.settings.minz"));
+        setMaxZ((Double) file.getDouble("simulation.settings.maxz"));
+        setEnvironAttenuation((Double) file.getDouble("simulation.settings.environAttenuation"));
     }
 }

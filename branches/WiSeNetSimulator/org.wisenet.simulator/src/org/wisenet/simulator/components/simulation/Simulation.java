@@ -2,6 +2,7 @@ package org.wisenet.simulator.components.simulation;
 
 import java.util.logging.Level;
 import org.apache.commons.configuration.ConfigurationException;
+import org.wisenet.simulator.common.PersistantException;
 import org.wisenet.simulator.components.instruments.coverage.CoverageInstrument;
 import org.wisenet.simulator.components.instruments.latency.LatencyInstrument;
 import org.wisenet.simulator.components.instruments.reliability.ReliabilityInstrument;
@@ -23,6 +24,8 @@ import org.wisenet.simulator.core.listeners.SimulatorListener;
 import org.wisenet.simulator.core.node.factories.AbstractNodeFactory;
 import org.wisenet.simulator.core.node.layers.routing.RoutingLayerController;
 import org.wisenet.simulator.core.node.Node;
+import org.wisenet.simulator.core.node.layers.mac.MACLayer;
+import org.wisenet.simulator.core.node.layers.mac.MACLayerController;
 import org.wisenet.simulator.core.node.layers.routing.RoutingLayer;
 import org.wisenet.simulator.core.radio.RadioModel;
 import org.wisenet.simulator.utilities.RandomGenerator;
@@ -89,10 +92,6 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
      */
     protected String simulationState;
     /**
-     *
-     */
-    protected RoutingLayerController routingLayerController;
-    /**
      * 
      */
     protected IOutputDisplay macOutputDisplay;
@@ -108,7 +107,6 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
      * 
      */
     private boolean networkBuilded = false;
-    private SimulationSettings settings;
 
     /**
      *
@@ -271,6 +269,10 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
                     maxY = Math.max(maxY, node.getGraphicNode().getY());
                     minY = Math.min(minY, node.getGraphicNode().getY());
                 }
+                maxX += getNodeFactory().getNodeMaxRadioRange();
+                maxY -= getNodeFactory().getNodeMaxRadioRange();
+                minX += getNodeFactory().getNodeMaxRadioRange();
+                minY -= getNodeFactory().getNodeMaxRadioRange();
                 h = maxY - minY;
                 w = maxX - minX;
                 return new Dimension(w, h);
@@ -616,14 +618,14 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
      * @param status
      * @param condition
      */
-    public void markNodes(boolean status, NodeSelectionCondition condition) {
+    public void markStableNodes(boolean status, NodeSelectionCondition condition) {
         if (getSimulator().getNodes().size() > 0) {
             for (Node node : getSimulator().getNodes()) {
                 if (condition.select(node)) {
                     if (status) {
-                        node.getGraphicNode().mark();
+                        node.getGraphicNode().markStable();
                     } else {
-                        node.getGraphicNode().unmark();
+                        node.getGraphicNode().unmarkStable();
                     }
                 }
 
@@ -681,10 +683,6 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         return RoutingLayer.getController();
     }
 
-    public void setSettings(SimulationSettings settings) {
-        this.settings = settings;
-    }
-
     @Override
     public void create(SimulationSettings settings) {
         try {
@@ -693,13 +691,32 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
             setNodeFactory((AbstractNodeFactory) Utilities.loadClassInstance(settings.getNodeFactoryClassName()));
             getNodeFactory().setNodeMaxRadioStregth(settings.getMaxNodeRadioStrength());
             setRadioModel((RadioModel) Utilities.loadClassInstance(settings.getRadioModelClassName()));
-            setEnergyModel((EnergyModel) Utilities.loadClassInstance(settings.getEnergyModelClassName()));
+            setEnergyModel(((EnergyModel) Utilities.loadClassInstance(settings.getEnergyModelClassName())).getInstanceWithDefaultValues());
+
+            getNodeFactory().setEnvironmentAttenuation(settings.getEnvironAttenuation());
+            getNodeFactory().setStaticZ(settings.isStaticZ());
+            getNodeFactory().setMaxZ(settings.getMaxZ());
+            getNodeFactory().setMinZ(settings.getMinZ());
             setMode(settings.isFastMode() ? Simulator.FAST : Simulator.REAL);
             Simulator.randomGenerator = new RandomGenerator(settings.getSeed());
             initialSetup();
-            
+
         } catch (Exception ex) {
             Logger.getLogger(Simulation.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public MACLayerController getMacLayerController() {
+        return MACLayer.getController();
+    }
+
+    public void saveToXML(XMLConfiguration configuration) throws PersistantException {
+        settings.saveToXML(configuration);
+        getMacLayerController().saveToXML(configuration);
+        getRoutingLayerController().saveToXML(configuration);
+    }
+
+    public void loadFromXML(XMLConfiguration configuration) throws PersistantException {
+        settings.loadFromXML(name);
     }
 }

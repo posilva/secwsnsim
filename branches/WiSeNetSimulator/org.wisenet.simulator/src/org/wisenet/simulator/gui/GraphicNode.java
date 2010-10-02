@@ -29,6 +29,7 @@ public class GraphicNode {
     protected Color linecolor = Color.BLACK;
     protected Color oldColor = Color.WHITE;
     protected Color markColor = Color.ORANGE;
+    protected Color markStableColor = Color.CYAN;
     protected Color sourceColor = Color.GREEN;
     protected Color stableColor = Color.ORANGE;
     protected Color destinationColor = Color.BLUE;
@@ -38,7 +39,7 @@ public class GraphicNode {
     protected boolean source;
     protected boolean destination;
     protected int mode = -1;
-    protected boolean stable;
+    protected boolean markedAsStable;
 
     public GraphicNode(Node aPhysicalNode) {
         this.id = count++;
@@ -291,7 +292,7 @@ public class GraphicNode {
     }
 
     private void paintStable(ISimulationDisplay display) {
-        if (!isStable()) {
+        if (!isMarkedAsStable()) {
             return;
         }
 
@@ -372,12 +373,12 @@ public class GraphicNode {
         restoreOldColor(g);
     }
 
-    public boolean isStable() {
-        return stable && getPhysicalNode().getRoutingLayer().isStable();
+    public boolean isMarkedAsStable() {
+        return markedAsStable && getPhysicalNode().getRoutingLayer().isStable();
     }
 
     public void setStable(boolean stable) {
-        this.stable = stable;
+        this.markedAsStable = stable;
     }
 
     public Color getStableColor() {
@@ -409,5 +410,14 @@ public class GraphicNode {
         double dx = this.getX() - _x;
         double dy = this.getY() - _y;
         return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    public void unmarkStable() {
+        markedAsStable = false;
+    }
+
+    public void markStable() {
+        markedAsStable = true;
+
     }
 }

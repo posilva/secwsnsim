@@ -49,7 +49,7 @@ public class RandomTopologyManager extends TopologyManager {
         for (Node node : nodes) {
             final double x = px + (random.nextDouble() * rect.width);
             final double y = py + (random.nextDouble() * rect.height);
-            final double z = 0;
+            final double z = applyZ();
             node.setPosition(x, y, z);
         }
         return nodes;
@@ -58,22 +58,20 @@ public class RandomTopologyManager extends TopologyManager {
     @Override
     protected List<Node> createTopologyImpl() {
         try {
+            if (random == null) {
+                random = new Random();
+            }
             int px = (Integer) parameters.get("x");
             int py = (Integer) parameters.get("y");
             int pw = (Integer) parameters.get("width");
             int ph = (Integer) parameters.get("height");
-            int pz = (Integer) parameters.get("maxelevation");
             int nNodes = (Integer) parameters.get("nodes");
-            if (random == null) {
-                random = new Random();
-            }
-            List<Node> nodes = nodeFactory.createNodes(nNodes);
+
+            List<Node> nodes = nodeFactory.createNodes((int) nNodes);
             for (Node node : nodes) {
                 final double x = px + (random.nextDouble() * pw);
                 final double y = py + (random.nextDouble() * ph);
-                final double z = (random.nextDouble() * pz);
-
-                System.out.println(this.getClass().getName() + ": FALTA O MIN E O MAX Z");
+                final double z = applyZ();
 
                 node.setPosition(x, y, z);
             }
@@ -88,4 +86,13 @@ public class RandomTopologyManager extends TopologyManager {
     public Vector<Node> apply(Vector<Node> nodes, TopologyParameters parameters) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    private double applyZ() {
+        if (nodeFactory.isStaticZ()) {
+            return nodeFactory.getMinZ();
+        } else {
+            return nodeFactory.getMinZ() + (random.nextDouble() * nodeFactory.getMaxZ());
+        }
+    }
+
 }

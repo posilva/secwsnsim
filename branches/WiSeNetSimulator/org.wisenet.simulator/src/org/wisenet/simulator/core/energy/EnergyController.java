@@ -1,6 +1,6 @@
 package org.wisenet.simulator.core.energy;
 
-import org.wisenet.simulator.components.logging.EnergyLogger;
+import org.wisenet.simulator.components.instruments.logging.EnergyLogger;
 import org.wisenet.simulator.core.energy.listeners.EnergyEvent;
 import org.wisenet.simulator.core.energy.listeners.EnergyListener;
 

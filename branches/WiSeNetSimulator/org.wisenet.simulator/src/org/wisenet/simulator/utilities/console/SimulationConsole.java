@@ -4,8 +4,7 @@
  */
 package org.wisenet.simulator.utilities.console;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.wisenet.simulator.components.simulation.Simulation;
 import org.wisenet.simulator.components.topology.RandomTopologyManager;
 import org.wisenet.simulator.components.topology.RandomTopologyParameters;
@@ -24,8 +23,9 @@ import org.wisenet.simulator.temp.insens.INSENSNodeFactory;
 public class SimulationConsole {
 
     private static SimulationSettings createSimulationSettings() {
+
         SimulationSettings settings = new SimulationSettings();
-        settings.setMaxNodeRadioStrength(20300); //    int maxNodeRadioStrength;
+        settings.setMaxNodeRadioStrength(2300); //    int maxNodeRadioStrength;
         settings.setNodeFactoryClassName(INSENSNodeFactory.class.getName()); //    String  nodeFactoryClassName;
         settings.setSimulatorClassName(Simulator.class.getName()); //    String simulatorClassName;
         settings.setRadioModelClassName(GaussianRadioModel.class.getName()); //    String radioModelClassName;
@@ -38,19 +38,19 @@ public class SimulationConsole {
         settings.setMaxZ(0);
         return settings;
     }
-    
+
     /**
      * 
      * @return
      */
     private static RandomTopologyManager createTopologyManager() {
+
         TopologyParameters parameters = new RandomTopologyParameters();
         parameters.set("x", 0);
         parameters.set("y", 0);
-        parameters.set("maxelevation", 0);
         parameters.set("width", 300);
         parameters.set("height", 300);
-        parameters.set("nodes", 200);
+        parameters.set("nodes", 100);
         RandomTopologyManager topologyManager = new RandomTopologyManager();
         topologyManager.setParameters(parameters);
         return topologyManager;
@@ -59,18 +59,21 @@ public class SimulationConsole {
     public static void main(String[] args) {
         try {
             Simulation simulation = createSimulation();
-            simulation.start();
+            simulation.saveToXML("Simulation.dump.xml");
+//            simulation.loadFromFile("Simulation.dump.xml");
+//            simulation.buildNetwork();
+//            simulation.start();
         } catch (Exception ex) {
-            Logger.getLogger(SimulationFactory.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+//            Logger.getLogger(SimulationFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public static Simulation createSimulation() throws Exception {
-        SimulationSettings settings = createSimulationSettings();
-        TopologyManager manager = createTopologyManager();
-        
-        Simulation simulation = new Simulation();
-        simulation.setDisplay(new NoDisplay());
+        SimulationSettings settings = createSimulationSettings();//verificado
+        TopologyManager manager = createTopologyManager();//verificado
+        Simulation simulation = new Simulation();//verificado
+        simulation.setDisplay(new NoDisplay());//verificado
         simulation.create(settings);
         simulation.appendNodes(manager);
         return simulation;

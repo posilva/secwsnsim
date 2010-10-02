@@ -171,9 +171,6 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         btnSave = new javax.swing.JButton();
         btnProperties = new javax.swing.JButton();
         jSeparator7 = new javax.swing.JToolBar.Separator();
-        adjustRadioStrengthPanel = new javax.swing.JPanel();
-        adjustRadioStrengthButton = new javax.swing.JButton();
-        adjustRadioStrengthSlider = new javax.swing.JSpinner();
         jPanel1 = new javax.swing.JPanel();
         lblRadioCoverageValue = new javax.swing.JLabel();
         lblRoutingCoverageValue = new javax.swing.JLabel();
@@ -201,13 +198,9 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         viewLatencyControlPanel = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenu5 = new javax.swing.JMenu();
-        viewRoutingInfo = new javax.swing.JMenuItem();
         viewNodeInfo = new javax.swing.JMenuItem();
         evaluationMenu = new javax.swing.JMenu();
         evalSettingsMenu = new javax.swing.JMenuItem();
-        mnuActions = new javax.swing.JMenu();
-        mnuActionSelectStable = new javax.swing.JMenuItem();
-        mnuActionMarkStable = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         statusPanel = new javax.swing.JPanel();
@@ -279,42 +272,19 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         jSeparator7.setName("jSeparator7"); // NOI18N
         mainToolbar.add(jSeparator7);
 
-        adjustRadioStrengthPanel.setMaximumSize(new java.awt.Dimension(150, 25));
-        adjustRadioStrengthPanel.setMinimumSize(new java.awt.Dimension(150, 25));
-        adjustRadioStrengthPanel.setName("adjustRadioStrengthPanel"); // NOI18N
-        adjustRadioStrengthPanel.setPreferredSize(new java.awt.Dimension(150, 25));
-        adjustRadioStrengthPanel.setLayout(new java.awt.BorderLayout());
-
-        adjustRadioStrengthButton.setAction(actionMap.get("ApplyRadioStrength")); // NOI18N
-        adjustRadioStrengthButton.setText(resourceMap.getString("adjustRadioStrengthButton.text")); // NOI18N
-        adjustRadioStrengthButton.setFocusable(false);
-        adjustRadioStrengthButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        adjustRadioStrengthButton.setName("adjustRadioStrengthButton"); // NOI18N
-        adjustRadioStrengthButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        adjustRadioStrengthPanel.add(adjustRadioStrengthButton, java.awt.BorderLayout.LINE_END);
-
-        adjustRadioStrengthSlider.setModel(new javax.swing.SpinnerNumberModel(100, 100, 100000, 100));
-        adjustRadioStrengthSlider.setToolTipText(resourceMap.getString("adjustRadioStrengthSlider.toolTipText")); // NOI18N
-        adjustRadioStrengthSlider.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        adjustRadioStrengthSlider.setEnabled(workbenchPanel1.isVisible());
-        adjustRadioStrengthSlider.setName("adjustRadioStrengthSlider"); // NOI18N
-        adjustRadioStrengthPanel.add(adjustRadioStrengthSlider, java.awt.BorderLayout.CENTER);
-
-        mainToolbar.add(adjustRadioStrengthPanel);
-
         jPanel1.setEnabled(workbenchPanel1.isVisible());
         jPanel1.setName("jPanel1"); // NOI18N
-        jPanel1.setPreferredSize(new java.awt.Dimension(1085, 25));
+        jPanel1.setPreferredSize(new java.awt.Dimension(780, 25));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1085, Short.MAX_VALUE)
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 780, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 25, Short.MAX_VALUE)
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 25, Short.MAX_VALUE)
         );
 
         mainToolbar.add(jPanel1);
@@ -459,11 +429,6 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         jMenu5.setText(resourceMap.getString("jMenu5.text")); // NOI18N
         jMenu5.setName("jMenu5"); // NOI18N
 
-        viewRoutingInfo.setAction(actionMap.get("ShowRoutingInfoPanelAction")); // NOI18N
-        viewRoutingInfo.setText(resourceMap.getString("viewRoutingInfo.text")); // NOI18N
-        viewRoutingInfo.setName("viewRoutingInfo"); // NOI18N
-        jMenu5.add(viewRoutingInfo);
-
         viewNodeInfo.setText(resourceMap.getString("viewNodeInfo.text")); // NOI18N
         viewNodeInfo.setName("viewNodeInfo"); // NOI18N
         jMenu5.add(viewNodeInfo);
@@ -481,21 +446,6 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         evaluationMenu.add(evalSettingsMenu);
 
         menuBar.add(evaluationMenu);
-
-        mnuActions.setText(resourceMap.getString("mnuActions.text")); // NOI18N
-        mnuActions.setName("mnuActions"); // NOI18N
-
-        mnuActionSelectStable.setAction(actionMap.get("SelectStableNodes")); // NOI18N
-        mnuActionSelectStable.setText(resourceMap.getString("mnuActionSelectStable.text")); // NOI18N
-        mnuActionSelectStable.setName("mnuActionSelectStable"); // NOI18N
-        mnuActions.add(mnuActionSelectStable);
-
-        mnuActionMarkStable.setAction(actionMap.get("MarkStableNodes")); // NOI18N
-        mnuActionMarkStable.setText(resourceMap.getString("mnuActionMarkStable.text")); // NOI18N
-        mnuActionMarkStable.setName("mnuActionMarkStable"); // NOI18N
-        mnuActions.add(mnuActionMarkStable);
-
-        menuBar.add(mnuActions);
 
         helpMenu.setText(resourceMap.getString("helpMenu.text")); // NOI18N
         helpMenu.setName("helpMenu"); // NOI18N
@@ -570,54 +520,54 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         FieldSize.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         FieldSize.setName("FieldSize"); // NOI18N
 
-        javax.swing.GroupLayout statusPanelLayout = new javax.swing.GroupLayout(statusPanel);
+        org.jdesktop.layout.GroupLayout statusPanelLayout = new org.jdesktop.layout.GroupLayout(statusPanel);
         statusPanel.setLayout(statusPanelLayout);
         statusPanelLayout.setHorizontalGroup(
-            statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statusPanelLayout.createSequentialGroup()
-                .addComponent(statusMessageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 458, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(SimulationStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
-                .addComponent(NrSimulationNodes, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(NrSelectedNodes, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(NrEvents, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(SimulationRealTime)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(SimulationTime, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(FieldSize, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(statusAnimationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+            statusPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, statusPanelLayout.createSequentialGroup()
+                .add(statusMessageLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 458, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(SimulationStatus, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 115, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(2, 2, 2)
+                .add(NrSimulationNodes, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 111, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(NrSelectedNodes, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 124, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(NrEvents, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 98, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(SimulationRealTime)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(SimulationTime, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 67, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(FieldSize, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 118, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(progressBar, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 95, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(statusAnimationLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
         );
 
-        statusPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {SimulationRealTime, SimulationTime});
+        statusPanelLayout.linkSize(new java.awt.Component[] {SimulationRealTime, SimulationTime}, org.jdesktop.layout.GroupLayout.HORIZONTAL);
 
-        statusPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {NrSelectedNodes, NrSimulationNodes});
+        statusPanelLayout.linkSize(new java.awt.Component[] {NrSelectedNodes, NrSimulationNodes}, org.jdesktop.layout.GroupLayout.HORIZONTAL);
 
         statusPanelLayout.setVerticalGroup(
-            statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(statusPanelLayout.createSequentialGroup()
-                .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(statusAnimationLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
-                    .addComponent(FieldSize, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
-                    .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statusPanelLayout.createSequentialGroup()
-                        .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(statusMessageLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
-                            .addComponent(NrSimulationNodes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
-                            .addComponent(NrSelectedNodes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(NrEvents, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
-                                .addComponent(SimulationRealTime)
-                                .addComponent(SimulationTime)
-                                .addComponent(SimulationStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)))
-                        .addGap(1, 1, 1)))
+            statusPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(statusPanelLayout.createSequentialGroup()
+                .add(statusPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, statusAnimationLabel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
+                    .add(FieldSize, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
+                    .add(progressBar, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, statusPanelLayout.createSequentialGroup()
+                        .add(statusPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, statusMessageLabel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, NrSimulationNodes, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, NrSelectedNodes, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, statusPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                                .add(NrEvents, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+                                .add(SimulationRealTime)
+                                .add(SimulationTime)
+                                .add(SimulationStatus, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)))
+                        .add(1, 1, 1)))
                 .addContainerGap())
         );
 
@@ -633,15 +583,15 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
 
         jPanel2.setName("jPanel2"); // NOI18N
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 100, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 100, Short.MAX_VALUE)
         );
 
         setComponent(mainPanel);
@@ -652,6 +602,7 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
 
     @Action
     public void newSimulation() {
+
         SimulationWizardDialog sw = new SimulationWizardDialog(null, true);
         sw.setVisible(true);
         boolean status = sw.isOk();
@@ -659,18 +610,27 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         {
             resetWorkbench();
             mainPanel.add(workbenchPanel1, java.awt.BorderLayout.CENTER);
-            workbenchPanel1.createSimulation(sw.getSimulationFactory());
+            workbenchPanel1.getSimulationPanel().initSimulation(sw.getSettings());
+         
         }
         sw.dispose();
+
         if (status) {
             if (PlatformManager.getInstance().getActiveSimulation() != null) {
+
                 workbenchPanel1.getSimulationPanel().addSimulationPanelListerner(this);
                 ((Simulation) PlatformManager.getInstance().getActiveSimulation()).addSimulationListener(this);
+
                 getComponent().setVisible(true);
+
                 showWorkbench();
+
                 PlatformManager.getInstance().setNewSimulation(true);
+
                 PlatformManager.getInstance().showSimulationName("");
+
                 PlatformManager.getInstance().getActiveSimulation().getCoverageInstrument().updateNetworkSize();
+
                 ((CoverageInstrument) getCoverageInstrument()).addCoverageListener(this);
             }
         }
@@ -700,9 +660,6 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
     protected javax.swing.JLabel SimulationStatus;
     protected javax.swing.JLabel SimulationTime;
     protected javax.swing.JMenu ViewMenu;
-    protected javax.swing.JButton adjustRadioStrengthButton;
-    protected javax.swing.JPanel adjustRadioStrengthPanel;
-    protected javax.swing.JSpinner adjustRadioStrengthSlider;
     protected javax.swing.JButton btnNew;
     protected javax.swing.JButton btnOpen;
     protected javax.swing.JButton btnProperties;
@@ -731,9 +688,6 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
     protected javax.swing.JMenuItem menuNewSimulation;
     protected javax.swing.JMenuItem menuOpenSImulation;
     protected javax.swing.JMenuItem menuSaveSimulation;
-    protected javax.swing.JMenuItem mnuActionMarkStable;
-    protected javax.swing.JMenuItem mnuActionSelectStable;
-    protected javax.swing.JMenu mnuActions;
     private javax.swing.JProgressBar progressBar;
     protected javax.swing.JMenuItem simPropertiesSubMenu;
     private javax.swing.JLabel statusAnimationLabel;
@@ -746,7 +700,6 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
     protected javax.swing.JMenuItem viewLatencyControlPanel;
     protected javax.swing.JMenuItem viewNodeInfo;
     protected javax.swing.JMenuItem viewReliabilityControlPanel;
-    protected javax.swing.JMenuItem viewRoutingInfo;
     protected javax.swing.JMenuItem viewRoutingOutput;
     protected org.wisenet.platform.gui.WorkbenchPanel workbenchPanel1;
     // End of variables declaration//GEN-END:variables
@@ -840,19 +793,7 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         }
     }
 
-    @Action
-    public void ApplyRadioStrength() {
-        if (isActiveSimulationValid()) {
-            if (PlatformManager.getInstance().getActiveSimulation().getSimulator().getNodes().size() > 0) {
-                long radioStrenght = (Integer) adjustRadioStrengthSlider.getModel().getValue();
-                PlatformManager.getInstance().getActiveSimulation().applyRadioStrength(radioStrenght);
-            } else {
-                GUI_Utils.showMessage("Must deploy nodes before apply new radio strength", JOptionPane.WARNING_MESSAGE);
-            }
-        }
-    }
-
-    public void updateAverageNeighborsPerNode() {
+      public void updateAverageNeighborsPerNode() {
         if (isActiveSimulationValid()) {
             lblAverageNeighborsPerNode.setText("" + PlatformManager.getInstance().getActiveSimulation().getAverageNeighborsPerNode());
         }
@@ -894,12 +835,6 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
 
     public void update() {
         getWorkbenchPanel().getSimulationPanel().updateDisplay();
-    }
-
-    @Action
-    public void ShowRoutingInfoPanelAction() {
-        PlatformFrame.display(new RoutingInfoPanel(), "Routing Information", PlatformFrame.OK_MODE);
-
     }
 
     @Action
@@ -1050,7 +985,7 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
     @Action
     public void MarkStableNodes() {
         if (PlatformManager.getInstance().haveActiveSimulation()) {
-            PlatformManager.getInstance().getActiveSimulation().markNodes(true, new NodeSelectionCondition() {
+            PlatformManager.getInstance().getActiveSimulation().markStableNodes(true, new NodeSelectionCondition() {
 
                 public boolean select(Node node) {
                     return node.getRoutingLayer().isStable();

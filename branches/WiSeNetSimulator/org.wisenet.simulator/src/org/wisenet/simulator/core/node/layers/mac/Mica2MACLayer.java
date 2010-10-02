@@ -31,19 +31,6 @@ public class Mica2MACLayer extends MACLayer {
      */
     protected boolean sendingPostponed = false;
     // //////////////////////////////
-    // MAC layer specific constants
-    // //////////////////////////////
-    /** The constant component of the time spent waiting before a transmission. */
-    public static int sendMinWaitingTime = 200;//200;
-    /** The variable component of the time spent waiting before a transmission. */
-    public static int sendRandomWaitingTime = 128;//128;
-    /** The constant component of the backoff time. */
-    public static int sendMinBackOffTime = 100;
-    /** The variable component of the backoff time. */
-    public static int sendRandomBackOffTime = 30;
-    /** The time of one transmission in 1/{@link Simulator#ONE_SECOND} second. */
-    public static int sendTransmissionTime = 960;
-    // //////////////////////////////
     // EVENTS
     // //////////////////////////////
     /**
@@ -59,22 +46,9 @@ public class Mica2MACLayer extends MACLayer {
      */
     protected EndTransmissionEvent endTransmissionEvent = new EndTransmissionEvent();
     /**
-     * The constant self noise level. See either the {@link Mica2MACLayer#calcSNR}
-     * or the {@link Mica2MACLayer#isChannelFree} function.
+     * Parameters for this MACLayer implementation
      */
-    public double noiseVariance = 0.025;
-    /**
-     * The maximum noise level that is allowed on sending. This is actually a
-     * multiplicator of the {@link Mica2MACLayer#noiseVariance}.
-     */
-    public double maxAllowedNoiseOnSending = 50;//5;
-    /** The minimum signal to noise ratio required to spot a message in the air. */
-    public double receivingStartSNR = 1.0; //4.0
-    /**
-     * The maximum signal to noise ratio below which a message is marked
-     * corrupted.
-     */
-    public double corruptionSNR = 1.0;//2.0
+    private MACLayerParameters parameters = new Mica2MACLayerParameters();
 
     public boolean deliverMessage(Object message) {
         setMessageColor(message);
@@ -95,6 +69,33 @@ public class Mica2MACLayer extends MACLayer {
         if (m.isShowColor()) {
             getNode().setMessageColor(m.getColor());
         }
+    }
+
+    private double applySignalAttenuation(double signalStrength) {
+        return applyBatterySignalAttenuation(applyEnvironmentSignalAttenuation(signalStrength));
+    }
+
+    @Override
+    public double applyBatterySignalAttenuation(double signal) {
+        return signal;
+    }
+
+    @Override
+    public double applyEnvironmentSignalAttenuation(double signal) {
+        return signal;
+    }
+
+    protected void createParameters() {
+
+        getController().setParameters(new Mica2MACLayerParameters());
+    }
+
+    @Override
+    protected void setupLayerParameters() {
+        if (!controllerUpdated) {
+            getController().setParameters(new Mica2MACLayerParameters());
+        }
+        controllerUpdated = true;
     }
 
     /**
@@ -127,7 +128,7 @@ public class Mica2MACLayer extends MACLayer {
                     }
                 });
 
-                endTransmissionEvent.setTime(getTime() + sendTransmissionTime);
+                endTransmissionEvent.setTime(getTime() + (Integer) getController().getParameters().get("sendTransmissionTime"));
                 getNode().getSimulator().addEvent(endTransmissionEvent);
             } else {
                 time += generateBackOffTime();
@@ -226,9 +227,9 @@ public class Mica2MACLayer extends MACLayer {
      *
      * @return returns the waiting time in milliseconds
      */
-    public static int generateWaitingTime() {
-        return sendMinWaitingTime
-                + (int) (Simulator.randomGenerator.random().nextDouble() * sendRandomWaitingTime);
+    public int generateWaitingTime() {
+        return (Integer) getController().getParameters().get("sendMinWaitingTime")
+                + (int) (Simulator.randomGenerator.random().nextDouble() * (Integer) getController().getParameters().get("sendRandomWaitingTime"));
     }
 
     /**
@@ -237,9 +238,9 @@ public class Mica2MACLayer extends MACLayer {
      *
      * @return returns the backoff time in milliseconds
      */
-    protected static int generateBackOffTime() {
-        return sendMinBackOffTime
-                + (int) (Simulator.randomGenerator.random().nextDouble() * sendRandomBackOffTime);
+    protected int generateBackOffTime() {
+        return (Integer) getController().getParameters().get("sendMinBackOffTime")
+                + (int) (Simulator.randomGenerator.random().nextDouble() * (Integer) getController().getParameters().get("sendRandomBackOffTime"));
     }
 
     /**
@@ -251,7 +252,7 @@ public class Mica2MACLayer extends MACLayer {
      * @return returns true if the channel is free
      */
     protected boolean isChannelFree(double noiseStrength) {
-        return noiseStrength < maxAllowedNoiseOnSending * noiseVariance;
+        return noiseStrength < (Double) getController().getParameters().get("maxAllowedNoiseOnSending") * (Double) getController().getParameters().get("noiseVariance");
     }
 
     /**
@@ -265,7 +266,7 @@ public class Mica2MACLayer extends MACLayer {
      * @return returns true if the message is corrupted
      */
     public boolean isMessageCorrupted(double signal, double noise) {
-        return calcSNR(signal, noise) < corruptionSNR;
+        return calcSNR(signal, noise) < (Double) parameters.get("corruptionSNR");
     }
 
     /**
@@ -279,7 +280,7 @@ public class Mica2MACLayer extends MACLayer {
      * @return returns the SNR
      */
     protected double calcSNR(double signal, double noise) {
-        return signal / (noiseVariance + noise);
+        return signal / ((Double) getController().getParameters().get("noiseVariance") + noise);
     }
 
     /**
@@ -292,7 +293,7 @@ public class Mica2MACLayer extends MACLayer {
      * @return returns true if the message is corrupted
      */
     public boolean isReceivable(double signal, double noise) {
-        return calcSNR(signal, noise) > receivingStartSNR; // PMS
+        return calcSNR(signal, noise) > (Double) getController().getParameters().get("receivingStartSNR"); // PMS
     }
 
     protected void transmitMessage() {
@@ -313,7 +314,7 @@ public class Mica2MACLayer extends MACLayer {
 
         if (receiving) {
             noiseStrength += level;
-            if (isMessageCorrupted(signalStrength, noiseStrength)) {
+            if (isMessageCorrupted(applySignalAttenuation(signalStrength), noiseStrength)) {
                 corrupted = true;
             }
         } else {
@@ -380,8 +381,5 @@ public class Mica2MACLayer extends MACLayer {
         } else {
             noiseStrength -= level;
         }
-    }
-
-    public static void main(String[] args) {
     }
 }

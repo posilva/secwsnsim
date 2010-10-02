@@ -12,6 +12,6 @@ public class RandomTopologyParameters extends TopologyParameters {
 
     @Override
     protected void setExtendedSupportedParameters() {
-        parameters.put("seed", System.currentTimeMillis());
+        init("seed", System.currentTimeMillis());
     }
 }
