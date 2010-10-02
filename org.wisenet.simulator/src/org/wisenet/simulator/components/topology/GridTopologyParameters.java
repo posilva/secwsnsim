@@ -12,6 +12,6 @@ public class GridTopologyParameters extends TopologyParameters {
 
     @Override
     protected void setExtendedSupportedParameters() {
-       parameters.put("distance",0);
+       init("distance",0);
     }
 }

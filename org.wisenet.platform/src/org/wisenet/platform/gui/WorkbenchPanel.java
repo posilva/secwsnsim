@@ -11,14 +11,18 @@ import javax.swing.JOptionPane;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 import org.wisenet.platform.common.ui.PlatformDialog;
+import org.wisenet.platform.common.ui.PlatformFrame;
 import org.wisenet.platform.core.PlatformManager;
 import org.wisenet.platform.gui.panels.NodeSettingsPanel;
+import org.wisenet.platform.gui.panels.RoutingInfoPanel;
 import org.wisenet.platform.utils.GUI_Utils;
 import org.wisenet.platform.utils.others.MapViewer;
+import org.wisenet.simulator.components.instruments.NodeSelectionCondition;
 import org.wisenet.simulator.components.simulation.Simulation;
 
 import org.wisenet.simulator.utilities.DebugConsole;
 import org.wisenet.simulator.components.simulation.SimulationFactory;
+import org.wisenet.simulator.core.node.Node;
 
 /**
  *
@@ -57,7 +61,6 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         btnDeployNodesMode = new javax.swing.JToggleButton();
         btnSelectionTool = new javax.swing.JToggleButton();
         selectionPointerTool = new javax.swing.JToggleButton();
-        jToolBar3 = new javax.swing.JToolBar();
         topToolbar = new javax.swing.JToolBar();
         showDebugWindow = new javax.swing.JToggleButton();
         showMouseCoordinates = new javax.swing.JToggleButton();
@@ -69,6 +72,9 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         jSeparator5 = new javax.swing.JToolBar.Separator();
         gmaps = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JToolBar.Separator();
+        btnStableMark = new javax.swing.JToggleButton();
+        btnStableSelect = new javax.swing.JToggleButton();
+        btnRoutingInfo = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         searchPanel = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
@@ -80,7 +86,7 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         simulationPanel1.setLayout(simulationPanel1Layout);
         simulationPanel1Layout.setHorizontalGroup(
             simulationPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1076, Short.MAX_VALUE)
+            .addGap(0, 1088, Short.MAX_VALUE)
         );
         simulationPanel1Layout.setVerticalGroup(
             simulationPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,9 +214,6 @@ public class WorkbenchPanel extends javax.swing.JPanel {
 
         add(jToolBar1, java.awt.BorderLayout.LINE_START);
 
-        jToolBar3.setRollover(true);
-        add(jToolBar3, java.awt.BorderLayout.LINE_END);
-
         topToolbar.setFloatable(false);
         topToolbar.setRollover(true);
 
@@ -253,7 +256,6 @@ public class WorkbenchPanel extends javax.swing.JPanel {
 
         selRandomNodes.setAction(actionMap.get("RandomNodeSelection")); // NOI18N
         selRandomNodes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/gui/resources/random.png"))); // NOI18N
-        selRandomNodes.setToolTipText("Select random nodes"); // NOI18N
         selRandomNodes.setFocusable(false);
         selRandomNodes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         selRandomNodes.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -287,6 +289,39 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         });
         topToolbar.add(gmaps);
         topToolbar.add(jSeparator3);
+
+        btnStableMark.setText("Stable Mark");
+        btnStableMark.setFocusable(false);
+        btnStableMark.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnStableMark.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnStableMark.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStableMarkActionPerformed(evt);
+            }
+        });
+        topToolbar.add(btnStableMark);
+
+        btnStableSelect.setText("Stable Select");
+        btnStableSelect.setFocusable(false);
+        btnStableSelect.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnStableSelect.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnStableSelect.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStableSelectActionPerformed(evt);
+            }
+        });
+        topToolbar.add(btnStableSelect);
+
+        btnRoutingInfo.setText("Routing Info");
+        btnRoutingInfo.setFocusable(false);
+        btnRoutingInfo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnRoutingInfo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnRoutingInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRoutingInfoActionPerformed(evt);
+            }
+        });
+        topToolbar.add(btnRoutingInfo);
 
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 25));
 
@@ -323,6 +358,17 @@ public class WorkbenchPanel extends javax.swing.JPanel {
 
         add(topToolbar, java.awt.BorderLayout.PAGE_START);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void selectStableNodes(boolean select) {
+        if (PlatformManager.getInstance().haveActiveSimulation()) {
+            PlatformManager.getInstance().getActiveSimulation().selectNodes(select, new NodeSelectionCondition() {
+
+                public boolean select(Node node) {
+                    return node.getRoutingLayer().isStable();
+                }
+            });
+        }
+    }
 
     private void verVizinhosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verVizinhosActionPerformed
 
@@ -370,29 +416,44 @@ public class WorkbenchPanel extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String s = txtSearchNode.getText();
-        if (s != null ) {
+        if (s != null) {
             try {
-            simulationPanel1.searchNode(Integer.valueOf(s).intValue());
+                simulationPanel1.searchNode(Integer.valueOf(s).intValue());
             } catch (Exception e) {
                 GUI_Utils.showException(e);
             }
-            
+
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btnStableMarkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStableMarkActionPerformed
+        markStableNodes(btnStableMark.isSelected());
+    }//GEN-LAST:event_btnStableMarkActionPerformed
+
+    private void btnStableSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStableSelectActionPerformed
+        selectStableNodes(btnStableSelect.isSelected());
+    }//GEN-LAST:event_btnStableSelectActionPerformed
+
+    private void btnRoutingInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRoutingInfoActionPerformed
+
+        showRoutingInfo();
+    }//GEN-LAST:event_btnRoutingInfoActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup OperationBG;
     private javax.swing.ButtonGroup SelectionBG;
     private javax.swing.JButton btnColorSettings;
     private javax.swing.JToggleButton btnDeployNodesMode;
     private javax.swing.JButton btnRebuildNetwork;
+    private javax.swing.JButton btnRoutingInfo;
     private javax.swing.JToggleButton btnSelectionTool;
     private javax.swing.JToggleButton btnSimulationPause;
     private javax.swing.JButton btnSimulationReset;
     private javax.swing.JToggleButton btnSimulationStart;
     private javax.swing.JToggleButton btnSimulationStop;
     private javax.swing.JButton btnSnapshot;
+    private javax.swing.JToggleButton btnStableMark;
+    private javax.swing.JToggleButton btnStableSelect;
     private javax.swing.JButton gmaps;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
@@ -404,7 +465,6 @@ public class WorkbenchPanel extends javax.swing.JPanel {
     private javax.swing.JToolBar.Separator jSeparator5;
     private javax.swing.JToolBar.Separator jSeparator6;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JToolBar jToolBar3;
     private javax.swing.JPanel searchPanel;
     private javax.swing.JButton selRandomNodes;
     private javax.swing.JToggleButton selectionPointerTool;
@@ -498,16 +558,26 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         return simulationPanel1;
     }
 
+    private void markStableNodes(boolean mark) {
+        if (PlatformManager.getInstance().haveActiveSimulation()) {
+            PlatformManager.getInstance().getActiveSimulation().markStableNodes(mark, new NodeSelectionCondition() {
+
+                public boolean select(Node node) {
+                    return node.getRoutingLayer().isStable();
+                }
+            });
+        }
+
+    }
+
+    private void showRoutingInfo() {
+        PlatformFrame.display(new RoutingInfoPanel(), "Routing Information", PlatformFrame.OK_MODE);
+    }
+
     private class RebuildNetworkTask extends org.jdesktop.application.Task<Object, Void> {
 
         RebuildNetworkTask(org.jdesktop.application.Application app) {
-            // Runs on the EDT.  Copy GUI state that
-            // doInBackground() depends on from parameters
-            // to RebuildNetworkTask fields, here.
             super(app);
-
-
-
         }
 
         @Override
@@ -523,8 +593,6 @@ public class WorkbenchPanel extends javax.swing.JPanel {
 
         @Override
         protected void succeeded(Object result) {
-            // Runs on the EDT.  Update the GUI based on
-            // the result computed by doInBackground().
         }
     }
 

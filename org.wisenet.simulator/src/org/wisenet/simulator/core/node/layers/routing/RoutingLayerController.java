@@ -3,17 +3,23 @@ package org.wisenet.simulator.core.node.layers.routing;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Set;
+import org.apache.commons.configuration.XMLConfiguration;
+import org.wisenet.simulator.common.ObjectParameters;
+import org.wisenet.simulator.common.Parameterizable;
+import org.wisenet.simulator.common.PersistantException;
+import org.wisenet.simulator.common.PersistantObject;
 
 /**
  *
  * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
-public class RoutingLayerController {
+public class RoutingLayerController extends PersistantObject implements Parameterizable {
 
-    RoutingLayerProperties properties = new RoutingLayerProperties();
     Set stableNodesSet = new HashSet();
     Hashtable<Short, Long> messageReceivedByTypeCounter = new Hashtable<Short, Long>();
     Hashtable<Short, Long> messageSentByTypeCounter = new Hashtable<Short, Long>();
+    RoutingLayerParameters parameters = new RoutingLayerParameters();
+    protected static boolean controllerUpdated = false;
 
     void registerAsStable(RoutingLayer nodeRL) {
         stableNodesSet.add(nodeRL);
@@ -67,11 +73,20 @@ public class RoutingLayerController {
         stableNodesSet.clear();
     }
 
-    public RoutingLayerProperties getProperties() {
-        return properties;
+    public ObjectParameters getParameters() {
+        return parameters;
     }
 
-    public void setProperties(RoutingLayerProperties properties) {
-        this.properties = properties;
+    public void setParameters(ObjectParameters params) {
+        this.parameters = (RoutingLayerParameters) params;
+    }
+
+    public void saveToXML(XMLConfiguration configuration) throws PersistantException {
+        parameters.saveToXML(configuration);
+    }
+
+    public void loadFromXML(XMLConfiguration configuration) throws PersistantException {
+        parameters.loadFromXML(configuration);
+
     }
 }

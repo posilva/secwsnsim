@@ -13,8 +13,10 @@ import org.wisenet.simulator.core.radio.RadioModel.Neighborhood;
 public abstract class MACLayer extends Layer {
 
     protected static MACLayerController controller = new MACLayerController();
+    
     RadioModel radioModel;
     RadioModel.Neighborhood neighborhood;
+    protected static boolean controllerUpdated = false;
     // //////////////////////////////
     // STATE VARIABLES
     // //////////////////////////////
@@ -32,6 +34,12 @@ public abstract class MACLayer extends Layer {
     protected boolean corrupted = false;
     protected double noiseStrength;
     protected double signalStrength;
+
+    public MACLayer() {
+        init();
+    }
+
+
 
     public boolean isCorrupted() {
         return corrupted;
@@ -84,20 +92,6 @@ public abstract class MACLayer extends Layer {
     protected final void beginTransmission(final double strength, Object stream) {
         Node n = (Node) stream;
         neighborhood.beginTransmission(strength, n);
-//        final Node nd = Node.cast(stream);
-//        getNode().getTransceiver().executeTransmission(new EnergyConsumptionAction() {
-//
-//            Node n = nd;
-//
-//            public void execute() {
-//                neighborhood.beginTransmission(strength, n);
-//            }
-//
-//            public int getNumberOfUnits() {
-//                return ((DefaultMessage) n.getMessage()).size();
-//            }
-//        });
-
     }
 
     /**
@@ -150,6 +144,22 @@ public abstract class MACLayer extends Layer {
      */
     public abstract boolean sendMessage(Object message, RoutingLayer layer);
 
+    /**
+     * Apply the battery consumption attenuation to the radio signal
+     * @param signal
+     * @return signal value after attenuation
+     */
+    public abstract double applyBatterySignalAttenuation(double signal);
+
+    /**
+     * Apply the environment attenuation to the radio signal
+     * (the humidity is a environment variable that can influence
+     * the signal strength )
+     * @param signal
+     * @return signal value after attenuation
+     */
+    public abstract double applyEnvironmentSignalAttenuation(double signal);
+
     public static long getTotalMessagesCorrupted() {
         return controller.getTotalMessagesCorrupted();
     }
@@ -181,5 +191,13 @@ public abstract class MACLayer extends Layer {
     public static MACLayerController getController() {
         return controller;
     }
+    private void init() {
+        setupLayerParameters();
+    }
+
+    /**
+     * Sets the common parameters for the mac layer
+     */
+    protected abstract void setupLayerParameters();
 
 }

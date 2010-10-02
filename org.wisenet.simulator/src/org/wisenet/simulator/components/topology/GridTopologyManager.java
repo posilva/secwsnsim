@@ -3,10 +3,12 @@
  */
 package org.wisenet.simulator.components.topology;
 
+import org.wisenet.simulator.core.Simulator;
 import org.wisenet.simulator.utilities.annotation.Annotated;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Vector;
 
 
@@ -14,7 +16,7 @@ import java.util.Vector;
 import org.wisenet.simulator.core.node.Node;
 
 /**
-* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  * 
  */
 public class GridTopologyManager extends TopologyManager implements Annotated {
@@ -64,19 +66,18 @@ public class GridTopologyManager extends TopologyManager implements Annotated {
             int py = (Integer) parameters.get("y");
             int pw = (Integer) parameters.get("width");
             int ph = (Integer) parameters.get("height");
-            int pz = (Integer) parameters.get("maxelevation");
 
             int d = (Integer) parameters.get("distance");
             int r = (int) ph / d;
             int c = (int) pw / d;
 
-            Node node = nodeFactory.createNode();
-            for (int i = 0; i < r; i++) {
-                px = pxIni;
-                for (int j = 0; j < c; j++) {
-                    node.setPosition(px, py, pz);
-                    nodes.add(node);
 
+            for (int i = 0; i <= r; i++) {
+                px = pxIni;
+                for (int j = 0; j <= c; j++) {
+                    Node node = nodeFactory.createNode();
+                    node.setPosition(px, py, applyZ());
+                    nodes.add(node);
                     px += d;
                     total_nodes++;
                 }
@@ -92,5 +93,15 @@ public class GridTopologyManager extends TopologyManager implements Annotated {
     @Override
     public Vector<Node> apply(Vector<Node> nodes, TopologyParameters parameters) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    private double applyZ() {
+        Random random = Simulator.randomGenerator.random();
+        if (nodeFactory.isStaticZ()) {
+            return nodeFactory.getMinZ();
+        } else {
+            return nodeFactory.getMinZ() + (random.nextDouble() * nodeFactory.getMaxZ());
+        }
+
     }
 }

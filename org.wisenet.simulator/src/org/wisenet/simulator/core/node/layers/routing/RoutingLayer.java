@@ -38,6 +38,11 @@ public abstract class RoutingLayer extends Layer {
      * Flag for controlling routing stability (ready for routing)
      */
     private boolean stable = false;
+    /**
+     * Flag to control some controller update status executed by
+     * derived classes
+     */
+    protected static boolean controllerUpdated = false;
 
     /**
      * Default constructor
@@ -232,7 +237,7 @@ public abstract class RoutingLayer extends Layer {
      * @param message
      * @return
      */
-    protected Object doAttack(Object message) {
+    protected final Object doAttack(Object message) {
         if (!isUnderAttack()) {
             return message;
         }

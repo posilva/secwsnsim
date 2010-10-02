@@ -33,7 +33,6 @@ public abstract class AbstractNodeFactory {
     public AbstractNodeFactory(Simulator simulator) {
         super();
         this.simulator = simulator;
-//        setup(); // removed PMS 2010/08/11
     }
 
     public abstract void setup();
@@ -112,12 +111,15 @@ public abstract class AbstractNodeFactory {
         node.setRoutingLayer((RoutingLayer) routingLayer.newInstance());
         /* assign application */
         node.setApplication((Application) application.newInstance());
-        node.getConfig().setMaximumRadioStrength(getNodeMaxRadioStregth());
+        /* sets the radio strength*/
+        node.getConfig().setSetRadioRange(getNodeMaxRadioRange() );
         /* assign MAC layer */
         node.setMacLayer(getMacLayerInstance());
         /* assign energy model */
         node.setBateryEnergy(new Batery(getEnergyModelInstance()));
+
         node.getBateryEnergy().setHostNode(node);
+        
         node.setEnvironmentAttenuation(getEnvironmentAttenuation());
         node.init();
         return node;
@@ -206,7 +208,7 @@ public abstract class AbstractNodeFactory {
         setup();
     }
 
-    public int getNodeMaxRadioStregth() {
+    public int getNodeMaxRadioRange() {
         return nodeMaxRadioStregth;
     }
 

@@ -278,6 +278,7 @@ public class Simulator {
      * Processes and executes the next event.
      */
     public synchronized void step() {
+
         Event event = (Event) eventQueue.getAndRemoveFirst();
         if (event != null) {
             // try to get more accurate event time

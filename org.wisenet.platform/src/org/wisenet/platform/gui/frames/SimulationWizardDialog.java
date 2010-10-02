@@ -25,11 +25,13 @@ import org.wisenet.platform.core.instruments.energy.ui.EnergyModelDialog;
 import org.wisenet.simulator.components.simulation.SimulationFactory;
 import org.wisenet.simulator.core.energy.EnergyModel;
 import org.wisenet.simulator.utilities.console.SimulationSettings;
+
 /**
  *
  * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class SimulationWizardDialog extends JDialog {
+
     protected SimulationSettings settings;
     private boolean ok;
     private FocusListener focusListener;
@@ -98,7 +100,7 @@ public class SimulationWizardDialog extends JDialog {
         minValueZ = new javax.swing.JFormattedTextField();
         maxValueZ = new javax.swing.JFormattedTextField();
         jLabel7 = new javax.swing.JLabel();
-        environAttenuation = new javax.swing.JFormattedTextField();
+        environAttenuation = new javax.swing.JSpinner();
         jPanel2 = new javax.swing.JPanel();
         lblSimName = new javax.swing.JLabel();
         txtSimulationName = new javax.swing.JTextField();
@@ -200,10 +202,12 @@ public class SimulationWizardDialog extends JDialog {
 
         minValueZ.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
         minValueZ.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        minValueZ.setText(resourceMap.getString("minValueZ.text")); // NOI18N
         minValueZ.setName("minValueZ"); // NOI18N
 
         maxValueZ.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
         maxValueZ.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        maxValueZ.setText(resourceMap.getString("maxValueZ.text")); // NOI18N
         maxValueZ.setEnabled(false);
         maxValueZ.setName("maxValueZ"); // NOI18N
 
@@ -211,9 +215,7 @@ public class SimulationWizardDialog extends JDialog {
         jLabel7.setText(resourceMap.getString("jLabel7.text")); // NOI18N
         jLabel7.setName("jLabel7"); // NOI18N
 
-        environAttenuation.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0%"))));
-        environAttenuation.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        environAttenuation.setText(resourceMap.getString("environAttenuation.text")); // NOI18N
+        environAttenuation.setModel(new javax.swing.SpinnerNumberModel(0, -100, 100, 1));
         environAttenuation.setName("environAttenuation"); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -223,34 +225,33 @@ public class SimulationWizardDialog extends JDialog {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(environAttenuation, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(377, 377, 377))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(cboNodeClass, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cmdEnergyModel, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(optStaticZ, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29)
-                                .addComponent(optVariableZ)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
-                                .addComponent(minValueZ, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(maxValueZ, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(nodeRangeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblNodeRangeValue)))
-                        .addContainerGap())))
+                        .addComponent(cboNodeClass, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmdEnergyModel, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(nodeRangeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblNodeRangeValue))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(environAttenuation, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(optStaticZ, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE))
+                        .addGap(29, 29, 29)
+                        .addComponent(optVariableZ)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
+                        .addComponent(minValueZ, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(maxValueZ, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -275,7 +276,7 @@ public class SimulationWizardDialog extends JDialog {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
                     .addComponent(environAttenuation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -483,7 +484,7 @@ public class SimulationWizardDialog extends JDialog {
     private javax.swing.JButton cmdCancel;
     private javax.swing.JButton cmdEnergyModel;
     private javax.swing.JButton cmdOK;
-    private javax.swing.JFormattedTextField environAttenuation;
+    private javax.swing.JSpinner environAttenuation;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -510,6 +511,19 @@ public class SimulationWizardDialog extends JDialog {
 
     private boolean validateData() {
         try {
+            /* create a settings object*/
+            settings = new SimulationSettings();
+            settings.setName(txtSimulationName.getText()); // set the name
+            settings.setSimulatorClassName(((ClassDefinitions) cboSimulatorClass.getSelectedItem()).className);
+            settings.setRadioModelClassName(((ClassDefinitions) cboRadioModelClass.getSelectedItem()).className);
+            settings.setNodeFactoryClassName(((ClassDefinitions) cboNodeClass.getSelectedItem()).className);
+            settings.setEnergyModelClassName(EnergyModel.class.getName()); // falta configurar o energy class
+            settings.setMaxNodeRadioStrength(nodeRangeSlider.getValue());
+            settings.setStaticZ(optStaticZ.isSelected());
+            settings.setEnvironAttenuation((Integer) environAttenuation.getModel().getValue());
+            settings.setMaxZ(Double.valueOf(maxValueZ.getText()));
+            settings.setMinZ(Double.valueOf(minValueZ.getText()));
+
             sf = new SimulationFactory();
             sf.setSimulatorClass(getClassInstance(((ClassDefinitions) cboSimulatorClass.getSelectedItem()).className));
             sf.setRadioModelClass(getClassInstance(((ClassDefinitions) cboRadioModelClass.getSelectedItem()).className));
@@ -565,5 +579,8 @@ public class SimulationWizardDialog extends JDialog {
         }
         emd.dispose();
     }
-    
+
+    public SimulationSettings getSettings() {
+        return settings;
+    }
 }

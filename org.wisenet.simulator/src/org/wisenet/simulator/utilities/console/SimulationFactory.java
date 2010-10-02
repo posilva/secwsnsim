@@ -31,7 +31,11 @@ public class SimulationFactory {
     public SimulationFactory(SimulationSettings settings) {
         this.settings = settings;
     }
-
+    /**
+     * 
+     * @return
+     * @throws Exception
+     */
     public Simulation createNew() throws Exception {
         createClassesInstances();
         Simulation simulation = new Simulation();
@@ -40,7 +44,11 @@ public class SimulationFactory {
 
 
     }
-
+    /**
+     * 
+     * @param simulation
+     * @throws Exception
+     */
     public void setupSimulationInstance(Simulation simulation) throws Exception {
         simulation.initialSetup();
         createSimulationNodes(simulation);

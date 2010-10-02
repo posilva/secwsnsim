@@ -41,7 +41,9 @@ import org.wisenet.simulator.components.simulation.AbstractSimulation;
 import org.wisenet.simulator.components.simulation.Simulation;
 import org.wisenet.simulator.components.simulation.SimulationFactory;
 import org.wisenet.simulator.components.topology.GridTopologyManager;
+import org.wisenet.simulator.components.topology.GridTopologyParameters;
 import org.wisenet.simulator.components.topology.RandomTopologyManager;
+import org.wisenet.simulator.components.topology.RandomTopologyParameters;
 import org.wisenet.simulator.core.energy.Batery;
 import org.wisenet.simulator.core.energy.listeners.EnergyEvent;
 import org.wisenet.simulator.core.energy.listeners.EnergyListener;
@@ -112,20 +114,23 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             loadImage();
         } catch (Exception ex) {
             Logger.getLogger(SimulationPanel.class.getName()).log(Level.SEVERE, null, ex);
+            GUI_Utils.showException(ex);
         }
     }
 
     public void reset() {
     }
 
-    public void initSimulation(SimulationSettings settings){
-        this.simulation= new Simulation();
+    public void initSimulation(SimulationSettings settings) {
+        this.simulation = new Simulation();
+        simulation.setDisplay(this);
         this.simulation.create(settings);
+        PlatformManager.getInstance().setActiveSimulation(simulation);
     }
-
 
     public void createSimulation(SimulationFactory sf) {
         try {
+
             this.simulation = sf.getNewInstanceFromClasses();
             simulation.setDisplay(this);
             Simulator.randomGenerator.reset();
@@ -142,114 +147,39 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     private void initComponents() {
 
         currentSelectedNodePopupMenu = new javax.swing.JPopupMenu();
-        selNodeVisualizacao = new javax.swing.JMenu();
+        selNodeRunEvent = new javax.swing.JMenuItem();
         selNodeVerVizinhos = new javax.swing.JCheckBoxMenuItem();
         selNodeVerID = new javax.swing.JCheckBoxMenuItem();
         selNodeVerOsQueMeConhecem = new javax.swing.JCheckBoxMenuItem();
         selNodeMarcar = new javax.swing.JCheckBoxMenuItem();
-        selNodeOperacao = new javax.swing.JMenu();
         selNodeOnOff = new javax.swing.JCheckBoxMenuItem();
         selNodeSink = new javax.swing.JCheckBoxMenuItem();
-        selNodeMonitorizacao = new javax.swing.JMenu();
         selNodeMonitEnergia = new javax.swing.JMenuItem();
-        selNodeRunEvent = new javax.swing.JMenuItem();
-        selNodeShowProperties = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         selNodeRoutingAttacks = new javax.swing.JMenuItem();
+        jSeparator5 = new javax.swing.JPopupMenu.Separator();
+        selNodeShowProperties = new javax.swing.JMenuItem();
+        selNodeUnderAttack = new javax.swing.JCheckBoxMenuItem();
         selectionToolPopupMenu = new javax.swing.JPopupMenu();
-        selNodesVisualization = new javax.swing.JMenu();
+        selNodesRunEvent = new javax.swing.JMenuItem();
         selNodesShowNeighbors = new javax.swing.JCheckBoxMenuItem();
         selNodesShowID = new javax.swing.JCheckBoxMenuItem();
         selNodesShowNodesThatKnownme = new javax.swing.JCheckBoxMenuItem();
-        selNodesOperations = new javax.swing.JMenu();
         selNodesOnOff = new javax.swing.JCheckBoxMenuItem();
-        selNodesMonitoring = new javax.swing.JMenu();
         selNodesMonitEnergy = new javax.swing.JMenuItem();
-        selNodesRunEvent = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
-        selNodesAttack = new javax.swing.JMenu();
+        selNodesRemove = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         selNodesShowProperties = new javax.swing.JMenuItem();
-        selNodesRemove = new javax.swing.JMenuItem();
         deployNodesPopupMenu = new javax.swing.JPopupMenu();
         depNodesDeploy = new javax.swing.JMenu();
         depNodesRandomTopology = new javax.swing.JMenuItem();
         depNodesGridTopology = new javax.swing.JMenuItem();
         deployNodePopupMenu = new javax.swing.JPopupMenu();
         depNodeDeployOneNode = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JSeparator();
 
         currentSelectedNodePopupMenu.setLabel("Configurar Sensor");
-
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(SimulationPanel.class);
-        selNodeVisualizacao.setText(resourceMap.getString("selNodeVisualizacao.text")); // NOI18N
-
-        selNodeVerVizinhos.setSelected(true);
-        selNodeVerVizinhos.setText(resourceMap.getString("selNodeVerVizinhos.text")); // NOI18N
-        selNodeVerVizinhos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                selNodeVerVizinhosActionPerformed(evt);
-            }
-        });
-        selNodeVisualizacao.add(selNodeVerVizinhos);
-
-        selNodeVerID.setSelected(true);
-        selNodeVerID.setText(resourceMap.getString("selNodeVerID.text")); // NOI18N
-        selNodeVerID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                selNodeVerIDActionPerformed(evt);
-            }
-        });
-        selNodeVisualizacao.add(selNodeVerID);
-
-        selNodeVerOsQueMeConhecem.setSelected(true);
-        selNodeVerOsQueMeConhecem.setText(resourceMap.getString("selNodeVerOsQueMeConhecem.text")); // NOI18N
-        selNodeVerOsQueMeConhecem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                selNodeVerOsQueMeConhecemActionPerformed(evt);
-            }
-        });
-        selNodeVisualizacao.add(selNodeVerOsQueMeConhecem);
-
-        selNodeMarcar.setSelected(true);
-        selNodeMarcar.setText(resourceMap.getString("selNodeMarcar.text")); // NOI18N
-        selNodeMarcar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                selNodeMarcarActionPerformed(evt);
-            }
-        });
-        selNodeVisualizacao.add(selNodeMarcar);
-
-        currentSelectedNodePopupMenu.add(selNodeVisualizacao);
-
-        selNodeOperacao.setText(resourceMap.getString("selNodeOperacao.text")); // NOI18N
-
-        selNodeOnOff.setSelected(true);
-        selNodeOnOff.setText(resourceMap.getString("selNodeOnOff.text")); // NOI18N
-        selNodeOnOff.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                selNodeOnOffActionPerformed(evt);
-            }
-        });
-        selNodeOperacao.add(selNodeOnOff);
-
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance().getContext().getActionMap(SimulationPanel.class, this);
-        selNodeSink.setAction(actionMap.get("SetNodeAsSink")); // NOI18N
-        selNodeSink.setSelected(true);
-        selNodeOperacao.add(selNodeSink);
-
-        currentSelectedNodePopupMenu.add(selNodeOperacao);
-
-        selNodeMonitorizacao.setText(resourceMap.getString("selNodeMonitorizacao.text")); // NOI18N
-
-        selNodeMonitEnergia.setText(resourceMap.getString("selNodeMonitEnergia.text")); // NOI18N
-        selNodeMonitEnergia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                selNodeMonitEnergiaActionPerformed(evt);
-            }
-        });
-        selNodeMonitorizacao.add(selNodeMonitEnergia);
-
-        currentSelectedNodePopupMenu.add(selNodeMonitorizacao);
 
         selNodeRunEvent.setText("Run application");
         selNodeRunEvent.addActionListener(new java.awt.event.ActionListener() {
@@ -259,10 +189,65 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         });
         currentSelectedNodePopupMenu.add(selNodeRunEvent);
 
-        selNodeShowProperties.setAction(actionMap.get("ShowNodeProperties")); // NOI18N
-        selNodeShowProperties.setText(resourceMap.getString("selNodeShowProperties.text")); // NOI18N
-        selNodeShowProperties.setToolTipText(resourceMap.getString("selNodeShowProperties.toolTipText")); // NOI18N
-        currentSelectedNodePopupMenu.add(selNodeShowProperties);
+        selNodeVerVizinhos.setSelected(true);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(SimulationPanel.class);
+        selNodeVerVizinhos.setText(resourceMap.getString("selNodeVerVizinhos.text")); // NOI18N
+        selNodeVerVizinhos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selNodeVerVizinhosActionPerformed(evt);
+            }
+        });
+        currentSelectedNodePopupMenu.add(selNodeVerVizinhos);
+
+        selNodeVerID.setSelected(true);
+        selNodeVerID.setText(resourceMap.getString("selNodeVerID.text")); // NOI18N
+        selNodeVerID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selNodeVerIDActionPerformed(evt);
+            }
+        });
+        currentSelectedNodePopupMenu.add(selNodeVerID);
+
+        selNodeVerOsQueMeConhecem.setSelected(true);
+        selNodeVerOsQueMeConhecem.setText(resourceMap.getString("selNodeVerOsQueMeConhecem.text")); // NOI18N
+        selNodeVerOsQueMeConhecem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selNodeVerOsQueMeConhecemActionPerformed(evt);
+            }
+        });
+        currentSelectedNodePopupMenu.add(selNodeVerOsQueMeConhecem);
+
+        selNodeMarcar.setSelected(true);
+        selNodeMarcar.setText(resourceMap.getString("selNodeMarcar.text")); // NOI18N
+        selNodeMarcar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selNodeMarcarActionPerformed(evt);
+            }
+        });
+        currentSelectedNodePopupMenu.add(selNodeMarcar);
+
+        selNodeOnOff.setSelected(true);
+        selNodeOnOff.setText(resourceMap.getString("selNodeOnOff.text")); // NOI18N
+        selNodeOnOff.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selNodeOnOffActionPerformed(evt);
+            }
+        });
+        currentSelectedNodePopupMenu.add(selNodeOnOff);
+
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance().getContext().getActionMap(SimulationPanel.class, this);
+        selNodeSink.setAction(actionMap.get("SetNodeAsSink")); // NOI18N
+        selNodeSink.setSelected(true);
+        selNodeSink.setText("Sink Node");
+        currentSelectedNodePopupMenu.add(selNodeSink);
+
+        selNodeMonitEnergia.setText(resourceMap.getString("selNodeMonitEnergia.text")); // NOI18N
+        selNodeMonitEnergia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selNodeMonitEnergiaActionPerformed(evt);
+            }
+        });
+        currentSelectedNodePopupMenu.add(selNodeMonitEnergia);
         currentSelectedNodePopupMenu.add(jSeparator3);
 
         selNodeRoutingAttacks.setText("Routing Attacks");
@@ -272,62 +257,22 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             }
         });
         currentSelectedNodePopupMenu.add(selNodeRoutingAttacks);
+        currentSelectedNodePopupMenu.add(jSeparator5);
 
-        selNodesVisualization.setText(resourceMap.getString("selNodesVisualizacao.text")); // NOI18N
+        selNodeShowProperties.setAction(actionMap.get("ShowNodeProperties")); // NOI18N
+        selNodeShowProperties.setText(resourceMap.getString("selNodeShowProperties.text")); // NOI18N
+        selNodeShowProperties.setToolTipText(resourceMap.getString("selNodeShowProperties.toolTipText")); // NOI18N
+        currentSelectedNodePopupMenu.add(selNodeShowProperties);
 
-        selNodesShowNeighbors.setSelected(true);
-        selNodesShowNeighbors.setText(resourceMap.getString("selNodesVerVizinhos.text")); // NOI18N
-        selNodesShowNeighbors.addActionListener(new java.awt.event.ActionListener() {
+        selNodeUnderAttack.setAction(actionMap.get("SetNodeAsSink")); // NOI18N
+        selNodeUnderAttack.setSelected(true);
+        selNodeUnderAttack.setText("Under Attack");
+        selNodeUnderAttack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                selNodesShowNeighborsActionPerformed(evt);
+                selNodeUnderAttackActionPerformed(evt);
             }
         });
-        selNodesVisualization.add(selNodesShowNeighbors);
-
-        selNodesShowID.setSelected(true);
-        selNodesShowID.setText(resourceMap.getString("selNodesVerID.text")); // NOI18N
-        selNodesShowID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                selNodesShowIDActionPerformed(evt);
-            }
-        });
-        selNodesVisualization.add(selNodesShowID);
-
-        selNodesShowNodesThatKnownme.setSelected(true);
-        selNodesShowNodesThatKnownme.setText(resourceMap.getString("selNodesVerOsQueMeConhecem.text")); // NOI18N
-        selNodesShowNodesThatKnownme.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                selNodesShowNodesThatKnownmeActionPerformed(evt);
-            }
-        });
-        selNodesVisualization.add(selNodesShowNodesThatKnownme);
-
-        selectionToolPopupMenu.add(selNodesVisualization);
-
-        selNodesOperations.setText(resourceMap.getString("selNodesOperacao.text")); // NOI18N
-
-        selNodesOnOff.setSelected(true);
-        selNodesOnOff.setText(resourceMap.getString("selNodesOnOff.text")); // NOI18N
-        selNodesOnOff.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                selNodesOnOffActionPerformed(evt);
-            }
-        });
-        selNodesOperations.add(selNodesOnOff);
-
-        selectionToolPopupMenu.add(selNodesOperations);
-
-        selNodesMonitoring.setText(resourceMap.getString("selNodesMonitorizacao.text")); // NOI18N
-
-        selNodesMonitEnergy.setText(resourceMap.getString("selNodesMonitEnergia.text")); // NOI18N
-        selNodesMonitEnergy.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                selNodesMonitEnergyActionPerformed(evt);
-            }
-        });
-        selNodesMonitoring.add(selNodesMonitEnergy);
-
-        selectionToolPopupMenu.add(selNodesMonitoring);
+        currentSelectedNodePopupMenu.add(selNodeUnderAttack);
 
         selNodesRunEvent.setText("Run application");
         selNodesRunEvent.addActionListener(new java.awt.event.ActionListener() {
@@ -336,16 +281,51 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             }
         });
         selectionToolPopupMenu.add(selNodesRunEvent);
+
+        selNodesShowNeighbors.setSelected(true);
+        selNodesShowNeighbors.setText(resourceMap.getString("selNodesVerVizinhos.text")); // NOI18N
+        selNodesShowNeighbors.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selNodesShowNeighborsActionPerformed(evt);
+            }
+        });
+        selectionToolPopupMenu.add(selNodesShowNeighbors);
+
+        selNodesShowID.setSelected(true);
+        selNodesShowID.setText(resourceMap.getString("selNodesVerID.text")); // NOI18N
+        selNodesShowID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selNodesShowIDActionPerformed(evt);
+            }
+        });
+        selectionToolPopupMenu.add(selNodesShowID);
+
+        selNodesShowNodesThatKnownme.setSelected(true);
+        selNodesShowNodesThatKnownme.setText(resourceMap.getString("selNodesVerOsQueMeConhecem.text")); // NOI18N
+        selNodesShowNodesThatKnownme.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selNodesShowNodesThatKnownmeActionPerformed(evt);
+            }
+        });
+        selectionToolPopupMenu.add(selNodesShowNodesThatKnownme);
+
+        selNodesOnOff.setSelected(true);
+        selNodesOnOff.setText(resourceMap.getString("selNodesOnOff.text")); // NOI18N
+        selNodesOnOff.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selNodesOnOffActionPerformed(evt);
+            }
+        });
+        selectionToolPopupMenu.add(selNodesOnOff);
+
+        selNodesMonitEnergy.setText(resourceMap.getString("selNodesMonitEnergia.text")); // NOI18N
+        selNodesMonitEnergy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selNodesMonitEnergyActionPerformed(evt);
+            }
+        });
+        selectionToolPopupMenu.add(selNodesMonitEnergy);
         selectionToolPopupMenu.add(jSeparator2);
-
-        selNodesAttack.setAction(actionMap.get("ShowAttackOptions")); // NOI18N
-        selectionToolPopupMenu.add(selNodesAttack);
-        selectionToolPopupMenu.add(jSeparator1);
-
-        selNodesShowProperties.setAction(actionMap.get("ShowNodesProperties")); // NOI18N
-        selNodesShowProperties.setText(resourceMap.getString("selNodesShowProperties.text")); // NOI18N
-        selNodesShowProperties.setToolTipText(resourceMap.getString("selNodesShowProperties.toolTipText")); // NOI18N
-        selectionToolPopupMenu.add(selNodesShowProperties);
 
         selNodesRemove.setAction(actionMap.get("RemoveNodesSelected")); // NOI18N
         selNodesRemove.setText(resourceMap.getString("selNodesRemove.text")); // NOI18N
@@ -355,6 +335,12 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             }
         });
         selectionToolPopupMenu.add(selNodesRemove);
+        selectionToolPopupMenu.add(jSeparator1);
+
+        selNodesShowProperties.setAction(actionMap.get("ShowNodesProperties")); // NOI18N
+        selNodesShowProperties.setText(resourceMap.getString("selNodesShowProperties.text")); // NOI18N
+        selNodesShowProperties.setToolTipText(resourceMap.getString("selNodesShowProperties.toolTipText")); // NOI18N
+        selectionToolPopupMenu.add(selNodesShowProperties);
 
         depNodesDeploy.setText(resourceMap.getString("depNodesDeploy.text")); // NOI18N
 
@@ -634,7 +620,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
                 pressedPoint_x = mouseX;
                 pressedPoint_y = mouseY;
 
-            } 
+            }
         } else if (deployNodeToolSelected) {
 
             if (selectedArea == null && evt.getButton() == MouseEvent.BUTTON3) {
@@ -878,6 +864,15 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         GUI_Utils.showMessage("Gained Focus");
     }//GEN-LAST:event_formFocusGained
 
+    private void selNodeUnderAttackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selNodeUnderAttackActionPerformed
+        if (currentSelectedNode != null) {
+            if (currentSelectedNode.getPhysicalNode().getRoutingLayer().isStable()) {
+                currentSelectedNode.getPhysicalNode().getRoutingLayer().setUnderAttack(selNodeUnderAttack.isSelected());
+            }
+            updateLocal();
+        }
+    }//GEN-LAST:event_selNodeUnderAttackActionPerformed
+
     protected boolean isMousePressed() {
         return pressedPoint_x != -1;
     }
@@ -892,31 +887,27 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JCheckBoxMenuItem selNodeMarcar;
     private javax.swing.JMenuItem selNodeMonitEnergia;
-    private javax.swing.JMenu selNodeMonitorizacao;
     private javax.swing.JCheckBoxMenuItem selNodeOnOff;
-    private javax.swing.JMenu selNodeOperacao;
     private javax.swing.JMenuItem selNodeRoutingAttacks;
     private javax.swing.JMenuItem selNodeRunEvent;
     private javax.swing.JMenuItem selNodeShowProperties;
     private javax.swing.JCheckBoxMenuItem selNodeSink;
+    private javax.swing.JCheckBoxMenuItem selNodeUnderAttack;
     private javax.swing.JCheckBoxMenuItem selNodeVerID;
     private javax.swing.JCheckBoxMenuItem selNodeVerOsQueMeConhecem;
     private javax.swing.JCheckBoxMenuItem selNodeVerVizinhos;
-    private javax.swing.JMenu selNodeVisualizacao;
-    private javax.swing.JMenu selNodesAttack;
     private javax.swing.JMenuItem selNodesMonitEnergy;
-    private javax.swing.JMenu selNodesMonitoring;
     private javax.swing.JCheckBoxMenuItem selNodesOnOff;
-    private javax.swing.JMenu selNodesOperations;
     private javax.swing.JMenuItem selNodesRemove;
     private javax.swing.JMenuItem selNodesRunEvent;
     private javax.swing.JCheckBoxMenuItem selNodesShowID;
     private javax.swing.JCheckBoxMenuItem selNodesShowNeighbors;
     private javax.swing.JCheckBoxMenuItem selNodesShowNodesThatKnownme;
     private javax.swing.JMenuItem selNodesShowProperties;
-    private javax.swing.JMenu selNodesVisualization;
     private javax.swing.JPopupMenu selectionToolPopupMenu;
     // End of variables declaration//GEN-END:variables
 
@@ -1312,16 +1303,13 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
 
         boolean ok = false;
         int nDistance = 0;
-        GridTopologyManager tm = new GridTopologyManager();
         AbstractNodeFactory nf = simulation.getNodeFactory();
         int nRange = simulation.getInitialMaxNodeRange();
         private long start;
         Rectangle deployArea;
 
         DeployNodesGridTopologyTask(org.jdesktop.application.Application app) {
-            // Runs on the EDT.  Copy GUI state that
-            // doInBackground() depends on from parameters
-            // to DeployNodesGridTopologyTask fields, here.
+
             super(app);
             if (selectedArea == null) {
                 deployArea = getBounds();
@@ -1351,32 +1339,16 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             if (!ok) {
                 return null;
             }
-            int status = 0;
             start = System.currentTimeMillis();
             try {
                 fireBeforeNodeDeploy(new DeployEvent(SimulationPanel.this));
-                int nNodes = 0;
-
                 GUI_Utils.mouseWait(SimulationPanel.this);
                 this.setMessage("Generating nodes using factory");
-
-                int nNodesLine = (int) (deployArea.getWidth() / nDistance);
-                int nNodesrow = (int) (deployArea.getHeight() / nDistance);
-                nNodes = nNodesLine * nNodesrow;
-                Vector<Node> nodes = (Vector<Node>) nf.createNodes(nNodes);
-                tm.setDistance(nDistance);
-                nodes = tm.apply(deployArea, nodes);
-                this.setProgress(status, 0, 1);
-
-                for (Node node : nodes) {
-                    status++;
-                    node.getConfig().setSetRadioRange(nRange);
-                    simulation.getSimulator().addNode((SensorNode) node);
-                    this.setProgress(status, 0, nodes.size());
-                }
+                GridTopologyManager manager = createGridTopologyManager(deployArea, nDistance);
+                simulation.appendNodes(manager);
             } catch (Exception ex) {
                 GUI_Utils.mouseDefault(SimulationPanel.this);
-                Logger.getLogger(SimulationPanel.class.getName()).log(Level.SEVERE, null, ex);
+                GUI_Utils.showException(ex);
                 updateLocal();
                 return false;
             }
@@ -1388,6 +1360,19 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             simulation.buildNetwork();
             updateLocal();
             return true;  // return your result
+        }
+
+        private GridTopologyManager createGridTopologyManager(Rectangle deployArea, int nDistance) {
+            GridTopologyManager manager = new GridTopologyManager();
+            manager.setNodeFactory(getSimulation().getNodeFactory());
+            GridTopologyParameters parameters = new GridTopologyParameters();
+            parameters.set("x", (int) deployArea.getX());
+            parameters.set("y", (int) deployArea.getY());
+            parameters.set("width", (int) deployArea.getWidth());
+            parameters.set("height", (int) deployArea.getHeight());
+            parameters.set("distance", (int) nDistance);
+            manager.setParameters(parameters);
+            return manager;
         }
 
         @Override
@@ -1422,7 +1407,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
                 deployArea = ((GeneralPath) selectedArea.clone()).getBounds();
             }
             while (!ok) {
-                String sNodes = JOptionPane.showInputDialog("Number of nodes to deploy:");
+                String sNodes = JOptionPane.showInputDialog("Number of nodes to deploy:", getDefaultNumberOfNodes(deployArea));
                 if (sNodes != null) {
                     if (NumberUtils.isNumber(sNodes)) {
                         nNodes = Integer.parseInt(sNodes);
@@ -1449,20 +1434,21 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             fireBeforeNodeDeploy(new DeployEvent(SimulationPanel.this));
             try {
                 GUI_Utils.mouseWait(SimulationPanel.this);
-                this.setMessage("Generating nodes using factory");
-                Vector<Node> nodes = (Vector<Node>) nf.createNodes(nNodes);
-                tm.setRandom(Simulator.randomGenerator.random());
-                nodes = tm.apply(deployArea, nodes);
-                this.setProgress(status, 0, 1);
-                for (Node node : nodes) {
-                    status++;
-                    node.getConfig().setSetRadioRange(nRange);
-                    simulation.getSimulator().addNode((SensorNode) node);
-                    this.setProgress(status, 0, nodes.size());
-                }
+                RandomTopologyManager manager = new RandomTopologyManager();
+                manager.setNodeFactory(getSimulation().getNodeFactory());
+                RandomTopologyParameters parameters = new RandomTopologyParameters();
+                parameters.set("x", (int) deployArea.getX());
+                parameters.set("y", (int) deployArea.getY());
+                parameters.set("width", (int) deployArea.getWidth());
+                parameters.set("height", (int) deployArea.getHeight());
+//                parameters.set("maxelevation", (int) manager.getNodeFactory().getMaxZ());
+                parameters.set("nodes", (int) nNodes);
+                manager.setParameters(parameters);
+                simulation.appendNodes(manager);
             } catch (Exception ex) {
                 GUI_Utils.mouseDefault(SimulationPanel.this);
-                Logger.getLogger(SimulationPanel.class.getName()).log(Level.SEVERE, null, ex);
+//                Logger.getLogger(SimulationPanel.class.getName()).log(Level.SEVERE, null, ex);
+                GUI_Utils.showException(ex);
                 updateLocal();
                 return false;
             }
@@ -1483,6 +1469,16 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             setMessage("Building Network... done in " + (System.currentTimeMillis() - start) + " milliseconds");
             this.setProgress(1, 0, 1);
             GUI_Utils.mouseDefault(SimulationPanel.this);
+        }
+
+
+        private int getDefaultNumberOfNodes(Rectangle deployArea) {
+            double w = deployArea.getWidth();
+            double h = deployArea.getHeight();
+            int range = getSimulation().getNodeFactory().getNodeMaxRadioRange();
+            double r = h / range;
+            double c = w / range;
+            return (int) (r * c);
         }
     }
 
@@ -1740,6 +1736,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             updateLocal();
         } catch (Exception ex) {
             Logger.getLogger(SimulationPanel.class.getName()).log(Level.SEVERE, null, ex);
+            GUI_Utils.showException(ex);
         }
 
 

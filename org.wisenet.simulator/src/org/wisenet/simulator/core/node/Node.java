@@ -40,7 +40,6 @@ public abstract class Node {
     protected double x = 0;
     protected double y = 0;
     protected double z = 0;
-
     /**
      * Attributes
      */
@@ -55,7 +54,7 @@ public abstract class Node {
     protected CPU cpu = null;
     protected Transceiver transceiver = null;
     protected Color messageColor = Color.BLUE;
-    protected double environmentAttenuation=0;
+    protected double environmentAttenuation = 0;
     /**
      * This is the message being sent, on reception it is extracted and the
      * message part is forwarded to the appropriate application, see
@@ -238,9 +237,9 @@ public abstract class Node {
      * @see net.tinyos.prowler.INode#setPosition(double, double, double)
      */
     public void setPosition(double x, double y, double z) {
-          this.x=x;
-          this.y=y;
-          this.z=z;
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
     /*
@@ -472,8 +471,6 @@ public abstract class Node {
             nroNeighbors = getMacLayer().getNeighborhood().neighbors.size();
         } catch (Exception e) {
         }
-
-
         String[] nodeInfo = new String[]{"ID: " + getId(),
             "Sink:  " + (isSinkNode() ? "True" : "False"),
             "Position:  (" + (int) getX() + " , " + (int) getY() + " , " + (int) getZ() + ")",
@@ -484,9 +481,9 @@ public abstract class Node {
             "Nro. Neighbors:  " + nroNeighbors,
             "Remaining Power:  " + twoPlaces.format(remainingPower <= 0.0 ? 0 : remainingPower) + "%",
             "Routing Stable: " + getRoutingLayer().isStable(),
+            "Routing Under Attack: " + getRoutingLayer().isUnderAttack(),
             "RSS: " + getMacLayer().getSignalStrength(),
             "MRS: " + getConfig().getMaximumRadioStrength(),};
-
         return nodeInfo;
     }
 
@@ -557,7 +554,4 @@ public abstract class Node {
     public void setEnvironmentAttenuation(double environmentAttenuation) {
         this.environmentAttenuation = environmentAttenuation;
     }
-
-
-    
 }

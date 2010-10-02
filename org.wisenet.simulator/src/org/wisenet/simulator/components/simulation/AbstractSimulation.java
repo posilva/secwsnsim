@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Properties;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.wisenet.simulator.common.PersistantObject;
 import org.wisenet.simulator.components.evaluation.tests.TestSet;
 import org.wisenet.simulator.components.evaluation.tests.TestTypeEnum;
 import org.wisenet.simulator.core.energy.EnergyController;
@@ -23,7 +24,7 @@ import org.wisenet.simulator.utilities.Utilities;
 import org.wisenet.simulator.utilities.console.SimulationSettings;
 import org.wisenet.simulator.utilities.xml.XMLFileReader;
 
-public abstract class AbstractSimulation implements ISimulationOperations {
+public abstract class AbstractSimulation extends PersistantObject implements ISimulationOperations {
 
     /**
      * Energy model for this simulation
@@ -83,6 +84,10 @@ public abstract class AbstractSimulation implements ISimulationOperations {
 
     public void setDisplay(ISimulationDisplay display) {
         this.display = display;
+        if (getSimulator() != null) {
+            getSimulator().setDisplay(display);
+
+        }
     }
 
     public Simulator getSimulator() {
@@ -92,6 +97,10 @@ public abstract class AbstractSimulation implements ISimulationOperations {
     public void setSimulator(Simulator simulator) {
         this.simulator = simulator;
         this.simulator.setSimulation(this);
+        if (getDisplay() != null) {
+            this.simulator.setDisplay(getDisplay());
+        }
+
     }
 
     public void reset() {
@@ -348,6 +357,10 @@ public abstract class AbstractSimulation implements ISimulationOperations {
 
     public List getTestByType(TestTypeEnum testType) {
         return testSet.getTestByType(testType);
+    }
+
+    public SimulationSettings getSettings() {
+        return settings;
     }
 
     public abstract void create(SimulationSettings settings);

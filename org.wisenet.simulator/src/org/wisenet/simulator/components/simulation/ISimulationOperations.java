@@ -69,7 +69,7 @@ public interface ISimulationOperations {
 
     void selectNodes(boolean status, NodeSelectionCondition condition);
 
-    void markNodes(boolean status, NodeSelectionCondition condition);
+    void markStableNodes(boolean status, NodeSelectionCondition condition);
 
     List selectRandomNodes(int nroNodes, List excludeNodes);
 

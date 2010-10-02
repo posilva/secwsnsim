@@ -49,6 +49,7 @@ public abstract class Layer {
             }
         }
     }
+
     protected void log(String message, Throwable ex) {
 
         String error = "";
@@ -59,9 +60,9 @@ public abstract class Layer {
                 error += stackTraceElement.toString() + "\n";
             }
             if (output != null) {
-                output.output(this, "["+message +"]\n"+error);
+                output.output(this, "[" + message + "]\n" + error);
             } else {
-                System.out.println("{" + getClass().getSimpleName() + "} <" + getNode().getSimulator().getSimulationTime() + "> - [" + getNode().getId() + "] - " + "["+message +"]\n"+error);
+                System.out.println("{" + getClass().getSimpleName() + "} <" + getNode().getSimulator().getSimulationTime() + "> - [" + getNode().getId() + "] - " + "[" + message + "]\n" + error);
             }
         }
     }
