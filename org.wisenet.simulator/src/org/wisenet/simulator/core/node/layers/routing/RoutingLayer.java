@@ -17,6 +17,10 @@ import org.wisenet.simulator.utilities.Utilities;
 
 public abstract class RoutingLayer extends Layer {
 
+    /**
+     * Routing layer controller
+     * Keeps global information about routing layer actions and state
+     */
     protected static RoutingLayerController routingController = new RoutingLayerController();
     /**
      * List of the attacks implementation
@@ -152,13 +156,6 @@ public abstract class RoutingLayer extends Layer {
      * @param message
      */
     public final void receiveMessage(Object message) {
-        if (this instanceof IInstrumentHandler) {
-            if (message instanceof IInstrumentMessage) {
-                getCoverageInstrument().notifyMessageReceived((IInstrumentMessage) message, (IInstrumentHandler) this);
-                getReliabilityInstrument().notifyMessageReceived((IInstrumentMessage) message, (IInstrumentHandler) this);
-                getLatencyInstrument().notifyMessageReceived((IInstrumentMessage) message, (IInstrumentHandler) this);
-            }
-        }
         onReceiveMessage(message);
     }
 
@@ -258,6 +255,53 @@ public abstract class RoutingLayer extends Layer {
     }
 
     /**
+     * Startup routing actions
+     */
+    public final void startup() {
+        setup();
+
+    }
+
+    /**
+     * Do actions for routing layer
+     */
+    private void prepareRouting() {
+    }
+
+    /**
+     * Get the Routing Protocol Phases
+     * @return
+     */
+    public List<String> getProtocolPhases() {
+        return protocolPhases;
+    }
+
+    /**
+     * Gets the ROuting controller 
+     * @return
+     */
+    public static RoutingLayerController getController() {
+        return routingController;
+    }
+
+    /**
+     * Signals a correct routing from source to destination application
+     * (this must be called by the application layer after message reception)
+     * Enables the reliability evaluation mechanism after all routing verifications
+     * @param message
+     */
+    public final void done(Object message) {
+
+        if (this instanceof IInstrumentHandler) {
+            if (message instanceof IInstrumentMessage) {
+                getCoverageInstrument().notifyMessageReceived((IInstrumentMessage) message, (IInstrumentHandler) this);
+                getReliabilityInstrument().notifyMessageReceived((IInstrumentMessage) message, (IInstrumentHandler) this);
+                getLatencyInstrument().notifyMessageReceived((IInstrumentMessage) message, (IInstrumentHandler) this);
+            }
+        }
+    }
+
+    /**
      * Returns the routing table in string format
      * @return
      */
@@ -308,22 +352,6 @@ public abstract class RoutingLayer extends Layer {
      * Setup stuff for routing protocol
      */
     protected abstract void setup();
-
-    public final void startup() {
-        setup();
-
-    }
-
-    private void prepareRouting() {
-    }
-
-    public List<String> getProtocolPhases() {
-        return protocolPhases;
-    }
-
-    public static RoutingLayerController getController() {
-        return routingController;
-    }
 
     /**
      * Do some action after switch to stable

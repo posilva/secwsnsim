@@ -59,7 +59,7 @@ public class SimulationFactory {
     }
 
     private void prepareSimulation(Simulation simulation) {
-        nodeFactoryClassInstance.setNodeMaxRadioStregth(settings.getMaxNodeRadioStrength());
+        nodeFactoryClassInstance.setNodeMaxRadioRange(settings.getMaxNodeRadioRange());
         simulation.setSimulator(simulatorClassInstance);
         simulation.setRadioModel(radioModelClassInstance);
         simulation.setNodeFactory(nodeFactoryClassInstance);

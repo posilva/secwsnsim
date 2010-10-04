@@ -26,7 +26,7 @@ public class SimulationSettings extends PersistantObject implements Serializable
     boolean staticZ = true;
     double minZ = 0;
     double maxZ = 0;
-    double environAttenuation = 0;
+    int environAttenuation = 0;
 
     public String getEnergyModelClassName() {
         return energyModelClassName;
@@ -36,11 +36,11 @@ public class SimulationSettings extends PersistantObject implements Serializable
         this.energyModelClassName = energyModelClassName;
     }
 
-    public int getMaxNodeRadioStrength() {
+    public int getMaxNodeRadioRange() {
         return maxNodeRadioStrength;
     }
 
-    public void setMaxNodeRadioStrength(int maxNodeRadioStrength) {
+    public void setMaxNodeRadioRange(int maxNodeRadioStrength) {
         this.maxNodeRadioStrength = maxNodeRadioStrength;
     }
 
@@ -100,11 +100,11 @@ public class SimulationSettings extends PersistantObject implements Serializable
         this.name = name;
     }
 
-    public double getEnvironAttenuation() {
+    public int getEnvironAttenuation() {
         return environAttenuation;
     }
 
-    public void setEnvironAttenuation(double environAttenuation) {
+    public void setEnvironAttenuation(int environAttenuation) {
         this.environAttenuation = environAttenuation;
     }
 
@@ -139,7 +139,7 @@ public class SimulationSettings extends PersistantObject implements Serializable
         configuration.addProperty("simulation.settings.nodeFactoryClassName", getNodeFactoryClassName());
         configuration.addProperty("simulation.settings.simulatorClassName", getSimulatorClassName());
         configuration.addProperty("simulation.settings.radioModelClassName", getRadioModelClassName());
-        configuration.addProperty("simulation.settings.maxNodeRadioStrength", getMaxNodeRadioStrength());
+        configuration.addProperty("simulation.settings.maxNodeRadioRange", getMaxNodeRadioRange());
         configuration.addProperty("simulation.settings.energyModelClassName", getEnergyModelClassName());
         configuration.addProperty("simulation.settings.staticz", isStaticZ());
         configuration.addProperty("simulation.settings.minz", getMinZ());
@@ -151,7 +151,7 @@ public class SimulationSettings extends PersistantObject implements Serializable
         setName((String) file.getString("simulation.settings.name"));
         setSeed((Long) file.getLong("simulation.settings.seed"));
         setFastMode((Boolean) file.getBoolean("simulation.settings.fastmode"));
-        setMaxNodeRadioStrength((Integer) file.getInt("simulation.settings.maxNodeRadioStrength"));
+        setMaxNodeRadioRange((Integer) file.getInt("simulation.settings.maxNodeRadioRange"));
         setEnergyModelClassName((String) file.getString("simulation.settings.energyModelClassName"));
         setSimulatorClassName((String) file.getString("simulation.settings.simulatorClassName"));
         setNodeFactoryClassName((String) file.getString("simulation.settings.nodeFactoryClassName"));
@@ -159,6 +159,6 @@ public class SimulationSettings extends PersistantObject implements Serializable
         setStaticZ((Boolean) file.getBoolean("simulation.settings.staticz"));
         setMinZ((Double) file.getDouble("simulation.settings.minz"));
         setMaxZ((Double) file.getDouble("simulation.settings.maxz"));
-        setEnvironAttenuation((Double) file.getDouble("simulation.settings.environAttenuation"));
+        setEnvironAttenuation((Integer) file.getInt("simulation.settings.environAttenuation"));
     }
 }

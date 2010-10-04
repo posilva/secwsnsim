@@ -51,8 +51,7 @@ public class EvaluateINSENSApplication extends Application {
         reliabilityEvaluationTimer.start();
     }
 
-    @Override
-    public void receiveMessage(Object message) {
+    protected void onMessageReceived(Object message) {
         if (message instanceof byte[]) {
             String receivedData = new String((byte[]) message);
             if (!receivedBag.contains(receivedData)) {

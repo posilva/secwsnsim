@@ -27,7 +27,7 @@ public class SimulationConsole1version {
 //        settings.setFieldHeight(300); //    int fieldHeight;
 //        settings.setFieldWidth(300); //    int fieldWidth;
 //        settings.setFieldMaxAltitude(0); //    int fieldMaxAltitude;
-        settings.setMaxNodeRadioStrength(2300); //    int maxNodeRadioStrength;
+        settings.setMaxNodeRadioRange(2300); //    int maxNodeRadioStrength;
         settings.setNodeFactoryClassName(INSENSNodeFactory.class.getName()); //    String  nodeFactoryClassName;
         settings.setSimulatorClassName(Simulator.class.getName()); //    String simulatorClassName;
         settings.setRadioModelClassName(GaussianRadioModel.class.getName()); //    String radioModelClassName;

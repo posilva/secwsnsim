@@ -4,11 +4,15 @@
  */
 package org.wisenet.simulator.components.evaluation.tests;
 
+import org.apache.commons.configuration.XMLConfiguration;
+import org.wisenet.simulator.common.PersistantException;
+import org.wisenet.simulator.common.PersistantObject;
+
 /**
  *
  * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
-public class TestInputParameters {
+public class TestInputParameters extends PersistantObject{
 
     protected int numberOfSenderNodes;
     protected int numberOfReceiverNodes;
@@ -126,5 +130,13 @@ public class TestInputParameters {
 
     public void setPercentOfSenderNodesValue(double percentOfSenderNodesValue) {
         this.percentOfSenderNodesValue = percentOfSenderNodesValue;
+    }
+
+    public void saveToXML(XMLConfiguration configuration) throws PersistantException {
+
+    }
+
+    public void loadFromXML(XMLConfiguration configuration) throws PersistantException {
+
     }
 }

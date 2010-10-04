@@ -4,11 +4,15 @@
  */
 package org.wisenet.simulator.components.evaluation.tests;
 
+import org.apache.commons.configuration.XMLConfiguration;
+import org.wisenet.simulator.common.PersistantException;
+import org.wisenet.simulator.common.PersistantObject;
+
 /**
  *
  * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
-public class TestOutputParameters {
+public class TestOutputParameters extends PersistantObject {
 
     protected long totalMessagesSent;
     protected int totalNodes;
@@ -115,5 +119,11 @@ public class TestOutputParameters {
 
     public void setTotalStableNodes(int totalStableNodes) {
         this.totalStableNodes = totalStableNodes;
+    }
+
+    public void saveToXML(XMLConfiguration configuration) throws PersistantException {
+    }
+
+    public void loadFromXML(XMLConfiguration configuration) throws PersistantException {
     }
 }

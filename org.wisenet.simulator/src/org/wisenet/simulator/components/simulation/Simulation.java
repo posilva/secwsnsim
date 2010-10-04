@@ -1,5 +1,7 @@
 package org.wisenet.simulator.components.simulation;
 
+
+
 import java.util.logging.Level;
 import org.apache.commons.configuration.ConfigurationException;
 import org.wisenet.simulator.common.PersistantException;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.logging.Logger;
+import java.io.File;
 import javax.swing.event.EventListenerList;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.wisenet.simulator.components.instruments.NodeSelectionCondition;
@@ -662,7 +665,18 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
     public void loadNetworkTopology(String filename) throws Exception {
         XMLConfiguration file = new XMLConfiguration();
         file.load(filename);
+        int numberOfNodes = file.getInt("simulation.topology.nodes.size");
 
+        for (int i = 0; i < numberOfNodes; i++) {
+            String tag = "simulation.topology.nodes.node(" + i + ")";
+            double x = file.getDouble(tag + ".x");
+            double y = file.getDouble(tag + ".y");
+            double z = file.getDouble(tag + ".z");
+            Node node = getNodeFactory().createNode();
+            node.setPosition(x, y, z);
+            getSimulator().addNode(node);
+        }
+        
     }
 
     private void saveNT(String filename) throws ConfigurationException {
@@ -675,6 +689,10 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
             file.addProperty("simulation.topology.nodes.node.x", node.getX());
             file.addProperty("simulation.topology.nodes.node.y", node.getY());
             file.addProperty("simulation.topology.nodes.node.z", node.getZ());
+        }
+        File f = new File(filename);
+        if (f.exists()) {
+            f.delete();
         }
         file.save(filename);
     }
@@ -689,7 +707,7 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
             this.settings = settings; // save settings
             setSimulator((Simulator) Utilities.loadClassInstance(settings.getSimulatorClassName()));
             setNodeFactory((AbstractNodeFactory) Utilities.loadClassInstance(settings.getNodeFactoryClassName()));
-            getNodeFactory().setNodeMaxRadioStregth(settings.getMaxNodeRadioStrength());
+            getNodeFactory().setNodeMaxRadioRange(settings.getMaxNodeRadioRange());
             setRadioModel((RadioModel) Utilities.loadClassInstance(settings.getRadioModelClassName()));
             setEnergyModel(((EnergyModel) Utilities.loadClassInstance(settings.getEnergyModelClassName())).getInstanceWithDefaultValues());
 

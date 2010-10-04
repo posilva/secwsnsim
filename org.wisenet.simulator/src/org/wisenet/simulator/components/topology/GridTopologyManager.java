@@ -45,9 +45,6 @@ public class GridTopologyManager extends TopologyManager implements Annotated {
             }
             posY += distance;
         }
-
-
-
         return nodes;
     }
 
