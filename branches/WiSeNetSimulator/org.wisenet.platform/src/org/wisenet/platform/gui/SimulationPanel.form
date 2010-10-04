@@ -22,7 +22,6 @@
         <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodeVerVizinhos">
           <Properties>
             <Property name="selected" type="boolean" value="true"/>
-            <Property name="text" type="java.lang.String" resourceKey="selNodeVerVizinhos.text"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodeVerVizinhosActionPerformed"/>
@@ -31,7 +30,6 @@
         <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodeVerID">
           <Properties>
             <Property name="selected" type="boolean" value="true"/>
-            <Property name="text" type="java.lang.String" resourceKey="selNodeVerID.text"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodeVerIDActionPerformed"/>
@@ -40,7 +38,6 @@
         <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodeVerOsQueMeConhecem">
           <Properties>
             <Property name="selected" type="boolean" value="true"/>
-            <Property name="text" type="java.lang.String" resourceKey="selNodeVerOsQueMeConhecem.text"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodeVerOsQueMeConhecemActionPerformed"/>
@@ -49,7 +46,6 @@
         <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodeMarcar">
           <Properties>
             <Property name="selected" type="boolean" value="true"/>
-            <Property name="text" type="java.lang.String" resourceKey="selNodeMarcar.text"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodeMarcarActionPerformed"/>
@@ -58,7 +54,6 @@
         <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodeOnOff">
           <Properties>
             <Property name="selected" type="boolean" value="true"/>
-            <Property name="text" type="java.lang.String" resourceKey="selNodeOnOff.text"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodeOnOffActionPerformed"/>
@@ -70,13 +65,9 @@
               <action class="org.wisenet.platform.ui.SimulationPanel" id="SetNodeAsSink" methodName="SetNodeAsSink"/>
             </Property>
             <Property name="selected" type="boolean" value="true"/>
-            <Property name="text" type="java.lang.String" value="Sink Node"/>
           </Properties>
         </MenuItem>
         <MenuItem class="javax.swing.JMenuItem" name="selNodeMonitEnergia">
-          <Properties>
-            <Property name="text" type="java.lang.String" resourceKey="selNodeMonitEnergia.text"/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodeMonitEnergiaActionPerformed"/>
           </Events>
@@ -98,8 +89,6 @@
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
               <action class="org.wisenet.platform.ui.SimulationPanel" id="ShowNodeProperties" methodName="ShowNodeProperties"/>
             </Property>
-            <Property name="text" type="java.lang.String" resourceKey="selNodeShowProperties.text"/>
-            <Property name="toolTipText" type="java.lang.String" resourceKey="selNodeShowProperties.toolTipText"/>
           </Properties>
         </MenuItem>
         <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodeUnderAttack">
@@ -108,7 +97,6 @@
               <action class="org.wisenet.platform.ui.SimulationPanel" id="SetNodeAsSink" methodName="SetNodeAsSink"/>
             </Property>
             <Property name="selected" type="boolean" value="true"/>
-            <Property name="text" type="java.lang.String" value="Under Attack"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodeUnderAttackActionPerformed"/>
@@ -133,7 +121,6 @@
         <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodesShowNeighbors">
           <Properties>
             <Property name="selected" type="boolean" value="true"/>
-            <Property name="text" type="java.lang.String" resourceKey="selNodesVerVizinhos.text"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesShowNeighborsActionPerformed"/>
@@ -142,7 +129,6 @@
         <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodesShowID">
           <Properties>
             <Property name="selected" type="boolean" value="true"/>
-            <Property name="text" type="java.lang.String" resourceKey="selNodesVerID.text"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesShowIDActionPerformed"/>
@@ -151,7 +137,6 @@
         <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodesShowNodesThatKnownme">
           <Properties>
             <Property name="selected" type="boolean" value="true"/>
-            <Property name="text" type="java.lang.String" resourceKey="selNodesVerOsQueMeConhecem.text"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesShowNodesThatKnownmeActionPerformed"/>
@@ -160,16 +145,12 @@
         <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodesOnOff">
           <Properties>
             <Property name="selected" type="boolean" value="true"/>
-            <Property name="text" type="java.lang.String" resourceKey="selNodesOnOff.text"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesOnOffActionPerformed"/>
           </Events>
         </MenuItem>
         <MenuItem class="javax.swing.JMenuItem" name="selNodesMonitEnergy">
-          <Properties>
-            <Property name="text" type="java.lang.String" resourceKey="selNodesMonitEnergia.text"/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesMonitEnergyActionPerformed"/>
           </Events>
@@ -181,7 +162,6 @@
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
               <action class="org.wisenet.platform.ui.SimulationPanel" id="RemoveNodesSelected" methodName="RemoveNodesSelected"/>
             </Property>
-            <Property name="text" type="java.lang.String" resourceKey="selNodesRemove.text"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesRemoveActionPerformed"/>
@@ -194,8 +174,6 @@
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
               <action class="org.wisenet.platform.ui.SimulationPanel" id="ShowNodesProperties" methodName="ShowNodesProperties"/>
             </Property>
-            <Property name="text" type="java.lang.String" resourceKey="selNodesShowProperties.text"/>
-            <Property name="toolTipText" type="java.lang.String" resourceKey="selNodesShowProperties.toolTipText"/>
           </Properties>
         </MenuItem>
       </SubComponents>
@@ -207,17 +185,12 @@
       </Layout>
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="depNodesDeploy">
-          <Properties>
-            <Property name="text" type="java.lang.String" resourceKey="depNodesDeploy.text"/>
-          </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="depNodesRandomTopology">
               <Properties>
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="org.wisenet.platform.ui.SimulationPanel" id="deployNodesUsingRandomTopology" methodName="deployNodesUsingRandomTopology"/>
                 </Property>
-                <Property name="text" type="java.lang.String" resourceKey="depNodesRandomTopology.text"/>
-                <Property name="toolTipText" type="java.lang.String" resourceKey="depNodesRandomTopology.toolTipText"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="depNodesGridTopology">
@@ -225,8 +198,6 @@
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="org.wisenet.platform.ui.SimulationPanel" id="deployNodesGridTopology" methodName="deployNodesGridTopology"/>
                 </Property>
-                <Property name="text" type="java.lang.String" resourceKey="depNodesGridTopology.text"/>
-                <Property name="toolTipText" type="java.lang.String" resourceKey="depNodesGridTopology.toolTipText"/>
               </Properties>
             </MenuItem>
           </SubComponents>
@@ -244,7 +215,6 @@
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
               <action class="org.wisenet.platform.ui.SimulationPanel" id="PlaceNodeHereAction" methodName="PlaceNodeHereAction"/>
             </Property>
-            <Property name="text" type="java.lang.String" resourceKey="depNodeDeployOneNode.text"/>
           </Properties>
         </MenuItem>
       </SubComponents>
@@ -253,7 +223,14 @@
     </Component>
   </NonVisualComponents>
   <Properties>
-    <Property name="background" type="java.awt.Color" resourceKey="background"/>
+    <Property name="background" type="java.awt.Color" noResource="true" editor="org.netbeans.beaninfo.editors.ColorEditor">
+      <Color blue="fe" green="fe" red="fe" type="rgb"/>
+    </Property>
+    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+      <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+        <LineBorder/>
+      </Border>
+    </Property>
   </Properties>
   <Events>
     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="formMouseClicked"/>
@@ -283,12 +260,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="699" max="32767" attributes="0"/>
+          <EmptySpace min="0" pref="697" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="523" max="32767" attributes="0"/>
+          <EmptySpace min="0" pref="521" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>

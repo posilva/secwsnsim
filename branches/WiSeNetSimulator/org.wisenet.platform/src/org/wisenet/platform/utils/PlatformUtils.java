@@ -4,6 +4,7 @@
  */
 package org.wisenet.platform.utils;
 
+import org.jdesktop.application.ResourceMap;
 import org.wisenet.platform.PlatformConstants;
 import java.io.File;
 import java.io.FileWriter;
@@ -12,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
+import org.wisenet.platform.PlatformApp;
 import org.wisenet.platform.core.PlatformManager;
 import org.wisenet.platform.utils.PlatformUtils.SimulationFilter;
 import org.wisenet.simulator.components.simulation.AbstractSimulation;
@@ -24,6 +26,7 @@ import org.wisenet.simulator.components.simulation.SimulationException;
  */
 public class PlatformUtils {
 
+    static org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(PlatformApp.class);
     private static String lastErrorMessage = null;
 
     /**
@@ -84,24 +87,36 @@ public class PlatformUtils {
     }
 
     private static String selectSimulationOpenFileLocation() {
-        String result = GUI_Utils.showOpenDialog(new FileFilter[]{new SimulationFilter()}, lastErrorMessage);
-        if (result == null) {
-            lastErrorMessage = PlatformConstants.MSG_OPEN_ERROR_OR_CANCEL;
+        try {
+            String result = GUI_Utils.showOpenDialog(new FileFilter[]{new SimulationFilter()}, lastErrorMessage);
+            if (result == null) {
+                lastErrorMessage = PlatformConstants.MSG_OPEN_ERROR_OR_CANCEL;
+                return null;
+            }
+            result = result.endsWith(PlatformConstants.SIMULATION_FILE_EXTENSION) ? result : result + PlatformConstants.SIMULATION_FILE_EXTENSION;
+            return result;
+
+        } catch (Exception e) {
+            GUI_Utils.showException(e);
             return null;
         }
-        result = result.endsWith(PlatformConstants.SIMULATION_FILE_EXTENSION) ? result : result + PlatformConstants.SIMULATION_FILE_EXTENSION;
-        return result;
 
     }
 
     private static String selectSimulationSaveFileLocation() {
-        String result = GUI_Utils.showSaveDialog(new FileFilter[]{new SimulationFilter()}, lastErrorMessage);
-        if (result == null) {
-            lastErrorMessage = PlatformConstants.MSG_SAVE_ERROR_OR_CANCEL;
+        try {
+            String result = GUI_Utils.showSaveDialog(new FileFilter[]{new SimulationFilter()}, lastErrorMessage);
+            if (result == null) {
+                lastErrorMessage = PlatformConstants.MSG_SAVE_ERROR_OR_CANCEL;
+                return null;
+            }
+            result = result.endsWith(PlatformConstants.SIMULATION_FILE_EXTENSION) ? result : result + PlatformConstants.SIMULATION_FILE_EXTENSION;
+            return result;
+
+        } catch (Exception e) {
+            GUI_Utils.showException(e);
             return null;
         }
-        result = result.endsWith(PlatformConstants.SIMULATION_FILE_EXTENSION) ? result : result + PlatformConstants.SIMULATION_FILE_EXTENSION;
-        return result;
 
     }
 
@@ -147,18 +162,28 @@ public class PlatformUtils {
         }
     }
 
+    public static void log(IOException ex) {
+        Logger.getLogger(PlatformUtils.class.getName()).log(Level.SEVERE, null, ex);
+    }
+
     /**
      * Extension filter for simulation files
      */
     public static class SimulationFilter extends FileFilter {
 
+        @Override
         public boolean accept(File file) {
             String filename = file.getName();
             return filename.endsWith(PlatformConstants.SIMULATION_FILE_EXTENSION);
         }
 
+        @Override
         public String getDescription() {
             return PlatformConstants.SIMULATION_FILE_DESCRIPTION;
         }
+    }
+
+    public static ResourceMap getResourceMap() {
+        return resourceMap;
     }
 }

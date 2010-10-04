@@ -18,6 +18,8 @@ public abstract class PlatformPanel extends javax.swing.JPanel {
 
     protected Object result = null;
     private IPlatformDialogActions notificationHandler;
+    protected int minHeight = 600;
+    protected int minWidth=800;
 
     public Object getResult() {
         return result;
@@ -66,5 +68,14 @@ public abstract class PlatformPanel extends javax.swing.JPanel {
 
     public boolean changed() {
         return false;
+    }
+
+
+    public int getMinWidth(){
+        return minWidth;
+    }
+
+    public int getMinHeight(){
+        return minHeight;
     }
 }

@@ -6,37 +6,61 @@
 package org.wisenet.platform.gui;
 
 import java.awt.Dimension;
-import java.awt.image.BufferedImage;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 import org.wisenet.platform.common.ui.PlatformDialog;
 import org.wisenet.platform.common.ui.PlatformFrame;
 import org.wisenet.platform.core.PlatformManager;
+import org.wisenet.platform.gui.listeners.DeployEvent;
+import org.wisenet.platform.gui.listeners.SimulationPanelEventListener;
+import org.wisenet.platform.gui.panels.ImageViewerPanel;
 import org.wisenet.platform.gui.panels.NodeSettingsPanel;
 import org.wisenet.platform.gui.panels.RoutingInfoPanel;
 import org.wisenet.platform.utils.GUI_Utils;
-import org.wisenet.platform.utils.others.MapViewer;
 import org.wisenet.simulator.components.instruments.NodeSelectionCondition;
 import org.wisenet.simulator.components.simulation.Simulation;
 
 import org.wisenet.simulator.utilities.DebugConsole;
 import org.wisenet.simulator.components.simulation.SimulationFactory;
 import org.wisenet.simulator.core.node.Node;
+import org.wisenet.simulator.utilities.Utilities;
 
 /**
  *
  * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
-public class WorkbenchPanel extends javax.swing.JPanel {
+public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPanelEventListener {
 
     /** Creates new form WorkbenchPanel */
     public WorkbenchPanel() {
         initComponents();
+        simulationPanel1.addSimulationPanelListerner(this);
+
         jScrollPane1.setPreferredSize(new Dimension(1280, 800));
         jScrollPane1.setAutoscrolls(true);
         btnDeployNodesMode.setSelected(true);
         updateSelectionGroup();
+    }
+
+    private boolean executeNodeSearch() {
+        String s = txtSearchNode.getText();
+        if (!org.apache.commons.lang.StringUtils.isNumeric(s)) {
+            return true;
+        }
+        if (s.isEmpty()) {
+            return true;
+        }
+        if (s != null) {
+            try {
+                simulationPanel1.searchNode(Integer.valueOf(s).intValue());
+            } catch (Exception e) {
+                GUI_Utils.showException(e);
+            }
+        }
+        return false;
     }
 
     @SuppressWarnings("unchecked")
@@ -72,13 +96,21 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         jSeparator5 = new javax.swing.JToolBar.Separator();
         gmaps = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JToolBar.Separator();
+        btnLoadTopology = new javax.swing.JButton();
+        btnSaveTopology = new javax.swing.JButton();
+        jSeparator7 = new javax.swing.JToolBar.Separator();
         btnStableMark = new javax.swing.JToggleButton();
         btnStableSelect = new javax.swing.JToggleButton();
         btnRoutingInfo = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        jSeparator8 = new javax.swing.JToolBar.Separator();
+        tgbRoutingAttackMode = new javax.swing.JToggleButton();
+        jSeparator9 = new javax.swing.JToolBar.Separator();
+        searchPanel1 = new javax.swing.JPanel();
         searchPanel = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         txtSearchNode = new javax.swing.JFormattedTextField();
+        jPanel2 = new javax.swing.JPanel();
+        lblField = new javax.swing.JLabel();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -97,22 +129,21 @@ public class WorkbenchPanel extends javax.swing.JPanel {
 
         add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
+        jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jToolBar1.setFloatable(false);
         jToolBar1.setOrientation(1);
         jToolBar1.setRollover(true);
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance().getContext().getActionMap(WorkbenchPanel.class, this);
         btnRebuildNetwork.setAction(actionMap.get("RebuildNetwork")); // NOI18N
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(WorkbenchPanel.class);
-        btnRebuildNetwork.setIcon(resourceMap.getIcon("btnRebuildNetwork.icon")); // NOI18N
-        btnRebuildNetwork.setToolTipText(resourceMap.getString("btnRebuildNetwork.toolTipText")); // NOI18N
+        btnRebuildNetwork.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/refresh.png"))); // NOI18N
         btnRebuildNetwork.setFocusable(false);
         btnRebuildNetwork.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnRebuildNetwork.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(btnRebuildNetwork);
         jToolBar1.add(jSeparator4);
 
-        verVizinhos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/gui/resources/Neighboors16.png"))); // NOI18N
+        verVizinhos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/Neighboors16.png"))); // NOI18N
         verVizinhos.setToolTipText("Show Neighborhood ");
         verVizinhos.setFocusable(false);
         verVizinhos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -124,7 +155,7 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         });
         jToolBar1.add(verVizinhos);
 
-        verOsQueConhecem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/gui/resources/OthersNeighboor16.png"))); // NOI18N
+        verOsQueConhecem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/OthersNeighboor16.png"))); // NOI18N
         verOsQueConhecem.setToolTipText("Show Two Way Connecions");
         verOsQueConhecem.setFocusable(false);
         verOsQueConhecem.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -139,8 +170,7 @@ public class WorkbenchPanel extends javax.swing.JPanel {
 
         btnSimulationStart.setAction(actionMap.get("StartSimulation")); // NOI18N
         OperationBG.add(btnSimulationStart);
-        btnSimulationStart.setIcon(resourceMap.getIcon("btnSimulationStart.icon")); // NOI18N
-        btnSimulationStart.setToolTipText(resourceMap.getString("btnSimulationStart.toolTipText")); // NOI18N
+        btnSimulationStart.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/Play16.png"))); // NOI18N
         btnSimulationStart.setFocusable(false);
         btnSimulationStart.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSimulationStart.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -148,8 +178,7 @@ public class WorkbenchPanel extends javax.swing.JPanel {
 
         btnSimulationPause.setAction(actionMap.get("PauseSimulation")); // NOI18N
         OperationBG.add(btnSimulationPause);
-        btnSimulationPause.setIcon(resourceMap.getIcon("btnSimulationPause.icon")); // NOI18N
-        btnSimulationPause.setToolTipText(resourceMap.getString("btnSimulationPause.toolTipText")); // NOI18N
+        btnSimulationPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/Pause16.png"))); // NOI18N
         btnSimulationPause.setFocusable(false);
         btnSimulationPause.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSimulationPause.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -157,16 +186,14 @@ public class WorkbenchPanel extends javax.swing.JPanel {
 
         btnSimulationStop.setAction(actionMap.get("StopSimulation")); // NOI18N
         OperationBG.add(btnSimulationStop);
-        btnSimulationStop.setIcon(resourceMap.getIcon("btnSimulationStop.icon")); // NOI18N
-        btnSimulationStop.setToolTipText(resourceMap.getString("btnSimulationStop.toolTipText")); // NOI18N
+        btnSimulationStop.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/Stop16.png"))); // NOI18N
         btnSimulationStop.setFocusable(false);
         btnSimulationStop.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSimulationStop.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(btnSimulationStop);
 
         btnSimulationReset.setAction(actionMap.get("ResetSimulation")); // NOI18N
-        btnSimulationReset.setIcon(resourceMap.getIcon("btnSimulationReset.icon")); // NOI18N
-        btnSimulationReset.setToolTipText(resourceMap.getString("btnSimulationReset.toolTipText")); // NOI18N
+        btnSimulationReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/Reset16.png"))); // NOI18N
         btnSimulationReset.setFocusable(false);
         btnSimulationReset.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSimulationReset.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -175,15 +202,14 @@ public class WorkbenchPanel extends javax.swing.JPanel {
 
         btnDeployNodesMode.setAction(actionMap.get("selectedNodeDeployMode")); // NOI18N
         SelectionBG.add(btnDeployNodesMode);
-        btnDeployNodesMode.setIcon(resourceMap.getIcon("btnDeployNodesMode.icon")); // NOI18N
-        btnDeployNodesMode.setToolTipText(resourceMap.getString("btnDeployNodesMode.toolTipText")); // NOI18N
+        btnDeployNodesMode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/share_this.png"))); // NOI18N
         btnDeployNodesMode.setFocusable(false);
         btnDeployNodesMode.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnDeployNodesMode.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(btnDeployNodesMode);
 
         SelectionBG.add(btnSelectionTool);
-        btnSelectionTool.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/gui/resources/arrow_expand.png"))); // NOI18N
+        btnSelectionTool.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/arrow_expand.png"))); // NOI18N
         btnSelectionTool.setToolTipText("Selection Area Tool");
         btnSelectionTool.setFocusable(false);
         btnSelectionTool.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -200,7 +226,7 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         jToolBar1.add(btnSelectionTool);
 
         SelectionBG.add(selectionPointerTool);
-        selectionPointerTool.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/gui/resources/018.png"))); // NOI18N
+        selectionPointerTool.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/018.png"))); // NOI18N
         selectionPointerTool.setToolTipText("Select Node");
         selectionPointerTool.setFocusable(false);
         selectionPointerTool.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -214,10 +240,11 @@ public class WorkbenchPanel extends javax.swing.JPanel {
 
         add(jToolBar1, java.awt.BorderLayout.LINE_START);
 
+        topToolbar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         topToolbar.setFloatable(false);
         topToolbar.setRollover(true);
 
-        showDebugWindow.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/gui/resources/terminal-icon.png"))); // NOI18N
+        showDebugWindow.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/terminal-icon.png"))); // NOI18N
         showDebugWindow.setToolTipText("Debug Console");
         showDebugWindow.setFocusable(false);
         showDebugWindow.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -229,7 +256,7 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         });
         topToolbar.add(showDebugWindow);
 
-        showMouseCoordinates.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/gui/resources/coordinates-icon.png"))); // NOI18N
+        showMouseCoordinates.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/coordinates-icon.png"))); // NOI18N
         showMouseCoordinates.setToolTipText("Show Mouse Coordinates");
         showMouseCoordinates.setFocusable(false);
         showMouseCoordinates.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -241,7 +268,7 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         });
         topToolbar.add(showMouseCoordinates);
 
-        viewNodesInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/gui/resources/about-icon.png"))); // NOI18N
+        viewNodesInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/about-icon.png"))); // NOI18N
         viewNodesInfo.setToolTipText("View Nodes Info");
         viewNodesInfo.setFocusable(false);
         viewNodesInfo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -255,30 +282,29 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         topToolbar.add(jSeparator6);
 
         selRandomNodes.setAction(actionMap.get("RandomNodeSelection")); // NOI18N
-        selRandomNodes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/gui/resources/random.png"))); // NOI18N
+        selRandomNodes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/random.png"))); // NOI18N
         selRandomNodes.setFocusable(false);
         selRandomNodes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         selRandomNodes.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         topToolbar.add(selRandomNodes);
 
         btnSnapshot.setAction(actionMap.get("TakeSnapshot")); // NOI18N
-        btnSnapshot.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/camera.png"))); // NOI18N
-        btnSnapshot.setToolTipText(resourceMap.getString("btnSnapshot.toolTipText")); // NOI18N
+        btnSnapshot.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/camera.png"))); // NOI18N
         btnSnapshot.setFocusable(false);
         btnSnapshot.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSnapshot.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         topToolbar.add(btnSnapshot);
 
         btnColorSettings.setAction(actionMap.get("ColorSettingsAction")); // NOI18N
-        btnColorSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/ColorSettings.png"))); // NOI18N
+        btnColorSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/ColorSettings.png"))); // NOI18N
         btnColorSettings.setFocusable(false);
         btnColorSettings.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnColorSettings.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         topToolbar.add(btnColorSettings);
         topToolbar.add(jSeparator5);
 
-        gmaps.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/GMaps.png"))); // NOI18N
-        gmaps.setToolTipText("Insert Google Maps");
+        gmaps.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/GMaps.png"))); // NOI18N
+        gmaps.setToolTipText("Load background image...");
         gmaps.setFocusable(false);
         gmaps.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         gmaps.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -289,6 +315,31 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         });
         topToolbar.add(gmaps);
         topToolbar.add(jSeparator3);
+
+        btnLoadTopology.setText("LT");
+        btnLoadTopology.setToolTipText("Load network topology from file...");
+        btnLoadTopology.setFocusable(false);
+        btnLoadTopology.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnLoadTopology.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnLoadTopology.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoadTopologyActionPerformed(evt);
+            }
+        });
+        topToolbar.add(btnLoadTopology);
+
+        btnSaveTopology.setText("ST");
+        btnSaveTopology.setToolTipText("Save network topology to file...");
+        btnSaveTopology.setFocusable(false);
+        btnSaveTopology.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnSaveTopology.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnSaveTopology.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveTopologyActionPerformed(evt);
+            }
+        });
+        topToolbar.add(btnSaveTopology);
+        topToolbar.add(jSeparator7);
 
         btnStableMark.setText("Stable Mark");
         btnStableMark.setFocusable(false);
@@ -322,41 +373,63 @@ public class WorkbenchPanel extends javax.swing.JPanel {
             }
         });
         topToolbar.add(btnRoutingInfo);
+        topToolbar.add(jSeparator8);
 
-        jPanel1.setPreferredSize(new java.awt.Dimension(800, 25));
+        tgbRoutingAttackMode.setText("Routing Attack Mode"); // NOI18N
+        topToolbar.add(tgbRoutingAttackMode);
+        topToolbar.add(jSeparator9);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 25, Short.MAX_VALUE)
-        );
+        searchPanel1.setPreferredSize(new java.awt.Dimension(100, 25));
+        searchPanel1.setLayout(new java.awt.BorderLayout());
+        topToolbar.add(searchPanel1);
 
-        topToolbar.add(jPanel1);
-
-        searchPanel.setPreferredSize(new java.awt.Dimension(200, 25));
+        searchPanel.setPreferredSize(new java.awt.Dimension(100, 25));
         searchPanel.setLayout(new java.awt.BorderLayout());
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/gui/resources/Search16.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/Search16.png"))); // NOI18N
         jButton1.setToolTipText("Search a node by ID");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        searchPanel.add(jButton1, java.awt.BorderLayout.LINE_END);
+        searchPanel.add(jButton1, java.awt.BorderLayout.LINE_START);
 
         txtSearchNode.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         txtSearchNode.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtSearchNode.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSearchNodeKeyPressed(evt);
+            }
+        });
         searchPanel.add(txtSearchNode, java.awt.BorderLayout.CENTER);
 
         topToolbar.add(searchPanel);
 
         add(topToolbar, java.awt.BorderLayout.PAGE_START);
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.setPreferredSize(new java.awt.Dimension(1137, 25));
+
+        lblField.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblField.setToolTipText("Covered field size");
+        lblField.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        lblField.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(911, Short.MAX_VALUE)
+                .addComponent(lblField, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblField, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
+        );
+
+        add(jPanel2, java.awt.BorderLayout.PAGE_END);
     }// </editor-fold>//GEN-END:initComponents
 
     private void selectStableNodes(boolean select) {
@@ -405,24 +478,28 @@ public class WorkbenchPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_selectionPointerToolActionPerformed
 
     private void gmapsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gmapsActionPerformed
-        MapViewer mapViewer = new MapViewer(null);
-        mapViewer.setModal(true);
-        mapViewer.setVisible(true);
-        BufferedImage image = mapViewer.getImage();
-        if (mapViewer.isApplyOk()) {
-            getSimulationPanel().updateImage(image);
+        ImageViewerPanel ivp = new ImageViewerPanel();
+        PlatformDialog f = PlatformDialog.display(ivp, "Background image", PlatformFrame.OKCANCEL_MODE);
+        if (ivp.getImage() != null) {
+            getSimulationPanel().updateImage(ivp.getImage(), ivp.strechImage());
         }
+
+
+        //        MapViewer mapViewer = new MapViewer(null);
+//        mapViewer.setModal(true);
+//        mapViewer.setVisible(true);
+//        BufferedImage image = mapViewer.getImage();
+//        if (mapViewer.isApplyOk()) {
+//            getSimulationPanel().updateImage(image);
+//        }
+
+
 }//GEN-LAST:event_gmapsActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String s = txtSearchNode.getText();
-        if (s != null) {
-            try {
-                simulationPanel1.searchNode(Integer.valueOf(s).intValue());
-            } catch (Exception e) {
-                GUI_Utils.showException(e);
-            }
 
+        if (executeNodeSearch()) {
+            return;
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -439,13 +516,30 @@ public class WorkbenchPanel extends javax.swing.JPanel {
 
         showRoutingInfo();
     }//GEN-LAST:event_btnRoutingInfoActionPerformed
+
+    private void btnLoadTopologyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadTopologyActionPerformed
+        loadNetworkTopology();
+    }//GEN-LAST:event_btnLoadTopologyActionPerformed
+
+    private void btnSaveTopologyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveTopologyActionPerformed
+        saveNetworkTopology();
+    }//GEN-LAST:event_btnSaveTopologyActionPerformed
+
+    private void txtSearchNodeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchNodeKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            executeNodeSearch();
+        }
+
+    }//GEN-LAST:event_txtSearchNodeKeyPressed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup OperationBG;
     private javax.swing.ButtonGroup SelectionBG;
     private javax.swing.JButton btnColorSettings;
     private javax.swing.JToggleButton btnDeployNodesMode;
+    private javax.swing.JButton btnLoadTopology;
     private javax.swing.JButton btnRebuildNetwork;
     private javax.swing.JButton btnRoutingInfo;
+    private javax.swing.JButton btnSaveTopology;
     private javax.swing.JToggleButton btnSelectionTool;
     private javax.swing.JToggleButton btnSimulationPause;
     private javax.swing.JButton btnSimulationReset;
@@ -456,7 +550,7 @@ public class WorkbenchPanel extends javax.swing.JPanel {
     private javax.swing.JToggleButton btnStableSelect;
     private javax.swing.JButton gmaps;
     private javax.swing.JButton jButton1;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
@@ -464,13 +558,19 @@ public class WorkbenchPanel extends javax.swing.JPanel {
     private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JToolBar.Separator jSeparator5;
     private javax.swing.JToolBar.Separator jSeparator6;
+    private javax.swing.JToolBar.Separator jSeparator7;
+    private javax.swing.JToolBar.Separator jSeparator8;
+    private javax.swing.JToolBar.Separator jSeparator9;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JLabel lblField;
     private javax.swing.JPanel searchPanel;
+    private javax.swing.JPanel searchPanel1;
     private javax.swing.JButton selRandomNodes;
     private javax.swing.JToggleButton selectionPointerTool;
     private javax.swing.JToggleButton showDebugWindow;
     private javax.swing.JToggleButton showMouseCoordinates;
     private org.wisenet.platform.gui.SimulationPanel simulationPanel1;
+    private javax.swing.JToggleButton tgbRoutingAttackMode;
     private javax.swing.JToolBar topToolbar;
     private javax.swing.JFormattedTextField txtSearchNode;
     private javax.swing.JToggleButton verOsQueConhecem;
@@ -544,7 +644,7 @@ public class WorkbenchPanel extends javax.swing.JPanel {
         }
     }
 
-    @Action(block = Task.BlockingScope.COMPONENT)
+        @Action(block = Task.BlockingScope.COMPONENT)
     public Task RebuildNetwork() {
         return new RebuildNetworkTask(org.jdesktop.application.Application.getInstance(org.wisenet.platform.PlatformApp.class));
     }
@@ -572,6 +672,54 @@ public class WorkbenchPanel extends javax.swing.JPanel {
 
     private void showRoutingInfo() {
         PlatformFrame.display(new RoutingInfoPanel(), "Routing Information", PlatformFrame.OK_MODE);
+    }
+
+    private void loadNetworkTopology() {
+        try {
+            String file = GUI_Utils.showOpenDialog(new FileFilter[]{GUI_Utils.XML()}, "Open Network Topology File");
+            if (file != null) {
+                String valid = Utilities.networkTopologyFileIsValid(file);
+                if (valid != null) {
+                    GUI_Utils.showWarningMessage(valid);
+                } else {
+                    GUI_Utils.mouseWait(this);
+                    PlatformManager.getInstance().getActiveSimulation().loadNetworkTopology(file);
+                    GUI_Utils.mouseDefault(this);
+                    PlatformManager.getInstance().getActiveSimulation().buildNetwork();
+                }
+            }
+        } catch (Exception ex) {
+            GUI_Utils.mouseDefault(this);
+            GUI_Utils.showException(ex);
+        }
+    }
+
+    private void saveNetworkTopology() {
+        try {
+            String file = GUI_Utils.showSaveDialog(new FileFilter[]{GUI_Utils.XML()}, "Save Network Topology ");
+            if (file != null) {
+                GUI_Utils.mouseWait(this);
+                PlatformManager.getInstance().getActiveSimulation().saveNetworkTopology(file);
+                GUI_Utils.showMessage("Network Topology saved!");
+                GUI_Utils.mouseDefault(this);
+            }
+        } catch (Exception ex) {
+            GUI_Utils.mouseDefault(this);
+            GUI_Utils.showException(ex);
+        }
+
+    }
+
+    @Override
+    public void afterNodeDeploy(DeployEvent event) {
+
+        Dimension d = PlatformManager.getInstance().getActiveSimulation().fieldSize();
+
+        lblField.setText(d.getWidth() + "-" + d.getHeight());
+    }
+
+    @Override
+    public void beforeNodeDeploy(DeployEvent event) {
     }
 
     private class RebuildNetworkTask extends org.jdesktop.application.Task<Object, Void> {

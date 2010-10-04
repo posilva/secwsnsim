@@ -17,7 +17,7 @@
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
-    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,15,0,0,4,113"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,18,0,0,4,23"/>
   </AuxValues>
 
   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
@@ -50,6 +50,11 @@
     </Container>
     <Container class="javax.swing.JToolBar" name="jToolBar1">
       <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+            <EtchetBorder/>
+          </Border>
+        </Property>
         <Property name="floatable" type="boolean" value="false"/>
         <Property name="orientation" type="int" value="1"/>
         <Property name="rollover" type="boolean" value="true"/>
@@ -65,10 +70,11 @@
         <Component class="javax.swing.JButton" name="btnRebuildNetwork">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="org.wisenet.platform.ui.WorkbenchPanel" id="RebuildNetwork" methodName="RebuildNetwork"/>
+              <action class="org.wisenet.platform.gui.WorkbenchPanel" id="RebuildNetwork" methodName="RebuildNetwork"/>
             </Property>
-            <Property name="icon" type="javax.swing.Icon" resourceKey="btnRebuildNetwork.icon"/>
-            <Property name="toolTipText" type="java.lang.String" resourceKey="btnRebuildNetwork.toolTipText"/>
+            <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/org/wisenet/platform/resources/images/refresh.png"/>
+            </Property>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -79,7 +85,7 @@
         <Component class="javax.swing.JToggleButton" name="verVizinhos">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/wisenet/platform/gui/resources/Neighboors16.png"/>
+              <Image iconType="3" name="/org/wisenet/platform/resources/images/Neighboors16.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Show Neighborhood "/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -93,7 +99,7 @@
         <Component class="javax.swing.JToggleButton" name="verOsQueConhecem">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/wisenet/platform/gui/resources/OthersNeighboor16.png"/>
+              <Image iconType="3" name="/org/wisenet/platform/resources/images/OthersNeighboor16.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Show Two Way Connecions"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -109,13 +115,14 @@
         <Component class="javax.swing.JToggleButton" name="btnSimulationStart">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="org.wisenet.platform.ui.WorkbenchPanel" id="StartSimulation" methodName="StartSimulation"/>
+              <action class="org.wisenet.platform.gui.WorkbenchPanel" id="StartSimulation" methodName="StartSimulation"/>
             </Property>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="OperationBG"/>
             </Property>
-            <Property name="icon" type="javax.swing.Icon" resourceKey="btnSimulationStart.icon"/>
-            <Property name="toolTipText" type="java.lang.String" resourceKey="btnSimulationStart.toolTipText"/>
+            <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/org/wisenet/platform/resources/images/Play16.png"/>
+            </Property>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -124,13 +131,14 @@
         <Component class="javax.swing.JToggleButton" name="btnSimulationPause">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="org.wisenet.platform.ui.WorkbenchPanel" id="PauseSimulation" methodName="PauseSimulation"/>
+              <action class="org.wisenet.platform.gui.WorkbenchPanel" id="PauseSimulation" methodName="PauseSimulation"/>
             </Property>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="OperationBG"/>
             </Property>
-            <Property name="icon" type="javax.swing.Icon" resourceKey="btnSimulationPause.icon"/>
-            <Property name="toolTipText" type="java.lang.String" resourceKey="btnSimulationPause.toolTipText"/>
+            <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/org/wisenet/platform/resources/images/Pause16.png"/>
+            </Property>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -139,13 +147,14 @@
         <Component class="javax.swing.JToggleButton" name="btnSimulationStop">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="org.wisenet.platform.ui.WorkbenchPanel" id="StopSimulation" methodName="StopSimulation"/>
+              <action class="org.wisenet.platform.gui.WorkbenchPanel" id="StopSimulation" methodName="StopSimulation"/>
             </Property>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="OperationBG"/>
             </Property>
-            <Property name="icon" type="javax.swing.Icon" resourceKey="btnSimulationStop.icon"/>
-            <Property name="toolTipText" type="java.lang.String" resourceKey="btnSimulationStop.toolTipText"/>
+            <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/org/wisenet/platform/resources/images/Stop16.png"/>
+            </Property>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -154,10 +163,11 @@
         <Component class="javax.swing.JButton" name="btnSimulationReset">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="org.wisenet.platform.ui.WorkbenchPanel" id="ResetSimulation" methodName="ResetSimulation"/>
+              <action class="org.wisenet.platform.gui.WorkbenchPanel" id="ResetSimulation" methodName="ResetSimulation"/>
             </Property>
-            <Property name="icon" type="javax.swing.Icon" resourceKey="btnSimulationReset.icon"/>
-            <Property name="toolTipText" type="java.lang.String" resourceKey="btnSimulationReset.toolTipText"/>
+            <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/org/wisenet/platform/resources/images/Reset16.png"/>
+            </Property>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -168,13 +178,14 @@
         <Component class="javax.swing.JToggleButton" name="btnDeployNodesMode">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="org.wisenet.platform.ui.WorkbenchPanel" id="selectedNodeDeployMode" methodName="selectedNodeDeployMode"/>
+              <action class="org.wisenet.platform.gui.WorkbenchPanel" id="selectedNodeDeployMode" methodName="selectedNodeDeployMode"/>
             </Property>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="SelectionBG"/>
             </Property>
-            <Property name="icon" type="javax.swing.Icon" resourceKey="btnDeployNodesMode.icon"/>
-            <Property name="toolTipText" type="java.lang.String" resourceKey="btnDeployNodesMode.toolTipText"/>
+            <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/org/wisenet/platform/resources/images/share_this.png"/>
+            </Property>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -186,7 +197,7 @@
               <ComponentRef name="SelectionBG"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/wisenet/platform/gui/resources/arrow_expand.png"/>
+              <Image iconType="3" name="/org/wisenet/platform/resources/images/arrow_expand.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Selection Area Tool"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -215,7 +226,7 @@
               <ComponentRef name="SelectionBG"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/wisenet/platform/gui/resources/018.png"/>
+              <Image iconType="3" name="/org/wisenet/platform/resources/images/018.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Select Node"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -230,6 +241,11 @@
     </Container>
     <Container class="javax.swing.JToolBar" name="topToolbar">
       <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+            <EtchetBorder/>
+          </Border>
+        </Property>
         <Property name="floatable" type="boolean" value="false"/>
         <Property name="rollover" type="boolean" value="true"/>
       </Properties>
@@ -244,7 +260,7 @@
         <Component class="javax.swing.JToggleButton" name="showDebugWindow">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/wisenet/platform/gui/resources/terminal-icon.png"/>
+              <Image iconType="3" name="/org/wisenet/platform/resources/images/terminal-icon.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Debug Console"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -258,7 +274,7 @@
         <Component class="javax.swing.JToggleButton" name="showMouseCoordinates">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/wisenet/platform/gui/resources/coordinates-icon.png"/>
+              <Image iconType="3" name="/org/wisenet/platform/resources/images/coordinates-icon.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Show Mouse Coordinates"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -272,7 +288,7 @@
         <Component class="javax.swing.JToggleButton" name="viewNodesInfo">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/wisenet/platform/gui/resources/about-icon.png"/>
+              <Image iconType="3" name="/org/wisenet/platform/resources/images/about-icon.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="View Nodes Info"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -288,10 +304,10 @@
         <Component class="javax.swing.JButton" name="selRandomNodes">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="org.wisenet.platform.ui.WorkbenchPanel" id="RandomNodeSelection" methodName="RandomNodeSelection"/>
+              <action class="org.wisenet.platform.gui.WorkbenchPanel" id="RandomNodeSelection" methodName="RandomNodeSelection"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/wisenet/platform/gui/resources/random.png"/>
+              <Image iconType="3" name="/org/wisenet/platform/resources/images/random.png"/>
             </Property>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -301,12 +317,11 @@
         <Component class="javax.swing.JButton" name="btnSnapshot">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="org.wisenet.platform.ui.WorkbenchPanel" id="TakeSnapshot" methodName="TakeSnapshot"/>
+              <action class="org.wisenet.platform.gui.WorkbenchPanel" id="TakeSnapshot" methodName="TakeSnapshot"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/wisenet/platform/resources/camera.png"/>
+              <Image iconType="3" name="/org/wisenet/platform/resources/images/camera.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" resourceKey="btnSnapshot.toolTipText"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -318,7 +333,7 @@
               <action class="org.wisenet.platform.gui.WorkbenchPanel" id="ColorSettingsAction" methodName="ColorSettingsAction"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/wisenet/platform/resources/ColorSettings.png"/>
+              <Image iconType="3" name="/org/wisenet/platform/resources/images/ColorSettings.png"/>
             </Property>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -330,9 +345,9 @@
         <Component class="javax.swing.JButton" name="gmaps">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/wisenet/platform/resources/GMaps.png"/>
+              <Image iconType="3" name="/org/wisenet/platform/resources/images/GMaps.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Insert Google Maps"/>
+            <Property name="toolTipText" type="java.lang.String" value="Load background image..."/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -342,6 +357,32 @@
           </Events>
         </Component>
         <Component class="javax.swing.JToolBar$Separator" name="jSeparator3">
+        </Component>
+        <Component class="javax.swing.JButton" name="btnLoadTopology">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="LT"/>
+            <Property name="toolTipText" type="java.lang.String" value="Load network topology from file..."/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLoadTopologyActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnSaveTopology">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="ST"/>
+            <Property name="toolTipText" type="java.lang.String" value="Save network topology to file..."/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSaveTopologyActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToolBar$Separator" name="jSeparator7">
         </Component>
         <Component class="javax.swing.JToggleButton" name="btnStableMark">
           <Properties>
@@ -376,30 +417,28 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRoutingInfoActionPerformed"/>
           </Events>
         </Component>
-        <Container class="javax.swing.JPanel" name="jPanel1">
+        <Component class="javax.swing.JToolBar$Separator" name="jSeparator8">
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="tgbRoutingAttackMode">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Routing Attack Mode" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JToolBar$Separator" name="jSeparator9">
+        </Component>
+        <Container class="javax.swing.JPanel" name="searchPanel1">
           <Properties>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[800, 25]"/>
+              <Dimension value="[100, 25]"/>
             </Property>
           </Properties>
 
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="800" max="32767" attributes="0"/>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="25" max="32767" attributes="0"/>
-              </Group>
-            </DimensionLayout>
-          </Layout>
+          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
         </Container>
         <Container class="javax.swing.JPanel" name="searchPanel">
           <Properties>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[200, 25]"/>
+              <Dimension value="[100, 25]"/>
             </Property>
           </Properties>
 
@@ -407,8 +446,8 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="jButton1">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/org/wisenet/platform/gui/resources/Search16.png"/>
+                <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/org/wisenet/platform/resources/images/Search16.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Search a node by ID"/>
               </Properties>
@@ -417,7 +456,7 @@
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
-                  <BorderConstraints direction="After"/>
+                  <BorderConstraints direction="Before"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -428,6 +467,9 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="4"/>
               </Properties>
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtSearchNodeKeyPressed"/>
+              </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                   <BorderConstraints direction="Center"/>
@@ -436,6 +478,53 @@
             </Component>
           </SubComponents>
         </Container>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="jPanel2">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+            <EtchetBorder/>
+          </Border>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[1137, 25]"/>
+        </Property>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+          <BorderConstraints direction="Last"/>
+        </Constraint>
+      </Constraints>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace pref="911" max="32767" attributes="0"/>
+                  <Component id="lblField" min="-2" pref="132" max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Component id="lblField" alignment="0" pref="21" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="lblField">
+          <Properties>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="toolTipText" type="java.lang.String" value="Covered field size"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+                <EtchetBorder/>
+              </Border>
+            </Property>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

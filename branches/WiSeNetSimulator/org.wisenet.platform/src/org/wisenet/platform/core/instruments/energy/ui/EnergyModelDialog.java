@@ -17,7 +17,7 @@ import org.wisenet.simulator.core.energy.EnergyModel;
 
 /**
  *
-* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class EnergyModelDialog extends javax.swing.JDialog {
 

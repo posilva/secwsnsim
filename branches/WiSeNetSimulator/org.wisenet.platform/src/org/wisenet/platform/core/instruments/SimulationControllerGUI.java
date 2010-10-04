@@ -8,12 +8,11 @@
  *
  * Created on 24/Mai/2010, 22:45:28
  */
-
 package org.wisenet.platform.core.instruments;
 
 /**
  *
-* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class SimulationControllerGUI extends javax.swing.JFrame {
 
@@ -155,16 +154,16 @@ public class SimulationControllerGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-    * @param args the command line arguments
-    */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 new SimulationControllerGUI().setVisible(true);
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup bgSimulationMode;
     private javax.swing.JButton btnApply;
@@ -177,5 +176,4 @@ public class SimulationControllerGUI extends javax.swing.JFrame {
     private javax.swing.JSlider sliderRadioRange;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
-
 }

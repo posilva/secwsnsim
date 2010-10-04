@@ -13,23 +13,16 @@ package org.wisenet.platform.utils.others;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.HeadlessException;
 import java.awt.Image;
-import java.awt.Transparency;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
-import java.awt.image.PixelGrabber;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import org.wisenet.platform.PlatformConfiguration;
 import org.wisenet.platform.utils.GUI_Utils;
+import org.wisenet.platform.utils.ImageUtils;
 
 /**
  *
@@ -47,7 +40,7 @@ public class MapViewer extends javax.swing.JDialog {
         try {
             GoogleMaps.setApiKey(PlatformConfiguration.CFG_GOOGLE_MAPS_KEY_KEY_DEFAULT);
             //   double[] lanLng = GoogleMaps.geocodeAddress("Academia da Força Aérea, Portugal");
-            image = (BufferedImage) toBufferedImage(GoogleMaps.retrieveStaticImage((Integer) (this.w.getValue()), (Integer) this.h.getValue(), Double.valueOf(this.x.getText()), Double.valueOf(this.y.getText()), (Integer) (this.zoom.getModel().getValue()), "jpeg32"));
+            image = (BufferedImage) ImageUtils.toBufferedImage(GoogleMaps.retrieveStaticImage((Integer) (this.w.getValue()), (Integer) this.h.getValue(), Double.valueOf(this.x.getText()), Double.valueOf(this.y.getText()), (Integer) (this.zoom.getModel().getValue()), "jpeg32"));
             refreshUI();
         } catch (Exception ex) {
             Logger.getLogger(MapViewer.class.getName()).log(Level.SEVERE, null, ex);
@@ -86,7 +79,7 @@ public class MapViewer extends javax.swing.JDialog {
 
         if (image == null) {
         } else {
-            this.image = toBufferedImage(image);
+            this.image = ImageUtils.toBufferedImage(image);
             _w = image.getWidth(this);
             _h = image.getHeight(this) + 20;
         }
@@ -96,76 +89,6 @@ public class MapViewer extends javax.swing.JDialog {
         p.setMaximumSize(p.getSize());
         p.setMinimumSize(p.getSize());
         GUI_Utils.centerOnScreen(this);
-    }
-
-    public static boolean hasAlpha(Image image) {
-        // If buffered image, the color model is readily available
-        if (image instanceof BufferedImage) {
-            BufferedImage bimage = (BufferedImage) image;
-            return bimage.getColorModel().hasAlpha();
-        }
-
-        // Use a pixel grabber to retrieve the image's color model;
-        // grabbing a single pixel is usually sufficient
-        PixelGrabber pg = new PixelGrabber(image, 0, 0, 1, 1, false);
-        try {
-            pg.grabPixels();
-        } catch (InterruptedException e) {
-        }
-
-        // Get the image's color model
-        ColorModel cm = pg.getColorModel();
-        return cm.hasAlpha();
-    }
-
-    public static BufferedImage toBufferedImage(Image image) {
-        if (image instanceof BufferedImage) {
-            return (BufferedImage) image;
-        }
-
-        // This code ensures that all the pixels in the image are loaded
-        image = new ImageIcon(image).getImage();
-
-        // Determine if the image has transparent pixels; for this method's
-        // implementation, see Determining If an Image Has Transparent Pixels
-        boolean hasAlpha = hasAlpha(image);
-
-        // Create a buffered image with a format that's compatible with the screen
-        BufferedImage bimage = null;
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        try {
-            // Determine the type of transparency of the new buffered image
-            int transparency = Transparency.OPAQUE;
-            if (hasAlpha) {
-                transparency = Transparency.BITMASK;
-            }
-
-            // Create the buffered image
-            GraphicsDevice gs = ge.getDefaultScreenDevice();
-            GraphicsConfiguration gc = gs.getDefaultConfiguration();
-            bimage = gc.createCompatibleImage(
-                    image.getWidth(null), image.getHeight(null), transparency);
-        } catch (HeadlessException e) {
-            // The system does not have a screen
-        }
-
-        if (bimage == null) {
-            // Create a buffered image using the default color model
-            int type = BufferedImage.TYPE_INT_RGB;
-            if (hasAlpha) {
-                type = BufferedImage.TYPE_INT_ARGB;
-            }
-            bimage = new BufferedImage(image.getWidth(null), image.getHeight(null), type);
-        }
-
-        // Copy image to buffered image
-        Graphics g = bimage.createGraphics();
-
-        // Paint the image onto the buffered image
-        g.drawImage(image, 0, 0, null);
-        g.dispose();
-
-        return bimage;
     }
 
     @SuppressWarnings("unchecked")

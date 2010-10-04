@@ -162,15 +162,11 @@ public class PlatformDialog extends javax.swing.JDialog implements KeyListener, 
         contentArea = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(PlatformDialog.class);
-        setTitle(resourceMap.getString("Form.title")); // NOI18N
         setMinimumSize(new java.awt.Dimension(200, 94));
         setName("Form"); // NOI18N
         setResizable(false);
 
-        titleArea.setBackground(resourceMap.getColor("titleArea.background")); // NOI18N
-        titleArea.setFont(resourceMap.getFont("titleArea.font")); // NOI18N
-        titleArea.setText(resourceMap.getString("titleArea.text")); // NOI18N
+        titleArea.setBackground(new java.awt.Color(254, 254, 254));
         titleArea.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         titleArea.setMaximumSize(new java.awt.Dimension(200, 30));
         titleArea.setMinimumSize(new java.awt.Dimension(200, 30));
@@ -192,7 +188,7 @@ public class PlatformDialog extends javax.swing.JDialog implements KeyListener, 
         pnlButtons.setPreferredSize(new java.awt.Dimension(200, 26));
         pnlButtons.setLayout(new java.awt.GridLayout(1, 3, 5, 0));
 
-        cmdOk.setText(resourceMap.getString("cmdOk.text")); // NOI18N
+        cmdOk.setText("OK"); // NOI18N
         cmdOk.setName("cmdOk"); // NOI18N
         cmdOk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -201,7 +197,7 @@ public class PlatformDialog extends javax.swing.JDialog implements KeyListener, 
         });
         pnlButtons.add(cmdOk);
 
-        cmdCancel.setText(resourceMap.getString("cmdCancel.text")); // NOI18N
+        cmdCancel.setText("Cancel"); // NOI18N
         cmdCancel.setName("cmdCancel"); // NOI18N
         cmdCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -210,7 +206,7 @@ public class PlatformDialog extends javax.swing.JDialog implements KeyListener, 
         });
         pnlButtons.add(cmdCancel);
 
-        cmdApply.setText(resourceMap.getString("cmdApply.text")); // NOI18N
+        cmdApply.setText("Apply"); // NOI18N
         cmdApply.setName("cmdApply"); // NOI18N
         cmdApply.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

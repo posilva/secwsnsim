@@ -5,6 +5,7 @@ package org.wisenet.platform;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
 import org.wisenet.simulator.utilities.Utilities;
