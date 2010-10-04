@@ -679,4 +679,5 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     protected void initAttacks() {
         attacks.addEntry(new AttacksEntry(false, "Blackhole Attack", new BlackholeRoutingAttack(this)));
     }
+
 }

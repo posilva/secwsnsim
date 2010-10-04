@@ -25,7 +25,7 @@ public class SimulationConsole {
     private static SimulationSettings createSimulationSettings() {
 
         SimulationSettings settings = new SimulationSettings();
-        settings.setMaxNodeRadioStrength(2300); //    int maxNodeRadioStrength;
+        settings.setMaxNodeRadioRange(130); //    int maxNodeRadioStrength;
         settings.setNodeFactoryClassName(INSENSNodeFactory.class.getName()); //    String  nodeFactoryClassName;
         settings.setSimulatorClassName(Simulator.class.getName()); //    String simulatorClassName;
         settings.setRadioModelClassName(GaussianRadioModel.class.getName()); //    String radioModelClassName;
@@ -59,10 +59,14 @@ public class SimulationConsole {
     public static void main(String[] args) {
         try {
             Simulation simulation = createSimulation();
-            simulation.saveToXML("Simulation.dump.xml");
+            simulation.getSettings().saveToXML("SimulationSettings.xml");
+            simulation.saveNetworkTopology("//home//posilva//NT.xml");
+            
+
+//            simulation.saveToXML("Simulation.dump.xml");
 //            simulation.loadFromFile("Simulation.dump.xml");
-//            simulation.buildNetwork();
-//            simulation.start();
+            simulation.buildNetwork();
+            simulation.start();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
 //            Logger.getLogger(SimulationFactory.class.getName()).log(Level.SEVERE, null, ex);

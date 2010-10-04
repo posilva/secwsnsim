@@ -81,6 +81,10 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     private Hashtable tableOfNodesByHops;
     private boolean reliableMode = false;
 
+    /**
+     * Receive a message from the MAC Layer
+     * @param message
+     */
     @Override
     public void onReceiveMessage(Object message) {
         if (message instanceof INSENSMessage) {
@@ -127,6 +131,15 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         messagesQueue.poll();
     }
 
+    /**
+     * Send a message that came from application layer
+     * @param message
+     *          Message to be sent
+     * @param app
+     *          Sender Application 
+     * @return   True success
+     *           False failed
+     */
     @Override
     protected boolean onSendMessage(Object message, Application app) {
         if (message instanceof INSENSDATAMessage) {
@@ -140,6 +153,9 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         }
     }
 
+    /**
+     * Setup the routing layer 
+     */
     @Override
     protected void setup() {
         setCurrentPhase(PHASE_SETUP);
@@ -156,14 +172,27 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         startProtocol();
     }
 
+    /**
+     * Gets the current OWS
+     * @return
+     */
     public long getOWS() {
         return OWS;
     }
 
+    /**
+     * Gets the node private key
+     * @return
+     */
     public byte[] getPrivateKey() {
         return privateKey;
     }
 
+    /**
+     * Action done when message routing needed
+     * @param message
+     *          Message to be routed
+     */
     @Override
     protected void onRouteMessage(Object message) {
         try {
@@ -206,7 +235,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     }
 
     /**
-     * 
+     * Broadcast a message
      * @param message
      * @param reliable
      */
@@ -219,7 +248,12 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         getNode().getSimulator().addEvent(delayMessageEvent);
     }
 
-    private Hashtable buildLisOfNodestByHops(Vector allpaths) {
+    /**
+     * Auxiliary function to create a list of nodes joined by number of hops
+     * @param allpaths
+     * @return
+     */
+    private Hashtable buildListOfNodestByHops(Vector allpaths) {
         Hashtable t = new Hashtable();
         for (Object list : allpaths) {
             LinkedList lst = (LinkedList) list;
@@ -485,10 +519,18 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         }
     }
 
+    /**
+     * Get neighbor info
+     * @return the neighbor information
+     */
     public NeighborInfo getNeighborInfo() {
         return neighborInfo;
     }
 
+    /**
+     * Send messages with pre-calculated routing tables
+     * @param forwardingTables
+     */
     private void sendRouteUpdateMessages(Hashtable<Short, ForwardingTable> forwardingTables) {
         Vector allpaths = baseStationController.getAllPaths();
         Comparator<LinkedList> c = new Comparator<LinkedList>() {
@@ -499,13 +541,18 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         };
         Collections.sort(allpaths, c);
         tableOfNodesByHops = new Hashtable();
-        tableOfNodesByHops = buildLisOfNodestByHops(allpaths);
+        tableOfNodesByHops = buildListOfNodestByHops(allpaths);
         sendForwardingTablesByHops(forwardingTables, tableOfNodesByHops);
         setStable(true);
     }
 
+    /**
+     * Process a RUPD message
+     * With this method we can get some reliable RouteUpdate messages
+     * by controlling the message acknowledge
+     * @param m
+     */
     private void processRUPDACKMessage(INSENSMessage m) {
-        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     /**
@@ -534,6 +581,11 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         }
     }
 
+    /**
+     * For each hop number based nodes send a Forwarding table
+     * @param forwardingTables
+     * @param tableOfNodesByHops
+     */
     private void sendForwardingTablesByHops(Hashtable<Short, ForwardingTable> forwardingTables, Hashtable tableOfNodesByHops) {
 
         List orderedByHops = new LinkedList(tableOfNodesByHops.keySet());
@@ -553,18 +605,32 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         }
     }
 
+    /**
+     * When receive a route update message, we must update the routing status
+     * of the node, ie. change status to stable (which can route messages)
+     * @param payload
+     */
     private void updateRoutingStatus(RUPDPayload payload) {
         forwardingTable = new ForwardingTable(getNode().getId());
         forwardingTable.addAll(payload.forwardingTable);
-        System.out.println("\n" + forwardingTable.toString());
         setStable(true);
         replyToRUPDMessage(payload);
     }
 
+    /**
+     * Send a route update message acknowledge to base station
+     * @param payload
+     */
     private void replyToRUPDMessage(RUPDPayload payload) {
         log("Replying to RUPD Message");
     }
 
+    /**
+     * When routing is stable we can process a data message
+     * this messages are application specific 
+     * @param m
+     *          the message
+     */
     private void processDATAMessage(INSENSMessage m) {
         if (isStable()) {
             if (!itsForMe(m)) {
@@ -580,7 +646,11 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
             }
         }
     }
-
+    /**
+     * Send a DATA message 
+     * @param message
+     * @return
+     */
     private boolean sendDATAMessage(INSENSDATAMessage message) {
         try {
             byte[] new_payload = encapsulateDataPayload(message);
@@ -593,7 +663,11 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         }
         return false;
     }
-
+    /**
+     * Create a DATA message payload
+     * @param message
+     * @return
+     */
     private byte[] encapsulateDataPayload(INSENSDATAMessage message) {
         return INSENSMessagePayloadFactory.createDATAPayload(message.getSource(), message.getDestination(), getNode().getId(), message.getPayload(), privateKey, this.getNode());
     }
@@ -615,7 +689,9 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         return false;
 
     }
-
+    /**
+     * Setting the evaluating classes
+     */
     private void setupEvaluationClasses() {
         getCoverageInstrument().setMessageClass(EvaluationINSENSDATAMessage.class);
         getReliabilityInstrument().setMessageClass(EvaluationINSENSDATAMessage.class);
@@ -625,6 +701,9 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     public String toString() {
         return forwardingTable.toString();
     }
+
+
+
 
     public Object getUniqueId() {
         return getNode().getId();
@@ -641,8 +720,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
 
     @Override
     protected void setupAttacks() {
-        boolean attackStatus = getNode().getId() % 5 == 0;
-
+        
     }
 
     @Override

@@ -4,13 +4,16 @@
  */
 package org.wisenet.simulator.utilities;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.event.EventListenerList;
+import org.apache.commons.configuration.ConfigurationException;
 import org.wisenet.simulator.utilities.listeners.ExceptionEvent;
 import org.wisenet.simulator.utilities.listeners.ExceptionListener;
+import org.apache.commons.configuration.XMLConfiguration;
 
 /**
  *
@@ -73,6 +76,7 @@ public class Utilities {
     private static void logException(Exception ex) {
         Logger.getLogger(Utilities.class.getName()).log(Level.SEVERE, null, ex);
     }
+
     /**
      * Returns a string with full exception stack trace
      * @param ex
@@ -83,5 +87,29 @@ public class Utilities {
         PrintWriter pw = new PrintWriter(sw);
         ex.printStackTrace(pw);
         return sw.toString();
+    }
+
+    public static String networkTopologyFileIsValid(String file) {
+        try {
+            File f = new File(file);
+            if (!f.exists()) {
+                return "File not found";
+            }
+            XMLConfiguration configuration = new XMLConfiguration(f);
+            configuration.load();
+            try {
+                Double d = configuration.getDouble("simulation.topology.nodes.size");
+                if (d != null) {
+                    return null;
+                } else {
+                    return "Invalid Network Topology File";
+                }
+
+            } catch (Exception e) {
+                return "Invalid Network Topology File";
+            }
+        } catch (ConfigurationException ex) {
+            return ex.getMessage();
+        }
     }
 }

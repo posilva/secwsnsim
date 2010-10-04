@@ -17,7 +17,7 @@ import org.wisenet.simulator.core.radio.RadioModel;
 public abstract class AbstractNodeFactory {
 
     public static final int INITIAL_NODE_MAXRADIOSTRENGTH = 100;
-    protected int nodeMaxRadioStregth = INITIAL_NODE_MAXRADIOSTRENGTH;
+    protected int nodeMaxRadioRange = INITIAL_NODE_MAXRADIOSTRENGTH;
     protected Class classOfNodes = null;
     protected Simulator simulator;
     protected Class application;
@@ -209,11 +209,11 @@ public abstract class AbstractNodeFactory {
     }
 
     public int getNodeMaxRadioRange() {
-        return nodeMaxRadioStregth;
+        return nodeMaxRadioRange;
     }
 
-    public void setNodeMaxRadioStregth(int nodeMaxRadioStregth) {
-        this.nodeMaxRadioStregth = nodeMaxRadioStregth;
+    public void setNodeMaxRadioRange(int nodeMaxRadioStregth) {
+        this.nodeMaxRadioRange = nodeMaxRadioStregth;
     }
 
     public double getEnvironmentAttenuation() {

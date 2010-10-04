@@ -15,7 +15,7 @@ import org.wisenet.simulator.core.Application;
 public class HelloApplication extends Application {
 
     @Override
-    public void receiveMessage(Object message) {
+    protected void onMessageReceived(Object message) {
         FloodingMessage m = (FloodingMessage) message;
         //JOptionPane.showMessageDialog(null, "Node: " + getNode().getId() +"\n" + "Data: "+ m.getMessageData() + "\nFrom: " + m.getSource());
     }

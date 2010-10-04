@@ -67,7 +67,10 @@ public abstract class Application {
      *
      * @param message The message that arrived.
      */
-    public void receiveMessage(Object message) {
+    public final void receiveMessage(Object message) {
+        /* notify the routing layer that the routing is done */
+        getNode().getRoutingLayer().done(message);
+        onMessageReceived(message);
     }
 
     /**
@@ -118,4 +121,10 @@ public abstract class Application {
     }
 
     public abstract void run();
+    
+    /**
+     * Received message handler
+     * @param message
+     */
+    protected abstract void onMessageReceived(Object message) ;
 }

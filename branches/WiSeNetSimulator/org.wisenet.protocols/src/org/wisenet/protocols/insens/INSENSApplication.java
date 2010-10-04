@@ -27,8 +27,7 @@ public class INSENSApplication extends Application {
         getNode().getRoutingLayer().sendMessage(dataMessage, this);
     }
 
-    @Override
-    public void receiveMessage(Object message) {
+    protected void onMessageReceived(Object message) {
         if (message instanceof byte[]) {
             ApplicationOutput.getInstance().output(this, "RECEIVED:  " + new String((byte[]) message));
         }

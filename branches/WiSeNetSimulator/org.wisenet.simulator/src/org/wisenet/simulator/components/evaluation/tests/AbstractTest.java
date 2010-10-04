@@ -4,6 +4,10 @@
  */
 package org.wisenet.simulator.components.evaluation.tests;
 
+import org.wisenet.simulator.common.ObjectParameters;
+import org.wisenet.simulator.common.Parameterizable;
+import org.wisenet.simulator.common.PersistantObject;
+import org.wisenet.simulator.common.Persistent;
 import org.wisenet.simulator.components.simulation.Simulation;
 
 /**
@@ -12,18 +16,22 @@ import org.wisenet.simulator.components.simulation.Simulation;
  * generates a output result.
  * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
-public abstract class AbstractTest {
+public abstract class AbstractTest extends PersistantObject implements Persistent, Parameterizable {
 
     protected String name;
-    protected TestTypeEnum type;
     protected String description;
+    protected TestTypeEnum type;
     protected TestInputParameters inputParameters;
     protected TestOutputParameters outputParameters;
     protected Simulation simulation;
     protected boolean executed = false;
     protected boolean executing = false;
+    protected boolean enabled = true;
+    protected ObjectParameters parameters = new TestParameters();
 
-    protected boolean enabled=true;
+    public AbstractTest() {
+        
+    }
 
     public AbstractTest(TestInputParameters inputParameters) {
         this.inputParameters = inputParameters;
@@ -89,9 +97,13 @@ public abstract class AbstractTest {
         return executing;
     }
 
-    public abstract void load(String filename);
+    public ObjectParameters getParameters() {
+        return parameters;
+    }
 
-    public abstract void save(String filename);
+    public void setParameters(ObjectParameters params) {
+        this.parameters = params;
+    }
 
     public abstract boolean verifyPreConditions();
 
