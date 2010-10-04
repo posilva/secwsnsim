@@ -8,7 +8,7 @@
  *
  * Created on 7/Jul/2010, 0:53:33
  */
-package org.wisenet.platform.gui.panels;
+package org.wisenet.platform.gui.panels ;
 
 import java.awt.BorderLayout;
 import javax.swing.JScrollPane;

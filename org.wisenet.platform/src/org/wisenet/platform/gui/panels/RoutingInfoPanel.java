@@ -1,12 +1,6 @@
 /*
- ***  Wireless Sensor Network Simulator
+ *  Wireless Sensor Network Simulator
  * The next generation for WSN Simulations
- */
-
-/*
- * RoutingInfoPanel.java
- *
- * Created on 7/Jul/2010, 0:53:33
  */
 package org.wisenet.platform.gui.panels;
 
@@ -200,6 +194,7 @@ public class RoutingInfoPanel extends PlatformPanel {
         if (!PlatformManager.getInstance().haveActiveSimulation()) {
             return;
         }
+
         RoutingLayerController routingLayerController = PlatformManager.getInstance().getActiveSimulation().getRoutingLayerController();
 
         if (routingLayerController == null) {

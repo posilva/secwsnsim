@@ -3,6 +3,7 @@
  */
 package org.wisenet.platform;
 
+import javax.swing.*;
 import java.awt.Dimension;
 import java.util.EventObject;
 import org.jdesktop.application.Action;
@@ -23,7 +24,6 @@ import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import org.jdesktop.application.Application.ExitListener;
 import org.jdesktop.application.ResourceMap;
 import org.wisenet.platform.core.PlatformManager;
@@ -34,8 +34,7 @@ import org.wisenet.platform.gui.listeners.DeployEvent;
 import org.wisenet.platform.gui.panels.ApplicationOutputPanel;
 import org.wisenet.platform.common.ui.PlatformDialog;
 import org.wisenet.platform.common.ui.PlatformFrame;
-import org.wisenet.platform.gui.panels.RoutingInfoPanel;
-import org.wisenet.platform.gui.frames.SimulationWizardDialog;
+import org.wisenet.platform.gui.panels.SimulationWizardPanel;
 import org.wisenet.platform.gui.listeners.SimulationPanelEventListener;
 import org.wisenet.platform.gui.panels.EnergyEvaluationPanel;
 import org.wisenet.platform.gui.panels.RoutingOutputPanel;
@@ -44,7 +43,6 @@ import org.wisenet.platform.utils.PlatformUtils;
 import org.wisenet.platform.utils.gui.ClockCounter;
 import org.wisenet.platform.utils.GUI_Utils;
 import org.wisenet.platform.utils.gui.IClockDisplay;
-import org.wisenet.platform.utils.gui.LookAndFeelPrefs;
 import org.wisenet.simulator.components.instruments.NodeSelectionCondition;
 import org.wisenet.simulator.components.instruments.coverage.CoverageInstrument;
 import org.wisenet.simulator.components.instruments.coverage.CoverageListener;
@@ -78,9 +76,12 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         clockCounter.setDisplay(this);
         getApplication().addExitListener(this);
         ResourceMap resourceMap = getResourceMap();
+
         int messageTimeout = resourceMap.getInteger("StatusBar.messageTimeout");
+
         messageTimer = new Timer(messageTimeout, new ActionListener() {
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 statusMessageLabel.setText("");
             }
@@ -133,12 +134,13 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
             }
         });
 
-        getMenuBar().add(LookAndFeelPrefs.createLookAndFeelMenu(this.getClass(), new ActionListener() {
-
-            public void actionPerformed(ActionEvent arg0) {
-                SwingUtilities.updateComponentTreeUI(PlatformView.this.getFrame());
-            }
-        }));
+        applyLookAndFeel();
+//        getMenuBar().add(LookAndFeelPrefs.createLookAndFeelMenu(this.getClass(), new ActionListener() {
+//
+//            public void actionPerformed(ActionEvent arg0) {
+//                SwingUtilities.updateComponentTreeUI(PlatformView.this.getFrame());
+//            }
+//        }));
 
         workbenchPanel1.setVisible(false);
     }
@@ -229,8 +231,8 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance().getContext().getActionMap(PlatformView.class, this);
         btnNew.setAction(actionMap.get("newSimulation")); // NOI18N
+        btnNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/new-icon.png"))); // NOI18N
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(PlatformView.class);
-        btnNew.setIcon(resourceMap.getIcon("btnNew.icon")); // NOI18N
         btnNew.setText(resourceMap.getString("btnNew.text")); // NOI18N
         btnNew.setToolTipText(resourceMap.getString("btnNew.toolTipText")); // NOI18N
         btnNew.setFocusable(false);
@@ -240,7 +242,7 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         mainToolbar.add(btnNew);
 
         btnOpen.setAction(actionMap.get("OpenSimulation")); // NOI18N
-        btnOpen.setIcon(resourceMap.getIcon("btnOpen.icon")); // NOI18N
+        btnOpen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/open-icon.png"))); // NOI18N
         btnOpen.setText(resourceMap.getString("btnOpen.text")); // NOI18N
         btnOpen.setToolTipText(resourceMap.getString("btnOpen.toolTipText")); // NOI18N
         btnOpen.setFocusable(false);
@@ -250,7 +252,7 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         mainToolbar.add(btnOpen);
 
         btnSave.setAction(actionMap.get("SaveSimulation")); // NOI18N
-        btnSave.setIcon(resourceMap.getIcon("btnSave.icon")); // NOI18N
+        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/save-icon.png"))); // NOI18N
         btnSave.setText(resourceMap.getString("btnSave.text")); // NOI18N
         btnSave.setToolTipText(resourceMap.getString("btnSave.toolTipText")); // NOI18N
         btnSave.setFocusable(false);
@@ -259,7 +261,6 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         btnSave.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         mainToolbar.add(btnSave);
 
-        btnProperties.setIcon(resourceMap.getIcon("btnProperties.icon")); // NOI18N
         btnProperties.setText(resourceMap.getString("btnProperties.text")); // NOI18N
         btnProperties.setToolTipText(resourceMap.getString("btnProperties.toolTipText")); // NOI18N
         btnProperties.setEnabled(workbenchPanel1.isVisible());
@@ -327,20 +328,20 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         simulationMenu.setName("simulationMenu"); // NOI18N
 
         menuNewSimulation.setAction(actionMap.get("newSimulation")); // NOI18N
-        menuNewSimulation.setIcon(resourceMap.getIcon("menuNewSimulation.icon")); // NOI18N
-        menuNewSimulation.setText(resourceMap.getString("menuNewSimulation.text")); // NOI18N
+        menuNewSimulation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/new-icon.png"))); // NOI18N
         menuNewSimulation.setName("menuNewSimulation"); // NOI18N
         simulationMenu.add(menuNewSimulation);
 
         menuOpenSImulation.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
-        menuOpenSImulation.setIcon(resourceMap.getIcon("menuOpenSImulation.icon")); // NOI18N
+        menuOpenSImulation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/open-icon.png"))); // NOI18N
         menuOpenSImulation.setMnemonic('O');
-        menuOpenSImulation.setText(resourceMap.getString("menuOpenSImulation.text")); // NOI18N
+        menuOpenSImulation.setText("Open"); // NOI18N
         menuOpenSImulation.setName("menuOpenSImulation"); // NOI18N
         simulationMenu.add(menuOpenSImulation);
 
         menuSaveSimulation.setAction(actionMap.get("SaveSimulation")); // NOI18N
-        menuSaveSimulation.setIcon(resourceMap.getIcon("menuSaveSimulation.icon")); // NOI18N
+        menuSaveSimulation.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        menuSaveSimulation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/save-icon.png"))); // NOI18N
         menuSaveSimulation.setText(resourceMap.getString("menuSaveSimulation.text")); // NOI18N
         menuSaveSimulation.setName("menuSaveSimulation"); // NOI18N
         simulationMenu.add(menuSaveSimulation);
@@ -349,7 +350,6 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         simulationMenu.add(jSeparator3);
 
         simPropertiesSubMenu.setAction(actionMap.get("ShowSimulationProperties")); // NOI18N
-        simPropertiesSubMenu.setText(resourceMap.getString("simPropertiesSubMenu.text")); // NOI18N
         simPropertiesSubMenu.setName("simPropertiesSubMenu"); // NOI18N
         simulationMenu.add(simPropertiesSubMenu);
 
@@ -449,6 +449,11 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
 
         helpMenu.setText(resourceMap.getString("helpMenu.text")); // NOI18N
         helpMenu.setName("helpMenu"); // NOI18N
+        helpMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                helpMenuActionPerformed(evt);
+            }
+        });
 
         aboutMenuItem.setAction(actionMap.get("showAboutBox")); // NOI18N
         aboutMenuItem.setName("aboutMenuItem"); // NOI18N
@@ -600,20 +605,22 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         setToolBar(mainToolbar);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void helpMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpMenuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_helpMenuActionPerformed
+
     @Action
     public void newSimulation() {
-
-        SimulationWizardDialog sw = new SimulationWizardDialog(null, true);
-        sw.setVisible(true);
+        SimulationWizardPanel sw = new SimulationWizardPanel();
+        PlatformDialog.display(sw, "Create a simulation", PlatformFrame.OKCANCEL_MODE);
         boolean status = sw.isOk();
-        if (status) 
-        {
+        if (status) {
+
             resetWorkbench();
             mainPanel.add(workbenchPanel1, java.awt.BorderLayout.CENTER);
             workbenchPanel1.getSimulationPanel().initSimulation(sw.getSettings());
-         
+
         }
-        sw.dispose();
 
         if (status) {
             if (PlatformManager.getInstance().getActiveSimulation() != null) {
@@ -757,6 +764,7 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         this.SimulationStatus.setText(state.toUpperCase());
     }
 
+    @Override
     public boolean canExit(EventObject event) {
         boolean return_value = GUI_Utils.confirm("Confirm Simulation Platform Exit?");
         if (return_value) {
@@ -793,7 +801,7 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         }
     }
 
-      public void updateAverageNeighborsPerNode() {
+    public void updateAverageNeighborsPerNode() {
         if (isActiveSimulationValid()) {
             lblAverageNeighborsPerNode.setText("" + PlatformManager.getInstance().getActiveSimulation().getAverageNeighborsPerNode());
         }
@@ -867,6 +875,7 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
     }
 
     private boolean isActiveSimulationValid() {
+
         return PlatformManager.getInstance().getActiveSimulation() != null;
     }
 
@@ -890,7 +899,9 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         if (!isActiveSimulationValid()) {
             return;
         }
+
         clockCounter.start();
+
         simulationTimer = new java.util.Timer();
         (simulationTimer).schedule(new TimerTask() {
 
@@ -909,18 +920,23 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
             }
         }, 0, 1000);
         updateSimulationState("START");
+
     }
 
+    @Override
     public void beforeStop(SimulationEvent event) {
     }
 
+    @Override
     public void afterStop(SimulationEvent event) {
         updateSimulationState("STOP");
     }
 
+    @Override
     public void beforeBuildNetwork(SimulationEvent event) {
     }
 
+    @Override
     public void afterBuildNetwork(SimulationEvent event) {
         try {
             updateAverageNeighborsPerNode();
@@ -931,10 +947,12 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
 
     }
 
+    @Override
     public void onStartFailure(SimulationEvent event) {
         GUI_Utils.showWarningMessage("Simulation Start failed: " + event.getReason());
     }
 
+    @Override
     public void onStopFailure(SimulationEvent event) {
         GUI_Utils.showWarningMessage("Simulation stop failed: " + event.getReason());
     }
@@ -992,5 +1010,15 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
                 }
             });
         }
+    }
+
+    private void applyLookAndFeel() {
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+
+//            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception ex) {
+        }
+
     }
 }

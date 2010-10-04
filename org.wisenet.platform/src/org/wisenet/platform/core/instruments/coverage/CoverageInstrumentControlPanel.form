@@ -4,7 +4,6 @@
   <NonVisualComponents>
     <Component class="javax.swing.JCheckBox" name="jCheckBox1">
       <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="jCheckBox1.text"/>
         <Property name="name" type="java.lang.String" value="jCheckBox1" noResource="true"/>
       </Properties>
     </Component>
@@ -37,8 +36,8 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanel1" max="32767" attributes="0"/>
+              <Component id="jPanel1" min="-2" pref="522" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -48,9 +47,7 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Coverage Instrument">
-              <Property name="titleX" resourceKey="jPanel1.border.title"/>
-            </TitledBorder>
+            <TitledBorder title="Coverage Instrument"/>
           </Border>
         </Property>
         <Property name="name" type="java.lang.String" value="jPanel1" noResource="true"/>
@@ -61,21 +58,16 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jPanel3" max="32767" attributes="1"/>
-                      <Component id="jPanel4" max="32767" attributes="1"/>
-                      <Component id="jScrollPane1" alignment="1" pref="336" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="jScrollPane1" pref="348" max="32767" attributes="0"/>
+                      <Component id="jPanel3" alignment="0" max="32767" attributes="1"/>
+                      <Component id="jPanel4" alignment="0" max="32767" attributes="1"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jPanel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="cmdClearResult" alignment="0" max="32767" attributes="1"/>
-                              <Component id="cmdResult" alignment="0" pref="105" max="32767" attributes="1"/>
-                          </Group>
-                      </Group>
+                      <Component id="jPanel2" alignment="0" max="32767" attributes="1"/>
+                      <Component id="cmdClearResult" alignment="0" pref="129" max="32767" attributes="1"/>
+                      <Component id="cmdResult" alignment="1" pref="129" max="32767" attributes="1"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -84,24 +76,27 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="jPanel2" alignment="0" min="0" max="32767" attributes="1"/>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="jPanel3" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <Component id="jPanel2" max="32767" attributes="1"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                           <Component id="cmdResult" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="cmdClearResult" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jScrollPane1" pref="82" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jScrollPane1" min="-2" pref="230" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -123,14 +118,12 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="cmdApply" alignment="0" pref="101" max="32767" attributes="1"/>
-                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="cmdAddReceivers" alignment="0" max="32767" attributes="1"/>
-                              <Component id="cmdAddSenders" alignment="0" max="32767" attributes="1"/>
-                              <Component id="cmdDelReceivers" alignment="0" max="32767" attributes="1"/>
-                              <Component id="cmdDelSenders" alignment="0" max="32767" attributes="1"/>
-                              <Component id="cmdProbe" alignment="0" max="32767" attributes="1"/>
-                          </Group>
+                          <Component id="cmdApply" linkSize="1" alignment="0" pref="101" max="32767" attributes="1"/>
+                          <Component id="cmdProbe" linkSize="1" alignment="0" pref="101" max="32767" attributes="1"/>
+                          <Component id="cmdDelSenders" linkSize="1" alignment="0" pref="101" max="32767" attributes="1"/>
+                          <Component id="cmdAddSenders" linkSize="1" alignment="0" pref="101" max="32767" attributes="1"/>
+                          <Component id="cmdDelReceivers" linkSize="1" alignment="0" pref="101" max="32767" attributes="1"/>
+                          <Component id="cmdAddReceivers" linkSize="1" alignment="0" pref="101" max="32767" attributes="1"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -159,7 +152,7 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="cmdDelReceivers">
               <Properties>
-                <Property name="text" type="java.lang.String" resourceKey="cmdDelReceivers.text"/>
+                <Property name="text" type="java.lang.String" value="Remove Receiver" noResource="true"/>
                 <Property name="name" type="java.lang.String" value="cmdDelReceivers" noResource="true"/>
               </Properties>
               <Events>
@@ -168,7 +161,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="cmdApply">
               <Properties>
-                <Property name="text" type="java.lang.String" resourceKey="cmdApply.text"/>
+                <Property name="text" type="java.lang.String" value="Apply" noResource="true"/>
                 <Property name="name" type="java.lang.String" value="cmdApply" noResource="true"/>
               </Properties>
               <Events>
@@ -177,7 +170,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="cmdDelSenders">
               <Properties>
-                <Property name="text" type="java.lang.String" resourceKey="cmdDelSenders.text"/>
+                <Property name="text" type="java.lang.String" value="Remove Sender" noResource="true"/>
                 <Property name="name" type="java.lang.String" value="cmdDelSenders" noResource="true"/>
               </Properties>
               <Events>
@@ -186,7 +179,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="cmdProbe">
               <Properties>
-                <Property name="text" type="java.lang.String" resourceKey="cmdProbe.text"/>
+                <Property name="text" type="java.lang.String" value="Probe" noResource="true"/>
                 <Property name="name" type="java.lang.String" value="cmdProbe" noResource="true"/>
               </Properties>
               <Events>
@@ -195,7 +188,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="cmdAddReceivers">
               <Properties>
-                <Property name="text" type="java.lang.String" resourceKey="cmdAddReceivers.text"/>
+                <Property name="text" type="java.lang.String" value="Add To Receivers" noResource="true"/>
                 <Property name="name" type="java.lang.String" value="cmdAddReceivers" noResource="true"/>
               </Properties>
               <Events>
@@ -204,7 +197,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="cmdAddSenders">
               <Properties>
-                <Property name="text" type="java.lang.String" resourceKey="cmdAddSenders.text"/>
+                <Property name="text" type="java.lang.String" value="Add To Senders" noResource="true"/>
                 <Property name="name" type="java.lang.String" value="cmdAddSenders" noResource="true"/>
               </Properties>
               <Events>
@@ -257,7 +250,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="24" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -297,7 +290,9 @@
           <SubComponents>
             <Component class="javax.swing.JCheckBox" name="chkAutoNumber">
               <Properties>
-                <Property name="text" type="java.lang.String" resourceKey="chkAutoNumber.text"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="org/wisenet/platform/resources/PlatformResources.properties" key="chkAutoNumber.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
                 <Property name="name" type="java.lang.String" value="chkAutoNumber" noResource="true"/>
               </Properties>
             </Component>
@@ -307,13 +302,14 @@
                   <Format format="#0" subtype="-1" type="0"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="4"/>
-                <Property name="text" type="java.lang.String" resourceKey="txtParamInterval.text"/>
                 <Property name="name" type="java.lang.String" value="txtParamInterval" noResource="true"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="chkNotifyPanel">
               <Properties>
-                <Property name="text" type="java.lang.String" resourceKey="chkNotifyPanel.text"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="org/wisenet/platform/resources/PlatformResources.properties" key="chkNotifyPanel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
                 <Property name="name" type="java.lang.String" value="chkNotifyPanel" noResource="true"/>
               </Properties>
             </Component>
@@ -323,7 +319,6 @@
                   <Format format="#0" subtype="-1" type="0"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="4"/>
-                <Property name="text" type="java.lang.String" resourceKey="txtParamTimes.text"/>
                 <Property name="name" type="java.lang.String" value="txtParamTimes" noResource="true"/>
               </Properties>
             </Component>
@@ -333,7 +328,6 @@
                   <Format format="#0" subtype="-1" type="0"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="4"/>
-                <Property name="text" type="java.lang.String" resourceKey="txtParamDelay.text"/>
                 <Property name="name" type="java.lang.String" value="txtParamDelay" noResource="true"/>
               </Properties>
             </Component>
@@ -342,7 +336,7 @@
                 <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
                   <ComponentRef name="txtParamNroMessages"/>
                 </Property>
-                <Property name="text" type="java.lang.String" resourceKey="jLabel1.text"/>
+                <Property name="text" type="java.lang.String" value="Nr. of Messages" noResource="true"/>
                 <Property name="name" type="java.lang.String" value="jLabel1" noResource="true"/>
               </Properties>
             </Component>
@@ -351,7 +345,7 @@
                 <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
                   <ComponentRef name="txtParamNroMessages"/>
                 </Property>
-                <Property name="text" type="java.lang.String" resourceKey="jLabel2.text"/>
+                <Property name="text" type="java.lang.String" value="Retransmissions" noResource="true"/>
                 <Property name="name" type="java.lang.String" value="jLabel2" noResource="true"/>
               </Properties>
             </Component>
@@ -361,7 +355,6 @@
                   <Format format="#0" subtype="-1" type="0"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="4"/>
-                <Property name="text" type="java.lang.String" resourceKey="txtParamNroMessages.text"/>
                 <Property name="name" type="java.lang.String" value="txtParamNroMessages" noResource="true"/>
               </Properties>
             </Component>
@@ -370,7 +363,7 @@
                 <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
                   <ComponentRef name="txtParamNroMessages"/>
                 </Property>
-                <Property name="text" type="java.lang.String" resourceKey="jLabel3.text"/>
+                <Property name="text" type="java.lang.String" value="Interval" noResource="true"/>
                 <Property name="name" type="java.lang.String" value="jLabel3" noResource="true"/>
               </Properties>
             </Component>
@@ -379,7 +372,7 @@
                 <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
                   <ComponentRef name="txtParamNroMessages"/>
                 </Property>
-                <Property name="text" type="java.lang.String" resourceKey="jLabel4.text"/>
+                <Property name="text" type="java.lang.String" value="Delay" noResource="true"/>
                 <Property name="name" type="java.lang.String" value="jLabel4" noResource="true"/>
               </Properties>
             </Component>
@@ -409,7 +402,7 @@
                           <Component id="lblNrSenderNodes" min="-2" pref="59" max="-2" attributes="0"/>
                           <Component id="lblNrReceiverNodes" min="-2" pref="59" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="144" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="156" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -434,27 +427,25 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLabel6">
               <Properties>
-                <Property name="text" type="java.lang.String" resourceKey="jLabel6.text"/>
+                <Property name="text" type="java.lang.String" value="Nr. Of Senders" noResource="true"/>
                 <Property name="name" type="java.lang.String" value="jLabel6" noResource="true"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblNrSenderNodes">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="4"/>
-                <Property name="text" type="java.lang.String" resourceKey="lblNrSenderNodes.text"/>
                 <Property name="name" type="java.lang.String" value="lblNrSenderNodes" noResource="true"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel5">
               <Properties>
-                <Property name="text" type="java.lang.String" resourceKey="jLabel5.text"/>
+                <Property name="text" type="java.lang.String" value="Nr. Of Receivers" noResource="true"/>
                 <Property name="name" type="java.lang.String" value="jLabel5" noResource="true"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblNrReceiverNodes">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="4"/>
-                <Property name="text" type="java.lang.String" resourceKey="lblNrReceiverNodes.text"/>
                 <Property name="name" type="java.lang.String" value="lblNrReceiverNodes" noResource="true"/>
               </Properties>
             </Component>
@@ -462,7 +453,7 @@
         </Container>
         <Component class="javax.swing.JButton" name="cmdResult">
           <Properties>
-            <Property name="text" type="java.lang.String" resourceKey="cmdResult.text"/>
+            <Property name="text" type="java.lang.String" value="Get Result" noResource="true"/>
             <Property name="name" type="java.lang.String" value="cmdResult" noResource="true"/>
           </Properties>
           <Events>
@@ -491,7 +482,7 @@
         </Container>
         <Component class="javax.swing.JButton" name="cmdClearResult">
           <Properties>
-            <Property name="text" type="java.lang.String" resourceKey="cmdClearResult.text"/>
+            <Property name="text" type="java.lang.String" value="Clear Results" noResource="true"/>
             <Property name="name" type="java.lang.String" value="cmdClearResult" noResource="true"/>
           </Properties>
           <Events>

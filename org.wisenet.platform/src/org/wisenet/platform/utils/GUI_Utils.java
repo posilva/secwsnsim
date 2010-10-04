@@ -10,6 +10,8 @@ import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.Window;
+import java.io.File;
+import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
@@ -64,7 +66,7 @@ public class GUI_Utils {
      * @param title
      * @return
      */
-    public static String showSaveDialog(FileFilter[] filters, String title) {
+    public static String showSaveDialog(FileFilter[] filters, String title) throws IOException {
         JFileChooser jf = new JFileChooser();
         if (filters != null) {
             jf.setAcceptAllFileFilterUsed(false);
@@ -72,8 +74,12 @@ public class GUI_Utils {
                 jf.addChoosableFileFilter(filters[i]);
             }
             jf.setFileFilter(filters[0]);
+
         }
-        jf.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        File f = new File(new File(".").getCanonicalPath());
+        jf.setCurrentDirectory(f);
+        jf.setDialogTitle(title);
+        jf.setFileSelectionMode(JFileChooser.FILES_ONLY);
         jf.setMultiSelectionEnabled(false);
         int result = jf.showSaveDialog(PlatformManager.getInstance().getPlatformView().getFrame());
         if (result == JFileChooser.CANCEL_OPTION || result == JFileChooser.ERROR_OPTION) {
@@ -90,7 +96,35 @@ public class GUI_Utils {
         ErrorHandler.displayThrowable(ex, "Platform Error ", null, null);
     }
 
-    public static String showOpenDialog(FileFilter[] filters, String title) {
+    public static FileFilter XML() {
+        return new FileFilter() {
+
+            String[] extensions = new String[]{"xml"};
+
+            @Override
+            public boolean accept(File f) {
+//                if (f.isDirectory()) {
+//                    return true;
+//                }
+
+                // Ok, itвЂ™s a regular file, so check the extension
+                String name = f.getName().toLowerCase();
+                for (int i = extensions.length - 1; i >= 0; i--) {
+                    if (name.endsWith(extensions[i])) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            @Override
+            public String getDescription() {
+                return "XML file";
+            }
+        };
+    }
+
+    public static String showOpenDialog(FileFilter[] filters, String title) throws IOException {
         JFileChooser jf = new JFileChooser();
         if (filters != null) {
             jf.setAcceptAllFileFilterUsed(false);
@@ -99,9 +133,16 @@ public class GUI_Utils {
             }
             jf.setFileFilter(filters[0]);
         }
-        jf.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        File f = new File(new File(".").getCanonicalPath());
+        jf.setCurrentDirectory(f);
+        jf.setDialogTitle(title);
+        jf.setFileSelectionMode(JFileChooser.FILES_ONLY);
         jf.setMultiSelectionEnabled(false);
-        int result = jf.showOpenDialog(PlatformManager.getInstance().getPlatformView().getFrame());
+        Component c =null;
+        if (PlatformManager.getInstance().getPlatformView()!=null){
+            c=PlatformManager.getInstance().getPlatformView().getFrame();
+        }
+        int result = jf.showOpenDialog(c);
         if (result == JFileChooser.CANCEL_OPTION || result == JFileChooser.ERROR_OPTION) {
             return null;
         }

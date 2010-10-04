@@ -76,19 +76,17 @@ public class CoverageInstrumentControlPanel extends PlatformPanel implements IIn
         txtaResult = new javax.swing.JTextArea();
         cmdClearResult = new javax.swing.JButton();
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(org.wisenet.platform.PlatformApp.class).getContext().getResourceMap(CoverageInstrumentControlPanel.class);
-        jCheckBox1.setText(resourceMap.getString("jCheckBox1.text")); // NOI18N
         jCheckBox1.setName("jCheckBox1"); // NOI18N
 
         setName("Form"); // NOI18N
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel1.border.title"))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Coverage Instrument"));
         jPanel1.setName("jPanel1"); // NOI18N
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.setName("jPanel2"); // NOI18N
 
-        cmdDelReceivers.setText(resourceMap.getString("cmdDelReceivers.text")); // NOI18N
+        cmdDelReceivers.setText("Remove Receiver"); // NOI18N
         cmdDelReceivers.setName("cmdDelReceivers"); // NOI18N
         cmdDelReceivers.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,7 +94,7 @@ public class CoverageInstrumentControlPanel extends PlatformPanel implements IIn
             }
         });
 
-        cmdApply.setText(resourceMap.getString("cmdApply.text")); // NOI18N
+        cmdApply.setText("Apply"); // NOI18N
         cmdApply.setName("cmdApply"); // NOI18N
         cmdApply.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,7 +102,7 @@ public class CoverageInstrumentControlPanel extends PlatformPanel implements IIn
             }
         });
 
-        cmdDelSenders.setText(resourceMap.getString("cmdDelSenders.text")); // NOI18N
+        cmdDelSenders.setText("Remove Sender"); // NOI18N
         cmdDelSenders.setName("cmdDelSenders"); // NOI18N
         cmdDelSenders.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -112,7 +110,7 @@ public class CoverageInstrumentControlPanel extends PlatformPanel implements IIn
             }
         });
 
-        cmdProbe.setText(resourceMap.getString("cmdProbe.text")); // NOI18N
+        cmdProbe.setText("Probe"); // NOI18N
         cmdProbe.setName("cmdProbe"); // NOI18N
         cmdProbe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,7 +118,7 @@ public class CoverageInstrumentControlPanel extends PlatformPanel implements IIn
             }
         });
 
-        cmdAddReceivers.setText(resourceMap.getString("cmdAddReceivers.text")); // NOI18N
+        cmdAddReceivers.setText("Add To Receivers"); // NOI18N
         cmdAddReceivers.setName("cmdAddReceivers"); // NOI18N
         cmdAddReceivers.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,7 +126,7 @@ public class CoverageInstrumentControlPanel extends PlatformPanel implements IIn
             }
         });
 
-        cmdAddSenders.setText(resourceMap.getString("cmdAddSenders.text")); // NOI18N
+        cmdAddSenders.setText("Add To Senders"); // NOI18N
         cmdAddSenders.setName("cmdAddSenders"); // NOI18N
         cmdAddSenders.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,14 +142,16 @@ public class CoverageInstrumentControlPanel extends PlatformPanel implements IIn
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cmdApply, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(cmdAddReceivers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cmdAddSenders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cmdDelReceivers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cmdDelSenders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cmdProbe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(cmdProbe, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
+                    .addComponent(cmdDelSenders, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
+                    .addComponent(cmdAddSenders, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
+                    .addComponent(cmdDelReceivers, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
+                    .addComponent(cmdAddReceivers, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE))
                 .addContainerGap())
         );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cmdAddReceivers, cmdAddSenders, cmdApply, cmdDelReceivers, cmdDelSenders, cmdProbe});
+
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -167,52 +167,49 @@ public class CoverageInstrumentControlPanel extends PlatformPanel implements IIn
                 .addComponent(cmdProbe)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmdApply)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel3.setName("jPanel3"); // NOI18N
 
-        chkAutoNumber.setText(resourceMap.getString("chkAutoNumber.text")); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/wisenet/platform/resources/PlatformResources"); // NOI18N
+        chkAutoNumber.setText(bundle.getString("chkAutoNumber.text")); // NOI18N
         chkAutoNumber.setName("chkAutoNumber"); // NOI18N
 
         txtParamInterval.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         txtParamInterval.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txtParamInterval.setText(resourceMap.getString("txtParamInterval.text")); // NOI18N
         txtParamInterval.setName("txtParamInterval"); // NOI18N
 
-        chkNotifyPanel.setText(resourceMap.getString("chkNotifyPanel.text")); // NOI18N
+        chkNotifyPanel.setText(bundle.getString("chkNotifyPanel.text")); // NOI18N
         chkNotifyPanel.setName("chkNotifyPanel"); // NOI18N
 
         txtParamTimes.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         txtParamTimes.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txtParamTimes.setText(resourceMap.getString("txtParamTimes.text")); // NOI18N
         txtParamTimes.setName("txtParamTimes"); // NOI18N
 
         txtParamDelay.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         txtParamDelay.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txtParamDelay.setText(resourceMap.getString("txtParamDelay.text")); // NOI18N
         txtParamDelay.setName("txtParamDelay"); // NOI18N
 
         jLabel1.setLabelFor(txtParamNroMessages);
-        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
+        jLabel1.setText("Nr. of Messages"); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
         jLabel2.setLabelFor(txtParamNroMessages);
-        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
+        jLabel2.setText("Retransmissions"); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
 
         txtParamNroMessages.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         txtParamNroMessages.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txtParamNroMessages.setText(resourceMap.getString("txtParamNroMessages.text")); // NOI18N
         txtParamNroMessages.setName("txtParamNroMessages"); // NOI18N
 
         jLabel3.setLabelFor(txtParamNroMessages);
-        jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
+        jLabel3.setText("Interval"); // NOI18N
         jLabel3.setName("jLabel3"); // NOI18N
 
         jLabel4.setLabelFor(txtParamNroMessages);
-        jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
+        jLabel4.setText("Delay"); // NOI18N
         jLabel4.setName("jLabel4"); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -242,7 +239,7 @@ public class CoverageInstrumentControlPanel extends PlatformPanel implements IIn
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtParamTimes, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtParamNroMessages, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -265,7 +262,7 @@ public class CoverageInstrumentControlPanel extends PlatformPanel implements IIn
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtParamDelay, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+                    .addComponent(txtParamDelay, javax.swing.GroupLayout.PREFERRED_SIZE, 20, Short.MAX_VALUE)
                     .addComponent(jLabel4))
                 .addContainerGap())
         );
@@ -273,18 +270,16 @@ public class CoverageInstrumentControlPanel extends PlatformPanel implements IIn
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel4.setName("jPanel4"); // NOI18N
 
-        jLabel6.setText(resourceMap.getString("jLabel6.text")); // NOI18N
+        jLabel6.setText("Nr. Of Senders"); // NOI18N
         jLabel6.setName("jLabel6"); // NOI18N
 
         lblNrSenderNodes.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblNrSenderNodes.setText(resourceMap.getString("lblNrSenderNodes.text")); // NOI18N
         lblNrSenderNodes.setName("lblNrSenderNodes"); // NOI18N
 
-        jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
+        jLabel5.setText("Nr. Of Receivers"); // NOI18N
         jLabel5.setName("jLabel5"); // NOI18N
 
         lblNrReceiverNodes.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblNrReceiverNodes.setText(resourceMap.getString("lblNrReceiverNodes.text")); // NOI18N
         lblNrReceiverNodes.setName("lblNrReceiverNodes"); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -294,13 +289,13 @@ public class CoverageInstrumentControlPanel extends PlatformPanel implements IIn
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblNrSenderNodes, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblNrReceiverNodes, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(144, 144, 144))
+                .addGap(156, 156, 156))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -316,7 +311,7 @@ public class CoverageInstrumentControlPanel extends PlatformPanel implements IIn
                 .addContainerGap())
         );
 
-        cmdResult.setText(resourceMap.getString("cmdResult.text")); // NOI18N
+        cmdResult.setText("Get Result"); // NOI18N
         cmdResult.setName("cmdResult"); // NOI18N
         cmdResult.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -332,7 +327,7 @@ public class CoverageInstrumentControlPanel extends PlatformPanel implements IIn
         txtaResult.setName("txtaResult"); // NOI18N
         jScrollPane1.setViewportView(txtaResult);
 
-        cmdClearResult.setText(resourceMap.getString("cmdClearResult.text")); // NOI18N
+        cmdClearResult.setText("Clear Results"); // NOI18N
         cmdClearResult.setName("cmdClearResult"); // NOI18N
         cmdClearResult.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -346,37 +341,36 @@ public class CoverageInstrumentControlPanel extends PlatformPanel implements IIn
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(cmdClearResult, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cmdResult, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE))))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmdClearResult, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+                    .addComponent(cmdResult, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, 0, 216, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
                         .addComponent(cmdResult)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmdClearResult))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE))
-                .addGap(18, 18, 18))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(77, 77, 77))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -391,8 +385,8 @@ public class CoverageInstrumentControlPanel extends PlatformPanel implements IIn
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
