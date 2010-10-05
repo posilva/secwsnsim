@@ -545,4 +545,8 @@ public class CoverageInstrumentControlPanel extends PlatformPanel implements IIn
     protected boolean isDataValid() {
         return true;
     }
+
+    @Override
+    public void beforeClose() {
+    }
 }

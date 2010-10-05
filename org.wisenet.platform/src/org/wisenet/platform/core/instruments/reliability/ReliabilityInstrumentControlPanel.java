@@ -580,4 +580,8 @@ public class ReliabilityInstrumentControlPanel extends PlatformPanel implements 
     protected boolean isDataValid() {
         return true;
     }
+
+    @Override
+    public void beforeClose() {
+    }
 }

@@ -483,4 +483,8 @@ public class NodeSettingsPanel extends PlatformPanel {
     Collection<Node> getNodes() {
         return PlatformManager.getInstance().getActiveSimulation().getSimulator().getNodes();
     }
+
+    @Override
+    public void beforeClose() {
+    }
 }

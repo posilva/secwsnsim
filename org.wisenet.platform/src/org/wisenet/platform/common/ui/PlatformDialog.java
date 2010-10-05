@@ -39,6 +39,7 @@ public class PlatformDialog extends javax.swing.JDialog implements KeyListener, 
     protected int status;
     protected int mode = OKCANCEL_MODE;
     protected boolean applyVisible = false;
+    private PlatformPanel platformPanel;
 
     /** 
      * Creates new form PlatformDialog
@@ -69,7 +70,7 @@ public class PlatformDialog extends javax.swing.JDialog implements KeyListener, 
     }
 
     public PlatformDialog(PlatformPanel content, String titlearea) {
-        super((JFrame)null, true);
+        super((JFrame) null, true);
         initComponents();
         initDialog();
         assignContent(content);
@@ -165,6 +166,11 @@ public class PlatformDialog extends javax.swing.JDialog implements KeyListener, 
         setMinimumSize(new java.awt.Dimension(200, 94));
         setName("Form"); // NOI18N
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         titleArea.setBackground(new java.awt.Color(254, 254, 254));
         titleArea.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -254,6 +260,12 @@ public class PlatformDialog extends javax.swing.JDialog implements KeyListener, 
     private void cmdApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdApplyActionPerformed
         performApplyAction(null);
     }//GEN-LAST:event_cmdApplyActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        if (platformPanel != null) {
+            platformPanel.beforeClose();
+        }
+    }//GEN-LAST:event_formWindowClosing
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel buttonArea;
     private javax.swing.JButton cmdApply;
@@ -277,9 +289,14 @@ public class PlatformDialog extends javax.swing.JDialog implements KeyListener, 
         if (getContentArea().getComponentCount() == 0) {
             return;
         }
+
         pack();
         GUI_Utils.centerOnScreen(this);
+        if (platformPanel != null) {
+            platformPanel.beforeStart();
+        }
         setVisible(true);
+
         this.contentArea.updateUI();
     }
 
@@ -418,6 +435,7 @@ public class PlatformDialog extends javax.swing.JDialog implements KeyListener, 
     }
 
     private void assignContent(PlatformPanel content) {
+        platformPanel = content;
         setContentArea(content);
         content.setNotificationHandler(this);
     }

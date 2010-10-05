@@ -53,4 +53,9 @@ public class INSENSNode extends Mica2SensorNode implements IDisplayable {
     public Object getLatencyUniqueId() {
         return getId();
     }
+    
+    @Override
+    public Object getUniqueID() {
+        return getId();
+    }
 }

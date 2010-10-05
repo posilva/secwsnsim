@@ -511,4 +511,8 @@ public class SimulationWizardPanel extends PlatformPanel {
     protected boolean isDataValid() {
         return validateData();
     }
+
+    @Override
+    public void beforeClose() {
+    }
 }

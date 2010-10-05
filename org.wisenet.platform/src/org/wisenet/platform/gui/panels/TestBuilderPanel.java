@@ -382,4 +382,8 @@ public class TestBuilderPanel extends PlatformPanel {
     private javax.swing.JTextArea txtTestDescription;
     private javax.swing.JTextField txtxTestName;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void beforeClose() {
+    }
 }

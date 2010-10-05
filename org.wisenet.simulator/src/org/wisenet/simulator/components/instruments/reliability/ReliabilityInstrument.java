@@ -52,7 +52,6 @@ public class ReliabilityInstrument extends AbstractInstrument {
                     numberOfMessagesToSend += getTimesToSentMessages();
                     final long interval = getIntervalToSentMessages() * Simulator.ONE_SECOND;
                     final long messageDelay = getDelayToSentMessages() * Simulator.ONE_SECOND;
-//                    sender.probing(message);
                     getSimulation().getSimulator().addEvent(new InstrumentEvent(getSimulation().getTime(), message, sender, getTimesToSentMessages(), messageDelay, interval));
                 }
             }

@@ -286,6 +286,7 @@ public class Batery {
      *
      */
     private void init() {
+        addEnergyListener(controller);
     }
 
     /**

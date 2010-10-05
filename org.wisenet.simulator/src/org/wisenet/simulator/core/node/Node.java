@@ -554,4 +554,8 @@ public abstract class Node {
     public void setEnvironmentAttenuation(double environmentAttenuation) {
         this.environmentAttenuation = environmentAttenuation;
     }
+
+    public abstract Object getUniqueID();
+
+    
 }

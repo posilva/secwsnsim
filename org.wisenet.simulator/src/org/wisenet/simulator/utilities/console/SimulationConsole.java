@@ -14,7 +14,6 @@ import org.wisenet.simulator.core.Simulator;
 import org.wisenet.simulator.core.energy.EnergyModel;
 import org.wisenet.simulator.core.radio.GaussianRadioModel;
 import org.wisenet.simulator.core.ui.NoDisplay;
-import org.wisenet.simulator.temp.insens.INSENSNodeFactory;
 
 /**
  *
@@ -26,7 +25,7 @@ public class SimulationConsole {
 
         SimulationSettings settings = new SimulationSettings();
         settings.setMaxNodeRadioRange(130); //    int maxNodeRadioStrength;
-        settings.setNodeFactoryClassName(INSENSNodeFactory.class.getName()); //    String  nodeFactoryClassName;
+//        settings.setNodeFactoryClassName(INSENSNodeFactory.class.getName()); //    String  nodeFactoryClassName;
         settings.setSimulatorClassName(Simulator.class.getName()); //    String simulatorClassName;
         settings.setRadioModelClassName(GaussianRadioModel.class.getName()); //    String radioModelClassName;
         settings.setEnergyModelClassName(EnergyModel.class.getName()); //    String energyModelClassName;
@@ -61,7 +60,7 @@ public class SimulationConsole {
             Simulation simulation = createSimulation();
             simulation.getSettings().saveToXML("SimulationSettings.xml");
             simulation.saveNetworkTopology("//home//posilva//NT.xml");
-            
+
 
 //            simulation.saveToXML("Simulation.dump.xml");
 //            simulation.loadFromFile("Simulation.dump.xml");

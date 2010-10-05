@@ -17,7 +17,7 @@
         </data>
         <data xmlns="http://www.netbeans.org/ns/jmx/1" version="0.4"/>
         <libraries xmlns="http://www.netbeans.org/ns/ant-project-libraries/1">
-            <definitions>lib\nblibraries.properties</definitions>
+            <definitions>./nblibraries.properties</definitions>
         </libraries>
         <references xmlns="http://www.netbeans.org/ns/ant-project-references/1">
             <reference>

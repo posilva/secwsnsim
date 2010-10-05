@@ -83,4 +83,8 @@ public class ApplicationOutputPanel extends PlatformPanel implements IOutputDisp
     protected boolean isDataValid() {
         return true;
     }
+
+    @Override
+    public void beforeClose() {
+    }
 }

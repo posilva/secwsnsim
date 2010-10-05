@@ -640,12 +640,14 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
                     DATAPayload payload = new DATAPayload(m.getPayload());
                     INSENSFunctions.decryptData(getNode(), payload.data, null);
                     getNode().getApplication().receiveMessage(payload.data);
+                    done(m);
                 } catch (INSENSException ex) {
                     log(ex);
                 }
             }
         }
     }
+
     /**
      * Send a DATA message 
      * @param message
@@ -663,6 +665,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         }
         return false;
     }
+
     /**
      * Create a DATA message payload
      * @param message
@@ -689,6 +692,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         return false;
 
     }
+
     /**
      * Setting the evaluating classes
      */
@@ -701,9 +705,6 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     public String toString() {
         return forwardingTable.toString();
     }
-
-
-
 
     public Object getUniqueId() {
         return getNode().getId();
@@ -720,7 +721,6 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
 
     @Override
     protected void setupAttacks() {
-        
     }
 
     @Override
@@ -746,8 +746,8 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     @Override
     protected void onStable(boolean oldValue) {
         if (oldValue == false) {
-            boolean attackStatus = getNode().getId() % 3 == 0;
-            setUnderAttack(attackStatus);
+//            boolean attackStatus = getNode().getId() % 3 == 0;
+//            setUnderAttack(attackStatus);
         }
     }
 
