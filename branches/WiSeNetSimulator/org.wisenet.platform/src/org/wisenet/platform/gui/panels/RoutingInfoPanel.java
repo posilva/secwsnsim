@@ -281,4 +281,8 @@ public class RoutingInfoPanel extends PlatformPanel {
     protected boolean isDataValid() {
         return true;
     }
+
+    @Override
+    public void beforeClose() {
+    }
 }

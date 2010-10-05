@@ -101,19 +101,14 @@ public class RoutingAttacksPanel extends PlatformPanel {
         contentArea.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         contentArea.setName("contentArea"); // NOI18N
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(RoutingAttacksPanel.class);
-        jLabel1.setFont(resourceMap.getFont("jLabel1.font")); // NOI18N
-        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
+        jLabel1.setText("Node Info"); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
-        jLabel2.setFont(resourceMap.getFont("jLabel1.font")); // NOI18N
-        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
 
         cboAttacks.setName("cboAttacks"); // NOI18N
 
-        lblEditCode.setForeground(resourceMap.getColor("lblEditCode.foreground")); // NOI18N
-        lblEditCode.setText(resourceMap.getString("lblEditCode.text")); // NOI18N
+        lblEditCode.setText("edit code"); // NOI18N
         lblEditCode.setName("lblEditCode"); // NOI18N
         lblEditCode.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -131,11 +126,11 @@ public class RoutingAttacksPanel extends PlatformPanel {
 
         txtNodeInfo.setColumns(20);
         txtNodeInfo.setEditable(false);
-        txtNodeInfo.setFont(resourceMap.getFont("txtNodeInfo.font")); // NOI18N
         txtNodeInfo.setRows(5);
         txtNodeInfo.setName("txtNodeInfo"); // NOI18N
         jScrollPane1.setViewportView(txtNodeInfo);
 
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(RoutingAttacksPanel.class);
         cmdEnableAttack.setText(resourceMap.getString("cmdEnableAttack.text")); // NOI18N
         cmdEnableAttack.setName("cmdEnableAttack"); // NOI18N
         cmdEnableAttack.addActionListener(new java.awt.event.ActionListener() {
@@ -157,8 +152,8 @@ public class RoutingAttacksPanel extends PlatformPanel {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(contentAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cmdEnableAttack, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
-                            .addComponent(cboAttacks, javax.swing.GroupLayout.Alignment.LEADING, 0, 209, Short.MAX_VALUE))
+                            .addComponent(cmdEnableAttack, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
+                            .addComponent(cboAttacks, javax.swing.GroupLayout.Alignment.LEADING, 0, 295, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblEditCode)))
                 .addContainerGap())
@@ -169,7 +164,7 @@ public class RoutingAttacksPanel extends PlatformPanel {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(9, 9, 9)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(contentAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -275,5 +270,9 @@ public class RoutingAttacksPanel extends PlatformPanel {
         for (AttacksEntry entry : node.getRoutingLayer().getAttacks().getAttacksList()) {
             cboAttacks.addItem(new AttackItem(entry));
         }
+    }
+
+    @Override
+    public void beforeClose() {
     }
 }

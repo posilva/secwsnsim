@@ -84,4 +84,8 @@ public class RoutingOutputPanel extends PlatformPanel implements IOutputDisplay 
     protected boolean isDataValid() {
         return true;
     }
+
+    @Override
+    public void beforeClose() {
+    }
 }

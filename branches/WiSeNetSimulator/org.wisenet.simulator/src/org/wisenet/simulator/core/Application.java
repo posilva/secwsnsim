@@ -69,7 +69,7 @@ public abstract class Application {
      */
     public final void receiveMessage(Object message) {
         /* notify the routing layer that the routing is done */
-        getNode().getRoutingLayer().done(message);
+//        getNode().getRoutingLayer().done(message);
         onMessageReceived(message);
     }
 

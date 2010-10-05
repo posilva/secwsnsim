@@ -10,7 +10,7 @@ import org.wisenet.simulator.core.radio.RadioModel;
 
 /**
  *
-* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class FloodingNode extends BasicNode {
 
@@ -23,6 +23,11 @@ public class FloodingNode extends BasicNode {
     }
 
     public Object getLatencyUniqueId() {
+        return getId();
+    }
+
+    @Override
+    public Object getUniqueID() {
         return getId();
     }
 }

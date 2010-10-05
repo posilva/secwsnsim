@@ -69,9 +69,6 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="btnRebuildNetwork">
           <Properties>
-            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="org.wisenet.platform.gui.WorkbenchPanel" id="RebuildNetwork" methodName="RebuildNetwork"/>
-            </Property>
             <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/org/wisenet/platform/resources/images/refresh.png"/>
             </Property>
@@ -79,6 +76,9 @@
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRebuildNetworkActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JToolBar$Separator" name="jSeparator4">
         </Component>
@@ -87,7 +87,7 @@
             <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/org/wisenet/platform/resources/images/Neighboors16.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Show Neighborhood "/>
+            <Property name="toolTipText" type="java.lang.String" value="Show Neighborhood " noResource="true"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -114,82 +114,87 @@
         </Component>
         <Component class="javax.swing.JToggleButton" name="btnSimulationStart">
           <Properties>
-            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="org.wisenet.platform.gui.WorkbenchPanel" id="StartSimulation" methodName="StartSimulation"/>
-            </Property>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="OperationBG"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/org/wisenet/platform/resources/images/Play16.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Play Simulation"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSimulationStartActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JToggleButton" name="btnSimulationPause">
           <Properties>
-            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="org.wisenet.platform.gui.WorkbenchPanel" id="PauseSimulation" methodName="PauseSimulation"/>
-            </Property>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="OperationBG"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/org/wisenet/platform/resources/images/Pause16.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Pause Simulation"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSimulationPauseActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JToggleButton" name="btnSimulationStop">
           <Properties>
-            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="org.wisenet.platform.gui.WorkbenchPanel" id="StopSimulation" methodName="StopSimulation"/>
-            </Property>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="OperationBG"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/org/wisenet/platform/resources/images/Stop16.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Stop Simulation"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSimulationStopActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnSimulationReset">
           <Properties>
-            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="org.wisenet.platform.gui.WorkbenchPanel" id="ResetSimulation" methodName="ResetSimulation"/>
-            </Property>
             <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/org/wisenet/platform/resources/images/Reset16.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Reset Simulation"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSimulationResetActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JToolBar$Separator" name="jSeparator2">
         </Component>
         <Component class="javax.swing.JToggleButton" name="btnDeployNodesMode">
           <Properties>
-            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="org.wisenet.platform.gui.WorkbenchPanel" id="selectedNodeDeployMode" methodName="selectedNodeDeployMode"/>
-            </Property>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="SelectionBG"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/org/wisenet/platform/resources/images/share_this.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Deploy Nodes Tool"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeployNodesModeActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JToggleButton" name="btnSelectionTool">
           <Properties>
@@ -303,42 +308,45 @@
         </Component>
         <Component class="javax.swing.JButton" name="selRandomNodes">
           <Properties>
-            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="org.wisenet.platform.gui.WorkbenchPanel" id="RandomNodeSelection" methodName="RandomNodeSelection"/>
-            </Property>
             <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/org/wisenet/platform/resources/images/random.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Select random nodes..."/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selRandomNodesActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnSnapshot">
           <Properties>
-            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="org.wisenet.platform.gui.WorkbenchPanel" id="TakeSnapshot" methodName="TakeSnapshot"/>
-            </Property>
             <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/org/wisenet/platform/resources/images/camera.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Take a network snapshot"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSnapshotActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnColorSettings">
           <Properties>
-            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="org.wisenet.platform.gui.WorkbenchPanel" id="ColorSettingsAction" methodName="ColorSettingsAction"/>
-            </Property>
             <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/org/wisenet/platform/resources/images/ColorSettings.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Set color settings"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnColorSettingsActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JToolBar$Separator" name="jSeparator5">
         </Component>
@@ -357,6 +365,20 @@
           </Events>
         </Component>
         <Component class="javax.swing.JToolBar$Separator" name="jSeparator3">
+        </Component>
+        <Component class="javax.swing.JButton" name="cmdMonitEnergy">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/org/wisenet/platform/resources/images/Battery-icon.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Observe Simulation Energy" noResource="true"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdMonitEnergyActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnLoadTopology">
           <Properties>
@@ -419,22 +441,32 @@
         </Component>
         <Component class="javax.swing.JToolBar$Separator" name="jSeparator8">
         </Component>
+        <Component class="javax.swing.JButton" name="cmdSelAttackedNodes">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Sel. Attacked Nodes"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdSelAttackedNodesActionPerformed"/>
+          </Events>
+        </Component>
         <Component class="javax.swing.JToggleButton" name="tgbRoutingAttackMode">
           <Properties>
             <Property name="text" type="java.lang.String" value="Routing Attack Mode" noResource="true"/>
           </Properties>
         </Component>
+        <Component class="javax.swing.JButton" name="cmdSelectAttack">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Select Attack"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdSelectAttackActionPerformed"/>
+          </Events>
+        </Component>
         <Component class="javax.swing.JToolBar$Separator" name="jSeparator9">
         </Component>
-        <Container class="javax.swing.JPanel" name="searchPanel1">
-          <Properties>
-            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[100, 25]"/>
-            </Property>
-          </Properties>
-
-          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
-        </Container>
         <Container class="javax.swing.JPanel" name="searchPanel">
           <Properties>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -456,7 +488,7 @@
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
-                  <BorderConstraints direction="Before"/>
+                  <BorderConstraints direction="After"/>
                 </Constraint>
               </Constraints>
             </Component>

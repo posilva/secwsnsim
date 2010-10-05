@@ -615,29 +615,19 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         PlatformDialog.display(sw, "Create a simulation", PlatformFrame.OKCANCEL_MODE);
         boolean status = sw.isOk();
         if (status) {
-
             resetWorkbench();
             mainPanel.add(workbenchPanel1, java.awt.BorderLayout.CENTER);
             workbenchPanel1.getSimulationPanel().initSimulation(sw.getSettings());
-
         }
-
         if (status) {
             if (PlatformManager.getInstance().getActiveSimulation() != null) {
-
                 workbenchPanel1.getSimulationPanel().addSimulationPanelListerner(this);
                 ((Simulation) PlatformManager.getInstance().getActiveSimulation()).addSimulationListener(this);
-
                 getComponent().setVisible(true);
-
                 showWorkbench();
-
                 PlatformManager.getInstance().setNewSimulation(true);
-
                 PlatformManager.getInstance().showSimulationName("");
-
                 PlatformManager.getInstance().getActiveSimulation().getCoverageInstrument().updateNetworkSize();
-
                 ((CoverageInstrument) getCoverageInstrument()).addCoverageListener(this);
             }
         }
@@ -653,7 +643,7 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         setSimulationTime("0");
         updateSimulationNrNodes(0);
         updateAverageNeighborsPerNode();
-        updateClock("0");
+        updateClock("00:00:00");
         updateSimulationFieldSize();
         updateSimulationState("DEPLOY");
     }

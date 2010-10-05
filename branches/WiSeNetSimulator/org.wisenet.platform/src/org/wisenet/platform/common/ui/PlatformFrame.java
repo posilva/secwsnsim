@@ -37,6 +37,7 @@ public class PlatformFrame extends javax.swing.JFrame implements KeyListener, Co
     protected int status;
     protected int mode = OKCANCEL_MODE;
     protected boolean applyVisible = false;
+    private PlatformPanel platformPanel;
 
     /** 
      * Creates new form PlatformDialog
@@ -143,6 +144,11 @@ public class PlatformFrame extends javax.swing.JFrame implements KeyListener, Co
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("Form"); // NOI18N
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         titleArea.setBackground(new java.awt.Color(254, 254, 254));
         titleArea.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -223,6 +229,12 @@ public class PlatformFrame extends javax.swing.JFrame implements KeyListener, Co
     private void cmdOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdOkActionPerformed
         performEnterAction(null);
     }//GEN-LAST:event_cmdOkActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        if (platformPanel != null) {
+            platformPanel.beforeClose();
+        }
+    }//GEN-LAST:event_formWindowClosing
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel buttonArea;
     private javax.swing.JButton cmdApply;
@@ -249,6 +261,10 @@ public class PlatformFrame extends javax.swing.JFrame implements KeyListener, Co
         pack();
         GUI_Utils.centerOnScreen(this);
         setVisible(true);
+        if (platformPanel != null) {
+            platformPanel.beforeStart();
+        }
+
         this.contentArea.updateUI();
     }
 
@@ -386,6 +402,7 @@ public class PlatformFrame extends javax.swing.JFrame implements KeyListener, Co
     }
 
     private void assignContent(PlatformPanel content) {
+        this.platformPanel = content;
         setContentArea(content);
         content.setNotificationHandler(this);
     }

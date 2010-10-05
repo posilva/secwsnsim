@@ -272,4 +272,8 @@ public class ImageViewerPanel extends PlatformPanel {
     public boolean strechImage() {
         return chkStrectch.isSelected();
     }
+
+    @Override
+    public void beforeClose() {
+    }
 }

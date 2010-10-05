@@ -1,6 +1,5 @@
 package org.wisenet.protocols.common;
 
-
 import java.awt.Color;
 import org.wisenet.simulator.core.Simulator;
 import org.wisenet.simulator.core.node.Mica2SensorNode;
@@ -18,4 +17,11 @@ public class BasicNode extends Mica2SensorNode implements IDisplayable {
     public void init() {
         super.init();
     }
+
+    @Override
+    public Object getUniqueID() {
+        return getId();
+    }
 }
+
+

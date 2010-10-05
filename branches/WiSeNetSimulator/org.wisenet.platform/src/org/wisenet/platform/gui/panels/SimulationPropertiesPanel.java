@@ -149,4 +149,7 @@ public class SimulationPropertiesPanel extends PlatformPanel {
     protected boolean isDataValid() {
         return true;
     }
+    @Override
+    public void beforeClose() {
+    }
 }
