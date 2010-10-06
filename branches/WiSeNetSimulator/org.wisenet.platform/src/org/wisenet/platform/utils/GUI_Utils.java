@@ -14,6 +14,8 @@ import java.io.File;
 import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileFilter;
 import org.wisenet.platform.core.PlatformManager;
 import org.wisenet.platform.utils.gui.ErrorHandler;
@@ -138,9 +140,9 @@ public class GUI_Utils {
         jf.setDialogTitle(title);
         jf.setFileSelectionMode(JFileChooser.FILES_ONLY);
         jf.setMultiSelectionEnabled(false);
-        Component c =null;
-        if (PlatformManager.getInstance().getPlatformView()!=null){
-            c=PlatformManager.getInstance().getPlatformView().getFrame();
+        Component c = null;
+        if (PlatformManager.getInstance().getPlatformView() != null) {
+            c = PlatformManager.getInstance().getPlatformView().getFrame();
         }
         int result = jf.showOpenDialog(c);
         if (result == JFileChooser.CANCEL_OPTION || result == JFileChooser.ERROR_OPTION) {
@@ -155,5 +157,14 @@ public class GUI_Utils {
 
     public static void showMessage(String msg) {
         showMessage(msg, JOptionPane.PLAIN_MESSAGE);
+    }
+
+    public static void setFocus(final JTextField textField) {
+        SwingUtilities.invokeLater(new Runnable() {
+
+            public void run() {
+                textField.requestFocus();
+            }
+        });
     }
 }

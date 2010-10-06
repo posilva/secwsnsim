@@ -30,6 +30,7 @@ import org.wisenet.platform.utils.GUI_Utils;
  */
 public class PlatformDialog extends javax.swing.JDialog implements KeyListener, ContainerListener, IPlatformDialogActions {
 
+    public static final int NOACTIONS_MODE = -1;
     public static final int OKCANCEL_MODE = 0;
     public static final int OKCANCELAPPLY_MODE = 1;
     public static final int OK_MODE = 2;
@@ -37,7 +38,7 @@ public class PlatformDialog extends javax.swing.JDialog implements KeyListener, 
     public static final int OK_STATUS = 1;
     private boolean displayed;
     protected int status;
-    protected int mode = OKCANCEL_MODE;
+    protected int mode = NOACTIONS_MODE;
     protected boolean applyVisible = false;
     private PlatformPanel platformPanel;
 
@@ -398,7 +399,10 @@ public class PlatformDialog extends javax.swing.JDialog implements KeyListener, 
             setOKCancelApplyMode();
         } else if (mode == OK_MODE) {
             setOKMode();
+        } else if (mode == NOACTIONS_MODE) {
+            setNoActionsMode();
         }
+
     }
 
     private void setOKMode() {
@@ -450,5 +454,9 @@ public class PlatformDialog extends javax.swing.JDialog implements KeyListener, 
         PlatformDialog pf = new PlatformDialog(null, true, content, mode, titlearea);
         pf.display();
         return pf;
+    }
+
+    private void setNoActionsMode() {
+        this.remove(buttonArea);
     }
 }

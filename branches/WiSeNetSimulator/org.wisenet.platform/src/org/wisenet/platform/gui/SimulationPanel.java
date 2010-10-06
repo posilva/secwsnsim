@@ -1198,6 +1198,11 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     }
 
     public void resetSimulation() {
+        if (getSimulation().isStarted()) {
+            getSimulation().reset();
+        }
+        simulationRunning = false;
+
     }
 
     /**

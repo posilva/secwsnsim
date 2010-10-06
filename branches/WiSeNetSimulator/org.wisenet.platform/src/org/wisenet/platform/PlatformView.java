@@ -1002,7 +1002,7 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         }
     }
 
-    private void applyLookAndFeel() {
+    public static void applyLookAndFeel() {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
 
