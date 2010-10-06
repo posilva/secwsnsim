@@ -200,7 +200,7 @@ public class Mica2MACLayer extends MACLayer {
         if (sending) {
             controller.incrementTotalMessagesNotSent();
             if (isDebugEnabled()) {
-                System.out.println(getSimData() + " - Messages not Sent: " + controller.getTotalMessagesNotSent());
+                log(" Messages not Sent: " + controller.getTotalMessagesNotSent());
             }
             return false;
         } else {
@@ -366,7 +366,7 @@ public class Mica2MACLayer extends MACLayer {
             } else {
                 controller.incrementTotalMessagesCorrupted();
                 if (isDebugEnabled()) {
-                    System.out.println(getSimData() + " - Corrupted message: " + controller.getTotalMessagesCorrupted());
+                    log("Corrupted message: " + controller.getTotalMessagesCorrupted());
                 }
             }
 
@@ -381,5 +381,16 @@ public class Mica2MACLayer extends MACLayer {
         } else {
             noiseStrength -= level;
         }
+    }
+
+    @Override
+    public void reset() {
+        super.reset();
+        parentID = -1;
+        noiseStrength = 0;
+        signalStrength = 0;
+        senderRoutingLayer = null;
+        testChannelEvent = new TestChannelEvent();
+        endTransmissionEvent = new EndTransmissionEvent();
     }
 }

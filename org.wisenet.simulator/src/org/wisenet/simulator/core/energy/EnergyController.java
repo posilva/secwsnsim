@@ -68,4 +68,11 @@ public class EnergyController implements EnergyListener {
     public void setLogEnergyEnable(boolean logEnergyEnable) {
         this.logEnergyEnable = logEnergyEnable;
     }
+
+    public void reset() {
+        getDatabase().reset();
+        if (getEnergyLogger() != null && this.logEnergyEnable) {
+            getEnergyLogger().reset();
+        }
+    }
 }

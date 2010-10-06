@@ -8,7 +8,7 @@ import java.util.Hashtable;
 
 /**
  *
-* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class GlobalEnergyDatabase {
 
@@ -16,7 +16,6 @@ public class GlobalEnergyDatabase {
     Hashtable<Short, Double> nodesEnergy = new Hashtable<Short, Double>();
     Hashtable<String, Double> statesEnergy = new Hashtable<String, Double>();
     double networkEnergyConsumption = 0;
-
 
     public void addConsumption(short nodeid, String event, long realTime, long simTime, double value, String state) {
         saveEventEnergy(event, value);
@@ -45,6 +44,7 @@ public class GlobalEnergyDatabase {
         eventsEnergy.clear();
         statesEnergy.clear();
         nodesEnergy.clear();
+        networkEnergyConsumption = 0;
     }
 
     private void saveEventEnergy(String event, double value) {
@@ -71,6 +71,7 @@ public class GlobalEnergyDatabase {
     private void updateNetworkEnergyConsumption(double value) {
         networkEnergyConsumption += value;
     }
+
     /**
      * 
      * @return

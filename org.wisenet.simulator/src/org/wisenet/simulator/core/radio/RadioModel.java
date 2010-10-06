@@ -40,6 +40,11 @@ import org.wisenet.simulator.core.node.Node;
 public abstract class RadioModel {
 
     private Simulator simulator;
+    protected boolean updated = false;
+
+    public boolean isUpdated() {
+        return updated;
+    }
 
     /**
      * Radio models must implement this method to create
@@ -59,8 +64,17 @@ public abstract class RadioModel {
      * whenever the location of the transcivers changed.
      * This operation is extremely expensive and should
      * be used sparsely.
+     *
+     * Changed to concrete to increase control over this action
      */
-    public abstract void updateNeighborhoods();
+    public final void updateNeighborhoods() {
+        if (beforeUpdateNeighborhoods()) {
+            if (updatingNeighborhoods()) {
+                afterUpdateNeighborhoods();
+            }
+        }
+
+    }
 
     /**
      * @param simulator the simulator to set
@@ -76,7 +90,17 @@ public abstract class RadioModel {
         return simulator;
     }
 
+    /**
+     * This action occurs after neighborhood update processing
+     */
+    protected abstract void afterUpdateNeighborhoods();
+
+    protected abstract boolean updatingNeighborhoods();
+
+    protected abstract boolean beforeUpdateNeighborhoods();
+
     public void reset() {
+
     }
 
     /**
@@ -110,5 +134,13 @@ public abstract class RadioModel {
          * parameters.
          */
         public abstract void endTransmission();
+
+        protected void reset() {
+            neighbors.clear();
+            neighborsThatKnowMe.clear();
+            neighborsThatKnowMeSet.clear();
+            neighborsSet.clear();
+
+        }
     }
 }

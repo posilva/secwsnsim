@@ -258,7 +258,7 @@ public abstract class RoutingLayer extends Layer {
      * Startup routing actions
      */
     public final void startup() {
-        setup();
+        onStartUp();
 
     }
 
@@ -351,7 +351,7 @@ public abstract class RoutingLayer extends Layer {
     /**
      * Setup stuff for routing protocol
      */
-    protected abstract void setup();
+    protected abstract void onStartUp();
 
     /**
      * Do some action after switch to stable
@@ -362,4 +362,12 @@ public abstract class RoutingLayer extends Layer {
      * Initialize attacks in each node
      */
     protected abstract void initAttacks();
+
+    @Override
+    public void reset() {
+        super.reset();
+        stable = false;
+        protocolPhases.clear();
+        currentPhase = null;
+    }
 }

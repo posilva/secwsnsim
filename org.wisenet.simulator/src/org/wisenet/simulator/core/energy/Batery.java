@@ -118,6 +118,9 @@ public class Batery {
         if (!enable) {
             return;
         }
+        if (infinit) {
+            return;
+        }
         consumeEvent(value, event);
     }
 
@@ -161,6 +164,9 @@ public class Batery {
      */
     protected synchronized void consume(double value) {
         if (!enable) {
+            return;
+        }
+        if (infinit) {
             return;
         }
         consumeEvent(value, UNKNOWNED_EVENT);
@@ -350,5 +356,14 @@ public class Batery {
      */
     public static EnergyController getController() {
         return controller;
+    }
+
+    public void reset() {
+        if (this.energyModel != null) {
+            this.initialPower = this.energyModel.getTotalEnergy();
+            this.currentPower = this.energyModel.getTotalEnergy();
+        } else {
+            this.initialPower = currentPower;
+        }
     }
 }

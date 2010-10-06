@@ -9,6 +9,7 @@ import java.util.Properties;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.wisenet.simulator.common.PersistantObject;
+import org.wisenet.simulator.components.evaluation.tests.AbstractTest;
 import org.wisenet.simulator.components.evaluation.tests.TestSet;
 import org.wisenet.simulator.components.evaluation.tests.TestTypeEnum;
 import org.wisenet.simulator.core.energy.EnergyController;
@@ -42,9 +43,21 @@ public abstract class AbstractSimulation extends PersistantObject implements ISi
     private boolean bPreInit = false;
     private TestSet testSet = new TestSet();
     protected SimulationSettings settings;
+    /**
+     * Control flag for start state
+     */
+    protected boolean started;
 
     public AbstractSimulation() {
         super();
+    }
+
+    public boolean isStarted() {
+        return started;
+    }
+
+    public void setStarted(boolean started) {
+        this.started = started;
     }
 
     public abstract void stop();
@@ -104,14 +117,9 @@ public abstract class AbstractSimulation extends PersistantObject implements ISi
     }
 
     public void reset() {
-        this.name = "";
+        started = false;
         this.bPreInit = false;
-        this.description = "";
-        this.initialMaxNodeRange = 0;
-        this.radioModel = null;
-        this.seed = 0;
-        this.nodeFactory = null;
-        this.simulator = null;
+
     }
 
     public String getName() {
@@ -364,4 +372,7 @@ public abstract class AbstractSimulation extends PersistantObject implements ISi
     }
 
     public abstract void create(SimulationSettings settings);
+
+    public void addTest(AbstractTest result) {
+    }
 }

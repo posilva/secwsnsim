@@ -4,6 +4,9 @@
  */
 package org.wisenet.simulator.components.evaluation.tests;
 
+import org.wisenet.simulator.components.evaluation.tests.events.TestStartEvent;
+import org.wisenet.simulator.components.evaluation.tests.events.TestEndEvent;
+import org.wisenet.simulator.components.evaluation.tests.events.TestExecutionEvent;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.wisenet.simulator.common.PersistantException;
 import org.wisenet.simulator.core.Message;

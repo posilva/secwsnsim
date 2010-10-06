@@ -2,8 +2,9 @@
  *  Wireless Sensor Network Simulator
  *  The next generation for WSN Simulations
  */
-package org.wisenet.simulator.components.evaluation.tests;
+package org.wisenet.simulator.components.evaluation.tests.events;
 
+import org.wisenet.simulator.components.evaluation.tests.AbstractTest;
 import org.wisenet.simulator.core.Event;
 
 /**
