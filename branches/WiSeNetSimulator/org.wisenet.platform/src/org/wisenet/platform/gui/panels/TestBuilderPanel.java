@@ -10,7 +10,10 @@
  */
 package org.wisenet.platform.gui.panels;
 
+import java.io.IOException;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
 import org.wisenet.platform.PlatformView;
@@ -19,6 +22,7 @@ import org.wisenet.platform.common.ui.PlatformFrame;
 import org.wisenet.platform.common.ui.PlatformPanel;
 import org.wisenet.platform.utils.GUI_Utils;
 import org.wisenet.simulator.components.evaluation.tests.AbstractTest;
+import org.wisenet.simulator.components.evaluation.tests.TestInputParameters;
 import org.wisenet.simulator.components.simulation.Simulation;
 import org.wisenet.simulator.core.node.layers.routing.attacks.AttacksEntry;
 
@@ -30,10 +34,15 @@ public class TestBuilderPanel extends PlatformPanel {
 
     protected Simulation simulation = null;
     AbstractTest test;
+    TestInputParameters inputParameters = new TestInputParameters();
 
     /** Creates new form TestBuilderPanel */
     public TestBuilderPanel() {
         initComponents();
+    }
+
+    private int INT(JTextField text) throws NumberFormatException {
+        return Integer.parseInt(text.getText());
     }
 
     /** This method is called from within the constructor to
@@ -74,6 +83,7 @@ public class TestBuilderPanel extends PlatformPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtTestDescription = new javax.swing.JTextArea();
         jSeparator1 = new javax.swing.JSeparator();
+        jCheckBox1 = new javax.swing.JCheckBox();
 
         jLabel1.setText("Test Name:");
         jLabel1.setName("jLabel1"); // NOI18N
@@ -261,7 +271,7 @@ public class TestBuilderPanel extends PlatformPanel {
                     .addComponent(chkSenderNodesStable)
                     .addComponent(chkReceiverNodesSinknodes)
                     .addComponent(chkAttackNodesStable))
-                .addGap(17, 17, 17))
+                .addGap(55, 55, 55))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -307,6 +317,11 @@ public class TestBuilderPanel extends PlatformPanel {
 
         jSeparator1.setName("jSeparator1"); // NOI18N
 
+        jCheckBox1.setText("Insert into current simulation");
+        jCheckBox1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jCheckBox1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jCheckBox1.setName("jCheckBox1"); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -316,13 +331,15 @@ public class TestBuilderPanel extends PlatformPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jSeparator1))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(cmdLoadFromFile, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cmdSaveToFile, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cmdSaveToFile, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
+                                .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(12, 12, 12)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -394,7 +411,8 @@ public class TestBuilderPanel extends PlatformPanel {
                 .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmdLoadFromFile)
-                    .addComponent(cmdSaveToFile))
+                    .addComponent(cmdSaveToFile)
+                    .addComponent(jCheckBox1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -499,6 +517,7 @@ public class TestBuilderPanel extends PlatformPanel {
             return false;
         }
 
+
         return true;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -511,6 +530,7 @@ public class TestBuilderPanel extends PlatformPanel {
     private javax.swing.JCheckBox chkSenderNodesStable;
     private javax.swing.JButton cmdLoadFromFile;
     private javax.swing.JButton cmdSaveToFile;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -562,7 +582,30 @@ public class TestBuilderPanel extends PlatformPanel {
 
     private void saveTestToFile() {
         if (isDataValid()) {
-            System.out.println("Saved");
+            try {
+                inputParameters.setNumberOfSenderNodes(INT(txtNrSenderNodes));
+                inputParameters.setNumberOfReceiverNodes(INT(txtNrReceiverNodes));
+                inputParameters.setNumberOfAttackNodes(INT(txtNrAttackNodes));
+                inputParameters.setPercentOfSenderNodes(chkSenderNodesPercent.isSelected());
+                inputParameters.setPercentOfReceiverNodes(chkReceiverNodesPercent.isSelected());
+                inputParameters.setPercentOfAttackNodes(chkAttackNodesPercent.isSelected());
+                inputParameters.setOnlyConsiderToSenderStableNodes(chkSenderNodesStable.isSelected());
+                inputParameters.setOnlyConsiderToAttackStableNodes(chkAttackNodesStable.isSelected());
+                inputParameters.setOnlyConsiderToReceiverSinkNodes(chkReceiverNodesSinknodes.isSelected());
+                inputParameters.setPercentOfSenderNodes(chkSenderNodesPercent.isSelected());
+                //
+                inputParameters.setNumberOfMessagesPerNode(INT(txtNrMessagesPerNode));
+                inputParameters.setIntervalBetweenMessagesSent(INT(txtIntervalBetweenMessages));
+                inputParameters.setNumberOfRetransmissions(INT(txtNrRetransmissions));
+                if (cboAttacks.getSelectedItem().equals("None")) {
+                    inputParameters.setAttackSelected(null);
+                } else {
+                    inputParameters.setAttackSelected(cboAttacks.getSelectedItem().toString());
+                }
+                GUI_Utils.showMessage(GUI_Utils.showSavePersistentObjectDialog("Save test"));
+            } catch (IOException ex) {
+                GUI_Utils.showException(ex);
+            }
         }
     }
 
@@ -575,7 +618,7 @@ public class TestBuilderPanel extends PlatformPanel {
             Set registeredAttacks = simulation.getRoutingLayerController().getRegisteredAttacks();
             if (registeredAttacks.size() > 0) {
                 cboAttacks.removeAll();
-                    cboAttacks.addItem("None");
+                cboAttacks.addItem("None");
                 for (Object object : registeredAttacks) {
                     AttacksEntry a = (AttacksEntry) object;
                     cboAttacks.addItem(a.getLabel());
