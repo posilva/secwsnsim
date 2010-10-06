@@ -157,7 +157,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
      * Setup the routing layer 
      */
     @Override
-    protected void setup() {
+    protected void onStartUp() {
         setCurrentPhase(PHASE_SETUP);
         ((CoverageInstrument) getCoverageInstrument()).signalNeighborDetectionReset(CoverageInstrument.CoverageModelEnum.ROUTING);
         setupEvaluationClasses();
@@ -753,6 +753,21 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
 
     @Override
     protected void initAttacks() {
-        attacks.addEntry(new AttacksEntry(false, "Blackhole Attack", new BlackholeRoutingAttack(this)));
+        AttacksEntry entry = new AttacksEntry(false, "Blackhole Attack", new BlackholeRoutingAttack(this));
+        attacks.addEntry(entry);
+        getController().registerAttack(entry);
+    }
+
+    @Override
+    public void reset() {
+        super.reset();
+        messagesQueue.clear();
+        neighborInfo = new NeighborInfo();
+        sendingMessage = false;
+        feedbackMessagesReceived = 0;
+        lastFeedbackMessagesReceivedCheck = 0;
+        feedbackMessageRetries = 0;
+        tableOfNodesByHops.clear();
+        reliableMode = false;
     }
 }
