@@ -98,4 +98,7 @@ public abstract class Layer {
     public void setUnderAttack(boolean underAttack) {
         this.underAttack = underAttack;
     }
+
+    public void reset() {
+    }
 }

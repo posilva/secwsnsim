@@ -557,5 +557,12 @@ public abstract class Node {
 
     public abstract Object getUniqueID();
 
-    
+    public void reset() {
+        getGraphicNode().reset();
+        setParentNode(null);
+        getBateryEnergy().reset();
+        getRoutingLayer().reset();
+        getMacLayer().reset();
+        getApplication().reset();
+    }
 }

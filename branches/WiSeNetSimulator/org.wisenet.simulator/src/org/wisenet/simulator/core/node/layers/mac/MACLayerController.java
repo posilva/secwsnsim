@@ -64,4 +64,10 @@ public class MACLayerController extends PersistantObject implements Parameteriza
         parameters.loadFromXML(configuration);
         
     }
+    public void reset(){
+        totalMessagesCorrupted=0;
+        totalMessagesNotSent=0;
+        totalMessagesSent=0;
+
+    }
 }

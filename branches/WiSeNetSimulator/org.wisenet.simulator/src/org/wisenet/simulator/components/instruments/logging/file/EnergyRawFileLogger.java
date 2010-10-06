@@ -14,14 +14,14 @@ import org.wisenet.simulator.utilities.Utilities;
 
 /**
  *
-* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class EnergyRawFileLogger extends EnergyFileLogger {
 
     public static final String LOGS_DIR = "logs";
     private boolean updating;
     private final Object writeMonitor = new Object();
-    private boolean exiting;
+    private boolean exiting = false;
 
     @Override
     public void init() {
@@ -71,10 +71,8 @@ public class EnergyRawFileLogger extends EnergyFileLogger {
                 if (updating) {
                     writeMonitor.wait();
                 }
-                System.out.print("Gracefull log exit...");
                 ((DataOutputStream) getOutputStream()).close();
                 exiting = true;
-                System.out.println("done");
 
             }
         } catch (Exception e) {
@@ -87,5 +85,11 @@ public class EnergyRawFileLogger extends EnergyFileLogger {
         if (!logDir.exists()) {
             logDir.mkdir();
         }
+    }
+
+    @Override
+    public void reset() {
+        close();
+        init();
     }
 }

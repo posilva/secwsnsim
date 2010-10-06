@@ -6,10 +6,10 @@ package org.wisenet.simulator.components.instruments.logging;
 
 /**
  *
-* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public abstract class EnergyLogger {
-   
+
     /**
      *
      */
@@ -18,9 +18,11 @@ public abstract class EnergyLogger {
     /**
      *
      */
-    public abstract void update(short id, String event,long realTime, long simTime, double value, String state);
+    public abstract void update(short id, String event, long realTime, long simTime, double value, String state);
 
     public abstract void open();
+
     public abstract void close();
 
+    public abstract void reset();
 }

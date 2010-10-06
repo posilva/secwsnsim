@@ -13,7 +13,6 @@ import org.wisenet.simulator.core.radio.RadioModel.Neighborhood;
 public abstract class MACLayer extends Layer {
 
     protected static MACLayerController controller = new MACLayerController();
-    
     RadioModel radioModel;
     RadioModel.Neighborhood neighborhood;
     protected static boolean controllerUpdated = false;
@@ -38,8 +37,6 @@ public abstract class MACLayer extends Layer {
     public MACLayer() {
         init();
     }
-
-
 
     public boolean isCorrupted() {
         return corrupted;
@@ -191,13 +188,22 @@ public abstract class MACLayer extends Layer {
     public static MACLayerController getController() {
         return controller;
     }
+
     private void init() {
         setupLayerParameters();
+    }
+
+    @Override
+    public void reset() {
+        super.reset();
+        receiving = false;
+        sending = false;
+        corrupted = false;
+        transmitting = false;
     }
 
     /**
      * Sets the common parameters for the mac layer
      */
     protected abstract void setupLayerParameters();
-
 }

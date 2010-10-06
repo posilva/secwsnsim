@@ -95,18 +95,8 @@ public class GaussianRadioModel extends RadioModel {
      * operation should be called whenever the location of the nodes changed.
      * This operation is extremely expensive and should be used sparsely.
      */
-    public void updateNeighborhoods() {
+    protected boolean updatingNeighborhoods() {
 
-        getCoverageInstrument().signalNeighborDetectionReset(CoverageInstrument.CoverageModelEnum.RADIO);
-        /**
-         * Clear neighborhood information
-         */
-        for (Node srcNode : getSimulator().getNodes()) {
-            srcNode.getMacLayer().getNeighborhood().neighbors.clear();
-            srcNode.getMacLayer().getNeighborhood().neighborsSet.clear();
-            srcNode.getMacLayer().getNeighborhood().neighborsThatKnowMe.clear();
-            srcNode.getMacLayer().getNeighborhood().neighborsThatKnowMeSet.clear();
-        }
         /**
          * Create neighborhood 
          */
@@ -136,13 +126,9 @@ public class GaussianRadioModel extends RadioModel {
                 neighborhood.dynamicStrengths.add(0.0);
             }
         }
-        /**
-         * Create direct access structures
-         */
-        for (Node srcNode : getSimulator().getNodes()) {
-            srcNode.getMacLayer().getNeighborhood().neighborsSet = new HashSet(srcNode.getMacLayer().getNeighborhood().neighbors);
-            srcNode.getMacLayer().getNeighborhood().neighborsThatKnowMeSet = new HashSet(srcNode.getMacLayer().getNeighborhood().neighborsThatKnowMe);
-        }
+
+
+        return true;
     }
 
     /**
@@ -182,6 +168,32 @@ public class GaussianRadioModel extends RadioModel {
     protected double getDynamicStrength(double signalStrength, double staticFading) {
         double dynamicRandomFading = 1.0 + dynamicRandomFactor * Simulator.randomGenerator.random().nextGaussian();
         return dynamicRandomFading <= 0.0 ? 0.0 : signalStrength * staticFading * dynamicRandomFading;
+    }
+
+    @Override
+    protected void afterUpdateNeighborhoods() {
+        /**
+         * Create direct access structures
+         */
+        for (Node srcNode : getSimulator().getNodes()) {
+            srcNode.getMacLayer().getNeighborhood().neighborsSet = new HashSet(srcNode.getMacLayer().getNeighborhood().neighbors);
+            srcNode.getMacLayer().getNeighborhood().neighborsThatKnowMeSet = new HashSet(srcNode.getMacLayer().getNeighborhood().neighborsThatKnowMe);
+        }
+    }
+
+    @Override
+    protected boolean beforeUpdateNeighborhoods() {
+        getCoverageInstrument().signalNeighborDetectionReset(CoverageInstrument.CoverageModelEnum.RADIO);
+        /**
+         * Clear neighborhood information
+         */
+        for (Node srcNode : getSimulator().getNodes()) {
+            srcNode.getMacLayer().getNeighborhood().neighbors.clear();
+            srcNode.getMacLayer().getNeighborhood().neighborsSet.clear();
+            srcNode.getMacLayer().getNeighborhood().neighborsThatKnowMe.clear();
+            srcNode.getMacLayer().getNeighborhood().neighborsThatKnowMeSet.clear();
+        }
+        return true;
     }
 
     /**
@@ -280,11 +292,14 @@ public class GaussianRadioModel extends RadioModel {
             }
             stream = null;
         }
-        /**
-         *
-         * @param source
-         * @param msg
-         */
+
+        @Override
+        protected void reset() {
+            super.reset();
+            dynamicStrengths.clear();
+            this.stream = null;
+            staticFadings.clear();
+        }
     }
 
     protected CoverageInstrument getCoverageInstrument() {

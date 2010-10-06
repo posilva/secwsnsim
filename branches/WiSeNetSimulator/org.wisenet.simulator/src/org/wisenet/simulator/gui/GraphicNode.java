@@ -420,4 +420,8 @@ public class GraphicNode {
         markedAsStable = true;
 
     }
+
+    public void reset() {
+//        backcolor = Color.RED;
+    }
 }

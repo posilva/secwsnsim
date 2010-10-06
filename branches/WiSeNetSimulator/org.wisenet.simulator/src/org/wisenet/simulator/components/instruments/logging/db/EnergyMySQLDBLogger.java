@@ -12,12 +12,20 @@ import org.wisenet.simulator.utilities.Utilities;
 
 /**
  *
-* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class EnergyMySQLDBLogger extends EnergyDBLogger {
 
     ArrayBlockingQueue<Record> recordsQueue = new ArrayBlockingQueue<Record>(5000);
     private boolean closed = false;
+
+    @Override
+    public void reset() {
+        recordsQueue = new ArrayBlockingQueue<Record>(5000);
+        closed = false;
+        init();
+        open();
+    }
 
     class Record {
 

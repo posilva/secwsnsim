@@ -1,7 +1,5 @@
 package org.wisenet.simulator.components.simulation;
 
-
-
 import java.util.logging.Level;
 import org.apache.commons.configuration.ConfigurationException;
 import org.wisenet.simulator.common.PersistantException;
@@ -676,7 +674,7 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
             node.setPosition(x, y, z);
             getSimulator().addNode(node);
         }
-        
+
     }
 
     private void saveNT(String filename) throws ConfigurationException {
@@ -736,5 +734,18 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
 
     public void loadFromXML(XMLConfiguration configuration) throws PersistantException {
         settings.loadFromXML(name);
+    }
+
+    @Override
+    public void reset() {
+        super.reset();
+
+        getSimulator().reset();
+        getRoutingLayerController().reset();
+        getMacLayerController().reset();
+        getEnergyController().reset();
+        getReliabilityInstrument().reset();
+        getLatencyInstrument().reset();
+        getCoverageInstrument().reset();
     }
 }

@@ -79,6 +79,7 @@ public class Simulator {
     private boolean paused;
     private RadioModel radioModel;
     private final Object monitor = new Object();
+    private final Object resetMonitor = new Object();
     private AbstractSimulation simulation;
     private Thread runningThread;
     private boolean reset = false;
@@ -92,6 +93,8 @@ public class Simulator {
     protected double maxCoordinate = 0;
     private ISimulationDisplay display;
     private boolean queueWasEmpty = false;
+    private boolean start = false;
+    private boolean running;
 
     public Simulator() {
         super();
@@ -126,11 +129,16 @@ public class Simulator {
 
     public void stop() {
         stop = true;
-        reset();
+
     }
 
     public void reset() {
+        if (!start && !stop) {
+            return;
+        }
         reset = true;
+        doReset();
+
     }
 
     public void pause() {
@@ -146,13 +154,16 @@ public class Simulator {
     }
 
     public void start() {
+        stop = false;
         reset = false;
+        paused = false;
         setupRoutingLayer();
         if (mode == FAST) {
             runWithDisplay();
         } else {
             runWithDisplayInRealTime();
         }
+        start = true;
     }
 
     private void fireOnNewStepRound(SimulatorEvent event) {
@@ -193,6 +204,40 @@ public class Simulator {
 
     public boolean isEmpty() {
         return getNodes().isEmpty();
+    }
+
+    private boolean doReset() {
+        if (running) {
+            waitToReset();
+        }
+
+        for (Node node : getNodes()) {
+            node.reset();
+            start = false;
+            stop = false;
+            reset = false;
+            paused = false;
+            eventQueue.clear();
+            lastEventTime = 0;
+        }
+        getRadioModel().reset();
+        return true;
+    }
+
+    private void notifyReset() {
+        synchronized (resetMonitor) {
+            resetMonitor.notifyAll();
+            running = false;
+        }
+    }
+
+    private void waitToReset() {
+        synchronized (resetMonitor) {
+            try {
+                resetMonitor.wait();
+            } catch (InterruptedException ex) {
+            }
+        }
     }
 
     /**
@@ -334,7 +379,6 @@ public class Simulator {
                         break;
                     }
                     // getDisplay().updateDisplay();
-
                 }
             }
         });
@@ -350,10 +394,13 @@ public class Simulator {
         runningThread = new Thread(new Runnable() {
 
             public void run() {
-                while (!reset) {
+                running = true;
+                while (canRun()) {
                     step(SIMULATOR_STEPS);
                     display.updateDisplay();
                 }
+                notifyReset();
+
             }
         });
         runningThread.start();
@@ -369,8 +416,9 @@ public class Simulator {
 
             @Override
             public void run() {
+                running = true;
                 long initDiff = System.currentTimeMillis() - getSimulationTimeInMillisec();
-                while (!reset) {
+                while (canRun()) {
                     step(RUNTIME_NUM_STEPS);
                     display.updateDisplay();
                     long diff = System.currentTimeMillis() - getSimulationTimeInMillisec();
@@ -383,9 +431,14 @@ public class Simulator {
                         }
                     }
                 }
+                notifyReset();
             }
         };
         runningThread.start();
+    }
+
+    private boolean canRun() {
+        return !reset && !stop;
     }
 
     /**

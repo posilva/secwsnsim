@@ -8,6 +8,7 @@ import org.wisenet.simulator.common.ObjectParameters;
 import org.wisenet.simulator.common.Parameterizable;
 import org.wisenet.simulator.common.PersistantException;
 import org.wisenet.simulator.common.PersistantObject;
+import org.wisenet.simulator.core.node.layers.routing.attacks.AttacksEntry;
 
 /**
  *
@@ -19,6 +20,7 @@ public class RoutingLayerController extends PersistantObject implements Paramete
     Hashtable<Short, Long> messageReceivedByTypeCounter = new Hashtable<Short, Long>();
     Hashtable<Short, Long> messageSentByTypeCounter = new Hashtable<Short, Long>();
     RoutingLayerParameters parameters = new RoutingLayerParameters();
+    Set registeredAttacks = new HashSet();
     protected static boolean controllerUpdated = false;
 
     void registerAsStable(RoutingLayer nodeRL) {
@@ -88,5 +90,21 @@ public class RoutingLayerController extends PersistantObject implements Paramete
     public void loadFromXML(XMLConfiguration configuration) throws PersistantException {
         parameters.loadFromXML(configuration);
 
+    }
+
+    public void registerAttack(AttacksEntry entry) {
+        registeredAttacks.add(entry);
+    }
+
+    public void unregisterAttack(AttacksEntry entry) {
+        registeredAttacks.remove(entry);
+    }
+
+    public Set getRegisteredAttacks() {
+        return registeredAttacks;
+    }
+
+    public void log(Exception ex) {
+        System.err.println(ex.getMessage());
     }
 }

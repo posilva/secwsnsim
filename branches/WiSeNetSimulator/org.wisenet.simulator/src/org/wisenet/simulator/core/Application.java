@@ -127,4 +127,8 @@ public abstract class Application {
      * @param message
      */
     protected abstract void onMessageReceived(Object message) ;
+
+    public void reset() {
+        
+    }
 }
