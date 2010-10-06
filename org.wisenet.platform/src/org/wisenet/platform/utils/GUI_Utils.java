@@ -81,6 +81,7 @@ public class GUI_Utils {
         File f = new File(new File(".").getCanonicalPath());
         jf.setCurrentDirectory(f);
         jf.setDialogTitle(title);
+
         jf.setFileSelectionMode(JFileChooser.FILES_ONLY);
         jf.setMultiSelectionEnabled(false);
         int result = jf.showSaveDialog(PlatformManager.getInstance().getPlatformView().getFrame());
@@ -105,9 +106,9 @@ public class GUI_Utils {
 
             @Override
             public boolean accept(File f) {
-//                if (f.isDirectory()) {
-//                    return true;
-//                }
+                if (f.isDirectory()) {
+                    return true;
+                }
 
                 // Ok, itвЂ™s a regular file, so check the extension
                 String name = f.getName().toLowerCase();
@@ -166,5 +167,13 @@ public class GUI_Utils {
                 textField.requestFocus();
             }
         });
+    }
+
+    public static String showSavePersistentObjectDialog(String msg) throws IOException {
+        String file = showSaveDialog(new FileFilter[]{XML()}, msg);
+        if (!file.toLowerCase().endsWith(".xml")) {
+            file = file + ".xml";
+        }
+        return file;
     }
 }
