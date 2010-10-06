@@ -2,12 +2,12 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1">
         <file>
-            <url>src/org/mei/securesim/components/logging/file/EnergyCSVFileLogger.java</url>
-            <line>18</line>
-        </file>
-        <file>
             <url>src/org/mei/securesim/components/logging/file/EnergyRawFileLogger.java</url>
             <line>19</line>
+        </file>
+        <file>
+            <url>src/org/mei/securesim/components/logging/file/EnergyCSVFileLogger.java</url>
+            <line>18</line>
         </file>
     </editor-bookmarks>
 </project-private>
