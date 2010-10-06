@@ -98,7 +98,7 @@
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-              <Component id="jPanel1" min="-2" pref="117" max="-2" attributes="0"/>
+              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -255,9 +255,9 @@
                           </Group>
                           <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="txtNrSenderNodes" pref="133" max="32767" attributes="1"/>
-                              <Component id="txtNrAttackNodes" alignment="1" pref="133" max="32767" attributes="1"/>
-                              <Component id="txtNrReceiverNodes" alignment="0" pref="133" max="32767" attributes="1"/>
+                              <Component id="txtNrSenderNodes" pref="134" max="32767" attributes="1"/>
+                              <Component id="txtNrAttackNodes" alignment="1" pref="134" max="32767" attributes="1"/>
+                              <Component id="txtNrReceiverNodes" alignment="0" pref="134" max="32767" attributes="1"/>
                           </Group>
                       </Group>
                   </Group>
