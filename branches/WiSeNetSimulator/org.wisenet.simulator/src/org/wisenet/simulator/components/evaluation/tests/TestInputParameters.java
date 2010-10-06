@@ -17,8 +17,10 @@ public class TestInputParameters extends PersistantObject{
     protected int numberOfSenderNodes;
     protected int numberOfReceiverNodes;
     protected boolean percentOfSenderNodes;
+    protected boolean percentOfReceiverNodes;
     protected double percentOfSenderNodesValue;
     protected boolean onlyConsiderToSenderStableNodes;
+    protected boolean onlyConsiderToAttackStableNodes;
     protected boolean onlyConsiderToReceiverSinkNodes;
     protected int numberOfMessagesPerNode;
     protected int intervalBetweenMessagesSent;
@@ -139,4 +141,22 @@ public class TestInputParameters extends PersistantObject{
     public void loadFromXML(XMLConfiguration configuration) throws PersistantException {
 
     }
+
+    public boolean isPercentOfReceiverNodes() {
+        return percentOfReceiverNodes;
+    }
+
+    public void setPercentOfReceiverNodes(boolean percentOfReceiverNodes) {
+        this.percentOfReceiverNodes = percentOfReceiverNodes;
+    }
+
+    public boolean isOnlyConsiderToAttackStableNodes() {
+        return onlyConsiderToAttackStableNodes;
+    }
+
+    public void setOnlyConsiderToAttackStableNodes(boolean onlyConsiderToAttackStableNodes) {
+        this.onlyConsiderToAttackStableNodes = onlyConsiderToAttackStableNodes;
+    }
+
+
 }
