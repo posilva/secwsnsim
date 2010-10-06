@@ -11,17 +11,22 @@ import org.wisenet.simulator.core.radio.GaussianRadioModel;
 
 /**
  *
-* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class INSENSGaussianRadioModel extends GaussianRadioModel {
-//org.mei.securesim.core.radio.INSENSGaussianRadioModel
 
     @Override
-    public void updateNeighborhoods() {
-        super.updateNeighborhoods();
-//        settingTwoWayNeighborHood();
+    protected void afterUpdateNeighborhoods() {
+        super.afterUpdateNeighborhoods();
+        settingTwoWayNeighborHood();
     }
+//org.mei.securesim.core.radio.INSENSGaussianRadioModel
 
+//    @Override
+//    public void updateNeighborhoods() {
+//        super.updateNeighborhoods();
+////        settingTwoWayNeighborHood();
+//    }
     private void settingTwoWayNeighborHood() {
         for (Node srcNode : getSimulator().getNodes()) {
             srcNode.getMacLayer().getNeighborhood().neighborsThatKnowMe.clear();
@@ -30,7 +35,7 @@ public class INSENSGaussianRadioModel extends GaussianRadioModel {
             Neighborhood neighborhood = (Neighborhood) srcNode.getMacLayer().getNeighborhood();
             ArrayList<Node> n = new ArrayList<Node>();
             HashSet<Node> ns = new HashSet<Node>();
-            
+
             for (Node node : srcNode.getMacLayer().getNeighborhood().neighbors) {
                 if (srcNode.getMacLayer().getNeighborhood().neighborsThatKnowMeSet.contains(node)) {
                     n.add(node);
@@ -53,5 +58,4 @@ public class INSENSGaussianRadioModel extends GaussianRadioModel {
         }
 
     }
-    
 }

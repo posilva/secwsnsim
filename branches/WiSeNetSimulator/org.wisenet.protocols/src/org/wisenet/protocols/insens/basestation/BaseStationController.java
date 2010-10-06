@@ -18,6 +18,7 @@ import org.wisenet.protocols.insens.basestation.dijkstra.engine.Calculator;
 import org.wisenet.protocols.insens.basestation.dijkstra.engine.CalculatorException;
 import org.wisenet.protocols.insens.messages.data.FDBKPayload;
 import org.wisenet.protocols.insens.utils.NeighborInfo;
+import org.wisenet.simulator.core.node.layers.routing.RoutingLayer;
 
 /**
  *
@@ -392,7 +393,7 @@ public class BaseStationController {
                 h = c.calculateAllPathsFromTo(start, s);
                 updatePaths(h);
             } catch (CalculatorException ex) {
-                Logger.getLogger(BaseStationController.class.getName()).log(Level.SEVERE, null, ex);
+                RoutingLayer.getController().log(ex);
             }
         }
     }

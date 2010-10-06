@@ -81,7 +81,7 @@ public class FloodingRoutingLayer extends RoutingLayer {
     }
 
     @Override
-    public void setup() {
+    public void onStartUp() {
 //        if (LatencyController.getInstance().getLatencyMessageClass() == null) {
 //            LatencyController.getInstance().setLatencyMessageClass(LatencyTestMessage.class);
 //        }
