@@ -10,10 +10,7 @@
  */
 package org.wisenet.platform.gui.panels;
 
-import java.io.IOException;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
 import org.wisenet.platform.PlatformView;
@@ -602,8 +599,12 @@ public class TestBuilderPanel extends PlatformPanel {
                 } else {
                     inputParameters.setAttackSelected(cboAttacks.getSelectedItem().toString());
                 }
-                GUI_Utils.showMessage(GUI_Utils.showSavePersistentObjectDialog("Save test"));
-            } catch (IOException ex) {
+                
+                String f = GUI_Utils.showSavePersistentObjectDialog("Save test");
+                if (f != null) {
+                    inputParameters.saveToXML(f);
+                }
+            } catch (Exception ex) {
                 GUI_Utils.showException(ex);
             }
         }
