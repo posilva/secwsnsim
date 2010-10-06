@@ -12,7 +12,7 @@ import org.wisenet.simulator.common.PersistantObject;
  *
  * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
-public class TestInputParameters extends PersistantObject{
+public class TestInputParameters extends PersistantObject {
 
     protected int numberOfSenderNodes;
     protected int numberOfReceiverNodes;
@@ -29,6 +29,7 @@ public class TestInputParameters extends PersistantObject{
     protected int numberOfAttackNodes;
     protected boolean percentOfAttackNodes;
     protected double percentOfAttackNodesValue;
+    protected double percentOfReceiverNodesValue;
 
     public int getIntervalBetweenMessagesSent() {
         return intervalBetweenMessagesSent;
@@ -135,11 +136,51 @@ public class TestInputParameters extends PersistantObject{
     }
 
     public void saveToXML(XMLConfiguration configuration) throws PersistantException {
+        String prefix = "Test";
+        configuration.addProperty(prefix + ".NumberOfAttackNodes", getNumberOfAttackNodes());
+        configuration.addProperty(prefix + ".PercentOfAttackNodesValue", getPercentOfAttackNodesValue());
+        configuration.addProperty(prefix + ".PercentOfAttackNodes", isPercentOfAttackNodes());
+        configuration.addProperty(prefix + ".OnlyConsiderToAttackStableNodes", isOnlyConsiderToAttackStableNodes());
 
+        configuration.addProperty(prefix + ".NumberOfReceiverNodes", getNumberOfReceiverNodes());
+        configuration.addProperty(prefix + ".OnlyConsiderToReceiverSinkNodes", isOnlyConsiderToReceiverSinkNodes());
+        configuration.addProperty(prefix + ".PercentOfReceiverNodes", isPercentOfReceiverNodes());
+
+
+        configuration.addProperty(prefix + ".NumberOfSenderNodes", getNumberOfSenderNodes());
+        configuration.addProperty(prefix + ".PercentOfSenderNodesValue", getPercentOfSenderNodesValue());
+        configuration.addProperty(prefix + ".OnlyConsiderToSenderStableNodes", isOnlyConsiderToSenderStableNodes());
+        configuration.addProperty(prefix + ".PercentOfSenderNodes", isPercentOfSenderNodes());
+
+        configuration.addProperty(prefix + ".IntervalBetweenMessagesSent", getIntervalBetweenMessagesSent());
+        configuration.addProperty(prefix + ".NumberOfMessagesPerNode", getNumberOfMessagesPerNode());
+        configuration.addProperty(prefix + ".NumberOfRetransmissions", getNumberOfRetransmissions());
+
+        configuration.addProperty(prefix + ".AttackSelected", getAttackSelected());
     }
 
     public void loadFromXML(XMLConfiguration configuration) throws PersistantException {
+        String prefix = "Test";
+        setNumberOfAttackNodes(configuration.getInt(prefix + ".NumberOfAttackNodes"));
+        setPercentOfAttackNodesValue(configuration.getDouble(prefix + ".PercentOfAttackNodesValue"));
+        setPercentOfAttackNodes(configuration.getBoolean(prefix + ".PercentOfAttackNodes"));
+        configuration.getBoolean(prefix + ".OnlyConsiderToAttackStableNodes", isOnlyConsiderToAttackStableNodes());
 
+        configuration.getInt(prefix + ".NumberOfReceiverNodes", getNumberOfReceiverNodes());
+        configuration.getBoolean(prefix + ".OnlyConsiderToReceiverSinkNodes", isOnlyConsiderToReceiverSinkNodes());
+        configuration.getBoolean(prefix + ".PercentOfReceiverNodes", isPercentOfReceiverNodes());
+
+
+        configuration.getInt(prefix + ".NumberOfSenderNodes", getNumberOfSenderNodes());
+        configuration.getDouble(prefix + ".PercentOfSenderNodesValue", getPercentOfSenderNodesValue());
+        configuration.getBoolean(prefix + ".OnlyConsiderToSenderStableNodes", isOnlyConsiderToSenderStableNodes());
+        configuration.getBoolean(prefix + ".PercentOfSenderNodes", isPercentOfSenderNodes());
+
+        configuration.getInt(prefix + ".IntervalBetweenMessagesSent", getIntervalBetweenMessagesSent());
+        configuration.getInt(prefix + ".NumberOfMessagesPerNode", getNumberOfMessagesPerNode());
+        configuration.getInt(prefix + ".NumberOfRetransmissions", getNumberOfRetransmissions());
+
+        configuration.getString(prefix + ".AttackSelected", getAttackSelected());
     }
 
     public boolean isPercentOfReceiverNodes() {
@@ -158,5 +199,11 @@ public class TestInputParameters extends PersistantObject{
         this.onlyConsiderToAttackStableNodes = onlyConsiderToAttackStableNodes;
     }
 
+    public double getPercentOfReceiverNodesValue() {
+        return percentOfReceiverNodesValue;
+    }
 
+    public void setPercentOfReceiverNodesValue(double percentOfReceiverNodesValue) {
+        this.percentOfReceiverNodesValue = percentOfReceiverNodesValue;
+    }
 }
