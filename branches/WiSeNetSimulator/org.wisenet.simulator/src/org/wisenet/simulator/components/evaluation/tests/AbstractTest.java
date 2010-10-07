@@ -4,8 +4,10 @@
  */
 package org.wisenet.simulator.components.evaluation.tests;
 
+import org.apache.commons.configuration.XMLConfiguration;
 import org.wisenet.simulator.common.ObjectParameters;
 import org.wisenet.simulator.common.Parameterizable;
+import org.wisenet.simulator.common.PersistantException;
 import org.wisenet.simulator.common.PersistantObject;
 import org.wisenet.simulator.common.Persistent;
 import org.wisenet.simulator.components.simulation.Simulation;
@@ -28,9 +30,11 @@ public abstract class AbstractTest extends PersistantObject implements Persisten
     protected boolean executing = false;
     protected boolean enabled = true;
     protected ObjectParameters parameters = new TestParameters();
+    protected Simulation activeSimulation;
 
     public AbstractTest() {
-        
+        inputParameters= new TestInputParameters();
+        outputParameters= new TestOutputParameters(inputParameters);
     }
 
     public AbstractTest(TestInputParameters inputParameters) {
@@ -103,6 +107,22 @@ public abstract class AbstractTest extends PersistantObject implements Persisten
 
     public void setParameters(ObjectParameters params) {
         this.parameters = params;
+    }
+
+    public Simulation getActiveSimulation() {
+        return activeSimulation;
+    }
+
+    public void setActiveSimulation(Simulation activeSimulation) {
+        this.activeSimulation = activeSimulation;
+    }
+
+    public void saveToXML(XMLConfiguration configuration) throws PersistantException {
+        inputParameters.saveToXML(configuration);
+    }
+
+    public void loadFromXML(XMLConfiguration configuration) throws PersistantException {
+        inputParameters.loadFromXML(configuration);
     }
 
     public abstract boolean verifyPreConditions();

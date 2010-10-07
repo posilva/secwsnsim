@@ -16,11 +16,11 @@ public abstract class TestMessage extends Message {
 
     public abstract Object getDestinationId();
 
-    public abstract long getUniqueId();
+    public abstract Object getUniqueId();
 
     public abstract void setSourceId(Object id);
 
     public abstract void setDestinationId(Object id);
 
-    public abstract void setUniqueId(long id);
+    public abstract void setUniqueId(Object id);
 }

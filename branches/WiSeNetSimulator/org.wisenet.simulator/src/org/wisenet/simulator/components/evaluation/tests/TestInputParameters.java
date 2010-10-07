@@ -14,11 +14,11 @@ import org.wisenet.simulator.common.PersistantObject;
  */
 public class TestInputParameters extends PersistantObject {
 
+    static String prefix = "inputparameters";
     protected int numberOfSenderNodes;
     protected int numberOfReceiverNodes;
     protected boolean percentOfSenderNodes;
     protected boolean percentOfReceiverNodes;
-    protected double percentOfSenderNodesValue;
     protected boolean onlyConsiderToSenderStableNodes;
     protected boolean onlyConsiderToAttackStableNodes;
     protected boolean onlyConsiderToReceiverSinkNodes;
@@ -28,8 +28,6 @@ public class TestInputParameters extends PersistantObject {
     protected String attackSelected;
     protected int numberOfAttackNodes;
     protected boolean percentOfAttackNodes;
-    protected double percentOfAttackNodesValue;
-    protected double percentOfReceiverNodesValue;
 
     public int getIntervalBetweenMessagesSent() {
         return intervalBetweenMessagesSent;
@@ -111,14 +109,6 @@ public class TestInputParameters extends PersistantObject {
         this.percentOfAttackNodes = percentOfAttackNodes;
     }
 
-    public double getPercentOfAttackNodesValue() {
-        return percentOfAttackNodesValue;
-    }
-
-    public void setPercentOfAttackNodesValue(double percentOfAttackNodesValue) {
-        this.percentOfAttackNodesValue = percentOfAttackNodesValue;
-    }
-
     public boolean isPercentOfSenderNodes() {
         return percentOfSenderNodes;
     }
@@ -127,18 +117,9 @@ public class TestInputParameters extends PersistantObject {
         this.percentOfSenderNodes = percentOfSenderNodes;
     }
 
-    public double getPercentOfSenderNodesValue() {
-        return percentOfSenderNodesValue;
-    }
-
-    public void setPercentOfSenderNodesValue(double percentOfSenderNodesValue) {
-        this.percentOfSenderNodesValue = percentOfSenderNodesValue;
-    }
-
     public void saveToXML(XMLConfiguration configuration) throws PersistantException {
-        String prefix = "Test";
+
         configuration.addProperty(prefix + ".NumberOfAttackNodes", getNumberOfAttackNodes());
-        configuration.addProperty(prefix + ".PercentOfAttackNodesValue", getPercentOfAttackNodesValue());
         configuration.addProperty(prefix + ".PercentOfAttackNodes", isPercentOfAttackNodes());
         configuration.addProperty(prefix + ".OnlyConsiderToAttackStableNodes", isOnlyConsiderToAttackStableNodes());
 
@@ -148,7 +129,6 @@ public class TestInputParameters extends PersistantObject {
 
 
         configuration.addProperty(prefix + ".NumberOfSenderNodes", getNumberOfSenderNodes());
-        configuration.addProperty(prefix + ".PercentOfSenderNodesValue", getPercentOfSenderNodesValue());
         configuration.addProperty(prefix + ".OnlyConsiderToSenderStableNodes", isOnlyConsiderToSenderStableNodes());
         configuration.addProperty(prefix + ".PercentOfSenderNodes", isPercentOfSenderNodes());
 
@@ -160,9 +140,7 @@ public class TestInputParameters extends PersistantObject {
     }
 
     public void loadFromXML(XMLConfiguration configuration) throws PersistantException {
-        String prefix = "Test";
         setNumberOfAttackNodes(configuration.getInt(prefix + ".NumberOfAttackNodes"));
-        setPercentOfAttackNodesValue(configuration.getDouble(prefix + ".PercentOfAttackNodesValue"));
         setPercentOfAttackNodes(configuration.getBoolean(prefix + ".PercentOfAttackNodes"));
         configuration.getBoolean(prefix + ".OnlyConsiderToAttackStableNodes", isOnlyConsiderToAttackStableNodes());
 
@@ -172,7 +150,6 @@ public class TestInputParameters extends PersistantObject {
 
 
         configuration.getInt(prefix + ".NumberOfSenderNodes", getNumberOfSenderNodes());
-        configuration.getDouble(prefix + ".PercentOfSenderNodesValue", getPercentOfSenderNodesValue());
         configuration.getBoolean(prefix + ".OnlyConsiderToSenderStableNodes", isOnlyConsiderToSenderStableNodes());
         configuration.getBoolean(prefix + ".PercentOfSenderNodes", isPercentOfSenderNodes());
 
@@ -197,13 +174,5 @@ public class TestInputParameters extends PersistantObject {
 
     public void setOnlyConsiderToAttackStableNodes(boolean onlyConsiderToAttackStableNodes) {
         this.onlyConsiderToAttackStableNodes = onlyConsiderToAttackStableNodes;
-    }
-
-    public double getPercentOfReceiverNodesValue() {
-        return percentOfReceiverNodesValue;
-    }
-
-    public void setPercentOfReceiverNodesValue(double percentOfReceiverNodesValue) {
-        this.percentOfReceiverNodesValue = percentOfReceiverNodesValue;
     }
 }

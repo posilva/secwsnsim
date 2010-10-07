@@ -30,7 +30,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="cmdSaveToFile" min="-2" pref="132" max="-2" attributes="0"/>
                               <EmptySpace pref="90" max="32767" attributes="0"/>
-                              <Component id="jCheckBox1" min="-2" pref="183" max="-2" attributes="0"/>
+                              <Component id="activateNow" min="-2" pref="183" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" max="-2" attributes="0">
                               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
@@ -125,7 +125,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="cmdLoadFromFile" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cmdSaveToFile" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jCheckBox1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="activateNow" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -221,6 +221,9 @@
         <Property name="text" type="java.lang.String" value="Load from file..."/>
         <Property name="name" type="java.lang.String" value="cmdLoadFromFile" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdLoadFromFileActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="cmdSaveToFile">
       <Properties>
@@ -331,6 +334,7 @@
         </Component>
         <Component class="javax.swing.JCheckBox" name="chkReceiverNodesSinknodes">
           <Properties>
+            <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="Only SinkNodes"/>
             <Property name="horizontalTextPosition" type="int" value="2"/>
             <Property name="name" type="java.lang.String" value="chkReceiverNodesSinknodes" noResource="true"/>
@@ -341,6 +345,7 @@
         </Component>
         <Component class="javax.swing.JCheckBox" name="chkSenderNodesPercent">
           <Properties>
+            <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="Percentage"/>
             <Property name="horizontalTextPosition" type="int" value="2"/>
             <Property name="name" type="java.lang.String" value="chkSenderNodesPercent" noResource="true"/>
@@ -367,6 +372,7 @@
         </Component>
         <Component class="javax.swing.JCheckBox" name="chkSenderNodesStable">
           <Properties>
+            <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="Only Stable"/>
             <Property name="horizontalTextPosition" type="int" value="2"/>
             <Property name="name" type="java.lang.String" value="chkSenderNodesStable" noResource="true"/>
@@ -377,6 +383,7 @@
         </Component>
         <Component class="javax.swing.JCheckBox" name="chkReceiverNodesPercent">
           <Properties>
+            <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="Percentage"/>
             <Property name="horizontalTextPosition" type="int" value="2"/>
             <Property name="name" type="java.lang.String" value="chkReceiverNodesPercent" noResource="true"/>
@@ -406,6 +413,7 @@
         </Component>
         <Component class="javax.swing.JCheckBox" name="chkAttackNodesPercent">
           <Properties>
+            <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="Percentage"/>
             <Property name="horizontalTextPosition" type="int" value="2"/>
             <Property name="name" type="java.lang.String" value="chkAttackNodesPercent" noResource="true"/>
@@ -428,6 +436,7 @@
         </Component>
         <Component class="javax.swing.JCheckBox" name="chkAttackNodesStable">
           <Properties>
+            <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="Only Stable"/>
             <Property name="horizontalTextPosition" type="int" value="2"/>
             <Property name="name" type="java.lang.String" value="chkAttackNodesStable" noResource="true"/>
@@ -470,13 +479,17 @@
         <Property name="name" type="java.lang.String" value="jSeparator1" noResource="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="jCheckBox1">
+    <Component class="javax.swing.JCheckBox" name="activateNow">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Insert into current simulation"/>
+        <Property name="selected" type="boolean" value="true"/>
+        <Property name="text" type="java.lang.String" value="Activate Now"/>
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="horizontalTextPosition" type="int" value="2"/>
-        <Property name="name" type="java.lang.String" value="jCheckBox1" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="activateNow" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="activateNowStateChanged"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
