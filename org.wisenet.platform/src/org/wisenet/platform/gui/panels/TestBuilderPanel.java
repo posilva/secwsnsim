@@ -11,6 +11,8 @@
 package org.wisenet.platform.gui.panels;
 
 import java.util.Set;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
 import org.wisenet.platform.PlatformView;
@@ -19,6 +21,7 @@ import org.wisenet.platform.common.ui.PlatformFrame;
 import org.wisenet.platform.common.ui.PlatformPanel;
 import org.wisenet.platform.utils.GUI_Utils;
 import org.wisenet.simulator.components.evaluation.tests.AbstractTest;
+import org.wisenet.simulator.components.evaluation.tests.DefaultTest;
 import org.wisenet.simulator.components.evaluation.tests.TestInputParameters;
 import org.wisenet.simulator.components.simulation.Simulation;
 import org.wisenet.simulator.core.node.layers.routing.attacks.AttacksEntry;
@@ -29,6 +32,7 @@ import org.wisenet.simulator.core.node.layers.routing.attacks.AttacksEntry;
  */
 public class TestBuilderPanel extends PlatformPanel {
 
+    protected boolean addToSim;
     protected Simulation simulation = null;
     AbstractTest test;
     TestInputParameters inputParameters = new TestInputParameters();
@@ -80,7 +84,7 @@ public class TestBuilderPanel extends PlatformPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtTestDescription = new javax.swing.JTextArea();
         jSeparator1 = new javax.swing.JSeparator();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        activateNow = new javax.swing.JCheckBox();
 
         jLabel1.setText("Test Name:");
         jLabel1.setName("jLabel1"); // NOI18N
@@ -134,6 +138,11 @@ public class TestBuilderPanel extends PlatformPanel {
 
         cmdLoadFromFile.setText("Load from file...");
         cmdLoadFromFile.setName("cmdLoadFromFile"); // NOI18N
+        cmdLoadFromFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdLoadFromFileActionPerformed(evt);
+            }
+        });
 
         cmdSaveToFile.setText("Save to file...");
         cmdSaveToFile.setName("cmdSaveToFile"); // NOI18N
@@ -156,6 +165,7 @@ public class TestBuilderPanel extends PlatformPanel {
             }
         });
 
+        chkReceiverNodesSinknodes.setSelected(true);
         chkReceiverNodesSinknodes.setText("Only SinkNodes");
         chkReceiverNodesSinknodes.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         chkReceiverNodesSinknodes.setName("chkReceiverNodesSinknodes"); // NOI18N
@@ -165,6 +175,7 @@ public class TestBuilderPanel extends PlatformPanel {
             }
         });
 
+        chkSenderNodesPercent.setSelected(true);
         chkSenderNodesPercent.setText("Percentage");
         chkSenderNodesPercent.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         chkSenderNodesPercent.setName("chkSenderNodesPercent"); // NOI18N
@@ -185,6 +196,7 @@ public class TestBuilderPanel extends PlatformPanel {
             }
         });
 
+        chkSenderNodesStable.setSelected(true);
         chkSenderNodesStable.setText("Only Stable");
         chkSenderNodesStable.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         chkSenderNodesStable.setName("chkSenderNodesStable"); // NOI18N
@@ -194,6 +206,7 @@ public class TestBuilderPanel extends PlatformPanel {
             }
         });
 
+        chkReceiverNodesPercent.setSelected(true);
         chkReceiverNodesPercent.setText("Percentage");
         chkReceiverNodesPercent.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         chkReceiverNodesPercent.setName("chkReceiverNodesPercent"); // NOI18N
@@ -216,6 +229,7 @@ public class TestBuilderPanel extends PlatformPanel {
             }
         });
 
+        chkAttackNodesPercent.setSelected(true);
         chkAttackNodesPercent.setText("Percentage");
         chkAttackNodesPercent.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         chkAttackNodesPercent.setName("chkAttackNodesPercent"); // NOI18N
@@ -231,6 +245,7 @@ public class TestBuilderPanel extends PlatformPanel {
         jLabel3.setText("No. of sender nodes:");
         jLabel3.setName("jLabel3"); // NOI18N
 
+        chkAttackNodesStable.setSelected(true);
         chkAttackNodesStable.setText("Only Stable");
         chkAttackNodesStable.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         chkAttackNodesStable.setName("chkAttackNodesStable"); // NOI18N
@@ -254,9 +269,9 @@ public class TestBuilderPanel extends PlatformPanel {
                             .addComponent(jLabel4))
                         .addGap(24, 24, 24)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtNrSenderNodes, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
-                            .addComponent(txtNrAttackNodes, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
-                            .addComponent(txtNrReceiverNodes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE))))
+                            .addComponent(txtNrSenderNodes, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                            .addComponent(txtNrAttackNodes, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                            .addComponent(txtNrReceiverNodes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -314,10 +329,16 @@ public class TestBuilderPanel extends PlatformPanel {
 
         jSeparator1.setName("jSeparator1"); // NOI18N
 
-        jCheckBox1.setText("Insert into current simulation");
-        jCheckBox1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jCheckBox1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jCheckBox1.setName("jCheckBox1"); // NOI18N
+        activateNow.setSelected(true);
+        activateNow.setText("Activate Now");
+        activateNow.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        activateNow.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        activateNow.setName("activateNow"); // NOI18N
+        activateNow.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                activateNowStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -336,7 +357,7 @@ public class TestBuilderPanel extends PlatformPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cmdSaveToFile, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
-                                .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(activateNow, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(12, 12, 12)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -386,7 +407,7 @@ public class TestBuilderPanel extends PlatformPanel {
                         .addGap(6, 6, 6)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(8, 8, 8)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -409,7 +430,7 @@ public class TestBuilderPanel extends PlatformPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmdLoadFromFile)
                     .addComponent(cmdSaveToFile)
-                    .addComponent(jCheckBox1))
+                    .addComponent(activateNow))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -455,6 +476,14 @@ public class TestBuilderPanel extends PlatformPanel {
         saveTestToFile();
     }//GEN-LAST:event_cmdSaveToFileActionPerformed
 
+    private void activateNowStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_activateNowStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_activateNowStateChanged
+
+    private void cmdLoadFromFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdLoadFromFileActionPerformed
+        loadFromFile();
+    }//GEN-LAST:event_cmdLoadFromFileActionPerformed
+
     @Override
     public boolean onCancel() {
         return true;
@@ -463,6 +492,7 @@ public class TestBuilderPanel extends PlatformPanel {
     @Override
     public boolean onOK() {
         if (isDataValid()) {
+
             result = test;
             return true;
         } else {
@@ -518,6 +548,7 @@ public class TestBuilderPanel extends PlatformPanel {
         return true;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox activateNow;
     private javax.swing.JComboBox cboAttacks;
     private javax.swing.JCheckBox chkAttackNodesPercent;
     private javax.swing.JCheckBox chkAttackNodesStable;
@@ -527,7 +558,6 @@ public class TestBuilderPanel extends PlatformPanel {
     private javax.swing.JCheckBox chkSenderNodesStable;
     private javax.swing.JButton cmdLoadFromFile;
     private javax.swing.JButton cmdSaveToFile;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -599,10 +629,14 @@ public class TestBuilderPanel extends PlatformPanel {
                 } else {
                     inputParameters.setAttackSelected(cboAttacks.getSelectedItem().toString());
                 }
-                
+                test = new DefaultTest(inputParameters);
+                test.setName(txtTestName.getText());
+                test.setDescription(txtTestDescription.getText());
+
                 String f = GUI_Utils.showSavePersistentObjectDialog("Save test");
                 if (f != null) {
-                    inputParameters.saveToXML(f);
+                    test.saveToXML(f);
+                     GUI_Utils.showinfoMessage("Test " + txtTestName.getText() + " saved");
                 }
             } catch (Exception ex) {
                 GUI_Utils.showException(ex);
@@ -626,5 +660,60 @@ public class TestBuilderPanel extends PlatformPanel {
                 }
             }
         }
+    }
+
+    public JCheckBox getActivateNow() {
+        return activateNow;
+    }
+
+    private void loadFromFile() {
+        try {
+            String f = GUI_Utils.showOpenPersistentObjectDialog("Open test file");
+            test = new DefaultTest();
+            test.loadFromXML(f);
+            txtTestName.setText(test.getName());
+            txtTestDescription.setText(test.getDescription());
+            inputParameters = test.getInputParameters();
+
+            showInputParameters(inputParameters);
+
+
+        } catch (Exception ex) {
+            GUI_Utils.showException(ex);
+        }
+
+    }
+
+    private void showInputParameters(TestInputParameters inputParameters) {
+        txtNrSenderNodes.setText("" + inputParameters.getNumberOfSenderNodes());
+        chkSenderNodesPercent.setSelected(inputParameters.isPercentOfSenderNodes());
+        chkSenderNodesStable.setSelected(inputParameters.isOnlyConsiderToSenderStableNodes());
+
+        txtNrReceiverNodes.setText("" + inputParameters.getNumberOfReceiverNodes());
+        chkReceiverNodesPercent.setSelected(inputParameters.isPercentOfReceiverNodes());
+        chkReceiverNodesSinknodes.setSelected(inputParameters.isOnlyConsiderToReceiverSinkNodes());
+
+        txtNrAttackNodes.setText("" + inputParameters.getNumberOfAttackNodes());
+        chkAttackNodesPercent.setSelected(inputParameters.isPercentOfAttackNodes());
+        chkAttackNodesStable.setSelected(inputParameters.isOnlyConsiderToAttackStableNodes());
+
+        txtNrMessagesPerNode.setText("" + inputParameters.getIntervalBetweenMessagesSent());
+        txtNrRetransmissions.setText("" + inputParameters.getNumberOfRetransmissions());
+        txtIntervalBetweenMessages.setText("" + inputParameters.getNumberOfMessagesPerNode());
+
+
+        selectCboValue(cboAttacks, inputParameters.getAttackSelected());
+    }
+
+    private void selectCboValue(JComboBox cboAttacks, String attackSelected) {
+        for (int i = 0; i < cboAttacks.getModel().getSize(); i++) {
+            Object object = cboAttacks.getModel().getElementAt(i);
+            if (object.equals(attackSelected)) {
+                cboAttacks.getModel().setSelectedItem(object);
+                return;
+            }
+        }
+        GUI_Utils.showWarningMessage("Load attack is not available in current simulation");
+
     }
 }

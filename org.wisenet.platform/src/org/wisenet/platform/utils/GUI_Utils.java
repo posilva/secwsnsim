@@ -176,4 +176,13 @@ public class GUI_Utils {
         }
         return file;
     }
+
+    public static String showOpenPersistentObjectDialog(String msg) throws IOException {
+        String file = showOpenDialog(new FileFilter[]{XML()}, msg);
+        return file;
+    }
+
+    public static void showinfoMessage(String msg) {
+        showMessage(msg, JOptionPane.INFORMATION_MESSAGE);
+    }
 }

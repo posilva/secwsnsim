@@ -100,7 +100,8 @@ public class ReliabilityTest extends AbstractTest {
             sourceNode.sendMessage(message);
         }
     }
-    class ReliabilityTestMessage extends TestMessage{
+
+    class ReliabilityTestMessage extends TestMessage {
 
         @Override
         public Object getSourceId() {
@@ -109,11 +110,6 @@ public class ReliabilityTest extends AbstractTest {
 
         @Override
         public Object getDestinationId() {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        @Override
-        public long getUniqueId() {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
@@ -128,7 +124,12 @@ public class ReliabilityTest extends AbstractTest {
         }
 
         @Override
-        public void setUniqueId(long id) {
+        public Object getUniqueId() {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public void setUniqueId(Object id) {
             throw new UnsupportedOperationException("Not supported yet.");
         }
     }
