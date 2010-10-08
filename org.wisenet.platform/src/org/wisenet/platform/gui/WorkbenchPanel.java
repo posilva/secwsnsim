@@ -121,6 +121,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         jSeparator9 = new javax.swing.JToolBar.Separator();
         cmdTest = new javax.swing.JButton();
         lblActiveTest = new javax.swing.JLabel();
+        cmdResetTest = new javax.swing.JButton();
         cmdRunTest = new javax.swing.JButton();
         jSeparator12 = new javax.swing.JToolBar.Separator();
         searchPanel = new javax.swing.JPanel();
@@ -128,6 +129,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         txtSearchNode = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         lblField = new javax.swing.JLabel();
+        lblMessage = new javax.swing.JLabel();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -506,11 +508,28 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         lblActiveTest.setPreferredSize(new java.awt.Dimension(200, 25));
         topToolbar.add(lblActiveTest);
 
+        cmdResetTest.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/clear.png"))); // NOI18N
+        cmdResetTest.setToolTipText("Reset current test");
+        cmdResetTest.setFocusable(false);
+        cmdResetTest.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        cmdResetTest.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        cmdResetTest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdResetTestActionPerformed(evt);
+            }
+        });
+        topToolbar.add(cmdResetTest);
+
         cmdRunTest.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/runit.png"))); // NOI18N
         cmdRunTest.setToolTipText("Run Selected Test");
         cmdRunTest.setFocusable(false);
         cmdRunTest.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         cmdRunTest.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        cmdRunTest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdRunTestActionPerformed(evt);
+            }
+        });
         topToolbar.add(cmdRunTest);
         topToolbar.add(jSeparator12);
 
@@ -547,16 +566,20 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         lblField.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lblField.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        lblMessage.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(921, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 378, Short.MAX_VALUE)
                 .addComponent(lblField, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblMessage, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
             .addComponent(lblField, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
         );
 
@@ -709,11 +732,20 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         if (d.getStatus() == PlatformDialog.OK_STATUS) {
             getSimulationPanel().getSimulation().addTest((AbstractTest) tc.getResult());
             if (tc.getActivateNow().isSelected()) {
+                this.currentTest = (AbstractTest) tc.getResult();
                 lblActiveTest.setText(((AbstractTest) tc.getResult()).getName());
             }
 
         }
     }//GEN-LAST:event_cmdTestActionPerformed
+
+    private void cmdRunTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdRunTestActionPerformed
+        runCurrentTest();
+    }//GEN-LAST:event_cmdRunTestActionPerformed
+
+    private void cmdResetTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdResetTestActionPerformed
+        resetCurrentTest();        // TODO add your handling code here:
+    }//GEN-LAST:event_cmdResetTestActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup OperationBG;
     private javax.swing.ButtonGroup SelectionBG;
@@ -732,6 +764,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
     private javax.swing.JToggleButton btnStableMark;
     private javax.swing.JToggleButton btnStableSelect;
     private javax.swing.JButton cmdMonitEnergy;
+    private javax.swing.JButton cmdResetTest;
     private javax.swing.JButton cmdRunTest;
     private javax.swing.JButton cmdSelAttackedNodes;
     private javax.swing.JButton cmdSelectAttack;
@@ -756,6 +789,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel lblActiveTest;
     private javax.swing.JLabel lblField;
+    private javax.swing.JLabel lblMessage;
     private javax.swing.JPanel searchPanel;
     private javax.swing.JButton selRandomNodes;
     private javax.swing.JToggleButton selectionPointerTool;
@@ -993,6 +1027,26 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    private void resetCurrentTest() {
+        if (currentTest != null) {
+            currentTest = null;
+            lblActiveTest.setText("None");
+            showMessage("Reset current test done!");
+        } else {
+            showMessage("No current test to reset!");
+        }
+    }
+
+    private void runCurrentTest() {
+        if (currentTest == null) {
+            return;
+        }
+        if (!getSimulationPanel().getSimulation().isStarted()) {
+            return;
+        }
+        currentTest.execute();
+    }
+
     private class RebuildNetworkTask extends org.jdesktop.application.Task<Object, Void> {
 
         RebuildNetworkTask(org.jdesktop.application.Application app) {
@@ -1057,5 +1111,20 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
 
     public boolean isNetworkDeployed() {
         return (getSimulationPanel().getSimulation().isNetworkDeployed());
+    }
+
+    public void showMessage(final String message) {
+        lblMessage.setText(message);
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                    lblMessage.setText("");
+                } catch (InterruptedException ex) {
+                }
+            }
+        }).start();
     }
 }

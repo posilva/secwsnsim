@@ -142,22 +142,22 @@ public class TestInputParameters extends PersistantObject {
     public void loadFromXML(XMLConfiguration configuration) throws PersistantException {
         setNumberOfAttackNodes(configuration.getInt(prefix + ".NumberOfAttackNodes"));
         setPercentOfAttackNodes(configuration.getBoolean(prefix + ".PercentOfAttackNodes"));
-        configuration.getBoolean(prefix + ".OnlyConsiderToAttackStableNodes", isOnlyConsiderToAttackStableNodes());
+        configuration.getBoolean(prefix + ".OnlyConsiderToAttackStableNodes");
 
-        configuration.getInt(prefix + ".NumberOfReceiverNodes", getNumberOfReceiverNodes());
-        configuration.getBoolean(prefix + ".OnlyConsiderToReceiverSinkNodes", isOnlyConsiderToReceiverSinkNodes());
-        configuration.getBoolean(prefix + ".PercentOfReceiverNodes", isPercentOfReceiverNodes());
+        configuration.getInt(prefix + ".NumberOfReceiverNodes");
+        configuration.getBoolean(prefix + ".OnlyConsiderToReceiverSinkNodes");
+        configuration.getBoolean(prefix + ".PercentOfReceiverNodes");
 
 
-        configuration.getInt(prefix + ".NumberOfSenderNodes", getNumberOfSenderNodes());
-        configuration.getBoolean(prefix + ".OnlyConsiderToSenderStableNodes", isOnlyConsiderToSenderStableNodes());
-        configuration.getBoolean(prefix + ".PercentOfSenderNodes", isPercentOfSenderNodes());
+        configuration.getInt(prefix + ".NumberOfSenderNodes");
+        configuration.getBoolean(prefix + ".OnlyConsiderToSenderStableNodes");
+        configuration.getBoolean(prefix + ".PercentOfSenderNodes");
 
-        configuration.getInt(prefix + ".IntervalBetweenMessagesSent", getIntervalBetweenMessagesSent());
-        configuration.getInt(prefix + ".NumberOfMessagesPerNode", getNumberOfMessagesPerNode());
-        configuration.getInt(prefix + ".NumberOfRetransmissions", getNumberOfRetransmissions());
+        configuration.getInt(prefix + ".IntervalBetweenMessagesSent");
+        configuration.getInt(prefix + ".NumberOfMessagesPerNode");
+        configuration.getInt(prefix + ".NumberOfRetransmissions");
 
-        configuration.getString(prefix + ".AttackSelected", getAttackSelected());
+        configuration.getString(prefix + ".AttackSelected");
     }
 
     public boolean isPercentOfReceiverNodes() {
