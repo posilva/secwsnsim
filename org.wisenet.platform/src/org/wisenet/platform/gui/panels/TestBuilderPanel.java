@@ -10,7 +10,6 @@
  */
 package org.wisenet.platform.gui.panels;
 
-import java.util.Set;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
@@ -20,11 +19,11 @@ import org.wisenet.platform.common.ui.PlatformDialog;
 import org.wisenet.platform.common.ui.PlatformFrame;
 import org.wisenet.platform.common.ui.PlatformPanel;
 import org.wisenet.platform.utils.GUI_Utils;
+import org.wisenet.platform.utils.PlatformUtils;
 import org.wisenet.simulator.components.evaluation.tests.AbstractTest;
 import org.wisenet.simulator.components.evaluation.tests.DefaultTest;
 import org.wisenet.simulator.components.evaluation.tests.TestInputParameters;
 import org.wisenet.simulator.components.simulation.Simulation;
-import org.wisenet.simulator.core.node.layers.routing.attacks.AttacksEntry;
 
 /**
  *
@@ -435,6 +434,13 @@ public class TestBuilderPanel extends PlatformPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void showTest() {
+        txtTestName.setText(test.getName());
+        txtTestDescription.setText(test.getDescription());
+        inputParameters = test.getInputParameters();
+        showInputParameters(inputParameters);
+    }
+
     private void txtTestNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTestNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTestNameActionPerformed
@@ -512,7 +518,11 @@ public class TestBuilderPanel extends PlatformPanel {
             GUI_Utils.showWarningMessage("No existing simulation!\n Close Window!");
             return;
         }
-        loadSimulationAttacks();
+        PlatformUtils.loadSimulationAttacksIntoCombo(cboAttacks);
+        if (test!=null){
+            showTest();
+        }
+        
 
     }
 
@@ -636,7 +646,7 @@ public class TestBuilderPanel extends PlatformPanel {
                 String f = GUI_Utils.showSavePersistentObjectDialog("Save test");
                 if (f != null) {
                     test.saveToXML(f);
-                     GUI_Utils.showinfoMessage("Test " + txtTestName.getText() + " saved");
+                    GUI_Utils.showinfoMessage("Test " + txtTestName.getText() + " saved");
                 }
             } catch (Exception ex) {
                 GUI_Utils.showException(ex);
@@ -648,20 +658,6 @@ public class TestBuilderPanel extends PlatformPanel {
         this.simulation = simulation;
     }
 
-    private void loadSimulationAttacks() {
-        if (simulation != null) {
-            Set registeredAttacks = simulation.getRoutingLayerController().getRegisteredAttacks();
-            if (registeredAttacks.size() > 0) {
-                cboAttacks.removeAll();
-                cboAttacks.addItem("None");
-                for (Object object : registeredAttacks) {
-                    AttacksEntry a = (AttacksEntry) object;
-                    cboAttacks.addItem(a.getLabel());
-                }
-            }
-        }
-    }
-
     public JCheckBox getActivateNow() {
         return activateNow;
     }
@@ -669,13 +665,12 @@ public class TestBuilderPanel extends PlatformPanel {
     private void loadFromFile() {
         try {
             String f = GUI_Utils.showOpenPersistentObjectDialog("Open test file");
-            test = new DefaultTest();
-            test.loadFromXML(f);
-            txtTestName.setText(test.getName());
-            txtTestDescription.setText(test.getDescription());
-            inputParameters = test.getInputParameters();
+            if (f != null) {
+                test = new DefaultTest();
+                test.loadFromXML(f);
 
-            showInputParameters(inputParameters);
+                showTest();
+            }
 
 
         } catch (Exception ex) {
@@ -697,9 +692,9 @@ public class TestBuilderPanel extends PlatformPanel {
         chkAttackNodesPercent.setSelected(inputParameters.isPercentOfAttackNodes());
         chkAttackNodesStable.setSelected(inputParameters.isOnlyConsiderToAttackStableNodes());
 
-        txtNrMessagesPerNode.setText("" + inputParameters.getIntervalBetweenMessagesSent());
+        txtNrMessagesPerNode.setText("" + inputParameters.getNumberOfMessagesPerNode());
         txtNrRetransmissions.setText("" + inputParameters.getNumberOfRetransmissions());
-        txtIntervalBetweenMessages.setText("" + inputParameters.getNumberOfMessagesPerNode());
+        txtIntervalBetweenMessages.setText("" + inputParameters.getIntervalBetweenMessagesSent());
 
 
         selectCboValue(cboAttacks, inputParameters.getAttackSelected());
@@ -716,4 +711,10 @@ public class TestBuilderPanel extends PlatformPanel {
         GUI_Utils.showWarningMessage("Load attack is not available in current simulation");
 
     }
+
+    public void setCurrentTest(AbstractTest currentTest) {
+        test=currentTest;
+    }
+
+
 }
