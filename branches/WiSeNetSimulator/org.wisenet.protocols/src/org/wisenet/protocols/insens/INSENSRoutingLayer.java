@@ -13,7 +13,6 @@ import org.wisenet.protocols.common.events.DelayedMessageEvent;
 import org.wisenet.protocols.insens.attacks.BlackholeRoutingAttack;
 import org.wisenet.protocols.insens.basestation.BaseStationController;
 import org.wisenet.protocols.insens.basestation.ForwardingTable;
-import org.wisenet.protocols.insens.messages.INSENSDATAMessage;
 import org.wisenet.protocols.insens.messages.INSENSMessage;
 import org.wisenet.protocols.insens.messages.INSENSMessagePayloadFactory;
 import org.wisenet.protocols.insens.messages.data.DATAPayload;
@@ -142,15 +141,18 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
      */
     @Override
     protected boolean onSendMessage(Object message, Application app) {
-        if (message instanceof INSENSDATAMessage) {
-            if (isStable()) {
-                return sendDATAMessage((INSENSDATAMessage) message);
-            } else {
-                return false;
-            }
+
+
+//        if (message instanceof INSENSDATAMessage) {
+        if (isStable()) {
+            return sendDATAMessage((Message) message);
         } else {
             return false;
         }
+//        } else {
+//            return false;
+//        }
+
     }
 
     /**
@@ -653,7 +655,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
      * @param message
      * @return
      */
-    private boolean sendDATAMessage(INSENSDATAMessage message) {
+    private boolean sendDATAMessage(Message message) {
         try {
             byte[] new_payload = encapsulateDataPayload(message);
             message.setPayload(new_payload);
@@ -671,8 +673,8 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
      * @param message
      * @return
      */
-    private byte[] encapsulateDataPayload(INSENSDATAMessage message) {
-        return INSENSMessagePayloadFactory.createDATAPayload(message.getSource(), message.getDestination(), getNode().getId(), message.getPayload(), privateKey, this.getNode());
+    private byte[] encapsulateDataPayload(Message message) {
+        return INSENSMessagePayloadFactory.createDATAPayload((Short) message.getSourceId(), (Short) message.getDestinationId(), getNode().getId(), message.getPayload(), privateKey, this.getNode());
     }
 
     /**
