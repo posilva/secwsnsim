@@ -9,8 +9,10 @@ import org.wisenet.platform.PlatformConstants;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import org.wisenet.platform.PlatformApp;
@@ -19,6 +21,7 @@ import org.wisenet.platform.utils.PlatformUtils.SimulationFilter;
 import org.wisenet.simulator.components.simulation.AbstractSimulation;
 import org.wisenet.simulator.components.simulation.Simulation;
 import org.wisenet.simulator.components.simulation.SimulationException;
+import org.wisenet.simulator.core.node.layers.routing.attacks.AttacksEntry;
 
 /**
  *
@@ -185,5 +188,20 @@ public class PlatformUtils {
 
     public static ResourceMap getResourceMap() {
         return resourceMap;
+    }
+
+    public static void loadSimulationAttacksIntoCombo(JComboBox cbo) {
+        Simulation simulation = (Simulation) PlatformManager.getInstance().getActiveSimulation();
+        if (simulation != null) {
+            Set registeredAttacks = simulation.getRoutingLayerController().getRegisteredAttacks();
+            if (registeredAttacks.size() > 0) {
+                cbo.removeAll();
+                cbo.addItem("None");
+                for (Object object : registeredAttacks) {
+                    AttacksEntry a = (AttacksEntry) object;
+                    cbo.addItem(a.getLabel());
+                }
+            }
+        }
     }
 }

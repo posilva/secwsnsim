@@ -231,7 +231,6 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance().getContext().getActionMap(PlatformView.class, this);
         btnNew.setAction(actionMap.get("newSimulation")); // NOI18N
-        btnNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/new-icon.png"))); // NOI18N
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(PlatformView.class);
         btnNew.setText(resourceMap.getString("btnNew.text")); // NOI18N
         btnNew.setToolTipText(resourceMap.getString("btnNew.toolTipText")); // NOI18N
@@ -242,7 +241,6 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         mainToolbar.add(btnNew);
 
         btnOpen.setAction(actionMap.get("OpenSimulation")); // NOI18N
-        btnOpen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/open-icon.png"))); // NOI18N
         btnOpen.setText(resourceMap.getString("btnOpen.text")); // NOI18N
         btnOpen.setToolTipText(resourceMap.getString("btnOpen.toolTipText")); // NOI18N
         btnOpen.setFocusable(false);
@@ -252,7 +250,6 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         mainToolbar.add(btnOpen);
 
         btnSave.setAction(actionMap.get("SaveSimulation")); // NOI18N
-        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/save-icon.png"))); // NOI18N
         btnSave.setText(resourceMap.getString("btnSave.text")); // NOI18N
         btnSave.setToolTipText(resourceMap.getString("btnSave.toolTipText")); // NOI18N
         btnSave.setFocusable(false);
@@ -328,7 +325,6 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         simulationMenu.setName("simulationMenu"); // NOI18N
 
         menuNewSimulation.setAction(actionMap.get("newSimulation")); // NOI18N
-        menuNewSimulation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/new-icon.png"))); // NOI18N
         menuNewSimulation.setName("menuNewSimulation"); // NOI18N
         simulationMenu.add(menuNewSimulation);
 
@@ -340,8 +336,6 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         simulationMenu.add(menuOpenSImulation);
 
         menuSaveSimulation.setAction(actionMap.get("SaveSimulation")); // NOI18N
-        menuSaveSimulation.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
-        menuSaveSimulation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/save-icon.png"))); // NOI18N
         menuSaveSimulation.setText(resourceMap.getString("menuSaveSimulation.text")); // NOI18N
         menuSaveSimulation.setName("menuSaveSimulation"); // NOI18N
         simulationMenu.add(menuSaveSimulation);
@@ -1009,6 +1003,22 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
 //            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception ex) {
         }
+
+    }
+
+    public void showMessage(String msg) {
+        int messageTimeout = 3000;
+        statusMessageLabel.setText(msg);
+
+        final Timer mt = new Timer(messageTimeout, new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                statusMessageLabel.setText("");
+            }
+        });
+        mt.setRepeats(false);
+        mt.start();
 
     }
 }
