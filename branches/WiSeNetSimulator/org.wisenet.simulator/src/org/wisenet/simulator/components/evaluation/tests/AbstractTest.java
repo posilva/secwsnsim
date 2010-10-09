@@ -20,6 +20,7 @@ import org.wisenet.simulator.components.simulation.Simulation;
  */
 public abstract class AbstractTest extends PersistantObject implements Persistent, Parameterizable {
 
+    protected static String PREFIX_CFG = "test";
     protected String name;
     protected String description;
     protected TestTypeEnum type;
@@ -33,8 +34,8 @@ public abstract class AbstractTest extends PersistantObject implements Persisten
     protected Simulation activeSimulation;
 
     public AbstractTest() {
-        inputParameters= new TestInputParameters();
-        outputParameters= new TestOutputParameters(inputParameters);
+        inputParameters = new TestInputParameters();
+        outputParameters = new TestOutputParameters(inputParameters);
     }
 
     public AbstractTest(TestInputParameters inputParameters) {
@@ -109,19 +110,16 @@ public abstract class AbstractTest extends PersistantObject implements Persisten
         this.parameters = params;
     }
 
-    public Simulation getActiveSimulation() {
-        return activeSimulation;
-    }
-
-    public void setActiveSimulation(Simulation activeSimulation) {
-        this.activeSimulation = activeSimulation;
-    }
 
     public void saveToXML(XMLConfiguration configuration) throws PersistantException {
+        configuration.setProperty(PREFIX_CFG + ".name", name);
+        configuration.setProperty(PREFIX_CFG + ".description", description);
         inputParameters.saveToXML(configuration);
     }
 
     public void loadFromXML(XMLConfiguration configuration) throws PersistantException {
+        setName(configuration.getString(PREFIX_CFG + ".name"));
+        setDescription(configuration.getString(PREFIX_CFG + ".description"));
         inputParameters.loadFromXML(configuration);
     }
 

@@ -9,15 +9,19 @@ import java.util.Arrays;
  */
 public class Message implements Cloneable {
 
-    static long numberOfTotalMessage = 0; // global message counter
-    private long messageNumber = 0;    // global number of the message
-    private byte[] payload;               // payload of the message
-    protected Color color = Color.green;  // message color for de ui
-    protected boolean showColor = true;  // message color flag
+    static long numberOfTotalMessage = 0;   // global message counter
+    private long messageNumber = 0;         // global number of the message
+    private byte[] payload;                  // payload of the message
+    protected Color color = Color.green;   // message color for de ui
+    protected boolean showColor = true;    // message color flag
     protected long totalHops;             // number of hops (must be updated outside)
+    protected Object sourceId;          // generic source node ID
+    protected Object destinationId;     // generic destination node ID
+    protected Object uniqueId;          // uniqueID of the message
 
     public Message() {
         messageNumber = numberOfTotalMessage++;
+        uniqueId = messageNumber;
     }
 
     /**
@@ -117,4 +121,30 @@ public class Message implements Cloneable {
     public void hop() {
         totalHops++;
     }
+
+    public Object getDestinationId() {
+        return destinationId;
+    }
+
+    public void setDestinationId(Object destinationId) {
+        this.destinationId = destinationId;
+    }
+
+    public Object getSourceId() {
+        return sourceId;
+    }
+
+    public void setSourceId(Object sourceId) {
+        this.sourceId = sourceId;
+    }
+
+    public Object getUniqueId() {
+        return uniqueId;
+    }
+
+    public void setUniqueId(Object uniqueId) {
+        this.uniqueId = uniqueId;
+    }
+
+    
 }

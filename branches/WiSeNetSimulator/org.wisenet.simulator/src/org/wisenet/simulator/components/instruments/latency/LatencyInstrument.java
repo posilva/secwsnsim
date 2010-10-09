@@ -61,9 +61,9 @@ public class LatencyInstrument extends AbstractInstrument {
 
     @Override
     public void notifyMessageReceived(IInstrumentMessage message, IInstrumentHandler handler) {
-        if (handler.getUniqueId() == message.getDestinationId()) {
-            if (sendingObject.containsKey(message.getUniqueId())) {
-                LatencyEntry entry = (LatencyEntry) sendingObject.get(message.getUniqueId());
+        if (handler.getUniqueId() == ((Message)message).getDestinationId()) {
+            if (sendingObject.containsKey(((Message)message).getUniqueId())) {
+                LatencyEntry entry = (LatencyEntry) sendingObject.get(((Message)message).getUniqueId());
                 updateEntry(entry, message);
 
             }
@@ -92,10 +92,10 @@ public class LatencyInstrument extends AbstractInstrument {
                 IInstrumentHandler receiver = (IInstrumentHandler) r;
                 for (int i = 0; i < howManyMessagesToSentPerSender; i++) {
                     IInstrumentMessage message = createMessageInstance();
-                    message.setSourceId(sender.getUniqueId());
-                    message.setDestinationId(receiver.getUniqueId());
+                    ((Message)message).setSourceId(sender.getUniqueId());
+                    ((Message)message).setDestinationId(receiver.getUniqueId());
                     if (isAutonumber()) {
-                        message.setUniqueId(messageUniqueId++);
+                        ((Message)message).setUniqueId(messageUniqueId++);
                     }
                     numberOfMessagesToSend += getTimesToSentMessages();
                     final long interval = getIntervalToSentMessages() * Simulator.ONE_SECOND;
@@ -118,14 +118,14 @@ public class LatencyInstrument extends AbstractInstrument {
      */
     protected void saveMessage(IInstrumentMessage message, IInstrumentHandler handler) {
         // se o nó que regista é o mesmo do source da mensagem
-        if (handler.getUniqueId() == message.getSourceId()) {
+        if (handler.getUniqueId() == ((Message)message).getSourceId()) {
             // se ainda n se registou
-            if (!sendingObject.containsKey(message.getUniqueId())) {
-                log("Saved Message: " + message.getUniqueId() + " from " + message.getSourceId() + " to " + message.getDestinationId());
+            if (!sendingObject.containsKey(((Message)message).getUniqueId())) {
+                log("Saved Message: " + ((Message)message).getUniqueId() + " from " + ((Message)message).getSourceId() + " to " + ((Message)message).getDestinationId());
                 LatencyEntry entry = new LatencyEntry();
                 entry.sendRealTime = System.currentTimeMillis();
                 entry.sendSimTime = getSimulation().getTimeInMilliseconds();
-                sendingObject.put(message.getUniqueId(), entry);
+                sendingObject.put(((Message)message).getUniqueId(), entry);
             }
         }
         refreshPanel();
@@ -138,13 +138,13 @@ public class LatencyInstrument extends AbstractInstrument {
      */
     @Override
     protected void computeMessageReception(IInstrumentMessage message, IInstrumentHandler handler) {
-        if (handler.getUniqueId().equals(message.getDestinationId())) { // é tratado pelo destino
-            if (sendingObject.containsKey(message.getUniqueId())) { // se foi registado o envio
-                log("Received Message: " + message.getUniqueId() + " from " + message.getSourceId() + " to " + message.getDestinationId());
-                Integer c = (Integer) sendingObject.get(message.getUniqueId());
+        if (handler.getUniqueId().equals(((Message)message).getDestinationId())) { // é tratado pelo destino
+            if (sendingObject.containsKey(((Message)message).getUniqueId())) { // se foi registado o envio
+                log("Received Message: " + ((Message)message).getUniqueId() + " from " + ((Message)message).getSourceId() + " to " + ((Message)message).getDestinationId());
+                Integer c = (Integer) sendingObject.get(((Message)message).getUniqueId());
                 // adicionar ao contador
                 c = c != null ? c + 1 : 1;
-                sendingObject.put(message.getUniqueId(), c);
+                sendingObject.put(((Message)message).getUniqueId(), c);
             }
         }
         refreshPanel();

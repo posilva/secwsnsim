@@ -12,6 +12,6 @@ public class TestEndEvent extends AbstractTestEvent {
 
     @Override
     public void execute() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        System.out.println("END TEST EXECUTED");
     }
 }
