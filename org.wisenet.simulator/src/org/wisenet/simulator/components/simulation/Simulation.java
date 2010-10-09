@@ -52,10 +52,6 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
      */
     protected boolean applyingRadioStrength;
     /**
-     * Control flag for start state
-     */
-    protected boolean started;
-    /**
      * Start timestamp for real time
      */
     protected long startRealTime;
@@ -670,8 +666,10 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
             double x = file.getDouble(tag + ".x");
             double y = file.getDouble(tag + ".y");
             double z = file.getDouble(tag + ".z");
+            boolean s = file.getBoolean(tag + ".sink");
             Node node = getNodeFactory().createNode();
             node.setPosition(x, y, z);
+            node.setSinkNode(s);
             getSimulator().addNode(node);
         }
 
@@ -687,6 +685,8 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
             file.addProperty("simulation.topology.nodes.node.x", node.getX());
             file.addProperty("simulation.topology.nodes.node.y", node.getY());
             file.addProperty("simulation.topology.nodes.node.z", node.getZ());
+            file.addProperty("simulation.topology.nodes.node.sink", node.isSinkNode());
+
         }
         File f = new File(filename);
         if (f.exists()) {
@@ -747,5 +747,15 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         getReliabilityInstrument().reset();
         getLatencyInstrument().reset();
         getCoverageInstrument().reset();
+    }
+
+    public int getNumberOfSinkNodes() {
+        int ct = 0;
+        for (Node node : getSimulator().getNodes()) {
+            if (node.isSinkNode()) {
+                ct++;
+            }
+        }
+        return ct;
     }
 }

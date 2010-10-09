@@ -14,7 +14,7 @@ import org.wisenet.simulator.common.PersistantObject;
  */
 public class TestInputParameters extends PersistantObject {
 
-    static String prefix = "inputparameters";
+    public static String PREFIX_CFG = AbstractTest.PREFIX_CFG + ".inputparameters";
     protected int numberOfSenderNodes;
     protected int numberOfReceiverNodes;
     protected boolean percentOfSenderNodes;
@@ -119,45 +119,45 @@ public class TestInputParameters extends PersistantObject {
 
     public void saveToXML(XMLConfiguration configuration) throws PersistantException {
 
-        configuration.addProperty(prefix + ".NumberOfAttackNodes", getNumberOfAttackNodes());
-        configuration.addProperty(prefix + ".PercentOfAttackNodes", isPercentOfAttackNodes());
-        configuration.addProperty(prefix + ".OnlyConsiderToAttackStableNodes", isOnlyConsiderToAttackStableNodes());
+        configuration.addProperty(PREFIX_CFG + ".NumberOfAttackNodes", getNumberOfAttackNodes());
+        configuration.addProperty(PREFIX_CFG + ".PercentOfAttackNodes", isPercentOfAttackNodes());
+        configuration.addProperty(PREFIX_CFG + ".OnlyConsiderToAttackStableNodes", isOnlyConsiderToAttackStableNodes());
 
-        configuration.addProperty(prefix + ".NumberOfReceiverNodes", getNumberOfReceiverNodes());
-        configuration.addProperty(prefix + ".OnlyConsiderToReceiverSinkNodes", isOnlyConsiderToReceiverSinkNodes());
-        configuration.addProperty(prefix + ".PercentOfReceiverNodes", isPercentOfReceiverNodes());
+        configuration.addProperty(PREFIX_CFG + ".NumberOfReceiverNodes", getNumberOfReceiverNodes());
+        configuration.addProperty(PREFIX_CFG + ".OnlyConsiderToReceiverSinkNodes", isOnlyConsiderToReceiverSinkNodes());
+        configuration.addProperty(PREFIX_CFG + ".PercentOfReceiverNodes", isPercentOfReceiverNodes());
 
 
-        configuration.addProperty(prefix + ".NumberOfSenderNodes", getNumberOfSenderNodes());
-        configuration.addProperty(prefix + ".OnlyConsiderToSenderStableNodes", isOnlyConsiderToSenderStableNodes());
-        configuration.addProperty(prefix + ".PercentOfSenderNodes", isPercentOfSenderNodes());
+        configuration.addProperty(PREFIX_CFG + ".NumberOfSenderNodes", getNumberOfSenderNodes());
+        configuration.addProperty(PREFIX_CFG + ".OnlyConsiderToSenderStableNodes", isOnlyConsiderToSenderStableNodes());
+        configuration.addProperty(PREFIX_CFG + ".PercentOfSenderNodes", isPercentOfSenderNodes());
 
-        configuration.addProperty(prefix + ".IntervalBetweenMessagesSent", getIntervalBetweenMessagesSent());
-        configuration.addProperty(prefix + ".NumberOfMessagesPerNode", getNumberOfMessagesPerNode());
-        configuration.addProperty(prefix + ".NumberOfRetransmissions", getNumberOfRetransmissions());
+        configuration.addProperty(PREFIX_CFG + ".IntervalBetweenMessagesSent", getIntervalBetweenMessagesSent());
+        configuration.addProperty(PREFIX_CFG + ".NumberOfMessagesPerNode", getNumberOfMessagesPerNode());
+        configuration.addProperty(PREFIX_CFG + ".NumberOfRetransmissions", getNumberOfRetransmissions());
 
-        configuration.addProperty(prefix + ".AttackSelected", getAttackSelected());
+        configuration.addProperty(PREFIX_CFG + ".AttackSelected", getAttackSelected());
     }
 
     public void loadFromXML(XMLConfiguration configuration) throws PersistantException {
-        setNumberOfAttackNodes(configuration.getInt(prefix + ".NumberOfAttackNodes"));
-        setPercentOfAttackNodes(configuration.getBoolean(prefix + ".PercentOfAttackNodes"));
-        configuration.getBoolean(prefix + ".OnlyConsiderToAttackStableNodes");
+        setNumberOfAttackNodes(configuration.getInt(PREFIX_CFG + ".NumberOfAttackNodes"));
+        setPercentOfAttackNodes(configuration.getBoolean(PREFIX_CFG + ".PercentOfAttackNodes"));
+        setOnlyConsiderToAttackStableNodes(configuration.getBoolean(PREFIX_CFG + ".OnlyConsiderToAttackStableNodes"));
 
-        configuration.getInt(prefix + ".NumberOfReceiverNodes");
-        configuration.getBoolean(prefix + ".OnlyConsiderToReceiverSinkNodes");
-        configuration.getBoolean(prefix + ".PercentOfReceiverNodes");
+        setNumberOfReceiverNodes(configuration.getInt(PREFIX_CFG + ".NumberOfReceiverNodes"));
+        setOnlyConsiderToReceiverSinkNodes(configuration.getBoolean(PREFIX_CFG + ".OnlyConsiderToReceiverSinkNodes"));
+        setPercentOfReceiverNodes(configuration.getBoolean(PREFIX_CFG + ".PercentOfReceiverNodes"));
 
 
-        configuration.getInt(prefix + ".NumberOfSenderNodes");
-        configuration.getBoolean(prefix + ".OnlyConsiderToSenderStableNodes");
-        configuration.getBoolean(prefix + ".PercentOfSenderNodes");
+        setNumberOfSenderNodes(configuration.getInt(PREFIX_CFG + ".NumberOfSenderNodes"));
+        setOnlyConsiderToSenderStableNodes(configuration.getBoolean(PREFIX_CFG + ".OnlyConsiderToSenderStableNodes"));
+        setPercentOfSenderNodes(configuration.getBoolean(PREFIX_CFG + ".PercentOfSenderNodes"));
 
-        configuration.getInt(prefix + ".IntervalBetweenMessagesSent");
-        configuration.getInt(prefix + ".NumberOfMessagesPerNode");
-        configuration.getInt(prefix + ".NumberOfRetransmissions");
+        setIntervalBetweenMessagesSent(configuration.getInt(PREFIX_CFG + ".IntervalBetweenMessagesSent"));
+        setNumberOfMessagesPerNode(configuration.getInt(PREFIX_CFG + ".NumberOfMessagesPerNode"));
+        setNumberOfRetransmissions(configuration.getInt(PREFIX_CFG + ".NumberOfRetransmissions"));
 
-        configuration.getString(prefix + ".AttackSelected");
+        setAttackSelected(configuration.getString(PREFIX_CFG + ".AttackSelected"));
     }
 
     public boolean isPercentOfReceiverNodes() {

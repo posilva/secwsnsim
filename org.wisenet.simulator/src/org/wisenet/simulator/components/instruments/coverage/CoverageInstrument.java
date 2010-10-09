@@ -10,6 +10,7 @@ import org.wisenet.simulator.components.instruments.InstrumentEvent;
 import org.wisenet.simulator.components.instruments.coverage.listeners.SignalUpdateEvent;
 import org.wisenet.simulator.components.instruments.utils.SignalHandler;
 import org.wisenet.simulator.components.simulation.Simulation;
+import org.wisenet.simulator.core.Message;
 import org.wisenet.simulator.core.Simulator; 
 import org.wisenet.simulator.core.node.Node;
 
@@ -165,10 +166,10 @@ public class CoverageInstrument extends AbstractInstrument {
                 IInstrumentHandler receiver = (IInstrumentHandler) r;
                 for (int i = 0; i < howManyMessagesToSentPerSender; i++) {
                     IInstrumentMessage message = createMessageInstance();
-                    message.setSourceId(sender.getUniqueId());
-                    message.setDestinationId(receiver.getUniqueId());
+                    ((Message)message).setSourceId(sender.getUniqueId());
+                    ((Message)message).setDestinationId(receiver.getUniqueId());
                     if (isAutonumber()) {
-                        message.setUniqueId(messageUniqueId++);
+                        ((Message)message).setUniqueId(messageUniqueId++);
                     }
                     numberOfMessagesToSend += getTimesToSentMessages();
                     final long interval = getIntervalToSentMessages() * Simulator.ONE_SECOND;
@@ -190,10 +191,10 @@ public class CoverageInstrument extends AbstractInstrument {
         /**
          * Se ainda não se deu o registo do nó
          */
-        if (handler.getUniqueId() == message.getSourceId()) {
+        if (handler.getUniqueId() == ((Message)message).getSourceId()) {
             if (!sendingObject.containsKey(handler.getUniqueId())) {
-                log("Saved Message: " + message.getUniqueId() + " from " + message.getSourceId() + " to " + message.getDestinationId());
-                sendingObject.put(message.getSourceId(), 0);
+                log("Saved Message: " + ((Message)message).getUniqueId() + " from " + ((Message)message).getSourceId() + " to " + ((Message)message).getDestinationId());
+                sendingObject.put(((Message)message).getSourceId(), 0);
             }
         }
         refreshPanel();
@@ -201,13 +202,13 @@ public class CoverageInstrument extends AbstractInstrument {
 
     @Override
     protected void computeMessageReception(IInstrumentMessage message, IInstrumentHandler handler) {
-        if (handler.getUniqueId().equals(message.getDestinationId())) { // se quem está a receber é o destino
-            if (sendingObject.containsKey(message.getSourceId())) { // se foi registado o envio
-                log("Received Message: " + message.getUniqueId() + " from " + message.getSourceId() + " to " + message.getDestinationId());
-                Integer c = (Integer) sendingObject.get(message.getSourceId());
+        if (handler.getUniqueId().equals(((Message)message).getDestinationId())) { // se quem está a receber é o destino
+            if (sendingObject.containsKey(((Message)message).getSourceId())) { // se foi registado o envio
+                log("Received Message: " + ((Message)message).getUniqueId() + " from " + ((Message)message).getSourceId() + " to " + ((Message)message).getDestinationId());
+                Integer c = (Integer) sendingObject.get(((Message)message).getSourceId());
                 // adicionar ao contador
                 c = c != null ? c + 1 : 1;
-                sendingObject.put(message.getSourceId(), c);
+                sendingObject.put(((Message)message).getSourceId(), c);
             }
         }
         refreshPanel();

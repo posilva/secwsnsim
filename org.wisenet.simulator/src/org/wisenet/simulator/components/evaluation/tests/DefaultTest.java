@@ -4,11 +4,13 @@
  */
 package org.wisenet.simulator.components.evaluation.tests;
 
+import java.util.LinkedList;
 import java.util.List;
 import org.wisenet.simulator.components.evaluation.tests.events.TestEndEvent;
 import org.wisenet.simulator.components.evaluation.tests.events.TestExecutionEvent;
 import org.wisenet.simulator.components.evaluation.tests.events.TestStartEvent;
 import org.wisenet.simulator.components.instruments.NodeSelectionCondition;
+import org.wisenet.simulator.core.Event;
 import org.wisenet.simulator.core.Message;
 import org.wisenet.simulator.core.Simulator;
 import org.wisenet.simulator.core.node.Node;
@@ -19,7 +21,9 @@ import org.wisenet.simulator.core.node.Node;
  */
 public class DefaultTest extends AbstractTest {
 
+    List<Event> testEvents = new LinkedList<Event>();
     private static int messageCounter = 0;
+    long testTime = 0;
 
     public DefaultTest(TestInputParameters inputParameters) {
         super(inputParameters);
@@ -44,22 +48,34 @@ public class DefaultTest extends AbstractTest {
 
     @Override
     public void execute() {
-        if (getActiveSimulation() == null) {
+
+        if (getSimulation() == null) {
             return;
         }
+        testTime = getSimulation().getTime() + Simulator.ONE_SECOND;
+
         // Starts Test
         TestStartEvent startEvent = new TestStartEvent();
         startEvent.setTest(this);
-        getSimulation().getSimulator().addEvent(startEvent);
+        startEvent.setTime(testTime);
+        testEvents.add(startEvent);
+        testTime += Simulator.ONE_SECOND;
 
         // Build test conditions
         buildTestConditions();
-
-
+        testTime += Simulator.ONE_SECOND;
         // Ends Test
         TestEndEvent endEvent = new TestEndEvent();
         endEvent.setTest(this);
-        getSimulation().getSimulator().addEvent(endEvent);
+        endEvent.setTime(testTime);
+        testEvents.add(endEvent);
+
+        if (testEvents.size() > 2) {
+            for (Event event : testEvents) {
+                getSimulation().getSimulator().addEvent(event);
+
+            }
+        }
     }
 
     private void buildTestConditions() {
@@ -68,11 +84,11 @@ public class DefaultTest extends AbstractTest {
         List sourceNodes = null;
         List receiverNodes = null;
         List attackNodes = null;
-        long time = 0;
+
 
         if (inputParameters.getNumberOfSenderNodes() > 0) {
             int selectableNodes = inputParameters.isOnlyConsiderToSenderStableNodes() ? stableNodes : allNodes;
-            int nNodes = inputParameters.isPercentOfSenderNodes() ? (inputParameters.getNumberOfSenderNodes() * 100 / selectableNodes) : (inputParameters.getNumberOfSenderNodes());
+            int nNodes = inputParameters.isPercentOfSenderNodes() ? (inputParameters.getNumberOfSenderNodes() * selectableNodes / 100) : (inputParameters.getNumberOfSenderNodes());
 
             sourceNodes = getSimulation().selectRandomNodes(nNodes, new NodeSelectionCondition() {
 
@@ -84,19 +100,23 @@ public class DefaultTest extends AbstractTest {
                 }
             });
 
+            int sinknodes = simulation.getNumberOfSinkNodes();
+            final List<Node> srcNodes = sourceNodes;
 
-            nNodes = inputParameters.getNumberOfReceiverNodes();
+            selectableNodes = inputParameters.isOnlyConsiderToReceiverSinkNodes() ? sinknodes : allNodes;
+            nNodes = inputParameters.isPercentOfReceiverNodes() ? (inputParameters.getNumberOfReceiverNodes() * selectableNodes / 100) : (inputParameters.getNumberOfSenderNodes());
+
             receiverNodes = getSimulation().selectRandomNodes(nNodes, new NodeSelectionCondition() {
 
                 public boolean select(Node node) {
                     if (inputParameters.isOnlyConsiderToReceiverSinkNodes()) {
-                        return node.isSinkNode();
+                        return node.isSinkNode() && !srcNodes.contains(node);
                     }
                     return true;
                 }
             });
             selectableNodes = inputParameters.isOnlyConsiderToSenderStableNodes() ? stableNodes : allNodes;
-            nNodes = inputParameters.isPercentOfAttackNodes() ? (inputParameters.getNumberOfAttackNodes() * 100 / selectableNodes) : (inputParameters.getNumberOfAttackNodes());
+            nNodes = inputParameters.isPercentOfAttackNodes() ? (inputParameters.getNumberOfAttackNodes() * selectableNodes / 100) : (inputParameters.getNumberOfAttackNodes());
             final List src = sourceNodes;
             attackNodes = getSimulation().selectRandomNodes(nNodes, new NodeSelectionCondition() {
 
@@ -107,18 +127,20 @@ public class DefaultTest extends AbstractTest {
                     return !node.isSinkNode();
                 }
             });
-            time = getSimulation().getTime();
+
             for (Object s : sourceNodes) {
                 Node srcNode = (Node) s;
+
                 for (Object r : receiverNodes) {
                     Node rcvNode = (Node) r;
-                    time += inputParameters.getIntervalBetweenMessagesSent() * Simulator.ONE_SECOND;
+                    testTime += inputParameters.getIntervalBetweenMessagesSent() * Simulator.ONE_SECOND;
                     for (int i = 0; i < inputParameters.getNumberOfRetransmissions(); i++) {
-                        DefaultTestExecutionEvent event = createEvent(srcNode, rcvNode, time);
-                        getSimulation().getSimulator().addEvent(event);
+                        DefaultTestExecutionEvent event = createEvent(srcNode, rcvNode, testTime);
+                        testEvents.add(event);
                     }
                 }
             }
+
         }
 
     }
@@ -134,6 +156,9 @@ public class DefaultTest extends AbstractTest {
     private DefaultTestExecutionEvent createEvent(Node srcNode, Node rcvNode, long time) {
         DefaultTestExecutionEvent event = new DefaultTestExecutionEvent();
         TestMessage m = createTestMessage(srcNode, rcvNode);
+        event.message = m;
+        event.setSourceNode(srcNode);
+        event.setDestNode(rcvNode);
         event.setTime(time);
 
         event.setTest(this);
@@ -146,6 +171,14 @@ public class DefaultTest extends AbstractTest {
         protected Node sourceNode;
         protected Node destNode;
         protected Message message;
+
+        public Message getMessage() {
+            return message;
+        }
+
+        public void setMessage(Message message) {
+            this.message = message;
+        }
 
         public Node getDestNode() {
             return destNode;
@@ -172,9 +205,9 @@ public class DefaultTest extends AbstractTest {
 
     class DefaultTestMessage extends TestMessage {
 
-        Object sourceId;
-        Object destinationId;
-        Object uniqueId;
+        public DefaultTestMessage() {
+            setPayload("TEST".getBytes());
+        }
 
         @Override
         public Object getDestinationId() {

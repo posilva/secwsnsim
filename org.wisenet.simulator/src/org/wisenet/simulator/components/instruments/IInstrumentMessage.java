@@ -10,15 +10,15 @@ package org.wisenet.simulator.components.instruments;
  */
 public interface IInstrumentMessage {
 
-    public Object getSourceId();
-
-    public Object getDestinationId();
-
-    public long getUniqueId();
-
-    public void setSourceId(Object id);
-
-    public void setDestinationId(Object id);
-
-    public void setUniqueId(long id);
+//    public Object getSourceId();
+//
+//    public Object getDestinationId();
+//
+//    public long getUniqueId();
+//
+//    public void setSourceId(Object id);
+//
+//    public void setDestinationId(Object id);
+//
+//    public void setUniqueId(long id);
 }

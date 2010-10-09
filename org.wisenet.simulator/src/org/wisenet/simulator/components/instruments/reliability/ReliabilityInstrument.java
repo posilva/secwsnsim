@@ -8,18 +8,18 @@ import org.wisenet.simulator.components.instruments.IResult;
 import org.wisenet.simulator.components.instruments.AbstractInstrument;
 import org.wisenet.simulator.components.instruments.InstrumentEvent;
 import org.wisenet.simulator.components.simulation.Simulation;
+import org.wisenet.simulator.core.Message;
 import org.wisenet.simulator.core.Simulator;
 
 /**
  * NEsta classe a intenção é registar o numero de mensagens enviadas e verificar se
  * são todas recebidas
-* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class ReliabilityInstrument extends AbstractInstrument {
     // TODO: Ver para mais de 100 nós
 
-    protected Hashtable sendingObject = new Hashtable()
-            ;
+    protected Hashtable sendingObject = new Hashtable();
     private long delayToSentMessages;
     private long intervalToSentMessages;
     private int timesToSentMessages;
@@ -44,10 +44,10 @@ public class ReliabilityInstrument extends AbstractInstrument {
                 IInstrumentHandler receiver = (IInstrumentHandler) r;
                 for (int i = 0; i < howManyMessagesToSentPerSender; i++) {
                     IInstrumentMessage message = createMessageInstance();
-                    message.setSourceId(sender.getUniqueId());
-                    message.setDestinationId(receiver.getUniqueId());
+                    ((Message) message).setSourceId(sender.getUniqueId());
+                    ((Message) message).setDestinationId(receiver.getUniqueId());
                     if (isAutonumber()) {
-                        message.setUniqueId(messageUniqueId++);
+                        ((Message) message).setUniqueId(messageUniqueId++);
                     }
                     numberOfMessagesToSend += getTimesToSentMessages();
                     final long interval = getIntervalToSentMessages() * Simulator.ONE_SECOND;
@@ -68,10 +68,10 @@ public class ReliabilityInstrument extends AbstractInstrument {
         /**
          * Se ainda não se deu o registo do nó
          */
-        if (handler.getUniqueId() == message.getSourceId()) {
-            if (!sendingObject.containsKey(message.getUniqueId())) {
-                log("Saved Message: " + message.getUniqueId() + " from " + message.getSourceId() + " to " + message.getDestinationId());
-                sendingObject.put(message.getUniqueId(), 0);
+        if (handler.getUniqueId().equals(((Message) message).getSourceId())) {
+            if (!sendingObject.containsKey(((Message) message).getUniqueId())) {
+                log("Saved Message: " + ((Message) message).getUniqueId() + " from " + ((Message) message).getSourceId() + " to " + ((Message) message).getDestinationId());
+                sendingObject.put(((Message) message).getUniqueId(), 0);
             }
         }
         refreshPanel();
@@ -79,13 +79,13 @@ public class ReliabilityInstrument extends AbstractInstrument {
 
     @Override
     protected void computeMessageReception(IInstrumentMessage message, IInstrumentHandler handler) {
-        if (handler.getUniqueId().equals(message.getDestinationId())) { // é tratado pelo destino
-            if (sendingObject.containsKey(message.getUniqueId())) { // se foi registado o envio
-                log("Received Message: " + message.getUniqueId() + " from " + message.getSourceId() + " to " + message.getDestinationId());
-                Integer c = (Integer) sendingObject.get(message.getUniqueId());
+        if (handler.getUniqueId().equals(((Message) message).getDestinationId())) { // é tratado pelo destino
+            if (sendingObject.containsKey(((Message) message).getUniqueId())) { // se foi registado o envio
+                log("Received Message: " + ((Message) message).getUniqueId() + " from " + ((Message) message).getSourceId() + " to " + ((Message) message).getDestinationId());
+                Integer c = (Integer) sendingObject.get(((Message) message).getUniqueId());
                 // adicionar ao contador
                 c = c != null ? c + 1 : 1;
-                sendingObject.put(message.getUniqueId(), c);
+                sendingObject.put(((Message) message).getUniqueId(), c);
             }
         }
         refreshPanel();

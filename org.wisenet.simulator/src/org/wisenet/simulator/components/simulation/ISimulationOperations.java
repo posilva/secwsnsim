@@ -86,5 +86,7 @@ public interface ISimulationOperations {
     /**
      *
      */
-    void stop();
+    public void stop();
+
+    public int getNumberOfSinkNodes();
 }
