@@ -44,7 +44,7 @@ public class EvaluationINSENSDATAMessage extends INSENSDATAMessage implements II
 //    public Object getUniqueId() {
 //        return getID();
 //    }
-    public long getUniqueId() {
+    public Object getUniqueId() {
         return getID();
     }
 

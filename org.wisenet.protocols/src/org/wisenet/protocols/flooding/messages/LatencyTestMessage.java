@@ -27,9 +27,9 @@ public class LatencyTestMessage extends FloodingMessage {
         return getDestin();
     }
 
-    public long getUniqueId() {
-        return Long.valueOf(getMessageData());
-    }
+//    public long getUniqueId() {
+//        return Long.valueOf(getMessageData());
+//    }
 
     public void setSourceId(Object id) {
         setSource((Short) id);
