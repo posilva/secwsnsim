@@ -4,12 +4,10 @@
  */
 package org.wisenet.platform.gui.panels;
 
-import java.util.Collection;
 import org.jdesktop.application.Action;
 import org.wisenet.platform.common.ui.PlatformPanel;
 import org.wisenet.platform.core.PlatformManager;
 import org.wisenet.simulator.core.node.layers.routing.RoutingLayerController;
-import org.wisenet.simulator.core.node.Node;
 
 /**
  *
@@ -58,6 +56,9 @@ public class RoutingInfoPanel extends PlatformPanel {
         cmdRefresh = new javax.swing.JButton();
         txtNrNeighborsPerNode = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
+        txtNrStableNodesPercent = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txtNrSimNodes = new javax.swing.JTextField();
 
         setName("Form"); // NOI18N
         setLayout(new java.awt.BorderLayout());
@@ -67,7 +68,7 @@ public class RoutingInfoPanel extends PlatformPanel {
         txtNrStableNodes.setEditable(false);
         txtNrStableNodes.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(RoutingInfoPanel.class);
-        txtNrStableNodes.setText(resourceMap.getString("txtNrStableNodes.text")); // NOI18N
+        txtNrStableNodes.setToolTipText(resourceMap.getString("txtNrStableNodes.toolTipText")); // NOI18N
         txtNrStableNodes.setName("txtNrStableNodes"); // NOI18N
         txtNrStableNodes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -75,19 +76,16 @@ public class RoutingInfoPanel extends PlatformPanel {
             }
         });
 
-        jLabel2.setFont(resourceMap.getFont("jLabel2.font")); // NOI18N
         jLabel2.setLabelFor(txtNrStableNodes);
-        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
+        jLabel2.setText("Number of stable nodes / %"); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
 
-        jLabel3.setFont(resourceMap.getFont("jLabel3.font")); // NOI18N
         jLabel3.setLabelFor(txtNrStableNodes);
-        jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
+        jLabel3.setText("Number of messages sent"); // NOI18N
         jLabel3.setName("jLabel3"); // NOI18N
 
         txtNrMessagesSent.setEditable(false);
         txtNrMessagesSent.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txtNrMessagesSent.setText(resourceMap.getString("txtNrMessagesSent.text")); // NOI18N
         txtNrMessagesSent.setName("txtNrMessagesSent"); // NOI18N
         txtNrMessagesSent.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -95,14 +93,12 @@ public class RoutingInfoPanel extends PlatformPanel {
             }
         });
 
-        jLabel4.setFont(resourceMap.getFont("jLabel4.font")); // NOI18N
         jLabel4.setLabelFor(txtNrStableNodes);
-        jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
+        jLabel4.setText("Number of messages received"); // NOI18N
         jLabel4.setName("jLabel4"); // NOI18N
 
         txtNrMessagesReceived.setEditable(false);
         txtNrMessagesReceived.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txtNrMessagesReceived.setText(resourceMap.getString("txtNrMessagesReceived.text")); // NOI18N
         txtNrMessagesReceived.setName("txtNrMessagesReceived"); // NOI18N
         txtNrMessagesReceived.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -110,16 +106,13 @@ public class RoutingInfoPanel extends PlatformPanel {
             }
         });
 
-        lblMessage.setFont(resourceMap.getFont("lblMessage.font")); // NOI18N
-        lblMessage.setForeground(resourceMap.getColor("lblMessage.foreground")); // NOI18N
         lblMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblMessage.setText(resourceMap.getString("lblMessage.text")); // NOI18N
         lblMessage.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lblMessage.setName("lblMessage"); // NOI18N
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance().getContext().getActionMap(RoutingInfoPanel.class, this);
         cmdRefresh.setAction(actionMap.get("Refresh")); // NOI18N
-        cmdRefresh.setText(resourceMap.getString("cmdRefresh.text")); // NOI18N
+        cmdRefresh.setText("Refresh"); // NOI18N
         cmdRefresh.setName("cmdRefresh"); // NOI18N
 
         txtNrNeighborsPerNode.setEditable(false);
@@ -131,20 +124,47 @@ public class RoutingInfoPanel extends PlatformPanel {
             }
         });
 
-        jLabel5.setFont(resourceMap.getFont("jLabel5.font")); // NOI18N
         jLabel5.setLabelFor(txtNrStableNodes);
-        jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
+        jLabel5.setText("Neighbors per node"); // NOI18N
         jLabel5.setName("jLabel5"); // NOI18N
+
+        txtNrStableNodesPercent.setEditable(false);
+        txtNrStableNodesPercent.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtNrStableNodesPercent.setToolTipText(resourceMap.getString("txtNrStableNodesPercent.toolTipText")); // NOI18N
+        txtNrStableNodesPercent.setName("txtNrStableNodesPercent"); // NOI18N
+        txtNrStableNodesPercent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNrStableNodesPercentActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setLabelFor(txtNrStableNodes);
+        jLabel6.setText("Number of simulation nodes"); // NOI18N
+        jLabel6.setName("jLabel6"); // NOI18N
+
+        txtNrSimNodes.setEditable(false);
+        txtNrSimNodes.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtNrSimNodes.setName("txtNrSimNodes"); // NOI18N
+        txtNrSimNodes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNrSimNodesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblMessage, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblMessage, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(207, 207, 207)
+                        .addComponent(cmdRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -152,21 +172,33 @@ public class RoutingInfoPanel extends PlatformPanel {
                             .addComponent(jLabel5))
                         .addGap(28, 28, 28)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmdRefresh, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
-                            .addComponent(txtNrNeighborsPerNode, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
-                            .addComponent(txtNrMessagesReceived, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
-                            .addComponent(txtNrMessagesSent, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
-                            .addComponent(txtNrStableNodes, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE))))
+                            .addComponent(txtNrNeighborsPerNode, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                            .addComponent(txtNrMessagesReceived, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                            .addComponent(txtNrMessagesSent, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtNrStableNodes, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtNrStableNodesPercent, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(txtNrSimNodes, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(1, 1, 1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtNrSimNodes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtNrStableNodes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNrStableNodes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNrStableNodesPercent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -179,9 +211,9 @@ public class RoutingInfoPanel extends PlatformPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(txtNrNeighborsPerNode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
                 .addComponent(cmdRefresh)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -201,9 +233,13 @@ public class RoutingInfoPanel extends PlatformPanel {
             lblMessage.setText("Invalid Routing Controller");
             txtNrStableNodes.setText("0");
             txtNrMessagesSent.setText("0");
+            txtNrSimNodes.setText("0");
             txtNrMessagesReceived.setText("0");
+            txtNrStableNodesPercent.setText("0");
         } else {
             lblMessage.setText("");
+            txtNrStableNodesPercent.setText(""+ routingLayerController.getTotalStableNodes()*100/PlatformManager.getInstance().getActiveSimulation().getSimulator().getNodes().size());
+            txtNrSimNodes.setText("" + PlatformManager.getInstance().getActiveSimulation().getSimulator().getNodes().size());
             txtNrStableNodes.setText("" + routingLayerController.getTotalStableNodes());
             txtNrMessagesSent.setText("" + routingLayerController.getTotalSentMessages());
             txtNrMessagesReceived.setText("" + routingLayerController.getTotalReceivedMessages());
@@ -226,40 +262,34 @@ public class RoutingInfoPanel extends PlatformPanel {
     private void txtNrNeighborsPerNodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNrNeighborsPerNodeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNrNeighborsPerNodeActionPerformed
+
+    private void txtNrStableNodesPercentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNrStableNodesPercentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNrStableNodesPercentActionPerformed
+
+    private void txtNrSimNodesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNrSimNodesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNrSimNodesActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cmdRefresh;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblMessage;
     private javax.swing.JTextField txtNrMessagesReceived;
     private javax.swing.JTextField txtNrMessagesSent;
     private javax.swing.JTextField txtNrNeighborsPerNode;
+    private javax.swing.JTextField txtNrSimNodes;
     private javax.swing.JTextField txtNrStableNodes;
+    private javax.swing.JTextField txtNrStableNodesPercent;
     // End of variables declaration//GEN-END:variables
 
     @Action
     public void Refresh() {
         refresh();
-    }
-
-    @Action
-    public void MarkStableNodes() {
-        if (!PlatformManager.getInstance().haveActiveSimulation()) {
-            return;
-        }
-        Collection<Node> nodes = PlatformManager.getInstance().getActiveSimulation().getSimulator().getNodes();
-        for (Node node : nodes) {
-            if (node.getRoutingLayer().isStable()) {
-                if (!node.getGraphicNode().isMarked()) {
-                    node.getGraphicNode().mark();
-                } else {
-                    node.getGraphicNode().unmark();
-                }
-            }
-        }
     }
 
     @Override
