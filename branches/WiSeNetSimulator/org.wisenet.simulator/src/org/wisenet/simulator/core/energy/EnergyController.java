@@ -1,6 +1,8 @@
 package org.wisenet.simulator.core.energy;
 
+import java.util.Hashtable;
 import org.wisenet.simulator.components.instruments.logging.EnergyLogger;
+import org.wisenet.simulator.core.Simulator;
 import org.wisenet.simulator.core.energy.listeners.EnergyEvent;
 import org.wisenet.simulator.core.energy.listeners.EnergyListener;
 
@@ -11,11 +13,11 @@ import org.wisenet.simulator.core.energy.listeners.EnergyListener;
 public class EnergyController implements EnergyListener {
 
     protected GlobalEnergyDatabase database = new GlobalEnergyDatabase();
+    protected Hashtable<String, GlobalEnergyDatabase> activeDatabases = new Hashtable<String, GlobalEnergyDatabase>();
     protected EnergyLogger energyLogger;
     private boolean logEnergyEnable = false;
 
     public EnergyController() {
-        System.err.println("Energy Controller - TODO: Access the simulator time");
     }
 
     public GlobalEnergyDatabase getDatabase() {
@@ -28,7 +30,7 @@ public class EnergyController implements EnergyListener {
      */
     public synchronized void onConsume(EnergyEvent evt) {
         String ev;
-        final long simTime = 0;//Simulator.getSimulationTime(); //TODO Access the simulator time
+        final long simTime = Simulator.getSimulationTime(); //TODO Access the simulator time
         ev = evt.getEvent();
         if (isLogEnergyEnable()) {
             if (energyLogger != null) {
@@ -36,6 +38,9 @@ public class EnergyController implements EnergyListener {
             }
         }
         database.addConsumption(evt.getNodeid(), ev, evt.getRealTime(), simTime, evt.getValue(), evt.getState());
+        for (GlobalEnergyDatabase globalEnergyDatabase : activeDatabases.values()) {
+            globalEnergyDatabase.addConsumption(evt.getNodeid(), ev, evt.getRealTime(), simTime, evt.getValue(), evt.getState());
+        }
     }
 
     public EnergyLogger getEnergyLogger() {
@@ -71,8 +76,44 @@ public class EnergyController implements EnergyListener {
 
     public void reset() {
         getDatabase().reset();
+        activeDatabases.clear();
         if (getEnergyLogger() != null && this.logEnergyEnable) {
             getEnergyLogger().reset();
         }
+    }
+
+    /**
+     * Create a database of energy consumption
+     * @param name
+     * @return
+     *      NULL if database exists
+     */
+    public GlobalEnergyDatabase createDatabase(String name) {
+        GlobalEnergyDatabase db = null;
+        if (activeDatabases.get(name) == null) {
+            db = new GlobalEnergyDatabase();
+            activeDatabases.put(name, new GlobalEnergyDatabase());
+        }
+        return db;
+    }
+
+    /**
+     * Gets the active database by name
+     * @param name
+     *          the name of the registered database
+     * @return
+     *          the active database 
+     */
+    public GlobalEnergyDatabase getDatabse(String name) {
+        return activeDatabases.get(name);
+    }
+
+    /**
+     * Deletes a active database by name
+     * @param name
+     *          name of the registered database
+     */
+    public void deleteDatabase(String name) {
+        activeDatabases.remove(name);
     }
 }

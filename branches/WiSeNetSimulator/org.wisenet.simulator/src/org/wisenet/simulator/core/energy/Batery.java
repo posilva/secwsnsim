@@ -237,7 +237,7 @@ public class Batery {
      * @param rate
      */
     public void consumeProcessing(long rate) {
-        consume(energyModel.processingEnergy * rate, PROCESSING_EVENT);
+        consume(energyModel.getProcessingEnergy() * rate, PROCESSING_EVENT);
     }
 
     /**

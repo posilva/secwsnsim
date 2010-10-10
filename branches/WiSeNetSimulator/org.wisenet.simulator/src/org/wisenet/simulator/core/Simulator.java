@@ -88,7 +88,7 @@ public class Simulator {
     /** Holds the events */
     public PriorityQueue eventQueue = new PriorityQueue();
     /** The time of the last event using the given resolution */
-    protected long lastEventTime = 0;
+    protected static long lastEventTime = 0;
     /** Needed for the display, stores the maximum of both the x and y coordinates */
     protected double maxCoordinate = 0;
     private ISimulationDisplay display;
@@ -298,7 +298,7 @@ public class Simulator {
      *
      * @return Returns the time of the last event in 1/ONE_SECOND
      */
-    public long getSimulationTime() {
+    public static long getSimulationTime() {
         return lastEventTime;
     }
 
@@ -306,7 +306,7 @@ public class Simulator {
      *
      * @return Returns the time of the last event in milliseconds.
      */
-    public long getSimulationTimeInMillisec() {
+    public static long getSimulationTimeInMillisec() {
         return (long) (1000 * lastEventTime / (double) Simulator.ONE_SECOND);
     }
 

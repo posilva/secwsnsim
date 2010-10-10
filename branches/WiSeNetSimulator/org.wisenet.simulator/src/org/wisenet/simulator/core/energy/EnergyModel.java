@@ -4,179 +4,135 @@
  */
 package org.wisenet.simulator.core.energy;
 
-import java.lang.reflect.Field;
-import java.util.Vector;
-import org.wisenet.simulator.utilities.Utilities;
-import org.wisenet.simulator.utilities.annotation.AnnotationUtils;
-import org.wisenet.simulator.utilities.annotation.Annotated;
-import org.wisenet.simulator.utilities.annotation.EnergyModelParameter;
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.XMLConfiguration;
+import org.wisenet.simulator.common.ObjectParameter;
+import org.wisenet.simulator.common.ObjectParameters;
+import org.wisenet.simulator.common.Parameterizable;
+import org.wisenet.simulator.common.PersistantException;
+import org.wisenet.simulator.common.Persistent;
 
 /**
  *
-* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
-public class EnergyModel implements Annotated {
+public class EnergyModel implements Parameterizable, Persistent {
+
+    EnergyModelParameters parameters = new EnergyModelParameters();
 
     private static void getEnergyModelDefaultValues(EnergyModel energyModel) throws SecurityException {
-        Vector fields = AnnotationUtils.readEnergyModelParametersFields(energyModel);
-        for (Object object : fields) {
-            try {
-                Field field = (Field) object;
-                EnergyModelParameter p = field.getAnnotation(EnergyModelParameter.class);
-                double v = p.value();
-                field.setAccessible(true);
-                field.set(energyModel, v);
-            } catch (IllegalArgumentException ex) {
-                Utilities.handleException(ex);
-            } catch (IllegalAccessException ex) {
-                Utilities.handleException(ex);
-            }
-        }
     }
-    /**
-     * Valores Baseados em
-     */
-    @EnergyModelParameter(label = "Total energy (Joules)", value = 9360.0)
-    double totalEnergy;
-    // baseado no paper 3 - Evaluation of security Mechanisms  in WSN // skipjack
-    @EnergyModelParameter(label = "Encrypt energy (Joules/Byte)", value = 0.000001788)
-    double encryptEnergy;
-    @EnergyModelParameter(label = "Decrypt energy (Joules/Byte)", value = 0.000001788)
-    double decryptEnergy;
-    //Energy Analysis of public key cryptography for WSN PAPER 2
-    @EnergyModelParameter(label = "Digest energy (Joules/Byte)", value = 0.0000059) // SHA1
-    double digestEnergy;
-    @EnergyModelParameter(label = "Sign energy (Joules/Byte)", value = 0.0000059)
-    double signatureEnergy;
-    @EnergyModelParameter(label = "Verify Digest energy (Joules/Byte)", value = 0.0000059)
-    double verifyDigestEnergy;
-    @EnergyModelParameter(label = "Verify signature energy (Joules/Byte)", value = 0.0000059)
-    double verifySignatureEnergy;
-    @EnergyModelParameter(label = "CPU Transition to ON energy (Joules)", value = 0.000000001)
-    double cpuTransitionToActiveEnergy;
-    @EnergyModelParameter(label = "Transciver Transition to ON energy (Joules)", value = 0.000000002)
-    double txTransitionToActiveEnergy;
-    @EnergyModelParameter(label = "Transmission energy (Joules/Byte)", value = 0.00000592)
-    double transmissionEnergy;
-    @EnergyModelParameter(label = "Reception energy (Joules/Byte)", value = 0.00000286)
-    double receptionEnergy;
-    @EnergyModelParameter(label = "Idle State energy (Joules)", value = 0.0000059)
-    double idleEnergy;
-    @EnergyModelParameter(label = "Sleep State energy (Joules)", value = 0.0000075)
-    double sleepEnergy;
-    @EnergyModelParameter(label = "Simple processing energy (Joules)", value = 0.0138)
-    double processingEnergy;
 
     public double getProcessingEnergy() {
-        return processingEnergy;
+        return (Double) parameters.get("processingEnergy");
     }
 
     public void setProcessingEnergy(double processingEnergy) {
-        this.processingEnergy = processingEnergy;
+        parameters.set("processingEnergy", processingEnergy);
     }
 
     public double getCpuTransitionToActiveEnergy() {
-        return cpuTransitionToActiveEnergy;
+        return (Double) parameters.get("cpuTransitionToActiveEnergy");
     }
 
     public void setCpuTransitionToActiveEnergy(double cpuTransitionToActiveEnergy) {
-        this.cpuTransitionToActiveEnergy = cpuTransitionToActiveEnergy;
+        parameters.set("cpuTransitionToActiveEnergy", cpuTransitionToActiveEnergy);
     }
 
     public double getDecryptEnergy() {
-        return decryptEnergy;
+        return (Double) parameters.get("decryptEnergy");
     }
 
     public void setDecryptEnergy(double decryptEnergy) {
-        this.decryptEnergy = decryptEnergy;
+        parameters.set("decryptEnergy", decryptEnergy);
     }
 
     public double getDigestEnergy() {
-        return digestEnergy;
+        return (Double) parameters.get("digestEnergy");
     }
 
     public void setDigestEnergy(double digestEnergy) {
-        this.digestEnergy = digestEnergy;
+        parameters.set("digestEnergy", digestEnergy);
     }
 
     public double getEncryptEnergy() {
-        return encryptEnergy;
+        return (Double) parameters.get("encryptEnergy");
     }
 
     public void setEncryptEnergy(double encryptEnergy) {
-        this.encryptEnergy = encryptEnergy;
+        parameters.set("encryptEnergy", encryptEnergy);
     }
 
     public double getIdleEnergy() {
-        return idleEnergy;
+        return (Double) parameters.get("idleEnergy");
     }
 
     public void setIdleEnergy(double idleEnergy) {
-        this.idleEnergy = idleEnergy;
+        parameters.set("idleEnergy", idleEnergy);
     }
 
     public double getReceptionEnergy() {
-        return receptionEnergy;
+        return (Double) parameters.get("receptionEnergy");
     }
 
     public void setReceptionEnergy(double receptionEnergy) {
-        this.receptionEnergy = receptionEnergy;
+        parameters.set("receptionEnergy", receptionEnergy);
     }
 
     public double getSignatureEnergy() {
-        return signatureEnergy;
+        return (Double) parameters.get("signatureEnergy");
     }
 
     public void setSignatureEnergy(double signatureEnergy) {
-        this.signatureEnergy = signatureEnergy;
+        parameters.set("signatureEnergy", signatureEnergy);
     }
 
     public double getSleepEnergy() {
-        return sleepEnergy;
+        return (Double) parameters.get("sleepEnergy");
     }
 
     public void setSleepEnergy(double sleepEnergy) {
-        this.sleepEnergy = sleepEnergy;
+        parameters.set("sleepEnergy", sleepEnergy);
     }
 
     public double getTotalEnergy() {
-        return totalEnergy;
+        return (Double) parameters.get("totalEnergy");
     }
 
     public void setTotalEnergy(double totalEnergy) {
-        this.totalEnergy = totalEnergy;
+        parameters.set("totalEnergy", totalEnergy);
     }
 
     public double getTransmissionEnergy() {
-        return transmissionEnergy;
+        return (Double) parameters.get("transmissionEnergy");
     }
 
     public void setTransmissionEnergy(double transmissionEnergy) {
-        this.transmissionEnergy = transmissionEnergy;
+        parameters.set("transmissionEnergy", transmissionEnergy);
     }
 
     public double getTxTransitionToActiveEnergy() {
-        return txTransitionToActiveEnergy;
+        return (Double) parameters.get("txTransitionToActiveEnergy");
     }
 
     public void setTxTransitionToActiveEnergy(double txTransitionToActiveEnergy) {
-        this.txTransitionToActiveEnergy = txTransitionToActiveEnergy;
+        parameters.set("txTransitionToActiveEnergy", txTransitionToActiveEnergy);
     }
 
     public double getVerifyDigestEnergy() {
-        return verifyDigestEnergy;
+        return (Double) parameters.get("verifyDigestEnergy");
     }
 
     public void setVerifyDigestEnergy(double verifyDigestEnergy) {
-        this.verifyDigestEnergy = verifyDigestEnergy;
+        parameters.set("verifyDigestEnergy", verifyDigestEnergy);
     }
 
     public double getVerifySignatureEnergy() {
-        return verifySignatureEnergy;
+        return (Double) parameters.get("verifySignatureEnergy");
     }
 
     public void setVerifySignatureEnergy(double verifySignatureEnergy) {
-        this.verifySignatureEnergy = verifySignatureEnergy;
+        parameters.set("verifySignatureEnergy", verifySignatureEnergy);
     }
 
     public EnergyModel getInstanceWithDefaultValues() {
@@ -188,5 +144,59 @@ public class EnergyModel implements Annotated {
         EnergyModel energyModel = new EnergyModel();
         getEnergyModelDefaultValues(energyModel);
         return energyModel;
+    }
+
+    public ObjectParameters getParameters() {
+        return parameters;
+    }
+
+    public void saveToXML(String file) throws PersistantException {
+        try {
+            XMLConfiguration configuration = new XMLConfiguration();
+            saveToXML(configuration);
+            configuration.save(file);
+        } catch (ConfigurationException ex) {
+            throw new PersistantException(ex);
+        }
+    }
+
+    public void loadFromXML(String file) throws PersistantException {
+        try {
+            XMLConfiguration configuration = new XMLConfiguration(file);
+            configuration.load();
+            loadFromXML(configuration);
+
+        } catch (ConfigurationException ex) {
+            throw new PersistantException(ex);
+        }
+    }
+
+    public void saveToXML(XMLConfiguration configuration) throws PersistantException {
+        for (ObjectParameter param : this.parameters.getAllParameters()) {
+            configuration.addProperty("energyModel." + param.getName() + ".label", param.getLabel());
+            configuration.addProperty("energyModel." + param.getName() + ".value", param.getValue());
+            configuration.addProperty("energyModel." + param.getName() + ".required", param.isRequired());
+        }
+    }
+
+    public void loadFromXML(XMLConfiguration configuration) throws PersistantException {
+        for (ObjectParameter param : this.parameters.getAllParameters()) {
+            String label = (String) configuration.getString("energyModel." + param.getName() + ".label");
+            Object value = configuration.getDouble("energyModel." + param.getName() + ".value");
+            Boolean required = (Boolean) configuration.getBoolean("energyModel." + param.getName() + ".required");
+            parameters.set(new ObjectParameter(param.getName(), label, value, required));
+        }
+    }
+
+    public static void main(String[] args) throws PersistantException {
+        EnergyModel cem = new EnergyModel();
+        cem.saveToXML("energycfg.xml");
+        cem.loadFromXML("energycfg.xml");
+        cem.saveToXML("energycfg2.xml");
+
+    }
+
+    public void setParameters(ObjectParameters params) {
+        this.parameters = (EnergyModelParameters) params;
     }
 }

@@ -229,8 +229,7 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         mainToolbar.setRollover(true);
         mainToolbar.setName("mainToolbar"); // NOI18N
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance().getContext().getActionMap(PlatformView.class, this);
-        btnNew.setAction(actionMap.get("newSimulation")); // NOI18N
+        btnNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/new-icon.png"))); // NOI18N
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(PlatformView.class);
         btnNew.setText(resourceMap.getString("btnNew.text")); // NOI18N
         btnNew.setToolTipText(resourceMap.getString("btnNew.toolTipText")); // NOI18N
@@ -238,33 +237,52 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         btnNew.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnNew.setName("btnNew"); // NOI18N
         btnNew.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnNew.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewActionPerformed(evt);
+            }
+        });
         mainToolbar.add(btnNew);
 
-        btnOpen.setAction(actionMap.get("OpenSimulation")); // NOI18N
-        btnOpen.setText(resourceMap.getString("btnOpen.text")); // NOI18N
-        btnOpen.setToolTipText(resourceMap.getString("btnOpen.toolTipText")); // NOI18N
+        btnOpen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/open-icon.png"))); // NOI18N
+        btnOpen.setToolTipText("Open Existing Simulation"); // NOI18N
         btnOpen.setFocusable(false);
         btnOpen.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnOpen.setName("btnOpen"); // NOI18N
         btnOpen.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnOpen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOpenActionPerformed(evt);
+            }
+        });
         mainToolbar.add(btnOpen);
 
-        btnSave.setAction(actionMap.get("SaveSimulation")); // NOI18N
+        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/save-icon.png"))); // NOI18N
         btnSave.setText(resourceMap.getString("btnSave.text")); // NOI18N
-        btnSave.setToolTipText(resourceMap.getString("btnSave.toolTipText")); // NOI18N
+        btnSave.setToolTipText("Save Current Simulation"); // NOI18N
         btnSave.setFocusable(false);
         btnSave.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSave.setName("btnSave"); // NOI18N
         btnSave.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
         mainToolbar.add(btnSave);
 
-        btnProperties.setText(resourceMap.getString("btnProperties.text")); // NOI18N
-        btnProperties.setToolTipText(resourceMap.getString("btnProperties.toolTipText")); // NOI18N
+        btnProperties.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/Panel-Setting-icon.png"))); // NOI18N
+        btnProperties.setToolTipText("Simulation Settings"); // NOI18N
         btnProperties.setEnabled(workbenchPanel1.isVisible());
         btnProperties.setFocusable(false);
         btnProperties.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnProperties.setName("btnProperties"); // NOI18N
         btnProperties.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnProperties.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPropertiesActionPerformed(evt);
+            }
+        });
         mainToolbar.add(btnProperties);
 
         jSeparator7.setName("jSeparator7"); // NOI18N
@@ -324,8 +342,15 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         simulationMenu.setText(resourceMap.getString("simulationMenu.text")); // NOI18N
         simulationMenu.setName("simulationMenu"); // NOI18N
 
-        menuNewSimulation.setAction(actionMap.get("newSimulation")); // NOI18N
+        menuNewSimulation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/new-icon.png"))); // NOI18N
+        menuNewSimulation.setText("New"); // NOI18N
+        menuNewSimulation.setToolTipText(resourceMap.getString("menuNewSimulation.toolTipText")); // NOI18N
         menuNewSimulation.setName("menuNewSimulation"); // NOI18N
+        menuNewSimulation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuNewSimulationActionPerformed(evt);
+            }
+        });
         simulationMenu.add(menuNewSimulation);
 
         menuOpenSImulation.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
@@ -333,23 +358,42 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         menuOpenSImulation.setMnemonic('O');
         menuOpenSImulation.setText("Open"); // NOI18N
         menuOpenSImulation.setName("menuOpenSImulation"); // NOI18N
+        menuOpenSImulation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuOpenSImulationActionPerformed(evt);
+            }
+        });
         simulationMenu.add(menuOpenSImulation);
 
-        menuSaveSimulation.setAction(actionMap.get("SaveSimulation")); // NOI18N
+        menuSaveSimulation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/save-icon.png"))); // NOI18N
         menuSaveSimulation.setText(resourceMap.getString("menuSaveSimulation.text")); // NOI18N
+        menuSaveSimulation.setToolTipText("Save Simulation"); // NOI18N
         menuSaveSimulation.setName("menuSaveSimulation"); // NOI18N
+        menuSaveSimulation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSaveSimulationActionPerformed(evt);
+            }
+        });
         simulationMenu.add(menuSaveSimulation);
 
         jSeparator3.setName("jSeparator3"); // NOI18N
         simulationMenu.add(jSeparator3);
 
-        simPropertiesSubMenu.setAction(actionMap.get("ShowSimulationProperties")); // NOI18N
+        simPropertiesSubMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/Panel-Setting-icon.png"))); // NOI18N
+        simPropertiesSubMenu.setText("Properties"); // NOI18N
+        simPropertiesSubMenu.setToolTipText("Show Simulation Properties"); // NOI18N
         simPropertiesSubMenu.setName("simPropertiesSubMenu"); // NOI18N
+        simPropertiesSubMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                simPropertiesSubMenuActionPerformed(evt);
+            }
+        });
         simulationMenu.add(simPropertiesSubMenu);
 
         jSeparator1.setName("jSeparator1"); // NOI18N
         simulationMenu.add(jSeparator1);
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance().getContext().getActionMap(PlatformView.class, this);
         exitMenuItem.setAction(actionMap.get("quit")); // NOI18N
         exitMenuItem.setIcon(resourceMap.getIcon("exitMenuItem.icon")); // NOI18N
         exitMenuItem.setName("exitMenuItem"); // NOI18N
@@ -602,6 +646,38 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
     private void helpMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpMenuActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_helpMenuActionPerformed
+
+    private void btnPropertiesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPropertiesActionPerformed
+        ShowSimulationProperties();
+    }//GEN-LAST:event_btnPropertiesActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        SaveSimulation();        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenActionPerformed
+        OpenSimulation();
+    }//GEN-LAST:event_btnOpenActionPerformed
+
+    private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
+        newSimulation();        // TODO add your handling code here:
+    }//GEN-LAST:event_btnNewActionPerformed
+
+    private void menuNewSimulationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNewSimulationActionPerformed
+        newSimulation();        // TODO add your handling code here:
+    }//GEN-LAST:event_menuNewSimulationActionPerformed
+
+    private void menuOpenSImulationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuOpenSImulationActionPerformed
+        OpenSimulation();
+    }//GEN-LAST:event_menuOpenSImulationActionPerformed
+
+    private void menuSaveSimulationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSaveSimulationActionPerformed
+        SaveSimulation();        // TODO add your handling code here:
+    }//GEN-LAST:event_menuSaveSimulationActionPerformed
+
+    private void simPropertiesSubMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simPropertiesSubMenuActionPerformed
+        ShowSimulationProperties();
+    }//GEN-LAST:event_simPropertiesSubMenuActionPerformed
 
     @Action
     public void newSimulation() {

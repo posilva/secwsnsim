@@ -6,8 +6,10 @@ package org.wisenet.simulator.utilities.console;
 
 import java.io.Serializable;
 import org.apache.commons.configuration.XMLConfiguration;
+import org.wisenet.simulator.common.ObjectParameters;
 import org.wisenet.simulator.common.PersistantException;
 import org.wisenet.simulator.common.PersistantObject;
+import org.wisenet.simulator.core.energy.EnergyModelParameters;
 
 /**
  *
@@ -23,6 +25,8 @@ public class SimulationSettings extends PersistantObject implements Serializable
     String simulatorClassName;
     String radioModelClassName;
     String energyModelClassName;
+    ObjectParameters energyModelParameters=new EnergyModelParameters();
+    
     boolean staticZ = true;
     double minZ = 0;
     double maxZ = 0;
@@ -145,6 +149,8 @@ public class SimulationSettings extends PersistantObject implements Serializable
         configuration.addProperty("simulation.settings.minz", getMinZ());
         configuration.addProperty("simulation.settings.maxz", getMaxZ());
         configuration.addProperty("simulation.settings.environAttenuation", getEnvironAttenuation());
+        energyModelParameters.saveToXML(configuration);
+
     }
 
     public void loadFromXML(XMLConfiguration file) throws PersistantException {
@@ -160,5 +166,15 @@ public class SimulationSettings extends PersistantObject implements Serializable
         setMinZ((Double) file.getDouble("simulation.settings.minz"));
         setMaxZ((Double) file.getDouble("simulation.settings.maxz"));
         setEnvironAttenuation((Integer) file.getInt("simulation.settings.environAttenuation"));
+        energyModelParameters.loadFromXML(file);
     }
+
+    public ObjectParameters getEnergyModelParameters() {
+        return energyModelParameters;
+    }
+
+    public void setEnergyModelParameters(ObjectParameters energyModelParameters) {
+        this.energyModelParameters = energyModelParameters;
+    }
+
 }

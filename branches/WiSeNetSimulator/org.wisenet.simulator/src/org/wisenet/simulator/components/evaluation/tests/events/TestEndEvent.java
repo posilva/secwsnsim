@@ -12,6 +12,6 @@ public class TestEndEvent extends AbstractTestEvent {
 
     @Override
     public void execute() {
-        System.out.println("END TEST EXECUTED");
+        this.test.getEvaluationManager().endTest();
     }
 }

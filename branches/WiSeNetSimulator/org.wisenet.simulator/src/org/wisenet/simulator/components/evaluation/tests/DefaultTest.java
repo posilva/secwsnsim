@@ -11,7 +11,6 @@ import org.wisenet.simulator.components.evaluation.tests.events.TestExecutionEve
 import org.wisenet.simulator.components.evaluation.tests.events.TestStartEvent;
 import org.wisenet.simulator.components.instruments.NodeSelectionCondition;
 import org.wisenet.simulator.core.Event;
-import org.wisenet.simulator.core.Message;
 import org.wisenet.simulator.core.Simulator;
 import org.wisenet.simulator.core.node.Node;
 
@@ -156,7 +155,7 @@ public class DefaultTest extends AbstractTest {
     private DefaultTestExecutionEvent createEvent(Node srcNode, Node rcvNode, long time) {
         DefaultTestExecutionEvent event = new DefaultTestExecutionEvent();
         TestMessage m = createTestMessage(srcNode, rcvNode);
-        event.message = m;
+        event.setMessage(m);
         event.setSourceNode(srcNode);
         event.setDestNode(rcvNode);
         event.setTime(time);
@@ -170,15 +169,6 @@ public class DefaultTest extends AbstractTest {
 
         protected Node sourceNode;
         protected Node destNode;
-        protected Message message;
-
-        public Message getMessage() {
-            return message;
-        }
-
-        public void setMessage(Message message) {
-            this.message = message;
-        }
 
         public Node getDestNode() {
             return destNode;
@@ -199,7 +189,7 @@ public class DefaultTest extends AbstractTest {
         @Override
         public void execute() {
             super.execute();
-            sourceNode.sendMessage(message);
+            sourceNode.sendMessage(getMessage());
         }
     }
 

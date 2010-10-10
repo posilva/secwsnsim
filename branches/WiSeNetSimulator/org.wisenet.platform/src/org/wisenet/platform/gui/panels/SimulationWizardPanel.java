@@ -16,8 +16,9 @@ import org.wisenet.platform.common.conf.ClassConfigReader.ClassDefinitions;
 import org.wisenet.platform.utils.GUI_Utils;
 
 import org.wisenet.platform.common.conf.ConfigurationUtils;
+import org.wisenet.platform.common.ui.PlatformDialog;
 import org.wisenet.platform.common.ui.PlatformPanel;
-import org.wisenet.platform.core.instruments.energy.ui.EnergyModelDialog;
+import org.wisenet.platform.core.instruments.energy.ui.EnergyModelPanel;
 import org.wisenet.simulator.components.simulation.SimulationFactory;
 import org.wisenet.simulator.core.energy.EnergyModel;
 import org.wisenet.simulator.utilities.console.SimulationSettings;
@@ -315,8 +316,7 @@ public class SimulationWizardPanel extends PlatformPanel {
             ok = false;
             FileFilter[] filters = new FileFilter[]{GUI_Utils.XML()};
             String filename = GUI_Utils.showOpenDialog(filters, "Open Simulation Settings File");
-            if (filename == null) {
-            } else {
+            if (filename != null) {
                 updateSettings(filename);
             }
 
@@ -383,6 +383,7 @@ public class SimulationWizardPanel extends PlatformPanel {
             settings.setRadioModelClassName(((ClassDefinitions) cboRadioModelClass.getSelectedItem()).className);
             settings.setNodeFactoryClassName(((ClassDefinitions) cboNodeClass.getSelectedItem()).className);
             settings.setEnergyModelClassName(EnergyModel.class.getName()); // falta configurar o energy class
+
             settings.setMaxNodeRadioRange(nodeRangeSlider.getValue());
             settings.setStaticZ(optStaticZ.isSelected());
             settings.setEnvironAttenuation((Integer) environAttenuation.getModel().getValue());
@@ -395,8 +396,10 @@ public class SimulationWizardPanel extends PlatformPanel {
             sf.setNodeFactoryClass(getClassInstance(((ClassDefinitions) cboNodeClass.getSelectedItem()).className));
             sf.setNodeRange(nodeRangeSlider.getValue());
             if (!energyModelConfig) {
+
                 energyModel = EnergyModel.getDefaultInstance();
             }
+            settings.setEnergyModelParameters(energyModel.getParameters());
             sf.setEnergyModel(energyModel);
 
             return true;
@@ -436,13 +439,23 @@ public class SimulationWizardPanel extends PlatformPanel {
 
     @Action
     public void configureEnergyModel() {
-        EnergyModelDialog emd = new EnergyModelDialog(null, true);
-        emd.setVisible(true);
-        if (emd.isOk()) {
-            energyModel = emd.getEnergyModel();
+
+        EnergyModelPanel emp = new EnergyModelPanel();
+        PlatformDialog emd = PlatformDialog.display(emp, "Energy Model Parameters", PlatformDialog.OKCANCEL_MODE);
+        if (emd.getStatus() == PlatformDialog.OK_STATUS) {
+            energyModel = emp.createEnergyModelInstance();
             energyModelConfig = true;
+        } else {
+            energyModelConfig = false;
         }
-        emd.dispose();
+
+//        EnergyModelDialog emd = new EnergyModelDialog(null, true);
+//        emd.setVisible(true);
+//        if (emd.isOk()) {
+//            energyModel = emd.getEnergyModel();
+//            energyModelConfig = true;
+//        }
+//        emd.dispose();
     }
 
     public SimulationSettings getSettings() {

@@ -10,6 +10,7 @@ import org.wisenet.simulator.common.Parameterizable;
 import org.wisenet.simulator.common.PersistantException;
 import org.wisenet.simulator.common.PersistantObject;
 import org.wisenet.simulator.common.Persistent;
+import org.wisenet.simulator.components.evaluation.EvaluationManager;
 import org.wisenet.simulator.components.simulation.Simulation;
 
 /**
@@ -32,6 +33,7 @@ public abstract class AbstractTest extends PersistantObject implements Persisten
     protected boolean enabled = true;
     protected ObjectParameters parameters = new TestParameters();
     protected Simulation activeSimulation;
+    private EvaluationManager evaluationManager;
 
     public AbstractTest() {
         inputParameters = new TestInputParameters();
@@ -110,7 +112,6 @@ public abstract class AbstractTest extends PersistantObject implements Persisten
         this.parameters = params;
     }
 
-
     public void saveToXML(XMLConfiguration configuration) throws PersistantException {
         configuration.setProperty(PREFIX_CFG + ".name", name);
         configuration.setProperty(PREFIX_CFG + ".description", description);
@@ -130,4 +131,12 @@ public abstract class AbstractTest extends PersistantObject implements Persisten
     public abstract void afterFinish();
 
     public abstract void execute();
+
+    public void setEvaluationManager(EvaluationManager evaluationManager) {
+        this.evaluationManager = evaluationManager;
+    }
+
+    public EvaluationManager getEvaluationManager() {
+        return evaluationManager;
+    }
 }
