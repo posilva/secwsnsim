@@ -15,7 +15,7 @@ import org.wisenet.simulator.core.node.layers.routing.attacks.AttacksEntry;
 import org.wisenet.simulator.core.node.layers.routing.attacks.IRoutingAttack;
 import org.wisenet.simulator.utilities.Utilities;
 
-public abstract class RoutingLayer extends Layer {
+public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
 
     /**
      * Routing layer controller
@@ -369,5 +369,12 @@ public abstract class RoutingLayer extends Layer {
         stable = false;
         protocolPhases.clear();
         currentPhase = null;
+    }
+
+    public Object getUniqueId() {
+        return null;
+    }
+
+    public void probing(IInstrumentMessage message) {
     }
 }

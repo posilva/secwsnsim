@@ -633,6 +633,7 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
     @Override
     public void initialSetup() {
         super.initialSetup();
+        getEnergyModel().setParameters(settings.getEnergyModelParameters());
         getSimulator().addListener(this);
     }
 
@@ -715,6 +716,7 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
             getNodeFactory().setMinZ(settings.getMinZ());
             setMode(settings.isFastMode() ? Simulator.FAST : Simulator.REAL);
             Simulator.randomGenerator = new RandomGenerator(settings.getSeed());
+
             initialSetup();
 
         } catch (Exception ex) {

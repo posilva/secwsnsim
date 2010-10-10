@@ -175,11 +175,11 @@ public abstract class AbstractSimulation extends PersistantObject implements ISi
     }
 
     public long getTime() {
-        return getSimulator().getSimulationTime();
+        return Simulator.getSimulationTime();
     }
 
     public long getTimeInMilliseconds() {
-        return getSimulator().getSimulationTimeInMillisec();
+        return Simulator.getSimulationTimeInMillisec();
     }
 
     /**

@@ -54,6 +54,7 @@ public class TestBuilderPanel extends PlatformPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bgRun = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -84,6 +85,10 @@ public class TestBuilderPanel extends PlatformPanel {
         txtTestDescription = new javax.swing.JTextArea();
         jSeparator1 = new javax.swing.JSeparator();
         activateNow = new javax.swing.JCheckBox();
+        jPanel2 = new javax.swing.JPanel();
+        optRunTimes = new javax.swing.JRadioButton();
+        optRunOnce = new javax.swing.JRadioButton();
+        txtRunTimes = new javax.swing.JFormattedTextField();
 
         jLabel1.setText("Test Name:");
         jLabel1.setName("jLabel1"); // NOI18N
@@ -282,7 +287,7 @@ public class TestBuilderPanel extends PlatformPanel {
                     .addComponent(chkSenderNodesStable)
                     .addComponent(chkReceiverNodesSinknodes)
                     .addComponent(chkAttackNodesStable))
-                .addGap(55, 55, 55))
+                .addGap(83, 83, 83))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -339,6 +344,62 @@ public class TestBuilderPanel extends PlatformPanel {
             }
         });
 
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.setName("jPanel2"); // NOI18N
+
+        bgRun.add(optRunTimes);
+        optRunTimes.setText("Run n Times");
+        optRunTimes.setName("optRunTimes"); // NOI18N
+        optRunTimes.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                optRunTimesStateChanged(evt);
+            }
+        });
+        optRunTimes.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                optRunTimesItemStateChanged(evt);
+            }
+        });
+        optRunTimes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                optRunTimesActionPerformed(evt);
+            }
+        });
+
+        bgRun.add(optRunOnce);
+        optRunOnce.setSelected(true);
+        optRunOnce.setText("Run Once");
+        optRunOnce.setName("optRunOnce"); // NOI18N
+
+        txtRunTimes.setToolTipText("Number of times to run");
+        txtRunTimes.setEnabled(false);
+        txtRunTimes.setName("txtRunTimes"); // NOI18N
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(optRunTimes, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtRunTimes, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
+                    .addComponent(optRunOnce, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(18, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(optRunOnce)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(optRunTimes)
+                    .addComponent(txtRunTimes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -355,7 +416,7 @@ public class TestBuilderPanel extends PlatformPanel {
                                 .addComponent(cmdLoadFromFile, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cmdSaveToFile, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
                                 .addComponent(activateNow, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(12, 12, 12)
@@ -370,9 +431,13 @@ public class TestBuilderPanel extends PlatformPanel {
                                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(18, 18, 18)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNrRetransmissions, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtIntervalBetweenMessages, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtNrMessagesPerNode, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtNrMessagesPerNode, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtNrRetransmissions, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtIntervalBetweenMessages, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(cboAttacks, 0, 358, Short.MAX_VALUE)))
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
@@ -406,31 +471,36 @@ public class TestBuilderPanel extends PlatformPanel {
                         .addGap(6, 6, 6)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(8, 8, 8)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtNrMessagesPerNode, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtIntervalBetweenMessages, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(txtNrMessagesPerNode, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(11, 11, 11)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(txtIntervalBetweenMessages, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtNrRetransmissions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNrRetransmissions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8)
+                    .addComponent(cboAttacks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(13, 13, 13)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cboAttacks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
-                .addGap(8, 8, 8)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmdLoadFromFile)
                     .addComponent(cmdSaveToFile)
                     .addComponent(activateNow))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -489,6 +559,18 @@ public class TestBuilderPanel extends PlatformPanel {
     private void cmdLoadFromFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdLoadFromFileActionPerformed
         loadFromFile();
     }//GEN-LAST:event_cmdLoadFromFileActionPerformed
+
+    private void optRunTimesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optRunTimesActionPerformed
+        txtRunTimes.setEnabled(optRunTimes.isSelected());
+    }//GEN-LAST:event_optRunTimesActionPerformed
+
+    private void optRunTimesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_optRunTimesItemStateChanged
+        txtRunTimes.setEnabled(optRunTimes.isSelected());
+    }//GEN-LAST:event_optRunTimesItemStateChanged
+
+    private void optRunTimesStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_optRunTimesStateChanged
+        txtRunTimes.setEnabled(optRunTimes.isSelected());
+    }//GEN-LAST:event_optRunTimesStateChanged
 
     @Override
     public boolean onCancel() {
@@ -559,6 +641,7 @@ public class TestBuilderPanel extends PlatformPanel {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox activateNow;
+    private javax.swing.ButtonGroup bgRun;
     private javax.swing.JComboBox cboAttacks;
     private javax.swing.JCheckBox chkAttackNodesPercent;
     private javax.swing.JCheckBox chkAttackNodesStable;
@@ -578,14 +661,18 @@ public class TestBuilderPanel extends PlatformPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JRadioButton optRunOnce;
+    private javax.swing.JRadioButton optRunTimes;
     private javax.swing.JFormattedTextField txtIntervalBetweenMessages;
     private javax.swing.JFormattedTextField txtNrAttackNodes;
     private javax.swing.JFormattedTextField txtNrMessagesPerNode;
     private javax.swing.JFormattedTextField txtNrReceiverNodes;
     private javax.swing.JFormattedTextField txtNrRetransmissions;
     private javax.swing.JFormattedTextField txtNrSenderNodes;
+    private javax.swing.JFormattedTextField txtRunTimes;
     private javax.swing.JTextArea txtTestDescription;
     private javax.swing.JTextField txtTestName;
     // End of variables declaration//GEN-END:variables

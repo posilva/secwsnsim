@@ -32,8 +32,8 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="btnNew">
               <Properties>
-                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                  <action class="org.wisenet.platform.PlatformView" id="newSimulation" methodName="newSimulation"/>
+                <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/org/wisenet/platform/resources/images/new-icon.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" resourceKey="btnNew.text"/>
                 <Property name="toolTipText" type="java.lang.String" resourceKey="btnNew.toolTipText"/>
@@ -42,37 +42,47 @@
                 <Property name="name" type="java.lang.String" value="btnNew" noResource="true"/>
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNewActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnOpen">
               <Properties>
-                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                  <action class="org.wisenet.platform.PlatformView" id="OpenSimulation" methodName="OpenSimulation"/>
+                <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/org/wisenet/platform/resources/images/open-icon.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" resourceKey="btnOpen.text"/>
-                <Property name="toolTipText" type="java.lang.String" resourceKey="btnOpen.toolTipText"/>
+                <Property name="toolTipText" type="java.lang.String" value="Open Existing Simulation" noResource="true"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
                 <Property name="name" type="java.lang.String" value="btnOpen" noResource="true"/>
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOpenActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnSave">
               <Properties>
-                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                  <action class="org.wisenet.platform.PlatformView" id="SaveSimulation" methodName="SaveSimulation"/>
+                <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/org/wisenet/platform/resources/images/save-icon.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" resourceKey="btnSave.text"/>
-                <Property name="toolTipText" type="java.lang.String" resourceKey="btnSave.toolTipText"/>
+                <Property name="toolTipText" type="java.lang.String" value="Save Current Simulation" noResource="true"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
                 <Property name="name" type="java.lang.String" value="btnSave" noResource="true"/>
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSaveActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnProperties">
               <Properties>
-                <Property name="text" type="java.lang.String" resourceKey="btnProperties.text"/>
-                <Property name="toolTipText" type="java.lang.String" resourceKey="btnProperties.toolTipText"/>
+                <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/org/wisenet/platform/resources/images/Panel-Setting-icon.png"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Simulation Settings" noResource="true"/>
                 <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection component="workbenchPanel1" name="visible" type="property"/>
                 </Property>
@@ -81,6 +91,9 @@
                 <Property name="name" type="java.lang.String" value="btnProperties" noResource="true"/>
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPropertiesActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JToolBar$Separator" name="jSeparator7">
               <Properties>
@@ -196,11 +209,16 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="menuNewSimulation">
               <Properties>
-                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                  <action class="pt.unl.fct.di.mei.securesim.platform.PlatformView" id="newSimulation" methodName="newSimulation"/>
+                <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/org/wisenet/platform/resources/images/new-icon.png"/>
                 </Property>
+                <Property name="text" type="java.lang.String" value="New" noResource="true"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="menuNewSimulation.toolTipText"/>
                 <Property name="name" type="java.lang.String" value="menuNewSimulation" noResource="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuNewSimulationActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuOpenSImulation">
               <Properties>
@@ -214,15 +232,22 @@
                 <Property name="text" type="java.lang.String" value="Open" noResource="true"/>
                 <Property name="name" type="java.lang.String" value="menuOpenSImulation" noResource="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuOpenSImulationActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuSaveSimulation">
               <Properties>
-                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                  <action class="org.wisenet.platform.PlatformView" id="SaveSimulation" methodName="SaveSimulation"/>
+                <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/org/wisenet/platform/resources/images/save-icon.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" resourceKey="menuSaveSimulation.text"/>
+                <Property name="toolTipText" type="java.lang.String" value="Save Simulation" noResource="true"/>
                 <Property name="name" type="java.lang.String" value="menuSaveSimulation" noResource="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuSaveSimulationActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator3">
               <Properties>
@@ -231,11 +256,16 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="simPropertiesSubMenu">
               <Properties>
-                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                  <action class="org.wisenet.platform.PlatformView" id="ShowSimulationProperties" methodName="ShowSimulationProperties"/>
+                <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/org/wisenet/platform/resources/images/Panel-Setting-icon.png"/>
                 </Property>
+                <Property name="text" type="java.lang.String" value="Properties" noResource="true"/>
+                <Property name="toolTipText" type="java.lang.String" value="Show Simulation Properties" noResource="true"/>
                 <Property name="name" type="java.lang.String" value="simPropertiesSubMenu" noResource="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="simPropertiesSubMenuActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
               <Properties>

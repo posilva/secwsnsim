@@ -10,7 +10,7 @@ import org.wisenet.simulator.core.Message;
  *
  * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
-public abstract class TestMessage extends Message {
+public abstract class TestMessage extends Message implements org.wisenet.simulator.components.instruments.IInstrumentMessage {
 
     public abstract Object getSourceId();
 
