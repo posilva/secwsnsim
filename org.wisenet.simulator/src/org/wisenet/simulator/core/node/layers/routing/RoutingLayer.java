@@ -159,7 +159,7 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
     public final void receiveMessage(Object message) {
         if (getController().isTesting()) {
             AbstractTest test = getController().getActiveTest();
-            test.getEvaluationManager().registerMessageReceived(message, this);
+            test.getEvaluationManager().registerMessageArrived(message, this);
         }
 
         onReceiveMessage(message);
