@@ -8,6 +8,7 @@ import org.wisenet.simulator.common.ObjectParameters;
 import org.wisenet.simulator.common.Parameterizable;
 import org.wisenet.simulator.common.PersistantException;
 import org.wisenet.simulator.common.PersistantObject;
+import org.wisenet.simulator.components.evaluation.tests.AbstractTest;
 import org.wisenet.simulator.core.node.layers.routing.attacks.AttacksEntry;
 
 /**
@@ -22,6 +23,8 @@ public class RoutingLayerController extends PersistantObject implements Paramete
     RoutingLayerParameters parameters = new RoutingLayerParameters();
     Set registeredAttacks = new HashSet();
     protected static boolean controllerUpdated = false;
+    protected boolean testing = false;
+    private AbstractTest activeTest;
 
     void registerAsStable(RoutingLayer nodeRL) {
         stableNodesSet.add(nodeRL);
@@ -106,5 +109,17 @@ public class RoutingLayerController extends PersistantObject implements Paramete
 
     public void log(Exception ex) {
         System.err.println(ex.getMessage());
+    }
+
+    public boolean isTesting() {
+        return this.activeTest != null;
+    }
+
+    AbstractTest getActiveTest() {
+        return activeTest;
+    }
+
+    public void setActiveTest(AbstractTest activeTest) {
+        this.activeTest = activeTest;
     }
 }

@@ -21,6 +21,7 @@ public class EnergyModel implements Parameterizable, Persistent {
     EnergyModelParameters parameters = new EnergyModelParameters();
 
     private static void getEnergyModelDefaultValues(EnergyModel energyModel) throws SecurityException {
+        
     }
 
     public double getProcessingEnergy() {
@@ -186,14 +187,6 @@ public class EnergyModel implements Parameterizable, Persistent {
             Boolean required = (Boolean) configuration.getBoolean("energyModel." + param.getName() + ".required");
             parameters.set(new ObjectParameter(param.getName(), label, value, required));
         }
-    }
-
-    public static void main(String[] args) throws PersistantException {
-        EnergyModel cem = new EnergyModel();
-        cem.saveToXML("energycfg.xml");
-        cem.loadFromXML("energycfg.xml");
-        cem.saveToXML("energycfg2.xml");
-
     }
 
     public void setParameters(ObjectParameters params) {
