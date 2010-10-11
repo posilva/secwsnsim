@@ -139,4 +139,19 @@ public abstract class AbstractTest extends PersistantObject implements Persisten
     public EvaluationManager getEvaluationManager() {
         return evaluationManager;
     }
+
+    public void activate() {
+
+        if (getEvaluationManager() == null) {
+            setEvaluationManager(new EvaluationManager());
+        }
+        getSimulation().getRoutingLayerController().setActiveTest(this);
+        getEvaluationManager().startTest(this);
+    }
+
+    public void deactivate() {
+        if (getEvaluationManager() != null) {
+            getEvaluationManager().endTest();
+        }
+    }
 }

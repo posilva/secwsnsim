@@ -3,6 +3,7 @@ package org.wisenet.simulator.core.node.layers.routing;
 import org.wisenet.simulator.core.node.layers.routing.attacks.AttacksList;
 import java.util.LinkedList;
 import java.util.List;
+import org.wisenet.simulator.components.evaluation.tests.AbstractTest;
 import org.wisenet.simulator.components.instruments.coverage.CoverageInstrument;
 import org.wisenet.simulator.components.instruments.IInstrumentHandler;
 import org.wisenet.simulator.components.instruments.IInstrumentMessage;
@@ -156,6 +157,11 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
      * @param message
      */
     public final void receiveMessage(Object message) {
+        if (getController().isTesting()) {
+            AbstractTest test = getController().getActiveTest();
+            test.getEvaluationManager().registerMessageReceived(message, this);
+        }
+
         onReceiveMessage(message);
     }
 
@@ -168,6 +174,12 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
     public boolean sendMessage(Object message, Application app) {
         if (this instanceof IInstrumentHandler) {
             if (message instanceof IInstrumentMessage) {
+                if (getController().isTesting()) {
+                    AbstractTest test = getController().getActiveTest();
+                    test.getEvaluationManager().registerMessageSent(message, this);
+                }
+
+
                 getCoverageInstrument().notifyMessageSent((IInstrumentMessage) message, (IInstrumentHandler) this);
                 getReliabilityInstrument().notifyMessageSent((IInstrumentMessage) message, (IInstrumentHandler) this);
                 getLatencyInstrument().notifyMessageSent((IInstrumentMessage) message, (IInstrumentHandler) this);
@@ -294,6 +306,10 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
 
         if (this instanceof IInstrumentHandler) {
             if (message instanceof IInstrumentMessage) {
+                if (getController().isTesting()) {
+                    AbstractTest test = getController().getActiveTest();
+                    test.getEvaluationManager().registerMessageReceivedDone(message, this);
+                }
                 getCoverageInstrument().notifyMessageReceived((IInstrumentMessage) message, (IInstrumentHandler) this);
                 getReliabilityInstrument().notifyMessageReceived((IInstrumentMessage) message, (IInstrumentHandler) this);
                 getLatencyInstrument().notifyMessageReceived((IInstrumentMessage) message, (IInstrumentHandler) this);

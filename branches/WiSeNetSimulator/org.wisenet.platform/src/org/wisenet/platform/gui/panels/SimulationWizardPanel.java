@@ -395,6 +395,8 @@ public class SimulationWizardPanel extends PlatformPanel {
             sf.setRadioModelClass(getClassInstance(((ClassDefinitions) cboRadioModelClass.getSelectedItem()).className));
             sf.setNodeFactoryClass(getClassInstance(((ClassDefinitions) cboNodeClass.getSelectedItem()).className));
             sf.setNodeRange(nodeRangeSlider.getValue());
+
+            
             if (!energyModelConfig) {
 
                 energyModel = EnergyModel.getDefaultInstance();

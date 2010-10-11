@@ -14,7 +14,7 @@ public class TestStartEvent extends AbstractTestEvent {
 
     @Override
     public void execute() {
-        this.test.setEvaluationManager(new EvaluationManager());
-        this.test.getEvaluationManager().startTest(this.test);
+        getTest().activate();
+
     }
 }

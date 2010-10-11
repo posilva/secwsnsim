@@ -12,6 +12,7 @@ import org.wisenet.simulator.components.evaluation.tests.AbstractTest;
 import org.wisenet.simulator.components.evaluation.tests.TestMessage;
 import org.wisenet.simulator.core.Message;
 import org.wisenet.simulator.core.energy.GlobalEnergyDatabase;
+import org.wisenet.simulator.core.node.layers.routing.RoutingLayer;
 
 /**
  *
@@ -52,5 +53,17 @@ public class EvaluationManager {
 
     public Set<Message> getTestMessages() {
         return testMessages;
+    }
+
+    public void registerMessageSent(Object message, RoutingLayer routing) {
+
+    }
+
+    public void registerMessageReceived(Object message, RoutingLayer routing) {
+        // message Received by a node
+    }
+
+    public void registerMessageReceivedDone(Object message, RoutingLayer routing) {
+        // Message received rigth
     }
 }

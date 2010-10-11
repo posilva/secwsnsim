@@ -21,7 +21,7 @@ import org.wisenet.platform.common.ui.PlatformPanel;
 import org.wisenet.platform.utils.GUI_Utils;
 import org.wisenet.platform.utils.PlatformUtils;
 import org.wisenet.simulator.components.evaluation.tests.AbstractTest;
-import org.wisenet.simulator.components.evaluation.tests.DefaultTest;
+import org.wisenet.simulator.components.evaluation.tests.BaseTest;
 import org.wisenet.simulator.components.evaluation.tests.TestInputParameters;
 import org.wisenet.simulator.components.simulation.Simulation;
 
@@ -726,7 +726,7 @@ public class TestBuilderPanel extends PlatformPanel {
                 } else {
                     inputParameters.setAttackSelected(cboAttacks.getSelectedItem().toString());
                 }
-                test = new DefaultTest(inputParameters);
+                test = new BaseTest(inputParameters);
                 test.setName(txtTestName.getText());
                 test.setDescription(txtTestDescription.getText());
 
@@ -753,7 +753,7 @@ public class TestBuilderPanel extends PlatformPanel {
         try {
             String f = GUI_Utils.showOpenPersistentObjectDialog("Open test file");
             if (f != null) {
-                test = new DefaultTest();
+                test = new BaseTest();
                 test.loadFromXML(f);
 
                 showTest();

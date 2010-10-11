@@ -12,6 +12,7 @@ public class TestEndEvent extends AbstractTestEvent {
 
     @Override
     public void execute() {
-        this.test.getEvaluationManager().endTest();
+
+        getTest().deactivate();
     }
 }

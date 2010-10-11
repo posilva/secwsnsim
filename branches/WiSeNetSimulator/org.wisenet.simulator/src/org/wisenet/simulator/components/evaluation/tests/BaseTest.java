@@ -13,22 +13,23 @@ import org.wisenet.simulator.components.instruments.NodeSelectionCondition;
 import org.wisenet.simulator.core.Event;
 import org.wisenet.simulator.core.Simulator;
 import org.wisenet.simulator.core.node.Node;
+import org.wisenet.simulator.core.node.layers.routing.attacks.AttacksEntry;
 
 /**
  *
  * @author posilva
  */
-public class DefaultTest extends AbstractTest {
+public class BaseTest extends AbstractTest {
 
     List<Event> testEvents = new LinkedList<Event>();
     private static int messageCounter = 0;
     long testTime = 0;
 
-    public DefaultTest(TestInputParameters inputParameters) {
+    public BaseTest(TestInputParameters inputParameters) {
         super(inputParameters);
     }
 
-    public DefaultTest() {
+    public BaseTest() {
         super();
     }
 
@@ -51,18 +52,19 @@ public class DefaultTest extends AbstractTest {
         if (getSimulation() == null) {
             return;
         }
-        testTime = getSimulation().getTime() + Simulator.ONE_SECOND;
+
+        testTime = getSimulation().getTime() + (Simulator.ONE_SECOND * 5);
 
         // Starts Test
         TestStartEvent startEvent = new TestStartEvent();
         startEvent.setTest(this);
         startEvent.setTime(testTime);
         testEvents.add(startEvent);
-        testTime += Simulator.ONE_SECOND;
+        testTime += Simulator.ONE_SECOND * 5;
 
         // Build test conditions
         buildTestConditions();
-        testTime += Simulator.ONE_SECOND;
+        testTime += Simulator.ONE_SECOND * 5;
         // Ends Test
         TestEndEvent endEvent = new TestEndEvent();
         endEvent.setTest(this);
@@ -83,6 +85,8 @@ public class DefaultTest extends AbstractTest {
         List sourceNodes = null;
         List receiverNodes = null;
         List attackNodes = null;
+        Integer interval = inputParameters.getIntervalBetweenMessagesSent();
+
 
 
         if (inputParameters.getNumberOfSenderNodes() > 0) {
@@ -132,11 +136,20 @@ public class DefaultTest extends AbstractTest {
 
                 for (Object r : receiverNodes) {
                     Node rcvNode = (Node) r;
-                    testTime += inputParameters.getIntervalBetweenMessagesSent() * Simulator.ONE_SECOND;
+                    testTime += (interval * Simulator.ONE_SECOND);
                     for (int i = 0; i < inputParameters.getNumberOfRetransmissions(); i++) {
                         DefaultTestExecutionEvent event = createEvent(srcNode, rcvNode, testTime);
                         testEvents.add(event);
                     }
+                }
+            }
+
+            for (Object a : attackNodes) {
+                Node attackedNode = (Node) a;
+                attackedNode.getRoutingLayer().isUnderAttack();
+                LinkedList<AttacksEntry> list =attackedNode.getRoutingLayer().getAttacks().getAttacksList();
+                for (AttacksEntry attacksEntry : list) {
+                    attacksEntry.getAttack().enable();
                 }
             }
 
