@@ -56,14 +56,18 @@ public class EvaluationManager {
     }
 
     public void registerMessageSent(Object message, RoutingLayer routing) {
-
+System.out.println("message Sent");
     }
 
-    public void registerMessageReceived(Object message, RoutingLayer routing) {
+    public void registerMessageArrived(Object message, RoutingLayer routing) {
         // message Received by a node
+        System.out.println("message arrived");
+
+        
     }
 
     public void registerMessageReceivedDone(Object message, RoutingLayer routing) {
         // Message received rigth
+        System.out.println("message received");
     }
 }

@@ -1090,13 +1090,19 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     }
 
     void startSimulation() {
-        if (!simulationRunning) {
-            PlatformManager.getInstance().getPlatformView().showMessage("Starting simulation");
-            simulation.start();
-            simulationRunning = true;
-        } else {
-            simulation.resume();
+        try {
+
+            if (!simulationRunning) {
+                PlatformManager.getInstance().getPlatformView().showMessage("Starting simulation");
+                simulation.start();
+                simulationRunning = true;
+            } else {
+                simulation.resume();
+            }
+        } catch (Exception e) {
+            GUI_Utils.showException(e);
         }
+
     }
 
     void stopSimulation() {
