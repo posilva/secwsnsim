@@ -94,26 +94,26 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
                     switch (type) {
                         case INSENSConstants.MSG_ROUTE_REQUEST:
                             setCurrentPhase(PHASE_ROUTE_REQUEST);
-                            routingController.addMessageReceivedCounter(INSENSConstants.MSG_ROUTE_REQUEST);
+                            getController().addMessageReceivedCounter(INSENSConstants.MSG_ROUTE_REQUEST);
                             processRREQMessage(m);
                             break;
                         case INSENSConstants.MSG_FEEDBACK:
                             setCurrentPhase(PHASE_ROUTE_FEEDBACK);
-                            routingController.addMessageReceivedCounter(INSENSConstants.MSG_FEEDBACK);
+                            getController().addMessageReceivedCounter(INSENSConstants.MSG_FEEDBACK);
                             processFDBKMessage(m);
                             break;
                         case INSENSConstants.MSG_ROUTE_UPDATE:
                             setCurrentPhase(PHASE_ROUTE_UPDATE);
-                            routingController.addMessageReceivedCounter(INSENSConstants.MSG_ROUTE_UPDATE);
+                            getController().addMessageReceivedCounter(INSENSConstants.MSG_ROUTE_UPDATE);
                             processRUPDMessage(m);
                             break;
                         case INSENSConstants.MSG_ROUTE_UPDATE_ACK:
-                            routingController.addMessageReceivedCounter(INSENSConstants.MSG_ROUTE_UPDATE_ACK);
+                            getController().addMessageReceivedCounter(INSENSConstants.MSG_ROUTE_UPDATE_ACK);
                             processRUPDACKMessage(m);
                             break;
                         case INSENSConstants.MSG_DATA:
                             setCurrentPhase(PHASE_FORWARD_DATA);
-                            routingController.addMessageReceivedCounter(INSENSConstants.MSG_DATA);
+                            getController().addMessageReceivedCounter(INSENSConstants.MSG_DATA);
                             processDATAMessage(m);
                             break;
                     }
@@ -207,7 +207,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
                         byte[] new_payload = INSENSMessagePayloadFactory.updateRUPDPayload(payload.source, payload.destination, getNode().getId(), payload.ows, payload.forwardingTable, payload.mac, this.getNode());
                         if (new_payload != null) {
                             m.setPayload(new_payload);
-                            routingController.addMessageSentCounter(INSENSConstants.MSG_ROUTE_UPDATE);
+                            getController().addMessageSentCounter(INSENSConstants.MSG_ROUTE_UPDATE);
                             send((Message) m.clone());
                             log("Forward Message from " + payload.source + " to " + payload.destination);
                         }
@@ -220,7 +220,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
                         byte[] new_payload = INSENSMessagePayloadFactory.updateDATAPayload(payloadData.source, payloadData.destination, getNode().getId(), payloadData.data, payloadData.mac, this.getNode());
                         if (new_payload != null) {
                             m.setPayload(new_payload);
-                            routingController.addMessageSentCounter(INSENSConstants.MSG_DATA);
+                            getController().addMessageSentCounter(INSENSConstants.MSG_DATA);
                             send((Message) m.clone());
                             log("Forward Message from " + payloadData.source + " to " + payloadData.destination);
                         }
@@ -244,7 +244,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     private void broadcastMessage(Message message) {
         sendingMessage = true;
         long delay = (long) Simulator.randomGenerator.nextDoubleBetween((int) INSENSConstants.MIN_DELAYED_MESSAGE_BOUND, (int) INSENSConstants.MAX_DELAYED_MESSAGE_BOUND);
-        long time = (long) (getNode().getSimulator().getSimulationTime());
+        long time = (long) (Simulator.getSimulationTime());
         DelayedMessageEvent delayMessageEvent = new DelayedMessageEvent(time, delay, message, getNode());
         delayMessageEvent.setReliable(reliableMode);
         getNode().getSimulator().addEvent(delayMessageEvent);
@@ -275,6 +275,18 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     private void createNodeKeys() {
         privateKey = CryptoFunctions.createSkipjackKey();
         NetworkKeyStore.getInstance().registerKey(getNode().getId(), privateKey);
+    }
+
+    private INSENSMessage encapsulateMESSAGE(Message message) {
+
+        INSENSMessage m = new INSENSMessage();
+        m.setUniqueId(message.getUniqueId());
+        m.setSourceId(message.getSourceId());
+        m.setDestinationId(message.getDestinationId());
+        byte[] new_payload = encapsulateDataPayload(message);
+        m.setPayload(new_payload);
+        getController().addMessageSentCounter(INSENSConstants.MSG_DATA);
+        return m;
     }
 
     /**
@@ -320,7 +332,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         byte[] payload = INSENSMessagePayloadFactory.createFBKPayload(getNode().getId(),
                 privateKey, neighborInfo, neighborInfo.getParentMac(), this.getNode());
         INSENSMessage message = new INSENSMessage(payload);
-        routingController.addMessageSentCounter(INSENSConstants.MSG_FEEDBACK);
+        getController().addMessageSentCounter(INSENSConstants.MSG_FEEDBACK);
         send(message);
     }
 
@@ -392,7 +404,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
             INSENSMessage m = new INSENSMessage(payload);
             RREQPayload dummy = new RREQPayload(payload);
             myRoundMAC = dummy.mac;
-            routingController.addMessageSentCounter(INSENSConstants.MSG_ROUTE_REQUEST);
+            getController().addMessageSentCounter(INSENSConstants.MSG_ROUTE_REQUEST);
             send(m);
             startForwardTablesCalculesTimer.start();
         } catch (INSENSException ex) {
@@ -463,7 +475,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         INSENSMessage message = new INSENSMessage(payload);
         RREQPayload dummy = new RREQPayload(payload);
         myRoundMAC = Arrays.copyOf(dummy.mac, dummy.mac.length);
-        routingController.addMessageSentCounter(INSENSConstants.MSG_ROUTE_REQUEST);
+        getController().addMessageSentCounter(INSENSConstants.MSG_ROUTE_REQUEST);
         send(message);
     }
 
@@ -480,7 +492,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
                 feedbackMessagesReceived++;
             } else { // forward the message if is from my child
                 byte[] new_payload = modifiedParentMAC(payload);
-                routingController.addMessageSentCounter(INSENSConstants.MSG_FEEDBACK);
+                getController().addMessageSentCounter(INSENSConstants.MSG_FEEDBACK);
                 send(new INSENSMessage(new_payload));
                 log("Forward FDBK Message From Child " + payload.sourceId);
             }
@@ -600,7 +612,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
                 Short id = (Short) n;
                 if (forwardingTables.containsKey(id)) {
                     payload = INSENSMessagePayloadFactory.createRUPDPayload(getNode().getId(), (Short) n, getNode().getId(), OWS, forwardingTables.get(id), privateKey, this.getNode());
-                    routingController.addMessageSentCounter(INSENSConstants.MSG_ROUTE_UPDATE);
+                    getController().addMessageSentCounter(INSENSConstants.MSG_ROUTE_UPDATE);
                     send(new INSENSMessage(payload));
                 }
             }
@@ -656,16 +668,9 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
      * @return
      */
     private boolean sendDATAMessage(Message message) {
-        try {
-            byte[] new_payload = encapsulateDataPayload(message);
-            message.setPayload(new_payload);
-            routingController.addMessageSentCounter(INSENSConstants.MSG_DATA);
-            send((Message) message.clone());
-            return true;
-        } catch (CloneNotSupportedException ex) {
-            log(ex);
-        }
-        return false;
+        INSENSMessage m = encapsulateMESSAGE(message);
+        send((Message) m);
+        return true;
     }
 
     /**
@@ -772,4 +777,5 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         tableOfNodesByHops.clear();
         reliableMode = false;
     }
+
 }

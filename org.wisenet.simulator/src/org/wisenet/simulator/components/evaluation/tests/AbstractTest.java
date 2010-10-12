@@ -152,6 +152,8 @@ public abstract class AbstractTest extends PersistantObject implements Persisten
     public void deactivate() {
         if (getEvaluationManager() != null) {
             getEvaluationManager().endTest();
+            getSimulation().notifyEndTest(this);
         }
+
     }
 }

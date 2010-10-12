@@ -1,8 +1,10 @@
 package org.wisenet.simulator.components.simulation;
 
+import org.wisenet.simulator.components.simulation.listeners.SimulationTestEvent;
 import java.util.logging.Level;
 import org.apache.commons.configuration.ConfigurationException;
 import org.wisenet.simulator.common.PersistantException;
+import org.wisenet.simulator.components.evaluation.tests.AbstractTest;
 import org.wisenet.simulator.components.instruments.coverage.CoverageInstrument;
 import org.wisenet.simulator.components.instruments.latency.LatencyInstrument;
 import org.wisenet.simulator.components.instruments.reliability.ReliabilityInstrument;
@@ -759,5 +761,22 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
             }
         }
         return ct;
+    }
+
+    public void notifyEndTest(AbstractTest test) {
+        fireAfterTestExecution(new SimulationTestEvent(test));
+    }
+
+    private void fireAfterTestExecution(SimulationTestEvent event) {
+    Object[] listeners = simulationListeners.getListenerList();
+        // loop through each listener and pass on the event if needed
+        int numListeners = listeners.length;
+        for (int i = 0; i
+                < numListeners; i += 2) {
+            if (listeners[i] == SimulationListener.class) {
+                // pass the event to the listeners event dispatch method
+                ((SimulationListener) listeners[i + 1]).afterTestExecution(event);
+            }
+        }
     }
 }

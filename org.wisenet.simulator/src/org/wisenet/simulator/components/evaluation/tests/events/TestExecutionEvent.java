@@ -24,6 +24,5 @@ public abstract class TestExecutionEvent extends AbstractTestEvent {
 
     @Override
     public void execute() {
-        getTest().getEvaluationManager().signalMessage(getMessage());
     }
 }

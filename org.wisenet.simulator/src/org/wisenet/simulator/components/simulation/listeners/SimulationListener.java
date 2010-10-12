@@ -33,4 +33,6 @@ public interface SimulationListener extends EventListener {
     public void onEmptyQueue(SimulationEvent event);
 
     public void onNewSimulatorRound(SimulationEvent event);
+
+    public void afterTestExecution(SimulationTestEvent event);
 }

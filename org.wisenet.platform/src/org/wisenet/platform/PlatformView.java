@@ -43,6 +43,7 @@ import org.wisenet.platform.utils.PlatformUtils;
 import org.wisenet.platform.utils.gui.ClockCounter;
 import org.wisenet.platform.utils.GUI_Utils;
 import org.wisenet.platform.utils.gui.IClockDisplay;
+import org.wisenet.simulator.components.evaluation.tests.AbstractTest;
 import org.wisenet.simulator.components.instruments.NodeSelectionCondition;
 import org.wisenet.simulator.components.instruments.coverage.CoverageInstrument;
 import org.wisenet.simulator.components.instruments.coverage.CoverageListener;
@@ -50,6 +51,7 @@ import org.wisenet.simulator.components.instruments.coverage.listeners.SignalUpd
 import org.wisenet.simulator.components.simulation.Simulation;
 import org.wisenet.simulator.components.simulation.listeners.SimulationEvent;
 import org.wisenet.simulator.components.simulation.listeners.SimulationListener;
+import org.wisenet.simulator.components.simulation.listeners.SimulationTestEvent;
 import org.wisenet.simulator.core.node.Node;
 import org.wisenet.simulator.utilities.Utilities;
 import org.wisenet.simulator.utilities.listeners.ExceptionEvent;
@@ -1095,6 +1097,26 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         });
         mt.setRepeats(false);
         mt.start();
+
+    }
+
+    @Override
+    public void afterTestExecution(final SimulationTestEvent event) {
+        SwingUtilities.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+                final AbstractTest t = (AbstractTest) event.getSource();
+                String msg = "TestName: " + t.getName()
+                        + "\n\nNumber Of Messages Sent: " + t.getEvaluationManager().getMessageDatabase().getTotalNumberOfMessagesSent()
+                        + "\nNumber Of Messages Received: " + t.getEvaluationManager().getMessageDatabase().getTotalMessagesReceived()
+                        + "\nNumber Of Sender Nodes: " + t.getEvaluationManager().getMessageDatabase().getTotalSenderNodes()
+                        + "\nNumber Of Covered Nodes: " + t.getEvaluationManager().getMessageDatabase().getTotalCoveredNodes()
+                        + "\n\nTotal Energy Spent: " + t.getEvaluationManager().getEnergyDatabase().getTotalEnergySpent();
+                System.out.println(msg);
+                GUI_Utils.showMessage(msg);
+            }
+        });
 
     }
 }

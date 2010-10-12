@@ -28,6 +28,7 @@ import org.wisenet.simulator.components.evaluation.tests.AbstractTest;
 import org.wisenet.simulator.components.instruments.NodeSelectionCondition;
 import org.wisenet.simulator.components.simulation.Simulation;
 import org.wisenet.simulator.components.simulation.listeners.SimulationEvent;
+import org.wisenet.simulator.components.simulation.listeners.SimulationTestEvent;
 
 import org.wisenet.simulator.utilities.DebugConsole;
 import org.wisenet.simulator.components.simulation.SimulationFactory;
@@ -56,7 +57,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
 
     private void buildTest() {
         TestBuilderPanel tc = new TestBuilderPanel();
-        if (currentTest!=null){
+        if (currentTest != null) {
             tc.setCurrentTest(currentTest);
         }
         tc.setSimulation((Simulation) getSimulationPanel().getSimulation());
@@ -1037,17 +1038,30 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
 
     private void loadSimulationAttacks() {
 
-        
-            Object selected = cboSimAttacks.getSelectedItem();
-            PlatformUtils.loadSimulationAttacksIntoCombo(cboSimAttacks);
-            for (int i = 0; i < cboSimAttacks.getItemCount(); i++) {
-                Object object = cboSimAttacks.getModel().getElementAt(i);
-                if (object.equals(selected)) {
-                    cboSimAttacks.setSelectedIndex(i);
-                }
-                return;
+
+        Object selected = cboSimAttacks.getSelectedItem();
+        PlatformUtils.loadSimulationAttacksIntoCombo(cboSimAttacks);
+        for (int i = 0; i < cboSimAttacks.getItemCount(); i++) {
+            Object object = cboSimAttacks.getModel().getElementAt(i);
+            if (object.equals(selected)) {
+                cboSimAttacks.setSelectedIndex(i);
             }
-        
+            return;
+        }
+
+    }
+
+    @Override
+    public void afterTestExecution(SimulationTestEvent event) {
+        AbstractTest t = (AbstractTest) event.getSource();
+        String msg = "TestName: " + t.getName()
+                + "\n\nNumber Of Messages Sent: " + t.getEvaluationManager().getMessageDatabase().getTotalNumberOfMessagesSent()
+                + "\nNumber Of Messages Received: " + t.getEvaluationManager().getMessageDatabase().getTotalMessagesReceived()
+                + "\nNumber Of Sender Nodes: " + t.getEvaluationManager().getMessageDatabase().getTotalSenderNodes()
+                + "\nNumber Of Covered Nodes: " + t.getEvaluationManager().getMessageDatabase().getTotalCoveredNodes()
+                + "\n\nTotal Energy Spent: " + t.getEvaluationManager().getEnergyDatabase().getTotalEnergySpent();
+
+        GUI_Utils.showMessage(msg);
     }
 
     private class RebuildNetworkTask extends org.jdesktop.application.Task<Object, Void> {

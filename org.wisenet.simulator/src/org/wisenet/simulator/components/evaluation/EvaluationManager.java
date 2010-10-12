@@ -5,11 +5,8 @@
 package org.wisenet.simulator.components.evaluation;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import org.wisenet.simulator.components.evaluation.tests.AbstractTest;
-import org.wisenet.simulator.components.evaluation.tests.TestMessage;
 import org.wisenet.simulator.core.Message;
 import org.wisenet.simulator.core.energy.GlobalEnergyDatabase;
 import org.wisenet.simulator.core.node.layers.routing.RoutingLayer;
@@ -20,9 +17,9 @@ import org.wisenet.simulator.core.node.layers.routing.RoutingLayer;
  */
 public class EvaluationManager {
 
-    protected Set<Message> testMessages = new HashSet<Message>();
+    MessageDatabase messageDatabase = new MessageDatabase();
     GlobalEnergyDatabase energyDatabase;
-    List<TestMessage> allMessages = new ArrayList<TestMessage>();
+    List<Message> allMessages = new ArrayList<Message>();
     AbstractTest test;
     private boolean started;
 
@@ -44,30 +41,34 @@ public class EvaluationManager {
      */
     public void endTest() {
         if (started) {
+            energyDatabase = test.getSimulation().getEnergyController().getDatabase(test.getName());
         }
     }
 
-    public void signalMessage(Message message) {
-        testMessages.add(message);
-    }
-
-    public Set<Message> getTestMessages() {
-        return testMessages;
-    }
-
     public void registerMessageSent(Object message, RoutingLayer routing) {
-System.out.println("message Sent");
+        messageDatabase.registerMessageSent((Message) message, routing);
+//        System.out.println("message Sent from " + ((Message) message).getSourceId() + " TO " + ((Message) message).getDestinationId());
     }
 
     public void registerMessageArrived(Object message, RoutingLayer routing) {
-        // message Received by a node
-        System.out.println("message arrived");
-
-        
     }
 
     public void registerMessageReceivedDone(Object message, RoutingLayer routing) {
-        // Message received rigth
-        System.out.println("message received");
+        // Message received right
+        messageDatabase.registerMessageReceived((Message) message, routing);
     }
+
+    public GlobalEnergyDatabase getEnergyDatabase() {
+        return energyDatabase;
+    }
+
+    public MessageDatabase getMessageDatabase() {
+        return messageDatabase;
+    }
+
+    public boolean isStarted() {
+        return started;
+    }
+
+    
 }
