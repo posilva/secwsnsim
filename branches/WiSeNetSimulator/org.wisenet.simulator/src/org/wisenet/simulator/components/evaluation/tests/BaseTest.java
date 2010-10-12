@@ -11,6 +11,7 @@ import org.wisenet.simulator.components.evaluation.tests.events.TestExecutionEve
 import org.wisenet.simulator.components.evaluation.tests.events.TestStartEvent;
 import org.wisenet.simulator.components.instruments.NodeSelectionCondition;
 import org.wisenet.simulator.core.Event;
+import org.wisenet.simulator.core.Message;
 import org.wisenet.simulator.core.Simulator;
 import org.wisenet.simulator.core.node.Node;
 import org.wisenet.simulator.core.node.layers.routing.attacks.AttacksEntry;
@@ -107,7 +108,7 @@ public class BaseTest extends AbstractTest {
             final List<Node> srcNodes = sourceNodes;
 
             selectableNodes = inputParameters.isOnlyConsiderToReceiverSinkNodes() ? sinknodes : allNodes;
-            nNodes = inputParameters.isPercentOfReceiverNodes() ? (inputParameters.getNumberOfReceiverNodes() * selectableNodes / 100) : (inputParameters.getNumberOfSenderNodes());
+            nNodes = inputParameters.isPercentOfReceiverNodes() ? (inputParameters.getNumberOfReceiverNodes() * selectableNodes / 100) : (inputParameters.getNumberOfReceiverNodes());
 
             receiverNodes = getSimulation().selectRandomNodes(nNodes, new NodeSelectionCondition() {
 
@@ -131,9 +132,9 @@ public class BaseTest extends AbstractTest {
                 }
             });
 
+            // create events to send messages
             for (Object s : sourceNodes) {
                 Node srcNode = (Node) s;
-
                 for (Object r : receiverNodes) {
                     Node rcvNode = (Node) r;
                     testTime += (interval * Simulator.ONE_SECOND);
@@ -144,12 +145,18 @@ public class BaseTest extends AbstractTest {
                 }
             }
 
+            if (this.getInputParameters().getAttackSelected().equals("None")) {
+                return;
+            }
+
+            /* Enable attacks in the selected nodes */
             for (Object a : attackNodes) {
                 Node attackedNode = (Node) a;
                 attackedNode.getRoutingLayer().isUnderAttack();
-                LinkedList<AttacksEntry> list =attackedNode.getRoutingLayer().getAttacks().getAttacksList();
-                for (AttacksEntry attacksEntry : list) {
-                    attacksEntry.getAttack().enable();
+                for (AttacksEntry attacksEntry : attackedNode.getRoutingLayer().getAttacks().getAttacksList()) {
+                    if (attacksEntry.getLabel().toLowerCase().equals(getInputParameters().getAttackSelected().toLowerCase())) {
+                        attacksEntry.getAttack().enable();
+                    }
                 }
             }
 
@@ -157,7 +164,7 @@ public class BaseTest extends AbstractTest {
 
     }
 
-    private TestMessage createTestMessage(Node s, Node r) {
+    private Message createTestMessage(Node s, Node r) {
         DefaultTestMessage m = new DefaultTestMessage();
         m.setSourceId(s.getUniqueID());
         m.setDestinationId(r.getUniqueID());
@@ -167,14 +174,12 @@ public class BaseTest extends AbstractTest {
 
     private DefaultTestExecutionEvent createEvent(Node srcNode, Node rcvNode, long time) {
         DefaultTestExecutionEvent event = new DefaultTestExecutionEvent();
-        TestMessage m = createTestMessage(srcNode, rcvNode);
+        Message m = createTestMessage(srcNode, rcvNode);
         event.setMessage(m);
         event.setSourceNode(srcNode);
         event.setDestNode(rcvNode);
         event.setTime(time);
-
         event.setTest(this);
-        event.setTime(messageCounter);
         return event;
     }
 
@@ -206,7 +211,7 @@ public class BaseTest extends AbstractTest {
         }
     }
 
-    class DefaultTestMessage extends TestMessage {
+    class DefaultTestMessage extends Message {
 
         public DefaultTestMessage() {
             setPayload("TEST".getBytes());

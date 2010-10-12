@@ -38,6 +38,10 @@ public class EnergyController implements EnergyListener {
             }
         }
         database.addConsumption(evt.getNodeid(), ev, evt.getRealTime(), simTime, evt.getValue(), evt.getState());
+        updateActiveDatabases(evt, ev, simTime);
+    }
+
+    private void updateActiveDatabases(EnergyEvent evt, String ev, final long simTime) {
         for (GlobalEnergyDatabase globalEnergyDatabase : activeDatabases.values()) {
             globalEnergyDatabase.addConsumption(evt.getNodeid(), ev, evt.getRealTime(), simTime, evt.getValue(), evt.getState());
         }
@@ -104,7 +108,7 @@ public class EnergyController implements EnergyListener {
      * @return
      *          the active database 
      */
-    public GlobalEnergyDatabase getDatabse(String name) {
+    public GlobalEnergyDatabase getDatabase(String name) {
         return activeDatabases.get(name);
     }
 

@@ -5,8 +5,8 @@
 package org.wisenet.simulator.components.evaluation;
 
 import java.util.Hashtable;
-import org.wisenet.simulator.components.evaluation.tests.TestMessage;
-import org.wisenet.simulator.core.node.Node;
+import org.wisenet.simulator.core.Message;
+import org.wisenet.simulator.core.node.layers.routing.RoutingLayer;
 
 /**
  *
@@ -14,9 +14,9 @@ import org.wisenet.simulator.core.node.Node;
  */
 public class MessageDatabase {
 
-    Hashtable<Long, Object> messagesTable = new Hashtable<Long, Object>();
-    Hashtable<Short, Object> senderNodesTable = new Hashtable<Short, Object>();
-    Hashtable<Short, Object> receiverNodesTable = new Hashtable<Short, Object>();
+    Hashtable<Object, Object> messagesTable = new Hashtable<Object, Object>();
+    Hashtable<Object, Object> senderNodesTable = new Hashtable<Object, Object>();
+    Hashtable<Object, Object> receiverNodesTable = new Hashtable<Object, Object>();
 
     /**
      * Registers a message sent event
@@ -25,33 +25,21 @@ public class MessageDatabase {
      * @param node
      *              the sender node
      */
-    public void registerMessageSent(TestMessage message, Node node) {
-
-        if (message.getSourceId().equals(node.getUniqueID())) {
-            if (!messagesTable.contains(message.getMessageNumber())) {
-                messagesTable.put(message.getMessageNumber(), null); //TODO: NOT NULL
+    public void registerMessageSent(Message message, RoutingLayer routing) {
+        /* if message source id is the same as the sender then process */
+        if (message.getSourceId().equals(routing.getUniqueId())) {
+            /* if message not allready processed */
+            if (!messagesTable.contains(message.getUniqueId())) {
+                /* process message */
+                messagesTable.put(message.getUniqueId(), new MessageTableEntry(message, routing));
+                /* if senders aren't processed then */
+                if (!senderNodesTable.contains(routing.getUniqueId())) {
+                    /*process sender*/
+                    senderNodesTable.put(routing.getUniqueId(), new SendersTableEntry());
+                }
             }
-            if (!senderNodesTable.contains(node.getId())) {
-                senderNodesTable.put(node.getId(), null); // TODO: NOT NULL
-            }
-
         }
-
-        // se a mensagem tem origem no NO que a envia
-        // então regista o envio se esta mensagem ainda não existe
-
-        // efectua processamento de fiabilidade
-        // efectua processamento de cobertura
-        // efectua processamento de latencia
-        // efectua processamento de energia
-
-
-
-
         // senão descarta mensagem
-
-
-
     }
 
     /**
@@ -61,20 +49,106 @@ public class MessageDatabase {
      * @param node
      *              the receiver node
      */
-    public void registerMessageReceived(TestMessage message, Node node) {
-        // Se a mensagem é destinada ao nó que a recebe
-        // então regista chegada
-        // efectua processamento de fiabilidade
+    public void registerMessageReceived(Message message, RoutingLayer routing) {
+        if (message.getDestinationId().equals(routing.getUniqueId())) {
+            if (!receiverNodesTable.contains(routing.getUniqueId())) {
+                receiverNodesTable.put(routing.getUniqueId(), new ReceiversTableEntry()); // TODO: NOT NULL
 
-        // efectua processamento de cobertura
-        // efectua processamento de latencia
-        // efectua processamento de energia
+                MessageTableEntry messageEntry = (MessageTableEntry) messagesTable.get(message.getUniqueId());
+                if (messageEntry != null) {
+                    messageEntry.arrived();
 
-        // senao descarta mensagem
-        if (message.getDestinationId().equals(node.getUniqueID())) {
-            if (!receiverNodesTable.contains(node.getId())) {
-                receiverNodesTable.put(node.getId(), null); // TODO: NOT NULL
+                    RoutingLayer senderId = messageEntry.getSenderRouting();
+                    SendersTableEntry senderEntry = (SendersTableEntry) senderNodesTable.get(senderId.getUniqueId());
+                    if (senderEntry != null) {
+                        senderEntry.arrived();
+                    }
+                }
             }
+        }
+    }
+
+    public int getTotalSenderNodes() {
+        return senderNodesTable.size();
+    }
+
+    public int getTotalCoveredNodes() {
+        int t = 0;
+        for (Object object : senderNodesTable.values()) {
+            SendersTableEntry e = (SendersTableEntry) object;
+            if (e.isArrived()) {
+                t++;
+            }
+        }
+        return t;
+    }
+
+    public synchronized  long getTotalMessagesReceived() {
+        long t = 0;
+        for (Object object : messagesTable.values()) {
+            MessageTableEntry e = (MessageTableEntry) object;
+
+
+            if (e.isArrived()) {
+                t++;
+            }
+        }
+        return t;
+    }
+
+    public long getTotalNumberOfMessagesSent() {
+        return messagesTable.size();
+    }
+    // reliability control
+
+    public class MessageTableEntry {
+
+        boolean arrived = false;
+        private final Message message;
+        private final RoutingLayer senderRouting;
+
+        private MessageTableEntry(Message message, RoutingLayer routing) {
+            this.message = message;
+            this.senderRouting = routing;
+        }
+
+        public RoutingLayer getSenderRouting() {
+            return senderRouting;
+        }
+
+        public boolean isArrived() {
+            return arrived;
+        }
+
+        public void arrived() {
+            this.arrived = true;
+        }
+
+        public Message getMessage() {
+            return message;
+        }
+    }
+// coverage control
+
+    public class SendersTableEntry {
+
+        boolean arrived = false;
+
+        public SendersTableEntry() {
+        }
+
+        public boolean isArrived() {
+            return arrived;
+        }
+
+        public void arrived() {
+            this.arrived = true;
+        }
+    }
+
+    public class ReceiversTableEntry {
+
+        public ReceiversTableEntry() {
         }
     }
 }

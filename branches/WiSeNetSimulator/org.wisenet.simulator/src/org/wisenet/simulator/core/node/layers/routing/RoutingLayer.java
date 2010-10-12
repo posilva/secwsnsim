@@ -173,13 +173,11 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
      */
     public boolean sendMessage(Object message, Application app) {
         if (this instanceof IInstrumentHandler) {
+            if (getController().isTesting()) {
+                AbstractTest test = getController().getActiveTest();
+                test.getEvaluationManager().registerMessageSent(message, this);
+            }
             if (message instanceof IInstrumentMessage) {
-                if (getController().isTesting()) {
-                    AbstractTest test = getController().getActiveTest();
-                    test.getEvaluationManager().registerMessageSent(message, this);
-                }
-
-
                 getCoverageInstrument().notifyMessageSent((IInstrumentMessage) message, (IInstrumentHandler) this);
                 getReliabilityInstrument().notifyMessageSent((IInstrumentMessage) message, (IInstrumentHandler) this);
                 getLatencyInstrument().notifyMessageSent((IInstrumentMessage) message, (IInstrumentHandler) this);
@@ -305,11 +303,12 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
     public final void done(Object message) {
 
         if (this instanceof IInstrumentHandler) {
+
+            if (getController().isTesting()) {
+                AbstractTest test = getController().getActiveTest();
+                test.getEvaluationManager().registerMessageReceivedDone(message, this);
+            }
             if (message instanceof IInstrumentMessage) {
-                if (getController().isTesting()) {
-                    AbstractTest test = getController().getActiveTest();
-                    test.getEvaluationManager().registerMessageReceivedDone(message, this);
-                }
                 getCoverageInstrument().notifyMessageReceived((IInstrumentMessage) message, (IInstrumentHandler) this);
                 getReliabilityInstrument().notifyMessageReceived((IInstrumentMessage) message, (IInstrumentHandler) this);
                 getLatencyInstrument().notifyMessageReceived((IInstrumentMessage) message, (IInstrumentHandler) this);
