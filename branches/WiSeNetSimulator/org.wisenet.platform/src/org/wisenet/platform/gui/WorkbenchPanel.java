@@ -34,6 +34,7 @@ import org.wisenet.simulator.utilities.DebugConsole;
 import org.wisenet.simulator.components.simulation.SimulationFactory;
 import org.wisenet.simulator.components.simulation.listeners.SimulationListener;
 import org.wisenet.simulator.core.node.Node;
+import org.wisenet.simulator.core.node.layers.routing.attacks.AttacksEntry;
 import org.wisenet.simulator.utilities.Utilities;
 
 /**
@@ -487,6 +488,11 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         tgbRoutingAttackMode.setToolTipText("Enable Routing Attack Mode");
         tgbRoutingAttackMode.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/powerON.png"))); // NOI18N
         tgbRoutingAttackMode.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/powerON.png"))); // NOI18N
+        tgbRoutingAttackMode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tgbRoutingAttackModeActionPerformed(evt);
+            }
+        });
         topToolbar.add(tgbRoutingAttackMode);
 
         cmdSelectAttack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/gui/resources/attack.png"))); // NOI18N
@@ -726,6 +732,11 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
     private void cmdResetTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdResetTestActionPerformed
         resetCurrentTest();        // TODO add your handling code here:
     }//GEN-LAST:event_cmdResetTestActionPerformed
+
+    private void tgbRoutingAttackModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgbRoutingAttackModeActionPerformed
+        getSimulationPanel().setUnderAttackModeSelectedNodes(tgbRoutingAttackMode.isSelected());
+    }//GEN-LAST:event_tgbRoutingAttackModeActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup OperationBG;
     private javax.swing.ButtonGroup SelectionBG;
@@ -921,12 +932,17 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
 
     private void selectRoutingAttack() {
         List<Node> nodes = (List) getSimulationPanel().getSimulation().getSimulator().getNodes();
-
         for (Node node : nodes) {
             if (!node.getRoutingLayer().getAttacks().getAttacksList().isEmpty()) {
-                node.getRoutingLayer().getAttacks().getAttacksList().getFirst().setEnable(true);
-            }
+                for (Object object : node.getRoutingLayer().getAttacks().getAttacksList()) {
+                    AttacksEntry a = (AttacksEntry) object;
+                    if (a.getLabel().toLowerCase().equals(cboSimAttacks.getModel().getSelectedItem().toString().toLowerCase())) {
+                        node.getRoutingLayer().getAttacks().getAttacksList().getFirst().setEnable(true);
+                        break;
+                    }
 
+                }
+            }
         }
     }
 

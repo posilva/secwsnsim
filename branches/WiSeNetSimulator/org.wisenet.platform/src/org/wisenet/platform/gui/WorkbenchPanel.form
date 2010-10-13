@@ -485,6 +485,9 @@
               <Image iconType="3" name="/org/wisenet/platform/resources/images/powerON.png"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tgbRoutingAttackModeActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="cmdSelectAttack">
           <Properties>

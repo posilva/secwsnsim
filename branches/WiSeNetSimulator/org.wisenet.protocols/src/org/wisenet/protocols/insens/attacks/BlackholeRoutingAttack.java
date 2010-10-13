@@ -24,10 +24,10 @@ public class BlackholeRoutingAttack extends AbstractRoutingAttack implements IRu
     @Override
     public Object attack(Object message) {
         if (getRoutingLayer().isStable()) {
-	System.out.println("Message suppressed at node CHANGED");	
+            log("Suppress Message");
             return null; // Supress message
         } else {
-System.out.println("Message NOT suppressed at node CHANGED");	
+
             return message;
         }
     }

@@ -6,6 +6,7 @@ package org.wisenet.simulator.gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Polygon;
 import java.awt.Rectangle;
 import org.wisenet.simulator.core.ui.ISimulationDisplay;
 import org.wisenet.simulator.core.node.Node;
@@ -18,6 +19,7 @@ public class GraphicNode {
 
     public final static int UNDER_ATTACK = 1;
     public final static int SINK_NODE = 2;
+    public static int NONE=-1;
     protected Node physicalNode;
     int id;
     static int count = 0;
@@ -172,9 +174,9 @@ public class GraphicNode {
         paintMark(display);
         paintAsDestination(display);
         paintAsSource(display);
-        paintMode(display);
         paintStable(display);
         fill(display);
+        paintMode(display);
         paintBorder(display);
         paintSelectionBorder(display);
     }
@@ -362,10 +364,17 @@ public class GraphicNode {
             return;
         }
 
+
         switch (this.mode) {
             case UNDER_ATTACK:
+                Polygon p=new Polygon();
+                int r=radius*2;
+                p.addPoint(_x, _y-r);
+                p.addPoint(_x-r, _y+r);
+                p.addPoint(_x+r, _y+r);
                 g.setColor(getAttackMarkColor());
-                g.fillRect(_x - radius, _y - radius, radius * 3, radius * 3);
+                g.fillPolygon(p);
+//                g.fillRect(_x - radius, _y - radius, radius * 3, radius * 3);
                 break;
             case SINK_NODE:
                 break;

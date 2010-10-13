@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.wisenet.simulator.components.evaluation.tests;
 
 import java.util.LinkedList;
@@ -51,11 +47,11 @@ public class BaseTest extends AbstractTest {
     public void execute() {
 
         if (getSimulation() == null) {
+            log("no simulation defined");
             return;
         }
-
+        testEvents.clear(); 
         testTime = getSimulation().getTime() + (Simulator.ONE_SECOND * 5);
-
         // Starts Test
         TestStartEvent startEvent = new TestStartEvent();
         startEvent.setTest(this);
@@ -72,14 +68,17 @@ public class BaseTest extends AbstractTest {
         endEvent.setTime(testTime);
         testEvents.add(endEvent);
 
+        // registers test events into the simulator
         if (testEvents.size() > 2) {
+            log("insert " + testEvents.size() + " events into the simulator");
             for (Event event : testEvents) {
                 getSimulation().getSimulator().addEvent(event);
-
             }
         }
     }
-
+    /**
+     * 
+     */
     private void buildTestConditions() {
         int stableNodes = simulation.getRoutingLayerController().getTotalStableNodes();
         int allNodes = simulation.getSimulator().getNodes().size();
@@ -88,9 +87,8 @@ public class BaseTest extends AbstractTest {
         List attackNodes = null;
         Integer interval = inputParameters.getIntervalBetweenMessagesSent();
 
+        if (inputParameters.getNumberOfSenderNodes() > 0 && inputParameters.getNumberOfReceiverNodes() > 0) {
 
-
-        if (inputParameters.getNumberOfSenderNodes() > 0) {
             int selectableNodes = inputParameters.isOnlyConsiderToSenderStableNodes() ? stableNodes : allNodes;
             int nNodes = inputParameters.isPercentOfSenderNodes() ? (inputParameters.getNumberOfSenderNodes() * selectableNodes / 100) : (inputParameters.getNumberOfSenderNodes());
 
@@ -103,7 +101,7 @@ public class BaseTest extends AbstractTest {
                     return !node.isSinkNode();
                 }
             });
-
+            log("selected " + nNodes + " source nodes");
             int sinknodes = simulation.getNumberOfSinkNodes();
             final List<Node> srcNodes = sourceNodes;
 
@@ -119,6 +117,7 @@ public class BaseTest extends AbstractTest {
                     return true;
                 }
             });
+            log("selected " + nNodes + " receiver nodes");
             selectableNodes = inputParameters.isOnlyConsiderToSenderStableNodes() ? stableNodes : allNodes;
             nNodes = inputParameters.isPercentOfAttackNodes() ? (inputParameters.getNumberOfAttackNodes() * selectableNodes / 100) : (inputParameters.getNumberOfAttackNodes());
             final List src = sourceNodes;
@@ -131,7 +130,7 @@ public class BaseTest extends AbstractTest {
                     return !node.isSinkNode();
                 }
             });
-
+            log("selected " + nNodes + " attack nodes");
             // create events to send messages
             for (Object s : sourceNodes) {
                 Node srcNode = (Node) s;
@@ -148,13 +147,14 @@ public class BaseTest extends AbstractTest {
             if (this.getInputParameters().getAttackSelected().equals("None")) {
                 return;
             }
-
+            log("enabling attack");
             /* Enable attacks in the selected nodes */
             for (Object a : attackNodes) {
                 Node attackedNode = (Node) a;
                 attackedNode.getRoutingLayer().isUnderAttack();
                 for (AttacksEntry attacksEntry : attackedNode.getRoutingLayer().getAttacks().getAttacksList()) {
                     if (attacksEntry.getLabel().toLowerCase().equals(getInputParameters().getAttackSelected().toLowerCase())) {
+                        log(attacksEntry.getLabel() + " attack enabled");
                         attacksEntry.getAttack().enable();
                     }
                 }

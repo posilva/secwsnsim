@@ -12,6 +12,7 @@ import org.wisenet.simulator.common.PersistantObject;
 import org.wisenet.simulator.common.Persistent;
 import org.wisenet.simulator.components.evaluation.EvaluationManager;
 import org.wisenet.simulator.components.simulation.Simulation;
+import org.wisenet.simulator.core.Simulator;
 
 /**
  * This class represents a test to be executed by the simulation
@@ -21,6 +22,7 @@ import org.wisenet.simulator.components.simulation.Simulation;
  */
 public abstract class AbstractTest extends PersistantObject implements Persistent, Parameterizable {
 
+    protected boolean debugEnabled = true;
     protected static String PREFIX_CFG = "test";
     protected String name;
     protected String description;
@@ -141,19 +143,36 @@ public abstract class AbstractTest extends PersistantObject implements Persisten
     }
 
     public void activate() {
-
-        if (getEvaluationManager() == null) {
-            setEvaluationManager(new EvaluationManager());
-        }
+        log("activating");
+        setEvaluationManager(new EvaluationManager());
         getSimulation().getRoutingLayerController().setActiveTest(this);
         getEvaluationManager().startTest(this);
     }
 
     public void deactivate() {
         if (getEvaluationManager() != null) {
+            log("deactivating");
             getEvaluationManager().endTest();
             getSimulation().notifyEndTest(this);
         }
 
+    }
+
+    /**
+     * 
+     * @param msg
+     */
+    protected void log(String msg) {
+        if (debugEnabled) {
+            System.out.println("[" + Simulator.getSimulationTime() + "]:" + getClass().getSimpleName() + " - " + msg);
+        }
+    }
+
+    public boolean isDebugEnabled() {
+        return debugEnabled;
+    }
+
+    public void setDebugEnabled(boolean debugEnabled) {
+        this.debugEnabled = debugEnabled;
     }
 }
