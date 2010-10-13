@@ -234,7 +234,6 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance().getContext().getActionMap(SimulationPanel.class, this);
         selNodeSink.setAction(actionMap.get("SetNodeAsSink")); // NOI18N
         selNodeSink.setSelected(true);
-        selNodeSink.setText("Is SinkNode");
         currentSelectedNodePopupMenu.add(selNodeSink);
 
         selNodeMonitEnergy.setText("Monitor Energy");
@@ -318,7 +317,6 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         selectionToolPopupMenu.add(jSeparator2);
 
         selNodesRemove.setAction(actionMap.get("RemoveNodesSelected")); // NOI18N
-        selNodesRemove.setText("Remove Nodes");
         selNodesRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 selNodesRemoveActionPerformed(evt);
@@ -326,7 +324,6 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         });
         selectionToolPopupMenu.add(selNodesRemove);
 
-        selNodesUnderAttack.setSelected(true);
         selNodesUnderAttack.setText("Under Routing Attack");
         selNodesUnderAttack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -338,17 +335,14 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         depNodesDeploy.setText("Deploy Nodes...");
 
         depNodesRandomTopology.setAction(actionMap.get("deployNodesUsingRandomTopology")); // NOI18N
-        depNodesRandomTopology.setText("Random Topology");
         depNodesDeploy.add(depNodesRandomTopology);
 
         depNodesGridTopology.setAction(actionMap.get("deployNodesGridTopology")); // NOI18N
-        depNodesGridTopology.setText("Grid Topology");
         depNodesDeploy.add(depNodesGridTopology);
 
         deployNodesPopupMenu.add(depNodesDeploy);
 
         depNodeDeployOneNode.setAction(actionMap.get("PlaceNodeHereAction")); // NOI18N
-        depNodeDeployOneNode.setText("Place one node here");
         deployNodePopupMenu.add(depNodeDeployOneNode);
 
         setBackground(new java.awt.Color(254, 254, 254));
@@ -859,12 +853,8 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     }//GEN-LAST:event_selNodeUnderAttackActionPerformed
 
     private void selNodesUnderAttackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selNodesUnderAttackActionPerformed
-        if (selectedNodes.size() > 0) {
-            for (GraphicNode graphicNode : selectedNodes) {
-                graphicNode.getPhysicalNode().getRoutingLayer().setUnderAttack(selNodesUnderAttack.isSelected());
-            }
-            updateLocal();
-        }
+
+        setUnderAttackModeSelectedNodes(selNodesUnderAttack.isSelected());
     }//GEN-LAST:event_selNodesUnderAttackActionPerformed
 
     protected boolean isMousePressed() {
@@ -1247,6 +1237,16 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             currentSelectedArea_w = selectedArea.getBounds().getWidth();
             currentSelectedArea_h = selectedArea.getBounds().getHeight();
         }
+    }
+
+    void setUnderAttackModeSelectedNodes(boolean selected) {
+        if (selectedNodes.size() > 0) {
+            for (GraphicNode graphicNode : selectedNodes) {
+                graphicNode.getPhysicalNode().getRoutingLayer().setUnderAttack(selected);
+            }
+            updateLocal();
+        }
+
     }
 
     /**

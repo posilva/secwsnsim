@@ -88,7 +88,8 @@ public abstract class SensorNode extends Node {
             }
             if(getRoutingLayer().isUnderAttack()){
                 getGraphicNode().setMode(GraphicNode.UNDER_ATTACK);
-            }
+            }else
+                getGraphicNode().setMode(GraphicNode.NONE);
         } else {
             // do nothing 
         }

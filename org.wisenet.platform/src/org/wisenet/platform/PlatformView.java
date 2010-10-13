@@ -52,6 +52,7 @@ import org.wisenet.simulator.components.simulation.Simulation;
 import org.wisenet.simulator.components.simulation.listeners.SimulationEvent;
 import org.wisenet.simulator.components.simulation.listeners.SimulationListener;
 import org.wisenet.simulator.components.simulation.listeners.SimulationTestEvent;
+import org.wisenet.simulator.core.Simulator;
 import org.wisenet.simulator.core.node.Node;
 import org.wisenet.simulator.utilities.Utilities;
 import org.wisenet.simulator.utilities.listeners.ExceptionEvent;
@@ -971,7 +972,7 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
             public void run() {
                 try {
 
-                    long time = PlatformManager.getInstance().getActiveSimulation().getSimulator().getSimulationTimeInMillisec();
+                    long time = Simulator.getSimulationTimeInMillisec();
                     DateFormat df = new SimpleDateFormat("HH':'mm':'ss");
                     df.setTimeZone(TimeZone.getTimeZone("GMT+0"));
                     SimulationTime.setText(df.format(new Date(time)));
@@ -1101,19 +1102,21 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
     }
 
     @Override
-    public void afterTestExecution(final SimulationTestEvent event) {
+    public synchronized void afterTestExecution(final SimulationTestEvent event) {
+
+        final AbstractTest t = (AbstractTest) event.getSource();
+        final String msg = "TestName: " + t.getName()
+                + "\n\nNumber Of Messages Sent: " + t.getEvaluationManager().getMessageDatabase().getTotalNumberOfMessagesSent()
+                + "\nNumber Of Messages Received: " + t.getEvaluationManager().getMessageDatabase().getTotalMessagesReceived()
+                + "\nNumber Of Sender Nodes: " + t.getEvaluationManager().getMessageDatabase().getTotalSenderNodes()
+                + "\nNumber Of Covered Nodes: " + t.getEvaluationManager().getMessageDatabase().getTotalCoveredNodes()
+                + "\n\nTotal Energy Spent: " + t.getEvaluationManager().getEnergyDatabase().getTotalEnergySpent();
+        System.out.println(msg);
+
         SwingUtilities.invokeLater(new Runnable() {
 
             @Override
             public void run() {
-                final AbstractTest t = (AbstractTest) event.getSource();
-                String msg = "TestName: " + t.getName()
-                        + "\n\nNumber Of Messages Sent: " + t.getEvaluationManager().getMessageDatabase().getTotalNumberOfMessagesSent()
-                        + "\nNumber Of Messages Received: " + t.getEvaluationManager().getMessageDatabase().getTotalMessagesReceived()
-                        + "\nNumber Of Sender Nodes: " + t.getEvaluationManager().getMessageDatabase().getTotalSenderNodes()
-                        + "\nNumber Of Covered Nodes: " + t.getEvaluationManager().getMessageDatabase().getTotalCoveredNodes()
-                        + "\n\nTotal Energy Spent: " + t.getEvaluationManager().getEnergyDatabase().getTotalEnergySpent();
-                System.out.println(msg);
                 GUI_Utils.showMessage(msg);
             }
         });

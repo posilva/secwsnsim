@@ -92,13 +92,28 @@ public class EnergyController implements EnergyListener {
      * @return
      *      NULL if database exists
      */
-    public GlobalEnergyDatabase createDatabase(String name) {
-        GlobalEnergyDatabase db = null;
-        if (activeDatabases.get(name) == null) {
+    public GlobalEnergyDatabase createDatabase(String name, boolean deleteIfExists) {
+        GlobalEnergyDatabase db = activeDatabases.get(name);
+        if (deleteIfExists == true) {
+            activeDatabases.remove(db);
+            db = null;
+        }
+        if (db == null) {
             db = new GlobalEnergyDatabase();
             activeDatabases.put(name, new GlobalEnergyDatabase());
         }
+
         return db;
+    }
+
+    /**
+     * 
+     * @param name
+     * @return
+     */
+    public GlobalEnergyDatabase createDatabase(String name) {
+
+        return createDatabase(name, false);
     }
 
     /**

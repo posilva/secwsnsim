@@ -1,8 +1,7 @@
-/*
- ***  Wireless Sensor Network Simulator
+/**
+ *  Wireless Sensor Network Simulator
  * The next generation for WSN Simulations
  */
-
 /*
  * RoutingInfoPanel.java
  *

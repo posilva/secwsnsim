@@ -73,7 +73,6 @@
               <action class="org.wisenet.platform.ui.SimulationPanel" id="SetNodeAsSink" methodName="SetNodeAsSink"/>
             </Property>
             <Property name="selected" type="boolean" value="true"/>
-            <Property name="text" type="java.lang.String" value="Is SinkNode"/>
           </Properties>
         </MenuItem>
         <MenuItem class="javax.swing.JMenuItem" name="selNodeMonitEnergy">
@@ -172,7 +171,6 @@
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
               <action class="org.wisenet.platform.gui.SimulationPanel" id="RemoveNodesSelected" methodName="RemoveNodesSelected"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Remove Nodes"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesRemoveActionPerformed"/>
@@ -180,7 +178,6 @@
         </MenuItem>
         <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodesUnderAttack">
           <Properties>
-            <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="Under Routing Attack"/>
           </Properties>
           <Events>
@@ -205,7 +202,6 @@
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="org.wisenet.platform.ui.SimulationPanel" id="deployNodesUsingRandomTopology" methodName="deployNodesUsingRandomTopology"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Random Topology"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="depNodesGridTopology">
@@ -213,7 +209,6 @@
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="org.wisenet.platform.gui.SimulationPanel" id="deployNodesGridTopology" methodName="deployNodesGridTopology"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Grid Topology"/>
               </Properties>
             </MenuItem>
           </SubComponents>
@@ -231,7 +226,6 @@
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
               <action class="org.wisenet.platform.ui.SimulationPanel" id="PlaceNodeHereAction" methodName="PlaceNodeHereAction"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Place one node here"/>
           </Properties>
         </MenuItem>
       </SubComponents>
@@ -240,7 +234,7 @@
     </Component>
   </NonVisualComponents>
   <Properties>
-    <Property name="background" type="java.awt.Color" noResource="true" editor="org.netbeans.beaninfo.editors.ColorEditor">
+    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
       <Color blue="fe" green="fe" red="fe" type="rgb"/>
     </Property>
     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">

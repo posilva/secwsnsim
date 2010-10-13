@@ -3,11 +3,6 @@
  *  The next generation for WSN Simulations
  */
 
-/*
- * TestBuilderPanel.java
- *
- * Created on Oct 4, 2010, 12:07:49 AM
- */
 package org.wisenet.platform.gui.panels;
 
 import javax.swing.JCheckBox;
