@@ -798,7 +798,6 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
                 GUI_Utils.showMessage("Simulation is not running yet!", JOptionPane.WARNING_MESSAGE);
 
             }
-
         }
     }//GEN-LAST:event_selNodeRunEventActionPerformed
 
@@ -806,11 +805,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     }//GEN-LAST:event_selNodesRemoveActionPerformed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-
-
-
         shiftKeyPressed = (evt.getKeyCode() == SHIFT_KEYCODE);
-
     }//GEN-LAST:event_formKeyPressed
 
     private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
@@ -840,7 +835,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     }//GEN-LAST:event_selNodeRoutingAttacksActionPerformed
 
     private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
-        GUI_Utils.showMessage("Gained Focus");
+//        GUI_Utils.showMessage("Gained Focus");
     }//GEN-LAST:event_formFocusGained
 
     private void selNodeUnderAttackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selNodeUnderAttackActionPerformed
