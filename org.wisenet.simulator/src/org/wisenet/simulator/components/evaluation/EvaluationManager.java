@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.wisenet.simulator.components.evaluation;
 
 import java.util.ArrayList;
@@ -31,7 +27,7 @@ public class EvaluationManager {
     public void startTest(AbstractTest test) {
         if (!started) {
             this.test = test;
-            energyDatabase = test.getSimulation().getEnergyController().createDatabase(test.getName());
+            energyDatabase = test.getSimulation().getEnergyController().createDatabase(test.getName(), true);
             started = true;
         }
     }
@@ -47,7 +43,6 @@ public class EvaluationManager {
 
     public void registerMessageSent(Object message, RoutingLayer routing) {
         messageDatabase.registerMessageSent((Message) message, routing);
-//        System.out.println("message Sent from " + ((Message) message).getSourceId() + " TO " + ((Message) message).getDestinationId());
     }
 
     public void registerMessageArrived(Object message, RoutingLayer routing) {
@@ -69,6 +64,4 @@ public class EvaluationManager {
     public boolean isStarted() {
         return started;
     }
-
-    
 }
