@@ -12,6 +12,6 @@ public class TestStartEvent extends AbstractTestEvent {
 
     @Override
     public void execute() {
-        getTest().activate();
+        getTest().beginTest();
     }
 }

@@ -20,21 +20,27 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                  <Group type="102" alignment="0" attributes="1">
+          <Group type="102" alignment="1" attributes="0">
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jSeparator1" max="32767" attributes="0"/>
+                      <Component id="jSeparator1" pref="646" max="32767" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="1" max="-2" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="1">
-                              <Component id="cmdLoadFromFile" min="-2" pref="148" max="-2" attributes="0"/>
+                              <Component id="cmdLoadFromFile" min="-2" pref="140" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="cmdSaveToFile" pref="133" max="32767" attributes="0"/>
+                              <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
+                              <Component id="jSeparator2" min="-2" pref="14" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="cmdSaveToFile" min="-2" pref="132" max="-2" attributes="0"/>
-                              <EmptySpace pref="118" max="32767" attributes="0"/>
-                              <Component id="activateNow" min="-2" pref="183" max="-2" attributes="0"/>
+                              <Component id="batchMode" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="debug" min="-2" pref="66" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="activateNow" min="-2" pref="112" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" max="-2" attributes="0">
                               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
@@ -59,7 +65,7 @@
                                           <Component id="txtNrRetransmissions" linkSize="1" min="-2" pref="107" max="-2" attributes="0"/>
                                           <Component id="txtIntervalBetweenMessages" linkSize="1" min="-2" pref="107" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace pref="70" max="32767" attributes="0"/>
+                                      <EmptySpace pref="129" max="32767" attributes="0"/>
                                       <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="cboAttacks" pref="358" max="32767" attributes="0"/>
@@ -73,8 +79,8 @@
                               </Group>
                               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="jScrollPane1" pref="412" max="32767" attributes="1"/>
-                                  <Component id="txtTestName" alignment="0" pref="412" max="32767" attributes="1"/>
+                                  <Component id="jScrollPane1" pref="538" max="32767" attributes="1"/>
+                                  <Component id="txtTestName" alignment="0" pref="538" max="32767" attributes="1"/>
                               </Group>
                           </Group>
                       </Group>
@@ -108,7 +114,7 @@
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <Component id="jPanel1" min="-2" pref="117" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
@@ -137,15 +143,20 @@
                   <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                   <Component id="cboAttacks" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="cmdLoadFromFile" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="cmdSaveToFile" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="activateNow" alignment="3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="cmdLoadFromFile" alignment="0" max="32767" attributes="1"/>
+                  <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                      <Component id="activateNow" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="debug" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="batchMode" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cmdSaveToFile" alignment="3" max="32767" attributes="1"/>
+                  </Group>
+                  <Component id="jSeparator2" pref="26" max="32767" attributes="1"/>
               </Group>
-              <EmptySpace pref="30" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -296,7 +307,7 @@
                       <Component id="chkReceiverNodesSinknodes" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Component id="chkAttackNodesStable" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="83" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="142" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -502,7 +513,7 @@
         <Property name="selected" type="boolean" value="true"/>
         <Property name="text" type="java.lang.String" value="Activate Now"/>
         <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="horizontalTextPosition" type="int" value="2"/>
+        <Property name="horizontalTextPosition" type="int" value="4"/>
         <Property name="name" type="java.lang.String" value="activateNow" noResource="true"/>
       </Properties>
       <Events>
@@ -584,5 +595,35 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JCheckBox" name="debug">
+      <Properties>
+        <Property name="selected" type="boolean" value="true"/>
+        <Property name="text" type="java.lang.String" value="Debug"/>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="horizontalTextPosition" type="int" value="4"/>
+        <Property name="name" type="java.lang.String" value="debug" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="debugStateChanged"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="batchMode">
+      <Properties>
+        <Property name="selected" type="boolean" value="true"/>
+        <Property name="text" type="java.lang.String" value="Batch mode"/>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="horizontalTextPosition" type="int" value="4"/>
+        <Property name="name" type="java.lang.String" value="batchMode" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="batchModeStateChanged"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JSeparator" name="jSeparator2">
+      <Properties>
+        <Property name="orientation" type="int" value="1"/>
+        <Property name="name" type="java.lang.String" value="jSeparator2" noResource="true"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

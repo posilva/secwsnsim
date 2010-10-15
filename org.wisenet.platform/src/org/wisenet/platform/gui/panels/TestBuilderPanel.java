@@ -2,7 +2,6 @@
  *  Wireless Sensor Network Simulator
  *  The next generation for WSN Simulations
  */
-
 package org.wisenet.platform.gui.panels;
 
 import javax.swing.JCheckBox;
@@ -84,6 +83,9 @@ public class TestBuilderPanel extends PlatformPanel {
         optRunTimes = new javax.swing.JRadioButton();
         optRunOnce = new javax.swing.JRadioButton();
         txtRunTimes = new javax.swing.JFormattedTextField();
+        debug = new javax.swing.JCheckBox();
+        batchMode = new javax.swing.JCheckBox();
+        jSeparator2 = new javax.swing.JSeparator();
 
         jLabel1.setText("Test Name:");
         jLabel1.setName("jLabel1"); // NOI18N
@@ -282,7 +284,7 @@ public class TestBuilderPanel extends PlatformPanel {
                     .addComponent(chkSenderNodesStable)
                     .addComponent(chkReceiverNodesSinknodes)
                     .addComponent(chkAttackNodesStable))
-                .addGap(83, 83, 83))
+                .addGap(142, 142, 142))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -331,7 +333,7 @@ public class TestBuilderPanel extends PlatformPanel {
         activateNow.setSelected(true);
         activateNow.setText("Activate Now");
         activateNow.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        activateNow.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        activateNow.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         activateNow.setName("activateNow"); // NOI18N
         activateNow.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -395,24 +397,55 @@ public class TestBuilderPanel extends PlatformPanel {
                 .addContainerGap())
         );
 
+        debug.setSelected(true);
+        debug.setText("Debug");
+        debug.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        debug.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        debug.setName("debug"); // NOI18N
+        debug.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                debugStateChanged(evt);
+            }
+        });
+
+        batchMode.setSelected(true);
+        batchMode.setText("Batch mode");
+        batchMode.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        batchMode.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        batchMode.setName("batchMode"); // NOI18N
+        batchMode.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                batchModeStateChanged(evt);
+            }
+        });
+
+        jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jSeparator2.setName("jSeparator2"); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jSeparator1))
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 646, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(cmdLoadFromFile, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cmdLoadFromFile, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cmdSaveToFile, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                                .addGap(58, 58, 58)
+                                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cmdSaveToFile, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
-                                .addComponent(activateNow, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(batchMode)
+                                .addGap(18, 18, 18)
+                                .addComponent(debug, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(activateNow, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(12, 12, 12)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -431,7 +464,7 @@ public class TestBuilderPanel extends PlatformPanel {
                                             .addComponent(txtNrMessagesPerNode, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(txtNrRetransmissions, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(txtIntervalBetweenMessages, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
                                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(cboAttacks, 0, 358, Short.MAX_VALUE)))
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -441,8 +474,8 @@ public class TestBuilderPanel extends PlatformPanel {
                                     .addComponent(jLabel1))
                                 .addGap(27, 27, 27)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
-                                    .addComponent(txtTestName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE))))))
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
+                                    .addComponent(txtTestName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE))))))
                 .addGap(20, 20, 20))
         );
 
@@ -488,20 +521,26 @@ public class TestBuilderPanel extends PlatformPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
                     .addComponent(cboAttacks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(13, 13, 13)
+                .addGap(30, 30, 30)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmdLoadFromFile)
-                    .addComponent(cmdSaveToFile)
-                    .addComponent(activateNow))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(cmdLoadFromFile, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(activateNow)
+                        .addComponent(debug)
+                        .addComponent(batchMode)
+                        .addComponent(cmdSaveToFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void showTest() {
         txtTestName.setText(test.getName());
         txtTestDescription.setText(test.getDescription());
+        debug.setSelected(test.isDebugEnabled());
+        batchMode.setSelected(test.isBatchMode());
         inputParameters = test.getInputParameters();
         showInputParameters(inputParameters);
     }
@@ -567,6 +606,14 @@ public class TestBuilderPanel extends PlatformPanel {
         txtRunTimes.setEnabled(optRunTimes.isSelected());
     }//GEN-LAST:event_optRunTimesStateChanged
 
+    private void debugStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_debugStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_debugStateChanged
+
+    private void batchModeStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_batchModeStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_batchModeStateChanged
+
     @Override
     public boolean onCancel() {
         return true;
@@ -596,10 +643,10 @@ public class TestBuilderPanel extends PlatformPanel {
             return;
         }
         PlatformUtils.loadSimulationAttacksIntoCombo(cboAttacks);
-        if (test!=null){
+        if (test != null) {
             showTest();
         }
-        
+
 
     }
 
@@ -636,6 +683,7 @@ public class TestBuilderPanel extends PlatformPanel {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox activateNow;
+    private javax.swing.JCheckBox batchMode;
     private javax.swing.ButtonGroup bgRun;
     private javax.swing.JComboBox cboAttacks;
     private javax.swing.JCheckBox chkAttackNodesPercent;
@@ -646,6 +694,7 @@ public class TestBuilderPanel extends PlatformPanel {
     private javax.swing.JCheckBox chkSenderNodesStable;
     private javax.swing.JButton cmdLoadFromFile;
     private javax.swing.JButton cmdSaveToFile;
+    private javax.swing.JCheckBox debug;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -659,6 +708,7 @@ public class TestBuilderPanel extends PlatformPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JRadioButton optRunOnce;
     private javax.swing.JRadioButton optRunTimes;
     private javax.swing.JFormattedTextField txtIntervalBetweenMessages;
@@ -724,6 +774,8 @@ public class TestBuilderPanel extends PlatformPanel {
                 test = new BaseTest(inputParameters);
                 test.setName(txtTestName.getText());
                 test.setDescription(txtTestDescription.getText());
+                test.setDebugEnabled(debug.isSelected());
+                test.setBatchMode(batchMode.isSelected());
 
                 String f = GUI_Utils.showSavePersistentObjectDialog("Save test");
                 if (f != null) {
@@ -750,7 +802,6 @@ public class TestBuilderPanel extends PlatformPanel {
             if (f != null) {
                 test = new BaseTest();
                 test.loadFromXML(f);
-
                 showTest();
             }
 
@@ -795,8 +846,14 @@ public class TestBuilderPanel extends PlatformPanel {
     }
 
     public void setCurrentTest(AbstractTest currentTest) {
-        test=currentTest;
+        test = currentTest;
     }
 
+    public boolean debug() {
+        return debug.isSelected();
+    }
 
+    public boolean batch() {
+        return batchMode.isSelected();
+    }
 }

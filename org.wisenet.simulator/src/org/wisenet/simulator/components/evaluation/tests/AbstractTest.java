@@ -4,6 +4,8 @@
  */
 package org.wisenet.simulator.components.evaluation.tests;
 
+import java.util.LinkedList;
+import java.util.List;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.wisenet.simulator.common.ObjectParameters;
 import org.wisenet.simulator.common.Parameterizable;
@@ -12,6 +14,7 @@ import org.wisenet.simulator.common.PersistantObject;
 import org.wisenet.simulator.common.Persistent;
 import org.wisenet.simulator.components.evaluation.EvaluationManager;
 import org.wisenet.simulator.components.simulation.Simulation;
+import org.wisenet.simulator.core.Event;
 import org.wisenet.simulator.core.Simulator;
 
 /**
@@ -22,8 +25,10 @@ import org.wisenet.simulator.core.Simulator;
  */
 public abstract class AbstractTest extends PersistantObject implements Persistent, Parameterizable {
 
+    protected boolean prepared = false;
     protected boolean debugEnabled = true;
     protected static String PREFIX_CFG = "test";
+    protected static int messageCounter = 0;
     protected String name;
     protected String description;
     protected TestTypeEnum type;
@@ -36,6 +41,14 @@ public abstract class AbstractTest extends PersistantObject implements Persisten
     protected ObjectParameters parameters = new TestParameters();
     protected Simulation activeSimulation;
     private EvaluationManager evaluationManager;
+    protected long startSimulationTime = 0;
+    protected long endSimulationTime = 0;
+    protected boolean batchMode = true;
+    protected List sourceNodes = new LinkedList();
+    protected List receiverNodes = new LinkedList();
+    protected List attackNodes = new LinkedList();
+    protected List<Event> testEvents = new LinkedList<Event>();
+    long testTime = 0;
 
     public AbstractTest() {
         inputParameters = new TestInputParameters();
@@ -117,12 +130,16 @@ public abstract class AbstractTest extends PersistantObject implements Persisten
     public void saveToXML(XMLConfiguration configuration) throws PersistantException {
         configuration.setProperty(PREFIX_CFG + ".name", name);
         configuration.setProperty(PREFIX_CFG + ".description", description);
+        configuration.setProperty(PREFIX_CFG + ".debug", debugEnabled);
+        configuration.setProperty(PREFIX_CFG + ".batch", batchMode);
         inputParameters.saveToXML(configuration);
     }
 
     public void loadFromXML(XMLConfiguration configuration) throws PersistantException {
         setName(configuration.getString(PREFIX_CFG + ".name"));
         setDescription(configuration.getString(PREFIX_CFG + ".description"));
+        setDebugEnabled(configuration.getBoolean(PREFIX_CFG + ".debug"));
+        setBatchMode(configuration.getBoolean(PREFIX_CFG + ".batch"));
         inputParameters.loadFromXML(configuration);
     }
 
@@ -134,6 +151,17 @@ public abstract class AbstractTest extends PersistantObject implements Persisten
 
     public abstract void execute();
 
+    public abstract void prepare();
+
+    public void run() {
+        if (!prepared) {
+            prepare();
+        }
+        if (prepared) {
+            execute();
+        }
+    }
+
     public void setEvaluationManager(EvaluationManager evaluationManager) {
         this.evaluationManager = evaluationManager;
     }
@@ -142,14 +170,17 @@ public abstract class AbstractTest extends PersistantObject implements Persisten
         return evaluationManager;
     }
 
-    public void activate() {
+    public void beginTest() {
+        startSimulationTime = Simulator.getSimulationTime();
         log("activating");
         setEvaluationManager(new EvaluationManager());
         getSimulation().getRoutingLayerController().setActiveTest(this);
         getEvaluationManager().startTest(this);
+        getSimulation().notifyStartTest(this);
     }
 
-    public void deactivate() {
+    public void endTest() {
+        endSimulationTime = Simulator.getSimulationTime();
         if (getEvaluationManager() != null) {
             log("deactivating");
             getEvaluationManager().endTest();
@@ -174,5 +205,57 @@ public abstract class AbstractTest extends PersistantObject implements Persisten
 
     public void setDebugEnabled(boolean debugEnabled) {
         this.debugEnabled = debugEnabled;
+    }
+
+    public long getElapsedTime() {
+        return endSimulationTime - startSimulationTime;
+    }
+
+    public boolean isBatchMode() {
+        return batchMode;
+    }
+
+    public void setBatchMode(boolean batchMode) {
+        this.batchMode = batchMode;
+    }
+
+    public List getAttackNodes() {
+        return attackNodes;
+    }
+
+    public void setAttackNodes(List attackNodes) {
+        this.attackNodes = attackNodes;
+    }
+
+    public List getReceiverNodes() {
+        return receiverNodes;
+    }
+
+    public void setReceiverNodes(List receiverNodes) {
+        this.receiverNodes = receiverNodes;
+    }
+
+    public List getSourceNodes() {
+        return sourceNodes;
+    }
+
+    public void setSourceNodes(List sourceNodes) {
+        this.sourceNodes = sourceNodes;
+    }
+
+    public List<Event> getTestEvents() {
+        return testEvents;
+    }
+
+    public void setTestEvents(List<Event> testEvents) {
+        this.testEvents = testEvents;
+    }
+
+    public boolean isPrepared() {
+        return prepared;
+    }
+
+    public void setPrepared(boolean prepared) {
+        this.prepared = prepared;
     }
 }
