@@ -19,7 +19,7 @@ public class GraphicNode {
 
     public final static int UNDER_ATTACK = 1;
     public final static int SINK_NODE = 2;
-    public static int NONE=-1;
+    public static int NONE = -1;
     protected Node physicalNode;
     int id;
     static int count = 0;
@@ -36,6 +36,7 @@ public class GraphicNode {
     protected Color stableColor = Color.ORANGE;
     protected Color destinationColor = Color.BLUE;
     protected Color attackMarkColor = Color.RED;
+    protected Color receiverColor = Color.DARK_GRAY;
     protected Rectangle rectangle;
     protected boolean marked;
     protected boolean source;
@@ -173,9 +174,10 @@ public class GraphicNode {
     public void paint(ISimulationDisplay display) {
         paintMark(display);
         paintAsDestination(display);
-        paintAsSource(display);
         paintStable(display);
         fill(display);
+        paintAsSource(display);
+        paintAsReceiver(display);
         paintMode(display);
         paintBorder(display);
         paintSelectionBorder(display);
@@ -271,9 +273,31 @@ public class GraphicNode {
 
         saveOldColor(g);
         g.setColor(sourceColor);
-        int r = (int) (radius * 4);
-        g.drawOval(_x - r, _y - r, r * 2, r * 2);
-        g.fillOval(_x - r, _y - r, r * 2, r * 2);
+        int r = (int) (radius * 2);
+        g.drawRect(_x - r, _y - r, r * 2, r * 2);
+        g.fillRect(_x - r, _y - r, r * 2, r * 2);
+        restoreOldColor(g);
+    }
+
+    private void paintAsReceiver(ISimulationDisplay display) {
+        if (!isReceiver()) {
+            return;
+        }
+        Graphics g = display.getGraphics();
+        int _x = display.x2ScreenX(getX());
+        int _y = display.y2ScreenY(getY());
+
+        saveOldColor(g);
+        g.setColor(receiverColor);
+        int r = (int) (radius * 2);
+        Polygon p = new Polygon();
+        p.addPoint(_x, _y - r);
+        p.addPoint(_x + r, _y);
+
+        p.addPoint(_x, _y + r);
+        p.addPoint(_x - r, _y);
+        g.drawPolygon(p);
+        g.fillPolygon(p);
         restoreOldColor(g);
     }
 
@@ -327,7 +351,7 @@ public class GraphicNode {
     }
 
     public boolean isSource() {
-        return source;
+        return getPhysicalNode().isSource();
     }
 
     public void setSource(boolean source) {
@@ -367,11 +391,11 @@ public class GraphicNode {
 
         switch (this.mode) {
             case UNDER_ATTACK:
-                Polygon p=new Polygon();
-                int r=radius*2;
-                p.addPoint(_x, _y-r);
-                p.addPoint(_x-r, _y+r);
-                p.addPoint(_x+r, _y+r);
+                Polygon p = new Polygon();
+                int r = radius * 2;
+                p.addPoint(_x, _y - r);
+                p.addPoint(_x - r, _y + r);
+                p.addPoint(_x + r, _y + r);
                 g.setColor(getAttackMarkColor());
                 g.fillPolygon(p);
 //                g.fillRect(_x - radius, _y - radius, radius * 3, radius * 3);
@@ -432,5 +456,25 @@ public class GraphicNode {
 
     public void reset() {
 //        backcolor = Color.RED;
+    }
+
+    private boolean isReceiver() {
+        return getPhysicalNode().isReceiver();
+    }
+
+    public Color getMarkStableColor() {
+        return markStableColor;
+    }
+
+    public void setMarkStableColor(Color markStableColor) {
+        this.markStableColor = markStableColor;
+    }
+
+    public Color getReceiverColor() {
+        return receiverColor;
+    }
+
+    public void setReceiverColor(Color receiverColor) {
+        this.receiverColor = receiverColor;
     }
 }

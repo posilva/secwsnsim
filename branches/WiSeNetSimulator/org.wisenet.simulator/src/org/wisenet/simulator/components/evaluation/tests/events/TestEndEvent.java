@@ -13,6 +13,6 @@ public class TestEndEvent extends AbstractTestEvent {
     @Override
     public void execute() {
 
-        getTest().deactivate();
+        getTest().endTest();
     }
 }

@@ -768,7 +768,7 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
     }
 
     private void fireAfterTestExecution(SimulationTestEvent event) {
-    Object[] listeners = simulationListeners.getListenerList();
+        Object[] listeners = simulationListeners.getListenerList();
         // loop through each listener and pass on the event if needed
         int numListeners = listeners.length;
         for (int i = 0; i
@@ -776,6 +776,23 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
             if (listeners[i] == SimulationListener.class) {
                 // pass the event to the listeners event dispatch method
                 ((SimulationListener) listeners[i + 1]).afterTestExecution(event);
+            }
+        }
+    }
+
+    public void notifyStartTest(AbstractTest test) {
+        fireStartTestExecution(new SimulationTestEvent(test));
+    }
+
+    private void fireStartTestExecution(SimulationTestEvent event) {
+        Object[] listeners = simulationListeners.getListenerList();
+        // loop through each listener and pass on the event if needed
+        int numListeners = listeners.length;
+        for (int i = 0; i
+                < numListeners; i += 2) {
+            if (listeners[i] == SimulationListener.class) {
+                // pass the event to the listeners event dispatch method
+                ((SimulationListener) listeners[i + 1]).startTestExecution(event);
             }
         }
     }

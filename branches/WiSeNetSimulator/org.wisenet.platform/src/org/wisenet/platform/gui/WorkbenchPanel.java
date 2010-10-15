@@ -8,6 +8,7 @@ package org.wisenet.platform.gui;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.util.List;
+import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.xml.ws.Action;
@@ -29,6 +30,7 @@ import org.wisenet.simulator.components.instruments.NodeSelectionCondition;
 import org.wisenet.simulator.components.simulation.Simulation;
 import org.wisenet.simulator.components.simulation.listeners.SimulationEvent;
 import org.wisenet.simulator.components.simulation.listeners.SimulationTestEvent;
+import org.wisenet.simulator.gui.GraphicNode;
 
 import org.wisenet.simulator.utilities.DebugConsole;
 import org.wisenet.simulator.components.simulation.SimulationFactory;
@@ -69,7 +71,6 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                 this.currentTest = (AbstractTest) tc.getResult();
                 lblActiveTest.setText(((AbstractTest) tc.getResult()).getName());
                 this.currentTest.setSimulation((Simulation) getSimulationPanel().getSimulation());
-
             }
         }
     }
@@ -144,6 +145,9 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         lblActiveTest = new javax.swing.JLabel();
         cmdResetTest = new javax.swing.JButton();
         cmdRunTest = new javax.swing.JButton();
+        testPrepare = new javax.swing.JButton();
+        testAddSources = new javax.swing.JToggleButton();
+        testAddReceivers = new javax.swing.JToggleButton();
         jSeparator12 = new javax.swing.JToolBar.Separator();
         searchPanel = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
@@ -555,6 +559,39 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
             }
         });
         topToolbar.add(cmdRunTest);
+
+        testPrepare.setText("P");
+        testPrepare.setFocusable(false);
+        testPrepare.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        testPrepare.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        testPrepare.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                testPrepareActionPerformed(evt);
+            }
+        });
+        topToolbar.add(testPrepare);
+
+        testAddSources.setText("SRC");
+        testAddSources.setFocusable(false);
+        testAddSources.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        testAddSources.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        testAddSources.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                testAddSourcesActionPerformed(evt);
+            }
+        });
+        topToolbar.add(testAddSources);
+
+        testAddReceivers.setText("RCV");
+        testAddReceivers.setFocusable(false);
+        testAddReceivers.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        testAddReceivers.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        testAddReceivers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                testAddReceiversActionPerformed(evt);
+            }
+        });
+        topToolbar.add(testAddReceivers);
         topToolbar.add(jSeparator12);
 
         searchPanel.setPreferredSize(new java.awt.Dimension(100, 25));
@@ -737,6 +774,20 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         getSimulationPanel().setUnderAttackModeSelectedNodes(tgbRoutingAttackMode.isSelected());
     }//GEN-LAST:event_tgbRoutingAttackModeActionPerformed
 
+    private void testAddSourcesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testAddSourcesActionPerformed
+        // TODO add your handling code here:
+        addSourcesToTest();
+    }//GEN-LAST:event_testAddSourcesActionPerformed
+
+    private void testAddReceiversActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testAddReceiversActionPerformed
+        // TODO add your handling code here:
+        addReceiversToTest();
+    }//GEN-LAST:event_testAddReceiversActionPerformed
+
+    private void testPrepareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testPrepareActionPerformed
+        // TODO add your handling code here:
+        prepareTest();
+    }//GEN-LAST:event_testPrepareActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup OperationBG;
     private javax.swing.ButtonGroup SelectionBG;
@@ -784,6 +835,9 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
     private javax.swing.JToggleButton showDebugWindow;
     private javax.swing.JToggleButton showMouseCoordinates;
     private org.wisenet.platform.gui.SimulationPanel simulationPanel1;
+    private javax.swing.JToggleButton testAddReceivers;
+    private javax.swing.JToggleButton testAddSources;
+    private javax.swing.JButton testPrepare;
     private javax.swing.JToggleButton tgbRoutingAttackMode;
     private javax.swing.JToolBar topToolbar;
     private javax.swing.JFormattedTextField txtSearchNode;
@@ -1045,7 +1099,11 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
             showMessage("Simulation must have been started!");
             return;
         }
-        currentTest.execute();
+        if (currentTest.isPrepared()) {
+            currentTest.execute();
+        } else {
+            currentTest.run();
+        }
     }
 
     private void showFieldArea() {
@@ -1071,13 +1129,59 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
     public void afterTestExecution(SimulationTestEvent event) {
         AbstractTest t = (AbstractTest) event.getSource();
         String msg = "TestName: " + t.getName()
-                + "\n\nNumber Of Messages Sent: " + t.getEvaluationManager().getMessageDatabase().getTotalNumberOfMessagesSent()
+                + "\n\nNumber Of Messages Sent: " + t.getEvaluationManager().getMessageDatabase().getTotalNumberOfUniqueMessagesSent()
                 + "\nNumber Of Messages Received: " + t.getEvaluationManager().getMessageDatabase().getTotalMessagesReceived()
                 + "\nNumber Of Sender Nodes: " + t.getEvaluationManager().getMessageDatabase().getTotalSenderNodes()
                 + "\nNumber Of Covered Nodes: " + t.getEvaluationManager().getMessageDatabase().getTotalCoveredNodes()
                 + "\n\nTotal Energy Spent: " + t.getEvaluationManager().getEnergyDatabase().getTotalEnergySpent();
 
         GUI_Utils.showMessage(msg);
+    }
+
+    @Override
+    public void startTestExecution(SimulationTestEvent event) {
+        System.out.println("Starting test: " + ((AbstractTest) event.getSource()).getName());
+    }
+
+    private void addSourcesToTest() {
+        Vector<GraphicNode> selNodes = null;
+        if (currentTest != null && !currentTest.isBatchMode()) {
+            if (getSimulationPanel().getSimulator().getNodes().size() > 0) {
+                selNodes = getSimulationPanel().getSelectedNodes();
+                if (selNodes != null) {
+                    for (GraphicNode graphicNode : selNodes) {
+                        Node n = graphicNode.getPhysicalNode();
+
+                        if (testAddSources.isSelected()) { // add
+                            if (!n.isSinkNode() && n.getRoutingLayer().isStable()) {
+                                if (!currentTest.getSourceNodes().contains(n)) {
+                                    currentTest.getSourceNodes().add(n);
+                                    n.setSource(true);
+                                }
+                            }
+                        } else {//remove
+                            n.setSource(false);
+                            currentTest.getSourceNodes().remove(n);
+
+                        }
+
+                    }
+                    getSimulationPanel().updateLocal();
+                }
+            }
+        }
+    }
+
+    private void addReceiversToTest() {
+    }
+
+    private void prepareTest() {
+        if (currentTest != null) {
+            if (getSimulationPanel().getSimulator().getNodes().size() > 0) {
+                currentTest.prepare();
+            }
+        }
+
     }
 
     private class RebuildNetworkTask extends org.jdesktop.application.Task<Object, Void> {
@@ -1105,29 +1209,43 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
     public void selectedNodeDeployMode() {
         updateSelectionGroup();
 
+
+
     }
 
     public void RandomNodeSelection() {
         simulationPanel1.selectRandomNodes(10);
+
+
     }
 
     public void TakeSnapshot() {
         simulationPanel1.takeSnapshot();
+
+
     }
 
     public void ColorSettingsAction() {
         if (PlatformManager.getInstance().haveActiveSimulation()) {
             Simulation simulation = (Simulation) PlatformManager.getInstance().getActiveSimulation();
+
+
             if (!simulation.getSimulator().isEmpty()) {
 
                 PlatformDialog pd = PlatformDialog.display(null, new NodeSettingsPanel(), "Color Settings", PlatformDialog.OKCANCELAPPLY_MODE);
                 pd.dispose();
+
+
             } else {
                 GUI_Utils.showWarningMessage("No sensor nodes added");
+
+
             }
 
         } else {
             GUI_Utils.showWarningMessage("No active simulation");
+
+
         }
 
 
@@ -1136,18 +1254,26 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
 
     public AbstractTest getCurrentTest() {
         return currentTest;
+
+
     }
 
     public void setCurrentTest(AbstractTest currentTest) {
         this.currentTest = currentTest;
+
+
     }
 
     public boolean isNetworkDeployed() {
         return (getSimulationPanel().getSimulation().isNetworkDeployed());
+
+
     }
 
     public void showMessage(final String message) {
         PlatformManager.getInstance().getPlatformView().showMessage(message);
+
+
     }
 
     public void updateSimulationInfo() {
@@ -1156,6 +1282,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         PlatformManager.getInstance().getPlatformView().updateAverageNeighborsPerNode();
         PlatformManager.getInstance().getPlatformView().updateSelectedNodes("" + getSimulationPanel().getSelectedNodes().size());
         PlatformManager.getInstance().getPlatformView().updateSimulationNrNodes(getSimulationPanel().getSimulator().getNodes().size());
+
 
 
     }

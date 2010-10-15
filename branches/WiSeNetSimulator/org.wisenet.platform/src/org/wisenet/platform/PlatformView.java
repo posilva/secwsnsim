@@ -26,6 +26,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.jdesktop.application.Application.ExitListener;
 import org.jdesktop.application.ResourceMap;
+import org.wisenet.platform.common.ui.PlatformPanel;
 import org.wisenet.platform.core.PlatformManager;
 import org.wisenet.platform.core.instruments.coverage.CoverageInstrumentControlPanel;
 import org.wisenet.platform.core.instruments.reliability.ReliabilityInstrumentControlPanel;
@@ -39,6 +40,7 @@ import org.wisenet.platform.gui.listeners.SimulationPanelEventListener;
 import org.wisenet.platform.gui.panels.EnergyEvaluationPanel;
 import org.wisenet.platform.gui.panels.RoutingOutputPanel;
 import org.wisenet.platform.gui.panels.SimulationPropertiesPanel;
+import org.wisenet.platform.gui.panels.TestResultsPanel;
 import org.wisenet.platform.utils.PlatformUtils;
 import org.wisenet.platform.utils.gui.ClockCounter;
 import org.wisenet.platform.utils.GUI_Utils;
@@ -1106,7 +1108,7 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
 
         final AbstractTest t = (AbstractTest) event.getSource();
         final String msg = "TestName: " + t.getName()
-                + "\n\nNumber Of Messages Sent: " + t.getEvaluationManager().getMessageDatabase().getTotalNumberOfMessagesSent()
+                + "\n\nNumber Of Messages Sent: " + t.getEvaluationManager().getMessageDatabase().getTotalNumberOfUniqueMessagesSent()
                 + "\nNumber Of Messages Received: " + t.getEvaluationManager().getMessageDatabase().getTotalMessagesReceived()
                 + "\nNumber Of Sender Nodes: " + t.getEvaluationManager().getMessageDatabase().getTotalSenderNodes()
                 + "\nNumber Of Covered Nodes: " + t.getEvaluationManager().getMessageDatabase().getTotalCoveredNodes()
@@ -1117,9 +1119,18 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
 
             @Override
             public void run() {
+
                 GUI_Utils.showMessage(msg);
+                TestResultsPanel c = new TestResultsPanel();
+                c.setTest(t);
+                PlatformFrame.display(c, "Test Results", PlatformFrame.OK_MODE);
             }
         });
 
+    }
+
+    @Override
+    public void startTestExecution(SimulationTestEvent event) {
+        System.out.println("Starting test: " + ((AbstractTest)event.getSource()).getName());
     }
 }

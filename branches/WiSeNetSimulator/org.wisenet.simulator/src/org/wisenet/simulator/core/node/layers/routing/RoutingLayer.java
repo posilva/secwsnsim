@@ -136,7 +136,7 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
      */
     public void receivedMessageHandler(Object message) {
         try {
-            ((Message) message).hop(); // increment one hop
+            
             Message m = (Message) ((Message) message).clone();
             receiveMessage(m);
         } catch (CloneNotSupportedException ex) {
@@ -149,6 +149,7 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
      * @param message
      */
     protected void routeMessage(Object message) {
+        ((Message) message).hop(); // increment one hop
         onRouteMessage(message);
     }
 
@@ -301,7 +302,7 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
      * @param message
      */
     public final void done(Object message) {
-
+        ((Message)message).hop();
         if (this instanceof IInstrumentHandler) {
 
             if (getController().isTesting()) {

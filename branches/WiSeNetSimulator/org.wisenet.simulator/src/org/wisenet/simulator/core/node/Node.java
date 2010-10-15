@@ -78,6 +78,25 @@ public abstract class Node {
      */
     protected Node parentNode;
     private boolean enableFunctioningEnergyConsumption = false;
+    /* is a source of messages node */
+    private boolean source;
+    private boolean receiver=false;
+
+    public boolean isSource() {
+        return source;
+    }
+
+    public void setSource(boolean b) {
+        source=b;
+    }
+
+    public void setReceiver(boolean b) {
+        receiver=b;
+    }
+
+    public boolean isReceiver() {
+        return receiver;
+    }
 
     public enum NodeState {
 

@@ -10,6 +10,8 @@
  */
 package org.wisenet.platform.common.ui;
 
+import org.wisenet.simulator.components.evaluation.tests.AbstractTest;
+
 /**
  *
  * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
@@ -82,4 +84,5 @@ public abstract class PlatformPanel extends javax.swing.JPanel {
         
     }
     public abstract void beforeClose();
+
 }
