@@ -31,29 +31,74 @@ public abstract class Node {
      * Constants
      */
     public static int NODEID_AUTOCOUNTER = 1;
+    /**
+     *
+     */
     public static final int INITIAL_BATERY_POWER = 1000;
+    /**
+     *
+     */
     public static final double DEFAULT_POWER_CONSUMING = 1.0E-2;
     private static long CLOCK_TICK = Simulator.ONE_SECOND;// /100;
     /**
      * Coordinates
      */
     protected double x = 0;
+    /**
+     *
+     */
     protected double y = 0;
+    /**
+     *
+     */
     protected double z = 0;
     /**
      * Attributes
      */
     protected boolean sinkNode = false;
+    /**
+     *
+     */
     protected Batery bateryEnergy = null;
+    /**
+     *
+     */
     protected Application application;
+    /**
+     *
+     */
     protected RoutingLayer routingLayer = null;
+    /**
+     *
+     */
     protected MACLayer macLayer = null;
+    /**
+     *
+     */
     protected Config config = new Config();
+    /**
+     *
+     */
     protected boolean turnedOn = true;
+    /**
+     *
+     */
     protected GraphicNode graphicNode;
+    /**
+     *
+     */
     protected CPU cpu = null;
+    /**
+     *
+     */
     protected Transceiver transceiver = null;
+    /**
+     *
+     */
     protected Color messageColor = Color.BLUE;
+    /**
+     *
+     */
     protected double environmentAttenuation = 0;
     /**
      * This is the message being sent, on reception it is extracted and the
@@ -82,32 +127,69 @@ public abstract class Node {
     private boolean source;
     private boolean receiver=false;
 
+    /**
+     *
+     * @return
+     */
     public boolean isSource() {
         return source;
     }
 
+    /**
+     *
+     * @param b
+     */
     public void setSource(boolean b) {
         source=b;
     }
 
+    /**
+     *
+     * @param b
+     */
     public void setReceiver(boolean b) {
         receiver=b;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isReceiver() {
         return receiver;
     }
 
+    /**
+     *
+     */
     public enum NodeState {
 
+        /**
+         *
+         */
         ACTIVE,
+        /**
+         *
+         */
         SLEEP
     };
+    /**
+     *
+     */
     protected NodeState state;
 
+    /**
+     *
+     */
     public class Config {
 
+        /**
+         *
+         */
         public static final int DEFAULT_MAX_COMUNICATION_RANGE = 30;
+        /**
+         *
+         */
         public static final int DEFAULT_MAX_RADIO_STRENGTH = 100;
         /**
          * This field defines the relative strength of a mote. If it is set to a
@@ -121,6 +203,10 @@ public abstract class Node {
          *
          * @see net.tinyos.prowler.INode#getMaximumRadioStrength()
          */
+        /**
+         *
+         * @return
+         */
         public double getMaximumRadioStrength() {
             return maxRadioStrength;
         }
@@ -130,14 +216,26 @@ public abstract class Node {
          *
          * @see net.tinyos.prowler.INode#setMaximumRadioStrength(double)
          */
+        /**
+         *
+         * @param d
+         */
         public void setMaximumRadioStrength(double d) {
             maxRadioStrength = d;
         }
 
+        /**
+         *
+         * @return
+         */
         public double getSetRadioRange() {
             return setRadioRange;
         }
 
+        /**
+         *
+         * @param setRadioRange
+         */
         public void setSetRadioRange(int setRadioRange) {
             // é necessário rever para calcular a função inversa que permite 
             // estimar o m do no face a um range desejado
@@ -185,44 +283,82 @@ public abstract class Node {
      */
     public abstract void init();
 
+    /**
+     *
+     * @return
+     */
     public boolean isSinkNode() {
         return sinkNode;
     }
 
+    /**
+     *
+     * @param sinkNode
+     */
     public void setSinkNode(boolean sinkNode) {
         this.sinkNode = sinkNode;
     }
 
+    /**
+     *
+     */
     public void initEnergyConsumation() {
         if (enableFunctioningEnergyConsumption) {
             simulator.addEvent(new Node.EnergyWasteEvent((int) Simulator.randomGenerator.random().nextDouble() * CLOCK_TICK));
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isEnableFunctioningEnergyConsumption() {
         return enableFunctioningEnergyConsumption;
     }
 
+    /**
+     *
+     * @param enableFunctioningEnergyConsumption
+     */
     public void setEnableFunctioningEnergyConsumption(boolean enableFunctioningEnergyConsumption) {
         this.enableFunctioningEnergyConsumption = enableFunctioningEnergyConsumption;
     }
 
+    /**
+     *
+     * @return
+     */
     public Object getMessage() {
         return message;
     }
 
+    /**
+     *
+     * @param message
+     */
     public void setMessage(Object message) {
         this.message = (Message) message;
     }
 
+    /**
+     *
+     * @return
+     */
     public MACLayer getMacLayer() {
         return macLayer;
     }
 
+    /**
+     *
+     * @param macLayer
+     */
     public void setMacLayer(MACLayer macLayer) {
         this.macLayer = macLayer;
     }
 
+    /**
+     *
+     */
     public void initBatery() {
         initEnergyConsumation();
     }
@@ -232,11 +368,21 @@ public abstract class Node {
      *
      * @see net.tinyos.prowler.INode#getDistanceSquare(net.tinyos.prowler.Node)
      */
+    /**
+     *
+     * @param other
+     * @return
+     */
     public double getDistanceSquare(Node other) {
         return (getX() - other.getX()) * (getX() - other.getX()) + (getY() - other.getY()) * (getY() - other.getY())
                 + (getZ() - other.getZ()) * (getZ() - other.getZ());
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     */
     public double getDistance(Node other) {
         return Math.sqrt(getDistanceSquare(other));
     }
@@ -246,6 +392,10 @@ public abstract class Node {
      *
      * @see net.tinyos.prowler.INode#setId(short)
      */
+    /**
+     *
+     * @param id
+     */
     public final void setId(short id) {
         this.id = id;
     }
@@ -254,6 +404,12 @@ public abstract class Node {
      * (non-Javadoc)
      *
      * @see net.tinyos.prowler.INode#setPosition(double, double, double)
+     */
+    /**
+     *
+     * @param x
+     * @param y
+     * @param z
      */
     public void setPosition(double x, double y, double z) {
         this.x = x;
@@ -266,6 +422,10 @@ public abstract class Node {
      *
      * @see net.tinyos.prowler.INode#getX()
      */
+    /**
+     *
+     * @return
+     */
     public double getX() {
         return this.x;
     }
@@ -274,6 +434,10 @@ public abstract class Node {
      * (non-Javadoc)
      *
      * @see net.tinyos.prowler.INode#getY()
+     */
+    /**
+     *
+     * @return
      */
     public double getY() {
         return this.y;
@@ -284,6 +448,10 @@ public abstract class Node {
      *
      * @see net.tinyos.prowler.INode#getZ()
      */
+    /**
+     *
+     * @return
+     */
     public double getZ() {
         return this.z;
     }
@@ -293,6 +461,10 @@ public abstract class Node {
      *
      * @see net.tinyos.prowler.INode#getId()
      */
+    /**
+     *
+     * @return
+     */
     public short getId() {
         return id;
     }
@@ -301,6 +473,10 @@ public abstract class Node {
      * (non-Javadoc)
      *
      * @see net.tinyos.prowler.INode#getSimulator()
+     */
+    /**
+     *
+     * @return
      */
     public Simulator getSimulator() {
         return simulator;
@@ -312,6 +488,10 @@ public abstract class Node {
      * @see
      * net.tinyos.prowler.INode#addApplication(net.tinyos.prowler.Application)
      */
+    /**
+     *
+     * @param app
+     */
     public void addApplication(Application app) {
         app.setNode(this);
         application = app;
@@ -321,8 +501,6 @@ public abstract class Node {
      * Visiting the elements of the application list, it returns the first with
      * the given application class.
      *
-     * @param appClass
-     *            the class that identifies the needed application for us
      * @return Returns the application instance running on this node
      */
     public Application getApplication() {
@@ -333,6 +511,10 @@ public abstract class Node {
      * (non-Javadoc)
      *
      * @see net.tinyos.prowler.INode#display(net.tinyos.prowler.Display)
+     */
+    /**
+     *
+     * @param disp
      */
     public synchronized void displayOn(ISimulationDisplay disp) {
         application.display(disp);
@@ -368,6 +550,10 @@ public abstract class Node {
         return routingLayer;
     }
 
+    /**
+     *
+     * @return
+     */
     public Node getParentNode() {
 
         return parentNode;
@@ -394,14 +580,28 @@ public abstract class Node {
         return bateryEnergy;
     }
 
+    /**
+     *
+     * @param message
+     * @param app
+     * @return
+     */
     public boolean sendMessageFromApplication(Object message, Application app) {
         return app.sendMessage(message);
     }
 
+    /**
+     *
+     * @param message
+     * @return
+     */
     public boolean sendMessage(Object message) {
         return application.sendMessage(message);
     }
 
+    /**
+     *
+     */
     public void dispose() {
     }
 
@@ -419,22 +619,41 @@ public abstract class Node {
         return turnedOn;
     }
 
+    /**
+     *
+     * @return
+     */
     public GraphicNode getGraphicNode() {
         return graphicNode;
     }
 
+    /**
+     *
+     * @param graphicNode
+     */
     public void setGraphicNode(GraphicNode graphicNode) {
         this.graphicNode = graphicNode;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getRadius() {
         return getGraphicNode().getRadius();
     }
 
+    /**
+     *
+     * @param radius
+     */
     public void setRadius(int radius) {
         getGraphicNode().setRadius(radius);
     }
 
+    /**
+     *
+     */
     public void startUp() {
         initBatery();
     }
@@ -466,10 +685,16 @@ public abstract class Node {
         }
     }
 
+    /**
+     *
+     */
     public void shutdown() {
         turnedOn = false;
     }
 
+    /**
+     *
+     */
     public void powerOn() {
         if (!getBateryEnergy().off()) {
             turnedOn = true;
@@ -477,11 +702,19 @@ public abstract class Node {
         }
     }
 
+    /**
+     *
+     * @param application
+     */
     public void setApplication(Application application) {
         this.application = application;
         application.setNode(this);
     }
 
+    /**
+     *
+     * @return
+     */
     public String[] getInfo() {
         DecimalFormat twoPlaces = new DecimalFormat("0.00");
         final double remainingPower = 100 * getBateryEnergy().getCurrentPower() / getBateryEnergy().getInitialPower();
@@ -506,76 +739,151 @@ public abstract class Node {
         return nodeInfo;
     }
 
+    /**
+     *
+     * @return
+     */
     public CPU getCPU() {
         return cpu;
     }
 
+    /**
+     *
+     * @param cpu
+     */
     public void setCPU(CPU cpu) {
         this.cpu = cpu;
     }
 
+    /**
+     *
+     */
     public static void resetCounter() {
         NODEID_AUTOCOUNTER = 1;
     }
 
+    /**
+     *
+     * @return
+     */
     public Transceiver getTransceiver() {
         return transceiver;
     }
 
+    /**
+     *
+     * @param transceiver
+     */
     public void setTransceiver(Transceiver transceiver) {
         this.transceiver = transceiver;
     }
 
+    /**
+     *
+     * @param object
+     * @return
+     */
     public static Node cast(Object object) {
         return (Node) object;
     }
 
+    /**
+     *
+     * @return
+     */
     public NodeState getState() {
         return state;
     }
 
+    /**
+     *
+     * @param state
+     */
     public void setState(NodeState state) {
         this.state = state;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isActive() {
         return state == NodeState.ACTIVE;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isSleep() {
         return state == NodeState.SLEEP;
     }
 
+    /**
+     *
+     * @return
+     */
     public Color getMessageColor() {
         return messageColor;
     }
 
+    /**
+     *
+     * @param messageColor
+     */
     public void setMessageColor(Color messageColor) {
         this.messageColor = messageColor;
     }
 
+    /**
+     *
+     * @param x
+     */
     public void setX(double x) {
         this.x = x;
     }
 
+    /**
+     *
+     * @param y
+     */
     public void setY(double y) {
         this.y = y;
     }
 
+    /**
+     *
+     * @param z
+     */
     public void setZ(double z) {
         this.z = z;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getEnvironmentAttenuation() {
         return environmentAttenuation;
     }
 
+    /**
+     *
+     * @param environmentAttenuation
+     */
     public void setEnvironmentAttenuation(double environmentAttenuation) {
         this.environmentAttenuation = environmentAttenuation;
     }
 
+    /**
+     *
+     * @return
+     */
     public abstract Object getUniqueID();
 
+    /**
+     *
+     */
     public void reset() {
         getGraphicNode().reset();
         setParentNode(null);

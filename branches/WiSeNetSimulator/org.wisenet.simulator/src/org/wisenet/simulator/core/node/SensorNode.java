@@ -18,13 +18,37 @@ import org.wisenet.simulator.gui.GraphicNode;
  */
 public abstract class SensorNode extends Node {
 
+    /**
+     *
+     */
     protected Color baseColor = Color.YELLOW;
+    /**
+     *
+     */
     protected Color receivingCorruptedColor = Color.red;
+    /**
+     *
+     */
     protected Color receivingNotCorruptedColor = Color.green;
+    /**
+     *
+     */
     protected Color sendingColor = Color.blue;
+    /**
+     *
+     */
     protected boolean paintNeighborhoodDst = false;
+    /**
+     *
+     */
     protected boolean paintNeighborhoodOrg = false;
+    /**
+     *
+     */
     protected boolean showID = false;
+    /**
+     *
+     */
     protected static Font monoFont = new Font("Courier", Font.BOLD, 8);
     private Color neighborsLinkColor=Color.GREEN;
     private Color othersLinkColor=Color.BLUE;
@@ -39,8 +63,16 @@ public abstract class SensorNode extends Node {
 
     }
 
+    /**
+     *
+     * @param radioModel
+     */
     protected abstract void configureMACLayer(RadioModel radioModel);
 
+    /**
+     *
+     * @param disp
+     */
     @Override
     public synchronized void displayOn(ISimulationDisplay disp) {
         Graphics g = disp.getGraphics();
@@ -141,18 +173,31 @@ public abstract class SensorNode extends Node {
 
     }
 
+    /**
+     *
+     * @param n
+     * @return
+     */
     public static SensorNode cast(Node n) {
         return (SensorNode) n;
 
 
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isPaintNeighborhoodOrg() {
         return paintNeighborhoodOrg;
 
 
     }
 
+    /**
+     *
+     * @param paintNeighborhoodOrg
+     */
     public void setPaintNeighborhoodOrg(boolean paintNeighborhoodOrg) {
         this.paintNeighborhoodOrg = paintNeighborhoodOrg;
 
@@ -163,50 +208,98 @@ public abstract class SensorNode extends Node {
         configureMACLayer(getSimulator().getRadioModel());
     }
 
+    /**
+     *
+     * @return
+     */
     public Color getBaseColor() {
         return graphicNode.getBackcolor();
     }
 
+    /**
+     *
+     * @param baseColor
+     */
     public void setBaseColor(Color baseColor) {
         this.graphicNode.setBackcolor(baseColor);
     }
 
+    /**
+     *
+     * @return
+     */
     public Color getReceivingCorruptedColor() {
         return receivingCorruptedColor;
     }
 
+    /**
+     *
+     * @param receivingCorruptedColor
+     */
     public void setReceivingCorruptedColor(Color receivingCorruptedColor) {
         this.receivingCorruptedColor = receivingCorruptedColor;
     }
 
+    /**
+     *
+     * @return
+     */
     public Color getReceivingNotCorruptedColor() {
         return receivingNotCorruptedColor;
     }
 
+    /**
+     *
+     * @param receivingNotCorruptedColor
+     */
     public void setReceivingNotCorruptedColor(Color receivingNotCorruptedColor) {
         this.receivingNotCorruptedColor = receivingNotCorruptedColor;
     }
 
+    /**
+     *
+     * @return
+     */
     public Color getSendingColor() {
         return sendingColor;
     }
 
+    /**
+     *
+     * @param sendingColor
+     */
     public void setSendingColor(Color sendingColor) {
         this.sendingColor = sendingColor;
     }
 
+    /**
+     *
+     * @return
+     */
     public Color getNeighborsLinkColor() {
         return neighborsLinkColor;
     }
 
+    /**
+     *
+     * @param neighborsLinkColor
+     */
     public void setNeighborsLinkColor(Color neighborsLinkColor) {
         this.neighborsLinkColor = neighborsLinkColor;
     }
 
+    /**
+     *
+     * @return
+     */
     public Color getOthersLinkColor() {
         return othersLinkColor;
     }
 
+    /**
+     *
+     * @param othersLinkColor
+     */
     public void setOthersLinkColor(Color othersLinkColor) {
         this.othersLinkColor = othersLinkColor;
     }

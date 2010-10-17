@@ -21,9 +21,20 @@ import org.wisenet.simulator.utilities.Utilities;
  */
 public class SecuredMica2MACLayer extends Mica2MACLayer {
 
+    /**
+     *
+     */
     protected byte[] keyData = CryptoFunctions.MACLayerGlobalKey();
+    /**
+     *
+     */
     protected byte[] iv = CryptoFunctions.MACLayerGlobalIV();
 
+    /**
+     *
+     * @param message
+     * @return
+     */
     protected Message decryptMessage(Object message) {
 
         try {
@@ -49,6 +60,10 @@ public class SecuredMica2MACLayer extends Mica2MACLayer {
         return null;
     }
 
+    /**
+     *
+     * @return
+     */
     protected boolean encryptMessage() {
         try {
             byte[] data = ((Message) getNode().getMessage()).getPayload();
@@ -73,6 +88,9 @@ public class SecuredMica2MACLayer extends Mica2MACLayer {
         return false;
     }
 
+    /**
+     *
+     */
     @Override
     protected void transmitMessage() {
         logger().log(Level.FINE, getNode().getId() + ": Trasmit Message");
@@ -81,6 +99,11 @@ public class SecuredMica2MACLayer extends Mica2MACLayer {
         }
     }
 
+    /**
+     *
+     * @param message
+     * @return
+     */
     @Override
     public boolean deliverMessage(Object message) {
 //        DefaultMessage m = (DefaultMessage) message;

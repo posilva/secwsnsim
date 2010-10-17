@@ -14,11 +14,21 @@ import org.wisenet.simulator.core.node.Node;
  */
 public class StaticTopologyManager extends TopologyManager {
 
+    /**
+     *
+     * @return
+     */
     @Override
     protected List<Node> createTopologyImpl() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /**
+     *
+     * @param nodes
+     * @param parameters
+     * @return
+     */
     @Override
     public Vector<Node> apply(Vector<Node> nodes, TopologyParameters parameters) {
         throw new UnsupportedOperationException("Not supported yet.");

@@ -12,5 +12,10 @@ import org.wisenet.simulator.core.node.Node;
  */
 public interface NodeSelectionCondition {
 
+    /**
+     *
+     * @param node
+     * @return
+     */
     public boolean select(Node node);
 }

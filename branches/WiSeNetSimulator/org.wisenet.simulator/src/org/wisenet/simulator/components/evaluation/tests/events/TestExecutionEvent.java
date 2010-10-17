@@ -14,10 +14,18 @@ public abstract class TestExecutionEvent extends AbstractTestEvent {
 
     Message message;
 
+    /**
+     *
+     * @return
+     */
     public Message getMessage() {
         return message;
     }
 
+    /**
+     *
+     * @param message
+     */
     public void setMessage(Message message) {
         this.message = message;
     }

@@ -10,9 +10,19 @@ package org.wisenet.simulator.components.simulation;
  */
 public interface ISimulationGUI {
 
+    /**
+     *
+     * @param message
+     */
     void showLogMessage(String message);
 
+    /**
+     *
+     */
     void onStartPlatform();
 
+    /**
+     *
+     */
     void onExitPlatform();
 }

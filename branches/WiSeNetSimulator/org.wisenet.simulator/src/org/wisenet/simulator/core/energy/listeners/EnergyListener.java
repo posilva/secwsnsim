@@ -10,5 +10,9 @@ import java.util.EventListener;
  *
  */
 public interface EnergyListener extends EventListener {
-    void onConsume(EnergyEvent evt);    
+    /**
+     *
+     * @param evt
+     */
+    void onConsume(EnergyEvent evt);
 }

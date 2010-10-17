@@ -29,11 +29,24 @@ import java.io.*;
  */
 public class DebugConsole extends JFrame implements WindowListener {
 
+    /**
+     *
+     */
     protected static DebugConsole instance;
 
+    /**
+     *
+     */
     protected PrintStream sysOut;
+    /**
+     *
+     */
     protected PrintStream sysErr;
 
+    /**
+     *
+     * @return
+     */
     public static DebugConsole getInstance() {
         if (instance == null) {
             instance = new DebugConsole(true, false, null, 700, 600, JFrame.DISPOSE_ON_CLOSE);
@@ -41,6 +54,15 @@ public class DebugConsole extends JFrame implements WindowListener {
         return instance;
     }
 
+    /**
+     *
+     * @param catchErrors
+     * @param logFile
+     * @param fileName
+     * @param width
+     * @param height
+     * @param closeOperation
+     */
     public DebugConsole(boolean catchErrors, boolean logFile, String fileName, int width,
             int height, int closeOperation) {
 
@@ -54,30 +76,61 @@ public class DebugConsole extends JFrame implements WindowListener {
         pack();
     }
 
+    /**
+     *
+     * @param e
+     */
     public void windowOpened(WindowEvent e) {
     }
 
+    /**
+     *
+     * @param e
+     */
     public void windowClosing(WindowEvent e) {
         System.setErr(sysErr);
         System.setOut(sysOut);
 
     }
 
+    /**
+     *
+     * @param e
+     */
     public void windowClosed(WindowEvent e) {
     }
 
+    /**
+     *
+     * @param e
+     */
     public void windowIconified(WindowEvent e) {
     }
 
+    /**
+     *
+     * @param e
+     */
     public void windowDeiconified(WindowEvent e) {
     }
 
+    /**
+     *
+     * @param e
+     */
     public void windowActivated(WindowEvent e) {
     }
 
+    /**
+     *
+     * @param e
+     */
     public void windowDeactivated(WindowEvent e) {
     }
 
+    /**
+     *
+     */
     public class DebugConsolePanel extends JPanel {
 
         private boolean catchErrors;
@@ -115,10 +168,6 @@ public class DebugConsole extends JFrame implements WindowListener {
          *         also be caught
          *  @param logFile set this to true if you want the output logged
          *  @param fileName the name of the file it is to be logged to
-         *  @param width the width of the frame
-         *  @param height the height of the frame
-         *  @param closeOperation the default close operation
-         *        (this must be one of the WindowConstants)
          */
         public DebugConsolePanel(boolean catchErrors, boolean logFile, String fileName) {
             sysOut=System.out;
@@ -210,6 +259,10 @@ public class DebugConsole extends JFrame implements WindowListener {
         }
     }
 
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         DebugConsole.getInstance().setVisible(true);
         System.out.println("teste");

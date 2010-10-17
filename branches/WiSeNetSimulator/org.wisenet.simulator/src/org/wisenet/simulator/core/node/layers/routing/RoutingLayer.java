@@ -16,6 +16,10 @@ import org.wisenet.simulator.core.node.layers.routing.attacks.AttacksEntry;
 import org.wisenet.simulator.core.node.layers.routing.attacks.IRoutingAttack;
 import org.wisenet.simulator.utilities.Utilities;
 
+/**
+ *
+ * @author posilva
+ */
 public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
 
     /**
@@ -132,7 +136,7 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
     /**
      * This method enables the instrumentation to perform the
      * controllers notification
-     * @param object
+     * @param message
      */
     public void receivedMessageHandler(Object message) {
         try {
@@ -225,6 +229,10 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
         return getNode().getSimulator().getSimulation().getLatencyInstrument();
     }
 
+    /**
+     *
+     * @return
+     */
     public AttacksList getAttacks() {
         return attacks;
     }
@@ -371,6 +379,7 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
 
     /**
      * Do some action after switch to stable
+     * @param oldValue
      */
     protected abstract void onStable(boolean oldValue);
 
@@ -379,6 +388,9 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
      */
     protected abstract void initAttacks();
 
+    /**
+     *
+     */
     @Override
     public void reset() {
         super.reset();

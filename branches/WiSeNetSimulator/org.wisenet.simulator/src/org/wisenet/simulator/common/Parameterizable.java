@@ -10,6 +10,14 @@ package org.wisenet.simulator.common;
  */
 public interface Parameterizable {
 
+    /**
+     *
+     * @return
+     */
     public ObjectParameters getParameters();
-     public void  setParameters(ObjectParameters params);
+    /**
+     *
+     * @param params
+     */
+    public void  setParameters(ObjectParameters params);
 }

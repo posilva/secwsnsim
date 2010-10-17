@@ -13,10 +13,18 @@ import org.wisenet.simulator.core.Event;
  */
 public abstract class AbstractTestEvent extends Event {
 
+    /**
+     *
+     * @return
+     */
     public AbstractTest getTest() {
         return test;
     }
 
+    /**
+     *
+     * @param test
+     */
     public void setTest(AbstractTest test) {
         this.test = test;
     }

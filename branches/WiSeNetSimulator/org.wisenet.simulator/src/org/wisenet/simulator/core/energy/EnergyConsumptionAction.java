@@ -12,15 +12,30 @@ public abstract class EnergyConsumptionAction {
 
     Object result;
 
+    /**
+     *
+     * @return
+     */
     public Object getResult() {
         return result;
     }
 
+    /**
+     *
+     * @param result
+     */
     public void setResult(Object result) {
         this.result = result;
     }
 
+    /**
+     *
+     */
     public abstract void execute();
 
+    /**
+     *
+     * @return
+     */
     public abstract int getNumberOfUnits();
 }

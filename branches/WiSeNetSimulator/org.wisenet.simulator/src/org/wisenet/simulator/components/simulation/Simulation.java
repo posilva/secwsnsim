@@ -139,6 +139,9 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         fireAfterStop(event);
     }
 
+    /**
+     *
+     */
     @Override
     public void start() {
         if (!networkBuilded) {
@@ -156,6 +159,9 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         fireAfterStart(event);
     }
 
+    /**
+     *
+     */
     @Override
     public void pause() {
         if (!isValid()) {
@@ -188,6 +194,9 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
 
     }
 
+    /**
+     *
+     */
     public void buildNetwork() {
         if (!isValid()) {
             return;
@@ -206,6 +215,10 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         }
     }
 
+    /**
+     *
+     * @param selected
+     */
     public void enableMACLayerDebug(boolean selected) {
         if (!isValid()) {
             return;
@@ -217,6 +230,10 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         }
     }
 
+    /**
+     *
+     * @param selected
+     */
     public void enableRoutingLayerDebug(boolean selected) {
         if (!isValid()) {
             return;
@@ -228,12 +245,22 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         }
     }
 
+    /**
+     *
+     */
     public void enterPlatform() {
     }
 
+    /**
+     *
+     */
     public void exitPlatform() {
     }
 
+    /**
+     *
+     * @return
+     */
     public int getAverageNeighborsPerNode() {
         try {
             if (!isValid()) {
@@ -252,6 +279,10 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         return 0;
     }
 
+    /**
+     *
+     * @return
+     */
     public Dimension fieldSize() {
 
         int maxX = Integer.MIN_VALUE;
@@ -282,6 +313,10 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public ISimulationGUI getSimulationPlatform() {
         throw new UnsupportedOperationException("Not supported yet.");
 
@@ -365,10 +400,18 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         return randomNodes;
     }
 
+    /**
+     *
+     * @param state
+     */
     public void setSimulationState(String state) {
         simulationState = state;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getSimulationState() {
         return simulationState;
     }
@@ -386,10 +429,18 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         }
     }
 
+    /**
+     *
+     * @param listener
+     */
     public void addSimulationListener(SimulationListener listener) {
         simulationListeners.add(SimulationListener.class, listener);
     }
 
+    /**
+     *
+     * @param listener
+     */
     public void removeSimulationListener(SimulationListener listener) {
         simulationListeners.remove(SimulationListener.class, listener);
     }
@@ -447,42 +498,82 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         started = false;
     }
 
+    /**
+     *
+     * @return
+     */
     protected boolean isValid() {
         return getSimulator() != null;
     }
 
+    /**
+     *
+     * @return
+     */
     protected boolean isSimulationPlatformRegistered() {
         return simulationGUI != null;
     }
 
+    /**
+     *
+     * @return
+     */
     public ISimulationGUI getSimulationGUI() {
         return simulationGUI;
     }
 
+    /**
+     *
+     * @return
+     */
     public CoverageInstrument getCoverageInstrument() {
         return coverageInstrument;
     }
 
+    /**
+     *
+     * @return
+     */
     public LatencyInstrument getLatencyInstrument() {
         return latencyInstrument;
     }
 
+    /**
+     *
+     * @return
+     */
     public ReliabilityInstrument getReliabilityInstrument() {
         return reliabilityInstrument;
     }
 
+    /**
+     *
+     * @return
+     */
     public long getExecutionRealtime() {
         return executionRealtime;
     }
 
+    /**
+     *
+     * @return
+     */
     public long getCurrentSimulationTime() {
         return System.currentTimeMillis() - startRealTime;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isLogEnergyEnable() {
         return logEnergyEnable;
     }
 
+    /**
+     *
+     * @param logEnergyEnable
+     */
     public void setLogEnergyEnable(boolean logEnergyEnable) {
         this.logEnergyEnable = logEnergyEnable;
     }
@@ -552,34 +643,66 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public IOutputDisplay getApplicationOutputDisplay() {
         return applicationOutputDisplay;
     }
 
+    /**
+     *
+     * @param applicationOutputDisplay
+     */
     public void setApplicationOutputDisplay(IOutputDisplay applicationOutputDisplay) {
         this.applicationOutputDisplay = applicationOutputDisplay;
     }
 
+    /**
+     *
+     * @return
+     */
     public IOutputDisplay getMacOutputDisplay() {
         return macOutputDisplay;
     }
 
+    /**
+     *
+     * @param macOutputDisplay
+     */
     public void setMacOutputDisplay(IOutputDisplay macOutputDisplay) {
         this.macOutputDisplay = macOutputDisplay;
     }
 
+    /**
+     *
+     * @return
+     */
     public IOutputDisplay getRoutingOutputDisplay() {
         return routingOutputDisplay;
     }
 
+    /**
+     *
+     * @param routingOutputDisplay
+     */
     public void setRoutingOutputDisplay(IOutputDisplay routingOutputDisplay) {
         this.routingOutputDisplay = routingOutputDisplay;
     }
 
+    /**
+     *
+     * @param event
+     */
     public void onEmptyQueue(SimulatorEvent event) {
         fireOnEmptyQueue(new SimulationEvent(this));
     }
 
+    /**
+     *
+     * @param event
+     */
     public void onNewStepRound(SimulatorEvent event) {
         fireOnNewSimulatorRound(new SimulationEvent(this));
     }
@@ -639,6 +762,10 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         getSimulator().addListener(this);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getNumberOfStableNodes() {
         int stableCount = 0;
@@ -651,6 +778,11 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         return stableCount;
     }
 
+    /**
+     *
+     * @param filename
+     * @throws Exception
+     */
     public void saveNetworkTopology(String filename) throws Exception {
         if (this.isValid()) {
             saveNT(filename);
@@ -659,6 +791,11 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         }
     }
 
+    /**
+     *
+     * @param filename
+     * @throws Exception
+     */
     public void loadNetworkTopology(String filename) throws Exception {
         XMLConfiguration file = new XMLConfiguration();
         file.load(filename);
@@ -698,10 +835,18 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         file.save(filename);
     }
 
+    /**
+     *
+     * @return
+     */
     public RoutingLayerController getRoutingLayerController() {
         return RoutingLayer.getController();
     }
 
+    /**
+     *
+     * @param settings
+     */
     @Override
     public void create(SimulationSettings settings) {
         try {
@@ -726,20 +871,37 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public MACLayerController getMacLayerController() {
         return MACLayer.getController();
     }
 
+    /**
+     *
+     * @param configuration
+     * @throws PersistantException
+     */
     public void saveToXML(XMLConfiguration configuration) throws PersistantException {
         settings.saveToXML(configuration);
         getMacLayerController().saveToXML(configuration);
         getRoutingLayerController().saveToXML(configuration);
     }
 
+    /**
+     *
+     * @param configuration
+     * @throws PersistantException
+     */
     public void loadFromXML(XMLConfiguration configuration) throws PersistantException {
         settings.loadFromXML(name);
     }
 
+    /**
+     *
+     */
     @Override
     public void reset() {
         super.reset();
@@ -753,6 +915,10 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         getCoverageInstrument().reset();
     }
 
+    /**
+     *
+     * @return
+     */
     public int getNumberOfSinkNodes() {
         int ct = 0;
         for (Node node : getSimulator().getNodes()) {
@@ -763,6 +929,10 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         return ct;
     }
 
+    /**
+     *
+     * @param test
+     */
     public void notifyEndTest(AbstractTest test) {
         fireAfterTestExecution(new SimulationTestEvent(test));
     }
@@ -780,6 +950,10 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         }
     }
 
+    /**
+     *
+     * @param test
+     */
     public void notifyStartTest(AbstractTest test) {
         fireStartTestExecution(new SimulationTestEvent(test));
     }

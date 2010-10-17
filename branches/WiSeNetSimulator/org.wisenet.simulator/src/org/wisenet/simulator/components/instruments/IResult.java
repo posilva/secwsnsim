@@ -10,6 +10,10 @@ package org.wisenet.simulator.components.instruments;
  */
 public interface IResult {
 
+    /**
+     *
+     * @return
+     */
     @Override
     String toString();
 }

@@ -15,22 +15,41 @@ import static org.wisenet.simulator.core.Simulator.randomGenerator;
 @SuppressWarnings("serial")
 public class RandomList<T> extends Vector<T>{
 
-	public RandomList() {}
+    /**
+     *
+     */
+    public RandomList() {}
 
-	public RandomList( Collection <? extends T> c) {
+    /**
+     *
+     * @param c
+     */
+    public RandomList( Collection <? extends T> c) {
 		super(c) ;
 	}
 	
-	public RandomList( Iterator <? extends T> it ) {
+        /**
+         *
+         * @param it
+         */
+        public RandomList( Iterator <? extends T> it ) {
 		for( ; it.hasNext() ; )
 			add( it.next() ) ;
 	}
 	
-	public T randomElement() {
+        /**
+         *
+         * @return
+         */
+        public T randomElement() {
 		return isEmpty() ? null : get( (int)(randomGenerator.random().nextDouble() * size() ) ) ;
 	}
 	
-	public T removeRandomElement() {
+        /**
+         *
+         * @return
+         */
+        public T removeRandomElement() {
 		return isEmpty() ? null : remove( (int)(randomGenerator.random().nextDouble() * size() ) ) ;
 	}		
 }

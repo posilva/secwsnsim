@@ -20,7 +20,10 @@ import org.wisenet.simulator.utilities.Utilities;
  public class SimulationFactory {
      
 
-    public static final int DEFAULT_NODE_RANGE = 30;
+     /**
+      *
+      */
+     public static final int DEFAULT_NODE_RANGE = 30;
     Class radioModelClass = null;
     Class simulatorClass = null;
     Class nodeFactoryClass = null;
@@ -30,11 +33,20 @@ import org.wisenet.simulator.utilities.Utilities;
     String radioModelClassName = null;
     String simulatorClassName = null;
     String nodeFactoryClassName = null;
+    /**
+     *
+     */
     protected EnergyModel energyModel;
     String simulationName = "none";
     String simulationdescription = "none";
     int initialNodeRange = DEFAULT_NODE_RANGE;
 
+    /**
+     *
+     * @param nodeFactoryClass
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     */
     public void setNodeFactoryClass(Class nodeFactoryClass) throws InstantiationException, IllegalAccessException {
         Object o = nodeFactoryClass.newInstance();
         if (o instanceof AbstractNodeFactory) {
@@ -109,6 +121,20 @@ import org.wisenet.simulator.utilities.Utilities;
         return s;
     }
 
+    /**
+     *
+     * @param simulation
+     * @param sim
+     * @param rm
+     * @param nf
+     * @param em
+     * @param nrange
+     * @param name
+     * @param desc
+     * @return
+     * @throws IllegalAccessException
+     * @throws InstantiationException
+     */
     protected static Simulation buildSimulation(Simulation simulation, Simulator sim, RadioModel rm, AbstractNodeFactory nf, EnergyModel em, int nrange, String name, String desc) throws IllegalAccessException, InstantiationException {
         sim.addListener(simulation);
         simulation.setSimulator(sim);
@@ -152,30 +178,58 @@ import org.wisenet.simulator.utilities.Utilities;
         return initialNodeRange;
     }
 
+    /**
+     *
+     * @param nodeRange
+     */
     public void setNodeRange(int nodeRange) {
         this.initialNodeRange = nodeRange;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getNodeFactoryClassName() {
         return nodeFactoryClassName;
     }
 
+    /**
+     *
+     * @param nodeFactoryClassName
+     */
     public void setNodeFactoryClassName(String nodeFactoryClassName) {
         this.nodeFactoryClassName = nodeFactoryClassName;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getRadioModelClassName() {
         return radioModelClassName;
     }
 
+    /**
+     *
+     * @param radioModelClassName
+     */
     public void setRadioModelClassName(String radioModelClassName) {
         this.radioModelClassName = radioModelClassName;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getSimulatorClassName() {
         return simulatorClassName;
     }
 
+    /**
+     *
+     * @param simulatorClassName
+     */
     public void setSimulatorClassName(String simulatorClassName) {
         this.simulatorClassName = simulatorClassName;
     }

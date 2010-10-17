@@ -15,18 +15,34 @@ public abstract class EnergyFileLogger extends EnergyLogger{
     String filename;
     OutputStream outputStream;
 
+    /**
+     *
+     * @return
+     */
     public OutputStream getOutputStream() {
         return outputStream;
     }
 
+    /**
+     *
+     * @param outputStream
+     */
     public void setOutputStream(OutputStream outputStream) {
         this.outputStream = outputStream;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getFilename() {
         return filename;
     }
 
+    /**
+     *
+     * @param filename
+     */
     public void setFilename(String filename) {
         this.filename = filename;
     }

@@ -10,5 +10,20 @@ package org.wisenet.simulator.components.evaluation.tests;
  */
 public enum TestTypeEnum {
 
-    OnDemand, Temporized, OnEmptyQueue, OnCondition;
+    /**
+     * 
+     */
+    OnDemand,
+    /**
+     *
+     */
+    Temporized,
+    /**
+     * 
+     */
+    OnEmptyQueue,
+    /**
+     *
+     */
+    OnCondition;
 }

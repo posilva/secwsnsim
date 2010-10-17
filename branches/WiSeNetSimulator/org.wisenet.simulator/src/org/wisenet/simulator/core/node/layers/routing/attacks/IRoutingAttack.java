@@ -15,6 +15,10 @@ public interface IRoutingAttack {
      * Gets if the attack is enabled
      */
 
+    /**
+     *
+     * @return
+     */
     public boolean isEnable();
 
     /**

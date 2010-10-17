@@ -96,6 +96,10 @@ public class SimualtionConfiguration {
 
     }
 
+    /**
+     *
+     * @param node
+     */
     protected void writeNodeInfo(Node node) {
         configurationFile.addProperty("simulation.nodes.node(-1).id", node.getId());
         configurationFile.addProperty("simulation.nodes.node.x", node.getX());

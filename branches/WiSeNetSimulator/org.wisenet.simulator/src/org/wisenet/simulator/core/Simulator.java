@@ -53,11 +53,29 @@ import org.wisenet.simulator.utilities.Utilities;
 public class Simulator {
 
     final static Logger LOGGER = Logger.getLogger(Simulator.class.getName());
+    /**
+     *
+     */
     public static final int SIMULATOR_STEPS = 200;
+    /**
+     *
+     */
     public static final int RUNTIME_NUM_STEPS = 1;
+    /**
+     *
+     */
     public static final Integer SIMULATION_SPEED_DEFAULT = 80000;
+    /**
+     *
+     */
     public static Integer ONE_SECOND = SIMULATION_SPEED_DEFAULT;
+    /**
+     *
+     */
     public final static int FAST = 0;
+    /**
+     *
+     */
     public final static int REAL = 1;
     /**
      * List of event simulatorListeners
@@ -83,6 +101,9 @@ public class Simulator {
     private AbstractSimulation simulation;
     private Thread runningThread;
     private boolean reset = false;
+    /**
+     *
+     */
     protected NodeDB db;
     private int mode;
     /** Holds the events */
@@ -96,20 +117,35 @@ public class Simulator {
     private boolean start = false;
     private boolean running;
 
+    /**
+     *
+     */
     public Simulator() {
         super();
         this.db = new NodeDB();
     }
 
+    /**
+     *
+     * @param node
+     */
     public void addNode(Node node) {
         db.nodes().add(node);
     }
 
+    /**
+     *
+     * @param node
+     */
     public void removeNode(Node node) {
         db.nodes().remove(node);
 
     }
 
+    /**
+     *
+     * @return
+     */
     public Collection<Node> getNodes() {
         return db.nodes();
     }
@@ -123,15 +159,24 @@ public class Simulator {
         }
     }
 
+    /**
+     *
+     */
     public void resume() {
         handleResume();
     }
 
+    /**
+     *
+     */
     public void stop() {
         stop = true;
 
     }
 
+    /**
+     *
+     */
     public void reset() {
         if (!start && !stop) {
             return;
@@ -141,18 +186,32 @@ public class Simulator {
 
     }
 
+    /**
+     *
+     */
     public void pause() {
         paused = true;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isPaused() {
         return paused;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isStop() {
         return stop;
     }
 
+    /**
+     *
+     */
     public void start() {
         stop = false;
         reset = false;
@@ -176,6 +235,10 @@ public class Simulator {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public int getNumberOfRemainEvents() {
         return eventQueue.size();
     }
@@ -202,6 +265,10 @@ public class Simulator {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isEmpty() {
         return getNodes().isEmpty();
     }
@@ -514,10 +581,18 @@ public class Simulator {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public AbstractSimulation getSimulation() {
         return simulation;
     }
 
+    /**
+     *
+     * @param simulation
+     */
     public void setSimulation(AbstractSimulation simulation) {
         this.simulation = simulation;
     }
@@ -529,14 +604,26 @@ public class Simulator {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public Node getRandomNode() {
         return db.randomNode();
     }
 
+    /**
+     *
+     * @param mode
+     */
     public void setMode(int mode) {
         this.mode = mode;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getMode() {
         return mode;
     }

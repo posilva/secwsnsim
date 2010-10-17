@@ -16,22 +16,42 @@ public class AttacksList {
     RoutingLayer routingLayer;
     LinkedList<AttacksEntry> attacksList = new LinkedList<AttacksEntry>();
 
+    /**
+     *
+     * @param routingLayer
+     */
     public AttacksList(RoutingLayer routingLayer) {
         this.routingLayer = routingLayer;
     }
 
+    /**
+     *
+     * @return
+     */
     public LinkedList<AttacksEntry> getAttacksList() {
         return attacksList;
     }
 
+    /**
+     *
+     * @return
+     */
     public RoutingLayer getRoutingLayer() {
         return routingLayer;
     }
 
+    /**
+     *
+     * @param routingLayer
+     */
     public void setRoutingLayer(RoutingLayer routingLayer) {
         this.routingLayer = routingLayer;
     }
 
+    /**
+     *
+     * @param entry
+     */
     public void addEntry(AttacksEntry entry) {
         if (!attacksList.contains(entry)) {
             attacksList.add(entry);
@@ -40,10 +60,18 @@ public class AttacksList {
         }
     }
 
+    /**
+     *
+     * @param entry
+     */
     public void removeEntry(AttacksEntry entry) {
         attacksList.remove(entry);
     }
 
+    /**
+     *
+     * @param newAttack
+     */
     public void updateAttack(Object newAttack) {
         for (AttacksEntry attacksEntry : attacksList) {
             if (attacksEntry.getAttack().getClass().getName().equals(newAttack.getClass().getName())) {

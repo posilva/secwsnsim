@@ -622,7 +622,7 @@ public class TestBuilderPanel extends PlatformPanel {
     @Override
     public boolean onOK() {
         if (isDataValid()) {
-
+            updateTest();
             result = test;
             return true;
         } else {
@@ -752,30 +752,7 @@ public class TestBuilderPanel extends PlatformPanel {
     private void saveTestToFile() {
         if (isDataValid()) {
             try {
-                inputParameters.setNumberOfSenderNodes(INT(txtNrSenderNodes));
-                inputParameters.setNumberOfReceiverNodes(INT(txtNrReceiverNodes));
-                inputParameters.setNumberOfAttackNodes(INT(txtNrAttackNodes));
-                inputParameters.setPercentOfSenderNodes(chkSenderNodesPercent.isSelected());
-                inputParameters.setPercentOfReceiverNodes(chkReceiverNodesPercent.isSelected());
-                inputParameters.setPercentOfAttackNodes(chkAttackNodesPercent.isSelected());
-                inputParameters.setOnlyConsiderToSenderStableNodes(chkSenderNodesStable.isSelected());
-                inputParameters.setOnlyConsiderToAttackStableNodes(chkAttackNodesStable.isSelected());
-                inputParameters.setOnlyConsiderToReceiverSinkNodes(chkReceiverNodesSinknodes.isSelected());
-                inputParameters.setPercentOfSenderNodes(chkSenderNodesPercent.isSelected());
-                //
-                inputParameters.setNumberOfMessagesPerNode(INT(txtNrMessagesPerNode));
-                inputParameters.setIntervalBetweenMessagesSent(INT(txtIntervalBetweenMessages));
-                inputParameters.setNumberOfRetransmissions(INT(txtNrRetransmissions));
-                if (cboAttacks.getSelectedItem().equals("None")) {
-                    inputParameters.setAttackSelected(null);
-                } else {
-                    inputParameters.setAttackSelected(cboAttacks.getSelectedItem().toString());
-                }
-                test = new BaseTest(inputParameters);
-                test.setName(txtTestName.getText());
-                test.setDescription(txtTestDescription.getText());
-                test.setDebugEnabled(debug.isSelected());
-                test.setBatchMode(batchMode.isSelected());
+                updateTest();
 
                 String f = GUI_Utils.showSavePersistentObjectDialog("Save test");
                 if (f != null) {
@@ -855,5 +832,33 @@ public class TestBuilderPanel extends PlatformPanel {
 
     public boolean batch() {
         return batchMode.isSelected();
+    }
+
+    protected void updateTest() {
+        inputParameters.setNumberOfSenderNodes(INT(txtNrSenderNodes));
+        inputParameters.setNumberOfReceiverNodes(INT(txtNrReceiverNodes));
+        inputParameters.setNumberOfAttackNodes(INT(txtNrAttackNodes));
+        inputParameters.setPercentOfSenderNodes(chkSenderNodesPercent.isSelected());
+        inputParameters.setPercentOfReceiverNodes(chkReceiverNodesPercent.isSelected());
+        inputParameters.setPercentOfAttackNodes(chkAttackNodesPercent.isSelected());
+        inputParameters.setOnlyConsiderToSenderStableNodes(chkSenderNodesStable.isSelected());
+        inputParameters.setOnlyConsiderToAttackStableNodes(chkAttackNodesStable.isSelected());
+        inputParameters.setOnlyConsiderToReceiverSinkNodes(chkReceiverNodesSinknodes.isSelected());
+        inputParameters.setPercentOfSenderNodes(chkSenderNodesPercent.isSelected());
+        //
+        inputParameters.setNumberOfMessagesPerNode(INT(txtNrMessagesPerNode));
+        inputParameters.setIntervalBetweenMessagesSent(INT(txtIntervalBetweenMessages));
+        inputParameters.setNumberOfRetransmissions(INT(txtNrRetransmissions));
+        if (cboAttacks.getSelectedItem().equals("None")) {
+            inputParameters.setAttackSelected(null);
+        } else {
+            inputParameters.setAttackSelected(cboAttacks.getSelectedItem().toString());
+        }
+        test = new BaseTest(inputParameters);
+        test.setName(txtTestName.getText());
+        test.setDescription(txtTestDescription.getText());
+        test.setDebugEnabled(debug.isSelected());
+        test.setBatchMode(batchMode.isSelected());
+        test.setTimesToRun(optRunOnce.isSelected() ? 1 : INT(txtRunTimes));
     }
 }

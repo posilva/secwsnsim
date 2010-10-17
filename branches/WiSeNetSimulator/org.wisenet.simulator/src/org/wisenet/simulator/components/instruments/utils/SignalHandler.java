@@ -15,21 +15,39 @@ public class SignalHandler extends Hashtable<Node, Integer> {
      * the calculations are repeated only if is dirty
      */
     protected boolean dirty = true;
+    /**
+     *
+     */
     protected int totalOfNodes = 0;
+    /**
+     *
+     */
     protected double lastResult;
     /**
      * Number of signals  that are considered 100% coverage for each node
      */
     protected int threshold = 1;
 
+    /**
+     *
+     * @return
+     */
     public int getThreshold() {
         return threshold;
     }
 
+    /**
+     *
+     * @param threshold
+     */
     public void setThreshold(int threshold) {
         this.threshold = threshold;
     }
 
+    /**
+     *
+     * @param n
+     */
     public void signal(Node n) {
         dirty=true;
         if (get(n) == null) {
@@ -40,6 +58,10 @@ public class SignalHandler extends Hashtable<Node, Integer> {
         put(n, i);
     }
 
+    /**
+     *
+     * @param n
+     */
     public void unSignal(Node n) {
         dirty=true;
         if (get(n) == null) {
@@ -92,10 +114,18 @@ public class SignalHandler extends Hashtable<Node, Integer> {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public int getTotalOfNodes() {
         return totalOfNodes;
     }
 
+    /**
+     *
+     * @param totalOfNodes
+     */
     public void setTotalOfNodes(int totalOfNodes) {
         this.totalOfNodes = totalOfNodes;
     }

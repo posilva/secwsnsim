@@ -17,9 +17,21 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface Parameter {
 
+    /**
+     *
+     * @return
+     */
     String label();
 
+    /**
+     *
+     * @return
+     */
     String className() default "java.lang.Object";
 
+    /**
+     *
+     * @return
+     */
     String value() default "";
 }

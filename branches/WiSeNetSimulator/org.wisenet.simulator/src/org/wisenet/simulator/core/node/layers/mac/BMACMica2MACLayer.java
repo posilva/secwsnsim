@@ -18,6 +18,9 @@ public class BMACMica2MACLayer extends Mica2MACLayer {
     Random randomSleep= new Random();
     DutyCycleEvent dutyCycleEvent;
 
+    /**
+     *
+     */
     public BMACMica2MACLayer() {
         super();
     }

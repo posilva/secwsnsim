@@ -20,14 +20,24 @@ import org.wisenet.simulator.core.Simulator;
  */
 public class CustomNodeFactory extends AbstractNodeFactory {
 
+    /**
+     *
+     */
     public CustomNodeFactory() {
         super();
     }
 
+    /**
+     *
+     * @param s
+     */
     public CustomNodeFactory(Simulator s) {
         super(s);
     }
 
+    /**
+     *
+     */
     @Override
     public void setup() {
         // this method is a dummy method because the setup must be handled

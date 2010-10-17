@@ -22,7 +22,13 @@ public class RoutingLayerController extends PersistantObject implements Paramete
     Hashtable<Short, Long> messageSentByTypeCounter = new Hashtable<Short, Long>();
     RoutingLayerParameters parameters = new RoutingLayerParameters();
     Set registeredAttacks = new HashSet();
+    /**
+     *
+     */
     protected static boolean controllerUpdated = false;
+    /**
+     *
+     */
     protected boolean testing = false;
     private AbstractTest activeTest;
 
@@ -34,6 +40,10 @@ public class RoutingLayerController extends PersistantObject implements Paramete
         stableNodesSet.remove(nodeRL);
     }
 
+    /**
+     *
+     * @param type
+     */
     public void addMessageReceivedCounter(short type) {
         Long counter = messageReceivedByTypeCounter.get(type);
         if (counter == null) {
@@ -43,6 +53,10 @@ public class RoutingLayerController extends PersistantObject implements Paramete
         messageReceivedByTypeCounter.put(type, counter);
     }
 
+    /**
+     *
+     * @param type
+     */
     public void addMessageSentCounter(short type) {
         Long counter = messageSentByTypeCounter.get(type);
         if (counter == null) {
@@ -52,10 +66,18 @@ public class RoutingLayerController extends PersistantObject implements Paramete
         messageSentByTypeCounter.put(type, counter);
     }
 
+    /**
+     *
+     * @return
+     */
     public int getTotalStableNodes() {
         return stableNodesSet.size();
     }
 
+    /**
+     *
+     * @return
+     */
     public long getTotalReceivedMessages() {
         Long total = 0L;
         for (Long value : messageReceivedByTypeCounter.values()) {
@@ -64,6 +86,10 @@ public class RoutingLayerController extends PersistantObject implements Paramete
         return total;
     }
 
+    /**
+     *
+     * @return
+     */
     public long getTotalSentMessages() {
         Long total = 0L;
         for (Long value : messageSentByTypeCounter.values()) {
@@ -72,45 +98,86 @@ public class RoutingLayerController extends PersistantObject implements Paramete
         return total;
     }
 
+    /**
+     *
+     */
     public void reset() {
         messageReceivedByTypeCounter.clear();
         messageSentByTypeCounter.clear();
         stableNodesSet.clear();
     }
 
+    /**
+     *
+     * @return
+     */
     public ObjectParameters getParameters() {
         return parameters;
     }
 
+    /**
+     *
+     * @param params
+     */
     public void setParameters(ObjectParameters params) {
         this.parameters = (RoutingLayerParameters) params;
     }
 
+    /**
+     *
+     * @param configuration
+     * @throws PersistantException
+     */
     public void saveToXML(XMLConfiguration configuration) throws PersistantException {
         parameters.saveToXML(configuration);
     }
 
+    /**
+     *
+     * @param configuration
+     * @throws PersistantException
+     */
     public void loadFromXML(XMLConfiguration configuration) throws PersistantException {
         parameters.loadFromXML(configuration);
 
     }
 
+    /**
+     *
+     * @param entry
+     */
     public void registerAttack(AttacksEntry entry) {
         registeredAttacks.add(entry);
     }
 
+    /**
+     *
+     * @param entry
+     */
     public void unregisterAttack(AttacksEntry entry) {
         registeredAttacks.remove(entry);
     }
 
+    /**
+     *
+     * @return
+     */
     public Set getRegisteredAttacks() {
         return registeredAttacks;
     }
 
+    /**
+     *
+     * @param ex
+     */
     public void log(Exception ex) {
         System.err.println(ex.getMessage());
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isTesting() {
         return this.activeTest != null;
     }
@@ -119,7 +186,15 @@ public class RoutingLayerController extends PersistantObject implements Paramete
         return activeTest;
     }
 
+    /**
+     *
+     * @param activeTest
+     */
     public void setActiveTest(AbstractTest activeTest) {
         this.activeTest = activeTest;
+    }
+
+    public long getTotalAttackedMessages() {
+        return 0L;
     }
 }

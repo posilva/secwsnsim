@@ -21,6 +21,10 @@ import org.wisenet.simulator.core.node.Node;
 public class CoverageInstrument extends AbstractInstrument {
 // TODO: Ver para mais de 100 nós
  
+    /**
+     *
+     * @param simulation
+     */
     public CoverageInstrument(Simulation simulation) {
         super(simulation);
     }
@@ -33,8 +37,18 @@ public class CoverageInstrument extends AbstractInstrument {
      */
     public enum CoverageModelEnum {
 
-        RADIO, ROUTING;
+        /**
+         * 
+         */
+        RADIO,
+        /**
+         *
+         */
+        ROUTING;
     }
+    /**
+     *
+     */
     protected Hashtable sendingObject = new Hashtable();
     private long delayToSentMessages;
     private long intervalToSentMessages;
@@ -42,8 +56,15 @@ public class CoverageInstrument extends AbstractInstrument {
     private int howManyMessagesToSentPerSender;
     private SignalHandler radioModelNeighbors = new SignalHandler();
     private SignalHandler routingModelNeighbors = new SignalHandler();
+    /**
+     *
+     */
     protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
 
+    /**
+     *
+     * @param model
+     */
     public void signalNeighborDetectionReset(CoverageModelEnum model) {
         switch (model) {
             case RADIO:
@@ -104,18 +125,34 @@ public class CoverageInstrument extends AbstractInstrument {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public int getRoutingModelThreshold() {
         return routingModelNeighbors.getThreshold();
     }
 
+    /**
+     *
+     * @param routingModelThreshold
+     */
     public void setRoutingModelThreshold(int routingModelThreshold) {
         routingModelNeighbors.setThreshold(routingModelThreshold);
     }
 
+    /**
+     *
+     * @return
+     */
     public int getRadioModelThreshold() {
         return radioModelNeighbors.getThreshold();
     }
 
+    /**
+     *
+     * @param radioModelThreshold
+     */
     public void setRadioModelThreshold(int radioModelThreshold) {
         radioModelNeighbors.setThreshold(radioModelThreshold);
     }
@@ -186,6 +223,7 @@ public class CoverageInstrument extends AbstractInstrument {
     /**
      * Save a message by ID
      * @param message
+     * @param handler
      */
     protected void saveMessage(IInstrumentMessage message, IInstrumentHandler handler) {
         /**
@@ -200,6 +238,11 @@ public class CoverageInstrument extends AbstractInstrument {
         refreshPanel();
     }
 
+    /**
+     *
+     * @param message
+     * @param handler
+     */
     @Override
     protected void computeMessageReception(IInstrumentMessage message, IInstrumentHandler handler) {
         if (handler.getUniqueId().equals(((Message)message).getDestinationId())) { // se quem está a receber é o destino
@@ -214,6 +257,9 @@ public class CoverageInstrument extends AbstractInstrument {
         refreshPanel();
     }
 
+    /**
+     *
+     */
     @Override
     public void reset() {
         sendingObject.clear();
@@ -222,6 +268,10 @@ public class CoverageInstrument extends AbstractInstrument {
         refreshPanel();
     }
 
+    /**
+     *
+     * @return
+     */
     public double getPerformance() {
         int numberOfMessagesSent = sendingObject.size();
         int numberOfMessagesReceived = 0;
@@ -235,39 +285,75 @@ public class CoverageInstrument extends AbstractInstrument {
         return (numberOfMessagesSent == 0) ? 0 : (numberOfMessagesReceived * 100 / numberOfMessagesSent);
     }
 
+    /**
+     *
+     * @return
+     */
     public long getDelayToSentMessages() {
         return delayToSentMessages;
     }
 
+    /**
+     *
+     * @param delayToSentMessages
+     */
     public void setDelayToSentMessages(long delayToSentMessages) {
         this.delayToSentMessages = delayToSentMessages;
     }
 
+    /**
+     *
+     * @return
+     */
     public long getIntervalToSentMessages() {
         return intervalToSentMessages;
     }
 
+    /**
+     *
+     * @param intervalToSentMessages
+     */
     public void setIntervalToSentMessages(long intervalToSentMessages) {
         this.intervalToSentMessages = intervalToSentMessages;
 
     }
 
+    /**
+     *
+     * @return
+     */
     public int getTimesToSentMessages() {
         return timesToSentMessages;
     }
 
+    /**
+     *
+     * @param timesToSentMessages
+     */
     public void setTimesToSentMessages(int timesToSentMessages) {
         this.timesToSentMessages = timesToSentMessages;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getHowManyMessagesToSentPerSender() {
         return howManyMessagesToSentPerSender;
     }
 
+    /**
+     *
+     * @param howManyMessagesToSentPerSender
+     */
     public void setHowManyMessagesToSentPerSender(int howManyMessagesToSentPerSender) {
         this.howManyMessagesToSentPerSender = howManyMessagesToSentPerSender;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public IResult getLastProbeResult() {
         CoverageProbingResult result = new CoverageProbingResult();
@@ -275,12 +361,23 @@ public class CoverageInstrument extends AbstractInstrument {
         return result;
     }
 
+    /**
+     *
+     */
     public class CoverageProbingResult implements IResult {
 
+        /**
+         *
+         * @return
+         */
         public int getNumberOfRegistredSenderNodes() {
             return sendingObject.size();
         }
 
+        /**
+         *
+         * @return
+         */
         public int getNumberOfRegistredReceivedNodes() {
             int result = 0;
             for (Object r : sendingObject.values()) {
@@ -292,11 +389,18 @@ public class CoverageInstrument extends AbstractInstrument {
             return result;
         }
 
+        /**
+         *
+         * @return
+         */
         public double getResultValue() {
             return getPerformance();
         }
     }
 
+    /**
+     *
+     */
     public CoverageInstrument() {
         super();
     }

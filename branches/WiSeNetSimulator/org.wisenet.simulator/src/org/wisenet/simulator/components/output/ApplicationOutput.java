@@ -16,6 +16,10 @@ public class ApplicationOutput {
 
     private static ApplicationOutput instance;
 
+    /**
+     *
+     * @return
+     */
     public static ApplicationOutput getInstance() {
         if (instance == null) {
             instance = new ApplicationOutput();
@@ -24,6 +28,11 @@ public class ApplicationOutput {
     }
     Set<IOutputDisplay> subscribers = new HashSet<IOutputDisplay>();
 
+    /**
+     *
+     * @param app
+     * @param message
+     */
     public void output(Application app, String message) {
         displayOnSubscribers("<" + app.getClass().getSimpleName() + "> [" + app.getNode().getId() + "]\t" + message);
     }
@@ -34,10 +43,18 @@ public class ApplicationOutput {
         }
     }
 
+    /**
+     *
+     * @param display
+     */
     public void subscribe(IOutputDisplay display) {
         subscribers.add(display);
     }
 
+    /**
+     *
+     * @param display
+     */
     public void unsubscribe(IOutputDisplay display) {
         subscribers.remove(display);
     }

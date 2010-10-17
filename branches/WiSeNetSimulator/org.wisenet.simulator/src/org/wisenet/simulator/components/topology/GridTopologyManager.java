@@ -26,9 +26,18 @@ public class GridTopologyManager extends TopologyManager implements Annotated {
      */
     private int distance = 30;
 
+    /**
+     *
+     */
     public GridTopologyManager() {
     }
 
+    /**
+     *
+     * @param rect
+     * @param nodes
+     * @return
+     */
     public Vector<Node> apply(Rectangle rect, Vector<Node> nodes) {
         double posX = rect.getX();
         double posY = rect.getY();
@@ -48,10 +57,18 @@ public class GridTopologyManager extends TopologyManager implements Annotated {
         return nodes;
     }
 
+    /**
+     *
+     * @param nDistance
+     */
     public void setDistance(int nDistance) {
         distance = nDistance;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     protected List<Node> createTopologyImpl() {
         int total_nodes = 0;
@@ -87,6 +104,12 @@ public class GridTopologyManager extends TopologyManager implements Annotated {
 
     }
 
+    /**
+     *
+     * @param nodes
+     * @param parameters
+     * @return
+     */
     @Override
     public Vector<Node> apply(Vector<Node> nodes, TopologyParameters parameters) {
         throw new UnsupportedOperationException("Not supported yet.");

@@ -25,13 +25,24 @@ public class XMLFileReader {
     private boolean opened = false;
     Node rootNode;
 
+    /**
+     *
+     * @param filename
+     */
     public XMLFileReader(String filename) {
         this.filename = filename;
     }
 
+    /**
+     *
+     */
     public XMLFileReader() {
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean open() {
         opened = false;
         try {
@@ -47,15 +58,28 @@ public class XMLFileReader {
         return true;
     }
 
+    /**
+     *
+     * @param filename
+     * @return
+     */
     public boolean open(String filename) {
         this.filename = filename;
         return open();
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isOpened() {
         return opened;
     }
 
+    /**
+     *
+     * @return
+     */
     public Node getRootNode() {
         if (isOpened()) {
             return rootNode;
@@ -64,6 +88,11 @@ public class XMLFileReader {
         }
     }
 
+    /**
+     *
+     * @param tagName
+     * @return
+     */
     public NodeList getList(String tagName) {
         if (isOpened()) {
             return doc.getElementsByTagName(tagName);
@@ -77,6 +106,10 @@ public class XMLFileReader {
         // do nothing
     }
 
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         XMLFileReader reader = new XMLFileReader();
         reader.open("simulation.sim");

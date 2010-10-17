@@ -15,8 +15,15 @@ import org.apache.commons.configuration.XMLConfiguration;
  */
 public abstract class ObjectParameters extends PersistantObject {
 
+    /**
+     *
+     */
     protected HashMap<String, ObjectParameter> parameters = new HashMap<String, ObjectParameter>();
 
+    /**
+     *
+     * @return
+     */
     protected HashMap<String, ObjectParameter> getParameters() {
         return parameters;
     }
@@ -53,6 +60,10 @@ public abstract class ObjectParameters extends PersistantObject {
         }
     }
 
+    /**
+     *
+     * @param parameter
+     */
     public void set(ObjectParameter parameter) {
         String name = parameter.getName();
 
@@ -72,6 +83,11 @@ public abstract class ObjectParameters extends PersistantObject {
         return getParameter(name).getValue();
     }
 
+    /**
+     *
+     * @param name
+     * @return
+     */
     public ObjectParameter getParameter(String name) {
         if (parameters.containsKey(name)) {
             return parameters.get(name);
@@ -89,15 +105,29 @@ public abstract class ObjectParameters extends PersistantObject {
         return s;
     }
 
+    /**
+     *
+     * @return
+     */
     public final Set<ObjectParameter> getAllParameters() {
         final Set s = new HashSet(parameters.values());
         return s;
     }
 
+    /**
+     *
+     * @param name
+     * @param value
+     */
     final protected void init(String name, Object value) {
         parameters.put(name, new ObjectParameter(name, value));
     }
 
+    /**
+     *
+     * @param configuration
+     * @throws PersistantException
+     */
     public void saveToXML(XMLConfiguration configuration) throws PersistantException {
          String name = getClass().getSimpleName();
         for (ObjectParameter param : this.getAllParameters()) {
@@ -107,6 +137,11 @@ public abstract class ObjectParameters extends PersistantObject {
         }
     }
 
+    /**
+     *
+     * @param configuration
+     * @throws PersistantException
+     */
     public void loadFromXML(XMLConfiguration configuration) throws PersistantException {
         String name = getClass().getSimpleName();
         for (ObjectParameter param : this.getAllParameters()) {

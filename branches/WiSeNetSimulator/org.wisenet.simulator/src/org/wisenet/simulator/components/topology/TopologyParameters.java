@@ -12,6 +12,9 @@ import org.wisenet.simulator.common.ObjectParameters;
  */
 public abstract class TopologyParameters extends ObjectParameters {
 
+    /**
+     *
+     */
     protected abstract void setExtendedSupportedParameters();
 
     @Override

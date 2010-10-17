@@ -12,10 +12,18 @@ import java.util.EventObject;
  */
 public class ExceptionEvent extends EventObject {
 
+    /**
+     *
+     * @param source
+     */
     public ExceptionEvent(Object source) {
         super(source);
     }
 
+    /**
+     *
+     * @return
+     */
     public Throwable getThrowable() {
         return (Throwable) source;
     }

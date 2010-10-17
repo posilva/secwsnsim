@@ -21,6 +21,9 @@ public class XMLFileChooser {
     /**
      * Constructor to open XML files only.
      * @param title : String
+     * @param fileTypes
+     * @param description
+     * @return
      */
     public static JFileChooser getJFileChooser(String title, String[] fileTypes, String description) {
         xmlfilefilter = new XMLFileFilter(fileTypes, description);
@@ -30,6 +33,12 @@ public class XMLFileChooser {
         return filechooser;
     }
 
+    /**
+     *
+     * @param title
+     * @param defaultDirectory
+     * @return
+     */
     public static JFileChooser getJFileChooser(String title, String defaultDirectory) {
         xmlfilefilter = new XMLFileFilter("xml");
         filechooser = new JFileChooser(defaultDirectory);

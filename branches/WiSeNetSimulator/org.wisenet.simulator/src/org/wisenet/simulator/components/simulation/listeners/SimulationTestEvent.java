@@ -13,6 +13,10 @@ import org.wisenet.simulator.components.evaluation.tests.AbstractTest;
  */
 public class SimulationTestEvent extends EventObject {
 
+    /**
+     *
+     * @param test
+     */
     public SimulationTestEvent(AbstractTest test) {
         super(test);
     }

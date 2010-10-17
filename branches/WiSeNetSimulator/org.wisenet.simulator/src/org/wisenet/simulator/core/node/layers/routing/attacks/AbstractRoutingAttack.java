@@ -12,17 +12,37 @@ import org.wisenet.simulator.core.node.layers.routing.RoutingLayer;
  */
 public abstract class AbstractRoutingAttack implements IRoutingAttack {
 
+    /**
+     *
+     */
     protected static boolean debugEnabed = true;
+    /**
+     *
+     */
     protected boolean enable = false;
+    /**
+     *
+     */
     protected RoutingLayer routingLayer = null;
 
+    /**
+     *
+     */
     public AbstractRoutingAttack() {
     }
 
+    /**
+     *
+     * @param routingLayer
+     */
     public AbstractRoutingAttack(RoutingLayer routingLayer) {
         this.routingLayer = routingLayer;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isEnable() {
         return enable;
     }
@@ -41,14 +61,26 @@ public abstract class AbstractRoutingAttack implements IRoutingAttack {
 
     public abstract Object attack(Object message);
 
+    /**
+     *
+     * @return
+     */
     public static boolean isDebugEnabed() {
         return debugEnabed;
     }
 
+    /**
+     *
+     * @param debugEnabed
+     */
     public static void setDebugEnabed(boolean debugEnabed) {
         AbstractRoutingAttack.debugEnabed = debugEnabed;
     }
 
+    /**
+     *
+     * @param msg
+     */
     public void log(String msg) {
         if (debugEnabed) {
             System.out.println(getClass().getSimpleName() + "-" + msg);

@@ -12,29 +12,81 @@ import java.util.EventListener;
  */
 public interface SimulationListener extends EventListener {
 
+    /**
+     *
+     * @param event
+     */
     public void onStartFailure(SimulationEvent event);
 
+    /**
+     *
+     * @param event
+     */
     public void beforeStart(SimulationEvent event);
 
+    /**
+     *
+     * @param event
+     */
     public void afterStart(SimulationEvent event);
 
+    /**
+     *
+     * @param event
+     */
     public void beforeStop(SimulationEvent event);
 
+    /**
+     *
+     * @param event
+     */
     public void onStopFailure(SimulationEvent event);
 
+    /**
+     *
+     * @param event
+     */
     public void afterStop(SimulationEvent event);
 
+    /**
+     *
+     * @param event
+     */
     public void beforeBuildNetwork(SimulationEvent event);
 
+    /**
+     *
+     * @param event
+     */
     public void afterBuildNetwork(SimulationEvent event);
 
+    /**
+     *
+     * @param event
+     */
     public void onBuildNetworkFailure(SimulationEvent event);
 
+    /**
+     *
+     * @param event
+     */
     public void onEmptyQueue(SimulationEvent event);
 
+    /**
+     *
+     * @param event
+     */
     public void onNewSimulatorRound(SimulationEvent event);
 
+    /**
+     *
+     * @param event
+     */
     public void afterTestExecution(SimulationTestEvent event);
 
+    /**
+     *
+     * @param event
+     */
     public void startTestExecution(SimulationTestEvent event);
 }

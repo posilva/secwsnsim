@@ -19,6 +19,11 @@ public class RoutingLayerParameters extends ObjectParameters {
     protected void setSupportedParameters() {
     }
 
+    /**
+     *
+     * @param configuration
+     * @throws PersistantException
+     */
     @Override
     public void saveToXML(XMLConfiguration configuration) throws PersistantException {
         String name = "RoutingLayer";
@@ -29,6 +34,11 @@ public class RoutingLayerParameters extends ObjectParameters {
         }
     }
 
+    /**
+     *
+     * @param configuration
+     * @throws PersistantException
+     */
     @Override
     public void loadFromXML(XMLConfiguration configuration) throws PersistantException {
         String name = "RoutingLayer";

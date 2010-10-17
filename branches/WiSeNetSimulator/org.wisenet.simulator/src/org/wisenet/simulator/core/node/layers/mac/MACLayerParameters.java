@@ -19,6 +19,11 @@ public class MACLayerParameters extends ObjectParameters {
     protected void setSupportedParameters() {
     }
 
+    /**
+     *
+     * @param configuration
+     * @throws PersistantException
+     */
     @Override
     public void saveToXML(XMLConfiguration configuration) throws PersistantException {
         String name = "MACLayer";
@@ -29,6 +34,11 @@ public class MACLayerParameters extends ObjectParameters {
         }
     }
 
+    /**
+     *
+     * @param configuration
+     * @throws PersistantException
+     */
     @Override
     public void loadFromXML(XMLConfiguration configuration) throws PersistantException {
         String name = "MACLayer";

@@ -4,14 +4,26 @@ import java.util.Collection;
 
 import org.wisenet.simulator.utilities.RandomList;
 
+/**
+ *
+ * @author posilva
+ */
 public class NodeDB {
 
     RandomList<Node> nodes = new RandomList<Node>();
 
+    /**
+     *
+     * @param n
+     */
     public void store(Node n) {
         nodes.add(n);
     }
 
+    /**
+     *
+     * @param n
+     */
     public void dispose(Node n) {
         if (n != null) {
             // seeds.remove( n ) ;
@@ -20,18 +32,33 @@ public class NodeDB {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public int size() {
         return nodes.size();
     }
 
+    /**
+     *
+     * @return
+     */
     public Node randomNode() {
         return nodes.randomElement();
     }
 
+    /**
+     *
+     * @return
+     */
     public Collection<Node> nodes() {
         return nodes;
     }
 
+    /**
+     *
+     */
     public void clear() {
         nodes.clear();
     }

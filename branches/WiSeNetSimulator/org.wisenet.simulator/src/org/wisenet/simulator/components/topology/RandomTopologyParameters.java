@@ -10,6 +10,9 @@ package org.wisenet.simulator.components.topology;
  */
 public class RandomTopologyParameters extends TopologyParameters {
 
+    /**
+     *
+     */
     @Override
     protected void setExtendedSupportedParameters() {
         init("seed", System.currentTimeMillis());

@@ -21,10 +21,19 @@ public abstract class Mica2SensorNode extends SensorNode {
     ;
     private boolean paintingPaths = true;
 
+    /**
+     *
+     * @param sim
+     * @param radioModel
+     */
     public Mica2SensorNode(Simulator sim, RadioModel radioModel) {
         super(sim, radioModel);
     }
 
+    /**
+     *
+     * @param radioModel
+     */
     @Override
     public void configureMACLayer(RadioModel radioModel) {
 
@@ -41,6 +50,10 @@ public abstract class Mica2SensorNode extends SensorNode {
         super.init();
     }
 
+    /**
+     *
+     * @param disp
+     */
     @Override
     public void displayOn(ISimulationDisplay disp) {
         Graphics g = disp.getGraphics();
@@ -89,18 +102,34 @@ public abstract class Mica2SensorNode extends SensorNode {
         g.setColor(oldcolor);
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isPaintingPaths() {
         return paintingPaths;
     }
 
+    /**
+     *
+     * @param paintingPaths
+     */
     public void setPaintingPaths(boolean paintingPaths) {
         this.paintingPaths = paintingPaths;
     }
 
+    /**
+     *
+     * @return
+     */
     public Color getPaintingPathColor() {
         return paintingPathColor;
     }
 
+    /**
+     *
+     * @param paintingPathColor
+     */
     public void setPaintingPathColor(Color paintingPathColor) {
         this.paintingPathColor = paintingPathColor;
     }

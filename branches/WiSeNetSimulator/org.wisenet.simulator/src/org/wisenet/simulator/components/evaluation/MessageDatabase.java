@@ -1,6 +1,8 @@
 package org.wisenet.simulator.components.evaluation;
 
 import java.util.Hashtable;
+import org.apache.commons.math.stat.StatUtils;
+import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 import org.wisenet.simulator.core.Message;
 import org.wisenet.simulator.core.node.layers.routing.RoutingLayer;
 
@@ -14,14 +16,16 @@ public class MessageDatabase {
     Hashtable<Object, Object> senderNodesTable = new Hashtable<Object, Object>();
     Hashtable<Object, Object> receiverNodesTable = new Hashtable<Object, Object>();
     long totalNumberOfMessagesSent = 0;
+    /**
+     *
+     */
     protected boolean debugEnabled = true;
 
     /**
      * Registers a message sent event
      * @param message
      *              the message sent
-     * @param node
-     *              the sender node
+     * @param routing
      */
     public synchronized void registerMessageSent(Message message, RoutingLayer routing) {
         totalNumberOfMessagesSent++;
@@ -48,8 +52,7 @@ public class MessageDatabase {
      * Registers a succeeded received message
      * @param message
      *              the message received
-     * @param node
-     *              the receiver node
+     * @param routing
      */
     public synchronized void registerMessageReceived(Message message, RoutingLayer routing) {
 
@@ -72,10 +75,18 @@ public class MessageDatabase {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public synchronized int getTotalSenderNodes() {
         return senderNodesTable.size();
     }
 
+    /**
+     *
+     * @return
+     */
     public synchronized int getTotalCoveredNodes() {
         int t = 0;
         for (Object object : senderNodesTable.values()) {
@@ -87,6 +98,10 @@ public class MessageDatabase {
         return t;
     }
 
+    /**
+     *
+     * @return
+     */
     public synchronized long getTotalMessagesReceived() {
         long t = 0;
         for (Object object : messagesTable.values()) {
@@ -98,17 +113,61 @@ public class MessageDatabase {
         return t;
     }
 
+    /**
+     *
+     * @return
+     */
     public synchronized long getTotalNumberOfUniqueMessagesSent() {
         return messagesTable.size();
     }
 
+    /**
+     *
+     * @param msg
+     */
     protected void log(String msg) {
         if (debugEnabled) {
             System.out.println(getClass().getSimpleName() + " - " + msg);
         }
     }
 
+    public double getCoveragePercent() {
+        return 100 * (getTotalCoveredNodes()) / getTotalSenderNodes();
+    }
+
+    public double getReliabilityPercent() {
+        return 100 * (getTotalMessagesReceived()) / getTotalNumberOfMessagesSent();
+    }
+    public double getLatencyMax() {
+        DescriptiveStatistics stats = new DescriptiveStatistics();
+        for (Object e : messagesTable.values()) {
+            MessageTableEntry entry = (MessageTableEntry) e;
+            stats.addValue(entry.getMessage().getTotalHops());
+        }
+        return stats.getMax();
+    }
+    public double getLatencyAvg() {
+        DescriptiveStatistics stats = new DescriptiveStatistics();
+        for (Object e : messagesTable.values()) {
+            MessageTableEntry entry = (MessageTableEntry) e;
+            stats.addValue(entry.getMessage().getTotalHops());
+        }
+        return stats.getMean();
+    }
+    
+    public double getLatencyMin() {
+        DescriptiveStatistics stats = new DescriptiveStatistics();
+        for (Object e : messagesTable.values()) {
+            MessageTableEntry entry = (MessageTableEntry) e;
+            stats.addValue(entry.getMessage().getTotalHops());
+        }
+        return stats.getMin();
+    }
+
     // reliability control
+    /**
+     *
+     */
     public class MessageTableEntry {
 
         boolean arrived = false;
@@ -123,62 +182,115 @@ public class MessageDatabase {
             this.senderRouting = routing;
         }
 
+        /**
+         *
+         * @return
+         */
         public RoutingLayer getSenderRouting() {
             return senderRouting;
         }
 
+        /**
+         *
+         * @return
+         */
         public boolean isArrived() {
             return arrived;
         }
 
+        /**
+         *
+         */
         public void arrived() {
             this.arrived = true;
         }
 
+        /**
+         *
+         * @return
+         */
         public Message getMessage() {
             return message;
         }
 
+        /**
+         *
+         * @return
+         */
         public int getCount() {
             return count;
         }
 
+        /**
+         *
+         */
         public void incrementCounter() {
             count++;
         }
     }
 // coverage control
 
+    /**
+     *
+     */
     public class SendersTableEntry {
 
         boolean arrived = false;
 
+        /**
+         *
+         */
         public SendersTableEntry() {
         }
 
+        /**
+         *
+         * @return
+         */
         public boolean isArrived() {
             return arrived;
         }
 
+        /**
+         *
+         */
         public void arrived() {
             this.arrived = true;
         }
     }
 
+    /**
+     *
+     */
     public class ReceiversTableEntry {
 
+        /**
+         *
+         */
         public ReceiversTableEntry() {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isDebugEnabled() {
         return debugEnabled;
     }
 
+    /**
+     *
+     * @param debugEnabled
+     */
     public void setDebugEnabled(boolean debugEnabled) {
         this.debugEnabled = debugEnabled;
     }
 
+    /**
+     *
+     * @return
+     */
     public long getTotalNumberOfMessagesSent() {
         return totalNumberOfMessagesSent;
     }
