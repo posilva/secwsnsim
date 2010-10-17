@@ -194,7 +194,7 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="depNodesDeploy">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Deploy Nodes..."/>
+            <Property name="text" type="java.lang.String" value="Deploy sensors..."/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="depNodesRandomTopology">
@@ -202,6 +202,8 @@
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="org.wisenet.platform.ui.SimulationPanel" id="deployNodesUsingRandomTopology" methodName="deployNodesUsingRandomTopology"/>
                 </Property>
+                <Property name="text" type="java.lang.String" value="Random Topology"/>
+                <Property name="toolTipText" type="java.lang.String" value="Deploy a Random Topology"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="depNodesGridTopology">
@@ -209,6 +211,8 @@
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="org.wisenet.platform.gui.SimulationPanel" id="deployNodesGridTopology" methodName="deployNodesGridTopology"/>
                 </Property>
+                <Property name="text" type="java.lang.String" value="Grid Topology"/>
+                <Property name="toolTipText" type="java.lang.String" value="Deploy Grid Topology"/>
               </Properties>
             </MenuItem>
           </SubComponents>
@@ -226,6 +230,8 @@
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
               <action class="org.wisenet.platform.ui.SimulationPanel" id="PlaceNodeHereAction" methodName="PlaceNodeHereAction"/>
             </Property>
+            <Property name="text" type="java.lang.String" value="Deploy sensor here"/>
+            <Property name="toolTipText" type="java.lang.String" value="Deploy Sensor Here"/>
           </Properties>
         </MenuItem>
       </SubComponents>

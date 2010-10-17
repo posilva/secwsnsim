@@ -332,17 +332,23 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         });
         selectionToolPopupMenu.add(selNodesUnderAttack);
 
-        depNodesDeploy.setText("Deploy Nodes...");
+        depNodesDeploy.setText("Deploy sensors...");
 
         depNodesRandomTopology.setAction(actionMap.get("deployNodesUsingRandomTopology")); // NOI18N
+        depNodesRandomTopology.setText("Random Topology");
+        depNodesRandomTopology.setToolTipText("Deploy a Random Topology");
         depNodesDeploy.add(depNodesRandomTopology);
 
         depNodesGridTopology.setAction(actionMap.get("deployNodesGridTopology")); // NOI18N
+        depNodesGridTopology.setText("Grid Topology");
+        depNodesGridTopology.setToolTipText("Deploy Grid Topology");
         depNodesDeploy.add(depNodesGridTopology);
 
         deployNodesPopupMenu.add(depNodesDeploy);
 
         depNodeDeployOneNode.setAction(actionMap.get("PlaceNodeHereAction")); // NOI18N
+        depNodeDeployOneNode.setText("Deploy sensor here");
+        depNodeDeployOneNode.setToolTipText("Deploy Sensor Here");
         deployNodePopupMenu.add(depNodeDeployOneNode);
 
         setBackground(new java.awt.Color(254, 254, 254));
