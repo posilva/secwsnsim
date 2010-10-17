@@ -12,7 +12,10 @@ import org.wisenet.simulator.core.node.Node;
  */
 public class MinDistanceRandomTopologyManager extends RandomTopologyManager {
 	
-	protected int minimumDistance=-1;
+    /**
+     *
+     */
+    protected int minimumDistance=-1;
 
 	/**
 	 * 
@@ -21,7 +24,13 @@ public class MinDistanceRandomTopologyManager extends RandomTopologyManager {
 		
 	}
 
-	protected boolean moreThanMinimumDistance(Node node , List<Node> nodes){
+        /**
+         *
+         * @param node
+         * @param nodes
+         * @return
+         */
+        protected boolean moreThanMinimumDistance(Node node , List<Node> nodes){
 		if (minimumDistance==-1) return true;
 		for (Node node2 : nodes) {
 			if(Math.sqrt(node.getDistanceSquare(node2))<minimumDistance)

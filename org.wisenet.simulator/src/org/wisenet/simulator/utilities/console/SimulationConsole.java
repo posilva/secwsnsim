@@ -55,6 +55,10 @@ public class SimulationConsole {
         return topologyManager;
     }
 
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         try {
             Simulation simulation = createSimulation();
@@ -72,6 +76,11 @@ public class SimulationConsole {
         }
     }
 
+    /**
+     *
+     * @return
+     * @throws Exception
+     */
     public static Simulation createSimulation() throws Exception {
         SimulationSettings settings = createSimulationSettings();//verificado
         TopologyManager manager = createTopologyManager();//verificado

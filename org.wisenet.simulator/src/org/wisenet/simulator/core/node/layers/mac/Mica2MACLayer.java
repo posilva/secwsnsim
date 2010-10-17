@@ -17,6 +17,9 @@ import org.wisenet.simulator.core.node.Node;
  */
 public class Mica2MACLayer extends MACLayer {
 
+    /**
+     *
+     */
     public short parentID = -1;
     /**
      * In this simulation not messages but references to motes are passed. All
@@ -50,6 +53,11 @@ public class Mica2MACLayer extends MACLayer {
      */
     private MACLayerParameters parameters = new Mica2MACLayerParameters();
 
+    /**
+     *
+     * @param message
+     * @return
+     */
     public boolean deliverMessage(Object message) {
         setMessageColor(message);
         /**
@@ -85,6 +93,9 @@ public class Mica2MACLayer extends MACLayer {
         return signal;
     }
 
+    /**
+     *
+     */
     protected void createParameters() {
 
         getController().setParameters(new Mica2MACLayerParameters());
@@ -296,6 +307,9 @@ public class Mica2MACLayer extends MACLayer {
         return calcSNR(signal, noise) > (Double) getController().getParameters().get("receivingStartSNR"); // PMS
     }
 
+    /**
+     *
+     */
     protected void transmitMessage() {
         beginTransmission(1, getNode());
     }
@@ -383,6 +397,9 @@ public class Mica2MACLayer extends MACLayer {
         }
     }
 
+    /**
+     *
+     */
     @Override
     public void reset() {
         super.reset();

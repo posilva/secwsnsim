@@ -19,6 +19,15 @@ public class InstrumentEvent extends Event {
     private final long interval;
     private int timesCt = 0;
 
+    /**
+     *
+     * @param time
+     * @param message
+     * @param sender
+     * @param times
+     * @param delay
+     * @param interval
+     */
     public InstrumentEvent(long time, IInstrumentMessage message, IInstrumentHandler sender, int times, long delay, long interval) {
         this.message = message;
         this.sender = sender;

@@ -88,13 +88,25 @@ public class XMLWriter {
         this.fileName = fileName;
     }
 
+    /**
+     *
+     */
     public XMLWriter() {
     }
 
+    /**
+     *
+     * @throws IOException
+     */
     public void open() throws IOException {
         open(this.fileName);
     }
 
+    /**
+     *
+     * @param fileName
+     * @throws IOException
+     */
     public void open(String fileName) throws IOException {
         this.fileName = fileName;
         OutputStream fout = new FileOutputStream(fileName);
@@ -251,6 +263,10 @@ public class XMLWriter {
         return "XMLWriter for file " + this.fileName + ".";
     }
 
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         XMLWriter writer = new XMLWriter("simulation.sim");
         try {

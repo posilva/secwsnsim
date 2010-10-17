@@ -13,14 +13,25 @@ import org.wisenet.simulator.core.node.Node;
  */
 public class Transceiver extends NodeComponent {
 
+    /**
+     *
+     * @param node
+     */
     public Transceiver(Node node) {
         super(node);
     }
 
+    /**
+     *
+     */
     protected void consumeTransitionToONEnergy() {
         getNode().getBateryEnergy().consumeTXTransitionToON();
     }
 
+    /**
+     *
+     * @param action
+     */
     public void executeTransmission(EnergyConsumptionAction action) {
         switchON();
         action.execute();
@@ -29,6 +40,10 @@ public class Transceiver extends NodeComponent {
         switchOFF();
     }
 
+    /**
+     *
+     * @param action
+     */
     public void executeReception(EnergyConsumptionAction action) {
         switchON();
         action.execute();

@@ -67,123 +67,243 @@ public class EnergyModelOld implements Annotated {
     @EnergyModelParameter(label = "Simple processing energy (Joules)", value = 0.0138)
     double processingEnergy;
 
+    /**
+     *
+     * @return
+     */
     public double getProcessingEnergy() {
         return processingEnergy;
     }
 
+    /**
+     *
+     * @param processingEnergy
+     */
     public void setProcessingEnergy(double processingEnergy) {
         this.processingEnergy = processingEnergy;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getCpuTransitionToActiveEnergy() {
         return cpuTransitionToActiveEnergy;
     }
 
+    /**
+     *
+     * @param cpuTransitionToActiveEnergy
+     */
     public void setCpuTransitionToActiveEnergy(double cpuTransitionToActiveEnergy) {
         this.cpuTransitionToActiveEnergy = cpuTransitionToActiveEnergy;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getDecryptEnergy() {
         return decryptEnergy;
     }
 
+    /**
+     *
+     * @param decryptEnergy
+     */
     public void setDecryptEnergy(double decryptEnergy) {
         this.decryptEnergy = decryptEnergy;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getDigestEnergy() {
         return digestEnergy;
     }
 
+    /**
+     *
+     * @param digestEnergy
+     */
     public void setDigestEnergy(double digestEnergy) {
         this.digestEnergy = digestEnergy;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getEncryptEnergy() {
         return encryptEnergy;
     }
 
+    /**
+     *
+     * @param encryptEnergy
+     */
     public void setEncryptEnergy(double encryptEnergy) {
         this.encryptEnergy = encryptEnergy;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getIdleEnergy() {
         return idleEnergy;
     }
 
+    /**
+     *
+     * @param idleEnergy
+     */
     public void setIdleEnergy(double idleEnergy) {
         this.idleEnergy = idleEnergy;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getReceptionEnergy() {
         return receptionEnergy;
     }
 
+    /**
+     *
+     * @param receptionEnergy
+     */
     public void setReceptionEnergy(double receptionEnergy) {
         this.receptionEnergy = receptionEnergy;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getSignatureEnergy() {
         return signatureEnergy;
     }
 
+    /**
+     *
+     * @param signatureEnergy
+     */
     public void setSignatureEnergy(double signatureEnergy) {
         this.signatureEnergy = signatureEnergy;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getSleepEnergy() {
         return sleepEnergy;
     }
 
+    /**
+     *
+     * @param sleepEnergy
+     */
     public void setSleepEnergy(double sleepEnergy) {
         this.sleepEnergy = sleepEnergy;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getTotalEnergy() {
         return totalEnergy;
     }
 
+    /**
+     *
+     * @param totalEnergy
+     */
     public void setTotalEnergy(double totalEnergy) {
         this.totalEnergy = totalEnergy;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getTransmissionEnergy() {
         return transmissionEnergy;
     }
 
+    /**
+     *
+     * @param transmissionEnergy
+     */
     public void setTransmissionEnergy(double transmissionEnergy) {
         this.transmissionEnergy = transmissionEnergy;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getTxTransitionToActiveEnergy() {
         return txTransitionToActiveEnergy;
     }
 
+    /**
+     *
+     * @param txTransitionToActiveEnergy
+     */
     public void setTxTransitionToActiveEnergy(double txTransitionToActiveEnergy) {
         this.txTransitionToActiveEnergy = txTransitionToActiveEnergy;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getVerifyDigestEnergy() {
         return verifyDigestEnergy;
     }
 
+    /**
+     *
+     * @param verifyDigestEnergy
+     */
     public void setVerifyDigestEnergy(double verifyDigestEnergy) {
         this.verifyDigestEnergy = verifyDigestEnergy;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getVerifySignatureEnergy() {
         return verifySignatureEnergy;
     }
 
+    /**
+     *
+     * @param verifySignatureEnergy
+     */
     public void setVerifySignatureEnergy(double verifySignatureEnergy) {
         this.verifySignatureEnergy = verifySignatureEnergy;
     }
 
+    /**
+     *
+     * @return
+     */
     public EnergyModelOld getInstanceWithDefaultValues() {
 //        getEnergyModelDefaultValues(this);
         return this;
     }
 
+    /**
+     *
+     * @return
+     */
     public static EnergyModel getDefaultInstance() {
         EnergyModel energyModel = new EnergyModel();
         getEnergyModelDefaultValues(energyModel);

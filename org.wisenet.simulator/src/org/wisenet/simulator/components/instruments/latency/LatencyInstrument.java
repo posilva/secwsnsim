@@ -20,6 +20,9 @@ import org.wisenet.simulator.core.Simulator;
 public class LatencyInstrument extends AbstractInstrument {
 
     private static LatencyInstrument instance;
+    /**
+     *
+     */
     protected Hashtable sendingObject = new Hashtable();
     private long delayToSentMessages;
     private long intervalToSentMessages;
@@ -115,6 +118,7 @@ public class LatencyInstrument extends AbstractInstrument {
     /**
      * Save a message by ID
      * @param message
+     * @param handler
      */
     protected void saveMessage(IInstrumentMessage message, IInstrumentHandler handler) {
         // se o nó que regista é o mesmo do source da mensagem
@@ -193,31 +197,59 @@ public class LatencyInstrument extends AbstractInstrument {
         this.delayToSentMessages = delayToSentMessages;
     }
 
+    /**
+     *
+     * @return
+     */
     public long getIntervalToSentMessages() {
         return intervalToSentMessages;
     }
 
+    /**
+     *
+     * @param intervalToSentMessages
+     */
     public void setIntervalToSentMessages(long intervalToSentMessages) {
         this.intervalToSentMessages = intervalToSentMessages;
 
     }
 
+    /**
+     *
+     * @return
+     */
     public int getTimesToSentMessages() {
         return timesToSentMessages;
     }
 
+    /**
+     *
+     * @param timesToSentMessages
+     */
     public void setTimesToSentMessages(int timesToSentMessages) {
         this.timesToSentMessages = timesToSentMessages;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getHowManyMessagesToSentPerSender() {
         return howManyMessagesToSentPerSender;
     }
 
+    /**
+     *
+     * @param howManyMessagesToSentPerSender
+     */
     public void setHowManyMessagesToSentPerSender(int howManyMessagesToSentPerSender) {
         this.howManyMessagesToSentPerSender = howManyMessagesToSentPerSender;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public IResult getLastProbeResult() {
         LatencyProbingResult result = new LatencyProbingResult();
@@ -225,12 +257,23 @@ public class LatencyInstrument extends AbstractInstrument {
         return result;
     }
 
+    /**
+     *
+     */
     public class LatencyProbingResult implements IResult {
 
+        /**
+         *
+         * @return
+         */
         public int getNumberOfRegistredSendingObjects() {
             return sendingObject.size();
         }
 
+        /**
+         *
+         * @return
+         */
         public int getNumberOfRegistredReceivedObjects() {
             int result = 0;
             for (Object r : sendingObject.values()) {
@@ -242,15 +285,26 @@ public class LatencyInstrument extends AbstractInstrument {
             return result;
         }
 
+        /**
+         *
+         * @return
+         */
         public double getResultValue() {
             return getPerformance();
         }
     }
 
+    /**
+     *
+     * @param simulation
+     */
     public LatencyInstrument(Simulation simulation) {
         super(simulation);
     }
 
+    /**
+     *
+     */
     public LatencyInstrument() {
         super();
     }

@@ -11,6 +11,11 @@ import org.wisenet.simulator.utilities.annotation.EnergyModelParameter;
  */
 public class AnnotationUtils {
 
+    /**
+     *
+     * @param c
+     * @return
+     */
     public static boolean isAnnotated(Class c) {
         Class[] interfaces = c.getInterfaces();
         for (int i = 0; i < interfaces.length; i++) {
@@ -22,6 +27,11 @@ public class AnnotationUtils {
         return false;
     }
 
+    /**
+     *
+     * @param o
+     * @return
+     */
     public static Vector readEnergyModelParametersFields(Object o) {
         Vector inputParameters = new Vector();
         if (isAnnotated(o.getClass())) {
@@ -38,6 +48,12 @@ public class AnnotationUtils {
         return inputParameters;
     }
 
+    /**
+     *
+     * @param o
+     * @param aClass
+     * @return
+     */
     public static Vector readParametersFields(Object o, Class aClass) {
         Vector inputParameters = new Vector();
         if (isAnnotated(o.getClass())) {

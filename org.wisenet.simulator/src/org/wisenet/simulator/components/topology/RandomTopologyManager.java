@@ -16,6 +16,9 @@ import org.wisenet.simulator.core.node.Node;
  */
 public class RandomTopologyManager extends TopologyManager {
 
+    /**
+     *
+     */
     protected Random random = null;
 
     /**
@@ -39,6 +42,12 @@ public class RandomTopologyManager extends TopologyManager {
         return random;
     }
 
+    /**
+     *
+     * @param rect
+     * @param nodes
+     * @return
+     */
     public Vector<Node> apply(Rectangle rect, Vector<Node> nodes) {
         int px = rect.x;
         int py = rect.y;
@@ -55,6 +64,10 @@ public class RandomTopologyManager extends TopologyManager {
         return nodes;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     protected List<Node> createTopologyImpl() {
         try {
@@ -82,6 +95,12 @@ public class RandomTopologyManager extends TopologyManager {
 
     }
 
+    /**
+     *
+     * @param nodes
+     * @param parameters
+     * @return
+     */
     @Override
     public Vector<Node> apply(Vector<Node> nodes, TopologyParameters parameters) {
         throw new UnsupportedOperationException("Not supported yet.");

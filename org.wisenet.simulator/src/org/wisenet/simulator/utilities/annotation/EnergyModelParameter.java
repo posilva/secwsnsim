@@ -13,9 +13,29 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface EnergyModelParameter {
+    /**
+     *
+     * @return
+     */
     String label();
+    /**
+     *
+     * @return
+     */
     double value() default 0.0;
+    /**
+     *
+     * @return
+     */
     boolean required() default false;
+    /**
+     *
+     * @return
+     */
     String classToLoad() default "";
+    /**
+     *
+     * @return
+     */
     boolean isClass() default false;
 }

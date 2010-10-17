@@ -14,30 +14,81 @@ import org.wisenet.simulator.utilities.Utilities;
  */
 public abstract class AbstractInstrument {
 
+    /**
+     *
+     */
     protected boolean debugEnabled = true;
+    /**
+     *
+     */
     protected int probingTests = 0;
+    /**
+     *
+     */
     protected boolean notifyPanel = false;
-    protected static int messageUniqueId = 0; 
+    /**
+     *
+     */
+    protected static int messageUniqueId = 0;
+    /**
+     *
+     */
     protected boolean autonumber = false;
+    /**
+     *
+     */
     protected Vector senders = new Vector();
+    /**
+     *
+     */
     protected Vector receivers = new Vector();
+    /**
+     *
+     */
     protected IInstrumentControlPanel controlPanel;
+    /**
+     *
+     */
     protected int totalMessagesSent = 0;
+    /**
+     *
+     */
     protected boolean enable = false;
+    /**
+     *
+     */
     protected Class messageClass = null;
+    /**
+     *
+     */
     protected Simulation simulation = null;
 
+    /**
+     *
+     */
     public AbstractInstrument() {
     }
 
+    /**
+     *
+     * @param simulation
+     */
     public AbstractInstrument(Simulation simulation) {
         this.simulation = simulation;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isEnable() {
         return enable;
     }
 
+    /**
+     *
+     * @param enable
+     */
     public void setEnable(boolean enable) {
         this.enable = enable;
     }
@@ -102,16 +153,27 @@ public abstract class AbstractInstrument {
         refreshPanel();
     }
 
+    /**
+     *
+     * @param n
+     */
     public void unregisterReceiver(IInstrumentHandler n) {
         receivers.remove(n);
         refreshPanel();
 
     }
 
+    /**
+     *
+     * @return
+     */
     public int getTotalMessagesSent() {
         return totalMessagesSent;
     }
 
+    /**
+     *
+     */
     public void refreshPanel() {
         if (notifyPanel) {
             if (controlPanel != null) {
@@ -140,26 +202,48 @@ public abstract class AbstractInstrument {
         refreshPanel();
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isAutonumber() {
         return autonumber;
     }
 
+    /**
+     *
+     * @param autonumber
+     */
     public void setAutonumber(boolean autonumber) {
         this.autonumber = autonumber;
     }
 
+    /**
+     *
+     * @param message
+     * @param handler
+     */
     protected void onMessageSent(IInstrumentMessage message, IInstrumentHandler handler) {
         if (senders.contains(handler)) { // sent by a sender
             saveMessage(message, handler);
         }
     }
 
+    /**
+     *
+     * @param message
+     * @param handler
+     */
     protected void onMessageReceived(IInstrumentMessage message, IInstrumentHandler handler) {
         if (receivers.contains(handler)) { // for a receiver
             computeMessageReception(message, handler);
         }
     }
 
+    /**
+     *
+     * @param messageClass
+     */
     public void setMessageClass(Class messageClass) {
         try {
             Object o = messageClass.newInstance();
@@ -174,6 +258,10 @@ public abstract class AbstractInstrument {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     protected IInstrumentMessage createMessageInstance() {
         if (this.messageClass != null) {
             try {
@@ -187,36 +275,68 @@ public abstract class AbstractInstrument {
         return null;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getProbingTests() {
         return probingTests;
     }
 
+    /**
+     *
+     * @return
+     */
     public IInstrumentControlPanel getControlPanel() {
         return controlPanel;
     }
 
+    /**
+     *
+     * @return
+     */
     public Class getMessageClass() {
         return messageClass;
     }
 
+    /**
+     *
+     * @return
+     */
     public Vector getReceivers() {
         return receivers;
     }
 
+    /**
+     *
+     * @return
+     */
     public Vector getSenders() {
         return senders;
     }
 
+    /**
+     *
+     * @param m
+     */
     protected void log(String m) {
         if (isDebugEnabled()) {
             System.out.println("<" + this.getClass().getSimpleName() + ">" + m);
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isDebugEnabled() {
         return debugEnabled;
     }
 
+    /**
+     *
+     * @param debugEnabled
+     */
     public void setDebugEnabled(boolean debugEnabled) {
         this.debugEnabled = debugEnabled;
     }
@@ -226,15 +346,36 @@ public abstract class AbstractInstrument {
      */
     public abstract void probe();
 
+    /**
+     *
+     */
     public abstract void reset();
 
+    /**
+     *
+     * @param message
+     * @param handler
+     */
     protected abstract void saveMessage(IInstrumentMessage message, IInstrumentHandler handler);
 
+    /**
+     *
+     * @param message
+     * @param handler
+     */
     protected abstract void computeMessageReception(IInstrumentMessage message, IInstrumentHandler handler);
 
+    /**
+     *
+     * @return
+     */
     public Simulation getSimulation() {
         return simulation;
     }
 
+    /**
+     *
+     * @return
+     */
     public abstract IResult getLastProbeResult();
 }

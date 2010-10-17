@@ -17,7 +17,19 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface ApplicationMethod {
+    /**
+     *
+     * @return
+     */
     String menuLabel() default "Method Label Missing";
-    String methodName () default "";
+    /**
+     *
+     * @return
+     */
+    String methodName() default "";
+    /**
+     *
+     * @return
+     */
     String menuTooltip() default "put mehod description here";
 }

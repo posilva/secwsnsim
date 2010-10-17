@@ -17,12 +17,27 @@ public abstract class EnergyLogger {
 
     /**
      *
+     * @param id 
+     * @param event
+     * @param simTime
+     * @param realTime
+     * @param state
+     * @param value
      */
     public abstract void update(short id, String event, long realTime, long simTime, double value, String state);
 
+    /**
+     *
+     */
     public abstract void open();
 
+    /**
+     *
+     */
     public abstract void close();
 
+    /**
+     *
+     */
     public abstract void reset();
 }

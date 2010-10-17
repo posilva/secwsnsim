@@ -10,6 +10,9 @@ package org.wisenet.simulator.components.topology;
  */
 public class GridTopologyParameters extends TopologyParameters {
 
+    /**
+     *
+     */
     @Override
     protected void setExtendedSupportedParameters() {
        init("distance",0);

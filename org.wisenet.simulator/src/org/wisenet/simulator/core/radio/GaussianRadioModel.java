@@ -94,6 +94,7 @@ public class GaussianRadioModel extends RadioModel {
      * (Re)calculates the neighborhoods of every node in the network. This
      * operation should be called whenever the location of the nodes changed.
      * This operation is extremely expensive and should be used sparsely.
+     * @return
      */
     protected boolean updatingNeighborhoods() {
 
@@ -142,6 +143,8 @@ public class GaussianRadioModel extends RadioModel {
      * Calculates the static part of the radio fading between two nodes based on
      * distance and a randomGenerator factor.
      *
+     * @param sender
+     * @param receiver
      * @return The radio fading coefficient
      */
     protected double getStaticFading(Node sender, Node receiver) {
@@ -181,6 +184,10 @@ public class GaussianRadioModel extends RadioModel {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     protected boolean beforeUpdateNeighborhoods() {
         getCoverageInstrument().signalNeighborDetectionReset(CoverageInstrument.CoverageModelEnum.RADIO);
@@ -222,26 +229,50 @@ public class GaussianRadioModel extends RadioModel {
          */
         protected Object stream = null;
 
+        /**
+         *
+         * @return
+         */
         public ArrayList<Double> getDynamicStrengths() {
             return dynamicStrengths;
         }
 
+        /**
+         *
+         * @return
+         */
         public ArrayList<Double> getStaticFadings() {
             return staticFadings;
         }
 
+        /**
+         *
+         * @return
+         */
         public ArrayList<Node> getNeighbors() {
             return neighbors;
         }
 
+        /**
+         *
+         * @return
+         */
         public HashSet<Node> getNeighborsSet() {
             return neighborsSet;
         }
 
+        /**
+         *
+         * @return
+         */
         public ArrayList<Node> getNeighborsThatKnowMe() {
             return neighborsThatKnowMe;
         }
 
+        /**
+         *
+         * @return
+         */
         public HashSet<Node> getNeighborsThatKnowMeSet() {
             return neighborsThatKnowMeSet;
         }
@@ -293,6 +324,9 @@ public class GaussianRadioModel extends RadioModel {
             stream = null;
         }
 
+        /**
+         *
+         */
         @Override
         protected void reset() {
             super.reset();
@@ -302,6 +336,10 @@ public class GaussianRadioModel extends RadioModel {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     protected CoverageInstrument getCoverageInstrument() {
         return getSimulator().getSimulation().getCoverageInstrument();
     }

@@ -14,109 +14,244 @@ import org.wisenet.simulator.common.PersistantObject;
  */
 public class TestInputParameters extends PersistantObject {
 
+    /**
+     *
+     */
     public static String PREFIX_CFG = AbstractTest.PREFIX_CFG + ".inputparameters";
+    /**
+     *
+     */
     protected int numberOfSenderNodes;
+    /**
+     *
+     */
     protected int numberOfReceiverNodes;
+    /**
+     *
+     */
     protected boolean percentOfSenderNodes;
+    /**
+     *
+     */
     protected boolean percentOfReceiverNodes;
+    /**
+     *
+     */
     protected boolean onlyConsiderToSenderStableNodes;
+    /**
+     *
+     */
     protected boolean onlyConsiderToAttackStableNodes;
+    /**
+     *
+     */
     protected boolean onlyConsiderToReceiverSinkNodes;
+    /**
+     *
+     */
     protected int numberOfMessagesPerNode;
+    /**
+     *
+     */
     protected int intervalBetweenMessagesSent;
+    /**
+     *
+     */
     protected int numberOfRetransmissions;
+    /**
+     *
+     */
     protected String attackSelected;
+    /**
+     *
+     */
     protected int numberOfAttackNodes;
+    /**
+     *
+     */
     protected boolean percentOfAttackNodes;
 
+    /**
+     *
+     * @return
+     */
     public int getIntervalBetweenMessagesSent() {
         return intervalBetweenMessagesSent;
     }
 
+    /**
+     *
+     * @param intervalBetweenMessagesSent
+     */
     public void setIntervalBetweenMessagesSent(int intervalBetweenMessagesSent) {
         this.intervalBetweenMessagesSent = intervalBetweenMessagesSent;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getNumberOfMessagesPerNode() {
         return numberOfMessagesPerNode;
     }
 
+    /**
+     *
+     * @param numberOfMessagesPerNode
+     */
     public void setNumberOfMessagesPerNode(int numberOfMessagesPerNode) {
         this.numberOfMessagesPerNode = numberOfMessagesPerNode;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getNumberOfReceiverNodes() {
         return numberOfReceiverNodes;
     }
 
+    /**
+     *
+     * @param numberOfReceiverNodes
+     */
     public void setNumberOfReceiverNodes(int numberOfReceiverNodes) {
         this.numberOfReceiverNodes = numberOfReceiverNodes;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getNumberOfRetransmissions() {
         return numberOfRetransmissions;
     }
 
+    /**
+     *
+     * @param numberOfRetransmissions
+     */
     public void setNumberOfRetransmissions(int numberOfRetransmissions) {
         this.numberOfRetransmissions = numberOfRetransmissions;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getNumberOfSenderNodes() {
         return numberOfSenderNodes;
     }
 
+    /**
+     *
+     * @param numberOfSenderNodes
+     */
     public void setNumberOfSenderNodes(int numberOfSenderNodes) {
         this.numberOfSenderNodes = numberOfSenderNodes;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isOnlyConsiderToReceiverSinkNodes() {
         return onlyConsiderToReceiverSinkNodes;
     }
 
+    /**
+     *
+     * @param onlyConsiderToReceiverSinkNodes
+     */
     public void setOnlyConsiderToReceiverSinkNodes(boolean onlyConsiderToReceiverSinkNodes) {
         this.onlyConsiderToReceiverSinkNodes = onlyConsiderToReceiverSinkNodes;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isOnlyConsiderToSenderStableNodes() {
         return onlyConsiderToSenderStableNodes;
     }
 
+    /**
+     *
+     * @param onlyConsiderToSenderStableNodes
+     */
     public void setOnlyConsiderToSenderStableNodes(boolean onlyConsiderToSenderStableNodes) {
         this.onlyConsiderToSenderStableNodes = onlyConsiderToSenderStableNodes;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getAttackSelected() {
         return attackSelected;
     }
 
+    /**
+     *
+     * @param attackSelected
+     */
     public void setAttackSelected(String attackSelected) {
         this.attackSelected = attackSelected;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getNumberOfAttackNodes() {
         return numberOfAttackNodes;
     }
 
+    /**
+     *
+     * @param numberOfAttackNodes
+     */
     public void setNumberOfAttackNodes(int numberOfAttackNodes) {
         this.numberOfAttackNodes = numberOfAttackNodes;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isPercentOfAttackNodes() {
         return percentOfAttackNodes;
     }
 
+    /**
+     *
+     * @param percentOfAttackNodes
+     */
     public void setPercentOfAttackNodes(boolean percentOfAttackNodes) {
         this.percentOfAttackNodes = percentOfAttackNodes;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isPercentOfSenderNodes() {
         return percentOfSenderNodes;
     }
 
+    /**
+     *
+     * @param percentOfSenderNodes
+     */
     public void setPercentOfSenderNodes(boolean percentOfSenderNodes) {
         this.percentOfSenderNodes = percentOfSenderNodes;
     }
 
+    /**
+     *
+     * @param configuration
+     * @throws PersistantException
+     */
     public void saveToXML(XMLConfiguration configuration) throws PersistantException {
 
         configuration.addProperty(PREFIX_CFG + ".NumberOfAttackNodes", getNumberOfAttackNodes());
@@ -139,6 +274,11 @@ public class TestInputParameters extends PersistantObject {
         configuration.addProperty(PREFIX_CFG + ".AttackSelected", getAttackSelected());
     }
 
+    /**
+     *
+     * @param configuration
+     * @throws PersistantException
+     */
     public void loadFromXML(XMLConfiguration configuration) throws PersistantException {
         setNumberOfAttackNodes(configuration.getInt(PREFIX_CFG + ".NumberOfAttackNodes"));
         setPercentOfAttackNodes(configuration.getBoolean(PREFIX_CFG + ".PercentOfAttackNodes"));
@@ -160,18 +300,34 @@ public class TestInputParameters extends PersistantObject {
         setAttackSelected(configuration.getString(PREFIX_CFG + ".AttackSelected"));
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isPercentOfReceiverNodes() {
         return percentOfReceiverNodes;
     }
 
+    /**
+     *
+     * @param percentOfReceiverNodes
+     */
     public void setPercentOfReceiverNodes(boolean percentOfReceiverNodes) {
         this.percentOfReceiverNodes = percentOfReceiverNodes;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isOnlyConsiderToAttackStableNodes() {
         return onlyConsiderToAttackStableNodes;
     }
 
+    /**
+     *
+     * @param onlyConsiderToAttackStableNodes
+     */
     public void setOnlyConsiderToAttackStableNodes(boolean onlyConsiderToAttackStableNodes) {
         this.onlyConsiderToAttackStableNodes = onlyConsiderToAttackStableNodes;
     }

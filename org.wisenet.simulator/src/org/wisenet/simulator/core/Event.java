@@ -74,6 +74,8 @@ public abstract class Event implements Comparable {
 
     /**
      * This makes earlier events happen earlier :)
+     * @param arg0 
+     * @return
      */
     public int compareTo(Object arg0) {
         long arg_time = ((Event) arg0).time;
@@ -86,10 +88,18 @@ public abstract class Event implements Comparable {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public long getTime() {
         return time;
     }
 
+    /**
+     *
+     * @param time
+     */
     public void setTime(long time) {
         this.time = time;
     }

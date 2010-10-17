@@ -27,15 +27,38 @@ import org.bouncycastle.crypto.engines.SkipjackEngine;
 import org.bouncycastle.crypto.macs.CMac;
 import org.bouncycastle.crypto.params.KeyParameter;
 
+/**
+ *
+ * @author posilva
+ */
 public class CryptoFunctions {
 
 //    private static final String CYPHER_SUITE = "Skipjack/CTR/NoPadding";
     private static final String CYPHER_SUITE = "Skipjack/CFB/NoPadding";
     private static final String CYPHER_ALGORITHM = "Skipjack";
+    /**
+     *
+     */
+    /**
+     *
+     */
+    /**
+     *
+     */
+    /**
+     *
+     */
     public static final int BLOCK_SIZE = 8, MIC_SIZE = 4, KEY_SIZE = 10, MAC_SIZE = 8;
     private static byte[] keyData;
     private static byte[] ivData;
 
+    /**
+     *
+     * @param data
+     * @param key
+     * @param iv
+     * @return
+     */
     public static byte[] cipherData(byte[] data, byte[] key, byte[] iv) {
         try {
 
@@ -63,6 +86,13 @@ public class CryptoFunctions {
         return null;
     }
 
+    /**
+     *
+     * @param data
+     * @param key
+     * @param iv
+     * @return
+     */
     public static byte[] decipherData(byte[] data, byte[] key, byte[] iv) {
         try {
             SecretKeySpec key_spec = new SecretKeySpec(key, CYPHER_ALGORITHM);
@@ -87,6 +117,12 @@ public class CryptoFunctions {
         return null;
     }
 
+    /**
+     *
+     * @param data
+     * @param key
+     * @return
+     */
     public static byte[] createMIC(byte[] data, byte[] key) {
         CMac mic = new CMac(new SkipjackEngine(), MIC_SIZE * 8);
         byte[] buffer = new byte[MIC_SIZE];
@@ -96,6 +132,12 @@ public class CryptoFunctions {
         return buffer;
     }
 
+    /**
+     *
+     * @param data
+     * @param key
+     * @return
+     */
     public static byte[] createMAC(byte[] data, byte[] key) {
         CMac mic = new CMac(new SkipjackEngine(), MAC_SIZE * 8);
         byte[] buffer = new byte[MAC_SIZE];
@@ -105,6 +147,11 @@ public class CryptoFunctions {
         return buffer;
     }
 
+    /**
+     *
+     * @param counter
+     * @return
+     */
     public static byte[] createIV(int counter) {
         byte[] iv = new byte[BLOCK_SIZE];
         for (int i = 0; i < BLOCK_SIZE / (Integer.SIZE / 8); i++) {
@@ -116,6 +163,10 @@ public class CryptoFunctions {
         return iv;
     }
 
+    /**
+     *
+     * @return
+     */
     public static byte[] createSkipjackKey() {
         try {
             return createSkipjackKeyObject().getEncoded();
@@ -127,10 +178,22 @@ public class CryptoFunctions {
         return null;
     }
 
+    /**
+     *
+     * @param payload
+     * @param received_mic
+     * @param key
+     * @return
+     */
     public static boolean verifyMessageIntegrity(byte[] payload, byte[] received_mic, byte[] key) {
         return Arrays.equals(received_mic, CryptoFunctions.createMIC(payload, key));
     }
 
+    /**
+     *
+     * @param lastKey
+     * @return
+     */
     public static byte[] createNextKey(byte[] lastKey) {
         CMac mic = new CMac(new SkipjackEngine(), BLOCK_SIZE * 8);
         byte[] buffer = new byte[BLOCK_SIZE];
@@ -141,6 +204,11 @@ public class CryptoFunctions {
 
     }
 
+    /**
+     *
+     * @param size
+     * @return
+     */
     public static byte[][] createOneWayKeyChain(int size) {
         byte[][] keyChain = new byte[size][];
         byte[] lastKey = createSkipjackKey();
@@ -153,6 +221,14 @@ public class CryptoFunctions {
         return keyChain;
     }
 
+    /**
+     *
+     * @param firstKey
+     * @param firstKeyIndex
+     * @param newKey
+     * @param newKeyIndex
+     * @return
+     */
     public static boolean checkLastKeyIntegrity(byte[] firstKey, int firstKeyIndex, byte[] newKey, int newKeyIndex) {
         for (int i = newKeyIndex; i > firstKeyIndex; i--) {
             newKey = createNextKey(newKey);
@@ -161,6 +237,13 @@ public class CryptoFunctions {
         return Arrays.equals(newKey, firstKey);
     }
 
+    /**
+     *
+     * @param lastKey
+     * @param lastKeyIndex
+     * @param firstKeyIndex
+     * @return
+     */
     public static byte[] getKeyForTimeSlot(byte[] lastKey, int lastKeyIndex, int firstKeyIndex) {
         for (int i = lastKeyIndex; i > firstKeyIndex; i--) {
             lastKey = createNextKey(lastKey);
@@ -187,6 +270,11 @@ public class CryptoFunctions {
     }
     static final String HEXES = "0123456789ABCDEF";
 
+    /**
+     *
+     * @param raw
+     * @return
+     */
     public static String getHex(byte[] raw) {
         if (raw == null) {
             return null;
@@ -198,6 +286,10 @@ public class CryptoFunctions {
         return hex.toString();
     }
 
+    /**
+     *
+     * @return
+     */
     public static byte[] MACLayerGlobalKey() {
         if (keyData == null) {
             keyData = createSkipjackKey();
@@ -205,6 +297,10 @@ public class CryptoFunctions {
         return keyData;
     }
 
+    /**
+     *
+     * @return
+     */
     public static byte[] MACLayerGlobalIV() {
         if (ivData == null) {
             ivData = createIV(BLOCK_SIZE);
@@ -212,6 +308,11 @@ public class CryptoFunctions {
         return ivData;
     }
 
+    /**
+     *
+     * @param key
+     * @return
+     */
     public static byte[] createEncryptionKeyFromKey(byte[] key) {
         CMac mic = new CMac(new SkipjackEngine(), BLOCK_SIZE * 8);
         byte[] buffer = new byte[BLOCK_SIZE];
@@ -222,6 +323,11 @@ public class CryptoFunctions {
 
     }
 
+    /**
+     *
+     * @param key
+     * @return
+     */
     public static byte[] createMACKeyFromKey(byte[] key) {
         CMac mic = new CMac(new SkipjackEngine(), BLOCK_SIZE * 8);
         byte[] buffer = new byte[BLOCK_SIZE];
@@ -232,6 +338,11 @@ public class CryptoFunctions {
 
     }
 
+    /**
+     *
+     * @return
+     * @throws Exception
+     */
     public static Key createSkipjackKeyObject() throws Exception {
 
         KeyGenerator key_g = KeyGenerator.getInstance(CYPHER_ALGORITHM, "BC");
@@ -240,10 +351,22 @@ public class CryptoFunctions {
 
     }
 
+    /**
+     *
+     * @param payload
+     * @param received_mac
+     * @param key
+     * @return
+     */
     public static boolean verifyMessageIntegrityMAC(byte[] payload, byte[] received_mac, byte[] key) {
         return Arrays.equals(received_mac, CryptoFunctions.createMAC(payload, key));
     }
 
+    /**
+     *
+     * @param data
+     * @return
+     */
     public static byte[] digestMD5(byte[] data) {
         try {
             MessageDigest algorithm = MessageDigest.getInstance("MD5");

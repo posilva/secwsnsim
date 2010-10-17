@@ -12,9 +12,15 @@ import org.wisenet.simulator.core.radio.RadioModel.Neighborhood;
  */
 public abstract class MACLayer extends Layer {
 
+    /**
+     *
+     */
     protected static MACLayerController controller = new MACLayerController();
     RadioModel radioModel;
     RadioModel.Neighborhood neighborhood;
+    /**
+     *
+     */
     protected static boolean controllerUpdated = false;
     // //////////////////////////////
     // STATE VARIABLES
@@ -31,61 +37,123 @@ public abstract class MACLayer extends Layer {
     protected boolean receiving = false;
     /** State variable, true if the last received message got corrupted by noise */
     protected boolean corrupted = false;
+    /**
+     *
+     */
     protected double noiseStrength;
+    /**
+     *
+     */
     protected double signalStrength;
 
+    /**
+     *
+     */
     public MACLayer() {
         init();
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isCorrupted() {
         return corrupted;
     }
 
+    /**
+     *
+     * @param corrupted
+     */
     public void setCorrupted(boolean corrupted) {
         this.corrupted = corrupted;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isReceiving() {
         return receiving;
     }
 
+    /**
+     *
+     * @param receiving
+     */
     public void setReceiving(boolean receiving) {
         this.receiving = receiving;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isSending() {
         return sending;
     }
 
+    /**
+     *
+     * @param sending
+     */
     public void setSending(boolean sending) {
         this.sending = sending;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isTransmitting() {
         return transmitting;
     }
 
+    /**
+     *
+     * @param transmitting
+     */
     public void setTransmitting(boolean transmitting) {
         this.transmitting = transmitting;
     }
 
+    /**
+     *
+     * @return
+     */
     public Neighborhood getNeighborhood() {
         return neighborhood;
     }
 
+    /**
+     *
+     * @param neighborhood
+     */
     public void setNeighborhood(Neighborhood neighborhood) {
         this.neighborhood = neighborhood;
     }
 
+    /**
+     *
+     * @return
+     */
     public RadioModel getRadioModel() {
         return radioModel;
     }
 
+    /**
+     *
+     * @param radioModel
+     */
     public void setRadioModel(RadioModel radioModel) {
         this.radioModel = radioModel;
     }
 
+    /**
+     *
+     * @param strength
+     * @param stream
+     */
     protected final void beginTransmission(final double strength, Object stream) {
         Node n = (Node) stream;
         neighborhood.beginTransmission(strength, n);
@@ -139,6 +207,12 @@ public abstract class MACLayer extends Layer {
      * @see net.tinyos.prowler.INode#sendMessage(java.lang.Object,
      * net.tinyos.prowler.Application)
      */
+    /**
+     *
+     * @param message
+     * @param layer
+     * @return
+     */
     public abstract boolean sendMessage(Object message, RoutingLayer layer);
 
     /**
@@ -157,34 +231,66 @@ public abstract class MACLayer extends Layer {
      */
     public abstract double applyEnvironmentSignalAttenuation(double signal);
 
+    /**
+     *
+     * @return
+     */
     public static long getTotalMessagesCorrupted() {
         return controller.getTotalMessagesCorrupted();
     }
 
+    /**
+     *
+     * @return
+     */
     public static long getTotalMessagesNotSent() {
         return controller.getTotalMessagesNotSent();
     }
 
+    /**
+     *
+     * @return
+     */
     public static long getTotalMessagesSent() {
         return controller.getTotalMessagesSent();
     }
 
+    /**
+     *
+     * @return
+     */
     public double getNoiseStrength() {
         return noiseStrength;
     }
 
+    /**
+     *
+     * @param noiseStrength
+     */
     public void setNoiseStrength(double noiseStrength) {
         this.noiseStrength = noiseStrength;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getSignalStrength() {
         return signalStrength;
     }
 
+    /**
+     *
+     * @param signalStrength
+     */
     public void setSignalStrength(double signalStrength) {
         this.signalStrength = signalStrength;
     }
 
+    /**
+     *
+     * @return
+     */
     public static MACLayerController getController() {
         return controller;
     }
@@ -193,6 +299,9 @@ public abstract class MACLayer extends Layer {
         setupLayerParameters();
     }
 
+    /**
+     *
+     */
     @Override
     public void reset() {
         super.reset();

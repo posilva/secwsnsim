@@ -17,6 +17,15 @@ public class GlobalEnergyDatabase {
     Hashtable<String, Double> statesEnergy = new Hashtable<String, Double>();
     double networkEnergyConsumption = 0;
 
+    /**
+     *
+     * @param nodeid
+     * @param event
+     * @param realTime
+     * @param simTime
+     * @param value
+     * @param state
+     */
     public void addConsumption(short nodeid, String event, long realTime, long simTime, double value, String state) {
         saveEventEnergy(event, value);
         saveNodeEnergy(nodeid, value);
@@ -24,22 +33,42 @@ public class GlobalEnergyDatabase {
         updateNetworkEnergyConsumption(value);
     }
 
+    /**
+     *
+     * @param topValue
+     * @return
+     */
     public Hashtable getTopNodes(int topValue) {
         return new Hashtable();
     }
 
+    /**
+     *
+     * @return
+     */
     public Hashtable<Short, Double> getNodesEnergy() {
         return nodesEnergy;
     }
 
+    /**
+     *
+     * @return
+     */
     public Hashtable<String, Double> getEventsEnergy() {
         return eventsEnergy;
     }
 
+    /**
+     *
+     * @return
+     */
     public Hashtable<String, Double> getStatesEnergy() {
         return statesEnergy;
     }
 
+    /**
+     *
+     */
     public void reset() {
         eventsEnergy.clear();
         statesEnergy.clear();

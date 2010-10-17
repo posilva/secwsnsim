@@ -13,6 +13,10 @@ import org.wisenet.simulator.core.Simulator;
  */
 public class SimulatorEvent extends EventObject {
 
+    /**
+     *
+     * @param source
+     */
     public SimulatorEvent(Object source) {
         super(source);
     }

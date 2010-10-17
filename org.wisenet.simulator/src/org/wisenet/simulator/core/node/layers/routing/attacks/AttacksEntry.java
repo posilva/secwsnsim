@@ -10,41 +10,85 @@ package org.wisenet.simulator.core.node.layers.routing.attacks;
  */
 public class AttacksEntry {
 
+    /**
+     *
+     */
     public boolean enable = false;
+    /**
+     *
+     */
     public String label = "attack";
+    /**
+     * 
+     */
     public IRoutingAttack attack;
 
+    /**
+     *
+     * @param enable
+     * @param label
+     * @param attack
+     */
     public AttacksEntry(boolean enable, String label, IRoutingAttack attack) {
         this.enable = enable;
         this.label = label;
         this.attack = attack;
     }
 
+    /**
+     *
+     * @return
+     */
     public IRoutingAttack getAttack() {
         return attack;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isEnable() {
         return enable;
     }
 
+    /**
+     *
+     * @param enable
+     */
     public void setEnable(boolean enable) {
         this.enable = enable;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getLabel() {
         return label;
     }
 
+    /**
+     *
+     * @param label
+     */
     public void setLabel(String label) {
         this.label = label;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "Attack " + attack.getClass().getName() + " - " + getLabel() + "[" + (enable ? "enable" : "disable") + "]";
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -60,6 +104,10 @@ public class AttacksEntry {
         return true;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int hashCode() {
         int hash = 7;

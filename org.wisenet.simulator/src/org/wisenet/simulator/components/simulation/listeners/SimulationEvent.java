@@ -13,29 +13,59 @@ import org.wisenet.simulator.components.simulation.AbstractSimulation;
  */
 public class SimulationEvent extends EventObject {
 
+    /**
+     *
+     */
     public boolean cancel = false;
+    /**
+     *
+     */
     public String reason;
 
+    /**
+     *
+     * @param source
+     */
     public SimulationEvent(Object source) {
         super(source);
     }
 
+    /**
+     *
+     * @return
+     */
     public AbstractSimulation getSimulation() {
         return (AbstractSimulation) source;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isCancel() {
         return cancel;
     }
 
+    /**
+     *
+     * @param cancel
+     */
     public void setCancel(boolean cancel) {
         this.cancel = cancel;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getReason() {
         return reason;
     }
 
+    /**
+     *
+     * @param reason
+     */
     public void setReason(String reason) {
         this.reason = reason;
     }

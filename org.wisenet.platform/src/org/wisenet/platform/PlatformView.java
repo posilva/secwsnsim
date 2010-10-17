@@ -26,7 +26,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.jdesktop.application.Application.ExitListener;
 import org.jdesktop.application.ResourceMap;
-import org.wisenet.platform.common.ui.PlatformPanel;
 import org.wisenet.platform.core.PlatformManager;
 import org.wisenet.platform.core.instruments.coverage.CoverageInstrumentControlPanel;
 import org.wisenet.platform.core.instruments.reliability.ReliabilityInstrumentControlPanel;
@@ -1120,7 +1119,7 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
             @Override
             public void run() {
 
-                GUI_Utils.showMessage(msg);
+//                GUI_Utils.showMessage(msg);
                 TestResultsPanel c = new TestResultsPanel();
                 c.setTest(t);
                 PlatformFrame.display(c, "Test Results", PlatformFrame.OK_MODE);

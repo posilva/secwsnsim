@@ -9,10 +9,18 @@ import org.wisenet.simulator.core.node.Node;
  */
 public class CPU extends NodeComponent {
 
+    /**
+     *
+     * @param node
+     */
     public CPU(Node node) {
         super(node);
     }
 
+    /**
+     *
+     * @param action
+     */
     public void execute(EnergyConsumptionAction action) {
         switchON();
         action.execute();
@@ -21,12 +29,19 @@ public class CPU extends NodeComponent {
         switchOFF();
     }
 
+    /**
+     *
+     */
     @Override
     protected void consumeTransitionToONEnergy() {
         getNode().getBateryEnergy().consumeCPUTransitionToON();
 
     }
 
+    /**
+     *
+     * @param action
+     */
     public void executeEncryption(EnergyConsumptionAction action) {
         switchON();
         action.execute();
@@ -35,6 +50,10 @@ public class CPU extends NodeComponent {
         switchOFF();
     }
 
+    /**
+     *
+     * @param action
+     */
     public void executeDecryption(EnergyConsumptionAction action) {
         switchON();
         action.execute();
@@ -43,6 +62,10 @@ public class CPU extends NodeComponent {
         switchOFF();
     }
 
+    /**
+     *
+     * @param action
+     */
     public void executeSignature(EnergyConsumptionAction action) {
         switchON();
         action.execute();
@@ -51,6 +74,10 @@ public class CPU extends NodeComponent {
         switchOFF();
     }
 
+    /**
+     *
+     * @param action
+     */
     public void executeVerifySignature(EnergyConsumptionAction action) {
         switchON();
         action.execute();

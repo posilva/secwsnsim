@@ -12,13 +12,34 @@ public class Message implements Cloneable {
     static long numberOfTotalMessage = 0;   // global message counter
     private long messageNumber = 0;         // global number of the message
     private byte[] payload;                  // payload of the message
+    /**
+     *
+     */
     protected Color color = Color.green;   // message color for de ui
+    /**
+     *
+     */
     protected boolean showColor = true;    // message color flag
+    /**
+     *
+     */
     protected long totalHops;             // number of hops (must be updated outside)
+    /**
+     *
+     */
     protected Object sourceId;          // generic source node ID
+    /**
+     *
+     */
     protected Object destinationId;     // generic destination node ID
+    /**
+     *
+     */
     protected Object uniqueId;          // uniqueID of the message
 
+    /**
+     *
+     */
     public Message() {
         messageNumber = numberOfTotalMessage++;
         uniqueId = messageNumber;
@@ -95,22 +116,42 @@ public class Message implements Cloneable {
         return m;
     }
 
+    /**
+     *
+     * @return
+     */
     public Color getColor() {
         return color;
     }
 
+    /**
+     *
+     * @param color
+     */
     public void setColor(Color color) {
         this.color = color;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isShowColor() {
         return showColor;
     }
 
+    /**
+     *
+     * @param showColor
+     */
     public void setShowColor(boolean showColor) {
         this.showColor = showColor;
     }
 
+    /**
+     *
+     * @return
+     */
     public long getTotalHops() {
         return totalHops;
     }
@@ -122,26 +163,50 @@ public class Message implements Cloneable {
         totalHops++;
     }
 
+    /**
+     *
+     * @return
+     */
     public Object getDestinationId() {
         return destinationId;
     }
 
+    /**
+     *
+     * @param destinationId
+     */
     public void setDestinationId(Object destinationId) {
         this.destinationId = destinationId;
     }
 
+    /**
+     *
+     * @return
+     */
     public Object getSourceId() {
         return sourceId;
     }
 
+    /**
+     *
+     * @param sourceId
+     */
     public void setSourceId(Object sourceId) {
         this.sourceId = sourceId;
     }
 
+    /**
+     *
+     * @return
+     */
     public Object getUniqueId() {
         return uniqueId;
     }
 
+    /**
+     *
+     * @param uniqueId
+     */
     public void setUniqueId(Object uniqueId) {
         this.uniqueId = uniqueId;
     }

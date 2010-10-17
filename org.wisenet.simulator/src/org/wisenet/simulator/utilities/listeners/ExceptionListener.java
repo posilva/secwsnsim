@@ -12,5 +12,9 @@ import java.util.EventListener;
  * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public interface ExceptionListener extends EventListener{
+    /**
+     *
+     * @param event
+     */
     public void onError(ExceptionEvent event);
 }

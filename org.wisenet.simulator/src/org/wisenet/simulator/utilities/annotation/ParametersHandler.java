@@ -15,6 +15,11 @@ import org.wisenet.simulator.utilities.Utilities;
  */
 public final class ParametersHandler {
 
+    /**
+     *
+     * @param c
+     * @return
+     */
     public static boolean isAnnotated(Class c) {
         Class[] interfaces = c.getInterfaces();
         for (int i = 0; i < interfaces.length; i++) {
@@ -26,6 +31,10 @@ public final class ParametersHandler {
         return false;
     }
 
+    /**
+     *
+     * @param o
+     */
     public static void readParameters(Object o) {
         if (isAnnotated(o.getClass())) {
             Vector inputParameters = new Vector();

@@ -13,6 +13,11 @@ import org.apache.commons.configuration.XMLConfiguration;
  */
 public abstract class PersistantObject implements Persistent {
 
+    /**
+     *
+     * @param file
+     * @throws PersistantException
+     */
     public void saveToXML(String file) throws PersistantException {
         try {
             XMLConfiguration configuration = new XMLConfiguration();
@@ -23,6 +28,11 @@ public abstract class PersistantObject implements Persistent {
         }
     }
 
+    /**
+     *
+     * @param file
+     * @throws PersistantException
+     */
     public void loadFromXML(String file) throws PersistantException {
         try {
             XMLConfiguration configuration = new XMLConfiguration(file);

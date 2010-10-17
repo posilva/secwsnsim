@@ -13,5 +13,9 @@ import org.wisenet.simulator.components.instruments.coverage.listeners.SignalUpd
  */
 public interface CoverageListener extends EventListener {
 
+    /**
+     *
+     * @param event
+     */
     public void onSignalUpdate(SignalUpdateEvent event);
 }

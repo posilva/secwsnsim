@@ -10,6 +10,9 @@ package org.wisenet.simulator.components.topology;
  */
 public class StaticTopologyParameters extends TopologyParameters {
 
+    /**
+     *
+     */
     @Override
     protected void setExtendedSupportedParameters() {
        

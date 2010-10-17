@@ -19,6 +19,9 @@ public class EnergyMySQLDBLogger extends EnergyDBLogger {
     ArrayBlockingQueue<Record> recordsQueue = new ArrayBlockingQueue<Record>(5000);
     private boolean closed = false;
 
+    /**
+     *
+     */
     @Override
     public void reset() {
         recordsQueue = new ArrayBlockingQueue<Record>(5000);
@@ -91,11 +94,17 @@ public class EnergyMySQLDBLogger extends EnergyDBLogger {
         }
     }
 
+    /**
+     *
+     */
     @Override
     public void open() {
         dispachQueue();
     }
 
+    /**
+     *
+     */
     @Override
     public void close() {
 //        while (!recordsQueue.isEmpty()) {

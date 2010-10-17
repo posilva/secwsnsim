@@ -3,13 +3,26 @@ package org.wisenet.simulator.core.node.layers;
 import org.wisenet.simulator.components.output.LayerOutput;
 import org.wisenet.simulator.core.node.Node;
 
+/**
+ *
+ * @author posilva
+ */
 public abstract class Layer {
 
+    /**
+     *
+     */
     protected LayerOutput output;
     private Node node;
+    /**
+     *
+     */
     protected boolean debugEnabled = true;
     private boolean underAttack;
 
+    /**
+     *
+     */
     public Layer() {
         super();
     }
@@ -28,10 +41,18 @@ public abstract class Layer {
         return node;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isDebugEnabled() {
         return debugEnabled;
     }
 
+    /**
+     *
+     * @param debugEnabled
+     */
     public void setDebugEnabled(boolean debugEnabled) {
         this.debugEnabled = debugEnabled;
     }
@@ -50,6 +71,11 @@ public abstract class Layer {
         }
     }
 
+    /**
+     *
+     * @param message
+     * @param ex
+     */
     protected void log(String message, Throwable ex) {
 
         String error = "";
@@ -67,6 +93,10 @@ public abstract class Layer {
         }
     }
 
+    /**
+     *
+     * @param ex
+     */
     protected void log(Throwable ex) {
         String message = "";
         if (isDebugEnabled()) {
@@ -83,6 +113,10 @@ public abstract class Layer {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isUnderAttack() {
         return underAttack;
     }
@@ -99,6 +133,9 @@ public abstract class Layer {
         this.underAttack = underAttack;
     }
 
+    /**
+     *
+     */
     public void reset() {
     }
 }

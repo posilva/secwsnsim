@@ -4,21 +4,67 @@ import org.wisenet.simulator.core.energy.listeners.EnergyEvent;
 import org.wisenet.simulator.core.energy.listeners.EnergyListener;
 import org.wisenet.simulator.core.node.Node;
 
+/**
+ *
+ * @author posilva
+ */
 public class Batery {
 
+    /**
+     *
+     */
     public static final String CPUTRANSITIONTOON_EVENT = "CPUTransitionToON";
+    /**
+     *
+     */
     public static final String DECRYPTION_EVENT = "Decryption";
+    /**
+     *
+     */
     public static final String ENCRYPTION_EVENT = "Encryption";
+    /**
+     *
+     */
     public static final String IDLE_EVENT = "Idle";
+    /**
+     *
+     */
     public static final int INFINIT_POWER = -1;
+    /**
+     *
+     */
     public static final String MACVERIFICATION_EVENT = "MACVerification";
+    /**
+     *
+     */
     public static final String MAC_EVENT = "MAC";
+    /**
+     *
+     */
     public static final String PROCESSING_EVENT = "Processing";
+    /**
+     *
+     */
     public static final String RECEIVING_EVENT = "Receiving";
+    /**
+     *
+     */
     public static final String SIGNATUREVERIFY_EVENT = "SignatureVerify";
+    /**
+     *
+     */
     public static final String SIGNATURE_EVENT = "Signature";
+    /**
+     *
+     */
     public static final String TRANSMISSION_EVENT = "Transmission";
+    /**
+     *
+     */
     public static final String TXTRANSITIONTOON_EVENT = "TXTransitionToON";
+    /**
+     *
+     */
     public static final String UNKNOWNED_EVENT = "unknowned";
     /**
      * 
@@ -29,6 +75,9 @@ public class Batery {
      */
     public boolean enable = true;
     /*
+     *
+     */
+    /**
      *
      */
     public boolean infinit = false;
@@ -77,12 +126,19 @@ public class Batery {
         listenerList.remove(EnergyListener.class, listener);
     }
 
+    /**
+     *
+     */
     public Batery() {
         this.initialPower = INFINIT_POWER;
         this.currentPower = INFINIT_POWER;
         init();
     }
 
+    /**
+     *
+     * @param energyModel
+     */
     public Batery(EnergyModel energyModel) {
         this.energyModel = energyModel;
         this.initialPower = this.energyModel.getTotalEnergy();
@@ -358,6 +414,9 @@ public class Batery {
         return controller;
     }
 
+    /**
+     *
+     */
     public void reset() {
         if (this.energyModel != null) {
             this.initialPower = this.energyModel.getTotalEnergy();

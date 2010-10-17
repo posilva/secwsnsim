@@ -57,6 +57,11 @@ public class TestSet {
         }
     }
 
+    /**
+     *
+     * @param testType
+     * @return
+     */
     public List getTestByType(TestTypeEnum testType) {
         return testByTypesTable.get(testType);
     }

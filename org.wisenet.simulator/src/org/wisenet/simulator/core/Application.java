@@ -43,7 +43,9 @@ public abstract class Application {
     /** The parent {@link Node} this application belongs to. */
     private Node node;
 
-    /** Returns the {@link Node} this application belongs to. */
+    /** Returns the {@link Node} this application belongs to.
+     * @return
+     */
     public Node getNode() {
         return node;
     }
@@ -52,7 +54,6 @@ public abstract class Application {
      * The constructor for applications. Makes both the application and the Node
      * reference to each other.
      *
-     * @param node The parent {@link Node} of this application
      */
     public Application() {
     }
@@ -120,6 +121,9 @@ public abstract class Application {
         this.node = node;
     }
 
+    /**
+     *
+     */
     public abstract void run();
     
     /**
@@ -128,6 +132,9 @@ public abstract class Application {
      */
     protected abstract void onMessageReceived(Object message) ;
 
+    /**
+     *
+     */
     public void reset() {
         
     }

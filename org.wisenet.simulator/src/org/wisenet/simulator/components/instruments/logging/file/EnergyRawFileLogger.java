@@ -18,6 +18,9 @@ import org.wisenet.simulator.utilities.Utilities;
  */
 public class EnergyRawFileLogger extends EnergyFileLogger {
 
+    /**
+     *
+     */
     public static final String LOGS_DIR = "logs";
     private boolean updating;
     private final Object writeMonitor = new Object();
@@ -59,10 +62,16 @@ public class EnergyRawFileLogger extends EnergyFileLogger {
         updating = false;
     }
 
+    /**
+     *
+     */
     @Override
     public void open() {
     }
 
+    /**
+     *
+     */
     @Override
     public void close() {
         try {
@@ -87,6 +96,9 @@ public class EnergyRawFileLogger extends EnergyFileLogger {
         }
     }
 
+    /**
+     *
+     */
     @Override
     public void reset() {
         close();

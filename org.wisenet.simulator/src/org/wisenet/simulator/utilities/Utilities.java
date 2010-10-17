@@ -48,14 +48,26 @@ public class Utilities {
         }
     }
 
+    /**
+     *
+     * @param listener
+     */
     public static void addExceptionListener(ExceptionListener listener) {
         listeners.add(ExceptionListener.class, listener);
     }
 
+    /**
+     *
+     * @param listener
+     */
     public static void removeExceptionListener(ExceptionListener listener) {
         listeners.remove(ExceptionListener.class, listener);
     }
 
+    /**
+     *
+     * @param ex
+     */
     public static void handleException(Exception ex) {
         logException(ex);
         fireException(ex);
@@ -89,6 +101,11 @@ public class Utilities {
         return sw.toString();
     }
 
+    /**
+     *
+     * @param file
+     * @return
+     */
     public static String networkTopologyFileIsValid(String file) {
         try {
             File f = new File(file);

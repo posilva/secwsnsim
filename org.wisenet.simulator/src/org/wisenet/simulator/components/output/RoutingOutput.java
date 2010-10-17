@@ -10,6 +10,10 @@ package org.wisenet.simulator.components.output;
  */
 public class RoutingOutput extends LayerOutput {
 
+    /**
+     *
+     * @return
+     */
     public static RoutingOutput getInstance() {
         if (instance == null) {
             instance = new RoutingOutput();

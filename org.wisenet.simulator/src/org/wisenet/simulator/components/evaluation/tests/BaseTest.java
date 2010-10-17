@@ -17,27 +17,47 @@ import org.wisenet.simulator.core.node.layers.routing.attacks.AttacksEntry;
  */
 public class BaseTest extends AbstractTest {
 
+    /**
+     *
+     * @param inputParameters
+     */
     public BaseTest(TestInputParameters inputParameters) {
         super(inputParameters);
     }
 
+    /**
+     *
+     */
     public BaseTest() {
         super();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean verifyPreConditions() {
         return true;
     }
 
+    /**
+     *
+     */
     @Override
     public void beforeStart() {
     }
 
+    /**
+     *
+     */
     @Override
     public void afterFinish() {
     }
 
+    /**
+     *
+     */
     @Override
     public void execute() {
         if (getSimulation() == null) {
@@ -116,6 +136,9 @@ public class BaseTest extends AbstractTest {
         return event;
     }
 
+    /**
+     *
+     */
     @Override
     public void prepare() {
         prepared = false;

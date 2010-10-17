@@ -17,53 +17,107 @@ import org.wisenet.simulator.common.Persistent;
  */
 public class MACLayerController extends PersistantObject implements Parameterizable,Persistent{
 
+    /**
+     *
+     */
     protected long totalMessagesSent = 0;
+    /**
+     *
+     */
     protected long totalMessagesNotSent = 0;
+    /**
+     *
+     */
     protected long totalMessagesCorrupted = 0;
 
+    /**
+     *
+     */
     protected MACLayerParameters parameters = new MACLayerParameters();
 
+    /**
+     *
+     * @return
+     */
     public long getTotalMessagesCorrupted() {
         return totalMessagesCorrupted;
     }
 
+    /**
+     *
+     */
     public void incrementTotalMessagesCorrupted() {
         totalMessagesCorrupted += 1;
     }
 
+    /**
+     *
+     * @return
+     */
     public long getTotalMessagesNotSent() {
         return totalMessagesNotSent;
     }
 
+    /**
+     *
+     */
     public void incrementTotalMessagesNotSent() {
         totalMessagesNotSent += 1;
     }
 
+    /**
+     *
+     * @return
+     */
     public long getTotalMessagesSent() {
         return totalMessagesSent;
     }
 
+    /**
+     *
+     */
     public void incrementTotalMessagesSent() {
         totalMessagesSent += 1;
     }
 
+    /**
+     *
+     * @return
+     */
     public MACLayerParameters getParameters() {
         return parameters;
     }
 
+    /**
+     *
+     * @param parameters
+     */
     public void setParameters(ObjectParameters parameters) {
         this.parameters = (MACLayerParameters) parameters;
     }
 
 
+    /**
+     *
+     * @param configuration
+     * @throws PersistantException
+     */
     public void saveToXML(XMLConfiguration configuration) throws PersistantException {
         parameters.saveToXML(configuration);
     }
 
+    /**
+     *
+     * @param configuration
+     * @throws PersistantException
+     */
     public void loadFromXML(XMLConfiguration configuration) throws PersistantException {
         parameters.loadFromXML(configuration);
         
     }
+    /**
+     *
+     */
     public void reset(){
         totalMessagesCorrupted=0;
         totalMessagesNotSent=0;

@@ -19,6 +19,9 @@ import org.wisenet.simulator.core.Simulator;
 public class ReliabilityInstrument extends AbstractInstrument {
     // TODO: Ver para mais de 100 nós
 
+    /**
+     *
+     */
     protected Hashtable sendingObject = new Hashtable();
     private long delayToSentMessages;
     private long intervalToSentMessages;
@@ -63,6 +66,7 @@ public class ReliabilityInstrument extends AbstractInstrument {
     /**
      * Save a message by ID
      * @param message
+     * @param handler
      */
     protected void saveMessage(IInstrumentMessage message, IInstrumentHandler handler) {
         /**
@@ -77,6 +81,11 @@ public class ReliabilityInstrument extends AbstractInstrument {
         refreshPanel();
     }
 
+    /**
+     *
+     * @param message
+     * @param handler
+     */
     @Override
     protected void computeMessageReception(IInstrumentMessage message, IInstrumentHandler handler) {
         if (handler.getUniqueId().equals(((Message) message).getDestinationId())) { // é tratado pelo destino
@@ -91,6 +100,9 @@ public class ReliabilityInstrument extends AbstractInstrument {
         refreshPanel();
     }
 
+    /**
+     *
+     */
     @Override
     public void reset() {
         sendingObject.clear();
@@ -99,6 +111,10 @@ public class ReliabilityInstrument extends AbstractInstrument {
         refreshPanel();
     }
 
+    /**
+     *
+     * @return
+     */
     public double getPerformance() {
         int numberOfMessagesSent = sendingObject.size();
         int numberOfMessagesReceived = 0;
@@ -112,39 +128,75 @@ public class ReliabilityInstrument extends AbstractInstrument {
         return (numberOfMessagesSent == 0) ? 0 : (numberOfMessagesReceived * 100 / numberOfMessagesSent);
     }
 
+    /**
+     *
+     * @return
+     */
     public long getDelayToSentMessages() {
         return delayToSentMessages;
     }
 
+    /**
+     *
+     * @param delayToSentMessages
+     */
     public void setDelayToSentMessages(long delayToSentMessages) {
         this.delayToSentMessages = delayToSentMessages;
     }
 
+    /**
+     *
+     * @return
+     */
     public long getIntervalToSentMessages() {
         return intervalToSentMessages;
     }
 
+    /**
+     *
+     * @param intervalToSentMessages
+     */
     public void setIntervalToSentMessages(long intervalToSentMessages) {
         this.intervalToSentMessages = intervalToSentMessages;
 
     }
 
+    /**
+     *
+     * @return
+     */
     public int getTimesToSentMessages() {
         return timesToSentMessages;
     }
 
+    /**
+     *
+     * @param timesToSentMessages
+     */
     public void setTimesToSentMessages(int timesToSentMessages) {
         this.timesToSentMessages = timesToSentMessages;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getHowManyMessagesToSentPerSender() {
         return howManyMessagesToSentPerSender;
     }
 
+    /**
+     *
+     * @param howManyMessagesToSentPerSender
+     */
     public void setHowManyMessagesToSentPerSender(int howManyMessagesToSentPerSender) {
         this.howManyMessagesToSentPerSender = howManyMessagesToSentPerSender;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public IResult getLastProbeResult() {
         ReliabilityProbingResult result = new ReliabilityProbingResult();
@@ -152,12 +204,23 @@ public class ReliabilityInstrument extends AbstractInstrument {
         return result;
     }
 
+    /**
+     *
+     */
     public class ReliabilityProbingResult implements IResult {
 
+        /**
+         *
+         * @return
+         */
         public int getNumberOfRegistredSendingObjects() {
             return sendingObject.size();
         }
 
+        /**
+         *
+         * @return
+         */
         public int getNumberOfRegistredReceivedObjects() {
             int result = 0;
             for (Object r : sendingObject.values()) {
@@ -169,20 +232,35 @@ public class ReliabilityInstrument extends AbstractInstrument {
             return result;
         }
 
+        /**
+         *
+         * @return
+         */
         public double getResultValue() {
             return getPerformance();
         }
 
+        /**
+         *
+         * @return
+         */
         @Override
         public String toString() {
             return "" + (getNumberOfRegistredReceivedObjects() * 100 / getNumberOfRegistredSendingObjects());
         }
     }
 
+    /**
+     *
+     * @param simulation
+     */
     public ReliabilityInstrument(Simulation simulation) {
         super(simulation);
     }
 
+    /**
+     *
+     */
     public ReliabilityInstrument() {
         super();
     }

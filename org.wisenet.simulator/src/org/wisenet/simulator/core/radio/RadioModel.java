@@ -40,8 +40,15 @@ import org.wisenet.simulator.core.node.Node;
 public abstract class RadioModel {
 
     private Simulator simulator;
+    /**
+     *
+     */
     protected boolean updated = false;
 
+    /**
+     *
+     * @return
+     */
     public boolean isUpdated() {
         return updated;
     }
@@ -95,10 +102,21 @@ public abstract class RadioModel {
      */
     protected abstract void afterUpdateNeighborhoods();
 
+    /**
+     *
+     * @return
+     */
     protected abstract boolean updatingNeighborhoods();
 
+    /**
+     *
+     * @return
+     */
     protected abstract boolean beforeUpdateNeighborhoods();
 
+    /**
+     *
+     */
     public void reset() {
 
     }
@@ -111,9 +129,15 @@ public abstract class RadioModel {
     public abstract static class Neighborhood {
         // vector of neighbors that knowme
 
+        /**
+         *
+         */
         public ArrayList<Node> neighborsThatKnowMe = new ArrayList<Node>();
         /** The vector of the neighboring nodes. */
         public ArrayList<Node> neighbors = new ArrayList<Node>();
+        /**
+         *
+         */
         public HashSet<Node> neighborsThatKnowMeSet = new HashSet<Node>();
         /** The vector of the neighboring nodes. */
         public HashSet<Node> neighborsSet = new HashSet<Node>();
@@ -135,6 +159,9 @@ public abstract class RadioModel {
          */
         public abstract void endTransmission();
 
+        /**
+         *
+         */
         protected void reset() {
             neighbors.clear();
             neighborsThatKnowMe.clear();

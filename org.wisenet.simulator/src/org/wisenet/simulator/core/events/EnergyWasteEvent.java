@@ -10,13 +10,23 @@ import org.wisenet.simulator.core.node.Node;
  */
 public class EnergyWasteEvent extends Event {
 
+    /**
+     *
+     */
     protected Node source;
     private static long clockTickTime = Simulator.ONE_SECOND / 10;
 
+    /**
+     *
+     * @param time
+     */
     public EnergyWasteEvent(long time) {
         super(time);
     }
 
+    /**
+     *
+     */
     public EnergyWasteEvent() {
         super();
     }
@@ -28,10 +38,18 @@ public class EnergyWasteEvent extends Event {
         source.simulator.addEvent(this);
     }
 
+    /**
+     *
+     * @return
+     */
     public Node getSource() {
         return source;
     }
 
+    /**
+     *
+     * @param source
+     */
     public void setSource(Node source) {
         this.source = source;
     }

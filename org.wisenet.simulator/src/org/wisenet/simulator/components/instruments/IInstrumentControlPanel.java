@@ -10,5 +10,9 @@ package org.wisenet.simulator.components.instruments;
  */
 public interface IInstrumentControlPanel {
 
+    /**
+     *
+     * @param controller
+     */
     public void refresh(AbstractInstrument controller);
 }

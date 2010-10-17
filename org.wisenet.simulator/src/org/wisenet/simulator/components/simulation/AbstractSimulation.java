@@ -25,6 +25,10 @@ import org.wisenet.simulator.utilities.Utilities;
 import org.wisenet.simulator.utilities.console.SimulationSettings;
 import org.wisenet.simulator.utilities.xml.XMLFileReader;
 
+/**
+ *
+ * @author posilva
+ */
 public abstract class AbstractSimulation extends PersistantObject implements ISimulationOperations {
 
     /**
@@ -32,40 +36,84 @@ public abstract class AbstractSimulation extends PersistantObject implements ISi
      */
     int mode = Simulator.FAST;
     EnergyModel energyModel; //TODO: uma vez que passou para dentro da node factory deve-se poder tirar
+    /**
+     *
+     */
     protected String name;
     private String description;
+    /**
+     *
+     */
     protected Simulator simulator;
+    /**
+     *
+     */
     protected RadioModel radioModel;
+    /**
+     *
+     */
     protected AbstractNodeFactory nodeFactory;
+    /**
+     *
+     */
     protected ISimulationDisplay display;
+    /**
+     *
+     */
     protected int initialMaxNodeRange;
+    /**
+     *
+     */
     protected long seed;
     private boolean bPreInit = false;
     private TestSet testSet = new TestSet();
+    /**
+     *
+     */
     protected SimulationSettings settings;
     /**
      * Control flag for start state
      */
     protected boolean started;
 
+    /**
+     *
+     */
     public AbstractSimulation() {
         super();
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isStarted() {
         return started;
     }
 
+    /**
+     *
+     * @param started
+     */
     public void setStarted(boolean started) {
         this.started = started;
     }
 
     public abstract void stop();
 
+    /**
+     *
+     */
     public abstract void start();
 
+    /**
+     *
+     */
     public abstract void pause();
 
+    /**
+     *
+     */
     public void setup() {
         if (!bPreInit) {
             preInit();
@@ -75,26 +123,50 @@ public abstract class AbstractSimulation extends PersistantObject implements ISi
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public int getInitialMaxNodeRange() {
         return initialMaxNodeRange;
     }
 
+    /**
+     *
+     * @param nodeRange
+     */
     public void setInitialMaxNodeRange(int nodeRange) {
         this.initialMaxNodeRange = nodeRange;
     }
 
+    /**
+     *
+     * @return
+     */
     public long getSeed() {
         return seed;
     }
 
+    /**
+     *
+     * @param seed
+     */
     public void setSeed(long seed) {
         this.seed = seed;
     }
 
+    /**
+     *
+     * @return
+     */
     public ISimulationDisplay getDisplay() {
         return display;
     }
 
+    /**
+     *
+     * @param display
+     */
     public void setDisplay(ISimulationDisplay display) {
         this.display = display;
         if (getSimulator() != null) {
@@ -103,10 +175,18 @@ public abstract class AbstractSimulation extends PersistantObject implements ISi
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public Simulator getSimulator() {
         return this.simulator;
     }
 
+    /**
+     *
+     * @param simulator
+     */
     public void setSimulator(Simulator simulator) {
         this.simulator = simulator;
         this.simulator.setSimulation(this);
@@ -116,36 +196,66 @@ public abstract class AbstractSimulation extends PersistantObject implements ISi
 
     }
 
+    /**
+     *
+     */
     public void reset() {
         started = false;
         this.bPreInit = false;
 
     }
 
+    /**
+     *
+     * @return
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     *
+     * @return
+     */
     public RadioModel getRadioModel() {
         return radioModel;
     }
 
+    /**
+     *
+     * @param radioModel
+     */
     public void setRadioModel(RadioModel radioModel) {
         this.radioModel = radioModel;
     }
 
+    /**
+     *
+     * @return
+     */
     public AbstractNodeFactory getNodeFactory() {
         return nodeFactory;
     }
 
+    /**
+     *
+     * @param simpleNodeFactory
+     */
     public void setNodeFactory(AbstractNodeFactory simpleNodeFactory) {
         this.nodeFactory = simpleNodeFactory;
     }
 
+    /**
+     *
+     */
     public void preInit() {
         bPreInit = true;
         if (simulator == null) {
@@ -162,22 +272,41 @@ public abstract class AbstractSimulation extends PersistantObject implements ISi
         simulator.setDisplay(display);
     }
 
+    /**
+     *
+     * @return
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     *
+     * @param description
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     *
+     */
     public void resume() {
         simulator.resume();
     }
 
+    /**
+     *
+     * @return
+     */
     public long getTime() {
         return Simulator.getSimulationTime();
     }
 
+    /**
+     *
+     * @return
+     */
     public long getTimeInMilliseconds() {
         return Simulator.getSimulationTimeInMillisec();
     }
@@ -220,7 +349,7 @@ public abstract class AbstractSimulation extends PersistantObject implements ISi
      * Read a simulation configuration from a file
      * @param file
      * @return
-     * @throws SimulationBuilderException
+     * @throws SimulationException
      */
     public AbstractSimulation readFromFile(String file) throws SimulationException {
         try {
@@ -282,7 +411,9 @@ public abstract class AbstractSimulation extends PersistantObject implements ISi
 
     /**
      * Create a simulation file based on a simulation
+     * @param simulation 
      * @param file
+     * @throws SimulationException
      */
     public static void createSimulationFile(AbstractSimulation simulation, String file) throws SimulationException {
         try {
@@ -313,10 +444,18 @@ public abstract class AbstractSimulation extends PersistantObject implements ISi
 
     }
 
+    /**
+     *
+     * @return
+     */
     public EnergyModel getEnergyModel() {
         return energyModel;
     }
 
+    /**
+     *
+     * @param energyModel
+     */
     public void setEnergyModel(EnergyModel energyModel) {
         this.energyModel = energyModel;
     }
@@ -343,14 +482,27 @@ public abstract class AbstractSimulation extends PersistantObject implements ISi
         bPreInit = true;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getMode() {
         return mode;
     }
 
+    /**
+     *
+     * @param mode
+     */
     public void setMode(int mode) {
         this.mode = mode;
     }
 
+    /**
+     *
+     * @param topologyManager
+     * @throws Exception
+     */
     public void appendNodes(TopologyManager topologyManager) throws Exception {
         topologyManager.setNodeFactory(getNodeFactory());
         List<org.wisenet.simulator.core.node.Node> nodes = topologyManager.createTopology();
@@ -359,20 +511,41 @@ public abstract class AbstractSimulation extends PersistantObject implements ISi
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public EnergyController getEnergyController() {
         return Batery.getController();
     }
 
+    /**
+     *
+     * @param testType
+     * @return
+     */
     public List getTestByType(TestTypeEnum testType) {
         return testSet.getTestByType(testType);
     }
 
+    /**
+     *
+     * @return
+     */
     public SimulationSettings getSettings() {
         return settings;
     }
 
+    /**
+     *
+     * @param settings
+     */
     public abstract void create(SimulationSettings settings);
 
+    /**
+     *
+     * @param result
+     */
     public void addTest(AbstractTest result) {
     }
 }

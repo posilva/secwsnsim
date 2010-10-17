@@ -12,14 +12,30 @@ import org.wisenet.simulator.core.energy.listeners.EnergyListener;
  */
 public class EnergyController implements EnergyListener {
 
+    /**
+     *
+     */
     protected GlobalEnergyDatabase database = new GlobalEnergyDatabase();
+    /**
+     *
+     */
     protected Hashtable<String, GlobalEnergyDatabase> activeDatabases = new Hashtable<String, GlobalEnergyDatabase>();
+    /**
+     *
+     */
     protected EnergyLogger energyLogger;
     private boolean logEnergyEnable = false;
 
+    /**
+     *
+     */
     public EnergyController() {
     }
 
+    /**
+     *
+     * @return
+     */
     public GlobalEnergyDatabase getDatabase() {
         return database;
     }
@@ -47,15 +63,26 @@ public class EnergyController implements EnergyListener {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public EnergyLogger getEnergyLogger() {
         return energyLogger;
     }
 
+    /**
+     *
+     * @param energyLogger
+     */
     public void setEnergyLogger(EnergyLogger energyLogger) {
         this.energyLogger = energyLogger;
         this.energyLogger.init();
     }
 
+    /**
+     *
+     */
     public void start() {
         if (isLogEnergyEnable()) {
             if (energyLogger != null) {
@@ -64,20 +91,34 @@ public class EnergyController implements EnergyListener {
         }
     }
 
+    /**
+     *
+     */
     public void stop() {
         if (energyLogger != null) {
             energyLogger.close();
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isLogEnergyEnable() {
         return logEnergyEnable;
     }
 
+    /**
+     *
+     * @param logEnergyEnable
+     */
     public void setLogEnergyEnable(boolean logEnergyEnable) {
         this.logEnergyEnable = logEnergyEnable;
     }
 
+    /**
+     *
+     */
     public void reset() {
         getDatabase().reset();
         activeDatabases.clear();
@@ -89,13 +130,16 @@ public class EnergyController implements EnergyListener {
     /**
      * Create a database of energy consumption
      * @param name
+     * @param deleteIfExists
      * @return
      *      NULL if database exists
      */
     public GlobalEnergyDatabase createDatabase(String name, boolean deleteIfExists) {
         GlobalEnergyDatabase db = activeDatabases.get(name);
         if (deleteIfExists == true) {
-            activeDatabases.remove(db);
+            if (db != null) {
+                activeDatabases.remove(db);
+            }
             db = null;
         }
         if (db == null) {
