@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes"?>
+<installation version="1.0">
+    <info>
+        <appname>WiSeNet Simulator</appname>
+        <appversion>0.1.265</appversion>
+        <authors>
+            <author email="posilva@gmail.com" name="Pedro Marques da Silva"/>
+        </authors>
+        <url>http://code.google.com/p/secwsnsim/</url>
+        <uninstaller name="Uninstaller.jar" write="yes"/>
+        <requiresjdk>no</requiresjdk>
+        <writeinstallationinformation>no</writeinstallationinformation>
+        <pack200/>
+        <run-privileged condition="izpack.windowsinstall.vista|izpack.windowsinstall.7"/>
+    </info>
+    <guiprefs height="480" resizable="no" width="640">
+        <laf name="kunststoff">
+            <os family="windows"/>
+            <os family="unix"/>
+            <os family="mac"/>
+        </laf>
+        <modifier key="useFlags" value="yes"/>
+        <modifier key="langDisplayType" value="default"/>
+        <modifier key="headingPanelCounter" value="progressbar"/>
+        <modifier key="headingPanelCounterPos" value="inNavigationPanel"/>
+    </guiprefs>
+    <locale>
+        <langpack iso3="eng"/>
+    </locale>
+    <resources>
+        <res id="shortcutSpec.xml" src="wisenetsimSetup_shortcutSpec.xml"/>
+        <res id="Unix_shortcutSpec.xml" src="wisenetsimSetup_Unix_shortcutSpec.xml"/>
+        <res id="Heading.image" src="/home/posilva/Dropbox/Tese/Projecto/svn/WiSeNetSimulator/org.wisenet.platform/splash.png"/>
+    </resources>
+    <panels>
+        <panel classname="CheckedHelloPanel"/>
+        <panel classname="PacksPanel"/>
+        <panel classname="TargetPanel"/>
+        <panel classname="InstallPanel"/>
+        <panel classname="ShortcutPanel"/>
+        <panel classname="SimpleFinishPanel"/>
+    </panels>
+    <variables>
+        <variable name="DesktopShortcutCheckboxEnabled" value="true"/>
+    </variables>
+    <packs>
+        <pack name="Binaries" preselected="yes" required="yes">
+            <description/>
+            <file override="update"
+                src="/home/posilva/Dropbox/Tese/Projecto/svn/WiSeNetSimulator/org.wisenet.platform/dist/org.wisenet.platform.jar" targetdir="$INSTALL_PATH/"/>
+            <file override="update"
+                src="/home/posilva/Dropbox/Tese/Projecto/svn/WiSeNetSimulator/Setup/install/ATENCION_SecureNode_NeedsBouncyCastleInstalled" targetdir="$INSTALL_PATH/"/>
+            <file override="update"
+                src="/home/posilva/Dropbox/Tese/Projecto/svn/WiSeNetSimulator/Setup/install/Platform.properties" targetdir="$INSTALL_PATH/"/>
+            <file override="update"
+                src="/home/posilva/Dropbox/Tese/Projecto/svn/WiSeNetSimulator/Setup/install/README.TXT" targetdir="$INSTALL_PATH/"/>
+            <file override="update"
+                src="/home/posilva/Dropbox/Tese/Projecto/svn/WiSeNetSimulator/Setup/install/run.bat" targetdir="$INSTALL_PATH/"/>
+            <file override="update"
+                src="/home/posilva/Dropbox/Tese/Projecto/svn/WiSeNetSimulator/Setup/install/run.sh" targetdir="$INSTALL_PATH/"/>
+            <file override="update"
+                src="/home/posilva/Dropbox/Tese/Projecto/svn/WiSeNetSimulator/Setup/install/splash.png" targetdir="$INSTALL_PATH/"/>
+        </pack>
+        <pack name="Libraries" preselected="yes" required="yes">
+            <description/>
+            <file override="update"
+                src="/home/posilva/Dropbox/Tese/Projecto/svn/WiSeNetSimulator/org.wisenet.platform/dist/lib" targetdir="$INSTALL_PATH/"/>
+        </pack>
+        <pack name="Configuration Files" preselected="yes" required="yes">
+            <description/>
+            <file override="update"
+                src="/home/posilva/Dropbox/Tese/Projecto/svn/WiSeNetSimulator/Setup/install/conf" targetdir="$INSTALL_PATH/"/>
+        </pack>
+    </packs>
+    <native name="ShellLink.dll" type="izpack"/>
+    <native name="ShellLink_x64.dll" type="izpack"/>
+</installation>

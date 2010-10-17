@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<shortcuts>
+    <skipIfNotSupported/>
+    <defaultCurrentUser/>
+    <programGroup defaultName="WiSeNetSim" location="applications"/>
+    <shortcut applications="yes" desktop="yes" initialState="noShow"
+        name="WiSeNet Simulator" programGroup="yes" startMenu="no"
+        startup="yes" target="$INSTALL_PATH/run.sh"/>
+</shortcuts>
