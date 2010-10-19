@@ -1,2 +1,2 @@
 #!/bin/bash
-java -jar pt.unl.fct.di.mei.securesim.platform.jar
+java -jar org.wisenet.platform.jar -splash splash.png

@@ -20,27 +20,52 @@ public class RoutingTableEntry {
     short destination;
     short immediate;
 
+    /**
+     *
+     */
     public RoutingTableEntry() {
     }
 
+    /**
+     *
+     * @param source
+     * @param destination
+     * @param immediate
+     */
     public RoutingTableEntry(short source, short destination, short immediate) {
         this.source = source;
         this.destination = destination;
         this.immediate = immediate;
     }
 
+    /**
+     *
+     * @return
+     */
     public short getDestination() {
         return destination;
     }
 
+    /**
+     *
+     * @return
+     */
     public short getImmediate() {
         return immediate;
     }
 
+    /**
+     *
+     * @return
+     */
     public short getSource() {
         return source;
     }
 
+    /**
+     *
+     * @param badis
+     */
     public void read(ByteArrayDataInputStream badis) {
         try {
             
@@ -64,6 +89,11 @@ public class RoutingTableEntry {
         }
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof RoutingTableEntry){
@@ -73,6 +103,10 @@ public class RoutingTableEntry {
         return false;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int hashCode() {
         int hash = 7;
@@ -82,6 +116,10 @@ public class RoutingTableEntry {
         return hash;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return destination+ " , " + source + " , " + immediate;

@@ -16,9 +16,20 @@ import org.wisenet.protocols.common.ByteArrayDataInputStream;
  */
 public class INSENSMessagePayload {
 
+    /**
+     *
+     */
     public ByteArrayDataInputStream badis;
+    /**
+     *
+     */
     public byte type;
 
+    /**
+     *
+     * @param payload
+     * @throws INSENSException
+     */
     public INSENSMessagePayload(byte[] payload) throws INSENSException {
         try {
             if (payload == null) {

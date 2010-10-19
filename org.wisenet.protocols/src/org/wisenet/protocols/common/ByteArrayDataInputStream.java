@@ -15,6 +15,10 @@ import java.io.InputStream;
  */
 public class ByteArrayDataInputStream extends DataInputStream{
 
+    /**
+     *
+     * @param in
+     */
     public ByteArrayDataInputStream(InputStream in) {
         super(in);
         if(!(in instanceof ByteArrayInputStream)){
@@ -22,6 +26,10 @@ public class ByteArrayDataInputStream extends DataInputStream{
         }
     }
     
+    /**
+     *
+     * @param data
+     */
     public ByteArrayDataInputStream(byte [] data) {
         super (new ByteArrayInputStream(data));
     }

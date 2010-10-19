@@ -1,3 +1,3 @@
 @echo OFF
-java -splash:splash.png -jar pt.unl.fct.di.mei.securesim.platform.jar
+java -splash:splash.png -jar org.wisenet.platform.jar -splash splash.png
  

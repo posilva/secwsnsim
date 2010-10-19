@@ -16,12 +16,32 @@ import org.wisenet.simulator.utilities.CryptoFunctions;
  */
 public class FDBKPayload extends INSENSMessagePayload {
 
+    /**
+     *
+     */
     public short sourceId;
+    /**
+     *
+     */
     public byte[] parent_mac;
+    /**
+     *
+     */
     public byte[] neighborInfo;
+    /**
+     *
+     */
     public int neighborInfoSize;
+    /**
+     *
+     */
     public byte[] mac;
 
+    /**
+     *
+     * @param payload
+     * @throws INSENSException
+     */
     public FDBKPayload(byte[] payload) throws INSENSException {
         super(payload);
         try {

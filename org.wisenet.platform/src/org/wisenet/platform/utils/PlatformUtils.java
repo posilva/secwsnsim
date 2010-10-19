@@ -191,11 +191,12 @@ public class PlatformUtils {
     }
 
     public static void loadSimulationAttacksIntoCombo(JComboBox cbo) {
+        
         Simulation simulation = (Simulation) PlatformManager.getInstance().getActiveSimulation();
         if (simulation != null) {
             Set registeredAttacks = simulation.getRoutingLayerController().getRegisteredAttacks();
             if (registeredAttacks.size() > 0) {
-                cbo.removeAll();
+                cbo.removeAllItems();
                 cbo.addItem("None");
                 for (Object object : registeredAttacks) {
                     AttacksEntry a = (AttacksEntry) object;

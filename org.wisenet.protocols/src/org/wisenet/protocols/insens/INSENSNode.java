@@ -20,6 +20,11 @@ import org.wisenet.simulator.gui.IDisplayable;
  */
 public class INSENSNode extends Mica2SensorNode implements IDisplayable {
 
+    /**
+     *
+     * @param sim
+     * @param radioModel
+     */
     public INSENSNode(Simulator sim, RadioModel radioModel) {
         super(sim, radioModel);
         setEnableFunctioningEnergyConsumption(false);
@@ -50,6 +55,10 @@ public class INSENSNode extends Mica2SensorNode implements IDisplayable {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public Object getLatencyUniqueId() {
         return getId();
     }

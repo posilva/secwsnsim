@@ -15,7 +15,7 @@ public abstract class AbstractRoutingAttack implements IRoutingAttack {
     /**
      *
      */
-    protected static boolean debugEnabed = true;
+    protected static boolean debugEnabled = true;
     /**
      *
      */
@@ -66,15 +66,15 @@ public abstract class AbstractRoutingAttack implements IRoutingAttack {
      * @return
      */
     public static boolean isDebugEnabed() {
-        return debugEnabed;
+        return debugEnabled;
     }
 
     /**
      *
-     * @param debugEnabed
+     * @param debugEnabled
      */
     public static void setDebugEnabed(boolean debugEnabed) {
-        AbstractRoutingAttack.debugEnabed = debugEnabed;
+        AbstractRoutingAttack.debugEnabled = debugEnabed;
     }
 
     /**
@@ -82,8 +82,13 @@ public abstract class AbstractRoutingAttack implements IRoutingAttack {
      * @param msg
      */
     public void log(String msg) {
-        if (debugEnabed) {
+        if (debugEnabled) {
             System.out.println(getClass().getSimpleName() + "-" + msg);
         }
     }
+
+    public void setRoutingLayer(RoutingLayer routingLayer) {
+        this.routingLayer=routingLayer;
+    }
+
 }

@@ -14,6 +14,10 @@ import org.wisenet.simulator.core.Message;
  */
 public class INSENSMessage extends Message {
 
+    /**
+     *
+     * @param payload
+     */
     public INSENSMessage(byte[] payload) {
 
         super(payload);
@@ -27,6 +31,9 @@ public class INSENSMessage extends Message {
         }
     }
 
+    /**
+     *
+     */
     public INSENSMessage() {
         super();
     }

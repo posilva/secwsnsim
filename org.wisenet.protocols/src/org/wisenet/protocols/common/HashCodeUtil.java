@@ -32,7 +32,10 @@ public final class HashCodeUtil {
 
   /**
   * booleans.
-  */
+   * @param aSeed
+   * @param aBoolean
+   * @return
+   */
   public static int hash( int aSeed, boolean aBoolean ) {
     System.out.println("boolean...");
     return firstTerm( aSeed ) + ( aBoolean ? 1 : 0 );
@@ -40,7 +43,10 @@ public final class HashCodeUtil {
 
   /**
   * chars.
-  */
+   * @param aSeed
+   * @param aChar 
+   * @return
+   */
   public static int hash( int aSeed, char aChar ) {
     System.out.println("char...");
     return firstTerm( aSeed ) + (int)aChar;
@@ -48,7 +54,10 @@ public final class HashCodeUtil {
 
   /**
   * ints.
-  */
+   * @param aSeed
+   * @param aInt
+   * @return
+   */
   public static int hash( int aSeed , int aInt ) {
     /*
     * Implementation Note
@@ -61,7 +70,10 @@ public final class HashCodeUtil {
 
   /**
   * longs.
-  */
+   * @param aSeed
+   * @param aLong
+   * @return
+   */
   public static int hash( int aSeed , long aLong ) {
     System.out.println("long...");
     return firstTerm(aSeed)  + (int)( aLong ^ (aLong >>> 32) );
@@ -69,14 +81,20 @@ public final class HashCodeUtil {
 
   /**
   * floats.
-  */
+   * @param aSeed
+   * @param aFloat
+   * @return
+   */
   public static int hash( int aSeed , float aFloat ) {
     return hash( aSeed, Float.floatToIntBits(aFloat) );
   }
 
   /**
   * doubles.
-  */
+   * @param aSeed
+   * @param aDouble
+   * @return
+   */
   public static int hash( int aSeed , double aDouble ) {
     return hash( aSeed, Double.doubleToLongBits(aDouble) );
   }
@@ -86,7 +104,10 @@ public final class HashCodeUtil {
   *
   * If <code>aObject</code> is an array, then each element may be a primitive
   * or a possibly-null object.
-  */
+   * @param aSeed
+   * @param aObject
+   * @return
+   */
   public static int hash( int aSeed , Object aObject ) {
     int result = aSeed;
     if ( aObject == null) {

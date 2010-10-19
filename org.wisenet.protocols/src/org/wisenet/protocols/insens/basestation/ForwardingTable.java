@@ -20,25 +20,48 @@ public class ForwardingTable {
     short nodeId;
     Set<RoutingTableEntry> entries = new HashSet<RoutingTableEntry>();
 
+    /**
+     *
+     * @param nodeId
+     */
     public ForwardingTable(short nodeId) {
         this.nodeId = nodeId;
     }
 
+    /**
+     *
+     */
     public ForwardingTable() {
     }
 
+    /**
+     *
+     * @return
+     */
     public short getNodeId() {
         return nodeId;
     }
 
+    /**
+     *
+     * @param nodeId
+     */
     public void setNodeId(short nodeId) {
         this.nodeId = nodeId;
     }
 
+    /**
+     *
+     * @return
+     */
     public Set<RoutingTableEntry> getEntries() {
         return entries;
     }
 
+    /**
+     *
+     * @param badis
+     */
     public void read(ByteArrayDataInputStream badis) {
         try {
             int nrEntries = badis.readInt();
@@ -52,6 +75,10 @@ public class ForwardingTable {
         }
     }
 
+    /**
+     *
+     * @param bados
+     */
     public void write(ByteArrayDataOutputStream bados) {
         try {
             bados.writeInt(entries.size());
@@ -63,6 +90,12 @@ public class ForwardingTable {
         }
     }
 
+    /**
+     *
+     * @param source
+     * @param destination
+     * @return
+     */
     public short getImmediate(short source, short destination) {
         for (RoutingTableEntry routingTableEntry : entries) {
             if (routingTableEntry.getSource() == source && routingTableEntry.getDestination() == destination) {
@@ -72,18 +105,36 @@ public class ForwardingTable {
         return -1;
     }
 
+    /**
+     *
+     * @param entry
+     */
     public void add(RoutingTableEntry entry) {
         entries.add(entry);
     }
 
+    /**
+     *
+     * @param source
+     * @param destination
+     * @param immediate
+     */
     public void add(short source, short destination, short immediate) {
         entries.add(new RoutingTableEntry(source, destination, immediate));
     }
 
+    /**
+     *
+     * @param entry
+     */
     public void remove(RoutingTableEntry entry) {
         entries.remove(entry);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         String out = "";
@@ -96,6 +147,10 @@ public class ForwardingTable {
         return out;
     }
 
+    /**
+     *
+     * @param forwardingTable
+     */
     public void addAll(ForwardingTable forwardingTable) {
         entries.addAll(forwardingTable.getEntries());
     }

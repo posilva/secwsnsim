@@ -13,8 +13,15 @@ import java.util.Map;
  */
 public class NetworkKeyStore extends Hashtable<Short, byte[]> {
 
+    /**
+     *
+     */
     protected static NetworkKeyStore instance;
 
+    /**
+     *
+     * @return
+     */
     public static NetworkKeyStore getInstance() {
         if (instance == null) {
             instance = new NetworkKeyStore();
@@ -22,18 +29,34 @@ public class NetworkKeyStore extends Hashtable<Short, byte[]> {
         return instance;
     }
 
+    /**
+     *
+     * @param t
+     */
     public NetworkKeyStore(Map<? extends Short, ? extends byte[]> t) {
         super(t);
     }
 
+    /**
+     *
+     */
     public NetworkKeyStore() {
         super();
     }
 
+    /**
+     *
+     * @param initialCapacity
+     */
     public NetworkKeyStore(int initialCapacity) {
         super(initialCapacity);
     }
 
+    /**
+     *
+     * @param initialCapacity
+     * @param loadFactor
+     */
     public NetworkKeyStore(int initialCapacity, float loadFactor) {
         super(initialCapacity, loadFactor);
     }

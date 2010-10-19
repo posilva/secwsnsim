@@ -70,7 +70,7 @@ public class GUI_Utils {
      */
     public static String showSaveDialog(FileFilter[] filters, String title) throws IOException {
         JFileChooser jf = new JFileChooser();
-        if (filters != null) {
+        if (filters != null && filters.length >0) {
             jf.setAcceptAllFileFilterUsed(false);
             for (int i = 0; i < filters.length; i++) {
                 jf.addChoosableFileFilter(filters[i]);
@@ -129,7 +129,7 @@ public class GUI_Utils {
 
     public static String showOpenDialog(FileFilter[] filters, String title) throws IOException {
         JFileChooser jf = new JFileChooser();
-        if (filters != null) {
+        if (filters != null && filters.length > 0) {
             jf.setAcceptAllFileFilterUsed(false);
             for (int i = 0; i < filters.length; i++) {
                 jf.addChoosableFileFilter(filters[i]);

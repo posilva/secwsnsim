@@ -38,7 +38,7 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
     /**
      * Current phase
      */
-    protected String currentPhase = null;
+    protected String currentPhase = "NOPHASE_DEFINED";
     /**
      * Reference to the application level
      */
@@ -200,6 +200,7 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
      */
     private Object beforeSendMessageToAir(Object message) {
         if (isUnderAttack()) {
+            getController().incrementAttackedMessages();
             return doAttack(message);
         }
         return message;
@@ -396,11 +397,12 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
         super.reset();
         stable = false;
         protocolPhases.clear();
+        
         currentPhase = null;
     }
 
     public Object getUniqueId() {
-        return null;
+        throw new IllegalStateException("Derived classes must implement \"getUniqueId\" method ");
     }
 
     public void probing(IInstrumentMessage message) {

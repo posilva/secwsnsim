@@ -17,6 +17,10 @@ public class OneWaySequenceNumbersChain extends Vector<Long> {
     private int chainSize;
     private final Iterator<Long> chainIterator;
 
+    /**
+     *
+     * @param chainSize
+     */
     public OneWaySequenceNumbersChain(int chainSize) {
         this.chainSize = chainSize;
         createSequence(chainSize);
@@ -50,7 +54,6 @@ public class OneWaySequenceNumbersChain extends Vector<Long> {
 
     /**
      * Creates a sequence initiated by Start with the size indicated
-     * @param start
      * @param size
      */
     protected final void createSequence(int size) {

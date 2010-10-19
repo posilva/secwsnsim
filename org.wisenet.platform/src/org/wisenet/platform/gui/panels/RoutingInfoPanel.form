@@ -115,7 +115,7 @@
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="horizontalAlignment" type="int" value="4"/>
-            <Property name="toolTipText" type="java.lang.String" resourceKey="txtNrStableNodes.toolTipText"/>
+            <Property name="toolTipText" type="java.lang.String" value="Number of Stable Nodes" noResource="true"/>
             <Property name="name" type="java.lang.String" value="txtNrStableNodes" noResource="true"/>
           </Properties>
           <Events>
@@ -208,7 +208,7 @@
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="horizontalAlignment" type="int" value="4"/>
-            <Property name="toolTipText" type="java.lang.String" resourceKey="txtNrStableNodesPercent.toolTipText"/>
+            <Property name="toolTipText" type="java.lang.String" value="% of Stable Nodes" noResource="true"/>
             <Property name="name" type="java.lang.String" value="txtNrStableNodesPercent" noResource="true"/>
           </Properties>
           <Events>

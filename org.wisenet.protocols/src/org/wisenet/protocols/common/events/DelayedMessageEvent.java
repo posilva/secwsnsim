@@ -22,32 +22,67 @@ public class DelayedMessageEvent extends DelayedEvent {
     Node node;
     boolean reliable = false;
 
+    /**
+     *
+     * @return
+     */
     public Node getNode() {
         return node;
     }
 
+    /**
+     *
+     * @param node
+     */
     public void setNode(Node node) {
         this.node = node;
     }
 
+    /**
+     *
+     * @return
+     */
     public Object getMessage() {
         return message;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isReliable() {
         return reliable;
     }
 
+    /**
+     *
+     * @param reliable
+     */
     public void setReliable(boolean reliable) {
         this.reliable = reliable;
     }
 
+    /**
+     *
+     * @param time
+     * @param delay
+     * @param message
+     * @param node
+     */
     public DelayedMessageEvent(long time, long delay, Object message, Node node) {
         super(time, delay);
         this.message = message;
         this.node = node;
     }
 
+    /**
+     *
+     * @param time
+     * @param delay
+     * @param message
+     * @param node
+     * @param reliable
+     */
     public DelayedMessageEvent(long time, long delay, Object message, Node node, boolean reliable) {
         super(time, delay);
         this.message = message;

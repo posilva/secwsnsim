@@ -7,9 +7,14 @@ package org.wisenet.platform.gui;
 
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileFilter;
 import javax.xml.ws.Action;
 import org.jdesktop.application.Task;
@@ -32,7 +37,6 @@ import org.wisenet.simulator.components.simulation.listeners.SimulationEvent;
 import org.wisenet.simulator.components.simulation.listeners.SimulationTestEvent;
 import org.wisenet.simulator.gui.GraphicNode;
 
-import org.wisenet.simulator.utilities.DebugConsole;
 import org.wisenet.simulator.components.simulation.SimulationFactory;
 import org.wisenet.simulator.components.simulation.listeners.SimulationListener;
 import org.wisenet.simulator.core.node.Node;
@@ -56,6 +60,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         jScrollPane1.setAutoscrolls(true);
         btnDeployNodesMode.setSelected(true);
         updateSelectionGroup();
+        initOutputWindow();
     }
 
     private void buildTest() {
@@ -99,8 +104,12 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
 
         SelectionBG = new javax.swing.ButtonGroup();
         OperationBG = new javax.swing.ButtonGroup();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        simulationPanel1 = new org.wisenet.platform.gui.SimulationPanel();
+        logActions = new javax.swing.JPopupMenu();
+        mnuClear = new javax.swing.JMenuItem();
+        mnuSave = new javax.swing.JMenuItem();
+        logErrorActions = new javax.swing.JPopupMenu();
+        mnuClearErrors = new javax.swing.JMenuItem();
+        mnuSaveErrors = new javax.swing.JMenuItem();
         jToolBar1 = new javax.swing.JToolBar();
         btnRebuildNetwork = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JToolBar.Separator();
@@ -152,23 +161,54 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         searchPanel = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         txtSearchNode = new javax.swing.JFormattedTextField();
+        workbenchSplit = new javax.swing.JSplitPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        simulationPanel1 = new org.wisenet.platform.gui.SimulationPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        logPane = new javax.swing.JTextPane();
+        jSplitPane1 = new javax.swing.JSplitPane();
+        logOutputPanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        logOutputArea = new javax.swing.JTextArea();
+        logOutputErrPanel = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        logOutputErrorArea = new javax.swing.JTextArea();
+
+        mnuClear.setText("Clear");
+        mnuClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuClearActionPerformed(evt);
+            }
+        });
+        logActions.add(mnuClear);
+
+        mnuSave.setText("Save...");
+        mnuSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuSaveActionPerformed(evt);
+            }
+        });
+        logActions.add(mnuSave);
+
+        mnuClearErrors.setText("Clear");
+        mnuClearErrors.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuClearErrorsActionPerformed(evt);
+            }
+        });
+        logErrorActions.add(mnuClearErrors);
+
+        mnuSaveErrors.setText("Save...");
+        mnuSaveErrors.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuSaveErrorsActionPerformed(evt);
+            }
+        });
+        logErrorActions.add(mnuSaveErrors);
 
         setLayout(new java.awt.BorderLayout());
-
-        javax.swing.GroupLayout simulationPanel1Layout = new javax.swing.GroupLayout(simulationPanel1);
-        simulationPanel1.setLayout(simulationPanel1Layout);
-        simulationPanel1Layout.setHorizontalGroup(
-            simulationPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1088, Short.MAX_VALUE)
-        );
-        simulationPanel1Layout.setVerticalGroup(
-            simulationPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 578, Short.MAX_VALUE)
-        );
-
-        jScrollPane1.setViewportView(simulationPanel1);
-
-        add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jToolBar1.setFloatable(false);
@@ -176,6 +216,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         jToolBar1.setRollover(true);
 
         btnRebuildNetwork.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/refresh.png"))); // NOI18N
+        btnRebuildNetwork.setToolTipText("Rebuild Network"); // NOI18N
         btnRebuildNetwork.setFocusable(false);
         btnRebuildNetwork.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnRebuildNetwork.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -499,8 +540,8 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         });
         topToolbar.add(tgbRoutingAttackMode);
 
-        cmdSelectAttack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/gui/resources/attack.png"))); // NOI18N
-        cmdSelectAttack.setToolTipText("Select Active Routing Attack");
+        cmdSelectAttack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/Attack.png"))); // NOI18N
+        cmdSelectAttack.setToolTipText("Select Active Routing Attack"); // NOI18N
         cmdSelectAttack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmdSelectAttackActionPerformed(evt);
@@ -514,8 +555,8 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         topToolbar.add(cboSimAttacks);
         topToolbar.add(jSeparator9);
 
-        cmdTest.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/Test.png"))); // NOI18N
-        cmdTest.setToolTipText("Config Test");
+        cmdTest.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/CreateTests.png"))); // NOI18N
+        cmdTest.setToolTipText("Test Builder");
         cmdTest.setFocusable(false);
         cmdTest.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         cmdTest.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -560,7 +601,8 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         });
         topToolbar.add(cmdRunTest);
 
-        testPrepare.setText("P");
+        testPrepare.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/Rebuild.png"))); // NOI18N
+        testPrepare.setToolTipText("Build Test"); // NOI18N
         testPrepare.setFocusable(false);
         testPrepare.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         testPrepare.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -571,7 +613,8 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         });
         topToolbar.add(testPrepare);
 
-        testAddSources.setText("SRC");
+        testAddSources.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/SourceNode.png"))); // NOI18N
+        testAddSources.setToolTipText("Add/Remove Sender Sensors\n"); // NOI18N
         testAddSources.setFocusable(false);
         testAddSources.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         testAddSources.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -582,7 +625,8 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         });
         topToolbar.add(testAddSources);
 
-        testAddReceivers.setText("RCV");
+        testAddReceivers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/ReceiverNode.png"))); // NOI18N
+        testAddReceivers.setToolTipText("Add/Remove Receiver Sensors"); // NOI18N
         testAddReceivers.setFocusable(false);
         testAddReceivers.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         testAddReceivers.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -618,6 +662,75 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         topToolbar.add(searchPanel);
 
         add(topToolbar, java.awt.BorderLayout.PAGE_START);
+
+        workbenchSplit.setDividerLocation(1024);
+        workbenchSplit.setDividerSize(4);
+        workbenchSplit.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+        workbenchSplit.setAutoscrolls(true);
+        workbenchSplit.setContinuousLayout(true);
+        workbenchSplit.setOneTouchExpandable(true);
+
+        javax.swing.GroupLayout simulationPanel1Layout = new javax.swing.GroupLayout(simulationPanel1);
+        simulationPanel1.setLayout(simulationPanel1Layout);
+        simulationPanel1Layout.setHorizontalGroup(
+            simulationPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1108, Short.MAX_VALUE)
+        );
+        simulationPanel1Layout.setVerticalGroup(
+            simulationPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 486, Short.MAX_VALUE)
+        );
+
+        jScrollPane1.setViewportView(simulationPanel1);
+
+        workbenchSplit.setLeftComponent(jScrollPane1);
+
+        logPane.setEditable(false);
+        jScrollPane2.setViewportView(logPane);
+
+        workbenchSplit.setRightComponent(jScrollPane2);
+
+        jSplitPane1.setDividerLocation(600);
+        jSplitPane1.setOneTouchExpandable(true);
+
+        logOutputPanel.setLayout(new java.awt.BorderLayout());
+
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 11));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Output Window");
+        logOutputPanel.add(jLabel1, java.awt.BorderLayout.PAGE_START);
+
+        logOutputArea.setColumns(20);
+        logOutputArea.setEditable(false);
+        logOutputArea.setRows(5);
+        logOutputArea.setComponentPopupMenu(logActions);
+        jScrollPane3.setViewportView(logOutputArea);
+
+        logOutputPanel.add(jScrollPane3, java.awt.BorderLayout.CENTER);
+
+        jSplitPane1.setLeftComponent(logOutputPanel);
+
+        logOutputErrPanel.setLayout(new java.awt.BorderLayout());
+
+        jLabel2.setFont(new java.awt.Font("Arial", 1, 11));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Output Error Window");
+        logOutputErrPanel.add(jLabel2, java.awt.BorderLayout.PAGE_START);
+
+        logOutputErrorArea.setColumns(20);
+        logOutputErrorArea.setEditable(false);
+        logOutputErrorArea.setForeground(new java.awt.Color(192, 36, 2));
+        logOutputErrorArea.setRows(5);
+        logOutputErrorArea.setComponentPopupMenu(logErrorActions);
+        jScrollPane4.setViewportView(logOutputErrorArea);
+
+        logOutputErrPanel.add(jScrollPane4, java.awt.BorderLayout.CENTER);
+
+        jSplitPane1.setRightComponent(logOutputErrPanel);
+
+        workbenchSplit.setRightComponent(jSplitPane1);
+
+        add(workbenchSplit, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void selectStableNodes(boolean select) {
@@ -629,6 +742,10 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                 }
             });
         }
+    }
+
+    private void showDebugWindow() {
+        showLogPane(showDebugWindow.isSelected());
     }
 
     private void verVizinhosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verVizinhosActionPerformed
@@ -649,11 +766,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
     }//GEN-LAST:event_showMouseCoordinatesActionPerformed
 
     private void showDebugWindowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showDebugWindowActionPerformed
-        if (showDebugWindow.isSelected()) {
-            DebugConsole.getInstance().setVisible(true);
-        } else {
-            DebugConsole.getInstance().setVisible(false);
-        }
+        showDebugWindow();
     }//GEN-LAST:event_showDebugWindowActionPerformed
 
     private void viewNodesInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewNodesInfoActionPerformed
@@ -723,7 +836,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
     }//GEN-LAST:event_btnColorSettingsActionPerformed
 
     private void btnRebuildNetworkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRebuildNetworkActionPerformed
-        RebuildNetwork();
+        RebuildNetwork().execute();
     }//GEN-LAST:event_btnRebuildNetworkActionPerformed
 
     private void btnSimulationStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimulationStartActionPerformed
@@ -788,6 +901,22 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         // TODO add your handling code here:
         prepareTest();
     }//GEN-LAST:event_testPrepareActionPerformed
+
+    private void mnuClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuClearActionPerformed
+        clearLogArea();
+    }//GEN-LAST:event_mnuClearActionPerformed
+
+    private void mnuSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSaveActionPerformed
+        saveLogArea();
+    }//GEN-LAST:event_mnuSaveActionPerformed
+
+    private void mnuClearErrorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuClearErrorsActionPerformed
+        clearLogErrorArea();
+    }//GEN-LAST:event_mnuClearErrorsActionPerformed
+
+    private void mnuSaveErrorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSaveErrorsActionPerformed
+        saveLogErrorArea();
+    }//GEN-LAST:event_mnuSaveErrorsActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup OperationBG;
     private javax.swing.ButtonGroup SelectionBG;
@@ -814,7 +943,12 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
     private javax.swing.JButton cmdTest;
     private javax.swing.JButton gmaps;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator10;
     private javax.swing.JToolBar.Separator jSeparator11;
@@ -827,8 +961,20 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
     private javax.swing.JToolBar.Separator jSeparator7;
     private javax.swing.JToolBar.Separator jSeparator8;
     private javax.swing.JToolBar.Separator jSeparator9;
+    private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel lblActiveTest;
+    private javax.swing.JPopupMenu logActions;
+    private javax.swing.JPopupMenu logErrorActions;
+    private javax.swing.JTextArea logOutputArea;
+    private javax.swing.JPanel logOutputErrPanel;
+    private javax.swing.JTextArea logOutputErrorArea;
+    private javax.swing.JPanel logOutputPanel;
+    private javax.swing.JTextPane logPane;
+    private javax.swing.JMenuItem mnuClear;
+    private javax.swing.JMenuItem mnuClearErrors;
+    private javax.swing.JMenuItem mnuSave;
+    private javax.swing.JMenuItem mnuSaveErrors;
     private javax.swing.JPanel searchPanel;
     private javax.swing.JButton selRandomNodes;
     private javax.swing.JToggleButton selectionPointerTool;
@@ -844,6 +990,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
     private javax.swing.JToggleButton verOsQueConhecem;
     private javax.swing.JToggleButton verVizinhos;
     private javax.swing.JToggleButton viewNodesInfo;
+    private javax.swing.JSplitPane workbenchSplit;
     // End of variables declaration//GEN-END:variables
 
     private void updateSelectionGroup() {
@@ -864,7 +1011,8 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                 getSimulationPanel().startSimulation();
             } else {
                 GUI_Utils.showWarningMessage("Cannot start simulation without nodes deployed");
-                btnSimulationStart.setSelected(false);
+                OperationBG.clearSelection();
+
             }
         } catch (Exception e) {
             GUI_Utils.showException(e);
@@ -877,7 +1025,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                 simulationPanel1.pauseSimulation();
             } else {
                 GUI_Utils.showMessage("Cannot pause simulation without nodes deployed", JOptionPane.WARNING_MESSAGE);
-                btnSimulationPause.setSelected(false);
+                OperationBG.clearSelection();
             }
         } catch (Exception e) {
         }
@@ -889,7 +1037,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                 simulationPanel1.stopSimulation();
             } else {
                 GUI_Utils.showMessage("Cannot stop simulation without nodes deployed", JOptionPane.WARNING_MESSAGE);
-                btnSimulationStop.setSelected(false);
+                OperationBG.clearSelection();
             }
         } catch (Exception e) {
         }
@@ -933,7 +1081,9 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
     }
 
     private void showRoutingInfo() {
-        PlatformFrame.display(new RoutingInfoPanel(), "Routing Information", PlatformFrame.OK_MODE);
+        if (getSimulationPanel().getSimulation().isStarted()) {
+            PlatformFrame.display(new RoutingInfoPanel(), "Routing Information", PlatformFrame.OK_MODE);
+        }
     }
 
     private void loadNetworkTopology() {
@@ -1145,6 +1295,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
 
     private void addSourcesToTest() {
         Vector<GraphicNode> selNodes = null;
+
         if (currentTest != null && !currentTest.isBatchMode()) {
             if (getSimulationPanel().getSimulator().getNodes().size() > 0) {
                 selNodes = getSimulationPanel().getSelectedNodes();
@@ -1166,22 +1317,83 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                         }
 
                     }
-                    getSimulationPanel().updateLocal();
                 }
             }
         }
+        getSimulationPanel().updateLocal();
     }
 
     private void addReceiversToTest() {
     }
 
     private void prepareTest() {
-        if (currentTest != null) {
-            if (getSimulationPanel().getSimulator().getNodes().size() > 0) {
-                currentTest.prepare();
-            }
+        if (currentTest == null) {
+            showMessage("No active test to run!");
+            return;
+        }
+        if (!getSimulationPanel().getSimulation().isStarted()) {
+            showMessage("Simulation must have been started!");
+            return;
+        }
+        if (getSimulationPanel().getSimulator().getNodes().size() > 0) {
+            currentTest.prepare();
+        } else {
+            showMessage("No nodes deployed!");
+            return;
         }
 
+    }
+
+    private void showLogPane(boolean selected) {
+        if (!selected) {
+            workbenchSplit.setDividerLocation(.99);
+        } else {
+            workbenchSplit.setDividerLocation(.8);
+        }
+    }
+
+    private void initOutputWindow() {
+        redirectSystemStreams();
+    }
+
+    private void clearLogArea() {
+        logOutputArea.setText("");
+    }
+
+    private void saveLogArea() {
+        String output = "";
+        output = logOutputArea.getText();
+        if (output.trim().length() > 0) {
+            saveOutputToFile(output);
+        }
+
+    }
+
+    private void saveOutputToFile(String output) {
+        try {
+            String f = GUI_Utils.showSaveDialog(new FileFilter[]{}, "Save output");
+            if (f != null) {
+                FileWriter fw = new FileWriter(f);
+                fw.write(output);
+                fw.flush();
+                GUI_Utils.showinfoMessage("File saved!");
+            }
+        } catch (IOException ex) {
+            GUI_Utils.showException(ex);
+        }
+
+    }
+
+    private void saveLogErrorArea() {
+        String output = "";
+        output = logOutputErrorArea.getText();
+        if (output.trim().length() > 0) {
+            saveOutputToFile(output);
+        }
+    }
+
+    private void clearLogErrorArea() {
+        logOutputErrorArea.setText("");
     }
 
     private class RebuildNetworkTask extends org.jdesktop.application.Task<Object, Void> {
@@ -1228,6 +1440,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
     public void ColorSettingsAction() {
         if (PlatformManager.getInstance().haveActiveSimulation()) {
             Simulation simulation = (Simulation) PlatformManager.getInstance().getActiveSimulation();
+
 
 
             if (!simulation.getSimulator().isEmpty()) {
@@ -1285,5 +1498,66 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
 
 
 
+    }
+
+    private void redirectSystemStreams() {
+        OutputStream out = new OutputStream() {
+
+            @Override
+            public void write(int b) throws IOException {
+                updateTextArea(String.valueOf((char) b));
+            }
+
+            @Override
+            public void write(byte[] b, int off, int len) throws IOException {
+                updateTextArea(new String(b, off, len));
+            }
+
+            @Override
+            public void write(byte[] b) throws IOException {
+                write(b, 0, b.length);
+            }
+
+            private void updateTextArea(final String s) {
+                SwingUtilities.invokeLater(new Runnable() {
+
+                    public void run() {
+                        logOutputArea.append(s);
+                    }
+                });
+
+            }
+        };
+
+        OutputStream err = new OutputStream() {
+
+            @Override
+            public void write(int b) throws IOException {
+                updateTextAreaErr(String.valueOf((char) b));
+            }
+
+            @Override
+            public void write(byte[] b, int off, int len) throws IOException {
+                updateTextAreaErr(new String(b, off, len));
+            }
+
+            @Override
+            public void write(byte[] b) throws IOException {
+                write(b, 0, b.length);
+            }
+
+            private void updateTextAreaErr(final String s) {
+                SwingUtilities.invokeLater(new Runnable() {
+
+                    public void run() {
+                        logOutputErrorArea.append(s);
+                    }
+                });
+
+            }
+        };
+
+        System.setOut(new PrintStream(out, true));
+        System.setErr(new PrintStream(err, true));
     }
 }

@@ -28,6 +28,7 @@ public class INSENSMessagePayloadFactory {
      * @param ows current round OWS sequence number
      * @param table forwarding table
      * @param key Private key 
+     * @param node
      * @return
      */
     public static byte[] createRUPDPayload(short src, short dst, short imt, long ows, ForwardingTable table, byte[] key, Node node) {
@@ -55,6 +56,8 @@ public class INSENSMessagePayloadFactory {
      * @param ows message ows
      * @param parent_mac can be null if not parent mac needded
      * @param key private key to create mac
+     * @param node
+     * @return
      */
     public static byte[] createREQPayload(short id, long ows, byte[] key, byte[] parent_mac, Node node) {
         try {
@@ -85,6 +88,8 @@ public class INSENSMessagePayloadFactory {
      * @param id Feedback node id
      * @param key Private key of the node
      * @param neighborInfo Neighbor info data
+     * @param parent_mac
+     * @param node
      * @return
      */
     public static byte[] createFBKPayload(short id, byte[] key, NeighborInfo neighborInfo, byte[] parent_mac, Node node) {
@@ -108,6 +113,16 @@ public class INSENSMessagePayloadFactory {
         return null;
     }
 
+    /**
+     *
+     * @param src
+     * @param dst
+     * @param imt
+     * @param payload
+     * @param key
+     * @param node
+     * @return
+     */
     public static byte[] createDATAPayload(short src, short dst, short imt, byte[] payload, byte[] key, Node node) {
         try {
             ByteArrayDataOutputStream bados = new ByteArrayDataOutputStream();
@@ -129,6 +144,17 @@ public class INSENSMessagePayloadFactory {
         return null;
     }
 
+    /**
+     *
+     * @param src
+     * @param dst
+     * @param imt
+     * @param ows
+     * @param table
+     * @param mac
+     * @param node
+     * @return
+     */
     public static byte[] updateRUPDPayload(short src, short dst, short imt, long ows, ForwardingTable table, byte[] mac, Node node) {
         try {
             ByteArrayDataOutputStream bados = new ByteArrayDataOutputStream();
@@ -147,6 +173,16 @@ public class INSENSMessagePayloadFactory {
 
     }
 
+    /**
+     *
+     * @param src
+     * @param dst
+     * @param imt
+     * @param payload
+     * @param mac
+     * @param node
+     * @return
+     */
     public static byte[] updateDATAPayload(short src, short dst, short imt, byte[] payload, byte[] mac, Node node) {
         try {
             ByteArrayDataOutputStream bados = new ByteArrayDataOutputStream();

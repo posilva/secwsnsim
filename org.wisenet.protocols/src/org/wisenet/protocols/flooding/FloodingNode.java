@@ -14,14 +14,28 @@ import org.wisenet.simulator.core.radio.RadioModel;
  */
 public class FloodingNode extends BasicNode {
 
+    /**
+     *
+     * @param sim
+     * @param radioModel
+     */
     public FloodingNode(Simulator sim, RadioModel radioModel) {
         super(sim, radioModel);
+        getGraphicNode().setRadius(3);
     }
 
+    /**
+     *
+     * @return
+     */
     public Object getCoverageId() {
         return getId();
     }
 
+    /**
+     *
+     * @return
+     */
     public Object getLatencyUniqueId() {
         return getId();
     }

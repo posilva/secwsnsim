@@ -13,6 +13,9 @@ import org.wisenet.simulator.core.node.factories.AbstractNodeFactory;
  */
 public class INSENSNodeFactory extends AbstractNodeFactory {
 
+    /**
+     *
+     */
     public INSENSNodeFactory() {
     }
 

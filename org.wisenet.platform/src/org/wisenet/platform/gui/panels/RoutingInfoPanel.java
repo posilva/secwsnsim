@@ -67,8 +67,7 @@ public class RoutingInfoPanel extends PlatformPanel {
 
         txtNrStableNodes.setEditable(false);
         txtNrStableNodes.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(RoutingInfoPanel.class);
-        txtNrStableNodes.setToolTipText(resourceMap.getString("txtNrStableNodes.toolTipText")); // NOI18N
+        txtNrStableNodes.setToolTipText("Number of Stable Nodes"); // NOI18N
         txtNrStableNodes.setName("txtNrStableNodes"); // NOI18N
         txtNrStableNodes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -130,7 +129,7 @@ public class RoutingInfoPanel extends PlatformPanel {
 
         txtNrStableNodesPercent.setEditable(false);
         txtNrStableNodesPercent.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txtNrStableNodesPercent.setToolTipText(resourceMap.getString("txtNrStableNodesPercent.toolTipText")); // NOI18N
+        txtNrStableNodesPercent.setToolTipText("% of Stable Nodes"); // NOI18N
         txtNrStableNodesPercent.setName("txtNrStableNodesPercent"); // NOI18N
         txtNrStableNodesPercent.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

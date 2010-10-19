@@ -50,13 +50,12 @@ public class SimulationPropertiesPanel extends PlatformPanel {
         tgbFastMode.setAction(actionMap.get("SetFastMode")); // NOI18N
         simulationMode.add(tgbFastMode);
         tgbFastMode.setSelected(true);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(SimulationPropertiesPanel.class);
-        tgbFastMode.setText(resourceMap.getString("tgbFastMode.text")); // NOI18N
+        tgbFastMode.setText("Fast Mode"); // NOI18N
         tgbFastMode.setName("tgbFastMode"); // NOI18N
 
         tgbRealTimeMode.setAction(actionMap.get("SetRealtimeMode")); // NOI18N
         simulationMode.add(tgbRealTimeMode);
-        tgbRealTimeMode.setText(resourceMap.getString("tgbRealTimeMode.text")); // NOI18N
+        tgbRealTimeMode.setText("Real Time Mode"); // NOI18N
         tgbRealTimeMode.setName("tgbRealTimeMode"); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);

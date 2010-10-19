@@ -4,22 +4,31 @@
 package org.wisenet.protocols.flooding;
 
 import java.util.HashSet;
+import org.wisenet.protocols.common.attacks.BlackholeRoutingAttack;
 import org.wisenet.protocols.flooding.messages.FloodingMessage;
 import org.wisenet.simulator.core.Application;
 import org.wisenet.simulator.core.energy.EnergyConsumptionAction;
 import org.wisenet.simulator.core.Message;
 import org.wisenet.simulator.core.node.layers.routing.RoutingLayer;
+import org.wisenet.simulator.core.node.layers.routing.attacks.AttacksEntry;
 
 /**
-* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  *
  */
 public class FloodingRoutingLayer extends RoutingLayer {
 
+    /**
+     *
+     */
     protected HashSet<Long> receivedMessages = new HashSet<Long>();
 
+    /**
+     *
+     */
     public FloodingRoutingLayer() {
         super();
+
     }
 
     /**
@@ -40,15 +49,15 @@ public class FloodingRoutingLayer extends RoutingLayer {
                 FloodingMessage m = msg;
                 if (!receivedMessages.contains(m.getMessageNumber())) {
                     receivedMessages.add(m.getMessageNumber());
-
-
-                    if (m.getDestin() == (int) getNode().getId()) {
+                    if (m.getDestinationId().equals(getUniqueId())) {
                         Application app = getNode().getApplication();
                         if (app != null) {
                             app.receiveMessage(msg);
+                            done(msg);  // must implement this method to notify
+                            // the routing layer about message reception
                         }
                     } else {
-                        send(msg);
+                        routeMessage(msg);
 
                     }
                 }
@@ -65,7 +74,8 @@ public class FloodingRoutingLayer extends RoutingLayer {
         System.out.println("Message Number: " + ((Message) message).getMessageNumber());
         application = app;
         receivedMessages.add(((Message) message).getMessageNumber());
-        send(message);
+        FloodingMessage msg = encapsulateMessage((Message) message);
+        send(msg);
         return true;
     }
 
@@ -82,13 +92,12 @@ public class FloodingRoutingLayer extends RoutingLayer {
 
     @Override
     public void onStartUp() {
-//        if (LatencyController.getInstance().getLatencyMessageClass() == null) {
-//            LatencyController.getInstance().setLatencyMessageClass(LatencyTestMessage.class);
-//        }
+        setStable(true);
     }
 
     @Override
     public void onRouteMessage(Object message) {
+        send(message);
     }
 
     @Override
@@ -115,5 +124,26 @@ public class FloodingRoutingLayer extends RoutingLayer {
 
     @Override
     protected void initAttacks() {
+        AttacksEntry entry = new AttacksEntry(false, "Blackhole Attack", new BlackholeRoutingAttack(this));
+        attacks.addEntry(entry);
+        getController().registerAttack(entry);
+
+    }
+
+    private FloodingMessage encapsulateMessage(Message message) {
+
+        FloodingMessage m = new FloodingMessage();
+        m.setUniqueId(message.getUniqueId());
+        m.setSourceId(message.getSourceId());
+        m.setDestinationId(message.getDestinationId());
+        byte[] new_payload = message.getPayload();
+        m.setPayload(new_payload);
+        getController().addMessageSentCounter((short) 0);
+        return m;
+    }
+
+    @Override
+    public Object getUniqueId() {
+        return getNode().getId();
     }
 }

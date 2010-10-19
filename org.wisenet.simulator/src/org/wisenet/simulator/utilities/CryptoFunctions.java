@@ -2,7 +2,7 @@ package org.wisenet.simulator.utilities;
 
 /**
  *
-* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -33,6 +33,7 @@ import org.bouncycastle.crypto.params.KeyParameter;
  */
 public class CryptoFunctions {
 
+    static boolean bypassBouncyCastle = false;
 //    private static final String CYPHER_SUITE = "Skipjack/CTR/NoPadding";
     private static final String CYPHER_SUITE = "Skipjack/CFB/NoPadding";
     private static final String CYPHER_ALGORITHM = "Skipjack";
@@ -61,11 +62,14 @@ public class CryptoFunctions {
      */
     public static byte[] cipherData(byte[] data, byte[] key, byte[] iv) {
         try {
-
-            SecretKeySpec key_spec = new SecretKeySpec(key, CYPHER_ALGORITHM);
-            Cipher c = Cipher.getInstance(CYPHER_SUITE, "BC");
-            c.init(Cipher.ENCRYPT_MODE, key_spec, new IvParameterSpec(iv));
-            return c.doFinal(data);
+            if (!bypassBouncyCastle) {
+                SecretKeySpec key_spec = new SecretKeySpec(key, CYPHER_ALGORITHM);
+                Cipher c = Cipher.getInstance(CYPHER_SUITE, "BC");
+                c.init(Cipher.ENCRYPT_MODE, key_spec, new IvParameterSpec(iv));
+                return c.doFinal(data);
+            } else {
+                return data;
+            }
         } catch (NoSuchAlgorithmException e) {
             Utilities.handleException(e);
             System.exit(0);
@@ -95,10 +99,15 @@ public class CryptoFunctions {
      */
     public static byte[] decipherData(byte[] data, byte[] key, byte[] iv) {
         try {
-            SecretKeySpec key_spec = new SecretKeySpec(key, CYPHER_ALGORITHM);
-            Cipher c = Cipher.getInstance(CYPHER_SUITE, "BC");
-            c.init(Cipher.DECRYPT_MODE, key_spec, new IvParameterSpec(iv));
-            return c.doFinal(data);
+            if (!bypassBouncyCastle) {
+
+                SecretKeySpec key_spec = new SecretKeySpec(key, CYPHER_ALGORITHM);
+                Cipher c = Cipher.getInstance(CYPHER_SUITE, "BC");
+                c.init(Cipher.DECRYPT_MODE, key_spec, new IvParameterSpec(iv));
+                return c.doFinal(data);
+            } else {
+                return data;
+            }
         } catch (NoSuchAlgorithmException e) {
             Utilities.handleException(e);
         } catch (NoSuchPaddingException e) {

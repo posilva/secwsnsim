@@ -75,7 +75,10 @@ public class AttacksList {
     public void updateAttack(Object newAttack) {
         for (AttacksEntry attacksEntry : attacksList) {
             if (attacksEntry.getAttack().getClass().getName().equals(newAttack.getClass().getName())) {
-                attacksEntry.attack = (IRoutingAttack) newAttack;
+                
+                ((IRoutingAttack) newAttack).setRoutingLayer(getRoutingLayer());
+                attacksEntry.setAttack((IRoutingAttack) newAttack);
+
             }
         }
     }

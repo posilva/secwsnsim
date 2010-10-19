@@ -44,10 +44,25 @@ import org.wisenet.simulator.core.node.layers.routing.attacks.AttacksEntry;
  */
 public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandler {
 
+    /**
+     *
+     */
     public static final String PHASE_FORWARD_DATA = "FORWARD_DATA";
+    /**
+     *
+     */
     public static final String PHASE_ROUTE_FEEDBACK = "ROUTE_FEEDBACK";
+    /**
+     *
+     */
     public static final String PHASE_ROUTE_REQUEST = "ROUTE_REQUEST";
+    /**
+     *
+     */
     public static final String PHASE_ROUTE_UPDATE = "ROUTE_UPDATE";
+    /**
+     *
+     */
     public static final String PHASE_SETUP = "SETUP";
     /**
      * Node info attributes
@@ -708,6 +723,10 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         getReliabilityInstrument().setMessageClass(EvaluationINSENSDATAMessage.class);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return forwardingTable.toString();

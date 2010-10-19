@@ -14,6 +14,10 @@ import java.io.OutputStream;
  */
 public class ByteArrayDataOutputStream extends DataOutputStream {
 
+    /**
+     *
+     * @param out
+     */
     public ByteArrayDataOutputStream(OutputStream out) {
         super(out);
         if (!(out instanceof ByteArrayOutputStream)) {
@@ -21,10 +25,17 @@ public class ByteArrayDataOutputStream extends DataOutputStream {
         }
     }
 
+    /**
+     *
+     */
     public ByteArrayDataOutputStream() {
         super(new ByteArrayOutputStream());
     }
 
+    /**
+     *
+     * @return
+     */
     public byte[] toByteArray() {
         if (!(out instanceof ByteArrayOutputStream)) {
             throw new IllegalStateException("output stream must be a ByteArrayOutputStream instance");

@@ -1,18 +1,35 @@
 package org.wisenet.protocols.insens.basestation.dijkstra.model;
 
+/**
+ *
+ * @author posilva
+ */
 public class Vertex {
 
     final private short id;
 
+    /**
+     *
+     * @param id
+     */
     public Vertex(short id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public short getId() {
         return Short.valueOf(id);
     }
 
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -35,6 +52,10 @@ public class Vertex {
 
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "" + id;

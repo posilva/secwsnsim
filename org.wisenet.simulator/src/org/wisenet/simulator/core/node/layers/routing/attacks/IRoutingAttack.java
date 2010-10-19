@@ -11,9 +11,6 @@ import org.wisenet.simulator.core.node.layers.routing.RoutingLayer;
  * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public interface IRoutingAttack {
-    /*
-     * Gets if the attack is enabled
-     */
 
     /**
      *
@@ -43,4 +40,10 @@ public interface IRoutingAttack {
      * @return
      */
     public Object attack(Object message);
+
+    /**
+     * 
+     * @return
+     */
+    public void setRoutingLayer(RoutingLayer routingLayer);
 }

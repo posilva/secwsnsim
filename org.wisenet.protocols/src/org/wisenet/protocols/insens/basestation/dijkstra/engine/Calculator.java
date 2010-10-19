@@ -11,6 +11,10 @@ import java.util.Set;
 import org.wisenet.protocols.insens.basestation.dijkstra.model.Edge;
 import org.wisenet.protocols.insens.basestation.dijkstra.model.Graph;
 
+/**
+ *
+ * @author posilva
+ */
 @SuppressWarnings("unchecked")
 public class Calculator {
 
@@ -31,6 +35,10 @@ public class Calculator {
         edges = new ArrayList<Edge>();
     }
 
+    /**
+     *
+     * @return
+     */
     public static Calculator getInstance() {
         if (instance == null) {
             instance = new Calculator();
@@ -38,14 +46,27 @@ public class Calculator {
         return instance;
     }
 
+    /**
+     *
+     * @param vertexs
+     */
     public void addVertexs(Collection vertexs) {
         nodes.addAll(vertexs);
     }
 
+    /**
+     *
+     * @param id
+     */
     public void addVertex(short id) {
         nodes.add(id);
     }
 
+    /**
+     *
+     * @param v1
+     * @param v2
+     */
     public void addEdge(short v1, short v2) {
 //        int i1 = nodes.indexOf(v1);
 //        int i2 = nodes.indexOf(v2);
@@ -53,10 +74,19 @@ public class Calculator {
         edges.add(new Edge(v1, v2));
     }
 
+    /**
+     *
+     * @param edges
+     */
     public void addEdges(Collection<Edge> edges) {
         this.edges.addAll(edges);
     }
 
+    /**
+     *
+     * @return
+     * @throws CalculatorException
+     */
     public Calculator prepare() throws CalculatorException {
         if (nodes.isEmpty()) {
             throw new CalculatorException("Nodes cannot be empty");
@@ -71,6 +101,12 @@ public class Calculator {
         return instance;
     }
 
+    /**
+     *
+     * @param from
+     * @param to
+     * @return
+     */
     public LinkedList calculatePath(short from, short to) {
 //        int i1 = nodes.indexOf(from);
 //        int i2 = nodes.indexOf(to);
@@ -81,6 +117,12 @@ public class Calculator {
         return path;
     }
 
+    /**
+     *
+     * @param from
+     * @param toSet
+     * @return
+     */
     public Hashtable calculateAllPathsFromTo(short from, Set toSet) {
         Short v1 = (Short) from;
         Hashtable pathsTo = new Hashtable();
@@ -99,6 +141,11 @@ public class Calculator {
         return pathsTo;
     }
 
+    /**
+     *
+     * @param from
+     * @return
+     */
     public Hashtable calculateAllPathsFrom(short from) {
 
         Short v1 = (Short) from;
@@ -115,6 +162,10 @@ public class Calculator {
         return pathsTo;
     }
 
+    /**
+     *
+     * @return
+     */
     public Hashtable calculateAllPaths() {
         Hashtable pathsTable = new Hashtable();
         for (Iterator from = nodes.iterator(); from.hasNext();) {

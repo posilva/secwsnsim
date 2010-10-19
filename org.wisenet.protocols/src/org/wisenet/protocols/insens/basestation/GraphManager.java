@@ -30,6 +30,10 @@ public class GraphManager {
     }
 
 
+    /**
+     *
+     * @return
+     */
     public Vector<Short> getVertices() {
         return vertices;
     }
