@@ -22,7 +22,12 @@ package org.wisenet.protocols.common;
  **************************************************************************/
 public class GeneralHashFunctions {
 
-   public static long RSHash(String str)
+    /**
+     *
+     * @param str
+     * @return
+     */
+    public static long RSHash(String str)
    {
       int b     = 378551;
       int a     = 63689;
@@ -39,6 +44,11 @@ public class GeneralHashFunctions {
    /* End Of RS Hash Function */
 
 
+   /**
+    *
+    * @param str
+    * @return
+    */
    public static long JSHash(String str)
    {
       long hash = 1315423911;
@@ -53,6 +63,11 @@ public class GeneralHashFunctions {
    /* End Of JS Hash Function */
 
 
+   /**
+    *
+    * @param str
+    * @return
+    */
    public static long PJWHash(String str)
    {
       long BitsInUnsignedInt = (long)(4 * 8);
@@ -77,6 +92,11 @@ public class GeneralHashFunctions {
    /* End Of  P. J. Weinberger Hash Function */
 
 
+   /**
+    *
+    * @param str
+    * @return
+    */
    public static long ELFHash(String str)
    {
       long hash = 0;
@@ -98,6 +118,11 @@ public class GeneralHashFunctions {
    /* End Of ELF Hash Function */
 
 
+   /**
+    *
+    * @param str
+    * @return
+    */
    public  static long BKDRHash(String str)
    {
       long seed = 131; // 31 131 1313 13131 131313 etc..
@@ -113,6 +138,11 @@ public class GeneralHashFunctions {
    /* End Of BKDR Hash Function */
 
 
+   /**
+    *
+    * @param str
+    * @return
+    */
    public  static long SDBMHash(String str)
    {
       long hash = 0;
@@ -127,6 +157,11 @@ public class GeneralHashFunctions {
    /* End Of SDBM Hash Function */
 
 
+   /**
+    *
+    * @param str
+    * @return
+    */
    public  static long DJBHash(String str)
    {
       long hash = 5381;
@@ -141,6 +176,11 @@ public class GeneralHashFunctions {
    /* End Of DJB Hash Function */
 
 
+   /**
+    *
+    * @param str
+    * @return
+    */
    public  static long DEKHash(String str)
    {
       long hash = str.length();
@@ -155,6 +195,11 @@ public class GeneralHashFunctions {
    /* End Of DEK Hash Function */
 
 
+   /**
+    *
+    * @param str
+    * @return
+    */
    public  static long BPHash(String str)
    {
       long hash = 0;
@@ -169,6 +214,11 @@ public class GeneralHashFunctions {
    /* End Of BP Hash Function */
 
 
+   /**
+    *
+    * @param str
+    * @return
+    */
    public static  long FNVHash(String str)
    {
       long fnv_prime = 0x811C9DC5;
@@ -185,6 +235,11 @@ public class GeneralHashFunctions {
    /* End Of FNV Hash Function */
 
 
+   /**
+    *
+    * @param str
+    * @return
+    */
    public static long APHash(String str)
    {
       long hash = 0xAAAAAAAA;

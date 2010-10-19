@@ -16,10 +16,24 @@ import org.wisenet.simulator.utilities.CryptoFunctions;
  */
 public class RREQPayload extends INSENSMessagePayload {
 
+    /**
+     *
+     */
     public short sourceId;
+    /**
+     *
+     */
     public long ows;
+    /**
+     *
+     */
     public byte[] mac;
 
+    /**
+     *
+     * @param payload
+     * @throws INSENSException
+     */
     public RREQPayload(byte[] payload) throws INSENSException {
         super(payload);
         try {

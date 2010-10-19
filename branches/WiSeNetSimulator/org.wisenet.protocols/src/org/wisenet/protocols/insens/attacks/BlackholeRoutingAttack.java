@@ -11,12 +11,19 @@ import org.wisenet.simulator.core.node.layers.routing.attacks.AbstractRoutingAtt
  *
  * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
-public class BlackholeRoutingAttack extends AbstractRoutingAttack implements IRuntimeEditable {
+public class BlackholeRoutingAttack extends AbstractRoutingAttack {
 
+    /**
+     *
+     */
     public BlackholeRoutingAttack() {
         super();
     }
 
+    /**
+     *
+     * @param routingLayer
+     */
     public BlackholeRoutingAttack(RoutingLayer routingLayer) {
         super(routingLayer);
     }

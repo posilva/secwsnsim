@@ -11,18 +11,34 @@ package org.wisenet.protocols.insens;
  */
 public class INSENSException extends Exception{
 
+    /**
+     *
+     * @param cause
+     */
     public INSENSException(Throwable cause) {
         super(cause);
     }
 
+    /**
+     *
+     * @param message
+     * @param cause
+     */
     public INSENSException(String message, Throwable cause) {
         super(message, cause);
     }
 
+    /**
+     *
+     * @param message
+     */
     public INSENSException(String message) {
         super(message);
     }
 
+    /**
+     *
+     */
     public INSENSException() {
     }
 

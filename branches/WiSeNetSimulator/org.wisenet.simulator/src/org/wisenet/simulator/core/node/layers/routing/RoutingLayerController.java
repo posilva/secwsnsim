@@ -31,6 +31,7 @@ public class RoutingLayerController extends PersistantObject implements Paramete
      */
     protected boolean testing = false;
     private AbstractTest activeTest;
+    private long attackedNodes;
 
     void registerAsStable(RoutingLayer nodeRL) {
         stableNodesSet.add(nodeRL);
@@ -104,6 +105,7 @@ public class RoutingLayerController extends PersistantObject implements Paramete
     public void reset() {
         messageReceivedByTypeCounter.clear();
         messageSentByTypeCounter.clear();
+        attackedNodes = 0;
         stableNodesSet.clear();
     }
 
@@ -194,7 +196,11 @@ public class RoutingLayerController extends PersistantObject implements Paramete
         this.activeTest = activeTest;
     }
 
+    public void incrementAttackedMessages() {
+        attackedNodes++;
+    }
+
     public long getTotalAttackedMessages() {
-        return 0L;
+        return attackedNodes;
     }
 }

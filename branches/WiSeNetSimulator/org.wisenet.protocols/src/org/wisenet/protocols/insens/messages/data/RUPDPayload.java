@@ -16,14 +16,37 @@ import org.wisenet.simulator.utilities.CryptoFunctions;
  * @author Pedro Marques da Silva
  */
 public class RUPDPayload extends INSENSMessagePayload {
+    /**
+     *
+     */
     public short source;
+    /**
+     *
+     */
     public short destination;
+    /**
+     *
+     */
     public short immediate;
+    /**
+     *
+     */
     public long ows;
+    /**
+     *
+     */
     public ForwardingTable forwardingTable;
 
+    /**
+     *
+     */
     public byte[] mac;
     
+    /**
+     *
+     * @param payload
+     * @throws INSENSException
+     */
     public RUPDPayload(byte[] payload) throws INSENSException {
         super(payload);
         

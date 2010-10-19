@@ -25,13 +25,14 @@ public class HelloApplication extends Application {
         byte parameter = askForParameter();
         switch (parameter) {
             case 0:
-                sendHelloTo((short)2);
+                sendHelloTo((short) 2);
                 break;
             default:
                 JOptionPane.showMessageDialog(null, "NONE");
                 break;
         }
     }
+
     /**
      * 
      * @return
@@ -41,11 +42,11 @@ public class HelloApplication extends Application {
         return Byte.valueOf(result);
     }
 
-    void sendHelloTo( short id ){
-        FloodingMessage m = new FloodingMessage(null);
-        m.setType((byte)1);
-        m.setSource(getNode().getId());
-        m.setDestin(id);
+    void sendHelloTo(short id) {
+        FloodingMessage m = new FloodingMessage("HELLO".getBytes());
+        m.setType((byte) 1);
+        m.setSourceId(getNode().getId());
+        m.setDestinationId(id);
         m.setMessageData("HELLO");
         sendMessage(m);
     }

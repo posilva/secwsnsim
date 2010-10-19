@@ -13,10 +13,17 @@ import org.wisenet.simulator.components.instruments.IInstrumentMessage;
  */
 public class EvaluationINSENSDATAMessage extends INSENSDATAMessage implements IInstrumentMessage {
 
+    /**
+     *
+     */
     public EvaluationINSENSDATAMessage() {
         super("A".getBytes());
     }
 
+    /**
+     *
+     * @param payload
+     */
     public EvaluationINSENSDATAMessage(byte[] payload) {
         super(payload);
     }
@@ -48,6 +55,10 @@ public class EvaluationINSENSDATAMessage extends INSENSDATAMessage implements II
         return getID();
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setUniqueId(long id) {
         setID(id);
     }

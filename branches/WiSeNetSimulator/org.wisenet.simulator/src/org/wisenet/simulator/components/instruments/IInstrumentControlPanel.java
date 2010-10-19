@@ -11,6 +11,7 @@ package org.wisenet.simulator.components.instruments;
 public interface IInstrumentControlPanel {
 
     /**
+     * 
      *
      * @param controller
      */

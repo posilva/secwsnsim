@@ -16,13 +16,36 @@ import org.wisenet.simulator.utilities.CryptoFunctions;
  */
 public class DATAPayload extends INSENSMessagePayload {
 
+    /**
+     *
+     */
     public short source;
+    /**
+     *
+     */
     public short destination;
+    /**
+     *
+     */
     public short immediate;
+    /**
+     *
+     */
     public int size;
+    /**
+     *
+     */
     public byte[] data;
+    /**
+     *
+     */
     public byte[] mac;
 
+    /**
+     *
+     * @param payload
+     * @throws INSENSException
+     */
     public DATAPayload(byte[] payload) throws INSENSException {
         super(payload);
 

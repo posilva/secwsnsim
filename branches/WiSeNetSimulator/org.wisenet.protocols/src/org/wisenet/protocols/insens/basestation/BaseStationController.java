@@ -36,31 +36,59 @@ public class BaseStationController {
     private Vector allPaths;
     private final INSENSRoutingLayer basestation;
 
+    /**
+     *
+     * @return
+     */
     public INSENSRoutingLayer getBasestation() {
         return basestation;
     }
 
+    /**
+     *
+     * @param basestation
+     */
     public BaseStationController(INSENSRoutingLayer basestation) {
         this.basestation = basestation;
 
     }
 
+    /**
+     *
+     * @return
+     */
     public Vector getAllPaths() {
         return allPaths;
     }
 
+    /**
+     *
+     * @return
+     */
     public Hashtable getFirstPaths() {
         return firstPaths;
     }
 
+    /**
+     *
+     * @return
+     */
     public Hashtable getNetworkNeighborsTable() {
         return networkNeighborsTable;
     }
 
+    /**
+     *
+     * @return
+     */
     public Hashtable getSecondPaths() {
         return secondPaths;
     }
 
+    /**
+     *
+     * @return
+     */
     public Hashtable getFeedbackMessagesTable() {
         return feedbackMessagesTable;
     }
@@ -109,6 +137,7 @@ public class BaseStationController {
      * Calculates a second path excluding first path nodes and neighbors
      * @param firstpath
      * @return
+     * @throws CalculatorException
      */
     public LinkedList calculateSecondPath(LinkedList firstpath) throws CalculatorException {
         LinkedList path = new LinkedList();
@@ -285,8 +314,14 @@ public class BaseStationController {
         }
     }
 
+    /**
+     *
+     */
     protected class TaskSecondPathsCalculator implements Runnable {
 
+        /**
+         *
+         */
         public void run() {
 
             Object key;
@@ -430,6 +465,10 @@ public class BaseStationController {
         return table;
     }
 
+    /**
+     *
+     * @return
+     */
     public Hashtable<Short, ForwardingTable> getForwardingTables() {
         return forwardingTables;
     }

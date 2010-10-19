@@ -85,6 +85,7 @@ public class SimulationWizardPanel extends PlatformPanel {
         jLabel6 = new javax.swing.JLabel();
         txtSimulationDescription = new javax.swing.JTextField();
         cmdLoadFromFIle = new javax.swing.JButton();
+        cmdSaveToFile = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -254,6 +255,15 @@ public class SimulationWizardPanel extends PlatformPanel {
             }
         });
 
+        cmdSaveToFile.setText("Save to file..."); // NOI18N
+        cmdSaveToFile.setName("cmdSaveToFile"); // NOI18N
+        cmdSaveToFile.setPreferredSize(new java.awt.Dimension(50, 24));
+        cmdSaveToFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdSaveToFileActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -267,9 +277,11 @@ public class SimulationWizardPanel extends PlatformPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(txtSimulationName, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
-                        .addComponent(cmdLoadFromFIle, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtSimulationDescription, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(cmdSaveToFile, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cmdLoadFromFIle, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSimulationDescription, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -279,7 +291,8 @@ public class SimulationWizardPanel extends PlatformPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSimName)
                     .addComponent(txtSimulationName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmdLoadFromFIle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmdLoadFromFIle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmdSaveToFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -294,9 +307,9 @@ public class SimulationWizardPanel extends PlatformPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -345,6 +358,17 @@ public class SimulationWizardPanel extends PlatformPanel {
     private void optStaticZActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optStaticZActionPerformed
         setZInput();
     }//GEN-LAST:event_optStaticZActionPerformed
+
+    private void cmdSaveToFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdSaveToFileActionPerformed
+        GUI_Utils.showinfoMessage("Feature not yet implemented!");
+        return ;
+//        if (txtSimulationName.getText().trim().length() > 0 && cboNodeClass.getItemCount() > 0 && cboRadioModelClass.getItemCount() > 0 && cboSimulatorClass.getItemCount() > 0) {
+//            SimulationSettings sets = new SimulationSettings();
+//            sets.setName(txtSimulationName.getName());
+//
+//
+//        }
+    }//GEN-LAST:event_cmdSaveToFileActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup bgValueZ;
     private javax.swing.JComboBox cboNodeClass;
@@ -352,6 +376,7 @@ public class SimulationWizardPanel extends PlatformPanel {
     private javax.swing.JComboBox cboSimulatorClass;
     private javax.swing.JButton cmdEnergyModel;
     private javax.swing.JButton cmdLoadFromFIle;
+    private javax.swing.JButton cmdSaveToFile;
     private javax.swing.JSpinner environAttenuation;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -396,7 +421,7 @@ public class SimulationWizardPanel extends PlatformPanel {
             sf.setNodeFactoryClass(getClassInstance(((ClassDefinitions) cboNodeClass.getSelectedItem()).className));
             sf.setNodeRange(nodeRangeSlider.getValue());
 
-            
+
             if (!energyModelConfig) {
 
                 energyModel = EnergyModel.getDefaultInstance();

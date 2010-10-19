@@ -11,6 +11,10 @@ import java.util.Set;
 import org.wisenet.protocols.insens.basestation.dijkstra.model.Edge;
 import org.wisenet.protocols.insens.basestation.dijkstra.model.Graph;
 
+/**
+ *
+ * @author posilva
+ */
 public class Algorithm {
 
     private final List<Short> nodes;
@@ -20,11 +24,19 @@ public class Algorithm {
     private Map<Short, Short> predecessors;
     private Map<Short, Integer> distance;
 
+    /**
+     *
+     * @param graph
+     */
     public Algorithm(Graph graph) {
         this.nodes = new ArrayList<Short>(graph.getVertexes());
         this.edges = new ArrayList<Edge>(graph.getEdges());
     }
 
+    /**
+     *
+     * @param source
+     */
     public void execute(Short source) {
         settledNodes = new HashSet<Short>();
         unSettledNodes = new HashSet<Short>();
@@ -103,6 +115,11 @@ public class Algorithm {
     /*
      * This method returns the path from the source to the selected target and
      * NULL if no path exists
+     */
+    /**
+     *
+     * @param target
+     * @return
      */
     public LinkedList<Short> getPath(Short target) {
         LinkedList<Short> path = new LinkedList<Short>();

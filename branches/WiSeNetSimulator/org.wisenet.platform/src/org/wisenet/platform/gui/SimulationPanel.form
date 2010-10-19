@@ -199,21 +199,19 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="depNodesRandomTopology">
               <Properties>
-                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                  <action class="org.wisenet.platform.ui.SimulationPanel" id="deployNodesUsingRandomTopology" methodName="deployNodesUsingRandomTopology"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Random Topology"/>
-                <Property name="toolTipText" type="java.lang.String" value="Deploy a Random Topology"/>
+                <Property name="text" type="java.lang.String" value="Random topology"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="depNodesRandomTopologyActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="depNodesGridTopology">
               <Properties>
-                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                  <action class="org.wisenet.platform.gui.SimulationPanel" id="deployNodesGridTopology" methodName="deployNodesGridTopology"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Grid Topology"/>
-                <Property name="toolTipText" type="java.lang.String" value="Deploy Grid Topology"/>
+                <Property name="text" type="java.lang.String" value="Grid topology"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="depNodesGridTopologyActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -227,12 +225,12 @@
       <SubComponents>
         <MenuItem class="javax.swing.JMenuItem" name="depNodeDeployOneNode">
           <Properties>
-            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="org.wisenet.platform.ui.SimulationPanel" id="PlaceNodeHereAction" methodName="PlaceNodeHereAction"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Deploy sensor here"/>
-            <Property name="toolTipText" type="java.lang.String" value="Deploy Sensor Here"/>
+            <Property name="text" type="java.lang.String" value="Deploy sensor here..." noResource="true"/>
+            <Property name="toolTipText" type="java.lang.String" value="Deploy sensor here..." noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="depNodeDeployOneNodeActionPerformed"/>
+          </Events>
         </MenuItem>
       </SubComponents>
     </Container>

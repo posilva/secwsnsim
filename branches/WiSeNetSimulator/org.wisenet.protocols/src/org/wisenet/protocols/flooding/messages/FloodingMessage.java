@@ -13,7 +13,7 @@ import org.wisenet.simulator.core.Message;
 
 /**
  *
-* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class FloodingMessage extends Message implements Cloneable {
 
@@ -22,8 +22,11 @@ public class FloodingMessage extends Message implements Cloneable {
     private short destin;
     private String data;
 
+    /**
+     *
+     */
     public FloodingMessage() {
-        super(null);
+        super("NULL".getBytes());
     }
 
     /**
@@ -49,34 +52,34 @@ public class FloodingMessage extends Message implements Cloneable {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public String getMessageData() {
         return data;
     }
 
+    /**
+     *
+     * @param data
+     */
     public void setMessageData(String data) {
         this.data = data;
     }
 
-    public short getDestin() {
-        return destin;
-    }
-
-    public void setDestin(short destin) {
-        this.destin = destin;
-    }
-
-    public short getSource() {
-        return source;
-    }
-
-    public void setSource(short source) {
-        this.source = source;
-    }
-
+    /**
+     *
+     * @return
+     */
     public byte getType() {
         return type;
     }
 
+    /**
+     *
+     * @param type
+     */
     public void setType(byte type) {
         this.type = type;
     }

@@ -10,6 +10,10 @@ package org.wisenet.protocols.insens.basestation.dijkstra.engine;
  */
 public class CalculatorException extends Exception {
 
+    /**
+     *
+     * @param msg
+     */
     public CalculatorException(String msg) {
         super(msg);
     }

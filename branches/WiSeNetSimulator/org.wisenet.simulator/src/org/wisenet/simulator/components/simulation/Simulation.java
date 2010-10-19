@@ -914,7 +914,15 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         getLatencyInstrument().reset();
         getCoverageInstrument().reset();
     }
-
+ public int getNumberOfAttackedNodes() {
+        int ct = 0;
+        for (Node node : getSimulator().getNodes()) {
+            if (node.getRoutingLayer().isUnderAttack()) {
+                ct++;
+            }
+        }
+        return ct;
+    }
     /**
      *
      * @return

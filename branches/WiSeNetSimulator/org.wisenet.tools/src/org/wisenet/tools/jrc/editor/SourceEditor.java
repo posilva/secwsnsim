@@ -51,6 +51,7 @@ public class SourceEditor extends javax.swing.JDialog {
         editorSplit = new javax.swing.JSplitPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         outputTextArea = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
         editor = new javax.swing.JEditorPane();
         editorToolbar = new javax.swing.JToolBar();
         cmdReload = new javax.swing.JButton();
@@ -81,7 +82,9 @@ public class SourceEditor extends javax.swing.JDialog {
                 editorCaretUpdate(evt);
             }
         });
-        editorSplit.setLeftComponent(editor);
+        jScrollPane2.setViewportView(editor);
+
+        editorSplit.setTopComponent(jScrollPane2);
 
         getContentPane().add(editorSplit, java.awt.BorderLayout.CENTER);
 
@@ -137,7 +140,7 @@ public class SourceEditor extends javax.swing.JDialog {
         statusPanel.setPreferredSize(new java.awt.Dimension(400, 25));
         statusPanel.setLayout(new java.awt.BorderLayout());
 
-        statusPanelText.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        statusPanelText.setFont(new java.awt.Font("Arial", 1, 12));
         statusPanelText.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         statusPanel.add(statusPanelText, java.awt.BorderLayout.CENTER);
 
@@ -205,6 +208,7 @@ public class SourceEditor extends javax.swing.JDialog {
     private javax.swing.JSplitPane editorSplit;
     private javax.swing.JToolBar editorToolbar;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea outputTextArea;
     private javax.swing.JPanel statusPanel;
     private javax.swing.JLabel statusPanelText;

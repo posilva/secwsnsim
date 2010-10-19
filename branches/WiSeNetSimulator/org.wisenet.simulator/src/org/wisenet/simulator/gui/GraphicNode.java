@@ -90,7 +90,7 @@ public class GraphicNode {
     /**
      *
      */
-    protected Color receiverColor = Color.DARK_GRAY;
+    protected Color receiverColor = Color.BLUE;
     /**
      *
      */
@@ -345,7 +345,7 @@ public class GraphicNode {
      */
     public void paint(ISimulationDisplay display) {
         paintMark(display);
-        paintAsDestination(display);
+//        paintAsDestination(display);
         paintStable(display);
         fill(display);
         paintAsSource(display);
@@ -485,22 +485,21 @@ public class GraphicNode {
         return marked;
     }
 
-    private void paintAsDestination(ISimulationDisplay display) {
-        if (!isDestination()) {
-            return;
-        }
-        Graphics g = display.getGraphics();
-        int _x = display.x2ScreenX(getX());
-        int _y = display.y2ScreenY(getY());
-
-        saveOldColor(g);
-        g.setColor(destinationColor);
-        int r = (int) (radius * 4);
-        g.drawOval(_x - r, _y - r, r * 2, r * 2);
-        g.fillOval(_x - r, _y - r, r * 2, r * 2);
-        restoreOldColor(g);
-    }
-
+//    private void paintAsDestination(ISimulationDisplay display) {
+//        if (!isDestination()) {
+//            return;
+//        }
+//        Graphics g = display.getGraphics();
+//        int _x = display.x2ScreenX(getX());
+//        int _y = display.y2ScreenY(getY());
+//
+//        saveOldColor(g);
+//        g.setColor(destinationColor);
+//        int r = (int) (radius * 4);
+//        g.drawOval(_x - r, _y - r, r * 2, r * 2);
+//        g.fillOval(_x - r, _y - r, r * 2, r * 2);
+//        restoreOldColor(g);
+//    }
     private void paintAsSource(ISimulationDisplay display) {
         if (!isSource()) {
             return;

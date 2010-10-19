@@ -40,15 +40,44 @@ public class RoutingAttacksPanel extends PlatformPanel {
     }
 
     private void enableSelectedAttack() {
-        if (cboAttacks.getItemCount()>0){
+        if (cboAttacks.getItemCount() > 0) {
             try {
-                ((AttackItem) cboAttacks.getSelectedItem()).entry.getAttack().enable();
+                if (cboAttacks.getModel().getSelectedItem().toString().equals("None")) {
+                    for (int i = 0; i < cboAttacks.getItemCount(); i++) {
+                        /* disable all attacks */
+                        if (!cboAttacks.getModel().getSelectedItem().toString().equals("None")) {
+                            AttacksEntry object = (AttacksEntry) cboAttacks.getModel().getElementAt(i);
+                            object.setEnable(false);
+                        }
+                    }
+                    node.getRoutingLayer().setUnderAttack(false);
+                } else {
+                    ((AttackItem) cboAttacks.getSelectedItem()).entry.getAttack().enable();
+                    node.getRoutingLayer().setUnderAttack(true);
+                }
             } catch (Exception ex) {
                 Logger.getLogger(RoutingAttacksPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
 
+    }
+
+    @Override
+    public void beforeStart() {
+        super.beforeStart();
+        String nodeInfo = "";
+        for (int i = 0; i < node.getInfo().length; i++) {
+            String info = node.getInfo()[i];
+            nodeInfo = nodeInfo + "\n" + info;
+
+        }
+        txtNodeInfo.setText(nodeInfo);
+        loadAttacks();
+
+    }
+
+    private void applyCodeChanges() {
     }
 
     private static class AttackItem {
@@ -72,14 +101,6 @@ public class RoutingAttacksPanel extends PlatformPanel {
         initComponents();
         lblEditCode.setText(NoUnderlineEditText);
         this.node = node;
-        String nodeInfo = "";
-        for (int i = 0; i < node.getInfo().length; i++) {
-            String info = node.getInfo()[i];
-            nodeInfo = nodeInfo + "\n" + info;
-
-        }
-        txtNodeInfo.setText(nodeInfo);
-        loadAttacks();
     }
 
     @SuppressWarnings("unchecked")
@@ -130,8 +151,7 @@ public class RoutingAttacksPanel extends PlatformPanel {
         txtNodeInfo.setName("txtNodeInfo"); // NOI18N
         jScrollPane1.setViewportView(txtNodeInfo);
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(RoutingAttacksPanel.class);
-        cmdEnableAttack.setText(resourceMap.getString("cmdEnableAttack.text")); // NOI18N
+        cmdEnableAttack.setText(" Enable Attack"); // NOI18N
         cmdEnableAttack.setName("cmdEnableAttack"); // NOI18N
         cmdEnableAttack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -164,7 +184,7 @@ public class RoutingAttacksPanel extends PlatformPanel {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(9, 9, 9)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(contentAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -199,7 +219,6 @@ public class RoutingAttacksPanel extends PlatformPanel {
         enableSelectedAttack();
 
     }//GEN-LAST:event_cmdEnableAttackActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox cboAttacks;
     private javax.swing.JButton cmdEnableAttack;
@@ -236,8 +255,12 @@ public class RoutingAttacksPanel extends PlatformPanel {
 
     @Override
     public boolean onApply() {
-        System.out.println("Applying Changes");
-        return isDataValid();
+        if (isDataValid()) {
+            applyCodeChanges();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     protected boolean isDataValid() {
@@ -245,7 +268,7 @@ public class RoutingAttacksPanel extends PlatformPanel {
     }
 
     private void editSelectedAttackCode() {
-        if (cboAttacks.getItemCount()>0){
+        if (cboAttacks.getItemCount() > 0) {
             try {
                 String selectedAttack = ((AttackItem) cboAttacks.getSelectedItem()).entry.getAttack().getClass().getName();
                 SourceFileReader sfr = new SourceFileReader();
@@ -256,8 +279,9 @@ public class RoutingAttacksPanel extends PlatformPanel {
                 rc.setSourceFile(source);
                 SourceEditor editor = new SourceEditor(rc);
                 editor.edit();
-                
-                node.getRoutingLayer().getAttacks().updateAttack(rc.getCompiledObject());
+                if (rc.getCompiledObject() != null) {
+                    node.getRoutingLayer().getAttacks().updateAttack(rc.getCompiledObject());
+                }
             } catch (Exception ex) {
                 Logger.getLogger(RoutingAttacksPanel.class.getName()).log(Level.SEVERE, null, ex);
             }

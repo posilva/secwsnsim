@@ -204,21 +204,19 @@ public class BaseTest extends AbstractTest {
                         return node.getRoutingLayer().isStable() && !node.isSinkNode() && !src.contains(node);
                     }
                     return !node.isSinkNode();
+                    
                 }
             });
             log("selected " + nNodes + " attack nodes");
-            if (this.getInputParameters().getAttackSelected().equals("None")) {
-                return;
-            }
-            log("enabling attack");
-            /* Enable attacks in the selected nodes */
-            for (Object a : attackNodes) {
-                Node attackedNode = (Node) a;
-                attackedNode.getRoutingLayer().setUnderAttack(true);
-                for (AttacksEntry attacksEntry : attackedNode.getRoutingLayer().getAttacks().getAttacksList()) {
-                    if (attacksEntry.getLabel().toLowerCase().equals(getInputParameters().getAttackSelected().toLowerCase())) {
-                        log(attacksEntry.getLabel() + " attack enabled");
-                        attacksEntry.getAttack().enable();
+            if (!this.getInputParameters().getAttackSelected().equals("None")) {
+                /* Enable attacks in the selected nodes */
+                for (Object a : attackNodes) {
+                    Node attackedNode = (Node) a;
+                    attackedNode.getRoutingLayer().setUnderAttack(true);
+                    for (AttacksEntry attacksEntry : attackedNode.getRoutingLayer().getAttacks().getAttacksList()) {
+                        if (attacksEntry.getLabel().toLowerCase().equals(getInputParameters().getAttackSelected().toLowerCase())) {
+                            attacksEntry.getAttack().enable();
+                        }
                     }
                 }
             }

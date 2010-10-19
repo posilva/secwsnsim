@@ -2,9 +2,10 @@
 <installation version="1.0">
     <info>
         <appname>WiSeNet Simulator</appname>
-        <appversion>0.1.265</appversion>
+        <appversion>0.1.278</appversion>
         <authors>
             <author email="posilva@gmail.com" name="Pedro Marques da Silva"/>
+            <author email="di@di.fct.unl.pt" name="Informatic Departament  FCT/UNL"/>
         </authors>
         <url>http://code.google.com/p/secwsnsim/</url>
         <uninstaller name="Uninstaller.jar" write="yes"/>
@@ -49,8 +50,6 @@
             <file override="update"
                 src="/home/posilva/Dropbox/Tese/Projecto/svn/WiSeNetSimulator/org.wisenet.platform/dist/org.wisenet.platform.jar" targetdir="$INSTALL_PATH/"/>
             <file override="update"
-                src="/home/posilva/Dropbox/Tese/Projecto/svn/WiSeNetSimulator/Setup/install/ATENCION_SecureNode_NeedsBouncyCastleInstalled" targetdir="$INSTALL_PATH/"/>
-            <file override="update"
                 src="/home/posilva/Dropbox/Tese/Projecto/svn/WiSeNetSimulator/Setup/install/Platform.properties" targetdir="$INSTALL_PATH/"/>
             <file override="update"
                 src="/home/posilva/Dropbox/Tese/Projecto/svn/WiSeNetSimulator/Setup/install/README.TXT" targetdir="$INSTALL_PATH/"/>
@@ -70,6 +69,22 @@
             <description/>
             <file override="update"
                 src="/home/posilva/Dropbox/Tese/Projecto/svn/WiSeNetSimulator/Setup/install/conf" targetdir="$INSTALL_PATH/"/>
+        </pack>
+        <pack name="Examples" preselected="no" required="no">
+            <description>Files with topology, tests, images, simulation settings examples.</description>
+            <file override="update"
+                src="/home/posilva/Dropbox/Tese/Projecto/svn/WiSeNetSimulator/org.wisenet.platform/examples" targetdir="$INSTALL_PATH/"/>
+        </pack>
+        <pack name="Bouncy Castle Files" preselected="no" required="no">
+            <description>BouncyCastle instalation files</description>
+            <file override="update"
+                src="/usr/lib/jvm/java-1.6.0-sun/jre/lib/ext/bcprov-ext-jdk16-145.jar" targetdir="$INSTALL_PATH/"/>
+            <file override="update"
+                src="/usr/lib/jvm/java-1.6.0-sun/jre/lib/security/java.security" targetdir="$INSTALL_PATH/"/>
+            <file override="update"
+                src="/usr/lib/jvm/java-1.6.0-sun/jre/lib/security/local_policy.jar" targetdir="$INSTALL_PATH/"/>
+            <file override="update"
+                src="/usr/lib/jvm/java-1.6.0-sun/jre/lib/security/US_export_policy.jar" targetdir="$INSTALL_PATH/"/>
         </pack>
     </packs>
     <native name="ShellLink.dll" type="izpack"/>

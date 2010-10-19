@@ -103,7 +103,7 @@
                   <ComponentRef name="simulationMode"/>
                 </Property>
                 <Property name="selected" type="boolean" value="true"/>
-                <Property name="text" type="java.lang.String" resourceKey="tgbFastMode.text"/>
+                <Property name="text" type="java.lang.String" value="Fast Mode" noResource="true"/>
                 <Property name="name" type="java.lang.String" value="tgbFastMode" noResource="true"/>
               </Properties>
             </Component>
@@ -115,7 +115,7 @@
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="simulationMode"/>
                 </Property>
-                <Property name="text" type="java.lang.String" resourceKey="tgbRealTimeMode.text"/>
+                <Property name="text" type="java.lang.String" value="Real Time Mode" noResource="true"/>
                 <Property name="name" type="java.lang.String" value="tgbRealTimeMode" noResource="true"/>
               </Properties>
             </Component>

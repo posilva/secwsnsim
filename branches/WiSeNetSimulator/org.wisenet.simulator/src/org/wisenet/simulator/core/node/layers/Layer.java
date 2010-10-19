@@ -1,6 +1,7 @@
 package org.wisenet.simulator.core.node.layers;
 
 import org.wisenet.simulator.components.output.LayerOutput;
+import org.wisenet.simulator.core.Simulator;
 import org.wisenet.simulator.core.node.Node;
 
 /**
@@ -13,11 +14,17 @@ public abstract class Layer {
      *
      */
     protected LayerOutput output;
+    /**
+     * 
+     */
     private Node node;
     /**
      *
      */
-    protected boolean debugEnabled = true;
+    protected boolean debugEnabled = false;
+    /**
+     * 
+     */
     private boolean underAttack;
 
     /**
@@ -66,7 +73,7 @@ public abstract class Layer {
             if (output != null) {
                 output.output(this, message);
             } else {
-                System.out.println("{" + getClass().getSimpleName() + "} <" + getNode().getSimulator().getSimulationTime() + "> - [" + getNode().getId() + "] - " + message);
+                System.out.println("{" + getClass().getSimpleName() + "} <" + Simulator.getSimulationTime() + "> - [" + getNode().getId() + "] - " + message);
             }
         }
     }

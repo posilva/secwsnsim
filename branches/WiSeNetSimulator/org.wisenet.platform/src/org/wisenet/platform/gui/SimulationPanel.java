@@ -334,21 +334,31 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
 
         depNodesDeploy.setText("Deploy sensors...");
 
-        depNodesRandomTopology.setAction(actionMap.get("deployNodesUsingRandomTopology")); // NOI18N
-        depNodesRandomTopology.setText("Random Topology");
-        depNodesRandomTopology.setToolTipText("Deploy a Random Topology");
+        depNodesRandomTopology.setText("Random topology");
+        depNodesRandomTopology.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                depNodesRandomTopologyActionPerformed(evt);
+            }
+        });
         depNodesDeploy.add(depNodesRandomTopology);
 
-        depNodesGridTopology.setAction(actionMap.get("deployNodesGridTopology")); // NOI18N
-        depNodesGridTopology.setText("Grid Topology");
-        depNodesGridTopology.setToolTipText("Deploy Grid Topology");
+        depNodesGridTopology.setText("Grid topology");
+        depNodesGridTopology.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                depNodesGridTopologyActionPerformed(evt);
+            }
+        });
         depNodesDeploy.add(depNodesGridTopology);
 
         deployNodesPopupMenu.add(depNodesDeploy);
 
-        depNodeDeployOneNode.setAction(actionMap.get("PlaceNodeHereAction")); // NOI18N
-        depNodeDeployOneNode.setText("Deploy sensor here");
-        depNodeDeployOneNode.setToolTipText("Deploy Sensor Here");
+        depNodeDeployOneNode.setText("Deploy sensor here..."); // NOI18N
+        depNodeDeployOneNode.setToolTipText("Deploy sensor here..."); // NOI18N
+        depNodeDeployOneNode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                depNodeDeployOneNodeActionPerformed(evt);
+            }
+        });
         deployNodePopupMenu.add(depNodeDeployOneNode);
 
         setBackground(new java.awt.Color(254, 254, 254));
@@ -857,6 +867,18 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
 
         setUnderAttackModeSelectedNodes(selNodesUnderAttack.isSelected());
     }//GEN-LAST:event_selNodesUnderAttackActionPerformed
+
+    private void depNodeDeployOneNodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_depNodeDeployOneNodeActionPerformed
+        PlaceNodeHereAction();
+    }//GEN-LAST:event_depNodeDeployOneNodeActionPerformed
+
+    private void depNodesRandomTopologyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_depNodesRandomTopologyActionPerformed
+        deployNodesUsingRandomTopology().execute();
+    }//GEN-LAST:event_depNodesRandomTopologyActionPerformed
+
+    private void depNodesGridTopologyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_depNodesGridTopologyActionPerformed
+        deployNodesGridTopology().execute();
+    }//GEN-LAST:event_depNodesGridTopologyActionPerformed
 
     protected boolean isMousePressed() {
         return pressedPoint_x != -1;

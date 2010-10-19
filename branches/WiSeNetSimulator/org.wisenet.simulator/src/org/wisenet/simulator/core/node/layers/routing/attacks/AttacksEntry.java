@@ -114,4 +114,8 @@ public class AttacksEntry {
         hash = 29 * hash + (this.attack.getClass() != null ? this.attack.getClass().hashCode() : 0);
         return hash;
     }
+
+    void setAttack(IRoutingAttack iRoutingAttack) {
+        attack = iRoutingAttack;
+    }
 }

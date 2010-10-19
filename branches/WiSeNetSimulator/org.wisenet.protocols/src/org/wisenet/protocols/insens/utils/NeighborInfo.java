@@ -26,6 +26,7 @@ public class NeighborInfo extends Hashtable<Short, byte[]> {
      * Adds a neighbor to the set of neighbors
      * @param id
      * @param mac
+     * @param parent
      */
     public void addNeighbor(short id, byte[] mac, boolean parent) {
 
@@ -90,10 +91,18 @@ public class NeighborInfo extends Hashtable<Short, byte[]> {
         parentMac = Arrays.copyOf(mac, mac.length);
     }
 
+    /**
+     *
+     * @return
+     */
     public short getParentId() {
         return parentId;
     }
 
+    /**
+     *
+     * @return
+     */
     public byte[] getParentMac() {
         return parentMac;
     }

@@ -17,6 +17,9 @@ import org.wisenet.simulator.core.node.Node;
  */
 public class INSENSFunctions {
 
+    /**
+     *
+     */
     protected static OneWaySequenceNumbersChain sequenceNumbersChain = new OneWaySequenceNumbersChain(INSENSConstants.CHAIN_SIZE);
 
     /**
@@ -39,17 +42,30 @@ public class INSENSFunctions {
      * Helper function for extract type  from message
      * @param m
      * @return
+     * @throws INSENSException
      */
     public static byte getMessageType(INSENSMessage m) throws INSENSException {
         INSENSMessagePayload payload = new INSENSMessagePayload(m.getPayload());
         return payload.type;
     }
 
+    /**
+     *
+     * @param p
+     * @return
+     * @throws INSENSException
+     */
     public static byte getMessageType(byte[] p) throws INSENSException {
         INSENSMessagePayload payload = new INSENSMessagePayload(p);
         return payload.type;
     }
 
+    /**
+     *
+     * @param payload
+     * @param type
+     * @return
+     */
     public static boolean verifyMAC(byte[] payload, byte type) {
         switch (type) {
             case INSENSConstants.MSG_ROUTE_REQUEST:
@@ -67,6 +83,13 @@ public class INSENSFunctions {
         return true;
     }
 
+    /**
+     *
+     * @param node
+     * @param data
+     * @param key
+     * @return
+     */
     public static byte[] decryptData(Node node, final byte[] data, final byte[] key) {
         EnergyConsumptionAction action = new EnergyConsumptionAction() {
 
@@ -83,6 +106,13 @@ public class INSENSFunctions {
         return (byte[]) action.getResult();
     }
 
+    /**
+     *
+     * @param node
+     * @param data
+     * @param key
+     * @return
+     */
     public static byte[] encryptData(Node node, final byte[] data, final byte[] key) {
         EnergyConsumptionAction action = new EnergyConsumptionAction() {
 
@@ -99,6 +129,14 @@ public class INSENSFunctions {
         return (byte[]) action.getResult();
     }
 
+    /**
+     *
+     * @param node
+     * @param data
+     * @param mac
+     * @param key
+     * @return
+     */
     public static boolean verifyMAC(Node node, final byte[] data, final byte[] mac, final byte[] key) {
         EnergyConsumptionAction action = new EnergyConsumptionAction() {
 
@@ -115,6 +153,13 @@ public class INSENSFunctions {
         return (Boolean) action.getResult();
     }
 
+    /**
+     *
+     * @param data
+     * @param key
+     * @param node
+     * @return
+     */
     public static byte[] createMAC(final byte[] data, final byte[] key, Node node) {
         EnergyConsumptionAction action = new EnergyConsumptionAction() {
 

@@ -1,5 +1,6 @@
 package org.wisenet.simulator.core.energy;
 
+import org.wisenet.simulator.core.Simulator;
 import org.wisenet.simulator.core.energy.listeners.EnergyEvent;
 import org.wisenet.simulator.core.energy.listeners.EnergyListener;
 import org.wisenet.simulator.core.node.Node;
@@ -188,7 +189,7 @@ public class Batery {
     private void consumeEvent(double value, String event) {
         reducePower(value);
         updateInternalCounters(value);
-        EnergyEvent ev = new EnergyEvent(this, value, System.currentTimeMillis(), getHostNode().getSimulator().getSimulationTime(), event, getHostNode().getId(), getHostNode().getRoutingLayer().getCurrentPhase());
+        EnergyEvent ev = new EnergyEvent(this, value, System.currentTimeMillis(), Simulator.getSimulationTime(), event, getHostNode().getId(), getHostNode().getRoutingLayer().getCurrentPhase());
         fireOnEnergyConsume(ev);
         if (currentPower <= 0) {
             getHostNode().shutdown();

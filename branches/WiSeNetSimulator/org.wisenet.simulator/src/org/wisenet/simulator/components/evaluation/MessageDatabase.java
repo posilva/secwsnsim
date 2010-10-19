@@ -1,7 +1,6 @@
 package org.wisenet.simulator.components.evaluation;
 
 import java.util.Hashtable;
-import org.apache.commons.math.stat.StatUtils;
 import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 import org.wisenet.simulator.core.Message;
 import org.wisenet.simulator.core.node.layers.routing.RoutingLayer;
@@ -65,6 +64,7 @@ public class MessageDatabase {
             if (messageEntry != null) {
                 messageEntry.arrived();
                 log("MESSAGE " + message.getUniqueId() + " takes " + message.getTotalHops() + " HOPS");
+                messageEntry.setMessage(message);
                 messageEntry.incrementCounter();
                 RoutingLayer senderId = messageEntry.getSenderRouting();
                 SendersTableEntry senderEntry = (SendersTableEntry) senderNodesTable.get(senderId.getUniqueId());
@@ -136,16 +136,21 @@ public class MessageDatabase {
     }
 
     public double getReliabilityPercent() {
-        return 100 * (getTotalMessagesReceived()) / getTotalNumberOfMessagesSent();
+        return 100 * (getTotalMessagesReceived()) / getTotalNumberOfUniqueMessagesSent();
     }
+
     public double getLatencyMax() {
+
         DescriptiveStatistics stats = new DescriptiveStatistics();
         for (Object e : messagesTable.values()) {
             MessageTableEntry entry = (MessageTableEntry) e;
             stats.addValue(entry.getMessage().getTotalHops());
         }
+
         return stats.getMax();
+
     }
+
     public double getLatencyAvg() {
         DescriptiveStatistics stats = new DescriptiveStatistics();
         for (Object e : messagesTable.values()) {
@@ -154,7 +159,7 @@ public class MessageDatabase {
         }
         return stats.getMean();
     }
-    
+
     public double getLatencyMin() {
         DescriptiveStatistics stats = new DescriptiveStatistics();
         for (Object e : messagesTable.values()) {
@@ -174,8 +179,8 @@ public class MessageDatabase {
         int count = 0;
         long simulationTimeSent = 0L;
         long simulationTimeReceived = 0L;
-        private final Message message;
-        private final RoutingLayer senderRouting;
+        private Message message;
+        private RoutingLayer senderRouting;
 
         private MessageTableEntry(Message message, RoutingLayer routing) {
             this.message = message;
@@ -226,6 +231,10 @@ public class MessageDatabase {
          */
         public void incrementCounter() {
             count++;
+        }
+
+        public void setMessage(Message message) {
+            this.message = message;
         }
     }
 // coverage control
