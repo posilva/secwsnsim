@@ -23,7 +23,7 @@ public class Message implements Cloneable {
     /**
      *
      */
-    protected long totalHops;             // number of hops (must be updated outside)
+    protected long totalHops=1;             // number of hops (must be updated outside)
     /**
      *
      */

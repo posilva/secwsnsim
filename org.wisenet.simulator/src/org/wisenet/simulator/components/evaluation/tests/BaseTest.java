@@ -1,6 +1,5 @@
 package org.wisenet.simulator.components.evaluation.tests;
 
-import java.util.List;
 import org.wisenet.simulator.components.evaluation.tests.events.TestEndEvent;
 import org.wisenet.simulator.components.evaluation.tests.events.TestExecutionEvent;
 import org.wisenet.simulator.components.evaluation.tests.events.TestStartEvent;
@@ -9,7 +8,6 @@ import org.wisenet.simulator.core.Event;
 import org.wisenet.simulator.core.Message;
 import org.wisenet.simulator.core.Simulator;
 import org.wisenet.simulator.core.node.Node;
-import org.wisenet.simulator.core.node.layers.routing.attacks.AttacksEntry;
 
 /**
  *
@@ -142,9 +140,11 @@ public class BaseTest extends AbstractTest {
     @Override
     public void prepare() {
         prepared = false;
-
+        /* prepare test pre-conditions*/
         int stableNodes = simulation.getRoutingLayerController().getTotalStableNodes();
         int allNodes = simulation.getSimulator().getNodes().size();
+        int nNodes = 0;
+        int selectableNodes = 0;
         for (Object node : simulation.getSimulator().getNodes()) {
             Node n = (Node) node;
             n.setSource(false);
@@ -152,38 +152,17 @@ public class BaseTest extends AbstractTest {
             n.getRoutingLayer().setUnderAttack(false);
 
         }
-
-        if (inputParameters.getNumberOfSenderNodes() > 0 && inputParameters.getNumberOfReceiverNodes() > 0) {
-
-            int selectableNodes = inputParameters.isOnlyConsiderToSenderStableNodes() ? stableNodes : allNodes;
-            int nNodes = inputParameters.isPercentOfSenderNodes() ? (inputParameters.getNumberOfSenderNodes() * selectableNodes / 100) : (inputParameters.getNumberOfSenderNodes());
-
-            sourceNodes = getSimulation().selectRandomNodes(nNodes, new NodeSelectionCondition() {
-
-                public boolean select(Node node) {
-                    if (inputParameters.isOnlyConsiderToSenderStableNodes()) {
-                        return node.getRoutingLayer().isStable() && !node.isSinkNode();
-                    }
-                    return !node.isSinkNode();
-                }
-            });
-            for (Object node : sourceNodes) {
-                Node n = (Node) node;
-                n.setSource(true);
-            }
-
-            log("selected " + nNodes + " source nodes");
+        /* prepare receiver nodes */
+        if (inputParameters.getNumberOfReceiverNodes() > 0) {
             int sinknodes = simulation.getNumberOfSinkNodes();
-            final List<Node> srcNodes = sourceNodes;
 
             selectableNodes = inputParameters.isOnlyConsiderToReceiverSinkNodes() ? sinknodes : allNodes;
             nNodes = inputParameters.isPercentOfReceiverNodes() ? (inputParameters.getNumberOfReceiverNodes() * selectableNodes / 100) : (inputParameters.getNumberOfReceiverNodes());
-
             receiverNodes = getSimulation().selectRandomNodes(nNodes, new NodeSelectionCondition() {
 
                 public boolean select(Node node) {
                     if (inputParameters.isOnlyConsiderToReceiverSinkNodes()) {
-                        return node.isSinkNode() && !srcNodes.contains(node);
+                        return node.isSinkNode();
                     }
                     return true;
                 }
@@ -192,40 +171,70 @@ public class BaseTest extends AbstractTest {
                 Node n = (Node) node;
                 n.setReceiver(true);
             }
+            log("Selected " + receiverNodes.size() + " Sensors  as Receiver");
 
-            log("selected " + nNodes + " receiver nodes");
-            selectableNodes = inputParameters.isOnlyConsiderToSenderStableNodes() ? stableNodes : allNodes;
-            nNodes = inputParameters.isPercentOfAttackNodes() ? (inputParameters.getNumberOfAttackNodes() * selectableNodes / 100) : (inputParameters.getNumberOfAttackNodes());
-            final List src = sourceNodes;
-            attackNodes = getSimulation().selectRandomNodes(nNodes, new NodeSelectionCondition() {
+            /* prepare attacked nodes */
+            if (inputParameters.getNumberOfAttackNodes() > 0) {
+                selectableNodes = inputParameters.isOnlyConsiderToSenderStableNodes() ? stableNodes : allNodes;
+                nNodes = inputParameters.isPercentOfAttackNodes() ? (inputParameters.getNumberOfAttackNodes() * selectableNodes / 100) : (inputParameters.getNumberOfAttackNodes());
+                attackNodes = getSimulation().selectRandomNodes(nNodes, new NodeSelectionCondition() {
 
-                public boolean select(Node node) {
-                    if (inputParameters.isOnlyConsiderToAttackStableNodes()) {
-                        return node.getRoutingLayer().isStable() && !node.isSinkNode() && !src.contains(node);
+                    public boolean select(Node node) {
+                        if (inputParameters.isOnlyConsiderToAttackStableNodes()) {
+                            return node.getRoutingLayer().isStable() && !node.isSinkNode() && !receiverNodes.contains(node);
+                        }
+                        return !node.isSinkNode() && !receiverNodes.contains(node);
+
                     }
-                    return !node.isSinkNode();
-                    
-                }
-            });
-            log("selected " + nNodes + " attack nodes");
+                });
+            }
+
+            log("Selected " + attackNodes.size() + " Sensors  as Attacked");
             if (!this.getInputParameters().getAttackSelected().equals("None")) {
                 /* Enable attacks in the selected nodes */
                 for (Object a : attackNodes) {
                     Node attackedNode = (Node) a;
                     attackedNode.getRoutingLayer().setUnderAttack(true);
-                    for (AttacksEntry attacksEntry : attackedNode.getRoutingLayer().getAttacks().getAttacksList()) {
-                        if (attacksEntry.getLabel().toLowerCase().equals(getInputParameters().getAttackSelected().toLowerCase())) {
-                            attacksEntry.getAttack().enable();
+                    for (int i = 0; i < attackedNode.getRoutingLayer().getAttacks().getAttacksList().size(); i++) {
+                        if (attackedNode.getRoutingLayer().getAttacks().getAttacksList().get(i).getLabel().toLowerCase().equals(getInputParameters().getAttackSelected().toLowerCase())) {
+                            attackedNode.getRoutingLayer().getAttacks().getAttacksList().get(i).setEnable(true);
                         }
                     }
                 }
             }
-            prepared = true;
-        }
+            /* Prepare sender nodes */
+            if (inputParameters.getNumberOfSenderNodes()
+                    > 0) {
+                selectableNodes = inputParameters.isOnlyConsiderToSenderStableNodes() ? stableNodes : allNodes;
+                nNodes = inputParameters.isPercentOfSenderNodes() ? (inputParameters.getNumberOfSenderNodes() * selectableNodes / 100) : (inputParameters.getNumberOfSenderNodes());
+                sourceNodes = getSimulation().selectRandomNodes(nNodes, new NodeSelectionCondition() {
 
+                    public boolean select(Node node) {
+                        if (inputParameters.isOnlyConsiderToSenderStableNodes()) {
+                            return node.getRoutingLayer().isStable() && !node.isSinkNode() && !attackNodes.contains(node) && !receiverNodes.contains(node);
+                        }
+                        return !node.isSinkNode() && !attackNodes.contains(node) && !receiverNodes.contains(node);
+                    }
+                });
+                for (Object node : sourceNodes) {
+                    Node n = (Node) node;
+                    n.setSource(true);
+                }
+            }
+
+            log("Selected "
+                    + sourceNodes.size() + " Sensors  as Senders");
+
+        } else {
+            throw new IllegalStateException("No receivers defined. Cannot prepare test conditions");
+
+
+        }
+        prepared = true;
     }
 
-    class DefaultTestExecutionEvent extends TestExecutionEvent {
+    class DefaultTestExecutionEvent
+            extends TestExecutionEvent {
 
         protected Node sourceNode;
         protected Node destNode;

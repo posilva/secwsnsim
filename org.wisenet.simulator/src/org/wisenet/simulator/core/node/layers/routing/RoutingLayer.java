@@ -188,6 +188,7 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
                 getLatencyInstrument().notifyMessageSent((IInstrumentMessage) message, (IInstrumentHandler) this);
             }
         }
+        application = app;
         boolean result = onSendMessage(message, app);
         return result;
     }

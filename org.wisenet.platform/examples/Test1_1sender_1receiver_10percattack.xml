@@ -12,12 +12,12 @@
 <NumberOfReceiverNodes>100</NumberOfReceiverNodes>
 <OnlyConsiderToReceiverSinkNodes>true</OnlyConsiderToReceiverSinkNodes>
 <PercentOfReceiverNodes>true</PercentOfReceiverNodes>
-<NumberOfSenderNodes>1</NumberOfSenderNodes>
+<NumberOfSenderNodes>10</NumberOfSenderNodes>
 <OnlyConsiderToSenderStableNodes>true</OnlyConsiderToSenderStableNodes>
-<PercentOfSenderNodes>false</PercentOfSenderNodes>
+<PercentOfSenderNodes>true</PercentOfSenderNodes>
 <IntervalBetweenMessagesSent>10</IntervalBetweenMessagesSent>
-<NumberOfMessagesPerNode>10</NumberOfMessagesPerNode>
-<NumberOfRetransmissions>3</NumberOfRetransmissions>
+<NumberOfMessagesPerNode>1</NumberOfMessagesPerNode>
+<NumberOfRetransmissions>1</NumberOfRetransmissions>
 <AttackSelected>Blackhole Attack</AttackSelected>
 </inputparameters>
 </test>

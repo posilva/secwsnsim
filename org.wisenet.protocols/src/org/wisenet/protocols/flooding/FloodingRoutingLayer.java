@@ -7,7 +7,6 @@ import java.util.HashSet;
 import org.wisenet.protocols.common.attacks.BlackholeRoutingAttack;
 import org.wisenet.protocols.flooding.messages.FloodingMessage;
 import org.wisenet.simulator.core.Application;
-import org.wisenet.simulator.core.energy.EnergyConsumptionAction;
 import org.wisenet.simulator.core.Message;
 import org.wisenet.simulator.core.node.layers.routing.RoutingLayer;
 import org.wisenet.simulator.core.node.layers.routing.attacks.AttacksEntry;
@@ -32,47 +31,31 @@ public class FloodingRoutingLayer extends RoutingLayer {
     }
 
     /**
-     * Stores the sender from which it first receives the message, and passes
+     * Stores the sender from which it first receives the message, and route
      * the message.
      */
     @Override
     public void onReceiveMessage(Object message) {
-
-        final FloodingMessage msg = (FloodingMessage) message;
-        getNode().getCPU().execute(new EnergyConsumptionAction() {
-
-            /**
-             * 
-             */
-            public void execute() {
-
-                FloodingMessage m = msg;
-                if (!receivedMessages.contains(m.getMessageNumber())) {
-                    receivedMessages.add(m.getMessageNumber());
-                    if (m.getDestinationId().equals(getUniqueId())) {
-                        Application app = getNode().getApplication();
-                        if (app != null) {
-                            app.receiveMessage(msg);
-                            done(msg);  // must implement this method to notify
-                            // the routing layer about message reception
-                        }
-                    } else {
-                        routeMessage(msg);
-
-                    }
+        FloodingMessage msg = (FloodingMessage) message;
+        if (!receivedMessages.contains(msg.getMessageNumber())) {
+            receivedMessages.add(msg.getMessageNumber());
+            if (msg.getDestinationId().equals(getUniqueId())) {
+                Application app = getNode().getApplication();
+                if (app != null) {
+                    app.receiveMessage(msg);
+                    done(msg);   // must call this method to notify
+                    // the routing layer about message reception
                 }
-            }
+            } else {
+                routeMessage(msg);
 
-            public int getNumberOfUnits() {
-                return msg.size();
             }
-        });
+        }
+
     }
 
     @Override
     public boolean onSendMessage(Object message, Application app) {
-        System.out.println("Message Number: " + ((Message) message).getMessageNumber());
-        application = app;
         receivedMessages.add(((Message) message).getMessageNumber());
         FloodingMessage msg = encapsulateMessage((Message) message);
         send(msg);
@@ -97,6 +80,7 @@ public class FloodingRoutingLayer extends RoutingLayer {
 
     @Override
     public void onRouteMessage(Object message) {
+        /* send the message by flood*/
         send(message);
     }
 
@@ -131,7 +115,6 @@ public class FloodingRoutingLayer extends RoutingLayer {
     }
 
     private FloodingMessage encapsulateMessage(Message message) {
-
         FloodingMessage m = new FloodingMessage();
         m.setUniqueId(message.getUniqueId());
         m.setSourceId(message.getSourceId());
