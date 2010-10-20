@@ -696,19 +696,14 @@ public class TestResultsPanel extends PlatformPanel {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel10Layout.createSequentialGroup()
-                                    .addComponent(jLabel19)
-                                    .addGap(137, 137, 137))
-                                .addComponent(energyAvgPerNode, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabel20))
-                        .addContainerGap(27, Short.MAX_VALUE))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(energyTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
-                        .addGap(43, 43, 43))))
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(energyTotal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel10Layout.createSequentialGroup()
+                        .addComponent(jLabel19)
+                        .addGap(137, 137, 137))
+                    .addComponent(energyAvgPerNode, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.LEADING))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -943,6 +938,7 @@ public class TestResultsPanel extends PlatformPanel {
 
     void updateReliabilityResults() {
         testMessagesSent.setText("" + test.getEvaluationManager().getMessageDatabase().getTotalNumberOfUniqueMessagesSent());
+        testMessagesReceived.setText("" + test.getEvaluationManager().getMessageDatabase().getTotalMessagesReceived());
         reliabilityPercent.setText("" + test.getEvaluationManager().getMessageDatabase().getReliabilityPercent());
         createReliabilityChart();
     }
@@ -984,6 +980,7 @@ public class TestResultsPanel extends PlatformPanel {
 
     private void updateResults() {
         updateTestConditions();
+        updateCoverageResults();
         updateReliabilityResults();
         updateLatencyResults();
         updateEnergyResults();

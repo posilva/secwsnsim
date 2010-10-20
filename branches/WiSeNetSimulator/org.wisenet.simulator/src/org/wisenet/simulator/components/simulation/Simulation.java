@@ -32,6 +32,7 @@ import org.wisenet.simulator.core.node.layers.mac.MACLayerController;
 import org.wisenet.simulator.core.node.layers.routing.RoutingLayer;
 import org.wisenet.simulator.core.radio.RadioModel;
 import org.wisenet.simulator.utilities.RandomGenerator;
+import org.wisenet.simulator.utilities.RandomList;
 import org.wisenet.simulator.utilities.Utilities;
 import org.wisenet.simulator.utilities.console.SimulationSettings;
 
@@ -369,11 +370,14 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
             throw new IllegalArgumentException("Cannot select more nodes than the number of nodes in the network ");
         }
         List randomNodes = new ArrayList();
-        while (randomNodes.size() < nroNodes) {
-            Node node = getSimulator().getRandomNode();
+        RandomList allNodes = new RandomList(getSimulator().getNodes());
+        while (randomNodes.size() < nroNodes && allNodes.size()>0) {
+
+            Node node = (Node) allNodes.randomElement();
             if (condition.select(node)) {
                 randomNodes.add(node);
             }
+            allNodes.remove(node);
         }
         return randomNodes;
     }
@@ -914,7 +918,8 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         getLatencyInstrument().reset();
         getCoverageInstrument().reset();
     }
- public int getNumberOfAttackedNodes() {
+
+    public int getNumberOfAttackedNodes() {
         int ct = 0;
         for (Node node : getSimulator().getNodes()) {
             if (node.getRoutingLayer().isUnderAttack()) {
@@ -923,6 +928,7 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         }
         return ct;
     }
+
     /**
      *
      * @return

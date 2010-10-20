@@ -169,6 +169,13 @@ public class MessageDatabase {
         return stats.getMin();
     }
 
+    void reset() {
+        messagesTable.clear();
+        senderNodesTable.clear();
+        receiverNodesTable.clear();
+        totalNumberOfMessagesSent = 0;
+    }
+
     // reliability control
     /**
      *
