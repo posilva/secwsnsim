@@ -217,11 +217,11 @@ public class Simulator {
         reset = false;
         paused = false;
         setupRoutingLayer();
-        if (mode == FAST) {
-            runWithDisplay();
-        } else {
-            runWithDisplayInRealTime();
-        }
+//        if (mode == FAST) {
+//            runWithDisplayOLD();
+//        } else {
+        runWithDisplay();
+//        }
         start = true;
     }
 
@@ -457,7 +457,7 @@ public class Simulator {
      * The user of the simulator must first add all the nodes used in the
      * experiment!
      */
-    public void runWithDisplay() {
+    public void runWithDisplayOLD() {
         runningThread = new Thread(new Runnable() {
 
             public void run() {
@@ -478,8 +478,10 @@ public class Simulator {
      * The user of the simulator must first add all the nodes used in the
      * experiment!
      */
-    public void runWithDisplayInRealTime() {
+    public void runWithDisplay() {
         runningThread = new Thread() {
+
+            private int lastMode = mode;
 
             @Override
             public void run() {
@@ -488,14 +490,23 @@ public class Simulator {
                 while (canRun()) {
                     step(RUNTIME_NUM_STEPS);
                     display.updateDisplay();
-                    long diff = System.currentTimeMillis() - getSimulationTimeInMillisec();
 
-                    if (diff < initDiff) {
-                        try {
-                            Thread.sleep(initDiff - diff);
-                        } catch (Exception e) {
-                            System.out.println("ERROR IN RUN. EXITING");
+                    if (getMode() == REAL) {
+                        if (lastMode != REAL) {
+                            initDiff = System.currentTimeMillis() - getSimulationTimeInMillisec();
+                            lastMode = REAL;
                         }
+                        long diff = System.currentTimeMillis() - getSimulationTimeInMillisec();
+
+                        if (diff < initDiff) {
+                            try {
+                                Thread.sleep(initDiff - diff);
+                            } catch (Exception e) {
+                                System.out.println("ERROR IN RUN. EXITING");
+                            }
+                        }
+                    } else {
+                        lastMode = FAST;
                     }
                 }
                 notifyReset();
@@ -616,7 +627,7 @@ public class Simulator {
      *
      * @param mode
      */
-    public void setMode(int mode) {
+    public synchronized void setMode(int mode) {
         this.mode = mode;
     }
 
@@ -624,7 +635,7 @@ public class Simulator {
      *
      * @return
      */
-    public int getMode() {
+    public synchronized int getMode() {
         return mode;
     }
 

@@ -53,16 +53,11 @@ public class INSENSNode extends Mica2SensorNode implements IDisplayable {
         if (isSinkNode()) {
             getGraphicNode().mark();
         }
+        if (getRoutingLayer().isStable()) {
+            setBaseColor(Color.BLACK);
+        }
     }
 
-    /**
-     *
-     * @return
-     */
-    public Object getLatencyUniqueId() {
-        return getId();
-    }
-    
     @Override
     public Object getUniqueID() {
         return getId();

@@ -836,7 +836,11 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
     }//GEN-LAST:event_btnColorSettingsActionPerformed
 
     private void btnRebuildNetworkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRebuildNetworkActionPerformed
-        RebuildNetwork().execute();
+        try {
+            getSimulationPanel().getSimulation().buildNetwork();
+        } catch (Exception e) {
+        }
+
     }//GEN-LAST:event_btnRebuildNetworkActionPerformed
 
     private void btnSimulationStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimulationStartActionPerformed
