@@ -231,9 +231,13 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         });
         currentSelectedNodePopupMenu.add(selNodeOnOff);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance().getContext().getActionMap(SimulationPanel.class, this);
-        selNodeSink.setAction(actionMap.get("SetNodeAsSink")); // NOI18N
         selNodeSink.setSelected(true);
+        selNodeSink.setText("Sink Node"); // NOI18N
+        selNodeSink.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selNodeSinkActionPerformed(evt);
+            }
+        });
         currentSelectedNodePopupMenu.add(selNodeSink);
 
         selNodeMonitEnergy.setText("Monitor Energy");
@@ -316,6 +320,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         selectionToolPopupMenu.add(selNodesMonitEnergy);
         selectionToolPopupMenu.add(jSeparator2);
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance().getContext().getActionMap(SimulationPanel.class, this);
         selNodesRemove.setAction(actionMap.get("RemoveNodesSelected")); // NOI18N
         selNodesRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -880,6 +885,10 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         deployNodesGridTopology().execute();
     }//GEN-LAST:event_depNodesGridTopologyActionPerformed
 
+    private void selNodeSinkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selNodeSinkActionPerformed
+        SetNodeAsSink();
+    }//GEN-LAST:event_selNodeSinkActionPerformed
+
     protected boolean isMousePressed() {
         return pressedPoint_x != -1;
     }
@@ -934,6 +943,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         g.draw(selectedArea);
         g.setStroke(o);
         grphcs.setColor(oldColor);
+        paintSelectionSize(grphcs);
     }
 
     public int x2ScreenX(double x) {
@@ -944,7 +954,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         return OFFSET_NETWORK + (int) ((getSize().getHeight() - (OFFSET_NETWORK * 2)) * y / getSize().getHeight());
     }
 
-    protected void updateLocal() {
+    protected synchronized void updateLocal() {
         JComponent parent = (JComponent) getParent();
         if (parent != null) {
             ((JComponent) getParent()).revalidate();
@@ -1019,18 +1029,19 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         grphcs.setColor(Color.BLACK);
         grphcs.drawString(mouseX + "," + mouseY, mouseX, mouseY);
         grphcs.setColor(c);
-        updateLocal();
+//        updateLocal();
     }
 
     private void paintSelectionSize(Graphics grphcs) {
-//        if (selectedArea == null) {
-//            return;
-//        }
-//        Color c = grphcs.getColor();
-//        grphcs.setColor(Color.BLACK);
-//        grphcs.drawString(currentSelectedArea_w + "," + currentSelectedArea_h, mouseX, mouseY);
-//        grphcs.setColor(c);
+        if (selectedArea == null) {
+            return;
+        }
+        Color c = grphcs.getColor();
+        grphcs.setColor(Color.BLACK);
+        grphcs.drawString(currentSelectedArea_w + "," + currentSelectedArea_h, mouseX + 15, mouseY + 30);
+        grphcs.setColor(c);
 //        updateLocal();
+
     }
 
     void viewOsQueConhecem(boolean selected) {
@@ -1622,14 +1633,6 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         if (paintNodesInfo) {
             paintInfo(grphcs);
         }
-        if (getSimulation() != null) {
-            if (getSimulator() != null) {
-//                GUI.showSimulationEvents(getSimulator().eventQueue.size());
-            } else {
-//                GUI.showSimulationEvents(0);
-            }
-        }
-//        g.drawImage(offscreen,0,0,this);
     }
 
     private void paintImage(Graphics g) {
@@ -1761,6 +1764,8 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
                 ((SensorNode) currentSelectedNode.getPhysicalNode()).setSinkNode(true);
             } else {
                 ((SensorNode) currentSelectedNode.getPhysicalNode()).setSinkNode(false);
+                currentSelectedNode.unmark();
+
             }
 
             updateLocal();

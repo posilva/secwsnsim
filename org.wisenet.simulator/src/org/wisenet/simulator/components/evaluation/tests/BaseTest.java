@@ -190,7 +190,7 @@ public class BaseTest extends AbstractTest {
             }
 
             log("Selected " + attackNodes.size() + " Sensors  as Attacked");
-            if (!this.getInputParameters().getAttackSelected().equals("None")) {
+            if (this.getInputParameters().getAttackSelected()!=null) {
                 /* Enable attacks in the selected nodes */
                 for (Object a : attackNodes) {
                     Node attackedNode = (Node) a;

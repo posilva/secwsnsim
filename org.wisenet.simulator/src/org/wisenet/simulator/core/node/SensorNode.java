@@ -13,7 +13,7 @@ import org.wisenet.simulator.core.radio.RadioModel;
 import org.wisenet.simulator.gui.GraphicNode;
 
 /**
-* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  * 
  */
 public abstract class SensorNode extends Node {
@@ -50,8 +50,8 @@ public abstract class SensorNode extends Node {
      *
      */
     protected static Font monoFont = new Font("Courier", Font.BOLD, 8);
-    private Color neighborsLinkColor=Color.GREEN;
-    private Color othersLinkColor=Color.BLUE;
+    private Color neighborsLinkColor = Color.GREEN;
+    private Color othersLinkColor = Color.BLUE;
 
     /**
      * @param sim
@@ -77,10 +77,10 @@ public abstract class SensorNode extends Node {
     public synchronized void displayOn(ISimulationDisplay disp) {
         Graphics g = disp.getGraphics();
         Color oldColor = g.getColor();
-        int x = disp.x2ScreenX(this.getX());
-        int y = disp.y2ScreenY(this.getY());
+        int _x = disp.x2ScreenX(this.getX());
+        int _y = disp.y2ScreenY(this.getY());
         super.displayOn(disp);
-        
+
         Font oldFont = g.getFont();
         if (turnedOn) {
 
@@ -91,11 +91,11 @@ public abstract class SensorNode extends Node {
                     // tem os dois sentidos
                     if (getMacLayer().getNeighborhood().neighborsThatKnowMeSet.contains(n)) {
                         g.setColor(neighborsLinkColor);
-                        g.drawLine(x, y, x2, y2);
+                        g.drawLine(_x, _y, x2, y2);
                     } else {
                         if (isPaintNeighborhoodDst()) {
                             g.setColor(othersLinkColor);
-                            g.drawLine(x, y, x2, y2);
+                            g.drawLine(_x, _y, x2, y2);
                         }
                     }
                 }
@@ -105,7 +105,7 @@ public abstract class SensorNode extends Node {
                     for (Node n : getMacLayer().getNeighborhood().neighbors) {
                         int x2 = disp.x2ScreenX(n.getX());
                         int y2 = disp.y2ScreenY(n.getY());
-                        g.drawLine(x, y, x2, y2);
+                        g.drawLine(_x, _y, x2, y2);
                     }
                 } else {
                     if (isPaintNeighborhoodOrg()) {
@@ -113,22 +113,23 @@ public abstract class SensorNode extends Node {
                         for (Node n : getMacLayer().getNeighborhood().neighborsThatKnowMe) {
                             int x2 = disp.x2ScreenX(n.getX());
                             int y2 = disp.y2ScreenY(n.getY());
-                            g.drawLine(x, y, x2, y2);
+                            g.drawLine(_x, _y, x2, y2);
                         }
                     }
                 }
             }
-            if(getRoutingLayer().isUnderAttack()){
+            if (getRoutingLayer().isUnderAttack()) {
                 getGraphicNode().setMode(GraphicNode.UNDER_ATTACK);
-            }else
+            } else {
                 getGraphicNode().setMode(GraphicNode.NONE);
+            }
         } else {
             // do nothing 
         }
         if (showID) {
             g.setColor(Color.black);
             g.setFont(monoFont);
-            g.drawString("" + getId(), x - getRadius() * 2, y - getRadius() * 2);
+            g.drawString("" + getId(), _x - getRadius() * 2, _y - getRadius() * 2);
         }
 
         g.setColor(oldColor);
