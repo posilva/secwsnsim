@@ -60,10 +60,6 @@ public abstract class AbstractTest extends PersistantObject implements Persisten
     /**
      *
      */
-    protected TestOutputParameters outputParameters;
-    /**
-     *
-     */
     protected Simulation simulation;
     /**
      *
@@ -122,7 +118,7 @@ public abstract class AbstractTest extends PersistantObject implements Persisten
      */
     public AbstractTest() {
         inputParameters = new TestInputParameters();
-        outputParameters = new TestOutputParameters(inputParameters);
+
     }
 
     /**
@@ -163,14 +159,6 @@ public abstract class AbstractTest extends PersistantObject implements Persisten
      */
     public void setInputParameters(TestInputParameters inputParameters) {
         this.inputParameters = inputParameters;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public TestOutputParameters getOutputParameters() {
-        return outputParameters;
     }
 
     /**

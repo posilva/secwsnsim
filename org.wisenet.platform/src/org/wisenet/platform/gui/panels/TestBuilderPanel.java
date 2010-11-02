@@ -368,6 +368,7 @@ public class TestBuilderPanel extends PlatformPanel {
         optRunOnce.setText("Run Once");
         optRunOnce.setName("optRunOnce"); // NOI18N
 
+        txtRunTimes.setText("1"); // NOI18N
         txtRunTimes.setToolTipText("Number of times to run");
         txtRunTimes.setEnabled(false);
         txtRunTimes.setName("txtRunTimes"); // NOI18N

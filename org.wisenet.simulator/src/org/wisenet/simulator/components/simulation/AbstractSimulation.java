@@ -1,15 +1,15 @@
 package org.wisenet.simulator.components.simulation;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.wisenet.simulator.common.PersistantObject;
 import org.wisenet.simulator.components.evaluation.tests.AbstractTest;
+import org.wisenet.simulator.components.evaluation.tests.TestResults;
 import org.wisenet.simulator.components.evaluation.tests.TestSet;
 import org.wisenet.simulator.components.evaluation.tests.TestTypeEnum;
 import org.wisenet.simulator.core.energy.EnergyController;
@@ -19,11 +19,11 @@ import org.wisenet.simulator.core.ui.ISimulationDisplay;
 import org.wisenet.simulator.core.Simulator;
 import org.wisenet.simulator.core.energy.Batery;
 import org.wisenet.simulator.core.energy.EnergyModel;
+import org.wisenet.simulator.core.node.Node;
 import org.wisenet.simulator.core.node.factories.AbstractNodeFactory;
 import org.wisenet.simulator.core.radio.RadioModel;
 import org.wisenet.simulator.utilities.Utilities;
 import org.wisenet.simulator.utilities.console.SimulationSettings;
-import org.wisenet.simulator.utilities.xml.XMLFileReader;
 
 /**
  *
@@ -32,14 +32,24 @@ import org.wisenet.simulator.utilities.xml.XMLFileReader;
 public abstract class AbstractSimulation extends PersistantObject implements ISimulationOperations {
 
     /**
+     * 
+     */
+    protected List testResults = new LinkedList<TestResults>();
+    /**
      * Energy model for this simulation
      */
     int mode = Simulator.FAST;
+    /**
+     * 
+     */
     EnergyModel energyModel; //TODO: uma vez que passou para dentro da node factory deve-se poder tirar
     /**
      *
      */
     protected String name;
+    /**
+     * 
+     */
     private String description;
     /**
      *
@@ -75,6 +85,7 @@ public abstract class AbstractSimulation extends PersistantObject implements ISi
      * Control flag for start state
      */
     protected boolean started;
+    private int radioCoveragethreshold = 1;
 
     /**
      *
@@ -312,40 +323,6 @@ public abstract class AbstractSimulation extends PersistantObject implements ISi
     }
 
     /**
-     * Load configurations from file
-     * @param file
-     * @return
-     */
-    public boolean loadFromFile(String file) {
-        File f = new File(file);
-        NodeList childs;
-        if (f.exists()) {
-            XMLFileReader fileReader = new XMLFileReader(file);
-            fileReader.open();
-            Node root = fileReader.getRootNode();
-            if (root.getChildNodes().getLength() > 0) {
-                childs = root.getChildNodes();
-                for (int i = 0; i < childs.getLength(); i++) {
-                    Node child = childs.item(i);
-                    if (child.getNodeName().equals("Name")) {
-                        this.name = child.getNodeValue();
-                    } else if (child.getNodeName().equals("Description")) {
-                        this.description = child.getNodeValue();
-                    } else if (child.getNodeName().equals("Seed")) {
-                        this.seed = Long.valueOf(child.getNodeValue());
-                    }
-                }
-                return true;
-            } else {
-                return false;
-            }
-
-        } else {
-            return false;
-        }
-    }
-
-    /**
      * Read a simulation configuration from a file
      * @param file
      * @return
@@ -547,5 +524,34 @@ public abstract class AbstractSimulation extends PersistantObject implements ISi
      * @param result
      */
     public void addTest(AbstractTest result) {
+    }
+
+    public String getRadioCoverageValue() {
+        if (getSimulator() != null) {
+            int t = getRadioCoverageThreshold();
+            Collection<Node> nodes = getSimulator().getNodes();
+            int c = 0;
+            for (Node node : nodes) {
+                if (node.getMacLayer().getNeighborhood().neighbors.size() >= t) {
+                    c++;
+                }
+            }
+            return (100 * c / nodes.size()) + "";
+
+        } else {
+            return "0";
+        }
+    }
+
+    public int getRadioCoverageThreshold() {
+        return radioCoveragethreshold;
+    }
+
+    public void setRadioCoveragethreshold(int radioCoveragethreshold) {
+        this.radioCoveragethreshold = radioCoveragethreshold;
+    }
+
+    public List getTestResults() {
+        return testResults;
     }
 }

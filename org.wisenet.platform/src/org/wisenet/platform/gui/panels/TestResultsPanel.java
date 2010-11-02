@@ -6,10 +6,12 @@
 package org.wisenet.platform.gui.panels;
 
 import java.awt.BorderLayout;
+import javax.swing.JLabel;
 import org.wisenet.platform.common.ui.PlatformPanel;
 import org.wisenet.platform.core.charts.ChartsFactory;
 import org.wisenet.platform.core.charts.SimulationChart;
 import org.wisenet.simulator.components.evaluation.tests.AbstractTest;
+import org.wisenet.simulator.components.evaluation.tests.TestResults;
 import org.wisenet.simulator.core.energy.GlobalEnergyDatabase;
 import org.wisenet.simulator.core.node.layers.routing.RoutingLayerController;
 
@@ -36,6 +38,7 @@ public class TestResultsPanel extends PlatformPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel2 = new javax.swing.JPanel();
         tabPaneTestResults = new javax.swing.JTabbedPane();
         tabConditions = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
@@ -100,6 +103,21 @@ public class TestResultsPanel extends PlatformPanel {
         tabEnergy = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         energyByEventPanel = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        addGlobalResults = new javax.swing.JButton();
+
+        jPanel2.setName("jPanel2"); // NOI18N
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setLayout(new java.awt.BorderLayout());
 
@@ -290,7 +308,7 @@ public class TestResultsPanel extends PlatformPanel {
                         .addComponent(messages, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel24)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                         .addComponent(interval, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -343,7 +361,7 @@ public class TestResultsPanel extends PlatformPanel {
                             .addComponent(senderNodes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(stableNodes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(nrNodes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -412,7 +430,7 @@ public class TestResultsPanel extends PlatformPanel {
                             .addComponent(jLabel11))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(168, Short.MAX_VALUE))
+                .addContainerGap(194, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout tabConditionsLayout = new javax.swing.GroupLayout(tabConditions);
@@ -781,7 +799,7 @@ public class TestResultsPanel extends PlatformPanel {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(energyByEventPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
+                .addComponent(energyByEventPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -805,8 +823,44 @@ public class TestResultsPanel extends PlatformPanel {
         tabPaneTestResults.addTab("Energy By Events", tabEnergy);
 
         add(tabPaneTestResults, java.awt.BorderLayout.CENTER);
+
+        jPanel5.setName("jPanel5"); // NOI18N
+        jPanel5.setPreferredSize(new java.awt.Dimension(720, 25));
+
+        addGlobalResults.setText("Add to global results");
+        addGlobalResults.setName("addGlobalResults"); // NOI18N
+        addGlobalResults.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addGlobalResultsActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap(596, Short.MAX_VALUE)
+                .addComponent(addGlobalResults, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(addGlobalResults)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        add(jPanel5, java.awt.BorderLayout.PAGE_END);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void addGlobalResultsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addGlobalResultsActionPerformed
+
+        TestResults tr = createTestResult();
+        getTest().getSimulation().getTestResults().add(tr);
+        
+    }//GEN-LAST:event_addGlobalResultsActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addGlobalResults;
     private javax.swing.JLabel attackNodes;
     private javax.swing.JLabel avgNeighborsRadio;
     private javax.swing.JLabel coveragePercent;
@@ -844,8 +898,10 @@ public class TestResultsPanel extends PlatformPanel {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
@@ -985,5 +1041,50 @@ public class TestResultsPanel extends PlatformPanel {
         updateLatencyResults();
         updateEnergyResults();
 
+    }
+
+    private TestResults createTestResult() {
+        TestResults t = new TestResults();
+        t.setTestName(txtName.getText());
+        t.setTotalNodes(INT(nrNodes));
+        t.setTotalStableNodes(INT(stableNodes));
+        t.setTotalSenderNodes(INT(senderNodes));
+        t.setTotalReceiverNodes(INT(receiverNodes));
+        t.setTotalAttackNodes(INT(attackNodes));
+        t.setAvgNeighboorsPerNode(D(avgNeighborsRadio));
+        t.setTotalOfMessagesSent(INT(messageSent));
+        t.setTotalReceiverNodes(INT(receiverNodes));
+        t.setTotalOfMessagesAttacked(INT(messagesAttacked));
+        t.setMessagesPerNode(INT(messages));
+        t.setMessagesInterval(INT(interval));
+        t.setMessagesRetransmissions(INT(retransmissions));
+        t.setReliabilityMessagesSent(INT(testMessagesSent));
+        t.setReliabilityMessagesReceived(INT(testMessagesReceived));
+        t.setReliabilityPercent(D(reliabilityPercent));
+        t.setCoverageSenderNodes(INT(coverageSenderNodes));
+        t.setCoverageReceivedNodes(INT(coveredNodes));
+        t.setCoveragePercent(D(coveragePercent));
+        t.setMinHopsPerMessage(INT(latencyMin));
+        t.setMaxHopsPerMessage(INT(latencyMax));
+        t.setAvgHopsPerMessage(D(latencyAverage));
+        t.setTotalEnergySpent(D(energyTotal));
+        t.setAverageEnergyPerNode(D(energyAvgPerNode));
+        return t;
+    }
+
+    private int INT(JLabel label) {
+        if (label.getText().equals("")) {
+            return 0;
+        } else {
+            return Integer.valueOf(label.getText());
+        }
+    }
+
+    private double D(JLabel label) {
+        if (label.getText().equals("")) {
+            return 0;
+        } else {
+            return Double.valueOf(label.getText());
+        }
     }
 }

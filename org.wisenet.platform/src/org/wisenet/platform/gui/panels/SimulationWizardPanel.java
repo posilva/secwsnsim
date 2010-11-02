@@ -122,8 +122,8 @@ public class SimulationWizardPanel extends PlatformPanel {
         cboNodeClass.setName("cboNodeClass"); // NOI18N
         jPanel3.add(cboNodeClass, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, 320, -1));
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance().getContext().getActionMap(SimulationWizardPanel.class, this);
-        cmdEnergyModel.setAction(actionMap.get("configureEnergyModel")); // NOI18N
+        cmdEnergyModel.setText("..."); // NOI18N
+        cmdEnergyModel.setToolTipText("Configure Energy Model"); // NOI18N
         cmdEnergyModel.setName("cmdEnergyModel"); // NOI18N
         jPanel3.add(cmdEnergyModel, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 30, 47, 24));
 

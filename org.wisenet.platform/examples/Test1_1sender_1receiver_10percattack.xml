@@ -4,7 +4,7 @@
 <description>Teste1 description</description>
 <debug>true</debug>
 <batch>false</batch>
-<timestorun>1</timestorun>
+<timestorun>4</timestorun>
 <inputparameters>
 <NumberOfAttackNodes>10</NumberOfAttackNodes>
 <PercentOfAttackNodes>true</PercentOfAttackNodes>

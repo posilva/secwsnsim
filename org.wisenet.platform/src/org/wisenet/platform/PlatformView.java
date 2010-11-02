@@ -23,12 +23,9 @@ import java.util.TimerTask;
 import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import org.jdesktop.application.Application.ExitListener;
 import org.jdesktop.application.ResourceMap;
 import org.wisenet.platform.core.PlatformManager;
-import org.wisenet.platform.core.instruments.coverage.CoverageInstrumentControlPanel;
-import org.wisenet.platform.core.instruments.reliability.ReliabilityInstrumentControlPanel;
 import org.wisenet.platform.gui.WorkbenchPanel;
 import org.wisenet.platform.gui.listeners.DeployEvent;
 import org.wisenet.platform.gui.panels.ApplicationOutputPanel;
@@ -45,10 +42,7 @@ import org.wisenet.platform.utils.gui.ClockCounter;
 import org.wisenet.platform.utils.GUI_Utils;
 import org.wisenet.platform.utils.gui.IClockDisplay;
 import org.wisenet.simulator.components.evaluation.tests.AbstractTest;
-import org.wisenet.simulator.components.instruments.NodeSelectionCondition;
-import org.wisenet.simulator.components.instruments.coverage.CoverageInstrument;
-import org.wisenet.simulator.components.instruments.coverage.CoverageListener;
-import org.wisenet.simulator.components.instruments.coverage.listeners.SignalUpdateEvent;
+import org.wisenet.simulator.utilities.NodeSelectionCondition;
 import org.wisenet.simulator.components.simulation.Simulation;
 import org.wisenet.simulator.components.simulation.listeners.SimulationEvent;
 import org.wisenet.simulator.components.simulation.listeners.SimulationListener;
@@ -62,7 +56,7 @@ import org.wisenet.simulator.utilities.listeners.ExceptionListener;
 /**
  * The application's main frame.
  */
-public class PlatformView extends FrameView implements ExitListener, IClockDisplay, CoverageListener, SimulationListener, SimulationPanelEventListener, ExceptionListener {
+public class PlatformView extends FrameView implements ExitListener, IClockDisplay, SimulationListener, SimulationPanelEventListener, ExceptionListener {
 
     private boolean workbenchVisible;
     protected ClockCounter clockCounter;
@@ -200,8 +194,6 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenu5 = new javax.swing.JMenu();
         viewNodeInfo = new javax.swing.JMenuItem();
-        evaluationMenu = new javax.swing.JMenu();
-        evalSettingsMenu = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         statusPanel = new javax.swing.JPanel();
@@ -453,16 +445,6 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
 
         menuBar.add(ViewMenu);
 
-        evaluationMenu.setText(resourceMap.getString("evaluationMenu.text")); // NOI18N
-        evaluationMenu.setName("evaluationMenu"); // NOI18N
-
-        evalSettingsMenu.setAction(actionMap.get("ShowEvaluationPanel")); // NOI18N
-        evalSettingsMenu.setText(resourceMap.getString("evalSettingsMenu.text")); // NOI18N
-        evalSettingsMenu.setName("evalSettingsMenu"); // NOI18N
-        evaluationMenu.add(evalSettingsMenu);
-
-        menuBar.add(evaluationMenu);
-
         helpMenu.setText(resourceMap.getString("helpMenu.text")); // NOI18N
         helpMenu.setName("helpMenu"); // NOI18N
         helpMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -695,8 +677,6 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
                 showWorkbench();
                 PlatformManager.getInstance().setNewSimulation(true);
                 PlatformManager.getInstance().showSimulationName("");
-                PlatformManager.getInstance().getActiveSimulation().getCoverageInstrument().updateNetworkSize();
-                ((CoverageInstrument) getCoverageInstrument()).addCoverageListener(this);
             }
         }
     }
@@ -732,8 +712,6 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
     protected javax.swing.JCheckBoxMenuItem chkMACLayerDebug;
     protected javax.swing.JCheckBoxMenuItem chkRoutingLayerDebug;
     protected javax.swing.JPanel clocksPanel;
-    protected javax.swing.JMenuItem evalSettingsMenu;
-    protected javax.swing.JMenu evaluationMenu;
     protected javax.swing.JPanel infoPanel;
     protected javax.swing.JLabel jLabel1;
     protected javax.swing.JMenu jMenu1;
@@ -843,21 +821,6 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         }
     }
 
-    @Action
-    public void ShowRadioCoverageValue() {
-        double value = ((CoverageInstrument) getCoverageInstrument()).getCoverageValueByModel(CoverageInstrument.CoverageModelEnum.RADIO);
-        JOptionPane.showMessageDialog(this.getFrame(), value);
-    }
-
-    public void onSignalUpdate(SignalUpdateEvent event) {
-        if (PlatformManager.getInstance().haveActiveSimulation()) {
-            if (event.getModel() == CoverageInstrument.CoverageModelEnum.RADIO) {
-            } else if (event.getModel() == CoverageInstrument.CoverageModelEnum.ROUTING) {
-                lblRoutingCoverageValue.setText("" + ((CoverageInstrument) getCoverageInstrument()).getCoverageValueByModel(CoverageInstrument.CoverageModelEnum.ROUTING) + "%");
-            }
-        }
-    }
-
     public void updateAverageNeighborsPerNode() {
         if (isActiveSimulationValid()) {
             lblAverageNeighborsPerNode.setText("" + PlatformManager.getInstance().getActiveSimulation().getAverageNeighborsPerNode());
@@ -871,21 +834,6 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
     @Action
     public void ShowSimulationProperties() {
         PlatformDialog.display(this.getFrame(), new SimulationPropertiesPanel(), "Simulation Properties", PlatformDialog.OK_MODE);
-    }
-
-    @Action
-    public void ShowEvaluationPanel() {
-//        PlatformFrame.display(EvaluationPanel.getInstance(), "Evaluation Settings", PlatformFrame.OK_MODE);
-    }
-
-    @Action
-    public void viewReliabilityControlPanelAction() {
-        PlatformFrame.display(new ReliabilityInstrumentControlPanel(), "Reliability Control Panel", PlatformFrame.OK_MODE);
-    }
-
-    @Action
-    public void viewCoverageControlPanelAction() {
-        PlatformFrame.display(new CoverageInstrumentControlPanel(), "Coverage Control Panel", PlatformFrame.OK_MODE);
     }
 
     @Action
@@ -936,9 +884,6 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         return PlatformManager.getInstance().getActiveSimulation() != null;
     }
 
-    private CoverageInstrument getCoverageInstrument() {
-        return PlatformManager.getInstance().getActiveSimulation().getCoverageInstrument();
-    }
 
     @Action
     public void OpenSimulation() {
@@ -997,7 +942,7 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
     public void afterBuildNetwork(SimulationEvent event) {
         try {
             updateAverageNeighborsPerNode();
-            lblRadioCoverageValue.setText("" + ((CoverageInstrument) getCoverageInstrument()).getCoverageValueByModel(CoverageInstrument.CoverageModelEnum.RADIO) + "%");
+            lblRadioCoverageValue.setText(PlatformManager.getInstance().getActiveSimulation().getRadioCoverageValue()+ "%");
         } catch (Exception e) {
             GUI_Utils.showException(e);
         }
@@ -1041,7 +986,6 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         pw.flush();
         sw.flush();
         System.out.println(sw.toString());
-
 
     }
 

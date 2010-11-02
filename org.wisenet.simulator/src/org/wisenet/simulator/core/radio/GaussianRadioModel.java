@@ -25,7 +25,6 @@ package org.wisenet.simulator.core.radio;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import org.wisenet.simulator.components.instruments.coverage.CoverageInstrument;
 
 import org.wisenet.simulator.core.Simulator;
 import org.wisenet.simulator.core.node.Node;
@@ -112,11 +111,6 @@ public class GaussianRadioModel extends RadioModel {
                         neighborhood.neighbors.add(dstNode);
                         dstNode.getMacLayer().getNeighborhood().neighborsThatKnowMe.add(srcNode);
                         neighborhood.staticFadings.add(staticRadioStrength);
-                        /**
-                         * Signals the coverage radio model that have a neighbor
-                         */
-                        getCoverageInstrument().signalNeighborDetection(CoverageInstrument.CoverageModelEnum.RADIO, srcNode);
-
                     }
                 }
 
@@ -190,7 +184,6 @@ public class GaussianRadioModel extends RadioModel {
      */
     @Override
     protected boolean beforeUpdateNeighborhoods() {
-        getCoverageInstrument().signalNeighborDetectionReset(CoverageInstrument.CoverageModelEnum.RADIO);
         /**
          * Clear neighborhood information
          */
@@ -336,11 +329,4 @@ public class GaussianRadioModel extends RadioModel {
         }
     }
 
-    /**
-     *
-     * @return
-     */
-    protected CoverageInstrument getCoverageInstrument() {
-        return getSimulator().getSimulation().getCoverageInstrument();
-    }
 }

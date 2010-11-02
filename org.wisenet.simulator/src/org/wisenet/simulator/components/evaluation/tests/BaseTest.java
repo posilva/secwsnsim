@@ -3,7 +3,7 @@ package org.wisenet.simulator.components.evaluation.tests;
 import org.wisenet.simulator.components.evaluation.tests.events.TestEndEvent;
 import org.wisenet.simulator.components.evaluation.tests.events.TestExecutionEvent;
 import org.wisenet.simulator.components.evaluation.tests.events.TestStartEvent;
-import org.wisenet.simulator.components.instruments.NodeSelectionCondition;
+import org.wisenet.simulator.utilities.NodeSelectionCondition;
 import org.wisenet.simulator.core.Event;
 import org.wisenet.simulator.core.Message;
 import org.wisenet.simulator.core.Simulator;
@@ -70,9 +70,11 @@ public class BaseTest extends AbstractTest {
         startEvent.setTime(testTime);
         testEvents.add(startEvent);
         testTime += Simulator.ONE_SECOND * 5;
+        for (int i = 0; i < getTimesToRun(); i++) // Build test conditions
+        {
+            buildTestConditions();
+        }
 
-        // Build test conditions
-        buildTestConditions();
         testTime += Simulator.ONE_SECOND * 5;
         // Ends Test
         TestEndEvent endEvent = new TestEndEvent();
@@ -190,7 +192,7 @@ public class BaseTest extends AbstractTest {
             }
 
             log("Selected " + attackNodes.size() + " Sensors  as Attacked");
-            if (this.getInputParameters().getAttackSelected()!=null) {
+            if (this.getInputParameters().getAttackSelected() != null) {
                 /* Enable attacks in the selected nodes */
                 for (Object a : attackNodes) {
                     Node attackedNode = (Node) a;

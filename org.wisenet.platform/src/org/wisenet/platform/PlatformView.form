@@ -368,23 +368,6 @@
             </Menu>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="evaluationMenu">
-          <Properties>
-            <Property name="text" type="java.lang.String" resourceKey="evaluationMenu.text"/>
-            <Property name="name" type="java.lang.String" value="evaluationMenu" noResource="true"/>
-          </Properties>
-          <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="evalSettingsMenu">
-              <Properties>
-                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                  <action class="org.wisenet.platform.PlatformView" id="ShowEvaluationPanel" methodName="ShowEvaluationPanel"/>
-                </Property>
-                <Property name="text" type="java.lang.String" resourceKey="evalSettingsMenu.text"/>
-                <Property name="name" type="java.lang.String" value="evalSettingsMenu" noResource="true"/>
-              </Properties>
-            </MenuItem>
-          </SubComponents>
-        </Menu>
         <Menu class="javax.swing.JMenu" name="helpMenu">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="helpMenu.text"/>

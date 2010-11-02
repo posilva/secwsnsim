@@ -19,14 +19,12 @@ import org.wisenet.protocols.insens.messages.data.DATAPayload;
 import org.wisenet.protocols.insens.messages.data.FDBKPayload;
 import org.wisenet.protocols.insens.messages.data.RREQPayload;
 import org.wisenet.protocols.insens.messages.data.RUPDPayload;
-import org.wisenet.protocols.insens.messages.evaluation.EvaluationINSENSDATAMessage;
 import org.wisenet.protocols.insens.utils.NeighborInfo;
 import org.wisenet.protocols.insens.utils.NetworkKeyStore;
 import org.wisenet.protocols.insens.utils.OneWaySequenceNumbersChain;
 import org.wisenet.simulator.utilities.CryptoFunctions;
 import org.wisenet.simulator.components.instruments.IInstrumentHandler;
 import org.wisenet.simulator.components.instruments.IInstrumentMessage;
-import org.wisenet.simulator.components.instruments.coverage.CoverageInstrument;
 import org.wisenet.simulator.core.Application;
 import org.wisenet.simulator.core.Message;
 import org.wisenet.simulator.core.Simulator;
@@ -176,8 +174,6 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     @Override
     protected void onStartUp() {
         setCurrentPhase(PHASE_SETUP);
-        ((CoverageInstrument) getCoverageInstrument()).signalNeighborDetectionReset(CoverageInstrument.CoverageModelEnum.ROUTING);
-        setupEvaluationClasses();
         getNode().getMacLayer().setDebugEnabled(false);
         getNode().getRoutingLayer().setDebugEnabled(false);
         if (getNode().isSinkNode()) {
@@ -454,7 +450,6 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
             }
         }
         if (!neighborInfo.containsKey(payload.sourceId)) {
-            ((CoverageInstrument) getCoverageInstrument()).signalNeighborDetection(CoverageInstrument.CoverageModelEnum.ROUTING, this.getNode());
         }
         neighborInfo.addNeighbor(payload.sourceId, payload.mac, isParent);
     }
@@ -716,14 +711,6 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     }
 
     /**
-     * Setting the evaluating classes
-     */
-    private void setupEvaluationClasses() {
-        getCoverageInstrument().setMessageClass(EvaluationINSENSDATAMessage.class);
-        getReliabilityInstrument().setMessageClass(EvaluationINSENSDATAMessage.class);
-    }
-
-    /**
      *
      * @return
      */
@@ -796,5 +783,4 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         tableOfNodesByHops.clear();
         reliableMode = false;
     }
-
 }
