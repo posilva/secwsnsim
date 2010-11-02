@@ -2,18 +2,20 @@
  ***  Wireless Sensor Network Simulator
  * The next generation for WSN Simulations
  */
-package org.wisenet.simulator.components.instruments;
+package org.wisenet.simulator.utilities;
+
+import org.wisenet.simulator.core.node.Node;
 
 /**
  *
 * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
-public interface IResult {
+public interface NodeSelectionCondition {
 
     /**
      *
+     * @param node
      * @return
      */
-    @Override
-    String toString();
+    public boolean select(Node node);
 }

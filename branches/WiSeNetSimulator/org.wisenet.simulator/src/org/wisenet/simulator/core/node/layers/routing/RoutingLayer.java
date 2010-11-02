@@ -4,11 +4,8 @@ import org.wisenet.simulator.core.node.layers.routing.attacks.AttacksList;
 import java.util.LinkedList;
 import java.util.List;
 import org.wisenet.simulator.components.evaluation.tests.AbstractTest;
-import org.wisenet.simulator.components.instruments.coverage.CoverageInstrument;
 import org.wisenet.simulator.components.instruments.IInstrumentHandler;
 import org.wisenet.simulator.components.instruments.IInstrumentMessage;
-import org.wisenet.simulator.components.instruments.latency.LatencyInstrument;
-import org.wisenet.simulator.components.instruments.reliability.ReliabilityInstrument;
 import org.wisenet.simulator.core.Application;
 import org.wisenet.simulator.core.Message;
 import org.wisenet.simulator.core.node.layers.Layer;
@@ -140,7 +137,7 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
      */
     public void receivedMessageHandler(Object message) {
         try {
-            
+
             Message m = (Message) ((Message) message).clone();
             receiveMessage(m);
         } catch (CloneNotSupportedException ex) {
@@ -182,11 +179,6 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
                 AbstractTest test = getController().getActiveTest();
                 test.getEvaluationManager().registerMessageSent(message, this);
             }
-            if (message instanceof IInstrumentMessage) {
-                getCoverageInstrument().notifyMessageSent((IInstrumentMessage) message, (IInstrumentHandler) this);
-                getReliabilityInstrument().notifyMessageSent((IInstrumentMessage) message, (IInstrumentHandler) this);
-                getLatencyInstrument().notifyMessageSent((IInstrumentMessage) message, (IInstrumentHandler) this);
-            }
         }
         application = app;
         boolean result = onSendMessage(message, app);
@@ -205,30 +197,6 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
             return doAttack(message);
         }
         return message;
-    }
-
-    /**
-     * Utility method
-     * @return
-     */
-    protected CoverageInstrument getCoverageInstrument() {
-        return getNode().getSimulator().getSimulation().getCoverageInstrument();
-    }
-
-    /**
-     * Utility method
-     * @return
-     */
-    protected ReliabilityInstrument getReliabilityInstrument() {
-        return getNode().getSimulator().getSimulation().getReliabilityInstrument();
-    }
-
-    /**
-     * Utility method
-     * @return
-     */
-    protected LatencyInstrument getLatencyInstrument() {
-        return getNode().getSimulator().getSimulation().getLatencyInstrument();
     }
 
     /**
@@ -312,17 +280,12 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
      * @param message
      */
     public final void done(Object message) {
-        ((Message)message).hop();
+        ((Message) message).hop();
         if (this instanceof IInstrumentHandler) {
 
             if (getController().isTesting()) {
                 AbstractTest test = getController().getActiveTest();
                 test.getEvaluationManager().registerMessageReceivedDone(message, this);
-            }
-            if (message instanceof IInstrumentMessage) {
-                getCoverageInstrument().notifyMessageReceived((IInstrumentMessage) message, (IInstrumentHandler) this);
-                getReliabilityInstrument().notifyMessageReceived((IInstrumentMessage) message, (IInstrumentHandler) this);
-                getLatencyInstrument().notifyMessageReceived((IInstrumentMessage) message, (IInstrumentHandler) this);
             }
         }
     }
@@ -398,7 +361,7 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
         super.reset();
         stable = false;
         protocolPhases.clear();
-        
+
         currentPhase = null;
     }
 

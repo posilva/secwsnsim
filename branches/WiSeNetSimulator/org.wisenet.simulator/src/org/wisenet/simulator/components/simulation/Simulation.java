@@ -5,9 +5,6 @@ import java.util.logging.Level;
 import org.apache.commons.configuration.ConfigurationException;
 import org.wisenet.simulator.common.PersistantException;
 import org.wisenet.simulator.components.evaluation.tests.AbstractTest;
-import org.wisenet.simulator.components.instruments.coverage.CoverageInstrument;
-import org.wisenet.simulator.components.instruments.latency.LatencyInstrument;
-import org.wisenet.simulator.components.instruments.reliability.ReliabilityInstrument;
 import org.wisenet.simulator.components.simulation.listeners.SimulationListener;
 import java.awt.Dimension;
 import java.util.ArrayList;
@@ -17,7 +14,7 @@ import java.util.logging.Logger;
 import java.io.File;
 import javax.swing.event.EventListenerList;
 import org.apache.commons.configuration.XMLConfiguration;
-import org.wisenet.simulator.components.instruments.NodeSelectionCondition;
+import org.wisenet.simulator.utilities.NodeSelectionCondition;
 import org.wisenet.simulator.components.output.IOutputDisplay;
 import org.wisenet.simulator.components.simulation.listeners.SimulationEvent;
 import org.wisenet.simulator.core.Simulator;
@@ -74,18 +71,6 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
     /**
      *
      */
-    protected CoverageInstrument coverageInstrument = new CoverageInstrument(this);
-    /**
-     *
-     */
-    protected ReliabilityInstrument reliabilityInstrument = new ReliabilityInstrument(this);
-    /**
-     *
-     */
-    protected LatencyInstrument latencyInstrument = new LatencyInstrument(this);
-    /**
-     *
-     */
     protected boolean logEnergyEnable;
     /**
      *
@@ -120,10 +105,6 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
      * Initialize instruments
      */
     private void setupInstruments() {
-        this.coverageInstrument = new CoverageInstrument(this);
-        this.coverageInstrument.setRadioModelThreshold(1);
-        this.reliabilityInstrument = new ReliabilityInstrument(this);
-        this.latencyInstrument = new LatencyInstrument(this);
     }
 
     @Override
@@ -371,7 +352,7 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         }
         List randomNodes = new ArrayList();
         RandomList allNodes = new RandomList(getSimulator().getNodes());
-        while (randomNodes.size() < nroNodes && allNodes.size()>0) {
+        while (randomNodes.size() < nroNodes && allNodes.size() > 0) {
 
             Node node = (Node) allNodes.randomElement();
             if (condition.select(node)) {
@@ -524,30 +505,6 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
      */
     public ISimulationGUI getSimulationGUI() {
         return simulationGUI;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public CoverageInstrument getCoverageInstrument() {
-        return coverageInstrument;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public LatencyInstrument getLatencyInstrument() {
-        return latencyInstrument;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public ReliabilityInstrument getReliabilityInstrument() {
-        return reliabilityInstrument;
     }
 
     /**
@@ -914,9 +871,6 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         getRoutingLayerController().reset();
         getMacLayerController().reset();
         getEnergyController().reset();
-        getReliabilityInstrument().reset();
-        getLatencyInstrument().reset();
-        getCoverageInstrument().reset();
     }
 
     public int getNumberOfAttackedNodes() {

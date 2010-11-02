@@ -426,4 +426,15 @@ public class Batery {
             this.initialPower = currentPower;
         }
     }
+
+    /**
+     * Function to determine the influence of battery consumption in signal strength
+     * Using the value 1000 slows down the influence of energy in signal
+     * @param signal
+     * @return
+     */
+    public double getDrainFunction(double signal) {
+        double relative = getCurrentPower() * 1000 / getInitialPower();
+        return signal * relative / 1000;
+    }
 }

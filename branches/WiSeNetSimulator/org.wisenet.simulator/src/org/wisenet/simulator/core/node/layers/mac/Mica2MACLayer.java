@@ -85,12 +85,16 @@ public class Mica2MACLayer extends MACLayer {
 
     @Override
     public double applyBatterySignalAttenuation(double signal) {
-        return signal;
+        double percent = getNode().getBateryEnergy().getDrainFunction(signal);
+        double v = signal * percent / 100;
+        return signal + v;
     }
 
     @Override
     public double applyEnvironmentSignalAttenuation(double signal) {
-        return signal;
+        double percent = getNode().getEnvironmentAttenuation();
+        double v = signal * percent / 100;
+        return signal - v;
     }
 
     /**
@@ -291,6 +295,7 @@ public class Mica2MACLayer extends MACLayer {
      * @return returns the SNR
      */
     protected double calcSNR(double signal, double noise) {
+        signal = applySignalAttenuation(signal);
         return signal / ((Double) getController().getParameters().get("noiseVariance") + noise);
     }
 

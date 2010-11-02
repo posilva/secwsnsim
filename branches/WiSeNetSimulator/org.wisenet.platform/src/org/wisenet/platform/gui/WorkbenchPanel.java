@@ -31,7 +31,7 @@ import org.wisenet.platform.gui.panels.TestBuilderPanel;
 import org.wisenet.platform.utils.GUI_Utils;
 import org.wisenet.platform.utils.PlatformUtils;
 import org.wisenet.simulator.components.evaluation.tests.AbstractTest;
-import org.wisenet.simulator.components.instruments.NodeSelectionCondition;
+import org.wisenet.simulator.utilities.NodeSelectionCondition;
 import org.wisenet.simulator.components.simulation.Simulation;
 import org.wisenet.simulator.components.simulation.listeners.SimulationEvent;
 import org.wisenet.simulator.components.simulation.listeners.SimulationTestEvent;

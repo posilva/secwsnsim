@@ -210,9 +210,8 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="cmdEnergyModel">
                   <Properties>
-                    <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                      <action class="org.wisenet.platform.ui.frames.SimulationWizardDialog" id="configureEnergyModel" methodName="configureEnergyModel"/>
-                    </Property>
+                    <Property name="text" type="java.lang.String" value="..." noResource="true"/>
+                    <Property name="toolTipText" type="java.lang.String" value="Configure Energy Model" noResource="true"/>
                     <Property name="name" type="java.lang.String" value="cmdEnergyModel" noResource="true"/>
                   </Properties>
                   <Constraints>
