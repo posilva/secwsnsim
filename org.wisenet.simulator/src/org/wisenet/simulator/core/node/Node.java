@@ -724,16 +724,17 @@ public abstract class Node {
         } catch (Exception e) {
         }
         String[] nodeInfo = new String[]{"ID: " + getId(),
-            "Sink:  " + (isSinkNode() ? "True" : "False"),
-            "Position:  (" + (int) getX() + " , " + (int) getY() + " , " + (int) getZ() + ")",
-            "Node:  " + this.getClass().getSimpleName(),
-            "Application:  " + this.getApplication().getClass().getSimpleName(),
-            "Routing:  " + this.getRoutingLayer().getClass().getSimpleName(),
-            "MAC:  " + this.getMacLayer().getClass().getSimpleName(),
-            "Nro. Neighbors:  " + nroNeighbors,
-            "Remaining Power:  " + twoPlaces.format(remainingPower <= 0.0 ? 0 : remainingPower) + "%",
+            "Sink: " + (isSinkNode() ? "True" : "False"),
+            "Position: (" + (int) getX() + " , " + (int) getY() + " , " + (int) getZ() + ")",
+            "Node: " + this.getClass().getSimpleName(),
+            "Application: " + this.getApplication().getClass().getSimpleName(),
+            "Routing: " + this.getRoutingLayer().getClass().getSimpleName(),
+            "MAC: " + this.getMacLayer().getClass().getSimpleName(),
+            "Nro. Neighbors: " + nroNeighbors,
+            "Remaining Power: " + twoPlaces.format(remainingPower <= 0.0 ? 0 : remainingPower) + "%",
             "Routing Stable: " + getRoutingLayer().isStable(),
             "Routing Under Attack: " + getRoutingLayer().isUnderAttack(),
+            "Environment Attenuation: " + getEnvironmentAttenuation(),
             "RSS: " + getMacLayer().getSignalStrength(),
             "MRS: " + getConfig().getMaximumRadioStrength(),};
         return nodeInfo;

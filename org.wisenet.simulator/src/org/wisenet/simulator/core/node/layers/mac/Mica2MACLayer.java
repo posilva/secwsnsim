@@ -69,7 +69,7 @@ public class Mica2MACLayer extends MACLayer {
     }
 
     private String getSimData() {
-        return "<" + getNode().getSimulator().getSimulationTime() + ">" + getNode().getId();
+        return "<" + Simulator.getSimulationTime() + ">" + getNode().getId();
     }
 
     private void setMessageColor(Object message) {
@@ -85,9 +85,7 @@ public class Mica2MACLayer extends MACLayer {
 
     @Override
     public double applyBatterySignalAttenuation(double signal) {
-        double percent = getNode().getBateryEnergy().getDrainFunction(signal);
-        double v = signal * percent / 100;
-        return signal + v;
+        return getNode().getBateryEnergy().getDrainFunction(signal);
     }
 
     @Override
@@ -228,7 +226,7 @@ public class Mica2MACLayer extends MACLayer {
                 sendingPostponed = true;
             } else {
                 sendingPostponed = false;
-                testChannelEvent.setTime(getNode().getSimulator().getSimulationTime()
+                testChannelEvent.setTime(Simulator.getSimulationTime()
                         + generateWaitingTime());
                 getNode().getSimulator().addEvent(testChannelEvent);
             }
@@ -392,7 +390,7 @@ public class Mica2MACLayer extends MACLayer {
             signalStrength = 0;
             if (sendingPostponed) {
                 sendingPostponed = false;
-                testChannelEvent.setTime(getNode().getSimulator().getSimulationTime()
+                testChannelEvent.setTime(Simulator.getSimulationTime()
                         + generateWaitingTime());
                 getNode().getSimulator().addEvent(testChannelEvent);
             }

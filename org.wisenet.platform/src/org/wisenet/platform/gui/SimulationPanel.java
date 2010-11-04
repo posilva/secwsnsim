@@ -151,6 +151,8 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         selNodeOnOff = new javax.swing.JCheckBoxMenuItem();
         selNodeSink = new javax.swing.JCheckBoxMenuItem();
         selNodeMonitEnergy = new javax.swing.JMenuItem();
+        selNodeSetZ = new javax.swing.JMenuItem();
+        selNodeSetEnvironmentAttenuation = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         selNodeRoutingAttacks = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
@@ -162,6 +164,8 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         selNodesShowNodesThatKnownme = new javax.swing.JCheckBoxMenuItem();
         selNodesOnOff = new javax.swing.JCheckBoxMenuItem();
         selNodesMonitEnergy = new javax.swing.JMenuItem();
+        selNodesSetZ = new javax.swing.JMenuItem();
+        selNodesSetEnvironmentAttenuation = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         selNodesRemove = new javax.swing.JMenuItem();
         selNodesUnderAttack = new javax.swing.JCheckBoxMenuItem();
@@ -247,6 +251,22 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             }
         });
         currentSelectedNodePopupMenu.add(selNodeMonitEnergy);
+
+        selNodeSetZ.setText("Set Z");
+        selNodeSetZ.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selNodeSetZActionPerformed(evt);
+            }
+        });
+        currentSelectedNodePopupMenu.add(selNodeSetZ);
+
+        selNodeSetEnvironmentAttenuation.setText("Set environment attenuation");
+        selNodeSetEnvironmentAttenuation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selNodeSetEnvironmentAttenuationActionPerformed(evt);
+            }
+        });
+        currentSelectedNodePopupMenu.add(selNodeSetEnvironmentAttenuation);
         currentSelectedNodePopupMenu.add(jSeparator3);
 
         selNodeRoutingAttacks.setText("Routing Attacks");
@@ -318,6 +338,22 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             }
         });
         selectionToolPopupMenu.add(selNodesMonitEnergy);
+
+        selNodesSetZ.setText("Set Z ");
+        selNodesSetZ.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selNodesSetZActionPerformed(evt);
+            }
+        });
+        selectionToolPopupMenu.add(selNodesSetZ);
+
+        selNodesSetEnvironmentAttenuation.setText("Set environment attenuation");
+        selNodesSetEnvironmentAttenuation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selNodesSetEnvironmentAttenuationActionPerformed(evt);
+            }
+        });
+        selectionToolPopupMenu.add(selNodesSetEnvironmentAttenuation);
         selectionToolPopupMenu.add(jSeparator2);
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance().getContext().getActionMap(SimulationPanel.class, this);
@@ -487,6 +523,31 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             }
         }
         updateLocal();
+    }
+
+    private Double inputNumberValue(String message, String defValue) throws NumberFormatException, HeadlessException {
+        boolean ok = false;
+        double nNodes = 0;
+        try {
+
+            while (!ok) {
+                String sNodes = JOptionPane.showInputDialog(message, defValue);
+                if (sNodes != null) {
+                    if (NumberUtils.isNumber(sNodes)) {
+                        nNodes = Integer.parseInt(sNodes);
+                        ok = true;
+                        return nNodes;
+                    }
+                } else {
+                    return null;
+                }
+                if (!ok) {
+                    JOptionPane.showMessageDialog(SimulationPanel.this, "Invalid value!");
+                }
+            }
+        } catch (Exception e) {
+        }
+        return null;
     }
 
     /**
@@ -889,6 +950,35 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         SetNodeAsSink();
     }//GEN-LAST:event_selNodeSinkActionPerformed
 
+    private void selNodeSetZActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selNodeSetZActionPerformed
+        if (currentSelectedNode != null) {
+            selectedNodes = new Vector<GraphicNode>();
+            selectedNodes.add(currentSelectedNode);
+            setZPosition(selectedNodes);
+            updateLocal();
+        }
+    }//GEN-LAST:event_selNodeSetZActionPerformed
+
+    private void selNodeSetEnvironmentAttenuationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selNodeSetEnvironmentAttenuationActionPerformed
+        if (currentSelectedNode != null) {
+            selectedNodes = new Vector<GraphicNode>();
+            selectedNodes.add(currentSelectedNode);
+            setEnvironmentAttenuation(selectedNodes);
+            updateLocal();
+        }
+
+    }//GEN-LAST:event_selNodeSetEnvironmentAttenuationActionPerformed
+
+    private void selNodesSetZActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selNodesSetZActionPerformed
+        setZPosition(selectedNodes);
+        updateLocal();
+    }//GEN-LAST:event_selNodesSetZActionPerformed
+
+    private void selNodesSetEnvironmentAttenuationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selNodesSetEnvironmentAttenuationActionPerformed
+        setEnvironmentAttenuation(selectedNodes);
+        updateLocal();
+    }//GEN-LAST:event_selNodesSetEnvironmentAttenuationActionPerformed
+
     protected boolean isMousePressed() {
         return pressedPoint_x != -1;
     }
@@ -909,6 +999,8 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     private javax.swing.JCheckBoxMenuItem selNodeOnOff;
     private javax.swing.JMenuItem selNodeRoutingAttacks;
     private javax.swing.JMenuItem selNodeRunEvent;
+    private javax.swing.JMenuItem selNodeSetEnvironmentAttenuation;
+    private javax.swing.JMenuItem selNodeSetZ;
     private javax.swing.JCheckBoxMenuItem selNodeShowID;
     private javax.swing.JCheckBoxMenuItem selNodeShowNeighbors;
     private javax.swing.JCheckBoxMenuItem selNodeShowOthers;
@@ -918,6 +1010,8 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     private javax.swing.JCheckBoxMenuItem selNodesOnOff;
     private javax.swing.JMenuItem selNodesRemove;
     private javax.swing.JMenuItem selNodesRunEvent;
+    private javax.swing.JMenuItem selNodesSetEnvironmentAttenuation;
+    private javax.swing.JMenuItem selNodesSetZ;
     private javax.swing.JCheckBoxMenuItem selNodesShowID;
     private javax.swing.JCheckBoxMenuItem selNodesShowNeighbors;
     private javax.swing.JCheckBoxMenuItem selNodesShowNodesThatKnownme;
@@ -1283,6 +1377,28 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
 
     }
 
+    private void setZPosition(Vector<GraphicNode> selectedNodes) {
+        Double v = inputNumberValue("Insert Z value:", "");
+        if (v == null) {
+            return;
+        }
+        for (GraphicNode graphicNode : selectedNodes) {
+            Node node = graphicNode.getPhysicalNode();
+            node.setZ(v);
+        }
+    }
+
+    private void setEnvironmentAttenuation(Vector<GraphicNode> selectedNodes) {
+        Double v = inputNumberValue("Insert Enviroment Attenuation Factor value:", "");
+        if (v == null) {
+            return;
+        }
+        for (GraphicNode graphicNode : selectedNodes) {
+            Node node = graphicNode.getPhysicalNode();
+            node.setEnvironmentAttenuation(v);
+        }
+    }
+
     /**
      * 
      */
@@ -1325,7 +1441,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
                         double c = 100 - (node.getBateryEnergy().getCurrentPower() * 100 / node.getBateryEnergy().getInitialPower());
                         stat.addValue(c);
                     }
-                    double x = NodesEnergyWatcher.this.nodes.get(0).getSimulator().getSimulationTimeInMillisec() / 1000;
+                    double x = Simulator.getSimulationTimeInMillisec() / 1000;
                     cp.updateChart(x, stat.getMean());
                 }
             }, delay, period);
@@ -1368,22 +1484,16 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             } else {
                 deployArea = ((GeneralPath) selectedArea.clone()).getBounds();
             }
-            while (!ok) {
-                String distance = JOptionPane.showInputDialog("Distance Between Nodes:");
-                if (distance != null) {
-                    if (NumberUtils.isNumber(distance)) {
-                        nDistance = Integer.parseInt(distance);
-                        if (nDistance > 0) {
-                            ok = true;
-                        }
-                    }
-                } else {
-                    return;
-                }
-                if (!ok) {
-                    JOptionPane.showMessageDialog(SimulationPanel.this, "Invalid value!");
-                }
+
+            Double v = inputNumberValue("Distance Between Nodes:", "");
+            if (v == null) {
+                ok = false;
+                return;
+            } else {
+                nDistance = Integer.parseInt(v.toString());
+                ok = true;
             }
+
         }
 
         @Override
