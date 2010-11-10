@@ -18,7 +18,7 @@ public class MessageDatabase {
     /**
      *
      */
-    protected boolean debugEnabled = true;
+    protected boolean debugEnabled = false;
 
     /**
      * Registers a message sent event

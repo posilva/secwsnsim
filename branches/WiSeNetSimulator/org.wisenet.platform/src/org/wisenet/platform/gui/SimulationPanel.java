@@ -1490,7 +1490,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
                 ok = false;
                 return;
             } else {
-                nDistance = Integer.parseInt(v.toString());
+                nDistance = v.intValue();
                 ok = true;
             }
 

@@ -85,14 +85,14 @@ public class Mica2MACLayer extends MACLayer {
 
     @Override
     public double applyBatterySignalAttenuation(double signal) {
-        return getNode().getBateryEnergy().getDrainFunction(signal);
+        return signal;//getNode().getBateryEnergy().getDrainFunction(signal);
     }
 
     @Override
     public double applyEnvironmentSignalAttenuation(double signal) {
-        double percent = getNode().getEnvironmentAttenuation();
-        double v = signal * percent / 100;
-        return signal - v;
+//        double percent = getNode().getEnvironmentAttenuation();
+//        double v = signal * percent / 100;
+        return signal;// - v;
     }
 
     /**
@@ -331,7 +331,7 @@ public class Mica2MACLayer extends MACLayer {
 
         if (receiving) {
             noiseStrength += level;
-            if (isMessageCorrupted(applySignalAttenuation(signalStrength), noiseStrength)) {
+            if (isMessageCorrupted(signalStrength, noiseStrength)) {
                 corrupted = true;
             }
         } else {

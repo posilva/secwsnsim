@@ -22,7 +22,7 @@ import org.wisenet.simulator.core.node.layers.routing.RoutingLayer;
 
 /**
  *
-* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class BaseStationController {
 
@@ -265,17 +265,30 @@ public class BaseStationController {
      * Perform the calculations related with building forwarding tables
      */
     public void calculateForwardingTables() {
+
         long start = System.currentTimeMillis();
+        long partial = start;
         System.out.println("INITIATED FORWARDING TABLES CALCULATION");
         prepareBaseStation(basestation);
+
+        System.out.println("prepared base station IN " + (System.currentTimeMillis() - partial) / 1000 + " SECONDS");
+        partial = System.currentTimeMillis();
         createNetworkGraph();
+        System.out.println("created network graph IN " + (System.currentTimeMillis() - partial) / 1000 + " SECONDS");
+        partial = System.currentTimeMillis();
+
         Hashtable firstPathsTtemp = calculateFirstPaths(basestation.getNode().getId());
+
+        System.out.println("first path calculated IN " + (System.currentTimeMillis() - partial) / 1000 + " SECONDS");
+        partial = System.currentTimeMillis();
         Hashtable secondPathsTemp = calculateSecondPaths(firstPathsTtemp);
+        System.out.println("second path calculated IN " + (System.currentTimeMillis() - partial) / 1000 + " SECONDS");
+
+        partial = System.currentTimeMillis();
         buildForwardingTables(firstPathsTtemp, secondPathsTemp);
+        System.out.println("builded tables IN " + (System.currentTimeMillis() - partial) / 1000 + " SECONDS");
 
-        long end = System.currentTimeMillis();
-        System.out.println("ENDED FORWARDING TABLES CALCULATION IN " + (end - start) / 1000 + " SECONDS");
-
+        System.out.println("ENDED FORWARDING TABLES CALCULATION IN " + (System.currentTimeMillis() - start) / 1000 + " SECONDS");
 
         //printFwTables();
     }
@@ -360,6 +373,8 @@ public class BaseStationController {
         final short graphSize = (short) networkGraph.vertices.size();
         final short graphHalf = (short) (graphSize / 2);
         firstPaths.clear();
+
+
         try {
             Thread t1 = new Thread(new TaskPathCalculator(start, (short) 0, (short) (graphHalf - 1)));
             Thread t2 = new Thread(new TaskPathCalculator(start, graphHalf, (short) (graphSize - 1)));

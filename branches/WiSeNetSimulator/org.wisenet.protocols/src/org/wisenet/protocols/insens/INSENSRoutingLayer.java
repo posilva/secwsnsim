@@ -93,12 +93,19 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     private Hashtable tableOfNodesByHops;
     private boolean reliableMode = false;
 
+    public INSENSRoutingLayer() {
+        setDebugEnabled(true);
+    }
+
+
+
     /**
      * Receive a message from the MAC Layer
      * @param message
      */
     @Override
     public void onReceiveMessage(Object message) {
+         setDebugEnabled(true);
         if (message instanceof INSENSMessage) {
             try {
                 INSENSMessage m = (INSENSMessage) message;
@@ -432,12 +439,14 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         RREQPayload payload = new RREQPayload(m.getPayload());
 
         if (!getNode().isSinkNode()) {
+            
             if (isFirstTime(payload)) {
-                log("SIGNAL STRENGTH: " + getNode().getMacLayer().getSignalStrength() + "\tSIGNAL NOISE: " + getNode().getMacLayer().getNoiseStrength());
+//                log("SIGNAL STRENGTH: " + getNode().getMacLayer().getSignalStrength() + "\tSIGNAL NOISE: " + getNode().getMacLayer().getNoiseStrength());
                 if (getNode().getMacLayer().getSignalStrength() > INSENSConstants.SIGNAL_STRENGH_THRESHOLD && getNode().getMacLayer().getNoiseStrength() < INSENSConstants.SIGNAL_NOISE_THRESHOLD) {
                     if (owsIsValid(payload)) {
                         isParent = true;
                         roundOWS = payload.ows; // updates the round ows
+                       log("Received RREQ From " + m.getSourceId());
                         rebroadcastRREQMessage(payload);
                         feedbackMessageStartTimer.start();
                     } else {
