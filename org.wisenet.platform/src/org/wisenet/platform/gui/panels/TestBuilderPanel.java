@@ -539,6 +539,11 @@ public class TestBuilderPanel extends PlatformPanel {
 
     private void showTest() {
         txtTestName.setText(test.getName());
+
+        optRunTimes.setSelected(test.getTimesToRun() > 1);
+        optRunOnce.setSelected(!optRunTimes.isSelected());
+
+        txtRunTimes.setText(test.getTimesToRun() + "");
         txtTestDescription.setText(test.getDescription());
         debug.setSelected(test.isDebugEnabled());
         batchMode.setSelected(test.isBatchMode());
@@ -812,15 +817,18 @@ public class TestBuilderPanel extends PlatformPanel {
     }
 
     private void selectCboValue(JComboBox cboAttacks, String attackSelected) {
-        for (int i = 0; i < cboAttacks.getModel().getSize(); i++) {
-            Object object = cboAttacks.getModel().getElementAt(i);
-            if (object.equals(attackSelected)) {
-                cboAttacks.getModel().setSelectedItem(object);
-                return;
+        if (cboAttacks.getItemCount() > 0) {
+            if (attackSelected != null && attackSelected.trim().length() > 0) {
+                for (int i = 0; i < cboAttacks.getModel().getSize(); i++) {
+                    Object object = cboAttacks.getModel().getElementAt(i);
+                    if (object.equals(attackSelected)) {
+                        cboAttacks.getModel().setSelectedItem(object);
+                        return;
+                    }
+                }
+                GUI_Utils.showWarningMessage("Load attack is not available in current simulation");
             }
         }
-        GUI_Utils.showWarningMessage("Load attack is not available in current simulation");
-
     }
 
     public void setCurrentTest(AbstractTest currentTest) {
@@ -850,10 +858,14 @@ public class TestBuilderPanel extends PlatformPanel {
         inputParameters.setNumberOfMessagesPerNode(INT(txtNrMessagesPerNode));
         inputParameters.setIntervalBetweenMessagesSent(INT(txtIntervalBetweenMessages));
         inputParameters.setNumberOfRetransmissions(INT(txtNrRetransmissions));
-        if (cboAttacks.getSelectedItem().equals("None")) {
-            inputParameters.setAttackSelected(null);
-        } else {
-            inputParameters.setAttackSelected(cboAttacks.getSelectedItem().toString());
+
+        if (cboAttacks.getItemCount() > 0) {
+
+            if (cboAttacks.getSelectedItem().equals("None")) {
+                inputParameters.setAttackSelected(null);
+            } else {
+                inputParameters.setAttackSelected(cboAttacks.getSelectedItem().toString());
+            }
         }
         test = new BaseTest(inputParameters);
         test.setName(txtTestName.getText());

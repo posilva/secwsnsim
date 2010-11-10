@@ -47,7 +47,7 @@ public class SimulationWizardPanel extends PlatformPanel {
         cboSimulatorClass.addFocusListener(focusListener);
         txtSimulationName.addFocusListener(focusListener);
         txtSimulationDescription.addFocusListener(focusListener);
-
+        updateRangeLabel();
     }
 
     /** This method is called from within the constructor to
@@ -79,6 +79,7 @@ public class SimulationWizardPanel extends PlatformPanel {
         maxValueZ = new javax.swing.JFormattedTextField();
         jLabel7 = new javax.swing.JLabel();
         environAttenuation = new javax.swing.JSpinner();
+        lblRange = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         lblSimName = new javax.swing.JLabel();
         txtSimulationName = new javax.swing.JTextField();
@@ -145,7 +146,7 @@ public class SimulationWizardPanel extends PlatformPanel {
                 nodeRangeSliderStateChanged(evt);
             }
         });
-        jPanel3.add(nodeRangeSlider, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, 362, -1));
+        jPanel3.add(nodeRangeSlider, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, 320, -1));
 
         jLabel5.setFont(lblSimName.getFont());
         jLabel5.setText("Z Value"); // NOI18N
@@ -196,6 +197,13 @@ public class SimulationWizardPanel extends PlatformPanel {
         environAttenuation.setModel(new javax.swing.SpinnerNumberModel(0, -100, 100, 1));
         environAttenuation.setName("environAttenuation"); // NOI18N
         jPanel3.add(environAttenuation, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 68, -1));
+
+        lblRange.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(SimulationWizardPanel.class);
+        lblRange.setText(resourceMap.getString("lblRange.text")); // NOI18N
+        lblRange.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lblRange.setName("lblRange"); // NOI18N
+        jPanel3.add(lblRange, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, 40, 20));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -342,11 +350,19 @@ public class SimulationWizardPanel extends PlatformPanel {
     private void nodeRangeSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_nodeRangeSliderStateChanged
         JSlider source = (JSlider) evt.getSource();
         if (!source.getValueIsAdjusting()) {
-            int value = (int) source.getValue();
-            nodeRangeSlider.setToolTipText("" + value);
+            updateRangeLabel();
         }
     }//GEN-LAST:event_nodeRangeSliderStateChanged
 
+    void updateRangeLabel() {
+        try {
+            int value = (int) nodeRangeSlider.getValue();
+            nodeRangeSlider.setToolTipText("" + value);
+            lblRange.setText(value + "");
+        } catch (Exception e) {
+        }
+
+    }
     private void optVariableZActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optVariableZActionPerformed
         setZInput();
     }
@@ -361,7 +377,7 @@ public class SimulationWizardPanel extends PlatformPanel {
 
     private void cmdSaveToFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdSaveToFileActionPerformed
         GUI_Utils.showinfoMessage("Feature not yet implemented!");
-        return ;
+        return;
 //        if (txtSimulationName.getText().trim().length() > 0 && cboNodeClass.getItemCount() > 0 && cboRadioModelClass.getItemCount() > 0 && cboSimulatorClass.getItemCount() > 0) {
 //            SimulationSettings sets = new SimulationSettings();
 //            sets.setName(txtSimulationName.getName());
@@ -389,6 +405,7 @@ public class SimulationWizardPanel extends PlatformPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JLabel lblRange;
     private javax.swing.JLabel lblSimName;
     private javax.swing.JFormattedTextField maxValueZ;
     private javax.swing.JFormattedTextField minValueZ;
