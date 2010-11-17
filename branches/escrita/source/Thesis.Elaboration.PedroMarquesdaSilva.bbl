@@ -1,0 +1,408 @@
+\begin{thebibliography}{10}
+
+\bibitem{btnodes}
+{BTnodes} - a distributed environment for prototyping ad hoc networks.
+\newblock
+  {http://www.btnode.ethz.ch/Documentation/BTnodeRev3HardwareReference}.
+
+\bibitem{contiki}
+The contiki operating system - home.
+\newblock http://www.sics.se/contiki/.
+
+\bibitem{gateways}
+Gateways - crossbow technology.
+\newblock {http://www.xbow.com/Products/productdetails.aspx?sid=159}.
+
+\bibitem{freemote}
+Home {\textbar} freemote emulator {\textbar} assembla.
+\newblock http://www.assembla.com/wiki/show/freemote.
+
+\bibitem{jsim}
+Home {(J-Sim} official).
+\newblock http://sites.google.com/site/jsimofficial/.
+
+\bibitem{jprowler}
+{ISIS} - {JProwler}.
+\newblock http://w3.isis.vanderbilt.edu/projects/nest/jprowler/.
+
+\bibitem{prowler}
+{ISIS} - prowler.
+\newblock {http://w3.isis.vanderbilt.edu/projects/nest/Prowler/index.html}.
+
+\bibitem{mica2_datasheet}
+{Mica2 Datasheet}.
+\newblock {http://www.xbow.com/Products/productdetails.aspx?sid=174}.
+
+\bibitem{micaz}
+{MicaZ Product Details}.
+\newblock {http://www.xbow.com/Products/productdetails.aspx?sid=164}.
+
+\bibitem{nanork}
+{Nano-RK:} a wireless sensor networking {Real-Time} operating system.
+\newblock http://www.nanork.org/.
+
+\bibitem{ns2}
+The network simulator - ns-2.
+\newblock http://www.isi.edu/nsnam/ns/.
+
+\bibitem{SENSE}
+{SENSE-3.0:} sensor network simulator and emulator.
+\newblock http://www.ita.cs.rpi.edu/sense/index.html.
+
+\bibitem{shox}
+{ShoX} project page.
+\newblock http://shox.sourceforge.net/.
+
+\bibitem{sunspotworld}
+{SunSPOTWorld} - documentation.
+\newblock http://sunspotworld.com/docs/index.html.
+
+\bibitem{tinyos}
+{TinyOS} community forum {\textbar}{\textbar} an open-source {OS} for the
+  networkedsensor regime.
+\newblock http://www.tinyos.net/.
+
+\bibitem{zigbee}
+{ZigBee} alliance.
+\newblock {http://www.zigbee.org/Default.aspx}.
+
+\bibitem{ietf_802154}
+{IEEE Standard for Information Technology - Telecommunications andinformation
+  exchange between systems - Local and metropolitan area networks -specific
+  requirement Part 15.4: Wireless Medium Access Control (MAC) andPhysical Layer
+  (PHY) Specifications fo}, 2007.
+
+\bibitem{Akkaya2005}
+Kemal Akkaya and Mohamed Younis.
+\newblock {A survey on routing protocols for wireless sensor networks}.
+\newblock {\em Ad Hoc Networks}, 3(3):325--349, May 2005.
+
+\bibitem{Akyildiz2002}
+I.~F. Akyildiz, W.~Su, Y.~Sankarasubramaniam, and E.~Cayirci.
+\newblock {Wireless sensor networks: a survey}.
+\newblock {\em Computer Networks}, 38(4):393--422, March 2002.
+
+\bibitem{al-karaki_routing_2004}
+{J.N.} {Al-Karaki} and {A.E.} Kamal.
+\newblock Routing techniques in wireless sensor networks: a survey.
+\newblock {\em Wireless Communications, {IEEE}}, 11(6):6--28, 2004.
+
+\bibitem{blackhole_adhoc}
+Mohammad Al-Shurman, Seong-Moo Yoo, and Seungjin Park.
+\newblock Black hole attack in mobile ad hoc networks.
+\newblock In {\em ACM-SE 42: Proceedings of the 42nd annual Southeast regional
+  conference}, pages 96--97, New York, NY, USA, 2004. ACM.
+
+\bibitem{zigbee_802154}
+Paolo Baronti, Prashant Pillai, Vince~W.C. Chook, Stefano Chessa, Alberto
+  Gotta, and Y.~Fun Hu.
+\newblock {Wireless sensor networks: A survey on the state of the art and the
+  802.15.4 and ZigBeestandards}.
+\newblock {\em Computer Communications}, 30(7):1655--1695, May 2007.
+
+\bibitem{igf_protocol}
+M.~Blum, Tian He, Sang Son, and John~A Stankovic.
+\newblock {IGF:} a {State-Free} robust communication protocol for wireless
+  sensor networks.
+
+\bibitem{falhas_bizantinas}
+Miguel Castro and Barbara Liskov.
+\newblock Practical byzantine fault tolerance.
+\newblock In {\em OSDI '99: Proceedings of the third symposium on Operating
+  systems design andimplementation}, pages 173--186, Berkeley, CA, USA, 1999.
+  USENIX Association.
+
+\bibitem{Corson1999}
+S~Corson and J~Macker.
+\newblock {Mobile Ad hoc Networking (MANET): Routing Protocol Performance
+  Issues and Evaluation Considerations}, January 1999.
+
+\bibitem{Coulouris_sd4ed}
+George~F. Coulouris and Jean Dollimore.
+\newblock {\em Distributed systems: concepts and design}.
+\newblock Addison-Wesley Longman Publishing Co., Inc., Boston, MA, USA, 1988.
+
+\bibitem{mac_protocols}
+I.~Demirkol, C.~Ersoy, and F.~Alagoz.
+\newblock Mac protocols for wireless sensor networks: a survey.
+\newblock {\em Communications Magazine, IEEE}, 44(4):115--121, April 2006.
+
+\bibitem{INSENS}
+Jing Deng, Richard Han, and Shivakant Mishra.
+\newblock Insens: Intrusion-tolerant routing for wireless sensor networks.
+\newblock {\em Comput. Commun.}, 29(2):216--230, 2006.
+
+\bibitem{Dolev1983}
+D.~Dolev and A.~Yao.
+\newblock {On the security of public key protocols}.
+\newblock {\em Information Theory, IEEE Transactions on}, 29(2):198--208, 1983.
+
+\bibitem{Douceur2002}
+John Douceur and Judith~S Donath.
+\newblock {The Sybil Attack}.
+\newblock pages 251----260, 2002.
+
+\bibitem{eschenauer2002}
+Laurent Eschenauer and Virgil~D. Gligor.
+\newblock A key-management scheme for distributed sensor networks.
+\newblock In {\em Proceedings of the 9th {ACM} conference on Computer
+  andcommunications security}, pages 41--47, Washington, {DC,} {USA}, 2002.
+  {ACM}.
+
+\bibitem{leachprotocol}
+Wendi~Rabiner Heinzelman, Anantha Chandrakasan, and Hari Balakrishnan.
+\newblock Energy-efficient communication protocol for wireless microsensor
+  networks.
+\newblock {\em Hawaii International Conference on System Sciences}, 8:8020,
+  2000.
+
+\bibitem{HongmeiDeng2002}
+{Hongmei Deng}, {Wei Li}, and D.P. Agrawal.
+\newblock {Routing security in wireless ad hoc networks}.
+\newblock {\em Communications Magazine, IEEE}, 40(10):70--75, 2002.
+
+\bibitem{Hu2005}
+Fei Hu and Neeraj~K. Sharma.
+\newblock {Security considerations in ad hoc sensor networks}.
+\newblock {\em Ad Hoc Networks}, 3(1):69--89, January 2005.
+
+\bibitem{packet_leashes_perrig}
+Y.-C. Hu, A.~Perrig, and D.B. Johnson.
+\newblock Packet leashes: a defense against wormhole attacks in wireless
+  networks.
+\newblock In {\em INFOCOM 2003. Twenty-Second Annual Joint Conference of the
+  IEEE Computer andCommunications. IEEE Societies}, volume~3, pages 1976--1986
+  vol.3, March-3 April 2003.
+
+\bibitem{Wormhole_perrig}
+Yih-Chun Hu, A.~Perrig, and D.B. Johnson.
+\newblock Wormhole attacks in wireless networks.
+\newblock {\em Selected Areas in Communications, IEEE Journal on},
+  24(2):370--380, Feb. 2006.
+
+\bibitem{Hu2004}
+Yih-Chun Hu and Adrian Perrig.
+\newblock {A Survey of Secure Wireless Ad Hoc Routing}.
+\newblock {\em IEEE Security and Privacy}, 2(3), 2004.
+
+\bibitem{Rushing_attacks_perrig}
+Yih-Chun Hu, Adrian Perrig, and David~B. Johnson.
+\newblock Rushing attacks and defense in wireless ad hoc network routing
+  protocols.
+\newblock In {\em WiSe '03: Proceedings of the 2nd ACM workshop on Wireless
+  security}, pages 30--40, New York, NY, USA, 2003. ACM.
+
+\bibitem{DirectDifusion}
+Chalermek Intanagonwiwat, Ramesh Govindan, Deborah Estrin, and Fabio Heidemann,
+  Johnand~Silva.
+\newblock Directed diffusion for wireless sensor networking.
+\newblock {\em IEEE/ACM Trans. Netw.}, 11(1):2--16, 2003.
+
+\bibitem{ITU-T1991}
+ITU-T.
+\newblock {Recommendation X.800: Security Architecture for Open Systems for
+  CCITTApplications}, 1991.
+
+\bibitem{DSR}
+David~B. Johnson and David~A. Maltz.
+\newblock Dynamic source routing in ad hoc wireless networks.
+\newblock In {\em Mobile Computing}, pages 153--181. Kluwer Academic
+  Publishers, 1996.
+
+\bibitem{livro_wsn_arch}
+Holger Karl and Andreas Willig.
+\newblock {\em Protocols and Architectures for Wireless Sensor Networks}.
+\newblock John Wiley \& Sons, 2005.
+
+\bibitem{Karlof2003}
+Chris Karlof and David Wagner.
+\newblock {Secure routing in wireless sensor networks: attacks
+  andcountermeasures}.
+\newblock {\em Ad Hoc Networks}, 1(2-3):293--315, September 2003.
+
+\bibitem{Karlof2004}
+Chris Karlof, David Wagner, and Naveen Sastry.
+\newblock {TinySec: a link layer security architecture for wireless
+  sensornetworks}.
+\newblock pages 162--175, Baltimore, MD, USA, 2004. ACM.
+
+\bibitem{Kuorilehto2005}
+Mauri Kuorilehto and Timo~D. H\"{a}nnik\"{a}inen,
+  Marko~andH\"{a}m\"{a}l\"{a}inen.
+\newblock {A survey of application distribution in wireless sensor networks}.
+\newblock {\em EURASIP Journal on Wireless Communications and Networking},
+  2005(5), 2005.
+
+\bibitem{simulators}
+Johannes Lessmann, Peter Janacik, Lazar Lachev, and Dalimir Orfanus.
+\newblock Comparative study of wireless network simulators.
+\newblock In {\em ICN '08: Proceedings of the Seventh International Conference
+  on Networking}, pages 517--523, Washington, DC, USA, 2008. IEEE Computer
+  Society.
+
+\bibitem{Luk2007d}
+Mark Luk, Adrian Perrig, Ghita Mezzour, and Virgil Gligor.
+\newblock {MiniSec: a secure sensor network communication architecture}.
+\newblock pages 479--488, Cambridge, Massachusetts, USA, 2007. ACM.
+
+\bibitem{Luk2006}
+Mark Luk, Adrian Perrig, and Bram Whillock.
+\newblock {Seven cardinal properties of sensor network broadcast
+  authentication}.
+\newblock pages 147--156, Alexandria, Virginia, USA, 2006. ACM.
+
+\bibitem{Fault_Intrusion_Tolerant_Techniques}
+Ruiping Ma, Liudong Xing, and H.E. Michel.
+\newblock Fault-intrusion tolerant techniques in wireless sensor networks.
+\newblock In {\em Dependable, Autonomic and Secure Computing, 2nd IEEE
+  International Symposium on}, pages 85--94, 29 2006-Oct. 1 2006.
+
+\bibitem{app_monitor}
+Alan Mainwaring, David Culler, Joseph Polastre, and John Szewczyk,
+  Robert~andAnderson.
+\newblock Wireless sensor networks for habitat monitoring.
+\newblock In {\em WSNA '02: Proceedings of the 1st ACM international workshop
+  on Wireless sensornetworks and applications}, pages 88--97, New York, NY,
+  USA, 2002. ACM.
+
+\bibitem{app_health}
+Aleksandar Milenkovi\'{c}, Chris Otto, and Emil Jovanov.
+\newblock Wireless sensor networks for personal health monitoring: Issues and
+  an implementation.
+\newblock {\em Comput. Commun.}, 29(13-14):2521--2533, 2006.
+
+\bibitem{Sec_WSN_Vulnerabilities}
+Wireless Networks.
+\newblock {Security Vulnerabilities In Wireless Sensor Networks: A Survey}.
+\newblock {\em Journal of Information Assurance and Security},
+  5(2010):031--044, 2009.
+
+\bibitem{sybil_perrig}
+J.~Newsome, E.~Shi, D.~Song, and A.~Perrig.
+\newblock The sybil attack in sensor networks: analysis \& defenses.
+\newblock In {\em Information Processing in Sensor Networks, 2004. IPSN 2004.
+  Third International Symposiumon}, pages 259--268, April 2004.
+
+\bibitem{Sinkhole_attack}
+E.C.H. Ngai, Jiangchuan Liu, and M.R. Lyu.
+\newblock On the intruder detection for sinkhole attack in wireless sensor
+  networks.
+\newblock In {\em Communications, 2006. ICC '06. IEEE International Conference
+  on}, volume~8, pages 3383--3389, June 2006.
+
+\bibitem{park_simulating_2001}
+Sung Park, Andreas Savvides, and Mani~B. Srivastava.
+\newblock Simulating networks of wireless sensors.
+\newblock In {\em Proceedings of the 33nd conference on Winter simulation},
+  pages 1330--1338, Arlington, Virginia, 2001. {IEEE} Computer Society.
+
+\bibitem{Parno2005}
+B.~Parno, A.~Perrig, and V.~Gligor.
+\newblock {Distributed detection of node replication attacks in
+  sensornetworks}.
+\newblock pages 49--63, 2005.
+
+\bibitem{clean_slate}
+Bryan Parno, Mark Luk, Evan Gaustad, and Adrian Perrig.
+\newblock Secure sensor network routing: a clean-slate approach.
+\newblock In {\em CoNEXT '06: Proceedings of the 2006 ACM CoNEXT conference},
+  pages 1--13, New York, NY, USA, 2006. ACM.
+
+\bibitem{Perkins1999}
+C.E. Perkins and E.M. Royer.
+\newblock {\em {Ad-hoc on-demand distance vector routing}}.
+\newblock IEEE, 1999.
+
+\bibitem{Perriga}
+Adrian Perrig and Haowen Chan.
+\newblock {Security and Privacy in Sensor Networks}.
+
+\bibitem{sec_in_wsn_perrig}
+Adrian Perrig, John Stankovic, and David Wagner.
+\newblock Security in wireless sensor networks.
+\newblock {\em Commun. ACM}, 47(6):53--57, 2004.
+
+\bibitem{SPINS}
+Adrian Perrig, Robert Szewczyk, Victor Wen, David Culler, and J.~D. Tygar.
+\newblock Spins: Security protocols for sensor networks.
+\newblock In {\em Wireless Networks}, pages 189--199, 2001.
+
+\bibitem{BMAC}
+Joseph Polastre, Jason Hill, and David Culler.
+\newblock Versatile low power media access for wireless sensor networks.
+\newblock In {\em SenSys '04: Proceedings of the 2nd international conference
+  on Embedded networkedsensor systems}, pages 95--107, New York, NY, USA, 2004.
+  ACM.
+
+\bibitem{IETF2828}
+RFC2828.
+\newblock {Internet Security Glossary}, 2000.
+
+\bibitem{perrig_design_sec_sensor}
+E.~Shi and A.~Perrig.
+\newblock Designing secure sensor networks.
+\newblock {\em Wireless Communications, IEEE}, 11(6):38--43, Dec. 2004.
+
+\bibitem{Stallings2005}
+William Stallings.
+\newblock {\em {Cryptography and Network Security (4th Edition)}}.
+\newblock 2005.
+
+\bibitem{sd_tanenbaum}
+Andrew~S. Tanenbaum and Maarten~Van Steen.
+\newblock {\em Distributed Systems: Principles and Paradigms}.
+\newblock Prentice Hall PTR, Upper Saddle River, NJ, USA, 2001.
+
+\bibitem{apps_tracking}
+Hua-Wen Tsai, Chih-Ping Chu, and Tzung-Shi Chen.
+\newblock Mobile object tracking in wireless sensor networks.
+\newblock {\em Comput. Commun.}, 30(8):1811--1825, 2007.
+
+\bibitem{Survey_wsn_Sec_issues}
+Yong Wang, G.~Attebury, and B.~Ramamurthy.
+\newblock A survey of security issues in wireless sensor networks.
+\newblock {\em Communications Surveys \& Tutorials, IEEE}, 8(2):2--23, Quarter
+  2006.
+
+\bibitem{MEMS}
+B.A. Warneke and K.S.J. Pister.
+\newblock Mems for distributed wireless sensor networks.
+\newblock In {\em Electronics, Circuits and Systems, 2002. 9th International
+  Conference on}, volume~1, pages 291--294 vol.1, 2002.
+
+\bibitem{SIGF}
+Anthony~D. Wood, Lei Fang, John~A. Stankovic, and Tian He.
+\newblock {SIGF: a family of configurable, secure routing protocols for
+  wirelesssensor networks}.
+\newblock pages 35--48, Alexandria, Virginia, USA, 2006. ACM.
+
+\bibitem{Xiao2006}
+Yang Xiao, Hsiao-Hwa Chen, Bo~Sun, Ruhai Wang, and Sakshi Sethi.
+\newblock {MAC security and security overhead analysis in the IEEE
+  802.15.4wireless sensor networks}.
+\newblock {\em EURASIP J. Wirel. Commun. Netw.}, 2006(2):81--81, 2006.
+
+\bibitem{SMAC}
+Wei Ye, J.~Heidemann, and D.~Estrin.
+\newblock Medium access control with coordinated adaptive sleeping for wireless
+  sensor networks.
+\newblock {\em Networking, IEEE/ACM Transactions on}, 12(3):493--506, June
+  2004.
+
+\bibitem{Yick2008}
+Jennifer Yick, Biswanath Mukherjee, and Dipak Ghosal.
+\newblock {Wireless sensor network survey}.
+\newblock {\em Computer Networks}, 52(12):2292--2330, August 2008.
+
+\bibitem{perrig_survey_ad_hoc}
+Hu. Yih-Chun and A.~Perrig.
+\newblock A survey of secure wireless ad hoc routing.
+\newblock {\em Security \& Privacy, IEEE}, 2(3):28--39, May-June 2004.
+
+\bibitem{Attaks_defenses_sec_in_wsn}
+W.~You-Chiun and Y~Tseng.
+\newblock Attacks and defenses of routing mechanisms in ad hoc and sensor
+  networks.
+\newblock In {\em Security in Sensor Networks}.
+
+\end{thebibliography}

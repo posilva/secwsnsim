@@ -1,0 +1,169 @@
+\section{Caracterização de uma RSSF}\label{sect:subsec_arq_sofware_wsn}
+Nas RSSF podem-se considerar vários tipos de nós de computação, estando estes 
+interligados por uma infraestrutura de comunicação textit{multi-hop}, em que
+cada nó da rede (\textit{mote}) pode desempenhar pelo
+menos três papeis\cite{REFERENCIA} : 1) Nó gerador de dados, pela captação da
+eventos associados às especificidades dos sensores possuídos; 2) Nó
+encaminhador, que recebendo dados de uns nós os encaminha  para outros por forma
+a que alcancem o destino; 3) Nó de sincronização ou nó de agregação, embora
+estas duas caracterizações não correspondam à mesma tarefa, por si só, a um
+nível mais macro, corresponde igualmente a colecção de dados da rede e a um
+pré-processamento, por forma a fazê-los seguir de forma agregada para outro
+destino (interno ou externo à rede ).
+\subsection{Modelo da plataforma genérica de uma RSSF - \textit{Mote}} 
+Interessa perceber qual a arquitectura inerente a estas plataformas de rede, 
+onde é possível executar uma multiplicidade de aplicações, apesar das limitações
+impostas pela arquitectura. Na figura seguinte apresenta-se um modelo
+simplificado\cite{ livro_wsn_arch} que ilustra os diversos componentes que
+concorrem para o funcionamento de um \textit{mote} numa RSSF. 
+\input{pic_sensornode}
+Como se pode observar na \figurename \ref{fig:sensor_node}, os sistemas que 
+estão presentes são os seguintes:  i) Sistema de processamento;  ii) Sistema de
+comunicação; iii) Sistema sensorial; iv) Sistema de memória; v) Sistema de
+energia;. 
+\paragraph{Sistemas de processamento}
+O sistema de processamento é um componente essencial num 
+\textit{mote}\cite{Holger_Karl_protocols_andarchs_wsn}. Toda o conjunto de
+processamento pode ser realizado nas várias arquitecturas representando um
+\textit{trade-off} entre desempenho, flexibilidade, performance, custo e consumo
+de energia. Dois dos processadores mais utilizados nas redes de
+sensores actuais são os da tecnologia Atmel Atmega 128L \cite{atmel} e da Texas
+Instruments o controlador TI MSP430 \cite{TIMSP430}
+
+\paragraph{Sistemas de comunicação}
+Este sistema é o responsável pela transferência de dados entre diversos nós de 
+uma rede por intermédio de radio frequência, o que quer dizer sem fios. A
+rádio-frequência permite ter bom alcance de comunicação com boas taxas de
+transferência, bem como equilibrar o consumo de energia perante existência de
+erros. 
+
+Os transmissores e receptores \footnote{No caso da implementação em
+RSSF, as plataformas incorporam num mesmo componente as duas funções,
+transmissão e recepção, estes são denominados por \textit{transceivers}}nos nós 
+têm a função de transformar uma cadeia de bits, vindas do processador, em
+ondas electromagnéticas. Os estados pelos quais passam estes componentes são os
+seguintes e estão associados essencialmente ao consumo de energia: a
+trasmitir\footnote{o transmissor está activo e a emitir
+dados}, a receber\footnote{O receptor está activo e a receber dados},
+\textit{idle}\footnote{Está livre para  receber dados, note-se que alguns
+componentes de comunicação estão activos e outros estão desligados},
+\textit{sleep}\footnote{A maior parte dos componentes de comunicação estão
+desligados}.  Alguns dos sistemas de rádio existentes nas redes de sensores são
+os seguintes: Xemics XE1205 \cite{XEMICS XE1205}, Chipcon 2420 (com chipset para
+802.15.4)\cite{CHIPCON2420}.
+
+Porque o custo energético da comunicação tem uma ordem de grandeza bastante 
+superior ao do processamento, o existe uma ligação estreita entre o sistema de
+comunicação e o protocolo de acesso ao meio (MAC)\cite{mac_protocols}. Estes
+protocolos, permitem optimizar o tempo de operação do sistema de comunicação,
+com vista à redução do consumo de energia permitindo aumentar o tempo de vida
+útil de uma RSSF. 
+
+\paragraph{Sistemas Operativos} 
+Os sistemas operativos (SO's) para as RSSF são menos complexos do que os 
+restantes SO's comuns para PC's. De seguida apresentam-se alguns
+sistemas operativos com vista a contribuir para a compreensão do estado da arte
+nesta componente das RSSF.
+\begin{description}
+ \item[TinyOS\cite{tinyos}] Sistema operativo livre e de código aberto, 
+desenvolvido pela Universidade da California, Berkeley e implementado em nesC
+(uma extensão da linguagem C) muito optimizado para as limitações de memória
+existentes nas RSSF. O modelo de execução orientado por eventos possibilita uma
+maior precisão na gestão de energia, ainda assim tem grande flexibilidade no
+escalonamento dos eventos gerados pelo ambiente real, que, como se sabe, são de
+natureza muito imprevista.
+ \item[Contiki\cite{Contiki}] Sistema operativo livre e de código aberto, 
+implementado em C, e tal como o TinyOS\cite{TinyOS} é orientado por eventos. As
+aplicações podem ser carregadas e descarregadas em tempo de execução. Os
+processos deste SO usam \textit{threads} leves, denominadas por protothreads
+que proporciona um estilo de programação  \textit{threadlike} em cima do
+\textit{kernel} orientado a eventos.
+ \item[Nano-RK\cite{nanork}] Sistema operativo desenvolvido na universidade  de
+Carnegie Mellon, o seu \textit{kernel} é baseado em execução em tempo real com 
+\textit{multithreading } preemptivo. Assim é possivel ao \textit{kernel} 
+controlar que processos têm acesso ao CPU, com a divisão em fracções de tempo a
+que cada processo acede ao CPU, à rede e aos sensores.
+ \end{description}
+ \paragraph{Sistemas de energia}
+A energia é um recurso escasso e como tal deve ser tido em conta no desenho  de
+uma qualquer RSSF, adaptando-se à aplicação ou aos eventos que se pretendem
+monitorizar. Assim, os dispositivos fornecedores de energia podem ser de
+diversos tipos, por exemplo: baterias (tipo AA), baterias fotovoltaícas .
+Encontra-se nas especificações das plataformas mais recentes os valores que
+indicam o consumo energético nos diversos estados de operação de um
+\textit{mote} a titulo de exemplo observe-se a plataforma
+\textit{Mica2}\cite{MICA} da \textit{Crossbows}\cite{CrossbowSite}:
+\input{tab_RSSF_Energia}
+\subsection[]{Modelo de energia de uma RSSF} 
+Nas diversas aplicações das RSSF\cite{APPLICAÇÔES}, uma das caracteristicas que
+tornam estas redes como as mais aconselhaveis para o seu uso é a capacidade de
+auto-organização, de facilidade de distribuição por locais remotos e de grande
+dimensão, permitindo a monitorização de eventos durante o maior tempo possível.
+Assim, para além das preocupações referentes à segurança e correcção de recolha
+dos dados, a energia é uma problemática relevante e que deve ser considerada em
+todos os momentos. Desde logo os sensores já possuem, na sua arquitectura,
+serviços que visam a optimização da energia, permitindo que o tempo de vida util
+da rede seja extendido o mais possível. Durante o seu funcionamento, um qualquer
+nó sensor, passa cerca de 90\% do tempo num estado "adormecido", que implica a
+inactivação de alguns dos seus componentes com vista a redução do consumo de
+energia\cite{energia}. Note-se que este comportamento é possível devido à
+natureza das próprias aplicações das RSSF, por exemplo, se o número de eventos
+detectados e propagados pela rede tiver uma frequência de acontecimento muito
+grande, naturalmente o tempo neste estado de adormecimento terá tendência a ser
+reduzido. No entanto o comportamento esperado numa RSSF é a ocorrência espaçada
+de eventos, permitindo por isso que um nó passe a maior parte do tempo num
+estado em que o consumo de energia seja mínimo. 
+Existem vários protocolos de acesso ao meio (MAC) que implementam estas mudanças
+de estado que podem ser completamente autonomas, ou seja não exigindo a
+coordenação com os nós vizinhos, ou de forma coordenada em que a informação
+trocada com os vizinhos contribui para passar mais ou menos tempo em estados de
+adormecimento\cite{MACs}.
+Considera-se que existem três estados principais na operação de um sensor:
+activo, inactivo, adormecido.  No primeiro estado, poder-se-ão considerar,
+ainda,  diferentes modos de funcionamento, devido aos componentes de um nó
+sensor estarem ligados ou desligados em determinado momento e com isso 
+consumirem mais ou menos energia. Na tabela seguinte apresenta-se alguns dos
+estados considerados numa plataforma do tipo Mica2\cite{mica2}.
+
+FALTA TABELA AQUI
+
+
+
+A energia nas RSSF é tida em consideração desde a implementação do \textit
+{hardware} até ao desenho e implementação de qualquer dos serviços existente na
+pilha de software dos nós sensores. Têm se observado que a maioria dos estudos
+desenvolvidos são levados a cabo com recurso a ambientes de
+simulação\cite{Germano_Guimarães,outros} estes ambientes ou ferramentas que
+permitem o estudo dos perfis de consumo de energia numa RSSF, são calibrados com
+recurso às especificações dos fabricantes \cite{} e a resultados de experiências
+em sensores reais. O estudo desta problemática é ainda mais relevante quando se
+associa a problemática da segurança na operação das RSSF.
+Dos componentes de um \textit{mote}, o sistema de comunicação e o CPU são os que
+mais influenciam o consumo de energia. Ainda o maior peso seja dado para a
+comunicação, numa ordem de grandeza de 1 para 1000  face ao processamento.
+Quando se pretende introduzir mecanismos de segurança ao nível do encaminhamento
+de dados, é necessário ter presente que existe um custo a pagar no que respeita
+à energia, devendo-se este facto ao aumento da computação, uma vez que estão
+envolvidas operações de criptografia\cite{PAPERS_CRIPTENERGIA} e mesmo ao nível
+da comunicação caso os modos de criptografia aumentem o tamanho das mensagens
+enviadas\cite{PAPERS_ENERGIA} o acréscimo é ainda maior. 
+Conhecidas as limitações impostas pela arquitectura, algumas derivadas da
+pequena dimensão dos sensores, poder-se-à dizer que os protocolos de acesso ao
+meio representam um papel importante no consumo de energia\cite{MAC_ENERGIA}. O
+facto destas redes terem as propriedades de auto-organização, possíbilidade de
+distribuição remota e de dificil acesso, sem necessidade de monitorização
+humana,  
+
+
+Na \tablename \ref{tab:MAC} apresentam-se de forma resumida alguns dos
+protocolos mais conhecidos e implementados em algumas plataformas. 
+
+
+No âmbito dos modelos de energia desenvolvidos para sistemas de simulação
+\cite{powertossim,omnet++,swanenergymodel}, os estudos conhecidos apresentam
+diversas abordagens mais ou menos relaxadas no que respeita ao cálculo do
+consumo energético. Por um lado, alguns modelos, por estarem muito próximos da
+plataforma fisica, como é o caso do PowerTossim\cite{powertossim}, conseguem
+obter um valor aproximado dos custo dos ciclos de relógio permitindo obter
+alguma acuidade no valores referentes a este tipo de eventos. Outros sistemas
+como o caso do modelo OMNET++\cite{OMNET++} começam por assumir 

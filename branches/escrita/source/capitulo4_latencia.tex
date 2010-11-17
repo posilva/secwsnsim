@@ -1,0 +1,9 @@
+\subsection[Módulo de avaliação de latência]{Módulo de avaliação de latência}
+A latência numa rede é uma das propriedades mais interessantes a observar e avaliar. Consoante o tipo de aplicação, assim pode ser mais ou menos determinante os resultados da latência. Obviamente que para uma aplicação com requisitos de reposta rápida (normalmente não caracterizada na RSSF) a latência pode ser a diferença em agir ou não dentro da janela útil de tempo. Assim, considerou-se dois tipos de métricas associados à latência numa RSSF. A primeira métrica é a mais intuitiva e consiste na medição do tempo entre um ponto de origem e um ponto de destino, sendo que este tempo é um tempo global e medido em unidades de simulação. A segunda métrica diz respeito ao número de hops envolvidos na transmissão de uma mensagem numa RSSF. Esta última permite inclusive avaliar a capacidade de contornar ligações piores ou inexistentes por diversos caminhos da rede.
+
+Para a medição da latência o processo é bastante semelhante ao da fiabilidade, com a definição de um conjunto de sensores geradores de informação e a definição de uma estação destino. Sendo o meio de transmissão sem fios e por broadcast para o meio é possível que uma mesma mensagens possa chegar por vários vizinhos, principalemente se existirem caminhos de multiplas rotas. Com esta informação é possível estabelecer-se medidas estatísticas para comparação de avaliações entre diversos protocolos.
+
+
+\subsubsection[Funcionamento do módulo de avaliação de latência]{Funcionamento do módulo de avaliação de latência} 
+
+Pelo diagrama seguinte é possível observar a interacção das diversas entidades no processo de medição de latência numa RSSF. A implementação dos respectivos interfaces faz com que para a ferramenta esta funcionalidade seja transparente para o utilizador, uma vez que apenas se baseia na semantica definida pelo interface que deve ser implementado específica mente para cada protocolo alvo de estudo.

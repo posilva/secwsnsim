@@ -1,0 +1,148 @@
+\newpage	
+\section{Estudo de Protocolos de Encaminhamento Seguro para RSSF}
+Como ponto introdutório da discussão e apresentação de algoritmos de encaminhamento em RSSF,
+importa identificar algumas tipologias ou classes destes algoritmos.
+\subsection{Caracterização dos protocolos de encaminhamento em RSSF}
+Podem-se estabelecer três classes de protocolos \cite{Akkaya2005}: os baseados na localização,
+os centrados nos dados e os hierárquicos. Os protocolos baseados na localização usam esta informação
+para tomarem as melhores decisões para alcançarem os destinos (ex: IGF \cite{igf_protocol}). Os
+centrados nos dados, ou seja, os que exploram a semântica dos dados, normalmente são
+baseados em algoritmos que efectuam pesquisas lançadas a partir de nós de sincronização (ex:
+Directed Diffusion \cite{DirectDifusion}). Por fim, os protocolos hierárquicos, cuja concepção é
+baseada na construção de grupos de nós, normalmente denominados como \textit{clusters} (ex:
+LEACH \cite{leachprotocol}), que funcionam baseados no princípio de agregação de dados do grupo e na
+transferência da informação para os nós base.
+
+Para além destas classificações, podemos ainda considerar algoritmos quanto ao momento em que são
+determinadas as rotas de encaminhamento de dados \cite{al-karaki_routing_2004}. Assim,
+consideram-se
+os protocolos como \textit{table-driven} ou \textit{on-demand}. Os primeiros referem-se a
+protocolos que mantêm as tabelas de encaminhamento, trocando mensagens de controlo durante a sua
+operação. Desta forma, observa-se um maior consumo de energia, devido à regular troca de mensagens. No
+segundo caso, nos protocolos \textit{on-demand}, as rotas são determinadas em cada envio de
+mensagem. Apesar de acarretar alguma sobrecarga, em cada envio, acaba por compensar em redes mais
+móveis e com eventos mais espaçados. 
+
+\subsection{Protocolos de encaminhamento seguro em RSSF}
+
+Muitos dos protocolos de encaminhamento para RSSF não foram concebidos tendo em conta
+o factor da segurança \cite{Karlof2003,al-karaki_routing_2004}. Em vez disso, pretendiam adaptar-se ao
+ambiente das aplicações e às características e capacidades das RSSF. No entanto, quando se pretende
+estender a sua utilização para outros domínios, cuja segurança é indispensável, estas preocupações
+aumentam, uma vez que os mecanismos de segurança implicam directamente um aumento da computação e
+um aumento no custo da comunicação, reflectindo-se na autonomia dos sensores.
+
+Nesta secção apresentam-se alguns protocolos de encaminhamento seguro em RSSF que visam
+cobrir todo o espectro da temática deste trabalho. 
+
+\subsubsection{\textit{Secure Implicit Geographic Forwarding }(SIGF)}
+Uma das formas de abordar o desenvolvimento de protocolos de encaminhamento seguro é implementar  mecanismos de segurança em protocolos já existentes, mas que não seguros. Um destes
+casos é o algoritmo de encaminhamento \textit{Implicit Geographic
+Forwarding} (IGF) \cite{igf_protocol}, que deu origem a uma implementação segura: o SIGF
+\cite{SIGF}. 
+
+O IGF é um protocolo \textit{on-demand}, baseado na localização que, não mantendo o estado ao longo
+do seu funcionamento, faz com que não seja necessário o conhecimento da topologia da rede ou a presença
+de outros nós. O seu carácter não determinístico de encaminhamento já representa
+um mecanismo de segurança perante determinados ataques, mas não é de forma alguma suficiente para
+manter uma aplicação, com requisitos de segurança, a executar em ambientes críticos.
+\paragraph*{\textbf{Funcionamento do protocolo IGF}}
+No protocolo IGF o ambiente está definido por coordenadas que permitem a cada nó saber exactamente
+a sua localização. Com a agregação do nível de rede e do nível MAC\footnote{ \textit{Medium Access
+Control}} num único protocolo \textit{Network/MAC}, é possível \cite{igf_protocol}, no momento do
+envio do pacote, determinar qual o próximo melhor candidato para encaminhar os dados. O protocolo
+inicia-se com a origem a enviar uma mensagem do tipo \textit{Open Request To Send} (ORTS) para a
+vizinhança (com a localização e o destino). Cada nó que se encontre no sextante válido
+\footnote{Ângulo de 60º centrado na origem, orientado para o destino e determinado por cada nó, com
+base na sua localização} inicia um temporizador de CTS (\textit{Clear To Send}) inversamente
+proporcional a determinados parâmetros (distância à origem, energia existente e distância
+perpendicular ao destino), favorecendo os nós com melhores condições. Ao expirar o temporizador, é
+enviada uma mensagem de CTS que, ao ser recebida, dá início ao envio de mensagens do tipo DATA a
+partir da origem. Como este protocolo não mantém estado, resiste a mudanças de topologia da rede. O
+facto de escolher o nó seguinte, em cada envio, constitui um mecanismo de tolerância a falhas que,
+em caso de ataque, confina os danos à vizinhança do nó comprometido.
+\paragraph*{\textbf{Funcionamento do protocolo SIGF \cite{SIGF}}}
+A introdução de mecanismos de segurança, num protocolo existente, compreende um acréscimo de
+sobrecarga no seu funcionamento. Contudo, o protocolo SIGF \cite{SIGF} pretende
+manter um bom desempenho e uma elevada taxa de sucesso de entrega das mensagens, mesmo durante um
+ataque. Uma das características deste protocolo é o facto de ser configurável e, como tal, permitir 
+adaptar os mecanismos de segurança ao grau de ameaça. O SIGF apresenta três extensões ao protocolo IGF
+\cite{igf_protocol}, o que possibilita a evolução gradual de um protocolo seguro, sem estado, para
+um protocolo seguro, com manutenção de estado, e, com isto, mais pesado e exigente em recursos.
+
+A primeira extensão é a mais simples e a menos exigente em recursos, o SIGF-0. Continua a não manter
+o estado e a ter um carácter não determinístico. No entanto, não sucumbe a ataques do tipo
+\textit{rushing} \cite{Rushing_attacks_perrig}, por não emitir logo para o primeiro nó que lhe envie um CTS. Em vez disso, mantém um conjunto de possíveis candidatos a próximo nó. A extensão intermédia, SIGF-1,
+já mantém estado, mas ao nível local, podendo com isto constituir listas de reputação dos seus
+vizinhos, por forma a escolher melhor o próximo nó. Por fim, e tratando-se já de um protocolo mais
+robusto, mas mais exigente, o SIGF-2 partilha o estado com os seus vizinhos. Permite usar
+mecanismos criptográficos que garantem integridade, autenticidade, confidencialidade e
+frescura. Acumula as propriedades de segurança das extensões anteriores: SIGF-0 e SIGF-1.
+\subsubsection{\textit{ INtrusion-tolerant routing protocol for wireless
+SEnsor NetworkS }(INSENS)}
+Este protocolo \cite{INSENS} foi concebido tendo em vista a tolerância a intrusões e, como
+tal, faz face a uma das tipologias do modelo de adversário preconizado neste trabalho. Para cumprir
+com este objectivo, foram identificados dois tipos de ataques: ataques por
+negação de serviço \cite{Hu2005} e ataques ao encaminhamento. O protocolo assenta na existência de
+uma estação base, constituindo-se como um centro confiável, que partilha chaves criptográficas
+simétricas com cada um dos nós da rede. Esta característica permite que, em caso de comprometimento de
+um nó, o atacante não terá acesso a mais do que uma chave segura da rede, isolando, de alguma
+forma, o ataque.
+
+O uso de caminhos redundantes permite aumentar a resiliência a atacantes não detectados, bastando que exista apenas um caminho sem interposição de atacantes, para que as mensagens cheguem
+ao destino sem serem comprometidas. Note-se que, neste protocolo, não é possível a comunicação
+directa entre nós da rede, sem que esta não passe pela estação base. O papel fundamental do
+protocolo, em termos de encaminhamento seguro, é desempenhado pela estação
+base. Uma das vantagens, apontadas pelos autores, é a redução das computações nos nós da
+rede (ex: para geração de chaves, construção de tabelas de encaminhamento), cujas limitações são as
+conhecidas. A formação das tabelas de encaminhamento divide-se em três fases: Pedido de rotas
+(\textit{route request}); Recolha dos dados de encaminhamento; Propagação das rotas.
+A primeira fase corresponde ao envio, por parte da estação base, de uma mensagem destinada a todos
+os nós da rede, por forma a obter dados sobre as vizinhanças. Numa segunda fase, cada nó envia a sua vizinhança para a estação base. Por fim, depois da estação base tratar toda a informação
+recolhida, são elaboradas as tabelas de encaminhamento. As tabelas são depois propagadas para cada nó, podendo prosseguir-se com o encaminhamento dos dados, baseado nas tabelas recebidas.
+
+\subsubsection{\textit{Secure Sensor Network Routing: Clean-Slate approach}}
+O algoritmo Clean-Slate \cite{clean_slate} foi concebido desde o início, de forma sistemática, com
+características de segurança. É orientado para a comunicação ponto-a-ponto entre nós da rede,
+visando a resistência mesmo na presença de um ataque (ataque activo). Classifica-se como um
+protocolo \textit{table-driven}.
+\paragraph*{\textbf{Funcionamento do Protocolo}}
+Cada sensor da rede recebe um identificador único global, um certificado assinado por uma
+autoridade de certificação da rede (AR), a chave pública desta entidade e um conjunto de valores
+(desafios) baseados numa função de dispersão de um sentido (\textit{one way hash function}).
+Neste protocolo, podem-se identificar as três fases de operação: organização da rede,
+estabelecimento dos caminhos e manutenção das rotas.
+
+O protocolo estabelece as tabelas de encaminhamento e os endereços dinâmicos (de tamanho
+variável) para cada nó da rede, usando um algoritmo recursivo de agrupamento, que executa 
+de forma determinística, mediante uma topologia. Os grupos são formados de forma recursiva e
+hierárquica, até que a rede forme apenas um único grupo. Em cada fusão é
+acrescentado um bit (0/1) à esquerda, que permitirá distinguir o endereço de cada nó. Dentro de um
+mesmo grupo, a comunicação é feita usando \textit{broadcast} autenticado, inspirada no protocolo
+${\mu}$TESLA \cite{SPINS,Luk2006}.
+
+Este algoritmo incorpora mecanismos de detecção de comportamentos incorrectos dos nós, por exemplo,
+caso pretendam assumir múltiplas identidades (\textit{sybil} \cite{sybil_perrig,Douceur2002}). Este
+mecanismo é desencadeado após a formação dos grupos, com cada nó a anunciar o seu endereço para os
+vizinhos, aplicando-se um algoritmo de detecção de replicação de nós \cite{Parno2005}. Outro
+mecanismo para a detecção de formação incorrecta de grupos é a utilização de \textit{Grouping
+Verification Trees (GVT)}, baseado em tabelas de dispersão que providenciam autenticação ao nível
+das folhas, usando a raiz para certificação. Cada nó tem uma GVT, permitindo verificar qualquer
+comunicação trocada com outros nós da rede.
+
+Durante a fase de manutenção das rotas e encaminhamento, o algoritmo incorpora operações que
+permitem tratar a saída e entrada de nós. Ao detectar a saída de outro, um nó
+procura, num dos seus vizinhos, um novo nó fronteira, que lhe permita alcançar o grupo antes
+acessível pelo nó que saiu. A definição de épocas (\textit{ephocs}) permite que, ao fim de algum
+tempo, o algoritmo de agrupamento se repita, de forma a incluir novos nós. No que respeita ao
+encaminhamento, o protocolo usa múltiplas rotas, fazendo com que possa contornar áreas comprometidas
+da rede. Os nós maliciosos são retirados do algoritmo, usando uma técnica denominada por
+\textit{Honeybee}. Corresponde ao seguinte: quando um nó malicioso (replicado ou não) é detectado, a
+rede é inundada com um pacote que indica que o atacante deve ser retirado das tabelas e, tratando-se
+de uma replicação, o nó replicado autosacrifica-se saindo da rede.
+
+De forma sumária, o protocolo Clean-Slate incorpora os três conceitos para o desenho de protocolos de
+encaminhamento seguro: prevenção (autenticação), resiliência (múltiplas rotas) e
+detecção/recuperação (GVT/Honeybee). Implementa-os em simultâneo, ao contrário do que acontece com alguns
+protocolos que apenas implementam um destes conceitos. É, por isso, um protocolo base, indicado
+para o estudo comparativo com outros protocolos.

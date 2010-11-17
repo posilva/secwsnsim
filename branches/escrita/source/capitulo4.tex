@@ -1,0 +1,81 @@
+\chapter[Implementação da plataforma de simulação]{Implementação da plataforma
+de simulação}\label{cap:implementacao}
+
+% Apresentar uma tabela com o numero de classes/ linhas de código
+% Fazer referencia ao Site e ao número de visitas
+
+Neste capítulo será apresentado com algum detalhe a implementação da plataforma
+de simulação, desta forma será possível realçar as potencialidades deste sistema
+tendo em conta o fim para o qual foi concebido. Tendo em conta a arquitectura
+proposta, já anteriormente, na primeira secção é apresentada a organização da
+plataforma enquanto sistema integrado. Na segunda secção observam-se os detalhes
+de cada um dos instrumentos concebidos para a avaliação de protocolos e o seu
+funcionamento e por fim na terceira secção apresentam-se os mecanismos que
+permitem efectuar a prova de conceito da plataforma.  
+
+\section[Organização do Sistema]{Organização do Sistema} 
+Para o desenvolvimento e implementação da plataforma foram utilizadas as
+seguintes tecnologias:
+\begin{enumerate}
+ \item Java como linguagem de programação
+ \item Apache Commons Configuration, Math, Logging
+ \item JFreeChart para realização de gráficos
+ \item Swing Application Framework para gestão de ambiente gráfico
+\end{enumerate}
+
+A implementação poder-se-á dividir em três componentes de software: 1) Sistema
+de simulação, que compreende todo ambiente de suporte à
+simulação, distinto de qualquer interacção gráfica; 2) Interface gráfico para
+controlo da simulação; 3) Protocolos de encaminhamento. Assim sendo, a evolução
+do simulador JProwler para a plataforma de simulação realizou-se mediante um
+quase total \textit{refactoring} do JProwler. Esta afirmação é confirmada não só
+pela dimensão do projecto, quer em termos de classes e de linhas de código,
+mas, fundamentalmente, no que se refere a funcionalidades que permitem uma
+maior facilidade de utilização. Na tabela \ref{tab:estatistica} é
+possível observar alguns dados estatísticos ilustram estas afirmações:
+\begin{small}
+\begin{table}
+ \centering
+ \begin{tabular}{|l|c|c|c|}
+  \hline
+   ~         & Linhas de código & Pacotes & Classes \\ \hline\hline
+   Simulator & 8000            & 24      & 117     \\ 
+   Platform  & 11500           & 17      & 72      \\ 
+   Protocols & 1500            & 14      & 47      \\ \hline
+   Totais    & 31000           & 55      & 236     \\
+  \hline
+ \end{tabular}
+\label{tab:estatistica}
+% \caption{Tabela estatística}\label{tab:estatistica}
+\end{table}
+\end{small}
+
+
+\section{Integração}
+A primeira fase da integração correspondeu à implementação da pilha de serviços 
+de uma plataforma sensor, originalmente um \textit{mote} era visto como um
+componente monolítico em que as diversas camadas estavam bastante intrincadas
+umas nas outras. O desafio foi desde logo separar as camadas lógicamente,
+permitindo definir três camadas: Camada de acesso ao meio (\textit{MACLayer}),
+camada de encaminhamento (\textit{RoutingLayer}) e a camada de aplicação
+(\textit {Application}). Este desenho permite aumentar a facilidade de
+desenvolver diversos componentes de cada camada e de os tornar permutáveis de
+forma facilitada, oferecendo a capacidade de avaliar diferentes cenários.
+
+A segunda fase, tem como base a intercepção de acções que ocorrem a quando da
+transmissão de dados e na sua passagem por cada uma das camadas. A intercepção
+destas operações permitiu colocar mecanismos de medição e de
+filtragem de dados por forma a avaliar o contéudo de cada pacote. 
+
+
+
+
+\section[Módulos de instrumentação]{Módulos de instrumentação} 
+
+\input{capitulo4_energia} 
+\input{capitulo4_cobertura} 
+\input{capitulo4_fiabilidade} 
+\input{capitulo4_latencia} 
+\input{capitulo4_visualizacao_controlo}
+\input{capitulo4_API}
+%\input{capitulo4_prova_conceito}

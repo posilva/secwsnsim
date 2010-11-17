@@ -1,0 +1,26 @@
+\section[Configuração, controlo e visualização da simulação ]{Configuração, controlo e visualização da simulação } 
+Uma das razões para a existência de ambientes de simulação diz respeito à agilização do processo de construção/estudo de modelos, no caso das RSSF, estes modelos referem-se a topologias de rede, parametros de operação ou configuração dos sensores. Portanto, uma das características que se encontra na plataforma desenvolvida é a facilidade de desenhar redes e produzir diferentes cenários para avaliação de RSSF, em particular protocolos de encaminhamento.\\
+Nesta secção apresenta-se a toda a componente de visualização, controlo e configuração da plataforma, expondo, fundamentalmente as facilidades implementadas para a agilização do processo de avaliação de protocolos de encaminhamento de dados em RSSF. Esta é um componente que pode sempre ser melhorada e estendida por forma a incorporar novas funcionalidades adequadas à avaliação para a qual se utiliza a plataforma.
+
+\subsection[Visualização e controlo da simulação]{Visualização e controlo da simulação} 
+No que se refere ao processo de visualização podem-se destacar as seguintes funcionalidades, algumas destas, não se encontram na totalidade numa única plataforma de simulação de RSSF:
+\begin{descriptionNoIndent}
+	\item[Visualização da topologia da rede - ] Permite observar a distribuição dos sensores no campo de simulação, bem como observar as ligações que o modelo de rádio estabelece entre sensores próximos;
+	\item[Visualização de informação de sensores - ] Permite aceder a informação interna do sensor, por exemplo, caracterização das camadas, energia existente, posição e identificação do sensor;
+	\item[Visualização de dados da simulação - ] Permite visualizar o tempo real e o tempo de simulação, o número de sensores distribuídos e o estado da simulação;
+	\item[Distribuição orientada de sensores - ] Permite colocar um sensor num local específico, mudar a posição de um sensor e reorganizar a rede; 
+	\item[Selecção de sensores - ] Permite seleccionar um sensor ou um grupo de sensores de forma a operar sobre os sensores seleccionados e  execução de comandos ou alteração de propriedades num sensor, esta selecção inclusive pode ser feita de forma aleatória por forma a facilitar algumas operações de avaliação;
+	\item[Controlo de execução da simulação - ] Permite controlar a execução da simulação através de uma semântica de inicio, pausa e stop;
+	\item[Outras utilidades - ] Foram incluídas algumas funcionalidades de menor impacto sobre a utilização da plataforma, mas que a tornam ainda mais funcional: i) Exportação da fotografia da rede para imagem; ii) Consola de informação de debug;  
+\end{descriptionNoIndent}
+\input{pic_simulator}
+\subsection[Mecanismo de configuração]{Mecanismo de configuração} 
+Uma vez que se pretende a persistência de configurações das simulações 
+desenvolveu-se um conjunto de funcionalidades por forma a facilitar este
+requisito, permitindo a sua extensão em versões futuras.
+Assim sendo, cada classe que se pretende que persista para reutilização
+implementa uma API especifica. No diagrama seguinte apresenta-se um exemplo
+desta implementação, que, expõe um interface simplista que faz com que os dados
+persistam pela invocação do método \textit{saveToXML()}. 
+
+
