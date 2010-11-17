@@ -41,6 +41,7 @@ public class INSENSConstants {
      *
      */
     public static double MIN_DELAYED_MESSAGE_BOUND = 2000;
+    
     private static final int IV_COUNTER = 128219;
     /**
      *
@@ -58,10 +59,12 @@ public class INSENSConstants {
      *
      */
     public static final byte MSG_ROUTE_UPDATE = 3;
+
     /**
      *
      */
     public static final byte MSG_DATA = 4;
+
     /**
      *
      */
@@ -69,7 +72,7 @@ public class INSENSConstants {
     /**
      * Helpers
      */
-    public static double SIGNAL_STRENGH_THRESHOLD = .0; // melhor .5
+    public static double SIGNAL_STRENGH_THRESHOLD = .5; // melhor .5
     /**
      * 
      */
