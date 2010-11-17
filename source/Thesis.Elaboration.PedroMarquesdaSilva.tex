@@ -1,0 +1,186 @@
+%% Template para dissertao/tese na classe thesisdifctunl  
+%%  EM  DESENVOLVIMENTO - Dezembro de 2007
+%%
+%% Carrega a classe thesisdifctunlpt
+%% Opes: 
+%% * Idiomas
+%%           pt   - portugus 
+%%           en   - ingls
+%% * Tipo de texto
+%%           lei  - licenciatura
+%%           premei - preparao de dissertao
+%%           mei  - mestrado
+%%           prop - proposta de doutoramento
+%%           prephd - preparao de tese
+%%           phd  - doutoramento
+%%   * Tipo de impresso
+%%            print
+%%    * Pginas
+%%           oneside - para impresso em face nica
+%%           twoside - para impresso em frente e verso
+\documentclass[pt, mei, twoside, print]{thesisdifctunl}
+
+%% Prembulo:
+%% coloque aqui o seu prembulo LaTeX, i.e., declarao de pacotes,
+%% (re)definies de macros, medidas, etc. 
+\newcommand{\descvspace}{\addtolength{\itemsep}{-.5\baselineskip}}
+\newcommand{\mc}[3]{\multicolumn{#1}{#2}{#3}}
+\newenvironment{FramedVerb}%
+{\scriptsize\VerbatimEnvironment
+\begin{Sbox}\begin{minipage}{15cm}\begin{Verbatim}}%
+{\end{Verbatim}\end{minipage}\end{Sbox}
+\setlength{\fboxsep}{8pt}\fbox{\TheSbox}\normalsize }
+%\usepackage{tweaklist}
+\usepackage{listings}
+\usepackage{fancybox}
+\usepackage{setspace}
+\usepackage{multirow}
+\usepackage[table]{xcolor}
+\usepackage{float}
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage{rotating}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar
+    unicode=false,          % non-Latin characters in Acrobats bookmarks
+    pdftoolbar=true,        % show Acrobat toolbar
+    pdfmenubar=true,        % show Acrobat menu
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={FitH},    % fits the width of the page to the window
+    pdftitle={Avaliação de condições de fiabilidade e segurança de protocolos de encaminhamento de
+dados em redes de sensores sem fios},    % title
+    pdfauthor={Pedro Miguel Oliveira Marques da Silva},     % author
+    pdfsubject={Masters in Science in Computer Engeneering},   % subject of the document
+    pdfcreator={Latex},   % creator of the document
+    pdfproducer={Faculdade de Ciências e Tecnologia, UNL}, % producer of the document
+    pdfkeywords={Wireless Sensor Networks, Secure Routing Protocols, WSN Simulation, Intrusion
+Atack}, % list of keywords
+    pdfnewwindow=true,      % links in new window
+    colorlinks=true,       % false boxed links true: colored links
+    linkcolor=black,          % color of internal links
+    citecolor=black,        % color of links to bibliography
+    filecolor=black,      % color of file links
+    urlcolor=black,           % color of external links
+		pagebackref=true
+}
+\setcounter{tocdepth}{3}
+
+\newenvironment{descriptionNoIndent}
+{
+  \begin{description}[leftmargin=0mm,topsep=5mm]
+}
+{
+  \end{description}
+}
+\newenvironment{descriptionNoIndent2}
+{
+  \begin{description}[leftmargin=0mm,topsep=3mm,noitemsep]
+}
+{
+  \end{description}
+}
+%\setlength{\parskip}{0mm plus0mm minus0mm}
+%% Identificao:
+% Universidade
+\university{Universidade Nova de Lisboa}
+% Endereo (cidade).
+\address{Lisboa}
+% Faculdade
+\faculty{Faculdade de Ciências e Tecnologia}
+% Departamento 
+\department{Departamento de Informática}
+% Curso
+\program{Mestrado em Engenharia Informática}
+% rea cientfica
+\majorfield{Engenharia Informática}
+% Ttulo da dissertao/tese
+\title{Avaliação de condições de fiabilidade e segurança de protocolos de encaminhamento de dados em
+redes de sensores sem fios}
+
+% Data
+\date{1º Semestre de 2009/10 \\ \smallskip
+5 de Fevereiro de 2010}
+
+% Autor
+\author{Pedro Miguel Oliveira Marques da Silva (nº 26649)}
+
+% Orientador(a)
+% Opo: [f] - para orientador do sexo feminino
+\adviser{Prof. Doutor Henrique João Lopes Domingos}
+
+% Co-orientador(a)
+%\coadviser{Prof. Doutor nome do co-orientador}
+
+%% Inicio do documento
+\begin{document}
+\onehalfspacing
+%% Parte pr-textual
+\frontmatter
+
+% Folha de rosto. Comente para ocultar
+\frontpage
+
+% Pgina de apresentao. Comente para ocultar
+\presentationpage
+
+% Agradecimentos. Se preferir, crie um ficheiro  parte e inclua com \include{}
+\acknowledgements
+
+% O texto ...
+\include{Contracapa}
+% Resumo em Portugus
+% Se preferir, crie um ficheiro  parte e inclua com \include{}
+\include{resumopt}
+
+% Resumo em Ingls
+% Se preferir, crie um ficheiro  parte e inclua com \include{}
+\include{resumoen}
+
+% ndice. 
+\tableofcontents
+
+% Lista de figuras. Comente para ocultar
+\listoffigures
+
+% Lista de tabelas. Comente para ocultar
+\listoftables
+
+%% O contedo principal
+\mainmatter
+
+%  aconselhvel ter um captulo por ficheiro :
+% "capitulo1.tex", "capitulo2.tex", ... "capituloN.tex" e depois
+% inclu-los com:
+\include{capitulo1}
+\include{capitulo2}
+\include{capitulo3}
+\include{capitulo4}
+\include{capitulo5}
+\include{capitulo6}
+\include{capitulo7}
+
+% ...
+% \include{capituloN}
+
+%% Parte ps-texto principal
+\backmatter
+
+% Apndices. Comente se no houver apndices
+\appendix
+
+%  aconselhvel ter um apndice por ficheiro
+% "apendice1.tex", "apendice.tex", ... "apendiceM.tex" e depois
+% inclu-los com:
+% \include{apendice1}
+% \include{apendice2}
+% ...
+% \include{apendiceM}
+
+% Bibliografia. Deve utilizar o BibTeX a partir de um arquivo, ex: "mybib.bib".
+\bibliographystyle{plain}
+\bibliography{mybib}
+
+%% Fim do documento
+\end{document}

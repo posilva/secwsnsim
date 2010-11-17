@@ -1,0 +1,105 @@
+\newpage
+\section{ Discussão e Resumo do Trabalho Relacionado}
+As RSSF representam um enorme desafio para a investigação de sistemas e
+protocolos de segurança. As características que as tornam uma mais-valia para a operação em
+ambientes remotos, apresentam-se, simultaneamente, como as suas maiores vulnerabilidades, em termos de
+segurança. Este paradoxo é contornado com mecanismos de segurança inovadores e que se distinguem
+dos existentes nas redes convencionais. Assim, passada em revista as diversas
+dimensões abarcadas por esta dissertação (protocolos de encaminhamento seguro
+em RSSF e plataformas de simulação de RSSF), importa apresentar uma visão
+crítica do trabalho relacionado.
+
+Na \tablename{ \ref{tab:tabela_ataques_contramedidas}} apresenta-se uma visão estruturada
+das contra-medidas que permitem mitigar ou diminuir o impacte dos ataques nas RSSF. O uso de
+criptografia simétrica é predominante, uma vez que representa uma forma de garantir propriedades, tais
+como, confidencialidade, autenticidade e integridade. O uso de funções de dispersão de um sentido
+permite verificar a integridade e, aliado ao uso de ``desafios''\footnote{Números sequenciais, cuja
+sequência depende da aplicação de uma função $f^n(x)=C$, $n$ vezes, por forma a obter $C$
+(\textit{challenge})}, permite garantir a frescura das mensagens, a um custo computacional reduzido.
+É de salientar que as implementações destes mecanismos são optimizadas para a redução dos custos
+computacionais e de comunicação. Esta tabela propicia uma visão mais actualizada das contra-medidas
+face aos ataques referenciados no modelo de adversário, fruto da consolidação do trabalho
+relacionado.
+\input{tab_ataques_contramedidas}
+Tendo em conta as contra-medidas apresentadas, cabe analisar, comparativamente,
+os algoritmos e a capacidade de resistir aos ataques definidos no modelo de
+adversário. Assim, na \tablename{ \ref{tab:ataques_vs_protocolos}}, estão
+marcados com o símbolo \checkmark os ataques defendidos por cada protocolo
+estudado, sendo que os marcados com \texttimes\ não defendem ou só o
+fazem em condições especiais. 
+
+O protocolo SIGF distingue-se dos demais protocolos estudados, particularmente pela sua origem (extensão
+do IGF) e por ser baseado em localização. Esta característica é específica para determinadas
+aplicações e obriga à existência de dispositivos especializados nos \textit{motes}. Para além disto,
+é particularmente indicado para a monitorização de eventos, cuja ocorrência é espaçada no tempo. Por
+ser configurável, faz com que se adapte consoante o grau de ameaça, aumentando os custos
+de operação com o aumento da ameaça.
+
+Os protocolos Clean-Slate e INSENS, não necessitam de conhecimento de
+localização, diminuindo a complexidade da plataforma de rede. Estes protocolos,
+devido às características que os definem, são excelentes candidatos a um estudo
+comparativo.  Distinguem-se na utilização da uma estação base como
+unidade central de encaminhamento, no INSENS. Contrariamente, o Clean-Slate
+tem uma abordagem completamente distribuída. A questão que se levanta, no
+INSENS, prende-se, essencialmente, com o impacte no consumo energético dos nós
+próximos (a um \textit{hop}) da estação base, uma vez que esta encaminhará todo
+o tráfego da rede. 
+\input{tab_protocolos_ataques}
+Ambos os protocolos implementam resiliência à intrusão. Uma das diferenças é que
+o Clean-Slate tem uma acção preventiva, correspondente à detecção dos nós
+maliciosos (replicados). Além disso, faz encaminhamento multi-rota, o que
+minimiza o impacte dos intrusores que resistam à detecção. No caso do INSENS,
+apenas existe um mecanismo redundante multi-rota. 
+
+Em relação aos ataques que podem ser direccionados a cada um dos protocolos, é
+importante realçar o ataque \textit{sybil}, como um caso de difícil resolução,
+quando este deriva de uma intrusão, em que um atacante obteve as chaves
+necessárias para se poder anunciar com qualquer uma
+das identidades que assumir. Assim, a resistência a este ataque, por parte dos
+protocolos estudados, não leva em conta este modo de intrusão, porque assume que
+cada atacante não tem todas as chaves necessárias para se
+autenticar com falsas identidades e que, como tal, pode ser detectado.
+\input{tab_simuladores_criterios}
+Por fim e sendo a análise de ambientes de simulação um dos focos do trabalho relacionado,
+apresenta-se na \tablename{ \ref{tab:Criterios_vs_ambientes}} a sua sistematização, contrapondo os
+critérios aos ambientes estudados. Como uma primeira nota, deve-se salientar que,
+tendo em vista a concepção de uma plataforma de simulação, a observação dos critérios de
+\textit{software} para a selecção de um simulador base teve um peso bastante grande, nomeadamente
+no que se refere à capacidade de extensibilidade reflectida na simplicidade.
+
+Perante a necessidade de seleccionar um ambiente que vise alcançar os objectivos
+da dissertação, esta selecção recaiu, no simulador JProwler. A sua simplicidade
+é uma mais valia, uma vez que, sendo composto por nove classes, bem
+documentadas, é de mais fácil extensibilidade quanto à implementação das
+funcionalidades requeridas na plataforma concebida. Cada componente de um nó
+sensor é mapeado numa classe abstracta. O modelo de comunicação é inspirado no
+Mica2 com a gestão de eventos baseada no TinyOS \cite{tinyos}, o que o torna, do
+ponto de vista da sua aproximação à realidade, bastante vantajoso. É certo que
+algumas funcionalidades tiveram de ser implementadas de raiz, como é o caso do
+módulo energia (existente no ShoX) ou gestão de topologias (existente no ShoX e
+no Freemote), o que permitirá desenvolver modelos que podem ser bem integrados
+de forma observar-se melhor as propriedades desejadas. O caso da emulação
+(existente no Freemote) não é um requisito mandatório da plataforma. Logo, a sua
+utilização não se apresenta como uma mais-valia, face aos aspectos menos
+positivos. O Freemote assenta sobre uma interacção cliente/servidor, o que torna
+difícil a depuração de erros. Possui um modelo de comunicação demasiado básico,
+não incorporando atenuações do meio ambiente, o que inviabiliza a sua selecção.
+O J-Sim é realmente uma plataforma poderosa, mas a sua dimensão obrigaria a um
+esforço adicional, demasiado grande, na medida em que necessitaria de ver
+desenvolvido muitos dos seus módulos de raiz.
+
+Desta forma, perante a maior complexidade de algumas plataformas, o JProwler
+constitui uma base simples, eficiente e, simultaneamente, com capacidade para
+ser enriquecida, de forma a integrar a plataforma de simulação. Ainda assim,
+alguns dos conceitos presentes nos outros simuladores prestaram significativos
+contributos conceptuais para o resultado final da plataforma concebida no
+âmbito desta dissertação.
+
+%No âmbito dos modelos de energia desenvolvidos para sistemas de simulação
+%\cite{powertossim,omnet++,swanenergymodel}, os estudos conhecidos apresentam
+%diversas abordagens mais ou menos relaxadas no que respeita ao cálculo do
+%consumo energético. Por um lado, alguns modelos, por estarem muito próximos da
+%plataforma fisica, como é o caso do PowerTossim\cite{powertossim}, conseguem
+%obter um valor aproximado dos custo dos ciclos de relógio permitindo obter
+%alguma acuidade no valores referentes a este tipo de eventos. Outros sistemas
+%como o caso do modelo OMNET++\cite{OMNET++} começam por assumir 

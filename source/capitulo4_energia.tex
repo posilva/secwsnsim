@@ -1,0 +1,115 @@
+\subsection[Módulo de energia]{Módulo de energia} 
+Com o módulo de energia pretende-se um componente que permita aferir os comportamentos de uma RSSF no que respeita ao consumo de energia. Este componente partiu de um estudo prévio de trabalhos publicados sobre o tema que permitiram coligir alguns valores para afectar em diferentes eventos que ocorrem numa plataforma sensor durante a sua operação.
+Primariamente foi elaborada uma tabela que representa os eventos sobre os quais se pretende medir os custos de energia durante a operação de um sensor. Esta tabela resulta da leitura de bibliografia dedicada ao tema da energia nas RSSF, e procura enformar o estudo desta problemática resumindo a informação de forma estruturada, permitindo uma visão geral do consumo de energia num nó sensor. Assim, a tabela de eventos encontra-se organizada da seguinte forma: Na primeira coluna surge a denominação do evento; Na segunda coluna  procura-se caracterizar o evento quanto ao custo; Na terceira coluna indica-se a parametrização de referência e por fim na quarta coluna apresenta-se o calculo do custo energético.
+\input{ pic_tabela_eventos} 
+\subsubsection[]{Algoritmo do modelo de energia}  
+\begin{FramedVerb}
+SE NODE==SLEEP ENTÃO   
+  não detecta eventos (camada aplicação não opera ao nível do simulador)
+SENAO    
+  SE for detectado um EVENTO ENTÃO   
+      PROCESSA_MENSAGEM()
+(1)     SE TX == ON ENTAO   
+          Transmite   
+          Consome energia de trasmissão baseado na unidade de referência(J/Byte)   
+      SENAO (TX==OFF)   
+          TX OFF==>ON    
+          Consome Energia de transição OFF==>ON   
+          Transmite   
+          Consome energia de trasmissão baseado na unidade de referência(J/Byte)   
+     FIM SE   
+  SENÃO (Operação em RELAY ou RECEPÇÃO)   
+      SE receber uma mensagem ENTAO   
+          SE TX==ON ENTÃO   
+             Recebe Mensagem   
+             Consome energia de Recepção baseado na unidade de referência
+                   (J/Byte)   
+             PROCESSA_MENSAGEM() e TRASMITE Caso se aplique   
+      SENAO (TRASMISSÃO RELAY)   
+          (1)   
+      FIM SE   
+  FIM SE
+FIM SE}
+
+PROCESSA_MENSAGEM(){   
+  SE estiver a CIFRAR ENTAO   
+      CIFRA MENSAGEM   
+      Consome energia de CIFRA baseado na unidade de referência
+      (J/Byte) do algoritmo utilizado   
+  SENAO    
+      SE estiver a DECIFRAR ENTAO   
+          DECIFRA MENSAGEM   
+          Consome energia de DECIFRA baseado na unidade de referência
+          (J/Byte) do algoritmo utilizado   
+      SENAO    
+          Computacao simples   
+          Consome energia de COMPUTAÇÃO baseado na unidade de referência 
+          (J/Ciclo de relógio)   
+      FIM SE   
+  FIM SE
+\end{FramedVerb}
+De entre os eventos apresentados poderemos dividir em dois grandes grupos os que estão associados a estados processamento e os que estão associados a estados de comunicação. Tendo a segurança como ponto central, não se podem descurar os eventos associados ao processamento, nomeadamente os que se referem a operações criptográficas, quer estes sejam de assinatura, de cifra ou de integridade. No entanto, a introdução destes mecanismos de segurança contribuem para um aumento das comunicações, uma vez que, normalmente, é necessária informação complementar para verificação de determinadas propriedades de segurança. Vejamos, por exemplo, no protocolo INSENS\cite{INSENS} o facto de todas as mensagens terem um MAC\cite{MAC} o que faz com que o \textit{payload} das mensagens aumente numa razão considerável. 
+
+Na caracterização do custo energético dos eventos, existem fundamentalmente duas abordagens típicas\cite{ENERGIA,ENERGIA2}: uma que considera a unidade de tempo como unidade de razão para o consumo, por exemplo, calculando o tempo que se passa a transmitir/receber, uma vez que a unidade \textit {joule} está relacionada com o tempo. Outra abordagem é a caracterização com base no tamanho da mensagem calculando com base na energia que se consome por byte operado. No entanto no modelo apresentado a decisão passou por implementar a segunda abordagem uma vez que tratando-se de tempos que não correspondem ao comportamento real num sensor a sua medição tornaria os resultados mais afastados dos resultados esperados. Ao se optar por uma medida baseada em bytes, recorrendo à bibliografia de referência poder-se-à  sempre ter os valores adequados aos tamanhos das mensagens. 
+
+A forma encontrada para permitir a modelação da energia e a sua implementação de forma o mais transparente possível para um programador que deseje testar um algoritmo na plataforma é a implementação de um interface, que obriga à implementação de uma operação de execução e uma operação que devolve o numero de unidades operadas. Em relação ao número de unidades operadas, esta operação terá a semântica que se pretender tendo por base os valores de consumo parametrizados no modelo de energia. Por exemplo, vejamos o exemplo seguinte para um processamento de cifra de um \textit {payload} de uma mensagem.\\
+
+\begin{FramedVerb}
+1.	n.getCPU().executeEncryption(new EnergyConsumptionAction() {
+2.	  public void execute() {
+3.	    // execute Skipjack encryption on message payload 
+4.		byte[] data= SkipjackEncrytion(node.getPayload(), myKey, myIV);
+         ...
+5.	   }
+6.	   public int getNumberOfUnits() {
+7.	     return node.getPayload().length; // return de size of payload encrypted
+8.	   }
+9.	});
+\end{FramedVerb}
+  
+
+Na linha 7 é devolvido o tamanho do payload em bytes, uma vez que foram esses os dados que foram cifrados. No entanto o mesmo interface poderia ser usado para devolver nas unidades o numero de ciclos de CPU,  se os valores de energia e de ciclos usados para uma cifra Skypjack fossem parametrizados. Desta forma, procurou-se flexibilizar o modelo de energia, primeiro dando liberdade para  definição dos valores de consumo com base na unidade de operação desejada, e com a implementação do interface afectar ao componente respectivo a acção de consumo de energia, no exemplo, linha 4 pode-se observar que será do CPU a responsabilidade de consumo de energia. Caso se tratasse de uma transmissão ou recepção seria um consumo a ser executado pelo componente \textit {transciever}.
+
+\subsubsection[]{Funcionamento do Módulo de Energia}
+Depois de identificados os eventos, definidos os valores de consumo de energia para cada um e a formula de cálculo, foi introduzido uma operação no componente Batery para o consumo de cada um destes eventos. Estas operações contabilizam o consumo consultando a parametrização de referência do modelo de energia. Cada evento tem uma tag, que é usada para o registo do consumo e do valor consumido em cada instante em cada um dos nós envolvidos na simulação. Todos os eventos de consumo são registados num repositório para que se possa, posteriormente, efectuar uma análise mais minuciosa, (esta forma de análise será detalhada na próxima secção).  
+O funcionamento do módulo de energia resulta da interacção de diversos componentes do simulador, o diagrama que se apresenta a seguir procura representar esta interacção para o exemplo de transmissão de uma mensagem.
+\input{pic_DS_TransmissionPower} 
+Observando o código é visível a expressividade para a exploração do modelo de energia e de forma transparente. É necessário parametrizar os valores do modelo de energia e indicar as unidades de consumo.\\
+\begin{FramedVerb}
+if (isChannelFree(noiseStrength)) {
+	\\ start transmitting
+    stransmitting = true;
+    final Node node = getNode();
+    getNode().getTransceiver().executeTransmission(new EnergyConsumptionAction() {
+	
+     DefaultMessage m = (DefaultMessage) node.getMessage();
+     public void execute() {
+       transmitMessage();
+     }
+     public int getNumberOfUnits() {
+	    return m.size();
+	}
+  });
+}
+\end{FramedVerb}
+\\Ao nível do componente, no caso o Transciever, para a contabilização do consumo de transmissão, o que se verifica é o seguinte:\\
+\begin{FramedVerb}
+public void executeTransmission(EnergyConsumptionAction action  ){
+  switchON(); \\ transição aleatória de estado 
+  action.execute(); \\ execução da acção de consumo
+  int rate= action.getNumberOfUnits(); \\ contabilização das unidades
+  \\ consumo de energia correspondente
+  getNode().getBateryEnergy().consumeTransmission(rate);
+  switchOFF();
+}
+\end{FramedVerb}
+\\
+Ao reutilizar o modelo MAC implementado no simulador JProwler e este não prevendo as mudanças de estado inerentes ao funcionamento de um \textit {mote}, foi implementado um mecanismo aleatório para a transição de estado dos componentes dos sensores. É possível, desta forma, simular a activação (transição do estado desligado para o ligado) de um componente, por exemplo o \textit{Transciever}, para iniciar a transmissão . Assim consegue-se considerar os custos referentes à activação dos componentes depois de estes entrarem em modos de consumo reduzido. O desenho dos sensores organizado por camadas possibilita a implementação de protocolos MAC para diferentes âmbitos, nomeadamente a implementação os protocolos S-MAC, B-MAC, Z-MAC.
+\subsubsection[Módulo de avaliação/experimentação]{Módulo de
+avaliação/experimentação} 
+Este módulo dispõe de alguns gráficos pré-definidos com base no que é mais
+frequente se querer observar. No entanto poderá ser extendido para incorporar
+outros gráficos que permitam a análise.
+
+
+ 

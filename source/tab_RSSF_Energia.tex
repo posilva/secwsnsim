@@ -1,0 +1,38 @@
+
+
+\begin{table*}[ht]
+\centering % used for centering table
+\begin{tabular}{l r} % centered columns (4 columns)
+\hline\hline %inserts double horizontal lines
+Descrição & Valor \\ [0.5ex] % inserts table
+%heading
+\hline % inserts single horizontal line
+Baterias& 2xAA \\ % inserting body of the table
+Mínimo $V_{in}$ & 2.7 V \\
+Capacidade da bateria& 2000 mAh \\
+Regulada &  no \\
+\hline %inserts single line
+\end{tabular}
+\label{table:mica2_caracter} % is used to refer this table in the text
+ \caption{Características de energia do \textit{mote} Mica2
+(origem:\cite{SNMuseum}))} % title of Table
+\end{table*}
+
+\begin{table*}[ht]
+\centering % used for centering table
+\begin{tabular}{l r} % centered columns (4 columns)
+\hline\hline %inserts double horizontal lines
+Operação & Consumo\\ [0.5ex] % inserts table
+%heading
+\hline % inserts single horizontal line
+CPU \textit{sleep} com \textit{timer} \textit{on} & 0.054 mW \\ % inserting body
+CPU activo,\textit{ radio }\textit{off} & 36 mW \\
+CPU activo, \textit{radio idle listening }& 66 mW \\
+CPU activo, \textit{radio TX/RX }& 117 mW \\
+Potência Máxima (CPU activo, radio TX/RX + flash write) & 165 mW \\ [1ex] %
+%[1ex] adds \hline %inserts single line
+\end{tabular}
+\label{table:mica2_powerops} % is used to refer this table in the text
+ \caption{Consumo de Energia \textit{Mica2} - Operação Tipica
+(origem:\cite{SNMuseum})} % title of Table
+\end{table*}

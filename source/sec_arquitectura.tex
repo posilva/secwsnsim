@@ -1,0 +1,58 @@
+\section{Caracterização de uma RSSF}\label{sect:subsec_arq_sofware_wsn}
+\subsection{Modelo da plataforma genérica de uma RSSF - \textit{Mote}}
+À semelhança do que acontece com as redes convencionais, existem nós de
+computação interligados por uma infraestrutura de comunicação. No caso da RSSF,
+esta infraestrutura corresponde a comunicação \textit{multi-hop} em que cada nó
+da rede (\textit{mote}) pode desempenhar pelo menos três papeis: 1) Nó gerador
+de dados, pela captação da eventos associados às especificidades dos sensores
+possuídos; 2) Nó encaminhador, que recebe dados de outros nós e os passa a
+outros nós por forma a que alcance o destino; 3) Nó de sincronização ou nó de
+agregação, embora estas duas caracterizações não correspondam à mesma tarefa
+por si só, a um nível mais macro, corresponde igualmente a colecção de dados da
+rede oriundos da detecção de eventos, por forma a faze-la seguir agregada para
+outro destino (interno ou externo à rede ).
+
+Desta forma interessa perceber qual o modelo inerente a estas pequenas
+plataformas de rede que apesar das características limitadoras da sua execução
+conseguem executar uma complexidade de aplicações tendo em conta sempre as
+limitações impostas pela arquitectura. Na figura seguinte apresenta-se um
+modelo \cite{ livro_wsn_arch} que ilustra os diversos componentes que concorrem
+para a efectividade de serviço de um \textit{mote} numa RSSF.
+\input{pic_sensornode}
+Como se pode observar pela figura, da qual se pode generalizar o modelo de uma
+plataforma genérica de RSSF, os sistemas que estão presentes são os seguintes:
+i) Sistema de processamento;ii) Sistema de energia; iii) Sistema de
+comunicação; iv) Sistema sensorial; v) Sistema de memória.
+A componente de \textit{hardware} corresponde aos sensores existentes no mercado
+\cite{mica2_datasheet, btnodes,sunspotworld} para as mais diferentes aplicações. No que se refere a
+sistemas operativos
+existem vários disponiveis, dos quais se destacam os seguintes:
+\begin{description}\addtolength{\itemsep}{-.50\baselineskip}
+ \item[TinyOS\cite{tinyos}] Sistema operativo livre e de código aberto,
+desenvolvido pela Universidade da California, Berkeley e implementado em nesC
+(uma extensão da linguagem C) muito optimizado para as limitações de memória
+existentes nas RSSF.O modelo de execução orientado por eventos, possibilita uma maior precisão na
+gestão de energia, ainda assim tem grande flexibilidade no escalonamento dos
+eventos, de natureza imprevista, gerados pelo ambiente real;
+ \item[Contiki\cite{contiki}] Sistema operativo livre e de código aberto,
+implementado em C, e tal como o TinyOS é orientado por eventos. As aplicações
+podem ser carregadas e descarregadas em tempo de execução. Os processos deste
+SO usam \textit{threads} leves, denominadas por \textit{protothreads} que
+proporcionam um estilo de programação  \textit{threadlike}. Uma das inovações é a
+possibilidade de,  com este SO, se ter um modelo \textit{multithreading} por processo, bem como um
+mecanismo de comunicação entre processos usando mensagens;
+ \item[Nano-RK\cite{nanork}] Sistema operativo desenvolvido na universidade de
+Carnegie Mellon, o seu \textit{kernel} é baseado em execução em tempo real com
+\textit{multithreading } preemptivo. Assim é possivel ao \textit{kernel} controlar que processos têm
+acesso ao CPU, à rede e aos sensores.
+ \end{description}
+A camada de comunicação é a que é responsável por gerir o acesso ao meio, devido à modularidade
+desta arquitectura, pode integrar diferentes mecanismos especificos e adequados à aplicação
+(B-MAC\cite{BMAC,mac_protocols}, S-MAC\cite{SMAC,mac_protocols},Zigbee\cite{zigbee_802154}). No que
+respeita à camada de
+encaminhamento seguro, é a camada onde são implementados os algoritmos de encaminhamento seguro que
+ que visam reforçar a arquitectura com a inclusão de mecanismos resistentes a ataques ao meio de
+comunicação e os causados por intrusão ou captura de nós. Por fim temos a camada de aplicação
+que corresponde às aplicações que servem para a gestão dos eventos detectados no meio ambiente.Esta
+visão estratificada tem a vantagem de permitir a implementação de segurança em cada um dos
+serviços, por forma a que no seu todo contribuam para um sistema mais seguro.

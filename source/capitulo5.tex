@@ -1,0 +1,44 @@
+\chapter[Prova de Conceito da Plataforma]{Prova de Conceito da Plataforma}
+
+Uma vez implementada a plataforma de simulação é necessário submete-la a uma
+utilização dirigida para o fim para o qual foi concebida. Tendo isto em
+atenção, este capítulo apresenta a implementação de dois protocolos de
+encaminhamento de dados em RSSF. O primeiro trata-se de um protocolo simplista,
+encaminhamento por \textit{inundação }, que visa, fundamentalmente, demonstrar a
+facilidade de implementação de um primeiro protocolo e ao mesmo tempo servir de
+termo de comparação com um protocolo seguro. O segundo protocolo, é um
+protocolo de encaminhamento seguro de referência, o INSENS\cite{INSENS}.
+Esta implementação, visa, não só provar que é possível implementar, avaliar e
+experimentar protocolos de especificação mais complexa, mas também contribuir
+com uma análise critica deste protocolo em critérios de segurança e no seu
+impacte nas propriedades que se podem avaliar com recurso à plataforma de
+simulação.\\
+
+\section{Implementação de Protocolos de Encaminhamento Seguro em RSSF}
+\subsection{Fase de desenho dos algoritmos baseado nas
+especificações}\label{sec:impl_protocolos}
+No início desta fase, será necessário re-aprofundar o funcionamento de cada
+algoritmo a implementar,
+conhecer e identificar cada mecanismo/técnica especificados, de modo a que se
+possa, dentro do
+possível, generalizar operações ou interfaces, com vista à reutilização para
+outros algoritmos. Assim
+sendo, esta fase exigirá uma aprendizagem/conhecimento de cada algoritmo,
+contribuindo
+também para a especialização neste domínio.
+\subsubsection{Avaliação dos algoritmos}\label{sec:aval_protocolos}
+Recorrendo às ferramentas disponibilizadas pela plataforma, deverá ser possível,
+no final da
+implementação, sistematizar as simulações, de maneira a extrair resultados.
+Estes resultados, por si só,
+devem caracterizar os algoritmos em matéria de segurança e quanto à sua
+correcção em determinados parâmetros, a saber: i) correcção do protocolo; ii)
+análise do consumo de energia; iii) fiabilidade/entrega de
+mensagens; iv) correcção dos eventos; v) latência. Esta fase contribui, também,
+para a aferição
+a usabilidade da plataforma em termos de avaliação/comparação de protocolos de
+encaminhamento seguro em
+RSSF.
+
+
+  

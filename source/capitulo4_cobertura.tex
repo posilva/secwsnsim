@@ -1,0 +1,55 @@
+\subsection[Módulo de avaliação de cobertura]{Módulo de avaliação de cobertura} 
+Para a implementação do módulo de avaliação de cobertura foi necessário definir 
+o que entende por cobertura de uma rede no âmbito das RSSF. Considera-se a
+cobertura como a capacidade de um qualquer nó comunicar com pelo menos um
+vizinho. Esta cobertura quando comparada com a cobertura física, determinada
+pelo modelo de radio  permite estabelecer uma base de comparação para os
+protocolos. Este módulo pode ainda ser associado à capacidade de avaliar a
+fiabilidade da rede, uma vez que uma rede está logicamente coberta se as
+mensagens consegue percorrer um determinado percurso até à estação base da
+rede. 
+Assim, pretende-se que a utilização deste módulo seja o mais transparente
+possível  para isso, a ùnica especificação que se espera que seja implementada
+visa a implementação de um conjunto de interfaces aos quais se atribui uma
+semântica especializada ( conforme o protocolo implementado e que deseja ver
+avaliado nesta propriedade) . Depois da rede atingir o ponto de estabilização
+com o estabelecimento das rotas é possível  avaliar a cobertura de forma
+automática por parametrização do módulo.
+
+Na figura seguinte apresenta-se o diagrama que mostra a interacção dos diversos 
+componentes envolvidos no modelo de avaliação de cobertura:
+
+
+
+\subsubsection[Funcionamento do módulo de avaliação de cobertura]{Funcionamento 
+do módulo de avaliação de cobertura} 
+MOSTRAR CÓDIGO
+
+
+\subsubsection[Recolha de dados e análise de resultados]{Recolha de dados e 
+análise de resultados} 
+
+Depois de executados a geração de dados, é possível 
+
+
+
+ 
+
+Para o uso do modulo de cobertura foram definadas algumas especificações.
+Estas especificações passam pela implementação de um conjunto de interfaces que
+fornecem ao Instrumento de Medição de cobertura da rede a informação que se
+pretende avaliar.
+
+Para iniciar definimos o que se entende por cobertura da rede. A cobertura
+de uma rede pode ser definida de duas formas: Total e Parcial. Com a cobertura
+Total pretende-se medir a capacidade de uma mensagem chegar de um ponto da
+rede a qualquer outro onde esta informação seja necessária, permitindo estabele-
+cer um ponto de comparação com o melhor caso que será o flooding. A cobertura
+parcial caracteriza-se pela capacidade de um nó conseguir enviar para os seus
+vizinhos uma mensagens e receber dele o ACK, permitindo comparar com cobertura
+fisica definada pela componente radio. A caracterização do módulo visa a
+extrapolação destes valores de cobertura a partir de uma amostra da rede e não
+da totalidade da rede, ainda que isto possa ser conseguido escolhendo N - 1 nós
+como geradores de informação e 1 nó como colector de informação.
+Note-se que estes módulos foram concebidos para serem utilizados na avaliação de
+protocolos de encaminhamento de dados em RSSF
