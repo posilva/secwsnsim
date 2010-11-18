@@ -48,11 +48,39 @@ PROCESSA_MENSAGEM(){   
       FIM SE   
   FIM SE
 \end{FramedVerb}
-De entre os eventos apresentados poderemos dividir em dois grandes grupos os que estão associados a estados processamento e os que estão associados a estados de comunicação. Tendo a segurança como ponto central, não se podem descurar os eventos associados ao processamento, nomeadamente os que se referem a operações criptográficas, quer estes sejam de assinatura, de cifra ou de integridade. No entanto, a introdução destes mecanismos de segurança contribuem para um aumento das comunicações, uma vez que, normalmente, é necessária informação complementar para verificação de determinadas propriedades de segurança. Vejamos, por exemplo, no protocolo INSENS\cite{INSENS} o facto de todas as mensagens terem um MAC\cite{MAC} o que faz com que o \textit{payload} das mensagens aumente numa razão considerável. 
+De entre os eventos apresentados poderemos dividir em dois grandes grupos os que
+estão associados a estados de processamento e os que estão associados a estados
+de comunicação. Tendo a segurança como ponto central, não se podem descurar os
+eventos associados ao processamento, nomeadamente os que se referem a operações
+criptográficas, quer estes sejam de assinatura, de cifra ou de integridade. No
+entanto, a introdução destes mecanismos de segurança contribuem para um aumento
+das comunicações, uma vez que, normalmente, é necessária informação complementar
+para verificação de determinadas propriedades de segurança. Vejamos, por
+exemplo, no protocolo INSENS\cite{INSENS} o facto de todas as mensagens terem um
+MAC\cite{MAC} o que faz com que o \textit{payload} das mensagens aumente numa
+razão considerável. 
 
-Na caracterização do custo energético dos eventos, existem fundamentalmente duas abordagens típicas\cite{ENERGIA,ENERGIA2}: uma que considera a unidade de tempo como unidade de razão para o consumo, por exemplo, calculando o tempo que se passa a transmitir/receber, uma vez que a unidade \textit {joule} está relacionada com o tempo. Outra abordagem é a caracterização com base no tamanho da mensagem calculando com base na energia que se consome por byte operado. No entanto no modelo apresentado a decisão passou por implementar a segunda abordagem uma vez que tratando-se de tempos que não correspondem ao comportamento real num sensor a sua medição tornaria os resultados mais afastados dos resultados esperados. Ao se optar por uma medida baseada em bytes, recorrendo à bibliografia de referência poder-se-à  sempre ter os valores adequados aos tamanhos das mensagens. 
+Na caracterização do custo  energético dos eventos, existem fundamentalmente
+duas abordagens típicas\cite{ENERGIA,ENERGIA2}: uma que considera a unidade de
+tempo como unidade de razão para o consumo, por exemplo, calculando o tempo que
+se passa a transmitir/receber, uma vez que a unidade \textit {joule} está
+relacionada com o tempo. Outra abordagem é a caracterização com base no tamanho
+da mensagem calculando com base na energia que se consome por byte operado. No
+entanto no modelo apresentado a decisão passou por implementar a segunda
+abordagem uma vez que tratando-se de tempos que não correspondem ao
+comportamento real num sensor a sua medição tornaria os resultados mais
+afastados dos resultados esperados. Ao se optar por uma medida baseada em bytes,
+recorrendo à bibliografia de referência poder-se-à  sempre ter os valores
+adequados aos tamanhos das mensagens. 
 
-A forma encontrada para permitir a modelação da energia e a sua implementação de forma o mais transparente possível para um programador que deseje testar um algoritmo na plataforma é a implementação de um interface, que obriga à implementação de uma operação de execução e uma operação que devolve o numero de unidades operadas. Em relação ao número de unidades operadas, esta operação terá a semântica que se pretender tendo por base os valores de consumo parametrizados no modelo de energia. Por exemplo, vejamos o exemplo seguinte para um processamento de cifra de um \textit {payload} de uma mensagem.\\
+A forma encontrada para permitir a modelação da energia e a sua implementação
+de forma o mais transparente possível para um programador que deseje testar um
+algoritmo na plataforma é a implementação de um interface, que obriga à
+implementação de uma operação de execução e uma operação que devolve o numero de
+unidades operadas. Em relação ao número de unidades operadas, esta operação terá
+a semântica que se pretender tendo por base os valores de consumo parametrizados
+no modelo de energia. Por exemplo, vejamos o exemplo seguinte para um
+processamento de cifra de um \textit {payload} de uma mensagem.\\
 
 \begin{FramedVerb}
 1.	n.getCPU().executeEncryption(new EnergyConsumptionAction() {
@@ -68,13 +96,33 @@ A forma encontrada para permitir a modelação da energia e a sua implementação de
 \end{FramedVerb}
   
 
-Na linha 7 é devolvido o tamanho do payload em bytes, uma vez que foram esses os dados que foram cifrados. No entanto o mesmo interface poderia ser usado para devolver nas unidades o numero de ciclos de CPU,  se os valores de energia e de ciclos usados para uma cifra Skypjack fossem parametrizados. Desta forma, procurou-se flexibilizar o modelo de energia, primeiro dando liberdade para  definição dos valores de consumo com base na unidade de operação desejada, e com a implementação do interface afectar ao componente respectivo a acção de consumo de energia, no exemplo, linha 4 pode-se observar que será do CPU a responsabilidade de consumo de energia. Caso se tratasse de uma transmissão ou recepção seria um consumo a ser executado pelo componente \textit {transciever}.
+Na linha 7 é devolvido o tamanho do payload em bytes, uma vez que foram esses 
+os dados que foram cifrados. No entanto o mesmo interface poderia ser usado para
+devolver nas unidades o numero de ciclos de CPU,  se os valores de energia e de
+ciclos usados para uma cifra Skypjack fossem parametrizados. Desta forma,
+procurou-se flexibilizar o modelo de energia, primeiro dando liberdade para 
+definição dos valores de consumo com base na unidade de operação desejada, e com
+a implementação do interface afectar ao componente respectivo a acção de consumo
+de energia, no exemplo, linha 4 pode-se observar que será do CPU a
+responsabilidade de consumo de energia. Caso se tratasse de uma transmissão ou
+recepção seria um consumo a ser executado pelo componente \textit {transciever}.
 
 \subsubsection[]{Funcionamento do Módulo de Energia}
-Depois de identificados os eventos, definidos os valores de consumo de energia para cada um e a formula de cálculo, foi introduzido uma operação no componente Batery para o consumo de cada um destes eventos. Estas operações contabilizam o consumo consultando a parametrização de referência do modelo de energia. Cada evento tem uma tag, que é usada para o registo do consumo e do valor consumido em cada instante em cada um dos nós envolvidos na simulação. Todos os eventos de consumo são registados num repositório para que se possa, posteriormente, efectuar uma análise mais minuciosa, (esta forma de análise será detalhada na próxima secção).  
-O funcionamento do módulo de energia resulta da interacção de diversos componentes do simulador, o diagrama que se apresenta a seguir procura representar esta interacção para o exemplo de transmissão de uma mensagem.
+Depois de identificados os eventos, definidos os valores de consumo de energia 
+para cada um e a formula de cálculo, foi introduzido uma operação no componente
+Batery para o consumo de cada um destes eventos. Estas operações contabilizam o
+consumo consultando a parametrização de referência do modelo de energia. Cada
+evento tem uma etiqueta, que é usada para o registo do consumo e do valor
+consumido em cada instante em cada um dos nós envolvidos na simulação. Todos os
+eventos de consumo são registados num repositório para análise gráfica no
+âmbito da simulação.
+O funcionamento do módulo de energia resulta da interacção de diversos
+componentes do simulador, o diagrama que se apresenta a seguir procura
+representar esta interacção para o exemplo de transmissão de uma mensagem.
 \input{pic_DS_TransmissionPower} 
-Observando o código é visível a expressividade para a exploração do modelo de energia e de forma transparente. É necessário parametrizar os valores do modelo de energia e indicar as unidades de consumo.\\
+Observando o código é visível a expressividade para a exploração do modelo de 
+energia e de forma transparente. É necessário parametrizar os valores do modelo
+de energia e indicar as unidades de consumo.\\
 \begin{FramedVerb}
 if (isChannelFree(noiseStrength)) {
 	\\ start transmitting
@@ -92,7 +140,8 @@ if (isChannelFree(noiseStrength)) {
   });
 }
 \end{FramedVerb}
-\\Ao nível do componente, no caso o Transciever, para a contabilização do consumo de transmissão, o que se verifica é o seguinte:\\
+\\Ao nível do componente, no caso o Transciever, para a contabilização do 
+consumo de transmissão, o que se verifica é o seguinte:\\
 \begin{FramedVerb}
 public void executeTransmission(EnergyConsumptionAction action  ){
   switchON(); \\ transição aleatória de estado 
@@ -104,12 +153,16 @@ public void executeTransmission(EnergyConsumptionAction action  ){
 }
 \end{FramedVerb}
 \\
-Ao reutilizar o modelo MAC implementado no simulador JProwler e este não prevendo as mudanças de estado inerentes ao funcionamento de um \textit {mote}, foi implementado um mecanismo aleatório para a transição de estado dos componentes dos sensores. É possível, desta forma, simular a activação (transição do estado desligado para o ligado) de um componente, por exemplo o \textit{Transciever}, para iniciar a transmissão . Assim consegue-se considerar os custos referentes à activação dos componentes depois de estes entrarem em modos de consumo reduzido. O desenho dos sensores organizado por camadas possibilita a implementação de protocolos MAC para diferentes âmbitos, nomeadamente a implementação os protocolos S-MAC, B-MAC, Z-MAC.
-\subsubsection[Módulo de avaliação/experimentação]{Módulo de
-avaliação/experimentação} 
-Este módulo dispõe de alguns gráficos pré-definidos com base no que é mais
-frequente se querer observar. No entanto poderá ser extendido para incorporar
-outros gráficos que permitam a análise.
+Ao reutilizar o modelo MAC implementado no simulador JProwler e este não 
+prevendo as mudanças de estado inerentes ao funcionamento de um \textit {mote},
+foi implementado um mecanismo aleatório para a transição de estado dos
+componentes dos sensores. É possível, desta forma, simular a activação
+(transição do estado desligado para o ligado) de um componente, por exemplo o
+\textit{Transciever}, para iniciar a transmissão . Assim consegue-se considerar
+os custos referentes à activação dos componentes depois de estes entrarem em
+modos de consumo reduzido. O desenho dos sensores organizado por camadas
+possibilita a implementação de protocolos MAC para diferentes âmbitos,
+nomeadamente a implementação os protocolos S-MAC, B-MAC, Z-MAC.
 
 
  

@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.0.85
-lastDocument=source/capitulo4_cobertura.tex
+lastDocument=source/capitulo1.tex
 masterDocument=
 name=Thesis.Elaboration
 pkg_extIsRegExp=false
@@ -16,7 +16,23 @@ src_extensions=.tex .ltx .latex .dtx .ins
 MakeIndex=
 QuickBuild=
 
+[document-settings,item:../v0/source/capitulo4_Novo.tex]
+Bookmarks=
+Encoding=ISO-8859-15
+Highlighting=LaTeX
+Indentation Mode=
+Mode=LaTeX
+ReadWrite=true
+
 [document-settings,item:../v1/latex/source/Notas_e_ideias.tex]
+Bookmarks=
+Encoding=ISO-8859-15
+Highlighting=LaTeX
+Indentation Mode=
+Mode=LaTeX
+ReadWrite=true
+
+[document-settings,item:source/Contracapa.tex]
 Bookmarks=
 Encoding=ISO-8859-15
 Highlighting=LaTeX
@@ -120,14 +136,6 @@ Indentation Mode=
 Mode=LaTeX
 ReadWrite=true
 
-[document-settings,item:source/capitulo4.tex]
-Bookmarks=
-Encoding=ISO-8859-15
-Highlighting=LaTeX
-Indentation Mode=
-Mode=LaTeX
-ReadWrite=true
-
 [document-settings,item:source/capitulo4_API.tex]
 Bookmarks=
 Encoding=ISO-8859-15
@@ -184,6 +192,14 @@ Indentation Mode=
 Mode=LaTeX
 ReadWrite=true
 
+[document-settings,item:source/capitulo4old.tex]
+Bookmarks=
+Encoding=ISO-8859-15
+Highlighting=LaTeX
+Indentation Mode=
+Mode=LaTeX
+ReadWrite=true
+
 [document-settings,item:source/capitulo5.tex]
 Bookmarks=
 Encoding=ISO-8859-15
@@ -201,6 +217,14 @@ Mode=LaTeX
 ReadWrite=true
 
 [document-settings,item:source/capitulo7.tex]
+Bookmarks=
+Encoding=ISO-8859-15
+Highlighting=LaTeX
+Indentation Mode=
+Mode=LaTeX
+ReadWrite=true
+
+[document-settings,item:source/logounl.tex]
 Bookmarks=
 Encoding=ISO-8859-15
 Highlighting=LaTeX
@@ -256,35 +280,45 @@ Indentation Mode=
 Mode=LaTeX
 ReadWrite=true
 
+[item:../v0/source/capitulo4_Novo.tex]
+archive=true
+column=0
+encoding=ISO-8859-15
+highlight=LaTeX
+line=61
+mode=LaTeX
+open=true
+order=5
+
 [item:../v1/latex/source/Notas_e_ideias.tex]
 archive=true
 column=0
 encoding=ISO-8859-15
 highlight=LaTeX
-line=0
+line=5
 mode=LaTeX
 open=false
 order=-1
 
 [item:source/Contracapa.tex]
 archive=true
-column=7471216
-encoding=
-highlight=
+column=0
+encoding=ISO-8859-15
+highlight=LaTeX
 line=0
-mode=
+mode=LaTeX
 open=false
 order=-1
 
 [item:source/Thesis.Elaboration.PedroMarquesdaSilva.tex]
 archive=true
-column=0
+column=18
 encoding=ISO-8859-15
 highlight=LaTeX
-line=148
+line=158
 mode=LaTeX
-open=false
-order=0
+open=true
+order=6
 
 [item:source/capitulo1.tex]
 archive=true
@@ -293,8 +327,8 @@ encoding=ISO-8859-15
 highlight=LaTeX
 line=173
 mode=LaTeX
-open=false
-order=1
+open=true
+order=4
 
 [item:source/capitulo2.tex]
 archive=true
@@ -308,10 +342,10 @@ order=6
 
 [item:source/capitulo2_RSSF.tex]
 archive=true
-column=52
+column=45
 encoding=ISO-8859-15
 highlight=LaTeX
-line=150
+line=75
 mode=LaTeX
 open=false
 order=-1
@@ -328,10 +362,10 @@ order=-1
 
 [item:source/capitulo2_arq_servicos_seguranca.tex]
 archive=true
-column=0
+column=37
 encoding=ISO-8859-15
 highlight=LaTeX
-line=10
+line=90
 mode=LaTeX
 open=false
 order=-1
@@ -388,33 +422,23 @@ order=-1
 
 [item:source/capitulo2_protocolos.tex]
 archive=true
-column=14
+column=92
 encoding=ISO-8859-15
 highlight=LaTeX
-line=143
+line=123
 mode=LaTeX
 open=false
 order=-1
 
 [item:source/capitulo3.tex]
 archive=true
-column=18
+column=61
 encoding=ISO-8859-15
 highlight=LaTeX
-line=311
+line=60
 mode=LaTeX
 open=true
-order=0
-
-[item:source/capitulo4.tex]
-archive=true
-column=28
-encoding=ISO-8859-15
-highlight=LaTeX
-line=79
-mode=LaTeX
-open=true
-order=1
+order=3
 
 [item:source/capitulo4_API.tex]
 archive=true
@@ -428,12 +452,12 @@ order=-1
 
 [item:source/capitulo4_cobertura.tex]
 archive=true
-column=14
+column=37
 encoding=ISO-8859-15
 highlight=LaTeX
-line=25
+line=0
 mode=LaTeX
-open=true
+open=false
 order=5
 
 [item:source/capitulo4_energia.tex]
@@ -441,27 +465,27 @@ archive=true
 column=0
 encoding=ISO-8859-15
 highlight=LaTeX
-line=0
+line=151
 mode=LaTeX
 open=true
-order=4
+order=1
 
 [item:source/capitulo4_fiabilidade.tex]
 archive=true
-column=0
+column=3
 encoding=ISO-8859-15
 highlight=LaTeX
-line=0
+line=5
 mode=LaTeX
-open=false
-order=-1
+open=true
+order=2
 
 [item:source/capitulo4_latencia.tex]
 archive=true
-column=0
+column=43
 encoding=ISO-8859-15
 highlight=LaTeX
-line=0
+line=18
 mode=LaTeX
 open=false
 order=-1
@@ -473,7 +497,7 @@ encoding=ISO-8859-15
 highlight=LaTeX
 line=0
 mode=LaTeX
-open=true
+open=false
 order=6
 
 [item:source/capitulo4_visualizacao_controlo.tex]
@@ -483,8 +507,18 @@ encoding=ISO-8859-15
 highlight=LaTeX
 line=15
 mode=LaTeX
-open=true
+open=false
 order=3
+
+[item:source/capitulo4old.tex]
+archive=true
+column=0
+encoding=ISO-8859-15
+highlight=LaTeX
+line=86
+mode=LaTeX
+open=true
+order=0
 
 [item:source/capitulo5.tex]
 archive=true
@@ -518,7 +552,17 @@ order=-1
 
 [item:source/logounl.tex]
 archive=true
-column=156147104
+column=0
+encoding=ISO-8859-15
+highlight=LaTeX
+line=0
+mode=LaTeX
+open=true
+order=7
+
+[item:source/mybib.bib]
+archive=true
+column=1
 encoding=
 highlight=
 line=0
@@ -653,7 +697,7 @@ encoding=ISO-8859-15
 highlight=LaTeX
 line=37
 mode=LaTeX
-open=true
+open=false
 order=2
 
 [item:thesis.elaboration.kilepr]
@@ -666,13 +710,21 @@ mode=
 open=false
 order=-1
 
+[view-settings,view=0,item:../v0/source/capitulo4_Novo.tex]
+CursorColumn=0
+CursorLine=61
+
 [view-settings,view=0,item:../v1/latex/source/Notas_e_ideias.tex]
+CursorColumn=0
+CursorLine=5
+
+[view-settings,view=0,item:source/Contracapa.tex]
 CursorColumn=0
 CursorLine=0
 
 [view-settings,view=0,item:source/Thesis.Elaboration.PedroMarquesdaSilva.tex]
-CursorColumn=0
-CursorLine=148
+CursorColumn=18
+CursorLine=158
 
 [view-settings,view=0,item:source/capitulo1.tex]
 CursorColumn=35
@@ -683,16 +735,16 @@ CursorColumn=21
 CursorLine=8
 
 [view-settings,view=0,item:source/capitulo2_RSSF.tex]
-CursorColumn=52
-CursorLine=150
+CursorColumn=45
+CursorLine=75
 
 [view-settings,view=0,item:source/capitulo2_ambientes_de_simulacao.tex]
 CursorColumn=0
 CursorLine=120
 
 [view-settings,view=0,item:source/capitulo2_arq_servicos_seguranca.tex]
-CursorColumn=0
-CursorLine=10
+CursorColumn=37
+CursorLine=90
 
 [view-settings,view=0,item:source/capitulo2_discussao.tex]
 CursorColumn=0
@@ -711,36 +763,32 @@ CursorColumn=0
 CursorLine=0
 
 [view-settings,view=0,item:source/capitulo2_protocolos.tex]
-CursorColumn=14
-CursorLine=143
+CursorColumn=92
+CursorLine=123
 
 [view-settings,view=0,item:source/capitulo3.tex]
-CursorColumn=18
-CursorLine=311
-
-[view-settings,view=0,item:source/capitulo4.tex]
-CursorColumn=28
-CursorLine=79
+CursorColumn=61
+CursorLine=60
 
 [view-settings,view=0,item:source/capitulo4_API.tex]
 CursorColumn=0
 CursorLine=0
 
 [view-settings,view=0,item:source/capitulo4_cobertura.tex]
-CursorColumn=14
-CursorLine=25
+CursorColumn=37
+CursorLine=0
 
 [view-settings,view=0,item:source/capitulo4_energia.tex]
 CursorColumn=0
-CursorLine=0
+CursorLine=151
 
 [view-settings,view=0,item:source/capitulo4_fiabilidade.tex]
-CursorColumn=0
-CursorLine=0
+CursorColumn=3
+CursorLine=5
 
 [view-settings,view=0,item:source/capitulo4_latencia.tex]
-CursorColumn=0
-CursorLine=0
+CursorColumn=43
+CursorLine=18
 
 [view-settings,view=0,item:source/capitulo4_prova_conceito.tex]
 CursorColumn=0
@@ -749,6 +797,10 @@ CursorLine=0
 [view-settings,view=0,item:source/capitulo4_visualizacao_controlo.tex]
 CursorColumn=0
 CursorLine=15
+
+[view-settings,view=0,item:source/capitulo4old.tex]
+CursorColumn=0
+CursorLine=86
 
 [view-settings,view=0,item:source/capitulo5.tex]
 CursorColumn=16
@@ -759,6 +811,10 @@ CursorColumn=33
 CursorLine=8
 
 [view-settings,view=0,item:source/capitulo7.tex]
+CursorColumn=0
+CursorLine=0
+
+[view-settings,view=0,item:source/logounl.tex]
 CursorColumn=0
 CursorLine=0
 

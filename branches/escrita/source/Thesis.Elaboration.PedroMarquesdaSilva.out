@@ -39,33 +39,29 @@
 \BOOKMARK [2][-]{subsection.2.4.6}{ShoX}{section.2.4}
 \BOOKMARK [1][-]{section.2.5}{ Discuss\343o e Resumo do Trabalho Relacionado}{chapter.2}
 \BOOKMARK [0][-]{chapter.3}{Plataforma para avalia\347\343o de protocolos de encaminhamento de dados em RSSF}{}
-\BOOKMARK [1][-]{section.3.1}{Desenho e concep\347\343o da plataforma de simula\347\343o}{chapter.3}
-\BOOKMARK [2][-]{subsection.3.1.1}{Consolida\347\343o da avalia\347\343o do simulador JProwler e a sua integra\347\343o}{section.3.1}
-\BOOKMARK [3][-]{subsubsection.3.1.1.1}{Arquitectura do simulador JProwler}{subsection.3.1.1}
-\BOOKMARK [3][-]{subsubsection.3.1.1.2}{Funcionamento do simulador JProwler}{subsection.3.1.1}
-\BOOKMARK [2][-]{subsection.3.1.2}{Proposta para a arquitectura da plataforma de simula\347\343o}{section.3.1}
-\BOOKMARK [3][-]{subsubsection.3.1.2.1}{Simulador base ou motor de simula\347\343o}{subsection.3.1.2}
-\BOOKMARK [3][-]{subsubsection.3.1.2.2}{Camada de instrumenta\347\343o}{subsection.3.1.2}
-\BOOKMARK [3][-]{subsubsection.3.1.2.3}{Consola de Visualiza\347\343o e Controlo de Simula\347\343o}{subsection.3.1.2}
-\BOOKMARK [3][-]{subsubsection.3.1.2.4}{API para implementa\347\343o de protocolos de encaminhamento}{subsection.3.1.2}
+\BOOKMARK [1][-]{section.3.1}{Consolida\347\343o da avalia\347\343o do simulador JProwler e a sua integra\347\343o}{chapter.3}
+\BOOKMARK [2][-]{subsection.3.1.1}{Arquitectura do simulador JProwler}{section.3.1}
+\BOOKMARK [2][-]{subsection.3.1.2}{Funcionamento do simulador JProwler}{section.3.1}
+\BOOKMARK [1][-]{section.3.2}{Proposta para a arquitectura da plataforma de simula\347\343o}{chapter.3}
+\BOOKMARK [2][-]{subsection.3.2.1}{Simulador base ou motor de simula\347\343o}{section.3.2}
+\BOOKMARK [2][-]{subsection.3.2.2}{Camada de instrumenta\347\343o}{section.3.2}
+\BOOKMARK [3][-]{subsubsection.3.2.2.1}{Mecanismo de Configura\347\343o}{subsection.3.2.2}
+\BOOKMARK [3][-]{subsubsection.3.2.2.2}{Mecanismo de Gera\347\343o de Topologias}{subsection.3.2.2}
+\BOOKMARK [3][-]{subsubsection.3.2.2.3}{Mecanismos de medi\347\343o de propriedades da rede}{subsection.3.2.2}
+\BOOKMARK [3][-]{subsubsection.3.2.2.4}{Mecanismo de Injec\347\343o de Falhas /Ataques}{subsection.3.2.2}
+\BOOKMARK [3][-]{subsubsection.3.2.2.5}{Execu\347\343o de testes e recolha de resultados}{subsection.3.2.2}
+\BOOKMARK [2][-]{subsection.3.2.3}{Consola de Visualiza\347\343o e Controlo de Simula\347\343o}{section.3.2}
+\BOOKMARK [2][-]{subsection.3.2.4}{API para implementa\347\343o de protocolos de encaminhamento}{section.3.2}
+\BOOKMARK [2][-]{subsection.3.2.5}{Metodologia de utiliza\347\343o da plataforma}{section.3.2}
+\BOOKMARK [3][-]{subsubsection.3.2.5.1}{Implementa\347\343o de protocolo}{subsection.3.2.5}
+\BOOKMARK [3][-]{subsubsection.3.2.5.2}{Caracteriza\347\343o do ambiente de simula\347\343o}{subsection.3.2.5}
+\BOOKMARK [3][-]{subsubsection.3.2.5.3}{Execu\347\343o/an\341lise de testes e resultados}{subsection.3.2.5}
 \BOOKMARK [0][-]{chapter.4}{Implementa\347\343o da plataforma de simula\347\343o}{}
-\BOOKMARK [1][-]{section.4.1}{Organiza\347\343o do Sistema}{chapter.4}
-\BOOKMARK [1][-]{section.4.2}{Integra\347\343o}{chapter.4}
-\BOOKMARK [1][-]{section.4.3}{M\363dulos de instrumenta\347\343o}{chapter.4}
-\BOOKMARK [2][-]{subsection.4.3.1}{M\363dulo de energia}{section.4.3}
-\BOOKMARK [3][-]{subsubsection.4.3.1.1}{}{subsection.4.3.1}
-\BOOKMARK [3][-]{subsubsection.4.3.1.2}{}{subsection.4.3.1}
-\BOOKMARK [3][-]{subsubsection.4.3.1.3}{M\363dulo de avalia\347\343o/experimenta\347\343o}{subsection.4.3.1}
-\BOOKMARK [2][-]{subsection.4.3.2}{M\363dulo de avalia\347\343o de cobertura}{section.4.3}
-\BOOKMARK [3][-]{subsubsection.4.3.2.1}{Funcionamento do m\363dulo de avalia\347\343o de cobertura}{subsection.4.3.2}
-\BOOKMARK [3][-]{subsubsection.4.3.2.2}{Recolha de dados e an\341lise de resultados}{subsection.4.3.2}
-\BOOKMARK [2][-]{subsection.4.3.3}{M\363dulo de avalia\347\343o de fiabilidade}{section.4.3}
-\BOOKMARK [2][-]{subsection.4.3.4}{M\363dulo de avalia\347\343o de lat\352ncia}{section.4.3}
-\BOOKMARK [3][-]{subsubsection.4.3.4.1}{Funcionamento do m\363dulo de avalia\347\343o de lat\352ncia}{subsection.4.3.4}
-\BOOKMARK [1][-]{section.4.4}{Configura\347\343o, controlo e visualiza\347\343o da simula\347\343o }{chapter.4}
-\BOOKMARK [2][-]{subsection.4.4.1}{Visualiza\347\343o e controlo da simula\347\343o}{section.4.4}
-\BOOKMARK [2][-]{subsection.4.4.2}{Mecanismo de configura\347\343o}{section.4.4}
-\BOOKMARK [2][-]{subsection.4.4.3}{M\363dulo de gest\343o de Energia}{section.4.4}
+\BOOKMARK [1][-]{section.4.1}{Principais funcionalidades}{chapter.4}
+\BOOKMARK [2][-]{subsection.4.1.1}{Portabilidade}{section.4.1}
+\BOOKMARK [2][-]{subsection.4.1.2}{Extensibilidade}{section.4.1}
+\BOOKMARK [2][-]{subsection.4.1.3}{Usabilidade}{section.4.1}
+\BOOKMARK [2][-]{subsection.4.1.4}{Facilidades}{section.4.1}
 \BOOKMARK [0][-]{chapter.5}{Prova de Conceito da Plataforma}{}
 \BOOKMARK [1][-]{section.5.1}{Implementa\347\343o de Protocolos de Encaminhamento Seguro em RSSF}{chapter.5}
 \BOOKMARK [2][-]{subsection.5.1.1}{Fase de desenho dos algoritmos baseado nas especifica\347\365es}{section.5.1}
