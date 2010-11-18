@@ -5,28 +5,10 @@ A level-1 auxiliary file: resumopt.aux
 A level-1 auxiliary file: resumoen.aux
 A level-1 auxiliary file: capitulo1.aux
 A level-1 auxiliary file: capitulo2.aux
-White space in argument---line 15 of file capitulo2.aux
- : \citation{XEMICS
- :                  XE1205}
-I'm skipping whatever remains of this command
-Case mismatch error between cite keys Contiki and contiki
----line 23 of file capitulo2.aux
- : \citation{Contiki
- :                  }
-I'm skipping whatever remains of this command
-Case mismatch error between cite keys TinyOS and tinyos
----line 24 of file capitulo2.aux
- : \citation{TinyOS
- :                 }
-I'm skipping whatever remains of this command
 A level-1 auxiliary file: capitulo3.aux
-White space in argument---line 18 of file capitulo3.aux
- : \citation{VER_CITACAO
- :                       DA PILHA}
-I'm skipping whatever remains of this command
 A level-1 auxiliary file: capitulo4.aux
 Case mismatch error between cite keys ENERGIA and energia
----line 16 of file capitulo4.aux
+---line 20 of file capitulo4.aux
  : \citation{ENERGIA
  :                  }
 I'm skipping whatever remains of this command
@@ -40,6 +22,7 @@ Warning--I didn't find a database entry for "REFERENCIA"
 Warning--I didn't find a database entry for "Holger_Karl_protocols_andarchs_wsn"
 Warning--I didn't find a database entry for "atmel"
 Warning--I didn't find a database entry for "TIMSP430"
+Warning--I didn't find a database entry for "XEMICS_XE1205"
 Warning--I didn't find a database entry for "CHIPCON2420"
 Warning--I didn't find a database entry for "MICA"
 Warning--I didn't find a database entry for "CrossbowSite"
@@ -52,9 +35,10 @@ Warning--I didn't find a database entry for "outros"
 Warning--I didn't find a database entry for "PAPERS_CRIPTENERGIA"
 Warning--I didn't find a database entry for "PAPERS_ENERGIA"
 Warning--I didn't find a database entry for "MAC_ENERGIA"
-Warning--I didn't find a database entry for "HUMiDADE_RADIO"
+Warning--I didn't find a database entry for "VERCITACAODAPILHA"
 Warning--I didn't find a database entry for "MAC"
 Warning--I didn't find a database entry for "ENERGIA2"
+Warning--I didn't find a database entry for "HUMiDADE_RADIO"
 Warning--to sort, need author or key in ietf_802154
 Warning--to sort, need author or key in mica2_datasheet
 Warning--to sort, need author or key in btnodes
@@ -87,7 +71,7 @@ Warning--empty publisher in Attaks_defenses_sec_in_wsn
 Warning--empty year in Attaks_defenses_sec_in_wsn
 You've used 75 entries,
             2118 wiz_defined-function locations,
-            954 strings with 16208 characters,
+            958 strings with 16268 characters,
 and the built_in function-call counts, 24680 in all, are:
 = -- 2469
 > -- 992
@@ -126,4 +110,4 @@ warning$ -- 30
 while$ -- 216
 width$ -- 77
 write$ -- 759
-(There were 5 error messages)
+(There was 1 error message)
