@@ -1,0 +1,28 @@
+\subsection{Representação da plataforma sensor} 
+
+A versão JProwler original implementa , como já foi referido uma visão mais
+monolitica da plataforma sensor sem a separação dos papeis de cada uma das
+camadas da pilha de software de um \textit{mote}. Assim sendo a melhor forma de
+estruturar um nó sensor é seguir um modelo de camadas, o que levou à separação
+de cada um dos componentes que se encontravam consolidados numa única classe 
+representativa de um nó sensor. Esta visão permitiu a separação de conceitos,
+sendo consideradas apenas três camadas: i) Camada MAC; ii) Camada de
+Encaminhamento; iii) Camada de Aplicação. Na figura \ref{fig:stack_components} é
+possível observar esta organização. 
+
+De forma tornar o nó sensor ainda mais
+modular procurou-se mapear os componentes de um sensor num conjunto de classes,
+tal como é apresentada na figura \ref{fig:stack_components}.
+\input{pic_nodestackcomponents} 
+No que se refere à noção de nó sensor também se pretende que este tenha um 
+desenho bastante semelhante à arquitectura real. Para tal, o nó sensor é
+modelado por componentes equivalentes à realidade física. Isto é, existe um
+componente \textit{CPU}, um componente \textit{Transciever} e um componente
+\textit{Batery}. Este desenho permite que os dois primeiros componentes
+interajam entre si e em particular com o terceiro para cálculo do consumo
+energético. Assim, cada componente tem associado um conjunto de acções que são
+da sua responsabilidade em que  cada uma consome um determinado valor energético
+(definido por parametrização do modelo de energia). 
+
+Implementação de uma semântica de \textit{timer} semelhante aos
+\textit{temporizadores} de tinyOS

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/openSUSE) (format=pdflatex 2010.11.18)  18 NOV 2010 01:50
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/openSUSE) (format=pdflatex 2010.11.20)  22 NOV 2010 01:21
 entering extended mode
  %&-line parsing enabled.
 **Thesis.Elaboration.PedroMarquesdaSilva.tex
@@ -542,8 +542,11 @@ Package hyperref Warning: Option `pagebackref' has already been used,
 
 (./Thesis.Elaboration.PedroMarquesdaSilva.aux (./Contracapa.aux)
 (./resumopt.aux) (./resumoen.aux) (./capitulo1.aux) (./capitulo2.aux)
-(./capitulo3.aux) (./capitulo4.aux) (./capitulo5.aux) (./capitulo6.aux)
-(./capitulo7.aux))
+(./capitulo3.aux
+
+LaTeX Warning: Label `fig:simulador_view' multiply defined.
+
+) (./capitulo4.aux) (./capitulo5.aux) (./capitulo6.aux) (./capitulo7.aux))
 \openout1 = `Thesis.Elaboration.PedroMarquesdaSilva.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 117.
@@ -561,7 +564,8 @@ LaTeX Font Info:    ... okay on input line 117.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 117.
 LaTeX Font Info:    Try loading font information for TS1+cmr on input line 117.
 
- (/usr/share/texmf/tex/latex/base/ts1cmr.fd
+
+(/usr/share/texmf/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 117.
@@ -607,7 +611,7 @@ LaTeX Info: Redefining \pageref on input line 117.
 
 \AtBeginShipoutBox=\box36
  (./logounl.tex
-<logounl.jpg, id=291, 97.36375pt x 97.36375pt>
+<logounl.jpg, id=235, 97.36375pt x 97.36375pt>
 File: logounl.jpg Graphic file (type jpg)
  <use logounl.jpg>)
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <17.28> not available
@@ -721,37 +725,32 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 3.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 3.
-
-Overfull \hbox (21.50046pt too wide) in paragraph at lines 39--39
- [][] [][][] \T1/ptm/m/it/12 INtrusion-tolerant rou-ting pro-to-col for wi-re-l
-ess SEn-sor NetworkS 
- []
-
-[13] [14])
+ [13])
 \tf@toc=\write5
 \openout5 = `Thesis.Elaboration.PedroMarquesdaSilva.toc'.
 
- [15] [16
-
-] (./Thesis.Elaboration.PedroMarquesdaSilva.lof)
+ [14]
+(./Thesis.Elaboration.PedroMarquesdaSilva.lof)
 \tf@lof=\write6
 \openout6 = `Thesis.Elaboration.PedroMarquesdaSilva.lof'.
 
- [17]
-[18
+ [15
 
-] (./Thesis.Elaboration.PedroMarquesdaSilva.lot
+] [16
 
-LaTeX Warning: Citation `SNMuseum' on page xix undefined on input line 4.
+]
+(./Thesis.Elaboration.PedroMarquesdaSilva.lot
+
+LaTeX Warning: Citation `SNMuseum' on page xvii undefined on input line 4.
 
 
-LaTeX Warning: Citation `SNMuseum' on page xix undefined on input line 5.
+LaTeX Warning: Citation `SNMuseum' on page xvii undefined on input line 5.
 
 )
 \tf@lot=\write7
 \openout7 = `Thesis.Elaboration.PedroMarquesdaSilva.lot'.
 
- [19] [20
+ [17] [18
 
 ]
 \openout2 = `capitulo1.aux'.
@@ -774,10 +773,10 @@ Underfull \vbox (badness 2512) has occurred while \output is active []
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <12> not available
 (Font)              Font shape `T1/ptm/b/it' tried instead on input line 66.
 
-(./pic_stack_services.tex <pilha_soft.png, id=539, 365.365pt x 386.44376pt>
+(./pic_stack_services.tex <pilha_soft.png, id=478, 365.365pt x 386.44376pt>
 File: pilha_soft.png Graphic file (type png)
 
-<use pilha_soft.png> <stackProtocol.png, id=540, 154.5775pt x 165.61874pt>
+<use pilha_soft.png> <stackProtocol.png, id=479, 154.5775pt x 165.61874pt>
 File: stackProtocol.png Graphic file (type png)
 
 <use stackProtocol.png>
@@ -797,7 +796,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 LaTeX Warning: Citation `REFERENCIA' on page 7 undefined on input line 5.
 
-(./pic_sensornode.tex <SENSOR_NODE.png, id=610, 228.855pt x 180.675pt>
+(./pic_sensornode.tex <SENSOR_NODE.png, id=548, 228.855pt x 180.675pt>
 File: SENSOR_NODE.png Graphic file (type png)
 
 <use SENSOR_NODE.png>)
@@ -1034,44 +1033,158 @@ Overfull \hbox (4.49129pt too wide) in paragraph at lines 6--41
 
 ]
 
-LaTeX Warning: Citation `mica2' on page 37 undefined on input line 34.
+LaTeX Warning: Citation `mica2' on page 37 undefined on input line 35.
 
 [37] (./pic_sim_jprowler_cd.tex
-<JProwlerClassDiagram.png, id=964, 829.59938pt x 411.78844pt>
+<JProwlerClassDiagram.png, id=914, 829.59938pt x 411.78844pt>
 File: JProwlerClassDiagram.png Graphic file (type png)
 
 <use JProwlerClassDiagram.png>)
 
 LaTeX Warning: Citation `VERCITACAODAPILHA' on page 38 undefined on input line 
-61.
+63.
 
-[38 <./JProwlerClassDiagram.png (PNG copy)>] (./pic_sim_arch.tex
-<Simulador_arquitectura.png, id=977, 925.4575pt x 593.21625pt>
+[38 <./JProwlerClassDiagram.png (PNG copy)>] (./pic_jprowler.tex
+<Jprowler.png, id=924, 796.9775pt x 536.0025pt>
+File: Jprowler.png Graphic file (type png)
+ <use Jprowler.png>) [39 <./Jprowler.png>] (./pic_sim_arch.tex
+<Simulador_arquitectura.png, id=932, 952.55875pt x 594.22pt>
 File: Simulador_arquitectura.png Graphic file (type png)
 
-<use Simulador_arquitectura.png>
+<use Simulador_arquitectura.png>) [40 <./Simulador_arquitectura.png (PNG copy)>
+]
+Underfull \vbox (badness 4779) has occurred while \output is active []
+
+ [41]
+(./pic_topologias.tex <topologias.png, id=942, 451.6875pt x 200.75pt>
+File: topologias.png Graphic file (type png)
+
+<use topologias.png>) (./pic_energia.tex
+<energy1.png, id=943, 490.83376pt x 367.3725pt>
+File: energy1.png Graphic file (type png)
+ <use energy1.png>
+<energy2.png, id=944, 661.47125pt x 426.59375pt>
+File: energy2.png Graphic file (type png)
+ <use energy2.png>
+Overfull \hbox (10.16823pt too wide) in paragraph at lines 3--8
+ [][] 
+ []
+
+[42 <./topologias.png>]) (./pic_ataques.tex
+<nodes.png, id=951, 231.86626pt x 193.72375pt>
+File: nodes.png Graphic file (type png)
+ <use nodes.png> [43 <./energy1.png> <./energy2.png>]) [44 <./nodes.png>] [45] 
+(./pic_simulator.tex
+<simulator.png, id=970, 1284.8pt x 803.0pt>
+File: simulator.png Graphic file (type png)
+ <use simulator.png> [46])
+Underfull \hbox (badness 10000) in paragraph at lines 329--338
+
+ []
+
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [39])
-[40 <./Simulador_arquitectura.png (PNG copy)>] [41] [42] [43] [44]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [45])
-[46]
+ [47 <./simulator.png (PNG copy)>] [48] (./pic_results.tex
+<Results.png, id=990, 769.87625pt x 646.415pt>
+File: Results.png Graphic file (type png)
+ <use Results.png>)
+(./pic_tests.tex <test.png, id=991, 710.655pt x 572.1375pt>
+File: test.png Graphic file (type png)
+ <use test.png>
+[49])) [50 <./Results.png> <./test.png>]
 \openout2 = `capitulo4.aux'.
 
  (./capitulo4.tex
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [47
+ [51
 
 
 
 ]
-[48]) [49]
+[52] (./capitulo4_sensores.tex
+
+LaTeX Warning: Reference `fig:stack_components' on page 53 undefined on input l
+ine 10.
+
+
+LaTeX Warning: Reference `fig:stack_components' on page 53 undefined on input l
+ine 15.
+
+(./pic_nodestackcomponents.tex
+<SensorNodeStack.png, id=1012, 215.80624pt x 231.86626pt>
+File: SensorNodeStack.png Graphic file (type png)
+
+<use SensorNodeStack.png>
+<sensorNode_components.png, id=1013, 215.80624pt x 231.86626pt>
+File: sensorNode_components.png Graphic file (type png)
+
+<use sensorNode_components.png>)
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [53])
+(./capitulo4_energia.tex (./pic_tabela_eventos.tex
+<tab_eventos.png, id=1021, 680.7834pt x 456.2646pt>
+File: tab_eventos.png Graphic file (type png)
+ <use tab_eventos.png>
+Overfull \hbox (28.44794pt too wide) in paragraph at lines 3--4
+ [][] 
+ []
+
+)
+LaTeX Font Info:    Try loading font information for T1+pcr on input line 64.
+ (/usr/share/texmf/tex/latex/psnfss/t1pcr.fd
+File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
+)
+
+LaTeX Warning: Citation `MAC' on page 54 undefined on input line 74.
+
+
+Overfull \hbox (4.61916pt too wide) in paragraph at lines 64--76
+[] \T1/ptm/m/n/12 De
+ []
+
+[54 <./SensorNodeStack.png (PNG copy)> <./sensorNode_components.png (PNG copy)>
+]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [55 <./tab_eventos.png>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [56]
+
+LaTeX Warning: Citation `ENERGIA' on page 57 undefined on input line 78.
+
+
+LaTeX Warning: Citation `ENERGIA2' on page 57 undefined on input line 78.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 90--98
+
+ []
+
+
+Overfull \hbox (5.97206pt too wide) in paragraph at lines 110--111
+[][] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [57]
+(./pic_DS_TransmissionPower.tex
+<DS_TransmissionPower.png, id=1044, 697.10437pt x 351.56343pt>
+File: DS_TransmissionPower.png Graphic file (type png)
+
+<use DS_TransmissionPower.png>)
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [58]))
+[59 <./DS_TransmissionPower.png (PNG copy)>]
 \openout2 = `capitulo5.aux'.
 
- (./capitulo5.tex [50
+ (./capitulo5.tex [60
 
 
 
@@ -1080,21 +1193,21 @@ Underfull \hbox (badness 10000) in paragraph at lines 3--16
 
  []
 
-) [51]
+) [61]
 \openout2 = `capitulo6.aux'.
 
- (./capitulo6.tex [52
+ (./capitulo6.tex [62
 
 
 
-]) [53]
+]) [63]
 \openout2 = `capitulo7.aux'.
 
- (./capitulo7.tex [54
+ (./capitulo7.tex [64
 
 
 
-]) [55] [56
+]) [65] [66
 
 
 ]
@@ -1127,9 +1240,9 @@ Underfull \hbox (badness 1270) in paragraph at lines 61--64
 ked-sen-sor re-gime.
  []
 
-[57
+[67
 
-] [58] [59] [60] [61] [62]) [63]
+] [68] [69] [70] [71] [72]) [73]
 (./Thesis.Elaboration.PedroMarquesdaSilva.aux (./Contracapa.aux)
 (./resumopt.aux) (./resumoen.aux) (./capitulo1.aux) (./capitulo2.aux)
 (./capitulo3.aux) (./capitulo4.aux) (./capitulo5.aux) (./capitulo6.aux)
@@ -1137,29 +1250,32 @@ ked-sen-sor re-gime.
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: There were multiply-defined labels.
+
  )
 (\end occurred when \if on line 126 was incomplete)
 (\end occurred when \if on line 126 was incomplete)
 (\end occurred when \if on line 123 was incomplete) 
 Here is how much of TeX's memory you used:
- 10741 strings out of 493848
- 144717 string characters out of 3155813
- 237769 words of memory out of 3500000
- 13355 multiletter control sequences out of 15000+200000
- 112393 words of font info for 160 fonts, out of 3000000 for 9000
+ 10889 strings out of 493848
+ 146890 string characters out of 3155813
+ 238404 words of memory out of 3500000
+ 13427 multiletter control sequences out of 15000+200000
+ 113014 words of font info for 162 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
  41i,14n,40p,375b,438s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texmf/fonts/enc/
 dvips/base/8r.enc}</usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr10.pfb></
 usr/share/texmf/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texm
-f/fonts/type1/urw/symbol/usyr.pfb></usr/share/texmf/fonts/type1/urw/times/utmb8
-a.pfb></usr/share/texmf/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texmf/fon
-ts/type1/urw/times/utmr8a.pfb></usr/share/texmf/fonts/type1/urw/times/utmri8a.p
-fb>
-Output written on Thesis.Elaboration.PedroMarquesdaSilva.pdf (83 pages, 533954 
+f/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texmf/fonts/type1/urw/symbol/u
+syr.pfb></usr/share/texmf/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf/fo
+nts/type1/urw/times/utmbi8a.pfb></usr/share/texmf/fonts/type1/urw/times/utmr8a.
+pfb></usr/share/texmf/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Thesis.Elaboration.PedroMarquesdaSilva.pdf (91 pages, 963581 
 bytes).
 PDF statistics:
- 1192 PDF objects out of 1200 (max. 8388607)
- 293 named destinations out of 1000 (max. 500000)
- 607 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1219 PDF objects out of 1440 (max. 8388607)
+ 316 named destinations out of 1000 (max. 500000)
+ 555 words of extra memory for PDF output out of 10000 (max. 10000000)
 

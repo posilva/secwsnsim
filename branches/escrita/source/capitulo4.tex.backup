@@ -1,117 +1,75 @@
 \chapter[Implementação da plataforma de simulação]{Implementação da plataforma
 de simulação}\label{cap:implementacao}
-Neste capítulo será apresentado com algum detalhe a implementação da plataforma
-de simulação, desta forma será possível realçar as potencialidades deste sistema
-tendo em conta o fim para o qual foi concebido. Tendo em conta a arquitectura
-proposta, já anteriormente, na primeira secção é apresentada a organização da
-plataforma enquanto sistema integrado. Na segunda secção observam-se os detalhes
-de cada um dos instrumentos concebidos para a avaliação de protocolos e o seu
-funcionamento e por fim na terceira secção apresentam-se os mecanismos que
-permitem efectuar a prova de conceito da plataforma.  
-\section[Visão geral]{Visão geral} 
-Para o desenvolvimento e implementação da plataforma foram utilizadas as
-seguintes tecnologias:
+Neste capitulo é apresentada a implementação do simulador. Inicialmente
+apresentam-se as principais funcionalidades, de seguida descrevem-se alguns
+detalhes dos componentes mais importantes, quer pela apresentação de diagramas,
+quer pela apresentação de alguns excertos de código. O projecto está disponível
+em código aberto, conta com cerca de 236 classes e 31000 linhas de código em
+Java (JDK 1.6). É possível aceder de forma gratuita a partir do
+sitio: http://code.google.com/p/secwsnsim/. 
+\section{Principais funcionalidades}
+As principais funcionalidades que se encontram na versão actual da
+plataforma que se encontra disponível no sitio acima referido são:
+
+\subsection{Portabilidade}  
+Uma vez que foi integralmente desenvolvido em Java, pode ser executado em
+qualquer plataforma independente do sistema operativo. O ambiente gráfico foi
+desenvolvido com recurso a um tema nativo por forma a manter o mesmo aspecto em
+qualquer sistema operativo.
+\subsection{Extensibilidade} 
+Alguns padrões da engenharia de software foram utilizados, com vista a facilitar
+a extensão de funcionalidades do ambiente de simulação. Foram usados padrões de
+\textit{Factories}(para criação de objectos de forma generalizada),
+\textit{Singleton} (facilitar o acesso a funcionalidades transversais) e
+\textit{Publish-Subscribe} (notificação de eventos, por exemplo: Notificação de
+inicio e fim de execução da simulação ).
+
+Os componentes mais importantes da RSSF foram mantidos abstractos por forma a
+permitir especializações dependendo do protocolo/aplicação que se pretende
+avaliar (exemplo: \textit{MACLayer, RoutingLayer, RadioModel, Application,
+Message}, etc).
+
+\subsection{Usabilidade}
+Com a existência de um ambiente gráfico rico, é possível controlar todo o ciclo
+de simulação a partir da consola de visualização. De uma forma geral é
+possível: 
+\begin{description}
+ \item [Distribuição de sensores] Possibilidade de movimentar sensores,
+adicionar ou remover um grupo ou apenas um sensor numa área seleccionada;
+ \item [Estados e informação dos sensores] Possibilidade de
+consultar/visualizar o estado e informação de cada sensor (exemplo: posição,
+altitude, energia ) e alterar estado de um sensor individualmente ou de um grupo
+de sensores (exemplo: ligar/desligar, alterar altitude, activar visualização de
+vizinhos);
+\item [Pesquisa de sensores] Uma vez que uma simulação pode ter milhares de nós
+é possível encontrar qualquer sensor com base no seu identificador único;
+\item [Controlo da simulação] Possibilidade de iniciar/parar/terminar uma
+simulação através da consola de simulação.
+\item [Depuração de erros/mensagens] Visualização integrada de mensagens/erros
+enviados usando a primitivas Java para a consola de sistema, para a consola de
+visualização;
+\item [Construção de uma simulação] Disponibilização de uma ferramenta para
+desenho de configurações para simulação;
+\item [Construção de testes] Disponibilização de uma ferramenta para
+especificação de condições de testes que permitem avaliar um protocolo em
+estudo;
+\end{description}
+\subsection{Facilidades}
 \begin{enumerate}
- \item Java como linguagem de programação
- \item Apache Commons Configuration, Math, Logging
- \item JFreeChart para realização de gráficos
- \item Swing Application Framework para gestão de ambiente gráfico
+ \item Capacidade para fazer persistir algumas das configurações entre
+simulações por forma a permitir a reutilização em diferentes protocolos;
+\item Introdução de imagens de fundo para simulação de ambientes de
+distribuição de redes;
+\item Definição de parâmetro  relacionado com o ambiente permitindo simular
+a indução de comportamentos derivados do meio ambiente ( ex: atenuação causada
+pela humidade do ar nas comunicações rádio, altura do solo a que um sensor esta
+colocado);
+\item Funcionalidade para tirar fotografia da rede, permitindo retirar uma
+imagem do estado da rede tal como ele é visto na consola de visualização; 
+\item Customização das cores de visualização da consola por forma a ajustar
+face a diferentes imagens de fundo;
+\item Obtenção de resultados dos testes executados;
 \end{enumerate}
+\section{Implementação dos componentes da plataforma} 
+\input{capitulo4_energia}
 
-A implementação poder-se-á dividir em três componentes de software: 1) Sistema
-de simulação, que compreende todo ambiente de suporte à
-simulação, distinto de qualquer interacção gráfica; 2) Interface gráfico para
-controlo da simulação; 3) Protocolos de encaminhamento. Assim sendo, a evolução
-do simulador JProwler para a plataforma de simulação realizou-se mediante um
-quase total \textit{refactoring} do JProwler. Esta afirmação é confirmada não só
-pela dimensão do projecto, quer em termos de classes e de linhas de código,
-mas, fundamentalmente, no que se refere a funcionalidades que permitem uma
-maior facilidade de utilização. Na tabela \ref{tab:estatistica} é
-possível observar alguns dados estatísticos ilustram estas afirmações:
-\begin{small}
-\begin{table}
- \centering
- \begin{tabular}{|l|c|c|c|}
-  \hline
-   ~         & Linhas de código & Pacotes & Classes \\ \hline\hline
-   Simulator & 8000            & 24      & 117     \\ 
-   Platform  & 11500           & 17      & 72      \\ 
-   Protocols & 1500            & 14      & 47      \\ \hline
-   Totais    & 31000           & 55      & 236     \\
-  \hline
- \end{tabular}
-\label{tab:estatistica}
-% \caption{Tabela estatística}\label{tab:estatistica}
-\end{table}
-\end{small}
-\section[Integração do Simulador]{Integração do Simulador} 
-O JProwler tem uma funcionamento bastante simples e adequado à sua utilização
-para a demonstração do funcionamento de protocolos de encaminhamento de uma
-forma geral. Esta simplicidade oferece a vantagem de ser bastante customizavel,
-em função da necessidade da aplicação desenvolvida. Isto é, desenvolvendo dois
-protocolos distintos existe a possibilidade de ter que desenvolver um mesmo
-conjunto de código para avaliar coisas semelhantes em cada uma das
-implementações. Assim sendo, depois de analisados os requisitos do que entende
-ser adequado para um simulador de redes de sensores e tendo ainda em conta
-algumas funcionalidades existentes nos diferentes simuladores estudados foi
-estendida a implementação do JProwler por forma a comportar as funcionalidades
-apresentadas no \chaptername{\ref{cap:plataforma}}.
-\subsection{Representação da plataforma sensor} 
-
-A versão JProwler original implementa , como já foi referido uma visão mais
-monolitica da plataforma sensor sem a separação dos papeis de cada uma das
-camadas da pilha de software de um \textit{mote}. Assim sendo a melhor forma de
-estruturar um nó sensor é seguir um modelo de camadas, o que levou à separação
-de cada um dos componentes que se encontravam consolidados numa única classe 
-representativa de um nó sensor. Esta visão permitiu a separação de conceitos,
-sendo consideradas apenas três camadas: i) Camada MAC; ii) Camada de
-Encaminhamento; iii) Camada de Aplicação. Na figura \ref{fig:stack_components} é
-possível observar esta organização. 
-
-De forma tornar o nó sensor ainda mais
-modular procurou-se mapear os componentes de um sensor num conjunto de classes,
-tal como é apresentada na figura \ref{fig:stack_components}.
-\input{pic_nodestackcomponents} 
-No que se refere à noção de nó sensor também se pretende que este tenha um 
-desenho bastante semelhante à arquitectura real. Para tal, o nó sensor é
-modelado por componentes equivalentes à realidade física. Isto é, existe um
-componente \textit{CPU}, um componente \textit{Transciever} e um componente
-\textit{Batery}. Este desenho permite que os dois primeiros componentes
-interajam entre si e em particular com o terceiro para cálculo do consumo
-energético. Assim, cada componente tem associado um conjunto de acções que são
-da sua responsabilidade em que  cada uma consome um determinado valor energético
-(definido por parametrização do modelo de energia). 
-
-Implementação de uma semântica de \textit{timer} semelhante aos
-\textit{temporizadores} de tinyOS
-
-\subsection{Execução da simulação}
-Foi introduzida a noção de simulação que é executada numa instância de um
-simulador (motor de simulação). Esta abstracção permitiu dotar a plataforma de
-acções de estado de execução do tipo: \textit{Start, Stop, Pause}. Estas acções
-são facilitadores do processo de estudo uma vez que durante a execução é
-possível parar e efectuar alterações em determinados parâmetros prosseguindo
-depois a execução. A plataforma ficou dotada de dois modos de execução da
-simulação, um em tempo-real e outro em modo rápido (dependente da capacidade de
-processamento do hardware). Esta funcionalidade permite acelerar algum parte já
-observada de uma simulação retomando depois uma execução mais lenta, em
-tempo-real, que permita a análise de comportamentos dos protocolos em estudo. 
-Introdução da noção de simulação que é executada numa instância do simulador
-
- 
-
-\section[Módulo de instrumentação]{Módulo de instrumentação} 
-\input{capitulo4_energia} 
-\input{capitulo4_cobertura} 
-\input{capitulo4_fiabilidade} 
-\input{capitulo4_latencia} 
-\input{capitulo4_visualizacao_controlo}
-\input{capitulo4_API}
-%\input{capitulo4_prova_conceito}
-
-Foi implementada uma função para influenciar o sinal de transmissão com o 
-decréscimo da energia na bateria. Outra das variáveis interessantes de observar
-é a do meio de ambiente que em função de algumas características, por exemplo
-da humidade do ar, influenciam o comportamento da comunicação rádio
-\cite{HUMiDADE_RADIO}. A parametrização do factor da altura do sensor face ao
-solo também é tida em conta para a topologia da rede.

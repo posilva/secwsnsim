@@ -10,26 +10,15 @@
 \BOOKMARK [2][-]{subsection.2.1.2}{}{section.2.1}
 \BOOKMARK [1][-]{section.2.2}{Modelo de Advers\341rio, Ataques ao Encaminhamento e Contra-medidas}{chapter.2}
 \BOOKMARK [2][-]{subsection.2.2.1}{Arquitectura de Servi\347os de Seguran\347a em RSSF}{section.2.2}
-\BOOKMARK [3][-]{subsubsection.2.2.1.1}{Requisitos de seguran\347a de uma RSSF}{subsection.2.2.1}
-\BOOKMARK [3][-]{subsubsection.2.2.1.2}{Servi\347os B\341sicos de Seguran\347a}{subsection.2.2.1}
 \BOOKMARK [2][-]{subsection.2.2.2}{Modelo de Advers\341rio}{section.2.2}
-\BOOKMARK [3][-]{subsubsection.2.2.2.1}{Modelo de Dolev-Yao}{subsection.2.2.2}
-\BOOKMARK [3][-]{subsubsection.2.2.2.2}{Modelo de Intrus\343o em RSSF}{subsection.2.2.2}
 \BOOKMARK [2][-]{subsection.2.2.3}{Ataques ao Encaminhamento}{section.2.2}
 \BOOKMARK [2][-]{subsection.2.2.4}{Ataques \340 organiza\347\343o da rede e descoberta de n\363s}{section.2.2}
-\BOOKMARK [3][-]{subsubsection.2.2.4.1}{Contra-medidas}{subsection.2.2.4}
 \BOOKMARK [2][-]{subsection.2.2.5}{Ataques ao estabelecimento de rotas}{section.2.2}
-\BOOKMARK [3][-]{subsubsection.2.2.5.1}{Contra-medidas}{subsection.2.2.5}
 \BOOKMARK [2][-]{subsection.2.2.6}{Ataques \340 manuten\347\343o de rotas}{section.2.2}
-\BOOKMARK [3][-]{subsubsection.2.2.6.1}{Contra-medidas}{subsection.2.2.6}
 \BOOKMARK [2][-]{subsection.2.2.7}{Ataques por Intrus\343o/Replica\347\343o}{section.2.2}
-\BOOKMARK [3][-]{subsubsection.2.2.7.1}{Contra-medidas}{subsection.2.2.7}
 \BOOKMARK [1][-]{section.2.3}{Estudo de Protocolos de Encaminhamento Seguro para RSSF}{chapter.2}
 \BOOKMARK [2][-]{subsection.2.3.1}{Caracteriza\347\343o dos protocolos de encaminhamento em RSSF}{section.2.3}
 \BOOKMARK [2][-]{subsection.2.3.2}{Protocolos de encaminhamento seguro em RSSF}{section.2.3}
-\BOOKMARK [3][-]{subsubsection.2.3.2.1}{Secure Implicit Geographic Forwarding \(SIGF\)}{subsection.2.3.2}
-\BOOKMARK [3][-]{subsubsection.2.3.2.2}{ INtrusion-tolerant routing protocol for wireless SEnsor NetworkS \(INSENS\)}{subsection.2.3.2}
-\BOOKMARK [3][-]{subsubsection.2.3.2.3}{Secure Sensor Network Routing: Clean-Slate approach}{subsection.2.3.2}
 \BOOKMARK [1][-]{section.2.4}{Ambientes de Simula\347\343o}{chapter.2}
 \BOOKMARK [2][-]{subsection.2.4.1}{Crit\351rios Relacionados com Engenharia de Software}{section.2.4}
 \BOOKMARK [2][-]{subsection.2.4.2}{Crit\351rios Relacionados com as RSSF}{section.2.4}
@@ -42,30 +31,28 @@
 \BOOKMARK [1][-]{section.3.1}{Consolida\347\343o da avalia\347\343o do simulador JProwler e a sua integra\347\343o}{chapter.3}
 \BOOKMARK [2][-]{subsection.3.1.1}{Arquitectura do simulador JProwler}{section.3.1}
 \BOOKMARK [2][-]{subsection.3.1.2}{Funcionamento do simulador JProwler}{section.3.1}
-\BOOKMARK [1][-]{section.3.2}{Proposta para a arquitectura da plataforma de simula\347\343o}{chapter.3}
+\BOOKMARK [1][-]{section.3.2}{Arquitectura da plataforma de simula\347\343o}{chapter.3}
 \BOOKMARK [2][-]{subsection.3.2.1}{Simulador base ou motor de simula\347\343o}{section.3.2}
-\BOOKMARK [2][-]{subsection.3.2.2}{Camada de instrumenta\347\343o}{section.3.2}
-\BOOKMARK [3][-]{subsubsection.3.2.2.1}{Mecanismo de Configura\347\343o}{subsection.3.2.2}
-\BOOKMARK [3][-]{subsubsection.3.2.2.2}{Mecanismo de Gera\347\343o de Topologias}{subsection.3.2.2}
-\BOOKMARK [3][-]{subsubsection.3.2.2.3}{Mecanismos de medi\347\343o de propriedades da rede}{subsection.3.2.2}
-\BOOKMARK [3][-]{subsubsection.3.2.2.4}{Mecanismo de Injec\347\343o de Falhas /Ataques}{subsection.3.2.2}
-\BOOKMARK [3][-]{subsubsection.3.2.2.5}{Execu\347\343o de testes e recolha de resultados}{subsection.3.2.2}
-\BOOKMARK [2][-]{subsection.3.2.3}{Consola de Visualiza\347\343o e Controlo de Simula\347\343o}{section.3.2}
-\BOOKMARK [2][-]{subsection.3.2.4}{API para implementa\347\343o de protocolos de encaminhamento}{section.3.2}
-\BOOKMARK [2][-]{subsection.3.2.5}{Metodologia de utiliza\347\343o da plataforma}{section.3.2}
-\BOOKMARK [3][-]{subsubsection.3.2.5.1}{Implementa\347\343o de protocolo}{subsection.3.2.5}
-\BOOKMARK [3][-]{subsubsection.3.2.5.2}{Caracteriza\347\343o do ambiente de simula\347\343o}{subsection.3.2.5}
-\BOOKMARK [3][-]{subsubsection.3.2.5.3}{Execu\347\343o/an\341lise de testes e resultados}{subsection.3.2.5}
+\BOOKMARK [2][-]{subsection.3.2.2}{Mecanismo de Configura\347\343o}{section.3.2}
+\BOOKMARK [2][-]{subsection.3.2.3}{Camada de instrumenta\347\343o}{section.3.2}
+\BOOKMARK [2][-]{subsection.3.2.4}{Consola de Visualiza\347\343o e Controlo de Simula\347\343o}{section.3.2}
+\BOOKMARK [2][-]{subsection.3.2.5}{API para implementa\347\343o de protocolos de encaminhamento}{section.3.2}
+\BOOKMARK [1][-]{section.3.3}{Metodologia de utiliza\347\343o da plataforma}{chapter.3}
+\BOOKMARK [2][-]{subsection.3.3.1}{Implementa\347\343o de protocolo}{section.3.3}
+\BOOKMARK [2][-]{subsection.3.3.2}{Caracteriza\347\343o do ambiente de simula\347\343o}{section.3.3}
+\BOOKMARK [2][-]{subsection.3.3.3}{Execu\347\343o/an\341lise de testes e resultados}{section.3.3}
 \BOOKMARK [0][-]{chapter.4}{Implementa\347\343o da plataforma de simula\347\343o}{}
 \BOOKMARK [1][-]{section.4.1}{Principais funcionalidades}{chapter.4}
 \BOOKMARK [2][-]{subsection.4.1.1}{Portabilidade}{section.4.1}
 \BOOKMARK [2][-]{subsection.4.1.2}{Extensibilidade}{section.4.1}
 \BOOKMARK [2][-]{subsection.4.1.3}{Usabilidade}{section.4.1}
 \BOOKMARK [2][-]{subsection.4.1.4}{Facilidades}{section.4.1}
+\BOOKMARK [1][-]{section.4.2}{Implementa\347\343o dos componentes da plataforma}{chapter.4}
+\BOOKMARK [2][-]{subsection.4.2.1}{Representa\347\343o da plataforma sensor}{section.4.2}
+\BOOKMARK [2][-]{subsection.4.2.2}{M\363dulo de energia}{section.4.2}
 \BOOKMARK [0][-]{chapter.5}{Prova de Conceito da Plataforma}{}
 \BOOKMARK [1][-]{section.5.1}{Implementa\347\343o de Protocolos de Encaminhamento Seguro em RSSF}{chapter.5}
 \BOOKMARK [2][-]{subsection.5.1.1}{Fase de desenho dos algoritmos baseado nas especifica\347\365es}{section.5.1}
-\BOOKMARK [3][-]{subsubsection.5.1.1.1}{Avalia\347\343o dos algoritmos}{subsection.5.1.1}
 \BOOKMARK [0][-]{chapter.6}{Avalia\347\343o}{}
 \BOOKMARK [1][-]{section.6.1}{Metodologia}{chapter.6}
 \BOOKMARK [2][-]{subsection.6.1.1}{Teste A}{section.6.1}
