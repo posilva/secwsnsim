@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.0.85
-lastDocument=source/capitulo1.tex
+lastDocument=source/capitulo4.tex
 masterDocument=
 name=Thesis.Elaboration
 pkg_extIsRegExp=false
@@ -15,14 +15,6 @@ src_extensions=.tex .ltx .latex .dtx .ins
 [Tools]
 MakeIndex=
 QuickBuild=
-
-[document-settings,item:../v0/source/capitulo4_Novo.tex]
-Bookmarks=
-Encoding=ISO-8859-15
-Highlighting=LaTeX
-Indentation Mode=
-Mode=LaTeX
-ReadWrite=true
 
 [document-settings,item:../v1/latex/source/Notas_e_ideias.tex]
 Bookmarks=
@@ -136,6 +128,14 @@ Indentation Mode=
 Mode=LaTeX
 ReadWrite=true
 
+[document-settings,item:source/capitulo4.tex]
+Bookmarks=
+Encoding=ISO-8859-15
+Highlighting=LaTeX
+Indentation Mode=
+Mode=LaTeX
+ReadWrite=true
+
 [document-settings,item:source/capitulo4_API.tex]
 Bookmarks=
 Encoding=ISO-8859-15
@@ -232,7 +232,63 @@ Indentation Mode=
 Mode=LaTeX
 ReadWrite=true
 
+[document-settings,item:source/pic_ataques.tex]
+Bookmarks=
+Encoding=ISO-8859-15
+Highlighting=LaTeX
+Indentation Mode=
+Mode=LaTeX
+ReadWrite=true
+
+[document-settings,item:source/pic_energia.tex]
+Bookmarks=
+Encoding=ISO-8859-15
+Highlighting=LaTeX
+Indentation Mode=
+Mode=LaTeX
+ReadWrite=true
+
 [document-settings,item:source/pic_gantt.tex]
+Bookmarks=
+Encoding=ISO-8859-15
+Highlighting=LaTeX
+Indentation Mode=
+Mode=LaTeX
+ReadWrite=true
+
+[document-settings,item:source/pic_jprowler.tex]
+Bookmarks=
+Encoding=ISO-8859-15
+Highlighting=LaTeX
+Indentation Mode=
+Mode=LaTeX
+ReadWrite=true
+
+[document-settings,item:source/pic_nodestackcomponents.tex]
+Bookmarks=
+Encoding=ISO-8859-15
+Highlighting=LaTeX
+Indentation Mode=
+Mode=LaTeX
+ReadWrite=true
+
+[document-settings,item:source/pic_results.tex]
+Bookmarks=
+Encoding=ISO-8859-15
+Highlighting=LaTeX
+Indentation Mode=
+Mode=LaTeX
+ReadWrite=true
+
+[document-settings,item:source/pic_sim_arch.tex]
+Bookmarks=
+Encoding=ISO-8859-15
+Highlighting=LaTeX
+Indentation Mode=
+Mode=LaTeX
+ReadWrite=true
+
+[document-settings,item:source/pic_sim_jprowler_cd.tex]
 Bookmarks=
 Encoding=ISO-8859-15
 Highlighting=LaTeX
@@ -248,7 +304,47 @@ Indentation Mode=
 Mode=LaTeX
 ReadWrite=true
 
+[document-settings,item:source/pic_stack.tex]
+Bookmarks=
+Encoding=ISO-8859-15
+Highlighting=LaTeX
+Indentation Mode=
+Mode=LaTeX
+ReadWrite=true
+
+[document-settings,item:source/pic_stack_protocols.tex]
+Bookmarks=
+Encoding=ISO-8859-15
+Highlighting=LaTeX
+Indentation Mode=
+Mode=LaTeX
+ReadWrite=true
+
+[document-settings,item:source/pic_stack_services.tex]
+Bookmarks=
+Encoding=ISO-8859-15
+Highlighting=LaTeX
+Indentation Mode=
+Mode=LaTeX
+ReadWrite=true
+
 [document-settings,item:source/pic_tabela_eventos.tex]
+Bookmarks=
+Encoding=ISO-8859-15
+Highlighting=LaTeX
+Indentation Mode=
+Mode=LaTeX
+ReadWrite=true
+
+[document-settings,item:source/pic_tests.tex]
+Bookmarks=
+Encoding=ISO-8859-15
+Highlighting=LaTeX
+Indentation Mode=
+Mode=LaTeX
+ReadWrite=true
+
+[document-settings,item:source/pic_topologias.tex]
 Bookmarks=
 Encoding=ISO-8859-15
 Highlighting=LaTeX
@@ -280,16 +376,6 @@ Indentation Mode=
 Mode=LaTeX
 ReadWrite=true
 
-[item:../v0/source/capitulo4_Novo.tex]
-archive=true
-column=0
-encoding=ISO-8859-15
-highlight=LaTeX
-line=61
-mode=LaTeX
-open=true
-order=5
-
 [item:../v1/latex/source/Notas_e_ideias.tex]
 archive=true
 column=0
@@ -312,12 +398,12 @@ order=-1
 
 [item:source/Thesis.Elaboration.PedroMarquesdaSilva.tex]
 archive=true
-column=18
+column=23
 encoding=ISO-8859-15
 highlight=LaTeX
-line=158
+line=67
 mode=LaTeX
-open=true
+open=false
 order=6
 
 [item:source/capitulo1.tex]
@@ -327,7 +413,7 @@ encoding=ISO-8859-15
 highlight=LaTeX
 line=173
 mode=LaTeX
-open=true
+open=false
 order=4
 
 [item:source/capitulo2.tex]
@@ -432,13 +518,23 @@ order=-1
 
 [item:source/capitulo3.tex]
 archive=true
-column=61
+column=13
 encoding=ISO-8859-15
 highlight=LaTeX
-line=60
+line=384
+mode=LaTeX
+open=false
+order=3
+
+[item:source/capitulo4.tex]
+archive=true
+column=6
+encoding=ISO-8859-15
+highlight=LaTeX
+line=79
 mode=LaTeX
 open=true
-order=3
+order=1
 
 [item:source/capitulo4_API.tex]
 archive=true
@@ -465,9 +561,9 @@ archive=true
 column=0
 encoding=ISO-8859-15
 highlight=LaTeX
-line=151
+line=6
 mode=LaTeX
-open=true
+open=false
 order=1
 
 [item:source/capitulo4_fiabilidade.tex]
@@ -477,7 +573,7 @@ encoding=ISO-8859-15
 highlight=LaTeX
 line=5
 mode=LaTeX
-open=true
+open=false
 order=2
 
 [item:source/capitulo4_latencia.tex]
@@ -557,7 +653,7 @@ encoding=ISO-8859-15
 highlight=LaTeX
 line=0
 mode=LaTeX
-open=true
+open=false
 order=7
 
 [item:source/mybib.bib]
@@ -570,12 +666,62 @@ mode=
 open=false
 order=-1
 
+[item:source/pic_ataques.tex]
+archive=true
+column=35
+encoding=ISO-8859-15
+highlight=LaTeX
+line=2
+mode=LaTeX
+open=false
+order=-1
+
+[item:source/pic_energia.tex]
+archive=true
+column=16
+encoding=ISO-8859-15
+highlight=LaTeX
+line=0
+mode=LaTeX
+open=false
+order=-1
+
 [item:source/pic_gantt.tex]
 archive=true
 column=0
 encoding=ISO-8859-15
 highlight=LaTeX
 line=0
+mode=LaTeX
+open=false
+order=-1
+
+[item:source/pic_jprowler.tex]
+archive=true
+column=0
+encoding=ISO-8859-15
+highlight=LaTeX
+line=0
+mode=LaTeX
+open=false
+order=-1
+
+[item:source/pic_nodestackcomponents.tex]
+archive=true
+column=16
+encoding=ISO-8859-15
+highlight=LaTeX
+line=0
+mode=LaTeX
+open=false
+order=-1
+
+[item:source/pic_results.tex]
+archive=true
+column=36
+encoding=ISO-8859-15
+highlight=LaTeX
+line=2
 mode=LaTeX
 open=false
 order=-1
@@ -592,17 +738,67 @@ order=-1
 
 [item:source/pic_sim_arch.tex]
 archive=true
-column=156455352
-encoding=
-highlight=
+column=0
+encoding=ISO-8859-15
+highlight=LaTeX
 line=0
-mode=
+mode=LaTeX
+open=false
+order=-1
+
+[item:source/pic_sim_jprowler_cd.tex]
+archive=true
+column=0
+encoding=ISO-8859-15
+highlight=LaTeX
+line=0
+mode=LaTeX
 open=false
 order=-1
 
 [item:source/pic_simulator.tex]
 archive=true
-column=37
+column=0
+encoding=ISO-8859-15
+highlight=LaTeX
+line=0
+mode=LaTeX
+open=false
+order=-1
+
+[item:source/pic_stack.tex]
+archive=true
+column=0
+encoding=ISO-8859-15
+highlight=LaTeX
+line=0
+mode=LaTeX
+open=false
+order=-1
+
+[item:source/pic_stack_protocols.tex]
+archive=true
+column=0
+encoding=ISO-8859-15
+highlight=LaTeX
+line=0
+mode=LaTeX
+open=false
+order=-1
+
+[item:source/pic_stack_services.tex]
+archive=true
+column=0
+encoding=ISO-8859-15
+highlight=LaTeX
+line=0
+mode=LaTeX
+open=false
+order=-1
+
+[item:source/pic_tabela_eventos.tex]
+archive=true
+column=0
 encoding=ISO-8859-15
 highlight=LaTeX
 line=2
@@ -610,39 +806,19 @@ mode=LaTeX
 open=false
 order=-1
 
-[item:source/pic_stack.tex]
+[item:source/pic_tests.tex]
 archive=true
-column=1680757840
-encoding=
-highlight=
-line=0
-mode=
+column=36
+encoding=ISO-8859-15
+highlight=LaTeX
+line=2
+mode=LaTeX
 open=false
 order=-1
 
-[item:source/pic_stack_protocols.tex]
+[item:source/pic_topologias.tex]
 archive=true
-column=7471216
-encoding=
-highlight=
-line=0
-mode=
-open=false
-order=-1
-
-[item:source/pic_stack_services.tex]
-archive=true
-column=7471216
-encoding=
-highlight=
-line=0
-mode=
-open=false
-order=-1
-
-[item:source/pic_tabela_eventos.tex]
-archive=true
-column=0
+column=27
 encoding=ISO-8859-15
 highlight=LaTeX
 line=2
@@ -710,10 +886,6 @@ mode=
 open=false
 order=-1
 
-[view-settings,view=0,item:../v0/source/capitulo4_Novo.tex]
-CursorColumn=0
-CursorLine=61
-
 [view-settings,view=0,item:../v1/latex/source/Notas_e_ideias.tex]
 CursorColumn=0
 CursorLine=5
@@ -723,8 +895,8 @@ CursorColumn=0
 CursorLine=0
 
 [view-settings,view=0,item:source/Thesis.Elaboration.PedroMarquesdaSilva.tex]
-CursorColumn=18
-CursorLine=158
+CursorColumn=23
+CursorLine=67
 
 [view-settings,view=0,item:source/capitulo1.tex]
 CursorColumn=35
@@ -767,8 +939,12 @@ CursorColumn=92
 CursorLine=123
 
 [view-settings,view=0,item:source/capitulo3.tex]
-CursorColumn=61
-CursorLine=60
+CursorColumn=13
+CursorLine=384
+
+[view-settings,view=0,item:source/capitulo4.tex]
+CursorColumn=6
+CursorLine=79
 
 [view-settings,view=0,item:source/capitulo4_API.tex]
 CursorColumn=0
@@ -780,7 +956,7 @@ CursorLine=0
 
 [view-settings,view=0,item:source/capitulo4_energia.tex]
 CursorColumn=0
-CursorLine=151
+CursorLine=6
 
 [view-settings,view=0,item:source/capitulo4_fiabilidade.tex]
 CursorColumn=3
@@ -818,16 +994,64 @@ CursorLine=0
 CursorColumn=0
 CursorLine=0
 
+[view-settings,view=0,item:source/pic_ataques.tex]
+CursorColumn=35
+CursorLine=2
+
+[view-settings,view=0,item:source/pic_energia.tex]
+CursorColumn=16
+CursorLine=0
+
 [view-settings,view=0,item:source/pic_gantt.tex]
 CursorColumn=0
 CursorLine=0
 
-[view-settings,view=0,item:source/pic_simulator.tex]
-CursorColumn=37
+[view-settings,view=0,item:source/pic_jprowler.tex]
+CursorColumn=0
+CursorLine=0
+
+[view-settings,view=0,item:source/pic_nodestackcomponents.tex]
+CursorColumn=16
+CursorLine=0
+
+[view-settings,view=0,item:source/pic_results.tex]
+CursorColumn=36
 CursorLine=2
+
+[view-settings,view=0,item:source/pic_sim_arch.tex]
+CursorColumn=0
+CursorLine=0
+
+[view-settings,view=0,item:source/pic_sim_jprowler_cd.tex]
+CursorColumn=0
+CursorLine=0
+
+[view-settings,view=0,item:source/pic_simulator.tex]
+CursorColumn=0
+CursorLine=0
+
+[view-settings,view=0,item:source/pic_stack.tex]
+CursorColumn=0
+CursorLine=0
+
+[view-settings,view=0,item:source/pic_stack_protocols.tex]
+CursorColumn=0
+CursorLine=0
+
+[view-settings,view=0,item:source/pic_stack_services.tex]
+CursorColumn=0
+CursorLine=0
 
 [view-settings,view=0,item:source/pic_tabela_eventos.tex]
 CursorColumn=0
+CursorLine=2
+
+[view-settings,view=0,item:source/pic_tests.tex]
+CursorColumn=36
+CursorLine=2
+
+[view-settings,view=0,item:source/pic_topologias.tex]
+CursorColumn=27
 CursorLine=2
 
 [view-settings,view=0,item:source/tab_ataques_contramedidas.tex]
