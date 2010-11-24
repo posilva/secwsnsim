@@ -77,16 +77,19 @@
 \contentsline {subsection}{\numberline {4.2.2}M\'odulo de energia}{54}{subsection.4.2.2}
 \contentsline {subsubsection}{\numberline {4.2.2.1}}{56}{subsubsection.4.2.2.1}
 \contentsline {subsubsection}{\numberline {4.2.2.2}}{58}{subsubsection.4.2.2.2}
+\contentsline {subsection}{\numberline {4.2.3}Mecanismo de avalia\c c\~ao e testes}{60}{subsection.4.2.3}
 \contentsline {chapter}{\numberline {5}Prova de Conceito da Plataforma}{61}{chapter.5}
-\contentsline {section}{\numberline {5.1}Implementa\c c\~ao de Protocolos de Encaminhamento Seguro em RSSF}{61}{section.5.1}
-\contentsline {subsection}{\numberline {5.1.1}Fase de desenho dos algoritmos baseado nas especifica\c c\~oes}{61}{subsection.5.1.1}
-\contentsline {subsubsection}{\numberline {5.1.1.1}Avalia\c c\~ao dos algoritmos}{61}{subsubsection.5.1.1.1}
-\contentsline {chapter}{\numberline {6}Avalia\c c\~ao}{63}{chapter.6}
-\contentsline {section}{\numberline {6.1}Metodologia}{63}{section.6.1}
-\contentsline {subsection}{\numberline {6.1.1}Teste A}{63}{subsection.6.1.1}
-\contentsline {paragraph}{\numberline {6.1.1.0.1}O que se quer testar}{63}{paragraph.6.1.1.0.1}
-\contentsline {paragraph}{\numberline {6.1.1.0.2}Como estou a testar - descri\c c\~ao do setting}{63}{paragraph.6.1.1.0.2}
-\contentsline {paragraph}{\numberline {6.1.1.0.3}Porque \'e assim que se avalia}{63}{paragraph.6.1.1.0.3}
-\contentsline {paragraph}{\numberline {6.1.1.0.4}Quais os resultados}{63}{paragraph.6.1.1.0.4}
-\contentsline {paragraph}{\numberline {6.1.1.0.5}Conclus\~oes dos testes}{63}{paragraph.6.1.1.0.5}
-\contentsline {chapter}{\numberline {7}Conclus\~oes e trabalho futuro}{65}{chapter.7}
+\contentsline {section}{\numberline {5.1}Implementa\c c\~ao de Protocolo de encaminhamento gen\'erico}{61}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}Componente L\'ogica}{61}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}Componente Arquitectural}{62}{subsection.5.1.2}
+\contentsline {section}{\numberline {5.2}Implementa\c c\~ao de Protocolo de Encaminhamento Seguro em RSSF}{63}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Fase de desenho dos algoritmos baseado nas especifica\c c\~oes}{63}{subsection.5.2.1}
+\contentsline {chapter}{\numberline {6}Avalia\c c\~ao}{65}{chapter.6}
+\contentsline {section}{\numberline {6.1}Metodologia}{65}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}Teste A}{65}{subsection.6.1.1}
+\contentsline {paragraph}{\numberline {6.1.1.0.1}O que se quer testar}{65}{paragraph.6.1.1.0.1}
+\contentsline {paragraph}{\numberline {6.1.1.0.2}Como estou a testar - descri\c c\~ao do setting}{65}{paragraph.6.1.1.0.2}
+\contentsline {paragraph}{\numberline {6.1.1.0.3}Porque \'e assim que se avalia}{65}{paragraph.6.1.1.0.3}
+\contentsline {paragraph}{\numberline {6.1.1.0.4}Quais os resultados}{65}{paragraph.6.1.1.0.4}
+\contentsline {paragraph}{\numberline {6.1.1.0.5}Conclus\~oes dos testes}{65}{paragraph.6.1.1.0.5}
+\contentsline {chapter}{\numberline {7}Conclus\~oes e trabalho futuro}{67}{chapter.7}

@@ -1,3 +1,80 @@
 \chapter[Prova de Conceito da Plataforma]{Prova de Conceito da Plataforma}
 
+Uma vez implementada a plataforma de simulação é necessário submete-la a uma
+utilização dirigida para o fim para o qual foi concebida. Tendo isto em
+atenção, este capítulo apresenta a implementação de dois protocolos de
+encaminhamento de dados em RSSF. O primeiro trata-se de um protocolo simplista,
+encaminhamento por \textit{inundação }, que visa, fundamentalmente, demonstrar a
+facilidade de implementação de um primeiro protocolo e ao mesmo tempo servir de
+termo de comparação com um protocolo seguro. O segundo protocolo, é um
+protocolo de encaminhamento seguro de referência, o INSENS\cite{INSENS}.
+Esta implementação, visa, não só provar que é possível implementar, avaliar e
+experimentar protocolos de especificação mais complexa, mas também contribuir
+com uma análise critica deste protocolo em critérios de segurança e no seu
+impacte nas propriedades que se podem avaliar com recurso à plataforma de
+simulação.
+
+Com a implementação destes dois protocolos, este capítulo permite,
+adicionalmente, descrever uma metodologia para a implementação de
+protocolos de encaminhamento usando a API concebida. Deste modo, é possível
+retirar o máximo partido da plataforma com o objectivo de estudar estes
+protocolos.
+
+\section{Implementação de Protocolo de encaminhamento genérico}
+Como já foi referido para efeito de comparação de algumas das propriedades em
+avaliação foi desenvolvido um primeiro protocolo mais simples que implementa o
+encaminhamento por inundação (\textit{flooding}). Este protocolo tem grande
+complexidade de funcionamento, uma vez que a única restrição para a propagação
+de mensagens é a garantia de não repetição de mensagens. 
+
+A implementação de um qualquer protocolo pode ser divida em duas componentes:
+1) a componente lógica, associada ao funcionamento do protocolo 
+2) a componente arquitectural, associada à integração na plataforma.
+\subsection{Componente Lógica}
+Para esta componente é necessário identificar as entidades principais de
+especificação do protocolo. Entidades estas que serão comuns a qualquer
+protocolo que se pretenda implementar, e que se apresentam a seguir:
+
+\begin{enumerate}
+ \item Message: Entidade que representa a unidade mínima de envio/recepção.
+Contém uma estrutura genérica suficiente para gestão da informação manipulada
+de forma transparente pelo simulador. No entanto, trata a informação
+transportada como um vector de bytes assemelhando-se com a realidade de um
+pacote de comunicação;
+\item Node: Cada protocolo deverá ter a especialização de uma entidade do tipo
+Node. Permitirá que o comportamento desta entidade possa ser especifica para o
+protocolo implementado (por exemplo, alteração de cores, tamanho ou
+inicialização de dados);
+\item RoutingLayer: A entidade principal uma vez que será esta que contém a
+lógica do protocolo e que deverá respeitar algumas especificações da API para
+que a sua integração com o simulador seja adequada;
+\item Application: Representa a camada aplicacional que será suportada em
+termos de encaminhamento pelo protocolo implementado.
+\end{enumerate}
+Na figura seguinte observa-se a estrutura do protocolo de inundação criada com
+base na lógica inerente ao protocolo. 
+\input{pic_protocol_struct} 
+
+
+\subsection{Componente Arquitectural}
+Na componente de integração é necessário criar uma entidade que integra/define
+quais as camadas existentes num sensor genérico de um protocolo essa entidade é
+mapeada a partir de um padrão de \textit{factory}. Padrão este que é consumido
+pela plataforma para criação de sensores a quando da sua distribuição na área
+de trabalho. Para além das camadas ainda podemos observar parâmetros
+relacionados com o modelo de energia  e com factores de atenuação radio do
+ambiente de operação.
+
+\section{Implementação de Protocolo de Encaminhamento Seguro em RSSF}
+\subsection{Fase de desenho dos algoritmos baseado
+nas especificações}\label{sec:impl_protocolos}
+No início desta fase, foi necessário re-aprofundar o funcionamento do
+algoritmo a implementar, conhecendo e identificando cada mecanismo/técnica
+especificados, de modo a que se pudesse, dentro do possível, generalizar
+operações ou interfaces, com vista à reutilização para outros algoritmos,
+contribuindo para a API genérica de implementação de protocolos de
+encaminhamento.
+
+
+
   

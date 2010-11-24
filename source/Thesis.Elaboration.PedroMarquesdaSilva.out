@@ -50,9 +50,13 @@
 \BOOKMARK [1][-]{section.4.2}{Implementa\347\343o dos componentes da plataforma}{chapter.4}
 \BOOKMARK [2][-]{subsection.4.2.1}{Representa\347\343o da plataforma sensor}{section.4.2}
 \BOOKMARK [2][-]{subsection.4.2.2}{M\363dulo de energia}{section.4.2}
+\BOOKMARK [2][-]{subsection.4.2.3}{Mecanismo de avalia\347\343o e testes}{section.4.2}
 \BOOKMARK [0][-]{chapter.5}{Prova de Conceito da Plataforma}{}
-\BOOKMARK [1][-]{section.5.1}{Implementa\347\343o de Protocolos de Encaminhamento Seguro em RSSF}{chapter.5}
-\BOOKMARK [2][-]{subsection.5.1.1}{Fase de desenho dos algoritmos baseado nas especifica\347\365es}{section.5.1}
+\BOOKMARK [1][-]{section.5.1}{Implementa\347\343o de Protocolo de encaminhamento gen\351rico}{chapter.5}
+\BOOKMARK [2][-]{subsection.5.1.1}{Componente L\363gica}{section.5.1}
+\BOOKMARK [2][-]{subsection.5.1.2}{Componente Arquitectural}{section.5.1}
+\BOOKMARK [1][-]{section.5.2}{Implementa\347\343o de Protocolo de Encaminhamento Seguro em RSSF}{chapter.5}
+\BOOKMARK [2][-]{subsection.5.2.1}{Fase de desenho dos algoritmos baseado nas especifica\347\365es}{section.5.2}
 \BOOKMARK [0][-]{chapter.6}{Avalia\347\343o}{}
 \BOOKMARK [1][-]{section.6.1}{Metodologia}{chapter.6}
 \BOOKMARK [2][-]{subsection.6.1.1}{Teste A}{section.6.1}
