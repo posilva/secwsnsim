@@ -71,5 +71,11 @@ face a diferentes imagens de fundo;
 \item Obtenção de resultados dos testes executados;
 \end{enumerate}
 \section{Implementação dos componentes da plataforma} 
+Nesta secção serão dados alguns detalhes ao nível da engenharia de software
+expondo o modo como foram implementados alguns componentes e alguns princípios
+tidos em conta no seu desenvolvimento. Realça-se fundamentalmente a
+implementação dos seguintes componentes: i) modelação dos sensores; ii) modelo
+de energia; iii) modelo de medição; iv) modelo de testes e resultados v) API
+para a implementação de um protocolo.
+\input{capitulo4_sensores}
 \input{capitulo4_energia}
-

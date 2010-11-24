@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.0.85
-lastDocument=source/capitulo4.tex
+lastDocument=source/pic_node_factory.tex
 masterDocument=
 name=Thesis.Elaboration
 pkg_extIsRegExp=false
@@ -176,6 +176,14 @@ Indentation Mode=
 Mode=LaTeX
 ReadWrite=true
 
+[document-settings,item:source/capitulo4_medicao.tex]
+Bookmarks=
+Encoding=ISO-8859-15
+Highlighting=LaTeX
+Indentation Mode=
+Mode=LaTeX
+ReadWrite=true
+
 [document-settings,item:source/capitulo4_prova_conceito.tex]
 Bookmarks=
 Encoding=ISO-8859-15
@@ -264,7 +272,23 @@ Indentation Mode=
 Mode=LaTeX
 ReadWrite=true
 
+[document-settings,item:source/pic_node_factory.tex]
+Bookmarks=
+Encoding=ISO-8859-15
+Highlighting=LaTeX
+Indentation Mode=
+Mode=LaTeX
+ReadWrite=true
+
 [document-settings,item:source/pic_nodestackcomponents.tex]
+Bookmarks=
+Encoding=ISO-8859-15
+Highlighting=LaTeX
+Indentation Mode=
+Mode=LaTeX
+ReadWrite=true
+
+[document-settings,item:source/pic_protocol_struct.tex]
 Bookmarks=
 Encoding=ISO-8859-15
 Highlighting=LaTeX
@@ -523,15 +547,15 @@ encoding=ISO-8859-15
 highlight=LaTeX
 line=384
 mode=LaTeX
-open=false
-order=3
+open=true
+order=7
 
 [item:source/capitulo4.tex]
 archive=true
-column=6
+column=7
 encoding=ISO-8859-15
 highlight=LaTeX
-line=79
+line=81
 mode=LaTeX
 open=true
 order=1
@@ -543,8 +567,8 @@ encoding=ISO-8859-15
 highlight=LaTeX
 line=0
 mode=LaTeX
-open=false
-order=-1
+open=true
+order=6
 
 [item:source/capitulo4_cobertura.tex]
 archive=true
@@ -563,8 +587,8 @@ encoding=ISO-8859-15
 highlight=LaTeX
 line=6
 mode=LaTeX
-open=false
-order=1
+open=true
+order=5
 
 [item:source/capitulo4_fiabilidade.tex]
 archive=true
@@ -573,7 +597,7 @@ encoding=ISO-8859-15
 highlight=LaTeX
 line=5
 mode=LaTeX
-open=false
+open=true
 order=2
 
 [item:source/capitulo4_latencia.tex]
@@ -586,7 +610,7 @@ mode=LaTeX
 open=false
 order=-1
 
-[item:source/capitulo4_prova_conceito.tex]
+[item:source/capitulo4_medicao.tex]
 archive=true
 column=0
 encoding=ISO-8859-15
@@ -594,7 +618,17 @@ highlight=LaTeX
 line=0
 mode=LaTeX
 open=false
-order=6
+order=-1
+
+[item:source/capitulo4_prova_conceito.tex]
+archive=true
+column=0
+encoding=ISO-8859-15
+highlight=LaTeX
+line=0
+mode=LaTeX
+open=true
+order=3
 
 [item:source/capitulo4_visualizacao_controlo.tex]
 archive=true
@@ -603,8 +637,8 @@ encoding=ISO-8859-15
 highlight=LaTeX
 line=15
 mode=LaTeX
-open=false
-order=3
+open=true
+order=4
 
 [item:source/capitulo4old.tex]
 archive=true
@@ -618,13 +652,13 @@ order=0
 
 [item:source/capitulo5.tex]
 archive=true
-column=16
+column=25
 encoding=ISO-8859-15
 highlight=LaTeX
-line=28
+line=67
 mode=LaTeX
-open=false
-order=4
+open=true
+order=8
 
 [item:source/capitulo6.tex]
 archive=true
@@ -706,6 +740,16 @@ mode=LaTeX
 open=false
 order=-1
 
+[item:source/pic_node_factory.tex]
+archive=true
+column=27
+encoding=ISO-8859-15
+highlight=LaTeX
+line=2
+mode=LaTeX
+open=true
+order=11
+
 [item:source/pic_nodestackcomponents.tex]
 archive=true
 column=16
@@ -716,15 +760,25 @@ mode=LaTeX
 open=false
 order=-1
 
-[item:source/pic_results.tex]
+[item:source/pic_protocol_struct.tex]
 archive=true
-column=36
+column=12
 encoding=ISO-8859-15
 highlight=LaTeX
-line=2
+line=5
 mode=LaTeX
-open=false
-order=-1
+open=true
+order=9
+
+[item:source/pic_results.tex]
+archive=true
+column=0
+encoding=ISO-8859-15
+highlight=LaTeX
+line=0
+mode=LaTeX
+open=true
+order=10
 
 [item:source/pic_sensornode.tex]
 archive=true
@@ -943,8 +997,8 @@ CursorColumn=13
 CursorLine=384
 
 [view-settings,view=0,item:source/capitulo4.tex]
-CursorColumn=6
-CursorLine=79
+CursorColumn=7
+CursorLine=81
 
 [view-settings,view=0,item:source/capitulo4_API.tex]
 CursorColumn=0
@@ -966,6 +1020,10 @@ CursorLine=5
 CursorColumn=43
 CursorLine=18
 
+[view-settings,view=0,item:source/capitulo4_medicao.tex]
+CursorColumn=0
+CursorLine=0
+
 [view-settings,view=0,item:source/capitulo4_prova_conceito.tex]
 CursorColumn=0
 CursorLine=0
@@ -979,8 +1037,8 @@ CursorColumn=0
 CursorLine=86
 
 [view-settings,view=0,item:source/capitulo5.tex]
-CursorColumn=16
-CursorLine=28
+CursorColumn=25
+CursorLine=67
 
 [view-settings,view=0,item:source/capitulo6.tex]
 CursorColumn=33
@@ -1010,13 +1068,21 @@ CursorLine=0
 CursorColumn=0
 CursorLine=0
 
+[view-settings,view=0,item:source/pic_node_factory.tex]
+CursorColumn=27
+CursorLine=2
+
 [view-settings,view=0,item:source/pic_nodestackcomponents.tex]
 CursorColumn=16
 CursorLine=0
 
+[view-settings,view=0,item:source/pic_protocol_struct.tex]
+CursorColumn=12
+CursorLine=5
+
 [view-settings,view=0,item:source/pic_results.tex]
-CursorColumn=36
-CursorLine=2
+CursorColumn=0
+CursorLine=0
 
 [view-settings,view=0,item:source/pic_sim_arch.tex]
 CursorColumn=0
