@@ -1,6 +1,7 @@
 package org.wisenet.protocols.insens;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -94,10 +95,8 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     private boolean reliableMode = false;
 
     public INSENSRoutingLayer() {
-        setDebugEnabled(true);
+        setDebugEnabled(false);
     }
-
-
 
     /**
      * Receive a message from the MAC Layer
@@ -105,7 +104,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
      */
     @Override
     public void onReceiveMessage(Object message) {
-         setDebugEnabled(true);
+        setDebugEnabled(false);
         if (message instanceof INSENSMessage) {
             try {
                 INSENSMessage m = (INSENSMessage) message;
@@ -276,12 +275,12 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     private Hashtable buildListOfNodestByHops(Vector allpaths) {
         Hashtable t = new Hashtable();
         for (Object list : allpaths) {
-            LinkedList lst = (LinkedList) list;
-            LinkedList lst2 = (LinkedList) t.get(lst.size());
+            ArrayList lst = (ArrayList) list;
+            ArrayList lst2 = (ArrayList) t.get(lst.size());
             if (lst2 == null) {
-                lst2 = new LinkedList();
+                lst2 = new ArrayList();
             }
-            lst2.add(lst.getLast());
+            lst2.add(lst.get(lst.size()-1));
             t.put(lst.size(), lst2);
         }
         return t;
@@ -439,14 +438,14 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         RREQPayload payload = new RREQPayload(m.getPayload());
 
         if (!getNode().isSinkNode()) {
-            
+
             if (isFirstTime(payload)) {
 //                log("SIGNAL STRENGTH: " + getNode().getMacLayer().getSignalStrength() + "\tSIGNAL NOISE: " + getNode().getMacLayer().getNoiseStrength());
                 if (getNode().getMacLayer().getSignalStrength() > INSENSConstants.SIGNAL_STRENGH_THRESHOLD && getNode().getMacLayer().getNoiseStrength() < INSENSConstants.SIGNAL_NOISE_THRESHOLD) {
                     if (owsIsValid(payload)) {
                         isParent = true;
                         roundOWS = payload.ows; // updates the round ows
-                       log("Received RREQ From " + m.getSourceId());
+                        log("Received RREQ From " + m.getSourceId());
                         rebroadcastRREQMessage(payload);
                         feedbackMessageStartTimer.start();
                     } else {
@@ -504,7 +503,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
      */
     private void processFDBKMessage(INSENSMessage m) throws INSENSException {
         FDBKPayload payload = new FDBKPayload(m.getPayload());
-        if (Arrays.equals(myRoundMAC, payload.parent_mac)) {
+        if (Arrays.equals(myRoundMAC, payload.parent_mac)) { // is from my child
             if (getNode().isSinkNode()) { // if i'm a sink node keep the information
                 baseStationController.addFeedbackMessages(payload);
                 INSENSFunctions.decryptData(getNode(), payload.neighborInfo, null);
@@ -513,6 +512,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
                 byte[] new_payload = modifiedParentMAC(payload);
                 getController().addMessageSentCounter(INSENSConstants.MSG_FEEDBACK);
                 send(new INSENSMessage(new_payload));
+                sendACKFeedbackMessage(payload);
                 log("Forward FDBK Message From Child " + payload.sourceId);
             }
         }// else drop it
@@ -566,9 +566,9 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
      */
     private void sendRouteUpdateMessages(Hashtable<Short, ForwardingTable> forwardingTables) {
         Vector allpaths = baseStationController.getAllPaths();
-        Comparator<LinkedList> c = new Comparator<LinkedList>() {
+        Comparator<List> c = new Comparator<List>() {
 
-            public int compare(LinkedList o1, LinkedList o2) {
+            public int compare(List o1, List o2) {
                 return Integer.valueOf(o1.size()).compareTo(Integer.valueOf(o2.size()));
             }
         };
@@ -625,7 +625,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         Collections.sort(orderedByHops);
         byte[] payload;
         for (Object key : orderedByHops) {
-            LinkedList nodes = (LinkedList) tableOfNodesByHops.get(key);
+            List nodes = (List) tableOfNodesByHops.get(key);
             for (Object n : nodes) {
 
                 Short id = (Short) n;
@@ -791,5 +791,9 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         feedbackMessageRetries = 0;
         tableOfNodesByHops.clear();
         reliableMode = false;
+    }
+
+    private void sendACKFeedbackMessage(FDBKPayload payload) {
+        // sending a feed back message ACK to the child
     }
 }

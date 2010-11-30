@@ -347,7 +347,6 @@ public class TestResults extends PersistantObject {
         return new String[]{
                     getTestName() + "",
                     getTotalOfMessagesAttacked() + "",
-                    getTestName() + "",
                     getTotalNodes() + "",
                     getTotalStableNodes() + "",
                     getTotalSenderNodes() + "",
@@ -355,7 +354,6 @@ public class TestResults extends PersistantObject {
                     getTotalAttackNodes() + "",
                     getAvgNeighboorsPerNode() + "",
                     getTotalOfMessagesSent() + "",
-                    getTotalReceiverNodes() + "",
                     getTotalOfMessagesAttacked() + "",
                     getMessagesPerNode() + "",
                     getMessagesInterval() + "",

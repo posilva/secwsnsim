@@ -197,6 +197,8 @@ public class RoutingLayerController extends PersistantObject implements Paramete
     }
 
     public void incrementAttackedMessages() {
+        if (isTesting())
+            getActiveTest().getEvaluationManager().incrementAttackedMessages();
         attackedNodes++;
     }
 

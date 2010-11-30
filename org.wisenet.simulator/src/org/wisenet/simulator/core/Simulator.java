@@ -64,7 +64,7 @@ public class Simulator {
     /**
      *
      */
-    public static final Integer SIMULATION_SPEED_DEFAULT = 80000;
+    public static final Integer SIMULATION_SPEED_DEFAULT = 40000;
     /**
      *
      */
