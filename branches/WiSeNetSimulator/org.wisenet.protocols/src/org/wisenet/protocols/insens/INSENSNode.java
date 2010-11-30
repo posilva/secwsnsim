@@ -28,7 +28,7 @@ public class INSENSNode extends Mica2SensorNode implements IDisplayable {
     public INSENSNode(Simulator sim, RadioModel radioModel) {
         super(sim, radioModel);
         setEnableFunctioningEnergyConsumption(false);
-        setRadius(3);
+        setRadius(2);
         setPaintingPaths(true);
         setBaseColor(Color.magenta);
     }

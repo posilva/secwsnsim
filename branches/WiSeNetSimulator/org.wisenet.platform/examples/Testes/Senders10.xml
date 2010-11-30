@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><configuration>
 <test>
 <name>Senders10</name>
-<description/>
+<description>Test with 10% of sender nodes and a sink node as receiver</description>
+<description>no atacks enabled. 
+Runs 10 times this configuration</description>
 <debug>true</debug>
 <batch>false</batch>
 <timestorun>10</timestorun>

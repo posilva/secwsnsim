@@ -855,8 +855,7 @@ public class TestResultsPanel extends PlatformPanel {
 
     private void addGlobalResultsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addGlobalResultsActionPerformed
 
-        TestResults tr = createTestResult();
-        getTest().getSimulation().getTestResults().add(tr);
+        getTest().getSimulation().getTestResults().add(test.getEvaluationManager().getTestResult());
         
     }//GEN-LAST:event_addGlobalResultsActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables

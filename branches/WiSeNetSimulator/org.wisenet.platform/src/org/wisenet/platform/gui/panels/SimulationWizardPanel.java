@@ -126,6 +126,11 @@ public class SimulationWizardPanel extends PlatformPanel {
         cmdEnergyModel.setText("..."); // NOI18N
         cmdEnergyModel.setToolTipText("Configure Energy Model"); // NOI18N
         cmdEnergyModel.setName("cmdEnergyModel"); // NOI18N
+        cmdEnergyModel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdEnergyModelActionPerformed(evt);
+            }
+        });
         jPanel3.add(cmdEnergyModel, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 30, 47, 24));
 
         jLabel3.setFont(lblSimName.getFont());
@@ -385,6 +390,11 @@ public class SimulationWizardPanel extends PlatformPanel {
 //
 //        }
     }//GEN-LAST:event_cmdSaveToFileActionPerformed
+
+    private void cmdEnergyModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdEnergyModelActionPerformed
+    configureEnergyModel();
+    }//GEN-LAST:event_cmdEnergyModelActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup bgValueZ;
     private javax.swing.JComboBox cboNodeClass;

@@ -4,21 +4,21 @@
  */
 package org.wisenet.protocols.insens.basestation;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.LinkedList;
+
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.wisenet.protocols.insens.INSENSRoutingLayer;
-import org.wisenet.protocols.insens.basestation.dijkstra.engine.Calculator;
 import org.wisenet.protocols.insens.basestation.dijkstra.engine.CalculatorException;
+import org.wisenet.protocols.insens.basestation.jgrapht.DijkstraCalculator;
 import org.wisenet.protocols.insens.messages.data.FDBKPayload;
 import org.wisenet.protocols.insens.utils.NeighborInfo;
-import org.wisenet.simulator.core.node.layers.routing.RoutingLayer;
 
 /**
  *
@@ -139,14 +139,15 @@ public class BaseStationController {
      * @return
      * @throws CalculatorException
      */
-    public LinkedList calculateSecondPath(LinkedList firstpath) throws CalculatorException {
-        LinkedList path = new LinkedList();
+    public ArrayList calculateSecondPath(ArrayList firstpath) throws CalculatorException {
+        ArrayList path = new ArrayList();
         HashSet S1 = new HashSet();
         HashSet S2 = new HashSet();
         HashSet S3 = new HashSet();
-        Short from = (Short) firstpath.getFirst();
-        Short to = (Short) firstpath.getLast();
-        LinkedList workingPath = new LinkedList(firstpath);
+        if(firstpath.isEmpty()) return path;
+        Short from = (Short) firstpath.get(0);
+        Short to = (Short) firstpath.get(firstpath.size() - 1);
+        ArrayList workingPath = new ArrayList(firstpath);
         workingPath.remove(from);
         workingPath.remove(to);
 
@@ -178,7 +179,7 @@ public class BaseStationController {
                 }
             }
         }
-        LinkedList lst1 = new LinkedList();
+        ArrayList lst1 = new ArrayList();
         lst1 = calculatePathWithOutFromTo(S1, from, to);
         if (lst1 == null || lst1.isEmpty()) {
             lst1 = calculatePathWithOutFromTo(S2, from, to);
@@ -197,15 +198,15 @@ public class BaseStationController {
      * @param to
      * @return
      */
-    private LinkedList calculatePathWithOutFromTo(HashSet S1, Short from, Short to) throws CalculatorException {
+    private ArrayList calculatePathWithOutFromTo(HashSet S1, Short from, Short to) throws CalculatorException {
         List lst1;
         GraphManager g1 = createNetworkGraphWithOut(S1);
-        Calculator c1 = new Calculator();
+        DijkstraCalculator c1 = new DijkstraCalculator();
         c1.addVertexs(g1.vertices);
         c1.addEdges(g1.edges);
         c1.prepare();
         lst1 = c1.calculatePath(from, to);
-        return (LinkedList) lst1;
+        return (ArrayList) lst1;
     }
 
     /**
@@ -318,7 +319,7 @@ public class BaseStationController {
 
     private void printPaths(Vector allPaths) {
         for (Object object : allPaths) {
-            LinkedList list = (LinkedList) object;
+            ArrayList list = (ArrayList) object;
             System.out.print("[");
             for (Object object1 : list) {
                 System.out.print(" " + object1 + " ");
@@ -343,7 +344,7 @@ public class BaseStationController {
                 if (key != null) {
                     try {
                         List value = (List) firstPaths.get(key);
-                        LinkedList new_path = calculateSecondPath((LinkedList) value);
+                        ArrayList new_path = calculateSecondPath((ArrayList) value);
                         if (new_path != null) {
                             if (!new_path.isEmpty()) {
                                 updateSecondPath(key, new_path);
@@ -364,7 +365,7 @@ public class BaseStationController {
             }
         }
 
-        private synchronized void updateSecondPath(Object key, LinkedList value) {
+        private synchronized void updateSecondPath(Object key, ArrayList value) {
             secondPaths.put(key, value);
         }
     }
@@ -396,7 +397,7 @@ public class BaseStationController {
 //        printPaths(allPaths);
         for (int i = 0; i < allPaths.size(); i++) {
             List path = (List) allPaths.get(i);
-            Hashtable table = path2RoutingTableEntryTable((LinkedList) path);
+            Hashtable table = path2RoutingTableEntryTable((ArrayList) path);
             saveTable(table);
         }
 
@@ -409,7 +410,7 @@ public class BaseStationController {
             if (fwt == null) {
                 fwt = new ForwardingTable(node);
             }
-            LinkedList t = (LinkedList) table.get(o);
+            ArrayList t = (ArrayList) table.get(o);
             if (t.size() > 0) {
                 fwt.add((RoutingTableEntry) t.get(0));
             }
@@ -434,17 +435,17 @@ public class BaseStationController {
         }
 
         public void run() {
-            try {
-                Calculator c = new Calculator();
-                c.addVertexs(networkGraph.vertices);
-                c.addEdges(networkGraph.edges);
-                c.prepare();
-                Set s = new HashSet(networkGraph.vertices.subList(from, to));
-                h = c.calculateAllPathsFromTo(start, s);
-                updatePaths(h);
-            } catch (CalculatorException ex) {
-                RoutingLayer.getController().log(ex);
-            }
+//            try {
+            DijkstraCalculator c = new DijkstraCalculator();
+            c.addVertexs(networkGraph.vertices);
+            c.addEdges(networkGraph.edges);
+            c.prepare();
+            Set s = new HashSet(networkGraph.vertices.subList(from, to));
+            h = c.calculateAllPathsFromTo(start, s);
+            updatePaths(h);
+//            } catch (CalculatorException ex) {
+//                RoutingLayer.getController().log(ex);
+//            }
         }
     }
 
@@ -458,19 +459,19 @@ public class BaseStationController {
         networkNeighborsTable.put(baseStation.getNode().getId(), n);
     }
 
-    private Hashtable path2RoutingTableEntryTable(LinkedList path) {
+    private Hashtable path2RoutingTableEntryTable(ArrayList path) {
         Short destination;
         Short source;
         Hashtable table = new Hashtable();
 //        if (path.size() == 2) {
 //            return table;
 //        }
-
-        destination = (Short) path.getLast();
-        source = (Short) path.getFirst();
+//        if (path.isEmpty()) return table;
+        destination = (Short) path.get(path.size() - 1);
+        source = (Short) path.get(0);
         for (int i = 1; i < path.size(); i++) {
             Short node = (Short) path.get(i);
-            LinkedList t = new LinkedList();
+            ArrayList t = new ArrayList();
             t.add(new RoutingTableEntry(source, destination, (Short) path.get(i - 1)));
             if (i < path.size() - 1) {
                 t.add(new RoutingTableEntry(destination, source, (Short) path.get(i + 1)));
