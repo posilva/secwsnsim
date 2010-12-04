@@ -1,0 +1,35 @@
+\begin{table}[H]
+\centering
+\begin{scriptsize}
+\begin{tabular}[t]{|l|l|}\hline
+\mc{1}{|c}{\textbf{Método}} & \mc{1}{|c|}{\textbf{Descrição}}\\\hline\hline
+\textit{sendMessage(m,app)} & Recepção de uma mensagem vinda da camada
+aplicação\\\hline
+\textit{onSendMessage(m)} & Envio de uma mensagem para o nível MAC\\\hline
+\textit{onReceiveMessage(m)} & Acções na recepção de uma mensagem (ex. avaliação
+do tipo da mensagem)\\\hline
+\textit{onRouteMessage(m)} & Acções de encaminhamento de uma mensagem\\\hline
+\textit{onStartUp()} & Acções de inicialização do protocolo de
+encaminhamento\\\hline
+\textit{setupAttacks()} & Criação das instancias dos ataques que podem ser
+desencadeados\\\hline
+\textit{initAttacks()} & Inicialização de dados referentes a ataques ao
+encaminhamento definidos\\\hline
+\textit{sendMessageToAir()} & Especifica as acções de enviar a mensagem para o
+meio\\\hline
+\textit{sendMessageDone()} & Assinala o envio de uma mensagem com
+sucesso\\\hline
+\textit{newRound()} & Permite activar uma acção em protocolos que podem ter
+novas rondas\\\hline
+\textit{encapsulateMessage(m)} & Cria um "envelope" para a mensagem de enviada
+pela aplicação\\\hline
+\textit{onStable()} & Permite desencadear uma acção assim que o nó entrar em
+modo de estabilização\\\hline
+\textit{send(m)} & Este método deverá ser sempre usado para enviar as
+mensagens\\
+& pois é o método condutor de todo o processo de transmissão/ataque/controlo dos
+dados\\\hline
+\end{tabular}
+\caption{API ao nível do \textit{RoutingLayer} \label{tab:APIRouting}
+\end{scriptsize}
+\end{table}

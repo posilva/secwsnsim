@@ -21,7 +21,7 @@ usando a API concebida.
 \section{Metodologia para a implementação de um protocolo}
 
 A implementação de um qualquer protocolo pode ser divida em duas componentes:
-1) a componente lógica, associada ao funcionamento do protocolo 
+1) a componente lógica, associada ao funcionamento do protocolo; 
 2) a componente de integração, associada à integração/interacção com a
 plataforma.
 
@@ -51,9 +51,10 @@ testar comportamentos da mesma aplicação com protocolos de
 encaminhamento diferentes.
 \end{enumerate}
 
-Na figura seguinte observa-se a estrutura do protocolo de inundação criada com
-base na lógica inerente ao protocolo. 
+Na figura seguinte observa-se a estrutura de implementação do protocolo de
+inundação seguindo a implementação referida. 
 \input{pic_protocol_struct} 
+
 \subsection{Componente de integração}
 Nesta componente é necessário criar uma entidade que integra/define
 quais as camadas existentes num sensor genérico de um protocolo. Esta entidade é
@@ -75,6 +76,19 @@ avaliação foi desenvolvido um primeiro protocolo mais simples que implementa o
 encaminhamento por inundação (\textit{flooding}). Este protocolo não tem grande
 complexidade de funcionamento, uma vez que a única restrição para a propagação
 de mensagens é a garantia de não repetição de mensagens. 
+
+A implementação define no total cinco classes, respeitando as duas componentes
+referidas anteriormente. As entidades representadas são: Um tipo de mensagem,
+uma fábrica de nós, um nó específico e o algoritmo de encaminhamento, para
+efeitos de teste foi criada uma aplicação simples que envia uma mensagem de
+Hello. No diagrama de classes da figura seguinte apresenta-se esta organização.
+
+APRESENTAR DIAGRAMA AQUI
+
+A implementação do protocolo tem o seguinte funcionamento:
+
+
+
 
 \section{Implementação de Protocolo de Encaminhamento Seguro em RSSF}
 \subsection{Fase de desenho dos algoritmos baseado

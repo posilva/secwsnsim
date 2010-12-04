@@ -1,9 +1,31 @@
 \subsection[Mecanismo de avaliação e testes]{Mecanismo de avaliação e testes} 
 O componente de avaliação e execução de testes está ligado intrinsecamente com
-o simulador. A sua execução resulta, fundamentalmente, da
-intercepção das acções de envio e recepção de mensagens em cada sensor, ao nível
-da camada de encaminhamento de dados.
-No diagrama seguinte procura-se espelhar o funcionamento desta ferramenta
-relacionado com os acções referidas.
+o simulador. A sua execução resulta, fundamentalmente, da intercepção das acções
+de envio e recepção de mensagens em cada sensor, ao nível da camada de
+encaminhamento de dados.
+Como já foi referido, na plataforma foram integradas funcionalidades que prevêm
+a medição/avaliação das propriedades de fiabilidade, cobertura, latência e
+cobertura da rede. Todas estas propriedades são medidas com base no envio e na
+recepção de mensagens. Para que isto aconteça existem um componente de controlo
+do mecanismo de avaliação(\textit{EvaluationManager}) que está associado ao
+teste que se encontra em execução, assim sendo todas as medidas são calculadas
+neste componente e retirados os resultados finda a execução do teste.
 
-1. Parametrização de um teste
+Assim, para a medição da cobertura são contabilizados os nós emissores de
+mensagens, bastando que apenas uma mensagem chegue ao destino para considerar o
+nó como coberto. Na fiabilidade o que importa são as mensagens, como tal são
+contabilizadas as mensagens que são enviadas e comparadas com as que são
+recebidas no destino. Podem ser adicionados parâmetros relacionados com o
+número de retransmissões para permitir reavaliar estas medições. No que se
+refere á medida de latência o funcionamento baseado no assinalar a passagem de
+uma mensagem por cada nó incrementando um contador de \textit{hops}. A medições
+de energia não é dependente do envio ou recepção de mensagens, uma vez que é
+transparente na plataforma e que resulta dos eventos realizados pela
+plataforma, nomeadamente nos que se referem a transmissão/recepção de dados.
+%\input{pic_sd_send_receive}
+No diagrama de actividades apresentado procura-se apresentar as
+diversas acções que concorrem para o funcionamento do mecanismo de medição de
+propriedades.
+
+
+1. Parametrização de um teste 
