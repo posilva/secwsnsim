@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/openSUSE) (format=pdflatex 2010.11.20)  28 NOV 2010 04:34
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/openSUSE) (format=pdflatex 2010.11.30)  4 DEC 2010 02:46
 entering extended mode
  %&-line parsing enabled.
 **Thesis.Elaboration.PedroMarquesdaSilva.tex
@@ -611,7 +611,7 @@ LaTeX Info: Redefining \pageref on input line 117.
 
 \AtBeginShipoutBox=\box36
  (./logounl.tex
-<logounl.jpg, id=259, 97.36375pt x 97.36375pt>
+<logounl.jpg, id=255, 97.36375pt x 97.36375pt>
 File: logounl.jpg Graphic file (type jpg)
  <use logounl.jpg>)
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <17.28> not available
@@ -773,10 +773,10 @@ Underfull \vbox (badness 2512) has occurred while \output is active []
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <12> not available
 (Font)              Font shape `T1/ptm/b/it' tried instead on input line 66.
 
-(./pic_stack_services.tex <pilha_soft.png, id=522, 365.365pt x 386.44376pt>
+(./pic_stack_services.tex <pilha_soft.png, id=517, 365.365pt x 386.44376pt>
 File: pilha_soft.png Graphic file (type png)
 
-<use pilha_soft.png> <stackProtocol.png, id=523, 154.5775pt x 165.61874pt>
+<use pilha_soft.png> <stackProtocol.png, id=518, 154.5775pt x 165.61874pt>
 File: stackProtocol.png Graphic file (type png)
 
 <use stackProtocol.png>
@@ -796,7 +796,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 LaTeX Warning: Citation `REFERENCIA' on page 7 undefined on input line 5.
 
-(./pic_sensornode.tex <SENSOR_NODE.png, id=593, 228.855pt x 180.675pt>
+(./pic_sensornode.tex <SENSOR_NODE.png, id=588, 228.855pt x 180.675pt>
 File: SENSOR_NODE.png Graphic file (type png)
 
 <use SENSOR_NODE.png>)
@@ -1036,7 +1036,7 @@ Overfull \hbox (4.49129pt too wide) in paragraph at lines 6--41
 LaTeX Warning: Citation `mica2' on page 37 undefined on input line 35.
 
 [37] (./pic_sim_jprowler_cd.tex
-<JProwlerClassDiagram.png, id=958, 829.59938pt x 411.78844pt>
+<JProwlerClassDiagram.png, id=953, 829.59938pt x 411.78844pt>
 File: JProwlerClassDiagram.png Graphic file (type png)
 
 <use JProwlerClassDiagram.png>)
@@ -1045,10 +1045,10 @@ LaTeX Warning: Citation `VERCITACAODAPILHA' on page 38 undefined on input line
 63.
 
 [38 <./JProwlerClassDiagram.png (PNG copy)>] (./pic_jprowler.tex
-<Jprowler.png, id=968, 796.9775pt x 536.0025pt>
+<Jprowler.png, id=963, 796.9775pt x 536.0025pt>
 File: Jprowler.png Graphic file (type png)
  <use Jprowler.png>) [39 <./Jprowler.png>] (./pic_sim_arch.tex
-<Simulador_arquitectura.png, id=976, 952.55875pt x 594.22pt>
+<Simulador_arquitectura.png, id=971, 952.55875pt x 594.22pt>
 File: Simulador_arquitectura.png Graphic file (type png)
 
 <use Simulador_arquitectura.png>) [40 <./Simulador_arquitectura.png (PNG copy)>
@@ -1056,14 +1056,14 @@ File: Simulador_arquitectura.png Graphic file (type png)
 Underfull \vbox (badness 4779) has occurred while \output is active []
 
  [41]
-(./pic_topologias.tex <topologias.png, id=987, 451.6875pt x 200.75pt>
+(./pic_topologias.tex <topologias.png, id=982, 451.6875pt x 200.75pt>
 File: topologias.png Graphic file (type png)
 
 <use topologias.png>) (./pic_energia.tex
-<energy1.png, id=988, 490.83376pt x 367.3725pt>
+<energy1.png, id=983, 490.83376pt x 367.3725pt>
 File: energy1.png Graphic file (type png)
  <use energy1.png>
-<energy2.png, id=989, 661.47125pt x 426.59375pt>
+<energy2.png, id=984, 661.47125pt x 426.59375pt>
 File: energy2.png Graphic file (type png)
  <use energy2.png>
 Overfull \hbox (10.16823pt too wide) in paragraph at lines 3--8
@@ -1071,11 +1071,11 @@ Overfull \hbox (10.16823pt too wide) in paragraph at lines 3--8
  []
 
 [42 <./topologias.png>]) (./pic_ataques.tex
-<nodes.png, id=996, 231.86626pt x 193.72375pt>
+<nodes.png, id=991, 231.86626pt x 193.72375pt>
 File: nodes.png Graphic file (type png)
  <use nodes.png> [43 <./energy1.png> <./energy2.png>]) [44 <./nodes.png>] [45] 
 (./pic_simulator.tex
-<simulator.png, id=1014, 1284.8pt x 803.0pt>
+<simulator.png, id=1009, 1284.8pt x 803.0pt>
 File: simulator.png Graphic file (type png)
  <use simulator.png> [46])
 Underfull \hbox (badness 10000) in paragraph at lines 329--338
@@ -1086,10 +1086,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 329--338
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [47 <./simulator.png (PNG copy)>] [48] (./pic_results.tex
-<Results.png, id=1035, 769.87625pt x 646.415pt>
+<Results.png, id=1030, 769.87625pt x 646.415pt>
 File: Results.png Graphic file (type png)
  <use Results.png>)
-(./pic_tests.tex <test.png, id=1036, 710.655pt x 572.1375pt>
+(./pic_tests.tex <test.png, id=1031, 710.655pt x 572.1375pt>
 File: test.png Graphic file (type png)
  <use test.png>
 [49])) [50 <./Results.png> <./test.png>]
@@ -1104,11 +1104,11 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 ]
 [52] (./capitulo4_sensores.tex (./pic_nodestackcomponents.tex
-<SensorNodeStack.png, id=1058, 215.80624pt x 231.86626pt>
+<SensorNodeStack.png, id=1053, 215.80624pt x 231.86626pt>
 File: SensorNodeStack.png Graphic file (type png)
 
 <use SensorNodeStack.png>
-<sensorNode_components.png, id=1059, 215.80624pt x 231.86626pt>
+<sensorNode_components.png, id=1054, 215.80624pt x 231.86626pt>
 File: sensorNode_components.png Graphic file (type png)
 
 <use sensorNode_components.png>)
@@ -1116,7 +1116,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [53])
 (./capitulo4_energia.tex (./pic_tabela_eventos.tex
-<tab_eventos.png, id=1068, 680.7834pt x 456.2646pt>
+<tab_eventos.png, id=1063, 680.7834pt x 456.2646pt>
 File: tab_eventos.png Graphic file (type png)
  <use tab_eventos.png>
 Overfull \hbox (28.44794pt too wide) in paragraph at lines 3--4
@@ -1165,7 +1165,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [57]
 (./pic_DS_TransmissionPower.tex
-<DS_TransmissionPower.png, id=1089, 697.10437pt x 351.56343pt>
+<DS_TransmissionPower.png, id=1084, 697.10437pt x 351.56343pt>
 File: DS_TransmissionPower.png Graphic file (type png)
 
 <use DS_TransmissionPower.png>)
@@ -1183,11 +1183,11 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 ]
-(./pic_protocol_struct.tex <flooding_dir.png, id=1111, 232.87pt x 135.50626pt>
+(./pic_protocol_struct.tex <flooding_dir.png, id=1106, 232.87pt x 135.50626pt>
 File: flooding_dir.png Graphic file (type png)
 
 <use flooding_dir.png>) (./pic_node_factory.tex
-<node_factory_setup.png, id=1112, 482.80376pt x 218.8175pt>
+<node_factory_setup.png, id=1107, 482.80376pt x 218.8175pt>
 File: node_factory_setup.png Graphic file (type png)
 
 <use node_factory_setup.png>)
@@ -1258,10 +1258,10 @@ LaTeX Warning: There were multiply-defined labels.
 (\end occurred when \if on line 126 was incomplete)
 (\end occurred when \if on line 123 was incomplete) 
 Here is how much of TeX's memory you used:
- 10929 strings out of 493848
- 147552 string characters out of 3155813
- 238549 words of memory out of 3500000
- 13442 multiletter control sequences out of 15000+200000
+ 10926 strings out of 493848
+ 147497 string characters out of 3155813
+ 238456 words of memory out of 3500000
+ 13440 multiletter control sequences out of 15000+200000
  113014 words of font info for 162 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
  41i,14n,40p,375b,438s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1272,10 +1272,10 @@ f/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texmf/fonts/type1/urw/symbol/u
 syr.pfb></usr/share/texmf/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf/fo
 nts/type1/urw/times/utmbi8a.pfb></usr/share/texmf/fonts/type1/urw/times/utmr8a.
 pfb></usr/share/texmf/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Thesis.Elaboration.PedroMarquesdaSilva.pdf (95 pages, 992709 
+Output written on Thesis.Elaboration.PedroMarquesdaSilva.pdf (95 pages, 993039 
 bytes).
 PDF statistics:
- 1279 PDF objects out of 1440 (max. 8388607)
- 330 named destinations out of 1000 (max. 500000)
- 613 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1274 PDF objects out of 1440 (max. 8388607)
+ 329 named destinations out of 1000 (max. 500000)
+ 605 words of extra memory for PDF output out of 10000 (max. 10000000)
 

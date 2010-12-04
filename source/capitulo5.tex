@@ -21,7 +21,7 @@ usando a API concebida.
 \section{Metodologia para a implementação de um protocolo}
 
 A implementação de um qualquer protocolo pode ser divida em duas componentes:
-1) a componente lógica, associada ao funcionamento do protocolo 
+1) a componente lógica, associada ao funcionamento do protocolo; 
 2) a componente de integração, associada à integração/interacção com a
 plataforma.
 
@@ -52,7 +52,7 @@ encaminhamento diferentes.
 \end{enumerate}
 
 Na figura seguinte observa-se a estrutura de implementação do protocolo de
-inundação seguindo a implementação refererida. 
+inundação seguindo a implementação referida. 
 \input{pic_protocol_struct} 
 
 \subsection{Componente de integração}
@@ -70,7 +70,7 @@ respeitar as especificações definidas pela API do simulador. Salienta-se de
 seguida as que se julgam essenciais:
 
 
-
+%\input{tab_API_routing}
 
 \section{Implementação de protocolo de encaminhamento por inundação}
 Como já foi referido para efeito de comparação de algumas das propriedades em
@@ -79,16 +79,24 @@ encaminhamento por inundação (\textit{flooding}). Este protocolo não tem grande
 complexidade de funcionamento, uma vez que a única restrição para a propagação
 de mensagens é a garantia de não repetição de mensagens. 
 
+A implementação define no total cinco classes, respeitando as duas componentes
+referidas anteriormente. As entidades representadas são: Um tipo de mensagem,
+uma fábrica de nós, um nó específico e o algoritmo de encaminhamento, para
+efeitos de teste foi criada uma aplicação simples que envia uma mensagem de
+Hello. No diagrama de classes da figura seguinte apresenta-se esta organização.
+
+APRESENTAR DIAGRAMA AQUI
+
+A implementação do protocolo tem o seguinte funcionamento:
+
+
+
+
 \section{Implementação de Protocolo de Encaminhamento Seguro em RSSF}
-\subsection{Fase de desenho dos algoritmos baseado
-nas especificações}\label{sec:impl_protocolos}
-No início desta fase, foi necessário re-aprofundar o funcionamento do
-algoritmo a implementar, conhecendo e identificando cada mecanismo/técnica
-especificados, de modo a que se pudesse, dentro do possível, generalizar
-operações ou interfaces, com vista à reutilização para outros algoritmos,
-contribuindo para a API genérica de implementação de protocolos de
-encaminhamento.
-
-
-
-  
+O algoritmo que serviu como prova de conceito para a utilização da plataforma
+na avaliação de protocolos de encaminhamento seguros foi o INSENS. Este
+protocolo foi seleccionado por à partida ter algumas particularidades que
+tornam interessante o seu estudo e o impacte que a sua especificação pode ter
+nas propriedades em estudo. Note-se por exemplo o facto de todo o trafego
+passar pela estação base e as mensagens atravessarem todo o perimetro da rede
+com todas as penalizações que isso possa introduzir.
