@@ -1,0 +1,25 @@
+\begin{table}[H]
+ \centering
+\begin{footnotesize}
+\begin{tabular}[t]{|l|p{11cm}|}\hline
+\textbf{Operação} & \textbf{Descrição} \\\hline
+\textbf{rebroadcastRREQMessage()} &se foi a primeira vez que foi recebida uma
+mensagem de Route Request então é re-enviada para os vizinhos adicionando a
+informação do nó actual, é iniciado o temporizador para envio de
+\textit{feedback} após se processada a informação;\\\hline
+\textbf{sendFeedbackMessageInfo()} & após finalização do temporizador é enviada
+para a estação base a informação relativa aos vizinhos conhecidos e as
+respectivas assinaturas recebidas;\\\hline
+\textbf{processFDBKMessage()} & uma vez que as mensagens de feedback circulam em
+sentido contrário ao das do tipo Route Request, um qualquer nó intermédio tem
+que fazer circular no sentido ascendente as mensagens recebidas dos nós
+que receberam a informação de request enviada pelo sensor actual;\\\hline
+\textbf{updateRoutingStatus()} & quando é recebida a informação da estação base
+com a tabela de encaminhamento cada sensor actualiza a informação das tabelas e
+passa e muda o seu estado para estável, servindo isto de indicador de que é um
+nó encaminhador, ou seja dotado de uma tabela de encaminhamento válida.\\\hline
+\end{tabular}
+\caption{Tabela de operações princípais da estação base}
+\label{tab:operacoes_sensores}
+\end{footnotesize}
+\end{table}

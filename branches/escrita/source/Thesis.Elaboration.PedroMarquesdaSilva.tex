@@ -25,12 +25,17 @@
 %% (re)definies de macros, medidas, etc. 
 \newcommand{\descvspace}{\addtolength{\itemsep}{-.5\baselineskip}}
 \newcommand{\mc}[3]{\multicolumn{#1}{#2}{#3}}
+\newcommand{\sups}[1]{\ensuremath{^{\textrm{#1}}}}
+\newcommand{\subs}[1]{\ensuremath{_{\textrm{#1}}}}
 \newenvironment{FramedVerb}%
 {\scriptsize\VerbatimEnvironment
 \begin{Sbox}\begin{minipage}{15cm}\begin{Verbatim}}%
 {\end{Verbatim}\end{minipage}\end{Sbox}
 \setlength{\fboxsep}{8pt}\fbox{\TheSbox}\normalsize }
 %\usepackage{tweaklist}
+% \usepackage{algorithm}
+\usepackage{algpseudocode}
+% \usepackage{algorithm2e}    
 \usepackage{listings}
 \usepackage{fancybox}
 \usepackage{setspace}

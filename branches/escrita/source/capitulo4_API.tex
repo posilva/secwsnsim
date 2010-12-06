@@ -1,1 +1,52 @@
-\subsection[Módulo de gestão de Energia]{Módulo de gestão de Energia} 
+\subsection{API para a implementação de um protocolo}
+\subsubsection{Metodologia para a implementação de um protocolo}
+
+A implementação de um qualquer protocolo pode ser divida em duas componentes:
+1) a componente lógica, associada ao funcionamento do protocolo; 
+2) a componente de integração, associada à integração/interacção com a
+plataforma.
+
+\paragraph{Componente Lógica}
+Para esta componente é necessário identificar as entidades principais de
+especificação do protocolo. Entidades estas que serão comuns a qualquer
+protocolo que se pretenda implementar:
+
+\begin{enumerate}
+ \item Message: Entidade que representa a unidade mínima de envio/recepção de
+dados. Contém uma estrutura genérica para gestão da informação manipulada,
+de forma transparente, pelo simulador juntamente com a representação da
+informação transportada, sob a forma de vector de bytes, assemelhando-se com o
+formato real de um pacote de comunicação;
+\item Node: Esta entidade tem, fundamentalmente, funções associadas a
+visualização (ex: raio, cores associadas ao estado) e podendo ter também
+informação transversal a todas as camadas para facilidade de acesso e que
+necessita de inicialização prévia (ex. desligado/ligado), a quando da construção
+do nó. Poderá não ser implementado se estas condições não se verificarem
+utilizando-se assim um Node genérico disponibilizado pela API.
+\item RoutingLayer: Esta é a entidade principal, uma vez que que
+contém a lógica do protocolo e que deverá respeitar algumas especificações da
+API para que a sua integração com o simulador seja adequada;
+\item Application: Representa a camada aplicacional que será suportada em
+termos de encaminhamento pelo protocolo implementado. Pode ser usado para
+testar comportamentos da mesma aplicação com protocolos de
+encaminhamento diferentes.
+\end{enumerate}
+
+Na figura seguinte observa-se a estrutura de implementação do protocolo de
+inundação seguindo a implementação referida. 
+\input{pic_protocol_struct} 
+
+\paragraph{Componente de integração}
+Nesta componente é necessário criar uma entidade que integra/define
+quais as camadas existentes num sensor genérico de um protocolo. Esta entidade é
+definida usando um padrão de \textit{factory}. Padrão este, que é consumido
+pela plataforma para criação de sensores a quando da sua distribuição na área
+de trabalho. Esta entidade durante a criação dos nós será ainda complementada
+com informação referente a parâmetros do modelo de energia.
+Na figura seguinte pode-se observar a simplicidade desta entidade e a forma de
+integração.
+\input{pic_node_factory} 
+Quanto à integração com a plataforma, é necessário, ao nível do RoutingLayer,
+respeitar as especificações definidas pela API do simulador. Salienta-se de
+seguida as que se julgam essenciais:
+\input{tab_API_routing}

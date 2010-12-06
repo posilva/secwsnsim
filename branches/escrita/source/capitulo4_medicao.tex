@@ -1,31 +1,90 @@
 \subsection[Mecanismo de avaliação e testes]{Mecanismo de avaliação e testes} 
-O componente de avaliação e execução de testes está ligado intrinsecamente com
-o simulador. A sua execução resulta, fundamentalmente, da intercepção das acções
-de envio e recepção de mensagens em cada sensor, ao nível da camada de
-encaminhamento de dados.
+O componente de avaliação/medição e execução de testes está ligado
+intrinsecamente com o simulador. A sua execução resulta, fundamentalmente, da
+intercepção das acções de envio e recepção de mensagens em cada sensor, ao nível
+da camada de encaminhamento de dados. Os testes consistem em parametrizações de
+referência estabelecem os critérios para ter em conta na interpretação dos
+resultados das medições.
+\subsubsection{Medição das propriedades}.
 Como já foi referido, na plataforma foram integradas funcionalidades que prevêm
-a medição/avaliação das propriedades de fiabilidade, cobertura, latência e
-cobertura da rede. Todas estas propriedades são medidas com base no envio e na
-recepção de mensagens. Para que isto aconteça existem um componente de controlo
-do mecanismo de avaliação(\textit{EvaluationManager}) que está associado ao
+a medição/avaliação das propriedades de fiabilidade, cobertura e latência.
+Estas propriedades são medidas com base no envio e na recepção de mensagens.
+Para que isto aconteça existem um componente de controlo do mecanismo de
+avaliação(\textit{EvaluationManager}) que está associado ao
 teste que se encontra em execução, assim sendo todas as medidas são calculadas
 neste componente e retirados os resultados finda a execução do teste.
+Com a instanciação de um teste, é-lhe associado um \textit{EvalutionManager}. O
+ponto de ligação do encaminhamento com o teste por forma a interceptar os
+eventos é o \textit{RoutingController}, componente que regista o estado global
+do encaminhamento no que se refere por exemplo, à estabilidade do protocolo
+quanto à organização da rede, ao número de mensagens enviadas e recebidas e
+controla o estado de teste do protocolo nomeadamente referenciando o teste que
+se encontra activo. No diagrama de classes que se apresenta pode-se verificar
+esta organização e a dependência de cada uma das entidades envolvidas no
+processo de avaliação/medição das propriedades em estudo.
+\input{pic_cd_evaluation}
+Os pressupostos para a execução das medições e que terão influência, por sua
+vez, na interpretação dos resultados obtidos, são os seguintes:
+\begin{description}
+ \item[Cobertura] para a medição da cobertura são contabilizados os nós
+emissores de mensagens, bastando que apenas uma das mensagem chegue ao destino
+para considerar o nó como coberto, obtendo-se depois a taxa de cobertura da
+rede em função do número de nós emissores;
+\item[Fiabilidade] Na fiabilidade o que importa avaliar é o número de mensagens
+enviadas face ao número de mensagens recebidas. Uma vez que a garantia de
+integridade das mensagens não depende do protocolo, mas sim dos mecanismos
+criptográficos postos ao dispor do protocolo, esta é a métrica que utiliza para
+efectuar esta medida. Podem ser adicionados parâmetros relacionados com o número
+de retransmissões para permitir reavaliar as medições de fiabilidade, tendo
+também impacto sobre os valores de energia;
+\item[Latência] no caso da medição da latência, o funcionamento é baseado no
+incremento de um contador de saltos\textit{hops}, efectuado a cada passagem
+por um sensor até este atingir o sensor destino. Uma vez que a mesma mensagem
+pode seguir diversos caminhos é de toda a relevância observar o número máximo,
+mínimo e médio de saltos realizados pelas mensagens entre emissor e receptor.
+ \end{description}
+No concerne às medições de energia, estas são observadas ano longo de um teste
+na sua totalidade possibilitando a medição do consumo médio de um nó no envio
+de mensagens a uma determinada taxa (mensagens de $t$ em $t$ segundos).
+No diagrama de actividades apresentado, procura-se representar as 
+diversas acções que ocorrem no funcionamento do mecanismo de medição das
+propriedades referidas, dando particular atenção aos componentes envolvidos
+desde que uma mensagem é enviada até a sua recepção ser assinalada.
+\input{pic_sd_send_receive}
 
-Assim, para a medição da cobertura são contabilizados os nós emissores de
-mensagens, bastando que apenas uma mensagem chegue ao destino para considerar o
-nó como coberto. Na fiabilidade o que importa são as mensagens, como tal são
-contabilizadas as mensagens que são enviadas e comparadas com as que são
-recebidas no destino. Podem ser adicionados parâmetros relacionados com o
-número de retransmissões para permitir reavaliar estas medições. No que se
-refere á medida de latência o funcionamento baseado no assinalar a passagem de
-uma mensagem por cada nó incrementando um contador de \textit{hops}. A medições
-de energia não é dependente do envio ou recepção de mensagens, uma vez que é
-transparente na plataforma e que resulta dos eventos realizados pela
-plataforma, nomeadamente nos que se referem a transmissão/recepção de dados.
-%\input{pic_sd_send_receive}
-No diagrama de actividades apresentado procura-se apresentar as
-diversas acções que concorrem para o funcionamento do mecanismo de medição de
-propriedades.
+\subsubsection{Execução de testes}
+A criação de um teste pressupõe a definição dos parâmetros indicados na
+secção \ref{sec:ss_exec_tests_results}, aplicados a uma simulação especifica.
+Os mesmos testes podem ser repetidos várias vezes na mesma simulação afinando
+os parâmetros que possam ter influência na experiência em causa. O modelo de
+testes assume um início e fim da execução com obtenção de resultados do teste
+efectuado. No diagrama seguinte é possível observar as acções existentes
+durante o processo de execução de um teste.
 
+\subsection{Modelo de injecção/implementação de ataques}
+Uma vez estabilizada a rede estabelecida por um protocolo de encaminhamento,
+pode-se sujeitá-lo a um ambiente hostil, em que as mensagens que circulam são
+interceptadas por sensores comprometidos e com comportamentos maliciosos. Uma
+vez que o foco da utilização da plataforma é o estudo dos protocolos de
+encaminhamento e tendo em conta os tipos de ataques e os momentos em que estes
+podem ocorrer durante a operação de um protocolo (conforme apresentado na
+secção \ref{sect:sec_mod_adversario_ataq_contramedidas}) a implementação de um
+modelo de injecção de ataques incidiu ao nível do componente RoutingLayer, a
+API de implementação prevê a "obrigatoriedade" de implementação de alguns
+métodos que permitem a operação de acções de ataque à rede. Estas operações
+(referidas na tabela \ref{tab:APIRouting}) são
+\textit{initAttacks},\textit{setupAttacks } a primeira com a particularidade de
+realizar algum tipo de inicialização relacionadas com ataque e a segunda
+permite afectar a um protocolo os ataques que se pretendem avaliar, ou aos
+quais se quer sujeitar.
+A modelação deste mecanismo teve por base a definição de uma classe específica
+por forma a garantir a interacção com o RoutingLayer. O diagrama de classes
+seguinte apresenta as entidades envolvidas no modelo. 
 
-1. Parametrização de um teste 
+DIAGRAMA DE CLASSES COM A ROUTINGATTACK
+O funcionamento é baseado
+na intercepção do processo de envio de mensagens do sensor. Quando um sensor
+envia uma mensagem para o ar, usando a primitiva \textit{send()}, são
+executadas as seguintes acções representadas no diagrama de actividade
+seguinte. 
+DIAGRAMA DE ACTIVIDADE

@@ -1,0 +1,36 @@
+\begin{table}[H]
+ \centering
+\begin{footnotesize}
+\begin{tabular}[t]{|l|p{11cm}|}\hline
+\textbf{Operação} & \textbf{Descrição} \\\hline
+\textbf{newRouteDiscovery()} & envia a primeira mensagem de Route Request para
+os vizinhos com a
+informação do seu identificador e assinada com a chave privada, inicia o
+temporizador
+para recolha das mensagens de feedback;\\\hline
+\textbf{processFDBKMessage()} & verifica a validade da mensagem de feedback
+quanto à origem e
+quanto à integridade, com base na cadeia de MAC?s e na informação do caminho
+per-
+corrido guardando-a para posterior processsamento;\\\hline
+\textbf{startComputeRoutingInfo()} & recolhida a informação de feedback limitada
+pelo tempo definido
+no temporizador, procede-se ao cálculo das tabelas de encaminhamento
+correlacionando
+a informação enviada pelos diversos nós, garantindo o mais cedo possível a
+defesa contra
+diversos ataques, como por exemplo, o Wormhole. O cálculo das tabelas é
+efectuado com
+recurso ao algoritmo de Dijkstra;\\\hline
+\textbf{sendRouteUpdateMessages()} & uma vez obtidas as tabelas de
+encaminhamento, inicia-se o pro-
+cesso de envio das tabelas para cada um dos nós seguindo uma ordem dos nós mais
+próximos para os mais afastados aproveitando os caminhos já definidos para os
+primeiros
+para chegar aos sensores mais afastados da rede.\\\hline
+\end{tabular}
+\caption{Tabela de operações princípais da estação
+base}\label{tab:operacoes_estacao_base}
+% \end{tiny}
+\end{footnotesize}
+\end{table}
