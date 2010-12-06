@@ -23,6 +23,15 @@ interajam entre si e em particular com o terceiro para cálculo do consumo
 energético. Assim, cada componente tem associado um conjunto de acções que são
 da sua responsabilidade em que  cada uma consome um determinado valor energético
 (definido por parametrização do modelo de energia). 
-
-Implementação de uma semântica de \textit{timer} semelhante aos
-\textit{temporizadores} de tinyOS
+\input{pic_node_cd}
+Com esta organização é possível a aumentar a granularidade do controlo de cada
+um dos componentes, não somente nas interacções relacionadas com a energia mas
+também com as entidades que se separaram no novo desenho do simulador base.
+Assim, a separação das camadas derivada da implementação monolítica, permite
+implementar diferentes protocolos de MAC para avaliação em diferentes
+protocolos de encaminhamento. O mesmo se passa com a separação da camada
+Aplicação, permitindo testar desenvolver aplicações e testar o seu
+comportamento em diversos protocolos. Esta alteração na arquitectura
+do simulador possibilita o alargamento da sua utilização em diversos
+experimentos enriquecendo os dados que se podem obter da avaliação de
+protocolos de encaminhamento seguro em RSSF.

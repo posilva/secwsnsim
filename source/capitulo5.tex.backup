@@ -70,6 +70,8 @@ respeitar as especificações definidas pela API do simulador. Salienta-se de
 seguida as que se julgam essenciais:
 
 
+%\input{tab_API_routing}
+
 \section{Implementação de protocolo de encaminhamento por inundação}
 Como já foi referido para efeito de comparação de algumas das propriedades em
 avaliação foi desenvolvido um primeiro protocolo mais simples que implementa o
@@ -87,19 +89,37 @@ APRESENTAR DIAGRAMA AQUI
 
 A implementação do protocolo tem o seguinte funcionamento:
 
-
-
-
 \section{Implementação de Protocolo de Encaminhamento Seguro em RSSF}
-\subsection{Fase de desenho dos algoritmos baseado
-nas especificações}\label{sec:impl_protocolos}
-No início desta fase, foi necessário re-aprofundar o funcionamento do
-algoritmo a implementar, conhecendo e identificando cada mecanismo/técnica
-especificados, de modo a que se pudesse, dentro do possível, generalizar
-operações ou interfaces, com vista à reutilização para outros algoritmos,
-contribuindo para a API genérica de implementação de protocolos de
-encaminhamento.
+O algoritmo que serviu como prova de conceito para a utilização da plataforma
+na avaliação de protocolos de encaminhamento seguro foi o INSENS. O
+desenvolvimento deste protocolo permitiu rever algumas funcionalidades da
+plataforma, desenvolvidas até então, fazendo com que se desse a
+incorporação de mecanismos facilitadores quer ao nível da implementação, quer
+ao nível das capacidades de avaliação da plataforma. Uma abstracção
+que surgiu da implementação deste protocolo foram os \textit{timers}, muito
+semelhante aos implementados nas plataformas de TinyOS, que permitem temporizar
+acções, com base num relógio interno. Uma vez identificada esta funcionalidade,
+foi integrada no simulador base por forma a poder ser utilizada de forma
+genérica na implementação de um qualquer protocolo.\\
 
+O código executado nas plataformas sensores é muito semelhante e somente
+diferenciado pelos papeis que podem ser desempenhados por um sensor. Neste
+protocolo identificaram-se dois tipos de papeis: 1) estação base, que controla
+todo o fluxo da informação e que serve como \textit{Trusted Computer Base} uma
+vez que é o único elemento que se garante que é totalmente seguro; 2) Sensor
+genérico, encaminhador e gerador de eventos. Uma vez tratando-se de uma
+plataforma de simulação a selecção dos sensores que executam as tarefas de cada
+um dos papeis identificados é especificada pelo próprio desenho da
+experiência. No que respeita às operações executadas pela estação base
+apresentam-se a seguir as que têm maior importância ao longo do estabelecimento
+da rede:
 
+\input{tab_operacoes_sensores}
 
-  
+Apresentadas as operações principais da estação base, os restantes sensores
+executam também um conjunto de operações das quais se destinguem as seguintes:
+\input{tab_operacoes_sensores_normais}
+
+Do ponto de vista da implementação foram respeitadas as API's da plataforma
+para permitir a sua integração. Assim, a figura seguinte apresenta o diagrama de
+classes da implementação do protocolo INSENS.

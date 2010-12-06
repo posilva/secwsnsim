@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/openSUSE) (format=pdflatex 2010.11.30)  4 DEC 2010 02:46
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/openSUSE) (format=pdflatex 2010.11.30)  6 DEC 2010 02:55
 entering extended mode
  %&-line parsing enabled.
 **Thesis.Elaboration.PedroMarquesdaSilva.tex
@@ -318,24 +318,43 @@ File: pdftex.def 2009/08/25 v0.04m Graphics/color for pdfTeX
 \c@Prop=\count110
 \c@Cor=\count111
 )
-(/usr/share/texmf/tex/latex/listings/listings.sty
-\lst@mode=\count112
+(/usr/share/texmf/tex/latex/algorithmicx/algpseudocode.sty
+Package: algpseudocode 
+
+(/usr/share/texmf/tex/latex/algorithmicx/algorithmicx.sty
+Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
+
+Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
+\c@ALG@line=\count112
+\c@ALG@rem=\count113
+\c@ALG@nested=\count114
+\ALG@tlm=\skip52
+\ALG@thistlm=\skip53
+\c@ALG@Lnr=\count115
+\c@ALG@blocknr=\count116
+\c@ALG@storecount=\count117
+\c@ALG@tmpcounter=\count118
+\ALG@tmplength=\skip54
+)
+Document Style - pseudocode environments for use with the `algorithmicx' style
+) (/usr/share/texmf/tex/latex/listings/listings.sty
+\lst@mode=\count119
 \lst@gtempboxa=\box28
 \lst@token=\toks28
-\lst@length=\count113
+\lst@length=\count120
 \lst@currlwidth=\dimen117
-\lst@column=\count114
-\lst@pos=\count115
+\lst@column=\count121
+\lst@pos=\count122
 \lst@lostspace=\dimen118
 \lst@width=\dimen119
-\lst@newlines=\count116
-\lst@lineno=\count117
+\lst@newlines=\count123
+\lst@lineno=\count124
 \lst@maxwidth=\dimen120
 
 (/usr/share/texmf/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
-\c@lstnumber=\count118
-\lst@skipnumbers=\count119
+\c@lstnumber=\count125
+\lst@skipnumbers=\count126
 \lst@framebox=\box29
 )
 (/usr/share/texmf/tex/latex/listings/listings.cfg
@@ -375,13 +394,13 @@ Package: array 2008/09/09 v2.4c Tabular extension package (FMi)
 \col@sep=\dimen123
 \extrarowheight=\dimen124
 \NC@list=\toks33
-\extratabsurround=\skip52
-\backup@length=\skip53
+\extratabsurround=\skip55
+\backup@length=\skip56
 )
 \everycr=\toks34
-\minrowclearance=\skip54
+\minrowclearance=\skip57
 )
-\rownum=\count120
+\rownum=\count127
 Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1337.
 Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1341.
 Package xcolor Info: Model `RGB' extended on input line 1353.
@@ -394,7 +413,7 @@ Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
 )
 (/usr/share/texmf/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count121
+\c@float@type=\count128
 \float@exts=\toks35
 \float@box=\box32
 \@float@everytoks=\toks36
@@ -402,18 +421,18 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 )
 (/usr/share/texmf/tex/latex/rotating/rotating.sty
 Package: rotating 2009/03/28 v2.16a rotated objects in LaTeX
-\c@r@tfl@t=\count122
-\rotFPtop=\skip55
-\rotFPbot=\skip56
+\c@r@tfl@t=\count129
+\rotFPtop=\skip58
+\rotFPbot=\skip59
 \rot@float@box=\box34
 \rot@mess@toks=\toks37
 )
 (/usr/share/texmf/tex/latex/enumitem/enumitem.sty
 Package: enumitem 2009/05/18 v2.2 Customized lists
 \enit@toks=\toks38
-\labelindent=\skip57
+\labelindent=\skip60
 \enit@outerparindent=\dimen125
-\enitdp@desc=\count123
+\enitdp@desc=\count130
 )
 (/usr/share/texmf/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2009/10/09 v6.79a Hypertext links for LaTeX
@@ -437,8 +456,8 @@ O)
 Package: xcolor-patch 2009/10/02 xcolor patch
 ))
 \@linkdim=\dimen126
-\Hy@linkcounter=\count124
-\Hy@pagecounter=\count125
+\Hy@linkcounter=\count131
+\Hy@pagecounter=\count132
 
 (/usr/share/texmf/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2009/10/09 v6.79a Hyperref: PDFDocEncoding definition (HO)
@@ -498,7 +517,7 @@ Package pdftexcmds Info: LuaTeX not detected.
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 )))
-\Fld@menulength=\count126
+\Fld@menulength=\count133
 \Field@Width=\dimen127
 \Fld@charsize=\dimen128
 \Field@toks=\toks39
@@ -513,32 +532,32 @@ Package hyperref Info: PDF/A mode OFF on input line 4407.
 (/usr/share/texmf/tex/generic/oberdiek/atbegshi.sty
 Package: atbegshi 2008/07/31 v1.9 At begin shipout hook (HO)
 )
-\Hy@abspage=\count127
-\c@Item=\count128
-\c@Hfootnote=\count129
+\Hy@abspage=\count134
+\c@Item=\count135
+\c@Hfootnote=\count136
 )
 *hyperref using default driver hpdftex*
 (/usr/share/texmf/tex/latex/hyperref/hpdftex.def
 File: hpdftex.def 2009/10/09 v6.79a Hyperref driver for pdfTeX
-\Fld@listcount=\count130
+\Fld@listcount=\count137
 )
 
 Package hyperref Warning: Option `bookmarks' has already been used,
-(hyperref)                setting the option has no effect on input line 67.
+(hyperref)                setting the option has no effect on input line 72.
 
-Package hyperref Info: Option `unicode' set `false' on input line 67.
+Package hyperref Info: Option `unicode' set `false' on input line 72.
 (/usr/share/texmf/tex/latex/hyperref/puenc.def
 File: puenc.def 2009/10/09 v6.79a Hyperref: PDF Unicode definition (HO)
 )
-Package hyperref Info: Option `pdftoolbar' set `true' on input line 67.
-Package hyperref Info: Option `pdfmenubar' set `true' on input line 67.
-Package hyperref Info: Option `pdffitwindow' set `false' on input line 67.
-Package hyperref Info: Option `pdfnewwindow' set `true' on input line 67.
-Package hyperref Info: Option `colorlinks' set `true' on input line 67.
+Package hyperref Info: Option `pdftoolbar' set `true' on input line 72.
+Package hyperref Info: Option `pdfmenubar' set `true' on input line 72.
+Package hyperref Info: Option `pdffitwindow' set `false' on input line 72.
+Package hyperref Info: Option `pdfnewwindow' set `true' on input line 72.
+Package hyperref Info: Option `colorlinks' set `true' on input line 72.
 
 
 Package hyperref Warning: Option `pagebackref' has already been used,
-(hyperref)                setting the option has no effect on input line 67.
+(hyperref)                setting the option has no effect on input line 72.
 
 (./Thesis.Elaboration.PedroMarquesdaSilva.aux (./Contracapa.aux)
 (./resumopt.aux) (./resumoen.aux) (./capitulo1.aux) (./capitulo2.aux)
@@ -546,63 +565,70 @@ Package hyperref Warning: Option `pagebackref' has already been used,
 
 LaTeX Warning: Label `fig:simulador_view' multiply defined.
 
-) (./capitulo4.aux) (./capitulo5.aux) (./capitulo6.aux) (./capitulo7.aux))
+) (./capitulo4.aux
+
+LaTeX Warning: Label `fig:nodes' multiply defined.
+
+
+LaTeX Warning: Label `fig:stack_components' multiply defined.
+
+) (./capitulo5.aux) (./capitulo6.aux) (./capitulo7.aux))
 \openout1 = `Thesis.Elaboration.PedroMarquesdaSilva.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 117.
-LaTeX Font Info:    ... okay on input line 117.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 117.
-LaTeX Font Info:    ... okay on input line 117.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 117.
-LaTeX Font Info:    ... okay on input line 117.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 117.
-LaTeX Font Info:    ... okay on input line 117.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 117.
-LaTeX Font Info:    ... okay on input line 117.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 117.
-LaTeX Font Info:    ... okay on input line 117.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 117.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 117.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 122.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 122.
 
 
 (/usr/share/texmf/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 117.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 117.
-LaTeX Font Info:    ... okay on input line 117.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 117.
-LaTeX Font Info:    ... okay on input line 117.
-LaTeX Font Info:    Try loading font information for T1+ptm on input line 117.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Try loading font information for T1+ptm on input line 122.
 
 (/usr/share/texmf/tex/latex/psnfss/t1ptm.fd
 File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 )
 (/usr/share/texmf/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count131
+\scratchcounter=\count138
 \scratchdimen=\dimen129
 \scratchbox=\box35
-\nofMPsegments=\count132
-\nofMParguments=\count133
+\nofMPsegments=\count139
+\nofMParguments=\count140
 \everyMPshowfont=\toks40
-\MPscratchCnt=\count134
+\MPscratchCnt=\count141
 \MPscratchDim=\dimen130
-\MPnumerator=\count135
+\MPnumerator=\count142
 \everyMPtoPDFconversion=\toks41
 )
-\c@lstlisting=\count136
-Package hyperref Info: Link coloring ON on input line 117.
+\c@lstlisting=\count143
+Package hyperref Info: Link coloring ON on input line 122.
  (/usr/share/texmf/tex/latex/hyperref/nameref.sty
 Package: nameref 2007/05/29 v2.31 Cross-referencing by name of section
 
 (/usr/share/texmf/tex/latex/oberdiek/refcount.sty
 Package: refcount 2008/08/11 v3.1 Data extraction from references (HO)
 )
-\c@section@level=\count137
+\c@section@level=\count144
 )
-LaTeX Info: Redefining \ref on input line 117.
-LaTeX Info: Redefining \pageref on input line 117.
+LaTeX Info: Redefining \ref on input line 122.
+LaTeX Info: Redefining \pageref on input line 122.
 
 (./Thesis.Elaboration.PedroMarquesdaSilva.out)
 (./Thesis.Elaboration.PedroMarquesdaSilva.out)
@@ -611,53 +637,53 @@ LaTeX Info: Redefining \pageref on input line 117.
 
 \AtBeginShipoutBox=\box36
  (./logounl.tex
-<logounl.jpg, id=255, 97.36375pt x 97.36375pt>
+<logounl.jpg, id=251, 97.36375pt x 97.36375pt>
 File: logounl.jpg Graphic file (type jpg)
  <use logounl.jpg>)
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <17.28> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 123.
-LaTeX Font Info:    Try loading font information for TS1+ptm on input line 123.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 128.
+LaTeX Font Info:    Try loading font information for TS1+ptm on input line 128.
 
 
 (/usr/share/texmf/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
 LaTeX Font Info:    Try loading font information for OT1+ztmcm on input line 12
-3.
+8.
 
 (/usr/share/texmf/tex/latex/psnfss/ot1ztmcm.fd
 File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
 )
 LaTeX Font Info:    Try loading font information for OML+ztmcm on input line 12
-3.
+8.
 
 (/usr/share/texmf/tex/latex/psnfss/omlztmcm.fd
 File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
 )
 LaTeX Font Info:    Try loading font information for OMS+ztmcm on input line 12
-3.
+8.
 
 (/usr/share/texmf/tex/latex/psnfss/omsztmcm.fd
 File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
 )
 LaTeX Font Info:    Try loading font information for OMX+ztmcm on input line 12
-3.
+8.
 
 (/usr/share/texmf/tex/latex/psnfss/omxztmcm.fd
 File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 123.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 128.
 
 
 (/usr/share/texmf/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 123.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 128.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 123.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 128.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 123.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 128.
  [1
 
 
@@ -667,7 +693,7 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
 ] (./logounl.tex
 File: logounl.jpg Graphic file (type jpg)
  <use logounl.jpg>)
-Overfull \hbox (58.02171pt too wide) in paragraph at lines 126--126
+Overfull \hbox (58.02171pt too wide) in paragraph at lines 131--131
  [] 
  []
 
@@ -709,7 +735,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 1--8
  []
 
 )
-Underfull \hbox (badness 10000) in paragraph at lines 20--139
+Underfull \hbox (badness 10000) in paragraph at lines 20--144
 
  []
 
@@ -773,10 +799,10 @@ Underfull \vbox (badness 2512) has occurred while \output is active []
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <12> not available
 (Font)              Font shape `T1/ptm/b/it' tried instead on input line 66.
 
-(./pic_stack_services.tex <pilha_soft.png, id=517, 365.365pt x 386.44376pt>
+(./pic_stack_services.tex <pilha_soft.png, id=526, 365.365pt x 386.44376pt>
 File: pilha_soft.png Graphic file (type png)
 
-<use pilha_soft.png> <stackProtocol.png, id=518, 154.5775pt x 165.61874pt>
+<use pilha_soft.png> <stackProtocol.png, id=527, 154.5775pt x 165.61874pt>
 File: stackProtocol.png Graphic file (type png)
 
 <use stackProtocol.png>
@@ -796,7 +822,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 LaTeX Warning: Citation `REFERENCIA' on page 7 undefined on input line 5.
 
-(./pic_sensornode.tex <SENSOR_NODE.png, id=588, 228.855pt x 180.675pt>
+(./pic_sensornode.tex <SENSOR_NODE.png, id=597, 228.855pt x 180.675pt>
 File: SENSOR_NODE.png Graphic file (type png)
 
 <use SENSOR_NODE.png>)
@@ -1036,7 +1062,7 @@ Overfull \hbox (4.49129pt too wide) in paragraph at lines 6--41
 LaTeX Warning: Citation `mica2' on page 37 undefined on input line 35.
 
 [37] (./pic_sim_jprowler_cd.tex
-<JProwlerClassDiagram.png, id=953, 829.59938pt x 411.78844pt>
+<JProwlerClassDiagram.png, id=962, 829.59938pt x 411.78844pt>
 File: JProwlerClassDiagram.png Graphic file (type png)
 
 <use JProwlerClassDiagram.png>)
@@ -1045,10 +1071,10 @@ LaTeX Warning: Citation `VERCITACAODAPILHA' on page 38 undefined on input line
 63.
 
 [38 <./JProwlerClassDiagram.png (PNG copy)>] (./pic_jprowler.tex
-<Jprowler.png, id=963, 796.9775pt x 536.0025pt>
+<Jprowler.png, id=972, 796.9775pt x 536.0025pt>
 File: Jprowler.png Graphic file (type png)
  <use Jprowler.png>) [39 <./Jprowler.png>] (./pic_sim_arch.tex
-<Simulador_arquitectura.png, id=971, 952.55875pt x 594.22pt>
+<Simulador_arquitectura.png, id=980, 952.55875pt x 594.22pt>
 File: Simulador_arquitectura.png Graphic file (type png)
 
 <use Simulador_arquitectura.png>) [40 <./Simulador_arquitectura.png (PNG copy)>
@@ -1056,14 +1082,14 @@ File: Simulador_arquitectura.png Graphic file (type png)
 Underfull \vbox (badness 4779) has occurred while \output is active []
 
  [41]
-(./pic_topologias.tex <topologias.png, id=982, 451.6875pt x 200.75pt>
+(./pic_topologias.tex <topologias.png, id=991, 451.6875pt x 200.75pt>
 File: topologias.png Graphic file (type png)
 
 <use topologias.png>) (./pic_energia.tex
-<energy1.png, id=983, 490.83376pt x 367.3725pt>
+<energy1.png, id=992, 490.83376pt x 367.3725pt>
 File: energy1.png Graphic file (type png)
  <use energy1.png>
-<energy2.png, id=984, 661.47125pt x 426.59375pt>
+<energy2.png, id=993, 661.47125pt x 426.59375pt>
 File: energy2.png Graphic file (type png)
  <use energy2.png>
 Overfull \hbox (10.16823pt too wide) in paragraph at lines 3--8
@@ -1071,11 +1097,11 @@ Overfull \hbox (10.16823pt too wide) in paragraph at lines 3--8
  []
 
 [42 <./topologias.png>]) (./pic_ataques.tex
-<nodes.png, id=991, 231.86626pt x 193.72375pt>
+<nodes.png, id=1000, 231.86626pt x 193.72375pt>
 File: nodes.png Graphic file (type png)
  <use nodes.png> [43 <./energy1.png> <./energy2.png>]) [44 <./nodes.png>] [45] 
 (./pic_simulator.tex
-<simulator.png, id=1009, 1284.8pt x 803.0pt>
+<simulator.png, id=1018, 1284.8pt x 803.0pt>
 File: simulator.png Graphic file (type png)
  <use simulator.png> [46])
 Underfull \hbox (badness 10000) in paragraph at lines 329--338
@@ -1086,10 +1112,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 329--338
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [47 <./simulator.png (PNG copy)>] [48] (./pic_results.tex
-<Results.png, id=1030, 769.87625pt x 646.415pt>
+<Results.png, id=1039, 769.87625pt x 646.415pt>
 File: Results.png Graphic file (type png)
  <use Results.png>)
-(./pic_tests.tex <test.png, id=1031, 710.655pt x 572.1375pt>
+(./pic_tests.tex <test.png, id=1040, 710.655pt x 572.1375pt>
 File: test.png Graphic file (type png)
  <use test.png>
 [49])) [50 <./Results.png> <./test.png>]
@@ -1104,19 +1130,24 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 ]
 [52] (./capitulo4_sensores.tex (./pic_nodestackcomponents.tex
-<SensorNodeStack.png, id=1053, 215.80624pt x 231.86626pt>
+<SensorNodeStack.png, id=1062, 215.80624pt x 231.86626pt>
 File: SensorNodeStack.png Graphic file (type png)
 
 <use SensorNodeStack.png>
-<sensorNode_components.png, id=1054, 215.80624pt x 231.86626pt>
+<sensorNode_components.png, id=1063, 215.80624pt x 231.86626pt>
 File: sensorNode_components.png Graphic file (type png)
 
 <use sensorNode_components.png>)
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [53])
-(./capitulo4_energia.tex (./pic_tabela_eventos.tex
-<tab_eventos.png, id=1063, 680.7834pt x 456.2646pt>
+ [53]
+(./pic_node_cd.tex <NodeDependencies.png, id=1072, 518.93875pt x 272.01625pt>
+File: NodeDependencies.png Graphic file (type png)
+
+<use NodeDependencies.png>)) (./capitulo4_energia.tex [54 <./SensorNodeStack.pn
+g (PNG copy)> <./sensorNode_components.png (PNG copy)> <./NodeDependencies.png 
+(PNG copy)>] (./pic_tabela_eventos.tex
+<tab_eventos.png, id=1077, 680.7834pt x 456.2646pt>
 File: tab_eventos.png Graphic file (type png)
  <use tab_eventos.png>
 Overfull \hbox (28.44794pt too wide) in paragraph at lines 3--4
@@ -1129,26 +1160,28 @@ LaTeX Font Info:    Try loading font information for T1+pcr on input line 64.
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 )
 
-LaTeX Warning: Citation `MAC' on page 54 undefined on input line 74.
+LaTeX Warning: Citation `MAC' on page 55 undefined on input line 74.
 
 
 Overfull \hbox (4.61916pt too wide) in paragraph at lines 64--76
 [] \T1/ptm/m/n/12 De
  []
 
-[54 <./SensorNodeStack.png (PNG copy)> <./sensorNode_components.png (PNG copy)>
-]
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [55 <./tab_eventos.png>]
+ [55]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [56]
+ [56 <./tab_eventos.png>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-LaTeX Warning: Citation `ENERGIA' on page 57 undefined on input line 78.
+ [57]
+
+LaTeX Warning: Citation `ENERGIA' on page 58 undefined on input line 78.
 
 
-LaTeX Warning: Citation `ENERGIA2' on page 57 undefined on input line 78.
+LaTeX Warning: Citation `ENERGIA2' on page 58 undefined on input line 78.
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 90--98
@@ -1163,55 +1196,105 @@ Overfull \hbox (5.97206pt too wide) in paragraph at lines 110--111
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [57]
+ [58]
 (./pic_DS_TransmissionPower.tex
-<DS_TransmissionPower.png, id=1084, 697.10437pt x 351.56343pt>
+<DS_TransmissionPower.png, id=1098, 697.10437pt x 351.56343pt>
 File: DS_TransmissionPower.png Graphic file (type png)
 
 <use DS_TransmissionPower.png>)
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [58])
+ [59])
 (./capitulo4_medicao.tex
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [59 <./DS_TransmissionPower.png (PNG copy)>])) [60]
+ [60 <./DS_TransmissionPower.png (PNG copy)>] (./pic_cd_evaluation.tex
+<RoutingLayerDependencies.png, id=1109, 757.83125pt x 288.07625pt>
+File: RoutingLayerDependencies.png Graphic file (type png)
+
+<use RoutingLayerDependencies.png>)
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [61]
+(./pic_sd_send_receive.tex <sd_sent.png, id=1115, 481.8pt x 225.09094pt>
+File: sd_sent.png Graphic file (type png)
+
+<use sd_sent.png> <sd_receive.png, id=1116, 459.96844pt x 374.90062pt>
+File: sd_receive.png Graphic file (type png)
+
+<use sd_receive.png>
+Overfull \hbox (24.00362pt too wide) in paragraph at lines 3--8
+ [][] 
+ []
+
+[62 <./RoutingLayerDependencies.png (PNG copy)>]) [63 <./sd_sent.png (PNG copy)
+> <./sd_receive.png (PNG copy)>]) (./capitulo4_API.tex [64]
+(./pic_protocol_struct.tex <flooding_dir.png, id=1137, 232.87pt x 135.50626pt>
+File: flooding_dir.png Graphic file (type png)
+
+<use flooding_dir.png>) (./pic_node_factory.tex
+<node_factory_setup.png, id=1138, 482.80376pt x 218.8175pt>
+File: node_factory_setup.png Graphic file (type png)
+
+<use node_factory_setup.png>)
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [65 <./flooding_dir.png>] (./tab_API_routing.tex))) [66 <./node_factory_setup.
+png>]
 \openout2 = `capitulo5.aux'.
 
- (./capitulo5.tex [61
+
+(./capitulo5.tex
+Underfull \hbox (badness 10000) in paragraph at lines 36--47
+
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [67
 
 
 
 ]
-(./pic_protocol_struct.tex <flooding_dir.png, id=1106, 232.87pt x 135.50626pt>
-File: flooding_dir.png Graphic file (type png)
+(./tab_operacoes_sensores.tex
+Overfull \hbox (5.69487pt too wide) in paragraph at lines 4--33
+ [][] 
+ []
 
-<use flooding_dir.png>) (./pic_node_factory.tex
-<node_factory_setup.png, id=1107, 482.80376pt x 218.8175pt>
-File: node_factory_setup.png Graphic file (type png)
+)
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-<use node_factory_setup.png>)
-Underfull \vbox (badness 1831) has occurred while \output is active []
+ [68]
+(./tab_operacoes_sensores_normais.tex
+Overfull \hbox (5.3251pt too wide) in paragraph at lines 4--22
+ [][] 
+ []
 
- [62 <./flooding_dir.png>]) [63 <./node_factory_setup.png>]
+) (./pic_INSENS_CD.tex
+<INSENSProtocol_CD.png, id=1160, 788.9475pt x 373.395pt>
+File: INSENSProtocol_CD.png Graphic file (type png)
+
+<use INSENSProtocol_CD.png> [69])) [70 <./INSENSProtocol_CD.png (PNG copy)>]
 \openout2 = `capitulo6.aux'.
 
- (./capitulo6.tex [64
+
+(./capitulo6.tex) [71
 
 
 
-]) [65]
+]
 \openout2 = `capitulo7.aux'.
 
-
-(./capitulo7.tex [66
-
+ (./capitulo7.tex [72
 
 
-]) [67] [68
+
+]) [73] [74
 
 
-] (./Thesis.Elaboration.PedroMarquesdaSilva.bbl
+]
+(./Thesis.Elaboration.PedroMarquesdaSilva.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 4--7
 []\T1/ptm/m/n/12 BTnodes - a dis-tri-bu-ted en-vi-ron-ment for pro-toty-ping ad
  hoc networks.
@@ -1240,9 +1323,9 @@ Underfull \hbox (badness 1270) in paragraph at lines 61--64
 ked-sen-sor re-gime.
  []
 
-[69
+[75
 
-] [70] [71] [72] [73] [74]) [75]
+] [76] [77] [78] [79] [80]) [81]
 (./Thesis.Elaboration.PedroMarquesdaSilva.aux (./Contracapa.aux)
 (./resumopt.aux) (./resumoen.aux) (./capitulo1.aux) (./capitulo2.aux)
 (./capitulo3.aux) (./capitulo4.aux) (./capitulo5.aux) (./capitulo6.aux)
@@ -1254,14 +1337,14 @@ LaTeX Warning: There were undefined references.
 LaTeX Warning: There were multiply-defined labels.
 
  )
-(\end occurred when \if on line 126 was incomplete)
-(\end occurred when \if on line 126 was incomplete)
-(\end occurred when \if on line 123 was incomplete) 
+(\end occurred when \if on line 131 was incomplete)
+(\end occurred when \if on line 131 was incomplete)
+(\end occurred when \if on line 128 was incomplete) 
 Here is how much of TeX's memory you used:
- 10926 strings out of 493848
- 147497 string characters out of 3155813
- 238456 words of memory out of 3500000
- 13440 multiletter control sequences out of 15000+200000
+ 11457 strings out of 493848
+ 155474 string characters out of 3155813
+ 247755 words of memory out of 3500000
+ 13918 multiletter control sequences out of 15000+200000
  113014 words of font info for 162 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
  41i,14n,40p,375b,438s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1272,10 +1355,10 @@ f/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texmf/fonts/type1/urw/symbol/u
 syr.pfb></usr/share/texmf/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf/fo
 nts/type1/urw/times/utmbi8a.pfb></usr/share/texmf/fonts/type1/urw/times/utmr8a.
 pfb></usr/share/texmf/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Thesis.Elaboration.PedroMarquesdaSilva.pdf (95 pages, 993039 
-bytes).
+Output written on Thesis.Elaboration.PedroMarquesdaSilva.pdf (101 pages, 115176
+8 bytes).
 PDF statistics:
- 1274 PDF objects out of 1440 (max. 8388607)
- 329 named destinations out of 1000 (max. 500000)
- 605 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1324 PDF objects out of 1440 (max. 8388607)
+ 346 named destinations out of 1000 (max. 500000)
+ 622 words of extra memory for PDF output out of 10000 (max. 10000000)
 
