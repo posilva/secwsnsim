@@ -20,21 +20,14 @@ Database file #1: mybib.bib
 Warning--I didn't find a database entry for "SNMuseum"
 Warning--I didn't find a database entry for "REFERENCIA"
 Warning--I didn't find a database entry for "Holger_Karl_protocols_andarchs_wsn"
-Warning--I didn't find a database entry for "atmel"
-Warning--I didn't find a database entry for "TIMSP430"
-Warning--I didn't find a database entry for "XEMICS_XE1205"
-Warning--I didn't find a database entry for "CHIPCON2420"
-Warning--I didn't find a database entry for "MICA"
-Warning--I didn't find a database entry for "CrossbowSite"
-Warning--I didn't find a database entry for "APPLICAÇÔES"
-Warning--I didn't find a database entry for "energia"
-Warning--I didn't find a database entry for "MACs"
 Warning--I didn't find a database entry for "mica2"
+Warning--I didn't find a database entry for "crossbow"
+Warning--I didn't find a database entry for "energia"
+Warning--I didn't find a database entry for "ZMAC"
 Warning--I didn't find a database entry for "Germano_Guimarães"
 Warning--I didn't find a database entry for "outros"
 Warning--I didn't find a database entry for "PAPERS_CRIPTENERGIA"
 Warning--I didn't find a database entry for "PAPERS_ENERGIA"
-Warning--I didn't find a database entry for "MAC_ENERGIA"
 Warning--I didn't find a database entry for "VERCITACAODAPILHA"
 Warning--I didn't find a database entry for "MAC"
 Warning--I didn't find a database entry for "ENERGIA2"
@@ -70,7 +63,7 @@ Warning--empty publisher in Attaks_defenses_sec_in_wsn
 Warning--empty year in Attaks_defenses_sec_in_wsn
 You've used 75 entries,
             2118 wiz_defined-function locations,
-            956 strings with 16240 characters,
+            942 strings with 16103 characters,
 and the built_in function-call counts, 24680 in all, are:
 = -- 2469
 > -- 992

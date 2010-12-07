@@ -2,54 +2,53 @@
 RSSF}\label{cap:Plataforma}
 
 Tendo sido abordadas as temáticas relacionadas com a problemática da segurança
-numa RSSF e dos aspectos que concorrem para o seu estudo, nomeadamente no que se
+numa RSSF e os aspectos que concorrem para o seu estudo, nomeadamente no que se
 refere a ambientes de simulação, neste capítulo apresenta-se a arquitectura da
 plataforma de simulação desenvolvida no âmbito deste trabalho. Esta
 plataforma tem como principal objectivo a agilização do desenho de
 topologias de RSSF, integrando unidades modulares que permitam a
 sistematização do processo de análise de protocolos de encaminhamento, antes e
-depois de serem sujeitos a ataques. Esta análise tem em vista o estudo do
+depois de serem sujeitos a ataques. Esta análise tem em vista o estudo
 destes protocolos no que se refere a propriedades de fiabilidade, latência,
 cobertura da rede e consumo de energia.
 
 \section{Consolidação da avaliação do simulador JProwler e a sua
 integração}\label{sec:elab_aval_amb_sim}
 Na concepção da plataforma de simulação, desde logo foi assumida a necessidade 
-de não ser uma solução \textit{from the scratch}, a decisão passou por
+de não ser uma solução \textit{from the scratch}, pelo que a decisão passou por
 estabelecer como ponto de partida um sistema de simulação já existente. Assim
 sendo, e tendo sido apresentados os ambientes tidos em conta para este estudo,
 as hipóteses iam desde a implementação de módulos de avaliação de segurança em
-simuladores mais evoluídos, estando condicionado a um estudo aprofundado da
-arquitectura de cada um, até à alteração profunda e adaptação, dos
-simuladores, a ambientes de RSSF, por forma a simular o comportamento dos
+simuladores mais evoluídos, obrigando a um estudo aprofundado da
+arquitectura de cada simulador, até à alteração profunda e adaptação dos
+simuladores a ambientes de RSSF, por forma a simular o comportamento dos
 sensores durante a sua operação. 
 
-Perante este cenário e tendo em conta os
-objectivos da plataforma que se pretende desenvolver, principalmente com o
-objectivo de integrar componentes orientados para uma avaliação de propriedades
-de segurança e da forma como estas afectam os  protocolos de encaminhamento a
-decisão foi a utilização do simulador JProwler\cite{jprowler}. Esta escolha
-deveu-se fundamentalmente ao facto deste simulador ter um comportamento muito
-semelhante ao de uma rede de sensores uma vez que foi implementado na tentativa
-de se aproximar o mais possível do sistema TinyOS \cite{tinyos} em particular
-simulando as plataformas Mica2 \cite{mica2}.
+Perante este cenário e tendo em conta os objectivos da plataforma que se
+pretendeu desenvolver, principalmente com o objectivo de integrar componentes
+orientados para uma avaliação de propriedades de segurança e da forma como estas
+afectam os  protocolos de encaminhamento a
+decisão foi a utilização do simulador JProwler \cite{jprowler}. Esta escolha
+deveu-se, fundamentalmente, ao facto de este simulador ter um comportamento
+muito semelhante ao de uma rede de sensores, uma vez que foi implementado na
+tentativa de se aproximar o mais possível do sistema TinyOS \cite{tinyos} em
+particular simulando as plataformas Mica2 \cite{mica2}.
 
-O facto do JProwler apresentar uma estrutura minimalista e simples, facilitou o
-entendimento do seu funcionamento e com isto a identificação de  cada componente
-envolvido na simulação, com vista à sua reutilização/extensão para a
-incorporação
-das diversas funcionalidades que se planearam  implementar na plataforma. Uma
-das vantagens da simplicidade do simulador recaí sobre a necessidade que existe
-de interceptar determinados eventos que ocorrem durante a simulação por forma a
-permitir a sua medição. Um exemplo é a necessidade de interceptar o envio e a
-recepção de mensagens com o intuito de medir os consumos energéticos destas
-operações.
+O facto do JProwler apresentar uma estrutura minimalista e simples facilitou o
+entendimento do seu funcionamento e, com isto, a identificação de  cada
+componente envolvido na simulação, com vista à sua reutilização/extensão para a
+incorporação das diversas funcionalidades que se planearam  implementar na
+plataforma. Uma das vantagens da simplicidade do simulador recai sobre a
+necessidade que existe de interceptar determinados eventos que ocorrem durante a
+simulação, por forma a permitir a sua medição. Um exemplo é a necessidade de
+interceptar o envio e a recepção de mensagens com o intuito de medir os consumos
+energéticos destas operações.
 \subsection[Arquitectura do simulador JProwler]{Arquitectura do simulador
 JProwler} 
 \input{pic_sim_jprowler_cd}
-O simulador base, JProwler\cite{jprowler}, é composto por um conjunto de nove
- classes que são representadas no diagrama \ref{fig:jprowler_cd}. Este simulador
-está estruturado em três grupos de funções: a) Motor de simulação, que
+O simulador base, JProwler \cite{jprowler}, é composto por um conjunto de nove
+ classes que são representadas na \figurename{\ref{fig:jprowler_cd}}. Este
+simulador está estruturado em três grupos de funções: a) Motor de simulação, que
 representa o ambiente de operação de uma RSSF, caracterizado pelo gerador de
 eventos discretos e modelos de rádio (Simulator, Event, RadioModel); b)
 Plataformas de execução, que simulam o comportamento dos nós sensores (Node,
@@ -59,10 +58,11 @@ rede.
 Para utilizar este simulador no estudo de um protocolo de encaminhamento,
 tal como existe actualmente, é necessário implementar uma classe derivada de
 Application com a lógica do protocolo. A implementação de uma plataforma sensor,
-disponibilizada no JProwler\cite{jprowler}, é monolítica ou seja não observa uma
+disponibilizada no JProwler\cite{jprowler}, é monolítica, ou seja, não observa
+uma
 divisão por camadas, como a apresentada em \cite{VERCITACAODAPILHA}. É certo
-que nas plataformas físicas observa-se uma forte afinidade entre as camadas do
-sensor, pois, em alguns casos, ao nível aplicação é necessário ter acesso a
+que nas plataformas físicas se observa uma forte afinidade entre as camadas do
+sensor pois, em alguns casos, ao nível aplicação é necessário ter acesso a
 dados da camada MAC ou transporte, de modo a facilitar o controlo do estado da
 aplicação.
 
@@ -75,30 +75,32 @@ ataque.
 
 \subsection[Funcionamento do simulador JProwler]{Funcionamento do simulador
 JProwler} 
-Como já foi referido o simulador procura ir ao encontro do funcionamento dos 
-\textit  {motes} Mica2\cite{mica2_datasheet}  e com o sistema de eventos
-implementado pelo TinyOS\cite{tinyos}. Neste sistema em cada momento apenas está
+Como já foi referido, o simulador procura ir ao encontro do funcionamento dos 
+\textit  {motes} Mica2 \cite{mica2_datasheet}, com o sistema de eventos
+implementado pelo TinyOS \cite{tinyos}. Neste sistema, em cada momento apenas
+está
 a ser tratada uma mensagem, o que faz com que,  caso cheguem várias
 mensagens ao mesmo tempo, algumas mensagens se possam perder. O modelo de rádio
 preconiza um mecanismo de \textit{backoff} em caso de falha na transmissão. A
-introdução de ruído na transmissão é materializada com base numa distribuição de
-Gauss, este ruído permite aproximar-se do comportamento de uma rede real. A
-existência de uma pilha de eventos que executa um conjunto de eventos em cada
-iteração permite simular a ocorrência de diversos eventos em diferentes pontos
-da rede, ao mesmo tempo.
+introdução de ruído (o qual permite aproximar-se do comportamento de uma rede
+real) é materializada com base numa distribuição de
+Gauss. A existência de uma pilha de eventos que executa um conjunto de eventos
+em cada iteração permite simular a ocorrência de diversos eventos em diferentes
+pontos da rede, ao mesmo tempo.
 \input{pic_jprowler}
-A interface gráfica disponibilizada, apenas permite a visualização dos nós 
+A interface gráfica disponibilizada apenas permite a visualização dos nós 
 sensores e a obtenção de alguma informação referente ao estado da transmissão,
-materializada por um código de cores, a possibilidade de dispor um determinado
-nó sensor de forma orientada com recurso a um sistema \textit{drag-and-drop} não
-se encontra disponível. A distribuição dos nós na área de trabalho é realizado
-de forma aleatória, permitindo obter uma rede com alguma homogeneidade no que
+materializada por um código de cores. A possibilidade de dispor um determinado
+nó sensor de forma orientada, com recurso a um sistema \textit{drag-and-drop}
+não se encontra disponível. A distribuição dos nós na área de trabalho é
+realizado de forma aleatória, permitindo obter uma rede com alguma homogeneidade
+no que
 respeita à distribuição dos sensores pela área. A implementação dos sensores,
-não preconiza a existência de diversos estados de operação dos sensores, ou
-seja, à semelhança do que se observa ao nível da gestão de energia de um sensor
+não preconiza a existência de diversos estados de operação dos sensores à
+semelhança do que se observa ao nível da gestão de energia de um sensor
 durante o seu ciclo de vida, com os estados, por exemplo, activo, inactivo e
-adormecido. Estes estados são, normalmente, geridos ao nível MAC dependendo dos
-protocolos que cada sensor implementa\cite{SMAC, BMAC}.
+adormecido. Estes estados são, normalmente, geridos ao nível MAC, dependendo dos
+protocolos que cada sensor implementa.\cite{SMAC, BMAC}
 
 \section{Arquitectura da plataforma de simulação}
 \label{sec:apresent_arch}
@@ -113,14 +115,14 @@ Consola de visualização e controlo de simulação.
 \input{pic_sim_arch}
 \subsection[Simulador base ou motor de simulação]{Simulador base ou motor de
 simulação}
-Como já foi referido o motor de simulação resulta da extensão do simulador 
-JProwler. De uma forma geral, o simulador já implementa os modelos base de um
-RSSF, nomeadamente no que respeita ao modelo de acesso ao meio e no modelo
+Como já foi referido, o motor de simulação resulta da extensão do simulador 
+JProwler. De uma forma geral, o simulador já implementa os modelos base de uma
+RSSF, nomeadamente no que respeita ao modelo de acesso ao meio e ao modelo
 rádio. 
 \subsection{Mecanismo de Configuração}\label{sec:impl_conf}
 Para dotar a plataforma de maior flexibilidade, a existência de um componente
  gestor de configurações revela-se importante. Este componente é transversal a
-toda a plataforma uma vez que os componentes que são passíveis de configuração
+toda a plataforma, uma vez que os componentes que são passíveis de configuração
 contêm lógica associada para que as parametrizações possam ser persistentes e
 portáveis. Foi adoptada a tecnologia XML para a definição dos ficheiros de
 configuração das simulações. Os ficheiros de configuração da plataforma são
@@ -130,8 +132,8 @@ funcionalidades vão desde as configurações dos parâmetros do simulador base, até
 possibilitar a repetição de experiências nas mesmas condições.
 
 \subsection[Camada de instrumentação]{Camada de instrumentação}
-Esta camada contém um conjunto de ferramentas que controlam a simulação 
-nomeadamente no que respeita aos mecanismos principais que se pretendeu
+Esta camada contém um conjunto de ferramentas que controlam a simulação, 
+nomeadamente no que respeita aos mecanismos principais que se pretenderam
 implementar na plataforma: 
 \subsubsection{Mecanismo de Geração de Topologias}\label{sec:impl_topo}
 As RSSF, normalmente, são caracterizadas por diferentes formas de distribuição
@@ -139,26 +141,25 @@ dos nós sensores. Estas distribuições podem ser essencialmente divididas em dois
 aleatório e estruturado. Sabe-se que, de facto, a
 topologia da rede pode influenciar o comportamento de um protocolo de
 encaminhamento. No sentido de permitir a análise do impacte de
-diferentes topologias nos protocolo, a plataforma dispõe, de um componente cuja
+diferentes topologias nos protocolo, a plataforma dispõe de um componente cuja
 função é gerar/desenhar topologias de rede. 
 
 A plataforma oferece, de forma automática, a geração de três tipos de
 topologias: 1) aleatória, delimitada pela área seleccionada; 2) em grelha,
 mediante a introdução da distância entre cada sensor, também numa área
-delimitada; 3) orientada, posicionado onde se pretende introduzir um
+delimitada; 3) orientada, posicionado o cursor onde se pretende adicionar um
 sensor. Os primeiros dois modos permitem estabelecer uma primeira
 distribuição, que seguidamente pode ser ajustada manualmente, de modo a desenhar
 uma topologia estruturada específica, através da introdução
 orientada de sensores, como é o exemplo da estação base. A remoção de sensores
-também é disponibilizada como forma de customização de topologias podendo se
-criar, por exemplo, zonas sem sensores para testar determinada topologia. 
-
+também é disponibilizada como forma de customização de topologias podendo
+criar-se, por exemplo, zonas sem sensores para testar determinada topologia. 
 \input{pic_topologias}
 Este componente possibilita a sua extensão para adição de novas
 topologias, geradas de forma automática (específicas para determinada
 simulação/avaliação). Uma vez que se pretende possibilitar o estudo
-comparativo de protocolos é dotado de uma mecanismo persistência que
-possibilita a reutilização, de determinada topologias, em diferentes
+comparativo de protocolos está dotado de um mecanismo de persistência que
+possibilita a reutilização de determinadas topologias, em diferentes
 experiências.
 
 \subsubsection{Mecanismo de Gestão de Consumo de Energia}
@@ -173,33 +174,34 @@ segurança, é necessário recorrer a maior computação, transmissão de dados de
 forma segura e capacidade de verificação de determinadas propriedades de
 segurança. 
 
-Sendo reconhecida a importância desta ferramenta os princípios
-orientadores para a sua implementação foram: i) Tornar a expressividade destes
+Sendo reconhecida a importância desta ferramenta, os princípios
+orientadores para a sua implementação foram:i) Tornar a expressividade destes
 consumos na lógica dos protocolos o mais transparente possível; ii) Adoptar um
 modelo o mais próximo possível da realidade, principalmente no que refere aos
 consumos de cada operação de um nó sensor; iii) Parametrização do modelo de
 energia por forma a permitir a calibração o mais próxima do valores reais; iv)
-Capacidade para analisar em pós processamento os dados resultantes da análise de
-consumo energético, para a elaboração de gráficos representativos dos resultados
-obtidos; v) Capacidade de, em tempo real, prever os perfis de consumo.
+Capacidade para analisar em pós-processamento os dados resultantes da análise
+de consumo energético, para a elaboração de gráficos representativos dos
+resultados obtidos; v) Capacidade de, em tempo real, prever os perfis de
+consumo.
 \input{pic_energia}
 Na \figurename\ \ref{fig:energy} é possível observar, em primeiro lugar, o
 consumo de um nó específico, em função do tempo. Em segundo lugar, observa-se o
 estado global da bateria de um conjunto de sensores. Esta visualização contribuí
 para a afinação da análise e dos testes, nomeadamente nas experiências que
-possuam execuções mais longas, no fundo permite a ante-visão dos comportamentos
+possuam execuções mais longas. No fundo, permite a antevisão dos comportamentos
 dos protocolos, no que respeita a perfis de consumo de energia. 
 
 \subsubsection{Mecanismo de Injecção de Falhas /Ataques}
 \label{sec:impl_ataques}
 Para que se possa avaliar a segurança nos protocolos de encaminhamento é
-necessário sujeita-los a ataques que possam expor as suas capacidades e
-vulnerabilidades de mitigar os efeitos dos atacantes. A não existência de um
-simulador que permita a indução de ataques de forma generalista, evidencia a
+necessário sujeita-los a ataques que possam expor as suas vulnerabilidades e
+as suas capacidades de mitigar os efeitos dos atacantes. A não-existência de um
+simulador que permita a indução de ataques de forma generalista evidencia a
 pertinência deste componente como factor diferenciador desta plataforma face a
 outras existentes. Das características que se podem encontrar neste componente
 evidenciam-se as seguintes:
-i)Componente flexível permitindo adaptar-se à lógica de cada algoritmo; ii)
+i) Componente flexível permitindo adaptar-se à lógica de cada algoritmo; ii)
 permite a visualização do código malicioso em tempo de execução, por forma a
 perceber comportamentos dos protocolos face ao ataque; iii) Permite acrescentar
 mais modelos de ataques, dos já tipificados neste relatório ou de outros que
@@ -209,8 +211,8 @@ Com o mecanismo de injecção de ataques procura-se tornar o mais intuitiva
 possível a sua utilização, baseando-se numa API simples e genérica. A integração
 com a consola de visualização permite identificar visualmente os sensores
 maliciosos face aos outros sensores. Assim, também é possível activar o modo de
-ataque em cada um dos sensores bem como seleccionar o ataque que se pretende
-observar, podendo coexistir diversos ataques. No entanto, está limitada a
+ataque em cada um dos sensores, bem como seleccionar o ataque que se pretende
+observar, podendo coexistir diversos ataques. No entanto, está limitada à
 operação de apenas um ataque de cada vez em cada sensor. No que se refere a
 avaliação, é possível medir o impacte do ataque pelo número de mensagens que
 atravessam os nós atacantes, ou pela observação do impacte nas propriedades
@@ -228,16 +230,17 @@ Esta abstracção é representada por intermédio de um modelo parametrizável de
 testes e da consequente recolha de resultados associados a cada teste. 
 
 \paragraph[]{Módulo de Cobertura/Fiabilidade/Latência da Rede}
-Mediante as tipologias de ataques estudadas, observa-se que, uma das
-resultantes destes ataques é a possibilidade de criação de partições na rede,
-limitação nas comunicações de modo selectivo ou alteração total ou
+Mediante as tipologias de ataques estudadas, observa-se que algumas das
+resultantes destes ataques são a possibilidade de criação de partições na rede,
+a limitação nas comunicações de modo selectivo ou alteração total ou
 parcial da informação de encaminhamento, resultando, em qualquer um dos casos,
-na perda de dados e com isto o comprometimento da finalidade da aplicação.
+na perda de dados e, com isto, o comprometimento da finalidade da aplicação.
 Assim, interessa desde logo observar a capacidade de resistência de um protocolo
 quando sujeito a determinados ataques e aferir qual o nível de disponibilidade
 da rede durante estas fases. Não obstante este facto, a rede
-deverá sempre ser medida, complementarmente, durante o seu funcionamento normal
-ou seja não sujeito a ataques. Com este módulo, é possível medir as propriedades
+deverá sempre ser medida, complementarmente, durante o seu funcionamento normal,
+ou seja, não sujeito a ataques. Com este módulo, é possível medir as
+propriedades
 de cobertura, fiabilidade e latência da rede seguindo as seguintes as
 definições:
 \begin{description}
@@ -246,7 +249,7 @@ conseguir comunicar com um qualquer outro sensor, utilizando o protocolo
 de encaminhamento implementado. A análise resultante da observação
 desta propriedade pode ser comparada com a cobertura física estabelecida pela
 comunicação rádio. Interessa portanto realçar que apesar de todos os sensores de
-uma rede estarem cobertos em certa medida, por comunicação rádio, isso não é
+uma rede estarem cobertos, em certa medida, por comunicação rádio, isso não é
 condição suficiente para garantir a transmissão de dados de um qualquer
 ponto A para um qualquer ponto B, uma vez que podem existir partições na rede,
 sejam estas causadas por ataques ou por falhas energéticas dos sensores
@@ -256,18 +259,18 @@ fronteira de cada partição.
 comunicação face ao modo de transmissão, modo este que compreende toda a camada
 de software utilizada na arquitectura de um sensor. Assim, o resultado da
 análise desta medida indica o índice de qualidade de informação  que um
-qualquer sensor pode enviar para outro. É medida tendo em conta o numero de
+qualquer sensor pode enviar para outro. É medida tendo em conta o número de
 mensagens enviadas, face às mensagens recebidas, entre quaisquer dois sensores
-de uma rede, tipicamente um sensor gerador de eventos e uma estação base.
-Alguns parâmetros podem ainda afectar os resultados observados, como por
-exemplo o número de retransmissões de cada mensagem e o intervalo de tempo
-entre o envio de cada mensagem, que, quando mal parametrizados podem contribuir
-para a perda de qualidade de comunicação na rede, por saturação da rede.
+de uma rede (tipicamente um sensor gerador de eventos e uma estação base).
+Alguns parâmetros podem ainda afectar os resultados observados como, por
+exemplo, o número de retransmissões de cada mensagem e o intervalo de tempo
+entre o envio de cada mensagem que, quando mal definidos, podem contribuir
+para a perda de qualidade de comunicação na rede, pela sua saturação.
 
 \item[Latência:] Tratando-se de redes, a latência é uma métrica
-sempre a ter presente na sua analise. Esta medida pode ser efectuada
+sempre a ter presente na sua análise. Esta medida pode ser efectuada
 de duas formas: a) por tempo decorrido no envio de mensagens entre dois pontos;
-b) por numero de nós percorridos no envio de mensagens entre dois pontos. A
+b) por número de nós percorridos no envio de mensagens entre dois pontos. A
 primeira pode ser difícil de medir, uma vez que se trata de um sistema simulado,
 em que o factor tempo nem sempre tem a resolução que permite aferir com
 rigor a qualidade desta medida. No segundo caso, o número de \textit{hops}
@@ -281,15 +284,15 @@ muito comuns em RSSF), torna-se também importante considerar o tempo como
 unidade de medida a avaliar.
 \end{description}
 
-A avaliação de um protocolo de encaminhamento, preconiza a repetição de
+A avaliação de um protocolo de encaminhamento preconiza a repetição de
 baterias de testes e a variação de alguns parâmetros como base
 de comparação de resultados. Desta forma podem-se observar tendências e
-comportamentos da rede. O modelo de execução de testes e recolha de resultados
-segue um modelo que permite sistematizar a sua re-utilização face a
+comportamentos da rede. O modelo de execução de testes e recolha de
+resultados permite sistematizar a sua re-utilização face a
 diversas distribuições de RSSF e protocolos implementados. Este componente do
-simulador é importante uma vez que permite agilizar o estudo e concentrar nas
+simulador é importante, uma vez que permite agilizar o estudo e concentrar nas
 experiências o foco da avaliação de um protocolo de encaminhamento de dados.
-Assim sendo, compreende-se como experiência, uma simulação com as seguintes
+Assim sendo, compreende-se, como experiência, uma simulação com as seguintes
 propriedades:
 \begin{enumerate}
 \item Topologia bem definida (aleatória, em grelha ou estruturada);
@@ -300,53 +303,55 @@ propriedades:
 \end{enumerate}
 
 Estas propriedades permitem sistematizar a avaliação de um qualquer protocolo
-de encaminhamento de dados seja ele seguro ou não. Para avaliar quaisquer
+de encaminhamento de dados, seja ele seguro ou não. Para avaliar quaisquer
 protocolos é possível cruzar estas propriedades de diversas formas e comparar os
 resultados com uma abordagem metódica. O que se observa em alguns
 simuladores é que a forma de implementação dos testes é diferente em cada
-protocolo o que pode levar a diferenças que influenciem os resultados. Com a
-definição destes critérios e da metodologia genérica de avaliação de protocolos
+protocolo, o que pode levar a diferenças que influenciem os resultados. Com a
+definição destes critérios e da metodologia genérica de avaliação de protocolos,
 é possível, efectivamente, ter a mesma base de comparação para protocolos
-diferentes, permitindo afinar as conclusões no que concerne ao seu comportamento
-em termos de segurança e no impacte nas propriedades que se pretende
-observar.Esta abordagem transforma-se assim num contributo de inovação para o
-estudo de protocolos de encaminhamento em RSSF, observando também as
+diferentes, permitindo afinar as conclusões no que concerne ao seu
+comportamento. Esta abordagem transforma-se assim num contributo de inovação
+para o estudo de protocolos de encaminhamento em RSSF, observando também as
 características de segurança.
 
 \subsection{Consola de Visualização e Controlo de Simulação}
 \label{sec:impl_visual}
-Como componente integrador de toda a plataforma foi desenvolvido uma consola de
-operação, que permite interagir com o simulador de forma intuitiva e fácil,
-facilitando o processo de experimentação durante todo o seu ciclo. Como tal,
+Como componente integrador de toda a plataforma, foi desenvolvida, uma consola
+de operação que permite interagir com o simulador de forma intuitiva e fácil,
+simplificando o processo de experimentação durante todo o seu ciclo. Como tal,
 foi implementado um componente de visualização gráfica de toda
 a simulação, com capacidade de controlo de parâmetros de execução e
-configuração, obtenção de resultados da execução de testes.
+configuração e obtenção de resultados da execução de testes.
 \input{pic_simulator}
 A \figurename \ \ref{fig:simulador_view} apresenta uma imagem do simulador
-durante a execução expondo algumas das funcionalidades disponíveis para a
+durante a execução, expondo algumas das funcionalidades disponíveis para a
 avaliação de protocolos. 
 \subsection{API para implementação de protocolos de encaminhamento}
 Uma vez que o ponto de partida da plataforma é uma simulador que respeita uma
-API, com a integração de novas funcionalidades com características de 
+API, com a integração de novas funcionalidades, com características de 
 avaliação em diferentes camadas do \textit{software} das plataformas
 sensoriais, surge um conjunto de interfaces que garantem a inter-operação entre
-os protocolos e o simulador facilitando a medição das propriedades já indicadas.
+os protocolos e o simulador, facilitando a medição das propriedades já
+indicadas.
 No capítulo seguinte é possível observar alguns destes interfaces que tornam a
-utilização de algumas funcionalidades o mais transparente possível por forma a
+utilização de algumas funcionalidades o mais transparente possível, por forma a
 permitir o mesmo tipo de acções de avaliação, que contribuem para uma melhor
 sistematização da análise entre diversas implementações de protocolos.\\
 \section{Metodologia de utilização da plataforma}
 Pretende-se com esta plataforma contribuir para uma metodologia de avaliação de
-protocolos de encaminhamento, principalmente, facilitando a comparação de
+protocolos de encaminhamento facilitando, principalmente, a comparação de
 diferentes protocolos. Assim, assumiu-se desde cedo a necessidade de
 estabelecer um modelo de utilização da plataforma, modelo este que não é
-obrigatório para a realização de avaliações com esta ferramenta. Sendo, no
-entanto, o utilizado na prova de conceito, tendo-se constatado que facilita 
-uma abordagem iterativa de análise. com vista a melhorar/refinar os resultados
+obrigatório para a realização de avaliações com esta ferramenta. No
+entanto, este modelo foi utilizado na prova de conceito, tendo-se constatado
+que facilita uma abordagem iterativa de análise. com vista a melhorar/refinar
+os resultados
 obtidos.
-Esta metodologia tem três fases, que serão descritas sumariamente de
-seguida, sendo que a segunda e terceira fase podem ser feitas uma vez e usadas
-em diferentes protocolos estabelecendo-se logo como uma base de comparação
+Esta metodologia desenvolve-se por três fases, que serão descritas
+sumariamente de seguida, sendo que a segunda e terceira fase podem ser
+realizadas uma vez e usadas
+em diferentes protocolos, estabelecendo-se logo como uma base de comparação
 para outros protocolos que se pretenda estudar.
 \subsection{Implementação de protocolo}
 Esta fase compreende a implementação da especificação do protocolo em estudo. A
@@ -355,24 +360,25 @@ interfaces requeridos para a instrumentação do simulador representam as únicas
 obrigatoriedades na implementação. Uma vez feito isto, algumas funcionalidades
 apresentam-se disponíveis sem que se tenha feito qualquer esforço
 adicional, como é o caso, por exemplo, dos consumos energéticos de transmissão,
-recepção e mudança de estados dos sensor. No \chaptername{
-\ref{cap:implementacao}} serão apresentados mais detalhes quanto a esta fase.
+recepção e mudança de estados dos sensores. 
+%No \chaptername{
+%\ref{cap:implementacao}} serão apresentados mais detalhes quanto a esta fase.
 \subsection{Caracterização do ambiente de simulação}
-A caracterização do ambiente de simulação, refere-se essencialmente ao ambiente
-de operação que se pretende estudar. A definição de características de operação
-como por exemplo: 1) alcance rádio; 2) topologias de rede; 2) atenuação
-radio ambiental; 4) altitude do terreno; 5)   definição de nós base e a sua
-localização; permite estabelecer um modelo de simulação que persiste entre
+A caracterização do ambiente de simulação refere-se, essencialmente, ao ambiente
+de operação que se pretende estudar. A definição de características de operação(
+como por exemplo, alcance rádio, topologias de rede, atenuação
+radio ambiental, altitude do terreno e definição de nós base e a sua
+localização) permite estabelecer um modelo de simulação que persiste entre
 diferentes experiências, retirando algum custo de configuração e permitindo uma
-abordagem incremental pela realização de pequenos ajustes resultante da
-observação de resultados face a comportamentos não esperados.
+abordagem incremental pela realização de pequenos ajustes decorrentes da
+observação de resultados na presença de comportamentos não esperados.
 \subsection{Execução/análise de testes e
 resultados}\label{sec:ss_exec_tests_results}
 A realização de testes, através do envio de mensagens em nós distintos da rede,
-foi a abordagem metodológica estabelecida para avaliação de um protocolo de
+foi a abordagem metodológica estabelecida para a avaliação de um protocolo de
 encaminhamento em RSSF. Seguindo o princípio de comparação entre diversos
-protocolos a persistência destes testes permitem a criação de baterias
-específicas de testes quem concorrem para o melhoramento das análise e a
+protocolos a persistência destes testes permite  a criação de baterias
+específicas de testes, que concorrem para o melhoramento da análise e para a
 construção de uma base de comparação para futuras implementações.
 Os parâmetros existentes num teste são os seguintes:
 \begin{itemize}
@@ -382,23 +388,27 @@ Os parâmetros existentes num teste são os seguintes:
  \item Número de mensagens enviadas;
  \item Intervalo de tempo entre cada envio;
  \item Número de retransmissões;
- \item Ataque activo;  
+ \item Ataque activo.
 \end{itemize}
-A figura seguinte apresenta a janela que possibilita a especificação de testes
-tendo por base os parâmetros enunciados podendo-se observar a facilidade
+A figura seguinte apresenta a janela que possibilita a especificação de testes,
+tendo por base os parâmetros enunciados, podendo-se observar a facilidade
 existente para tornar estes testes persistentes. Uma vez executado o teste
-importa observar os resultados por forma a coligi-los para análise gráfica dos
+importa observar os resultados, por forma a coligi-los para análise gráfica dos
 dados.
 \input{pic_results}
 \input{pic_tests}
-Com este modelo de testes entende-se ser possível sujeitar os protocolos a
-condições que permitem levar a cabo a medição em cada topologia e ataque por
-forma a facilitar o seu estudo e a sistematizar as experiências. Uma vez que a
-implementação de toda a plataforma foi realizada em Java será sempre possível
-estender as funcionalidades por forma a incorporar novos modelos de avaliação e
+Com este modelo de testes, representados na
+\figurename{\ref{fig:simulador_view}} e na \figurename{\ref{fig:results_view}}
+entende-se ser possível sujeitar os protocolos a
+condições que permitem levar a cabo a medição em cada topologia e em cada
+ataque, por forma a facilitar o seu estudo e a sistematizar as experiências. Uma
+vez que a implementação de toda a plataforma foi realizada em Java será sempre
+possível
+estender as funcionalidades de maneira a incorporar novos modelos de
+avaliação e
 novas abordagens ou metodologias que enriqueçam o estudo das RSSF, nomeadamente
 no que concerne à problemática da segurança de protocolos de encaminhamento de
-dados, funcionalidade representada pela figura X. 
+dados. 
 
 %\subsubsection{Avaliação da Solução}\label{sec:aval_solucao}
 %Uma vez que a contribuição efectiva para a componente de investigação de
