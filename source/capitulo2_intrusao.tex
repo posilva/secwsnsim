@@ -1,6 +1,7 @@
 \subsection{Ataques por Intrusão/Replicação}
 Alguns dos ataques tipificados anteriormente podem ser desencadeados a partir de nós
-maliciosos, \cite{Sinkhole_attack} introduzidos na rede de forma incorrecta e, posteriormente,
+maliciosos \cite{Sinkhole_attack}, introduzidos na rede de forma incorrecta e,
+posteriormente,
 replicados. Os ataques por intrusão nas RSSF são tipificados pela capacidade de um
 atacante se apropriar de material criptográfico que, durante o desenrolar do protocolo de
 encaminhamento, lhe permita participar nas comunicações, fazendo passar-se por um nó legítimo. Este
@@ -18,16 +19,18 @@ algumas condições para a indução de outros ataques.
 \begin{descriptionNoIndent}
 \item[Autenticação central] Uma primeira forma de defesa contra replicação é a
 autenticação dos nós, numa estação central, usando os seus identificadores e permitindo
-detectar inconsistências ou duplicações\cite{INSENS}.
+detectar inconsistências ou duplicações \cite{INSENS}.
 \item[Múltiplas Rotas] A existência de diversos caminhos para entregar uma mensagem
 no destino faz com que se possa aliar a tolerância a falhas à resistência a intrusões. Assim, se a
-mensagem for interceptada por um intrusor, existe alta probabilidade de esta alcançar o
+mensagem for interceptada por um intruso, existe alta probabilidade de esta
+alcançar o
 destino, usando outro dos caminhos de envio \cite{INSENS}.
 \item[Detecção de replicação] Perrig e Parno em \cite{Parno2005}
 apresentam mecanismos de detecção distribuída de replicações. Um dos mecanismos é de carácter
-aleatório \textit{Randomized Multicast} e outro, denominado por \textit{Line-Selected Multicast},
-serve-se do modelo de comunicação multi-\textit{hop} da rede para detectar nós duplicados.
-Outro exemplo é o a criação de estruturas auxiliares (ex: árvores binárias), como acontece no
-protocolo \textit{Clean-Slate} \cite{clean_slate}. 
+aleatório (\textit{Randomized Multicast}) e outro, denominado por
+\textit{Line-Selected Multicast}, serve-se do modelo de comunicação
+multi-\textit{hop} da rede para detectar nós duplicados.
+Outro exemplo é o da criação de estruturas auxiliares (ex: árvores binárias),
+como acontece no protocolo \textit{Clean-Slate} \cite{clean_slate}. 
 \end{descriptionNoIndent}
 

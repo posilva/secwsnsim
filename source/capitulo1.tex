@@ -7,9 +7,11 @@ desempenhar tarefas específicas. Estes avanços permitiram integrar, nesses siste
 miniaturizados, memória, dispositivos de processamento de sinal e de conversão analógica-digital
 para a detecção de diferentes fenómenos físicos (através de diversos tipos de sensores) e
 capacidades de comunicação sem fios por rádio frequência (com base nas normas 802.15.4 
-\cite{ietf_802154,zigbee_802154} e Zigbee \cite{zigbee_802154})). A possibilidade de construção
+\cite{ietf_802154,zigbee_802154} e Zigbee \cite{zigbee_802154}). A possibilidade
+de construção
 destes dispositivos (que se designam mais simplesmente por nós sensores) fez surgir, nos últimos
-anos, um novo campo da investigação conhecido por redes de sensores sem fios (RSSF).
+anos, um novo campo da investigação, conhecido por redes de sensores sem fios
+(RSSF).
 
 Uma RSSF é formada por um conjunto de dispositivos com as características descritas anteriormente,
 distribuídos numa certa área geográfica, que podem funcionar de forma autónoma ou sem supervisão
@@ -20,7 +22,8 @@ ser formadas por um menor ou maior número de sensores, permitindo cobrir desde p
 industrial, uma área de combate, uma vasta zona de monitorização de um habitat natural, um veículo
 ou o próprio corpo humano \cite{apps_tracking,app_monitor,app_health,Akyildiz2002}.
 
-A componente básica e fundamental de uma rede de sensores é, pois, o nó sensor (também designado por
+O componente básico e fundamental de uma rede de sensores é, pois, o nó sensor
+(também designado por
 \textit{mote}) \cite{mica2_datasheet, btnodes,sunspotworld,micaz}. Cada um destes nós constitui um
 substrato computorizado que pode possuir diversos sensores para monitorizar, por exemplo,
 temperatura, luz, movimento e outros fenómenos físicos, consoante as necessidades das aplicações.
@@ -43,13 +46,15 @@ redes e sub-sistemas externos). Uma RSSF pode ser concebida de forma a ser inter
 infraestruturas computacionais que, com maior capacidade de armazenamento e processamento, permitem
 efectuar análise de dados coligidos. Na tecnologia actual existem ainda nós de desenvolvimento, que
 possuem ligações a computadores (ex: ligação de rede \textit{Ethernet}, RS-232 ou USB), permitindo o
-carregamento expedito de código desenvolvido em estações de desenvolvimento. Os
+carregamento expedito de código em estações de desenvolvimento. Os
 sensores dotados de ligações Ethernet, RS-232 ou USB podem ainda funcionar como nós de tipo
 \textit{gateway},
 permitindo, num cenário concreto, ligar a rede de sensores a aplicações, executando em sistemas de
 computadores usuais \cite{gateways}.
-\subsection{Caracterização de RSSF}\label{sect:subsec_caracterizacao_wsn}
-As redes de sensores sem fios podem ser abordadas como um caso especial de redes \textit{ad-hoc},
+\subsection{Redes de Sensores Sem Fios - RSSF}
+\label{sect:subsec_caracterizacao_wsn}
+As redes de sensores sem fios podem ser abordadas como um caso especial de redes
+\textit{ad-hoc},
 embora exibam características específicas \cite{Corson1999}. As RSSF para aplicações de larga escala
 fazem emergir algumas problemáticas inerentes a aplicações distribuídas, com especificidades e
 desafios próprios \cite{Coulouris_sd4ed}, nomeadamente ao nível dos mecanismos de gestão, da
@@ -63,7 +68,8 @@ autónomo destas redes oferece um sem número de vantagens que propicia a sua util
 remotos de acessibilidade difícil e onde não é possível a sua manutenção e supervisão. De entre as
 aplicações das RSSF, podem destacar-se as seguintes: 
 \begin{descriptionNoIndent}
- \item \textbf{Detecção de alvos/objectos(\textit{Target Tracking}):}  \cite{apps_tracking}
+ \item \textbf{Detecção de alvos/objectos (\textit{Target Tracking}):} 
+\cite{apps_tracking}
 associada à detecção de movimento (trajectória/presença) em áreas vigiadas (como, por exemplo, em
 teatros operacionais militares ou na vigilância e monitorização de recursos ou infraestruturas);
  \item \textbf{Monitorização de fenómenos naturais:}  \cite{app_monitor}
@@ -128,15 +134,19 @@ como um desafio à concepção de RSSF que operem em condições de segurança. Este d
 relevante quando a análise de segurança pode envolver a avaliação de diferentes modelos e hipóteses
 de adversário \cite{Dolev1983,Parno2005} e tipologias de
 ataques \cite{Attaks_defenses_sec_in_wsn,Karlof2003}. Estas tipologias nem sempre são estudadas de
-forma sistemática e comparativa, na abordagem de diferentes protocolos de encaminhamento seguro que
+forma sistemática e comparativa na abordagem a diferentes protocolos de
+encaminhamento seguro que
 vão sendo propostos. Por outro lado, existe uma dificuldade adicional em poder conjugar-se o estudo
 das contra-medidas de segurança importantes com a sua avaliação experimental face à implementação.
 Para cada protocolo interessa medir o impacte que diferentes tipologias de ataques podem
 ter, nomeadamente, em cenários de grande escala, o que exige a utilização de sistemas de simulação
 \cite{ns2,jsim,SENSE,shox,jprowler,freemote} de RSSF que permitam simular diferentes hipóteses de
-ataque e antecipar o seu impacte. Este impacte deve ser analisado não apenas no que refere ao
-comportamento dos protocolos mas, complementarmente, no que refere à forma como afectam a própria
-rede nomeadamente, em termos de consumo de energia, fiabilidade e latência. Um sistema que suprima
+ataque e antecipar o seu impacte. Este impacte deve ser analisado não apenas no
+que se refere ao
+comportamento dos protocolos mas, complementarmente, no que diz respeito à forma
+como afectam a própria
+rede, nomeadamente em termos de consumo de energia, fiabilidade e latência. Um
+sistema que suprima
 estas dificuldades contribui para um mais rápido desenvolvimento e uma afinação mais cuidada de
 determinados parâmetros dos protocolos, com vista a garantir as propriedades de segurança desejadas
 para o ambiente de operação das RSSF, em condições mais realistas.
@@ -151,7 +161,8 @@ serem seguros, e possui, em particular, as
 seguintes funcionalidades: 
 \begin{itemize}
 \item Interface de visualização e configuração da rede com informações dos parâmetros de simulação e
-informação de cada nó (por exemplo, o seu estado energético, identificador, camadas da pilha ); 
+informação de cada nó (por exemplo, o seu estado energético, identificador,
+camadas da pilha); 
 \item Implementação de um modelo de energia que permite extrair consumos em diferentes momentos de
 operação: operação normal e operação perante determinado ataque; 
 \item Modelo de geração de topologias, podendo estas ser definidas como: distribuição
@@ -159,16 +170,26 @@ aleatória, distribuição em grelha, distribuição controlada (estruturada);
 \item Mecanismo de introdução de falhas/ataques na rede. Com este mecanismo pretende-se permitir o
 estudo do comportamento dos protocolos face à possibilidade de introduzir ataques tipificados; 
 \item Utilitários de recolha de dados da simulação, em tempo real e em tempo diferido, que permitam
-a extracção de medições referentes a propriedades importantes, como consumos de energia, latência,
-fiabilidade, correcção do protocolo e correcção dos eventos, disponibilizando-os de forma gráfica. 
+a extracção de medições referentes a propriedades importantes, como consumos de
+energia, latência, cobertura e fiabilidade disponibilizando-os de forma
+gráfica. 
 \end{itemize}
-O ambiente de simulação em causa permite estudar, sistemática e comparativamente, diferentes
-protocolos de encaminhamento seguro em RSSF. Contribui, ainda, com o estabelecimento de uma base
-de comparação, pelo desenvolvimento de um protocolo, para futuras avaliações de
-outros protocolos emergentes. Esta avaliação é referente ao impacte que os
-mecanismos de segurança têm sobre propriedades tão importantes como: o consumo
-de energia, a cobertura da rede, a latência das comunicações, correcção dos
-dados e do protocolo. Estas propriedades são,
+Com a concepção deste ambiente de simulação, para além de se contribuir com uma
+plataforma orientada para o estudo, sistemático e comparativo, de diferentes
+protocolos de encaminhamento seguro em RSSF, numa perspectiva da avaliação de
+condições de segurança e fiabilidade do encaminhamento de dados. Contribui-se
+ainda, com a implementação de um protocolo de encaminhamento seguro de
+referência. Este protocolo, o INSENS, constitui uma base de comparação com 
+protocolos emergentes, servindo simultaneamente como prova de conceito da
+utilização da plataforma. A definição de uma metodologia de
+avaliação pré-definindo um conjunto de topologias, testes, ataques e
+parametrizações  possibilita a sua reutilização na avaliação de outros
+protocolos, com uma análise comparativa dos resultados. Esta avaliação é
+referente ao impacte que os mecanismos de segurança têm sobre propriedades tão
+importantes como: o consumo de energia, a cobertura da rede, a latência das
+comunicações, e fiabilidade da rede. Estas propriedades que são,
 normalmente,extrapoladas da implementação experimental em pequena escala ou da
 adopção de modelos matemáticos, os quais, devido a variáveis externas, próprias
-do ambiente de operação, se podem  afastar bastante dos resultados reais.
+do ambiente de operação, se podem  afastar bastante dos resultados reais, podem
+com este ambiente ser afinadas de forma iterativa por forma a se aproximarem o
+mais possível de valores e comportamentos reais.

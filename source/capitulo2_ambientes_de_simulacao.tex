@@ -10,11 +10,11 @@ importante destes ambientes é a capacidade de repetição de
 experiências, perante as mesmas condições, facilitando, assim, uma análise sistemática do objecto de
 estudo.
 
-Nesta secção, apresentam-se diversos ambientes de simulação, mais comuns, e que permitam simular um
-sistema de RSSF. Foram seleccionados, em primeiro lugar, seguindo critérios relacionados com 
-engenharia de \textit{software}. Seguidamente, com vista à avaliação de um ambiente que se mostre
-adequado para ser utilizado no trabalho de dissertação, foram estabelecidos critérios relacionados
-com as RSSF.
+Nesta secção, apresentam-se diversos ambientes de simulação, mais comuns, e que
+permitem simular um sistema de RSSF. Foram seleccionados, em primeiro lugar,
+ critérios relacionados com engenharia de \textit{software}, por se
+pretender a concepção de uma plataforma de simulação. Em segundo lugar,
+critérios relacionados com as RSSF, considerados no âmbito deste trabalho.
 
 \subsection{Critérios Relacionados com Engenharia de Software}
 \begin{description}\descvspace	
@@ -27,22 +27,23 @@ obstáculos inerentes a licenciamento de \textit{software}, ao mesmo tempo que
 possibilita a análise e aproveitamento de todas as funcionalidades existentes,
 permitindo introduzir algumas melhorias ou alterações específicas.
 \item[Modularidade e extensibilidade] Tendo em conta que os ambientes não
-possuem todos as mesmas características e funcionalidades e, considerando que
-a componente experimental da dissertação irá introduzir novos
-mecanismos, o princípio da modularidade e da fácil extensibilidade facilitará o desenrolar do
-trabalho.
-\item[Documentação] Alguns ambientes podem não estar bem documentados. Este critério será
-importante como ponto de partida para o aprofundamento do conhecimento de cada uma das
-arquitecturas destas ferramentas.
+possuem todos as mesmas características e funcionalidades, o princípio da
+modularidade e da fácil extensibilidade permitiu avaliar a base de simulação a
+adoptar para a plataforma.
+\item[Documentação] Alguns ambientes não se encontram bem documentados. Este
+critério foi importante como ponto de partida para o aprofundamento do
+conhecimento de cada uma das arquitecturas destas ferramentas.
 \end{description}
 \subsection{Critérios Relacionados com as RSSF}
-\begin{description}\descvspace
+\begin{description}%\descvspace
 \item[Escalabilidade da Rede] Uma das características mais importantes das RSSF é o conceito de
-escala, que se deve ao facto de estas compreenderem, normalmente, um grande número de sensores
-distribuídos por uma vasta área. Assim, é importante que o ambiente de simulação possa suportar
-experiências com milhares de nós, uma vez que o factor escala é um das propriedades que se querem
-ver analisadas no trabalho a desenvolver;
-\item[Modelo de Colisões/Comunicação Rádio] É fundamental que este modelo se encontre presente no
+escala, o que se deve ao facto de estas compreenderem, normalmente, um grande
+número de sensores
+distribuídos por uma vasta área. Assim, é importante que o ambiente de simulação
+suporte experiências com milhares de nós, uma vez que o factor escala é uma das
+propriedades observadas neste trabalho;
+\item[Modelo de Colisões/Comunicação Rádio] É fundamental que este modelo se
+encontre presente no
 sistema de simulação, por ser um componente base das RSSF, relacionado com a camada de
 acesso ao meio e de ligação de dados (ex: B-MAC, S-MAC) \cite{BMAC,SMAC};
 \item[Modelo de Gestão de Energia] A existência de um modelo de energia permitirá adaptar esta
@@ -56,14 +57,17 @@ estáticas ou de pouca mobilidade, a existência de um modelo de mobilidade poderá
 a avaliação dos comportamentos dos protocolos, mediante esta propriedade;
 \item[Interface de Visualização] É importante que o ambiente de simulação possua uma interface de
 visualização, permitindo uma percepção mais fácil dos comportamentos dos protocolos (ex:
-topologia, cobertura), bem como o controlo da simulação e extracção de resultados.
+topologia, cobertura), bem como o controlo da simulação e extracção de
+resultados;
 \item[Modelo de Gestão de Topologia] Um factor que pode influenciar o comportamento de
 um protocolo de encaminhamento é a topologia. Como tal, é relevante a existência deste modelo por
 forma a avaliar os protocolos desenhados, perante diferentes topologias.
 \end{description}
 \subsection{Prowler/JProwler}
- \cite{jprowler}Esta ferramenta resulta da conversão de um simulador de eventos
-discretos\footnote{Fila global, onde são inseridos todos os eventos da rede, tratados sequencialmente ou por prioridade.}, Prowler \cite{prowler}, implementado em MATLAB, pela Universidade de
+ Esta ferramenta resulta da conversão de um simulador de eventos
+discretos,\footnote{Fila global, onde são inseridos todos os eventos da rede, 
+tratados sequencialmente ou por prioridade.} Prowler
+\cite{prowler,jprowler}, implementado em MATLAB, pela Universidade de
 Vanderbilt, para a linguagem Java. Este simulador pode ser
 configurado para simular, de forma determinística ou probabilística. Permite a simulação, com diversos
 nós, podendo atingir os 5000 (ainda que o número possa ser maior, por razões de
@@ -115,6 +119,8 @@ Para além disso, é ainda possível visualizar a topologia de rede e extrair resul
 simulação. O facto de o modelo de propagação de sinal ser baseado na norma IEEE802.11 dificulta a
 adaptação às condições das RSSF. No entanto, a modularidade do sistema
 permite o desenvolvimento de uma camada IEEE802.15.4 para se aproximar da norma
-mais recente de comunicação das RSSF\footnote{Não cabe no âmbito da dissertação o desenvolvimento do módulo de comunicação}. A arquitectura deste simulador aproxima-se bastante daquilo que deve ser um
+mais recente de comunicação das RSSF.\footnote{Não cabe no âmbito da
+dissertação o desenvolvimento do módulo de comunicação.} A arquitectura deste
+simulador aproxima-se bastante daquilo que deve ser um
 simulador de RSSF, em que as diversas camadas estão bem definidas.
 

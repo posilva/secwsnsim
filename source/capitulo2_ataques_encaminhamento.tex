@@ -25,7 +25,8 @@ estes mesmos efeitos é realizado por nós atacantes que inundam a rede com pacote
 O \textit{Rushing attack} \cite{Rushing_attacks_perrig} é definido pela exploração, por parte do
 atacante, de uma janela de tempo para responder a um pedido de caminho para um destino. Este ataque
 é efectivo quando um protocolo (ex:
-AODV \cite{Perkins1999}) aceita a primeira resposta que recebe \textit{Route Reply}(RREP).
+AODV \cite{Perkins1999}) aceita a primeira resposta que recebe \textit{Route
+Reply} (RREP).
 Explorando isto, o atacante é sempre um candidato a ser o próximo encaminhador, uma vez que não
 respeita temporizadores nem condições de resposta, podendo depois influenciar o estabelecimento das
 rotas.
@@ -34,12 +35,15 @@ rotas.
 Os mecanismos de autenticação fazem com que ataques de falsificação de informação ou de inundação
 de RREQ sejam minimizados. Os nós da rede podem partilhar chaves simétricas (par-a-par) como forma
 de autenticar as mensagens de dados e controlo do encaminhamento (RREQ e RREP). Desta forma, o
-atacante, não possuindo a chaves necessárias para a comunicação, não poderá participar no protocolo.
+atacante, não possuindo as chaves necessárias para a comunicação, não poderá
+participar no protocolo.
 
 Para fazer face a ataques de \textit{Rushing}, alguns autores \cite{Rushing_attacks_perrig}
-apresentam dois mecanismos de defesa: reenvio aleatório de RREQ \textit{Randomized RREQ
-Forwarding}) e detecção segura (\textit{Secure Detection}). No primeiro caso, cada nó
-intermédio guarda  um conjunto de mensagens RREQ, escolhendo depois, aleatoriamente, um para reenviar.
+apresentam dois mecanismos de defesa: reenvio aleatório de RREQ
+(\textit{Randomized RREQ Forwarding}) e detecção segura (\textit{Secure
+Detection}). No primeiro caso, cada nó
+intermédio guarda  um conjunto de mensagens RREQ, escolhendo depois,
+aleatoriamente, um para reenviar.
 Ainda assim, pode ser seleccionada uma mensagem RREQ maliciosa, daí a existência do segundo
 mecanismo, que permite a autenticação de mensagens entre dois nós, garantindo que estas pertencem a
 nós legítimos. Outros mecanismos passam pela selecção de mais do que uma resposta (permitindo que a
@@ -84,9 +88,11 @@ Este ataque foi definido como uma acção que permitia atingir os mecanismos de re
 em armazenamento distribuído em sistemas ponto-a-ponto \cite{Douceur2002}. Outra
 definição que surge, agora associada às RSSF, é a que o define como ``um dispositivo malicioso que
 ilegitimamente assume múltiplas entidades'' \cite{sybil_perrig}. Com estas definições e, devido à sua
-taxonomia, é um ataque bastante efectivo contra protocolos de encaminhamento \cite{Karlof2003}. Em
-particular, nos protocolos que adoptam múltiplos caminhos, o que permite que um nó assuma
-múltiplas identidades, ocultando o facto de os dados estarem a passar por um único nó malicioso
+taxonomia, é um ataque bastante efectivo contra protocolos de encaminhamento
+\cite{Karlof2003}, em particular, nos protocolos que adoptam múltiplos caminhos,
+o que permite que um nó assuma
+múltiplas identidades, ocultando o facto de os dados estarem a passar por um
+único nó malicioso
 \cite{Survey_wsn_Sec_issues,Attaks_defenses_sec_in_wsn}.
 \end{descriptionNoIndent}
 \subsubsection{Contra-medidas}
@@ -112,7 +118,7 @@ muitos caminhos a passar pelo mesmo nó, logo pode estar na presença de um ataque
 \textit{Sinkhole} \cite{Survey_wsn_Sec_issues,Attaks_defenses_sec_in_wsn}).
 A utilização de chaves ponto-a-ponto, como forma de garantir que a informação dos pacotes
 é legítima, evita que um atacante altere dados da mensagem (origem e número de
-sequência)\cite{SIGF,INSENS}.
+sequência) \cite{SIGF,INSENS}.
 
 A utilização de \textit{packet leashes} \cite{packet_leashes_perrig} permite mitigar o ataque
 \textit{wormhole}. Assim, existem dois tipos de condições para se aceitar os pacotes vindos de uma
@@ -123,9 +129,11 @@ do pacote, exigindo, então, a sincronização de relógios. Se for muito rápido a c
 nó assume que está perante um ataque de \textit{wormhole}. A implementação de encaminhamento por
 múltiplas rotas, também, permite fazer face a ataques \textit{wormhole} \cite{clean_slate}.
 
-Para o ataque \textit{sybil} em \cite{sybil_perrig,Survey_wsn_Sec_issues}, são possíveis dois
-esquemas de protecção: i) \textit{Radio resource testing} (cada vizinho só pode transmitir num
-canal, seleccionando um canal para receber e enviar uma mensagem. Os nós que não responderem são
+Para o ataque \textit{sybil}, são
+possíveis dois esquemas de protecção \cite{sybil_perrig,Survey_wsn_Sec_issues}:
+i) \textit{Radio resource testing} (cada vizinho só pode transmitir num
+canal, seleccionando um canal para receber e enviar uma mensagem. Os nós que não
+responderem são
 tratados como falsos, ao nível MAC); ii) \textit{Random key distribution} (usando um modelo de
 \textit{key-pool}, são atribuidas $n$ chaves de um conjunto de $m$. Se dois nós partilharem $q$
 chaves então estarão em condições de comunicar de forma segura. Uma função de dispersão, com base no
@@ -138,7 +146,8 @@ vizinhos de forma autenticada \cite{clean_slate}.
 \item[Ataque \textit{Blackhole}]
 No ataque \textit{blackhole} \cite{HongmeiDeng2002}, o atacante intercepta os pacotes destinados ao
 nó/área alvo de ataque, informando a origem de que se trata de um caminho de melhor qualidade ou a
-menor distância forçando todo o tráfego, dirigido ao destino, a circular através dele. Assim, um
+menor distância, forçando todo o tráfego, dirigido ao destino, a circular
+através dele. Assim, um
 nó malicioso intermédio, pode anunciar-se com um caminho melhor, apesar de não ter sequer caminho
 para o destino, originando um ``vazio'' e interrompendo o processo de comunicação
 \cite{Survey_wsn_Sec_issues,Attaks_defenses_sec_in_wsn}.
@@ -147,8 +156,8 @@ para o destino, originando um ``vazio'' e interrompendo o processo de comunicaçã
 Para mitigar os ataques de \textit{blackhole} existem várias propostas
  \cite{blackhole_adhoc,Attaks_defenses_sec_in_wsn,HongmeiDeng2002}, das quais se destacam as
 que implementam os seguintes mecanismos: i) Confirmação do destino, em que é enviada uma mensagem
-de ACK por cada mensagem recebida, pelo caminho inverso; iii) Definição de limites
-de tempo de recepção das mensagens de ACK ou de mensagens de
+de ACK por cada mensagem recebida, pelo caminho inverso; ii) Definição de
+limites de tempo de recepção das mensagens de ACK ou de mensagens de
 falha; iii) Mensagens de falha, geradas quando um nó intermédio detecta o fim do
 temporizador de ACK; iv) Caminho definido pela origem, significando que, em cada pacote, é indicado,
 pela origem, o caminho seguido até ao destino. Os mecanismos que não se baseiem em informação

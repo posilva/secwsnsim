@@ -36,7 +36,9 @@ Nesta secção apresentam-se alguns protocolos de encaminhamento seguro em RSSF qu
 cobrir todo o espectro da temática deste trabalho. 
 
 \subsubsection{\textit{Secure Implicit Geographic Forwarding }(SIGF)}
-Uma das formas de abordar o desenvolvimento de protocolos de encaminhamento seguro é implementar  mecanismos de segurança em protocolos já existentes, mas que não seguros. Um destes
+Uma das formas de abordar o desenvolvimento de protocolos de encaminhamento 
+seguro é implementar  mecanismos de segurança em protocolos já existentes, mas
+que não são seguros. Um destes
 casos é o algoritmo de encaminhamento \textit{Implicit Geographic
 Forwarding} (IGF) \cite{igf_protocol}, que deu origem a uma implementação segura: o SIGF
 \cite{SIGF}. 
@@ -49,12 +51,15 @@ manter uma aplicação, com requisitos de segurança, a executar em ambientes críti
 \paragraph*{\textbf{Funcionamento do protocolo IGF}}
 No protocolo IGF o ambiente está definido por coordenadas que permitem a cada nó saber exactamente
 a sua localização. Com a agregação do nível de rede e do nível MAC\footnote{ \textit{Medium Access
-Control}} num único protocolo \textit{Network/MAC}, é possível \cite{igf_protocol}, no momento do
+Control}.} num único protocolo \textit{Network/MAC}, é possível
+\cite{igf_protocol}, no momento do
 envio do pacote, determinar qual o próximo melhor candidato para encaminhar os dados. O protocolo
 inicia-se com a origem a enviar uma mensagem do tipo \textit{Open Request To Send} (ORTS) para a
-vizinhança (com a localização e o destino). Cada nó que se encontre no sextante válido
-\footnote{Ângulo de 60º centrado na origem, orientado para o destino e determinado por cada nó, com
-base na sua localização} inicia um temporizador de CTS (\textit{Clear To Send}) inversamente
+vizinhança (com a localização e o destino). Cada nó que se encontre no sextante
+válido\footnote{Ângulo de 60º centrado na origem, orientado para o destino e
+determinado por cada nó, com
+base na sua localização.} inicia um temporizador de CTS (\textit{Clear To Send})
+inversamente
 proporcional a determinados parâmetros (distância à origem, energia existente e distância
 perpendicular ao destino), favorecendo os nós com melhores condições. Ao expirar o temporizador, é
 enviada uma mensagem de CTS que, ao ser recebida, dá início ao envio de mensagens do tipo DATA a
