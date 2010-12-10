@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><configuration>
+<test>
+<name>Test4</name>
+<description/>
+<debug>true</debug>
+<batch>true</batch>
+<timestorun>1</timestorun>
+<inputparameters>
+<NumberOfAttackNodes>0</NumberOfAttackNodes>
+<PercentOfAttackNodes>true</PercentOfAttackNodes>
+<OnlyConsiderToAttackStableNodes>true</OnlyConsiderToAttackStableNodes>
+<NumberOfReceiverNodes>100</NumberOfReceiverNodes>
+<OnlyConsiderToReceiverSinkNodes>true</OnlyConsiderToReceiverSinkNodes>
+<PercentOfReceiverNodes>true</PercentOfReceiverNodes>
+<NumberOfSenderNodes>50</NumberOfSenderNodes>
+<OnlyConsiderToSenderStableNodes>true</OnlyConsiderToSenderStableNodes>
+<PercentOfSenderNodes>true</PercentOfSenderNodes>
+<IntervalBetweenMessagesSent>10</IntervalBetweenMessagesSent>
+<NumberOfMessagesPerNode>100</NumberOfMessagesPerNode>
+<NumberOfRetransmissions>1</NumberOfRetransmissions>
+</inputparameters>
+</test>
+</configuration>

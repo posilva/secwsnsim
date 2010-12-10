@@ -57,7 +57,7 @@ public class FloodingRoutingLayer extends RoutingLayer {
     @Override
     public boolean onSendMessage(Object message, Application app) {
         receivedMessages.add(((Message) message).getMessageNumber());
-        FloodingMessage msg = encapsulateMessage((Message) message);
+        FloodingMessage msg = (FloodingMessage) encapsulateMessage((Message) message);
         send(msg);
         return true;
     }
@@ -114,7 +114,7 @@ public class FloodingRoutingLayer extends RoutingLayer {
 
     }
 
-    private FloodingMessage encapsulateMessage(Message message) {
+    protected Message encapsulateMessage(Message message) {
         FloodingMessage m = new FloodingMessage();
         m.setUniqueId(message.getUniqueId());
         m.setSourceId(message.getSourceId());

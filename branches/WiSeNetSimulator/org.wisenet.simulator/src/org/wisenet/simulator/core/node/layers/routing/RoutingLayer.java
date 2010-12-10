@@ -55,7 +55,7 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
      */
     public RoutingLayer() {
         super();
-        prepareRouting();
+
         prepareAttacks();
     }
 
@@ -252,12 +252,6 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
     }
 
     /**
-     * Do actions for routing layer
-     */
-    private void prepareRouting() {
-    }
-
-    /**
      * Get the Routing Protocol Phases
      * @return
      */
@@ -352,6 +346,8 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
      * Initialize attacks in each node
      */
     protected abstract void initAttacks();
+
+    protected abstract Message encapsulateMessage(Message m);
 
     /**
      *

@@ -51,7 +51,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
 
     AbstractTest currentTest = null;
 
-    /** Creates new form WorkbenchPanel */
+                        /** Creates new form WorkbenchPanel */
     public WorkbenchPanel() {
         initComponents();
 
