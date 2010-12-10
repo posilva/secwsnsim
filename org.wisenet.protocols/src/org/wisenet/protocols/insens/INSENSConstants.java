@@ -72,7 +72,7 @@ public class INSENSConstants {
     /**
      * Helpers
      */
-    public static double SIGNAL_STRENGH_THRESHOLD = .5; // melhor .5
+    public static double SIGNAL_STRENGH_THRESHOLD = 0.5; // melhor .5
     /**
      * 
      */

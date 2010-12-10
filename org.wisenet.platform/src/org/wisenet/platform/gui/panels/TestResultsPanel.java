@@ -1009,7 +1009,7 @@ public class TestResultsPanel extends PlatformPanel {
         stableNodes.setText("" + routingController.getTotalStableNodes());
         messageSent.setText("" + routingController.getTotalSentMessages());
         messageReceived.setText("" + routingController.getTotalReceivedMessages());
-        messagesAttacked.setText("" + routingController.getTotalAttackedMessages());
+        messagesAttacked.setText("" + test.getEvaluationManager().getCountAttackedMessages());
 
         nrNodes.setText("" + test.getSimulation().getSimulator().getNodes().size());
 

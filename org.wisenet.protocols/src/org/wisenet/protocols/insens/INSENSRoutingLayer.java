@@ -25,7 +25,6 @@ import org.wisenet.protocols.insens.utils.NetworkKeyStore;
 import org.wisenet.protocols.insens.utils.OneWaySequenceNumbersChain;
 import org.wisenet.simulator.utilities.CryptoFunctions;
 import org.wisenet.simulator.components.instruments.IInstrumentHandler;
-import org.wisenet.simulator.components.instruments.IInstrumentMessage;
 import org.wisenet.simulator.core.Application;
 import org.wisenet.simulator.core.Message;
 import org.wisenet.simulator.core.Simulator;
@@ -160,17 +159,11 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
      */
     @Override
     protected boolean onSendMessage(Object message, Application app) {
-
-
-//        if (message instanceof INSENSDATAMessage) {
         if (isStable()) {
             return sendDATAMessage((Message) message);
         } else {
             return false;
         }
-//        } else {
-//            return false;
-//        }
 
     }
 
@@ -280,7 +273,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
             if (lst2 == null) {
                 lst2 = new ArrayList();
             }
-            lst2.add(lst.get(lst.size()-1));
+            lst2.add(lst.get(lst.size() - 1));
             t.put(lst.size(), lst2);
         }
         return t;
@@ -294,7 +287,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         NetworkKeyStore.getInstance().registerKey(getNode().getId(), privateKey);
     }
 
-    private INSENSMessage encapsulateMESSAGE(Message message) {
+    protected Message encapsulateMessage(Message message) {
 
         INSENSMessage m = new INSENSMessage();
         m.setUniqueId(message.getUniqueId());
@@ -351,6 +344,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         INSENSMessage message = new INSENSMessage(payload);
         getController().addMessageSentCounter(INSENSConstants.MSG_FEEDBACK);
         send(message);
+//        feedbackMessageStartTimer.reschedule();
     }
 
     /**
@@ -440,7 +434,6 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         if (!getNode().isSinkNode()) {
 
             if (isFirstTime(payload)) {
-//                log("SIGNAL STRENGTH: " + getNode().getMacLayer().getSignalStrength() + "\tSIGNAL NOISE: " + getNode().getMacLayer().getNoiseStrength());
                 if (getNode().getMacLayer().getSignalStrength() > INSENSConstants.SIGNAL_STRENGH_THRESHOLD && getNode().getMacLayer().getNoiseStrength() < INSENSConstants.SIGNAL_NOISE_THRESHOLD) {
                     if (owsIsValid(payload)) {
                         isParent = true;
@@ -687,7 +680,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
      * @return
      */
     private boolean sendDATAMessage(Message message) {
-        INSENSMessage m = encapsulateMESSAGE(message);
+        INSENSMessage m = (INSENSMessage) encapsulateMessage(message);
         send((Message) m);
         return true;
     }
@@ -730,10 +723,6 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
 
     public Object getUniqueId() {
         return getNode().getId();
-    }
-
-    public void probing(IInstrumentMessage message) {
-        getNode().sendMessage(message);
     }
 
     @Override
