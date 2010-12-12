@@ -8,87 +8,42 @@ encaminhamento por \textit{inundação }, que visa, fundamentalmente, demonstrar a
 facilidade de implementação de um primeiro protocolo e ao mesmo tempo servir de
 termo de comparação com um protocolo seguro. O segundo protocolo, é um
 protocolo de encaminhamento seguro de referência, o INSENS\cite{INSENS}.
-Esta implementação, visa, não só provar que é possível implementar, avaliar e
+Esta implementação, visa, não só comprovar que é possível implementar, avaliar e
 experimentar protocolos de especificação mais complexa, mas também contribuir
 com uma análise critica deste protocolo em critérios de segurança e no seu
 impacte nas propriedades que se podem avaliar com recurso à plataforma de
 simulação.
-
-Com a implementação destes dois protocolos, este capítulo, inicialmente,
-descreve uma metodologia para a implementação de protocolos de encaminhamento
-usando a API concebida. 
-
-\section{Metodologia para a implementação de um protocolo}
-
-A implementação de um qualquer protocolo pode ser divida em duas componentes:
-1) a componente lógica, associada ao funcionamento do protocolo; 
-2) a componente de integração, associada à integração/interacção com a
-plataforma.
-
-\subsection{Componente Lógica}
-Para esta componente é necessário identificar as entidades principais de
-especificação do protocolo. Entidades estas que serão comuns a qualquer
-protocolo que se pretenda implementar:
-
-\begin{enumerate}
- \item Message: Entidade que representa a unidade mínima de envio/recepção de
-dados. Contém uma estrutura genérica para gestão da informação manipulada,
-de forma transparente, pelo simulador juntamente com a representação da
-informação transportada, sob a forma de vector de bytes, assemelhando-se com o
-formato real de um pacote de comunicação;
-\item Node: Esta entidade tem, fundamentalmente, funções associadas a
-visualização (ex: raio, cores associadas ao estado) e podendo ter também
-informação transversal a todas as camadas para facilidade de acesso e que
-necessita de inicialização prévia (ex. desligado/ligado), a quando da construção
-do nó. Poderá não ser implementado se estas condições não se verificarem
-utilizando-se assim um Node genérico disponibilizado pela API.
-\item RoutingLayer: Esta é a entidade principal, uma vez que que
-contém a lógica do protocolo e que deverá respeitar algumas especificações da
-API para que a sua integração com o simulador seja adequada;
-\item Application: Representa a camada aplicacional que será suportada em
-termos de encaminhamento pelo protocolo implementado. Pode ser usado para
-testar comportamentos da mesma aplicação com protocolos de
-encaminhamento diferentes.
-\end{enumerate}
-
-Na figura seguinte observa-se a estrutura de implementação do protocolo de
-inundação seguindo a implementação referida. 
-\input{pic_protocol_struct} 
-
-\subsection{Componente de integração}
-Nesta componente é necessário criar uma entidade que integra/define
-quais as camadas existentes num sensor genérico de um protocolo. Esta entidade é
-definida usando um padrão de \textit{factory}. Padrão este, que é consumido
-pela plataforma para criação de sensores a quando da sua distribuição na área
-de trabalho. Esta entidade durante a criação dos nós será ainda complementada
-com informação referente a parâmetros do modelo de energia.
-Na figura seguinte pode-se observar a simplicidade desta entidade e a forma de
-integração.
-\input{pic_node_factory} 
-Quanto à integração com a plataforma, é necessário, ao nível do RoutingLayer,
-respeitar as especificações definidas pela API do simulador. Salienta-se de
-seguida as que se julgam essenciais:
-
-
-%\input{tab_API_routing}
 
 \section{Implementação de protocolo de encaminhamento por inundação}
 Como já foi referido para efeito de comparação de algumas das propriedades em
 avaliação foi desenvolvido um primeiro protocolo mais simples que implementa o
 encaminhamento por inundação (\textit{flooding}). Este protocolo não tem grande
 complexidade de funcionamento, uma vez que a única restrição para a propagação
-de mensagens é a garantia de não repetição de mensagens. 
+de mensagens é a garantia de não repetição encaminhamento de mensagens. 
 
 A implementação define no total cinco classes, respeitando as duas componentes
 referidas anteriormente. As entidades representadas são: Um tipo de mensagem,
 uma fábrica de nós, um nó específico e o algoritmo de encaminhamento, para
 efeitos de teste foi criada uma aplicação simples que envia uma mensagem de
-Hello. No diagrama de classes da figura seguinte apresenta-se esta organização.
+\textit{Hello}. No diagrama de classes da figura seguinte apresenta-se esta
+organização.
+\input{pic_FloodingRoutingcd}
+Assim, no envio de mensagens entre quaisquer dois sensores A e B na rede o
+protocolo executa o seguinte algoritmo:
 
-APRESENTAR DIAGRAMA AQUI
-
-A implementação do protocolo tem o seguinte funcionamento:
-
+\begin{algorithm}[H]
+\SetLine
+\Entrada{Lista de mensagens enviadas, mensagem recebida}
+\uSe{listaMensagensEnviadas.existe(m)}{
+  descarta( m);
+}
+\Senao{
+  listaMensagensEnviadas.insere(m);\\
+  encaminhaMensagem(m);
+}
+\caption{Protocolo de \textit{flooding} sem repetição}
+\label{alg:flooding}
+\end{algorithm}
 \section{Implementação de Protocolo de Encaminhamento Seguro em RSSF}
 O algoritmo que serviu como prova de conceito para a utilização da plataforma
 na avaliação de protocolos de encaminhamento seguro foi o INSENS. O
@@ -123,3 +78,10 @@ executam também um conjunto de operações das quais se destinguem as seguintes:
 Do ponto de vista da implementação foram respeitadas as API's da plataforma
 para permitir a sua integração. Assim, a figura seguinte apresenta o diagrama de
 classes da implementação do protocolo INSENS.
+\input{pic_INSENS_CD}
+
+\subsubsection{Análise critica}
+Para a implementação do protocolo INSENS, procurou-se respeitar ao máximo a
+implementação. Alguns pormenores foram relaxados tendo em conta a sua
+implementação numa base de simulação. Estes pormenores em nada influem na
+execução do protocolo comespecificada

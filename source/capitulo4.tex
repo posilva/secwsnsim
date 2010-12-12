@@ -8,51 +8,51 @@ em código aberto, conta com cerca de 236 classes e 31000 linhas de código em
 Java (JDK 1.6). É possível aceder de forma gratuita a partir do
 sitio: http://code.google.com/p/secwsnsim/. 
 \section{Principais funcionalidades}
-As principais funcionalidades que se encontram na versão actual da
-plataforma que se encontra disponível no sitio acima referido são:
-
+As principais funcionalidades da plataforma são:
 \subsection{Portabilidade}  
 Uma vez que foi integralmente desenvolvido em Java, pode ser executado em
-qualquer plataforma independente do sistema operativo. O ambiente gráfico foi
-desenvolvido com recurso a um tema nativo por forma a manter o mesmo aspecto em
-qualquer sistema operativo.
+qualquer plataforma independentemente do sistema operativo. O ambiente gráfico
+foi desenvolvido com recurso a um tema nativo por forma a manter o mesmo aspecto
+em qualquer sistema operativo.
 \subsection{Extensibilidade} 
-Alguns padrões da engenharia de software foram utilizados, com vista a facilitar
-a extensão de funcionalidades do ambiente de simulação. Foram usados padrões de
-\textit{Factories}(para criação de objectos de forma generalizada),
-\textit{Singleton} (facilitar o acesso a funcionalidades transversais) e
-\textit{Publish-Subscribe} (notificação de eventos, por exemplo: Notificação de
-inicio e fim de execução da simulação ).
-
-Os componentes mais importantes da RSSF foram mantidos abstractos por forma a
-permitir especializações dependendo do protocolo/aplicação que se pretende
-avaliar (exemplo: \textit{MACLayer, RoutingLayer, RadioModel, Application,
-Message}, etc).
+Foram utilizados alguns padrões da engenharia de software, com vista a
+facilitar a extensão de funcionalidades do ambiente de simulação. Foram usados
+padrões de \textit{Factories}(para criação de objectos de forma generalizada,
+por exemplo, \textit{Nodes} ), \textit{Singleton} (por forma a facilitar o
+acesso a funcionalidades transversais) e \textit{Publish-Subscribe} (notificação
+de eventos, por exemplo: Notificação de inicio e fim de execução da
+simulação). Os componentes mais importantes da RSSF foram mantidos abstractos
+por forma a permitir especializações dependendo do protocolo/aplicação que se
+pretende avaliar (exemplo: \textit{MACLayer, RoutingLayer, RadioModel,
+Application, Message}, etc).
 
 \subsection{Usabilidade}
 Com a existência de um ambiente gráfico rico, é possível controlar todo o ciclo
 de simulação a partir da consola de visualização. De uma forma geral é
 possível: 
 \begin{description}
- \item [Distribuição de sensores] Possibilidade de movimentar sensores,
-adicionar ou remover um grupo ou apenas um sensor numa área seleccionada;
+ \item [Distribuição de sensores] Possibilidade de movimentar um sensor e
+possibilidade de adicionar ou remover um ou mais sensores numa área
+seleccionada;
  \item [Estados e informação dos sensores] Possibilidade de
 consultar/visualizar o estado e informação de cada sensor (exemplo: posição,
-altitude, energia ) e alterar estado de um sensor individualmente ou de um grupo
-de sensores (exemplo: ligar/desligar, alterar altitude, activar visualização de
-vizinhos);
+altitude, energia ) e alterar o estado individualmente ou de um
+grupo de sensores (exemplo: ligar/desligar, alterar altitude, activar
+visualização de vizinhos);
 \item [Pesquisa de sensores] Uma vez que uma simulação pode ter milhares de nós
 é possível encontrar qualquer sensor com base no seu identificador único;
-\item [Controlo da simulação] Possibilidade de iniciar/parar/terminar uma
-simulação através da consola de simulação.
-\item [Depuração de erros/mensagens] Visualização integrada de mensagens/erros
-enviados usando a primitivas Java para a consola de sistema, para a consola de
-visualização;
+\item [Controlo da simulação] Possibilidade de iniciar/por em pausa/terminar uma
+simulação através da consola.
+\item [Depuração de erros/mensagens] Visualização integrada de mensagens e
+erros ocorridos durante a execução para a consola de visualização.
+Diferenciação das mensagens de informação e das mensagens de erro, para
+consolas diferentes;
 \item [Construção de uma simulação] Disponibilização de uma ferramenta para
-desenho de configurações para simulação;
+especificação de configurações para simulação e parâmetros de uma simulação,
+por exemplo, alcance rádio, altitude máxima, tipos de nós e de modelo de rádio;
 \item [Construção de testes] Disponibilização de uma ferramenta para
-especificação de condições de testes que permitem avaliar um protocolo em
-estudo;
+especificação de condições de testes para avaliação de determinado protocolo,
+com a capacidade de persistir em ficheiro para reutilização futura;
 \end{description}
 \subsection{Facilidades}
 \begin{enumerate}
@@ -62,21 +62,21 @@ simulações por forma a permitir a reutilização em diferentes protocolos;
 distribuição de redes;
 \item Definição de parâmetro  relacionado com o ambiente permitindo simular
 a indução de comportamentos derivados do meio ambiente ( ex: atenuação causada
-pela humidade do ar nas comunicações rádio, altura do solo a que um sensor esta
-colocado);
-\item Funcionalidade para tirar fotografia da rede, permitindo retirar uma
+pela humidade do ar nas comunicações rádio, altura do solo a que um sensor
+está colocado);
+\item Funcionalidade para obter um fotografia da rede, permitindo retirar uma
 imagem do estado da rede tal como ele é visto na consola de visualização; 
-\item Customização das cores de visualização da consola por forma a ajustar
+\item Personalização das cores de visualização da consola por forma a ajustar
 face a diferentes imagens de fundo;
 \item Obtenção de resultados dos testes executados;
 \end{enumerate}
 \section{Implementação dos componentes da plataforma} 
-Nesta secção serão dados alguns detalhes ao nível da engenharia de software
-expondo o modo como foram implementados alguns componentes e alguns princípios
-tidos em conta no seu desenvolvimento. Realça-se fundamentalmente a
-implementação dos seguintes componentes: i) modelação dos sensores; ii) modelo
-de energia; iii) modelo de avaliação e testes; iv) modelo de injecção de ataques
-v) API para a implementação de um protocolo.
+Nesta secção serão apresentados alguns detalhes ao nível da engenharia de
+\textit{software}, expondo o modo como foram implementados alguns componentes e
+alguns princípios tidos em conta no seu desenvolvimento. Realça-se
+fundamentalmente a implementação dos seguintes componentes: i) modelação dos
+sensores; ii) modelo de energia; iii) modelo de avaliação e testes; iv) modelo
+de injecção de ataques v) API para a implementação de um protocolo.
 \input{capitulo4_sensores}
 \input{capitulo4_energia}
 \input{capitulo4_medicao}

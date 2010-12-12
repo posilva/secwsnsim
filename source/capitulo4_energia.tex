@@ -1,67 +1,98 @@
 \subsection[Módulo de energia]{Módulo de energia} 
 Com o módulo de energia pretende-se um componente que permita aferir os 
-comportamentos de uma RSSF no que respeita ao consumo de energia. Este
-componente partiu de um estudo prévio de trabalhos publicados sobre o tema que
-permitiram coligir alguns valores para afectar em diferentes eventos que ocorrem
-numa plataforma sensor durante a sua operação.
+comportamentos de uma RSSF no que respeita ao consumo de energia. Partindo de um
+estudo prévio de trabalhos publicados sobre o tema, foi possível chegar a um
+conjunto de valores relacionados com os diferentes eventos que ocorrem
+numa plataforma sensor durante a sua operação. Este estudo, permitiu, desde
+logo, fazer uma abordagem sistémica para a definição do modelo de energia a
+implementar.
 
 Primariamente foi elaborada uma tabela que representa os eventos sobre os quais
 se pretende medir os custos de energia durante a operação de um sensor. Esta
-tabela resulta da leitura de bibliografia dedicada ao tema da energia nas RSSF,
-e procura enformar o estudo desta problemática resumindo a informação de forma
-estruturada, permitindo uma visão geral do consumo de energia num nó sensor.
-Assim, a tabela de eventos encontra-se organizada da seguinte forma: Na primeira
-coluna surge a denominação do evento; Na segunda coluna  procura-se caracterizar
-o evento quanto ao custo; Na terceira coluna indica-se a parametrização de
-referência e por fim na quarta coluna apresenta-se o calculo do custo
-energético.
+tabela procura enformar o estudo desta problemática resumindo a informação de
+forma estruturada, permitindo uma visão geral do consumo de energia num
+nó sensor. Assim, a tabela de eventos encontra-se organizada da seguinte forma:
+Na primeira coluna surge a denominação do evento; Na segunda coluna  procura-se
+caracterizar o evento quanto ao custo; Na terceira coluna indica-se a
+parametrização de referência e por fim na quarta coluna apresenta-se o cálculo
+do custo energético com base nas duas colunas anteriores.
 \input{ pic_tabela_eventos} 
-\subsubsection[]{Algoritmo do modelo de energia}  
-\begin{FramedVerb}
-SE NODE==SLEEP ENTÃO   
-  não detecta eventos (camada aplicação não opera ao nível do simulador)
-SENAO    
-  SE for detectado um EVENTO ENTÃO   
-      PROCESSA_MENSAGEM()
-(1)     SE TX == ON ENTAO   
-          Transmite   
-          Consome energia de trasmissão baseado na unidade de referência(J/Byte)   
-      SENAO (TX==OFF)   
-          TX OFF==>ON    
-          Consome Energia de transição OFF==>ON   
-          Transmite   
-          Consome energia de trasmissão baseado na unidade de referência(J/Byte)   
-     FIM SE   
-  SENÃO (Operação em RELAY ou RECEPÇÃO)   
-      SE receber uma mensagem ENTAO   
-          SE TX==ON ENTÃO   
-             Recebe Mensagem   
-             Consome energia de Recepção baseado na unidade de referência
-                   (J/Byte)   
-             PROCESSA_MENSAGEM() e TRASMITE Caso se aplique   
-      SENAO (TRASMISSÃO RELAY)   
-          (1)   
-      FIM SE   
-  FIM SE
-FIM SE}
 
-PROCESSA_MENSAGEM(){   
-  SE estiver a CIFRAR ENTAO   
-      CIFRA MENSAGEM   
-      Consome energia de CIFRA baseado na unidade de referência
-      (J/Byte) do algoritmo utilizado   
-  SENAO    
-      SE estiver a DECIFRAR ENTAO   
-          DECIFRA MENSAGEM   
-          Consome energia de DECIFRA baseado na unidade de referência
-          (J/Byte) do algoritmo utilizado   
-      SENAO    
-          Computacao simples   
-          Consome energia de COMPUTAÇÃO baseado na unidade de referência 
-          (J/Ciclo de relógio)   
-      FIM SE   
-  FIM SE
-\end{FramedVerb}
+Observando a tabela, constata-se que a abordagem não foi conservadora comparada
+com os modelos implementados em alguns simuladores de referência
+\cite{POWERTOSSIM}, uma vez que considera um conjunto de eventos bastante rico e
+que consegue abarcar, consideravelmente todos os eventos mais relevantes e mais
+frequentes que ocorrem num sensor que opere com requisitos de segurança. Alguns
+autores separam o estudo destes eventos \cite{ESTUDOCRIPTO,ESTUDOCOMM}, por
+forma a apenas analisarem uma parte dos custos energéticos, ora focando-se nos
+custos dos mecanismos criptográficos ou de assinatura, ora focando-se nos
+mecanismos de comunicação. Estas abordagens enriquecem os valores de
+parametrização dos consumos energéticos em cada um dos casos, no entanto
+considerando que existe uma relação efectiva entre a comunicação e os mecanismos
+de segurança é interessante manter uma abordagem completa que nos permite
+estabelecer desde logo uma comparação do overhead dos mecanismos de segurança no
+processo de comunicação do protocolo.
+\subsubsection[]{Algoritmo do modelo de energia}  
+O algoritmo que se apresenta de seguida representa o modelo de consumo de
+energia durante a operação do sensor tendo em conta o estado em que se encontra
+em cada uma das operações. Note-se em particular o estado do
+\textit{transciever} que pode obrigar a um consumo extra inerente ao facto de
+ter que se ligar. Observe-se também a possibilidade de um sensor se encontrar
+num estado de adormecimento, estado este que o impossibilita de participar no
+protocolo de rede. 
+\begin{algorithm}[H]
+\eSe{estado==SLEEP}{
+    Não detecta eventos (Aplicação não opera no simulador)
+}{
+    \eSe{detectado um $evento$}{
+      processaMensagem();\\
+      transmissao();
+    }{ \emph{a operar em modo relay ou recepção}
+        \eSe{recebeu $mensagem$}{
+            \Se{transciever==OFF}{
+                radio.toOn();\\
+                bateria.consomeEnergia(transiçãoON->OFF,joule/acção) ;\\
+            }
+            radio.recebe\\
+            bateria.consomeEnergia(transmissao,joule/byte) \\
+            processaMensagem();\\
+            transmissao();
+        }{\emph{em relay}
+          transmissao();
+        }
+    }
+}
+
+\caption{Algoritmo do modelo de energia}
+\end{algorithm}
+\begin{procedure}[H]
+\eSe{transciever==ON}{
+    radio.transmite\\
+    bateria.consomeEnergia(transmissao,joule/byte) 
+}{ \tcp{transciever==OFF}
+    radio.toOn();\\
+    bateria.consomeEnergia(transiçãoON->OFF,joule/acção) ;\\
+    radio.transmite\\
+    bateria.consomeEnergia(transmissao,joule/byte) \\
+}
+\caption{transmissao()}
+\end{procedure}
+\begin{procedure}[H]
+\eSe{CPU.executarCifra()}{
+    CPU.cifraMensagem()\\
+    bateria.consomeEnergia(cifrar,joule/byte) 
+}{  \eSe{CPU.executarDecifra()}{
+        CPU.decifraMensagem()\\
+        bateria.consomeEnergia(decifrar,joule/byte) 
+    }{ \tcp{processamento normal}
+        CPU.process();\\
+        bateria.consomeEnergia(processar,joule/byte) ;
+    }
+}
+\caption{processaMensagem()}
+\end{procedure}
+
+
 De entre os eventos apresentados poderemos dividir em dois grandes grupos os que
 estão associados a estados de processamento e os que estão associados a estados
 de comunicação. Tendo a segurança como ponto central, não se podem descurar os
@@ -74,27 +105,28 @@ exemplo, no protocolo INSENS\cite{INSENS} o facto de todas as mensagens terem um
 MAC\cite{MAC} o que faz com que o \textit{payload} das mensagens aumente numa
 razão considerável. 
 
-Na caracterização do custo  energético dos eventos, existem fundamentalmente
-duas abordagens típicas\cite{ENERGIA,ENERGIA2}: uma que considera a unidade de
-tempo como unidade de razão para o consumo, por exemplo, calculando o tempo que
-se passa a transmitir/receber, uma vez que a unidade \textit {joule} está
-relacionada com o tempo. Outra abordagem é a caracterização com base no tamanho
-da mensagem calculando com base na energia que se consome por byte operado. No
-entanto no modelo apresentado a decisão passou por implementar a segunda
-abordagem uma vez que tratando-se de tempos que não correspondem ao
-comportamento real num sensor a sua medição tornaria os resultados mais
-afastados dos resultados esperados. Ao se optar por uma medida baseada em bytes,
-recorrendo à bibliografia de referência poder-se-à  sempre ter os valores
-adequados aos tamanhos das mensagens. 
+Na caracterização do custo energético dos eventos, existem, fundamentalmente,
+duas abordagens típicas \cite{ENERGIA,ENERGIA2}: uma que considera o tempo como
+unidade de cálculo do consumo, por exemplo, calculando o tempo que
+se passa a transmitir/receber, relacionando os consumos em \textit
+{joule} com a largura de banda e o tempo de comunicação. Outra abordagem é a
+caracterização com base no tamanho da mensagem calculado com base na energia
+que se consome por byte operado. No modelo apresentado a decisão
+passou por implementar a segunda abordagem uma vez que, tratando-se de tempos
+que não correspondem ao comportamento real num sensor, a sua medição tornaria os
+resultados mais afastados dos resultados reais. Ao se optar por uma medida
+baseada em bytes, recorrendo à bibliografia de referência poder-se-à  sempre ter
+os valores adequados aos tamanhos das mensagens, sem dependência do tempo de
+do ambiente de simulação. 
 
 A forma encontrada para permitir a modelação da energia e a sua implementação
-de forma o mais transparente possível para um programador que deseje testar um
-algoritmo na plataforma é a implementação de um interface, que obriga à
-implementação de uma operação de execução e uma operação que devolve o numero de
-unidades operadas. Em relação ao número de unidades operadas, esta operação terá
-a semântica que se pretender tendo por base os valores de consumo parametrizados
-no modelo de energia. Por exemplo, vejamos o exemplo seguinte para um
-processamento de cifra de um \textit {payload} de uma mensagem.\\
+de modo a ser o mais transparente possível para um programador, é a
+implementação de um interface, que obriga à programação de uma operação de
+execução e uma operação de devolução do numero de unidades consumidas. Em
+relação ao número de unidades consumidas, esta operação terá
+a semântica que se pretender implementar, tendo por base os valores de consumo
+parametrizados no modelo de energia. Por exemplo, observe-se o bloco de código
+seguinte referente à cifra de um \textit {payload} de uma mensagem.\\
 
 \begin{FramedVerb}
 1.	n.getCPU().executeEncryption(new EnergyConsumptionAction() {
@@ -112,14 +144,15 @@ processamento de cifra de um \textit {payload} de uma mensagem.\\
 
 Na linha 7 é devolvido o tamanho do payload em bytes, uma vez que foram esses 
 os dados que foram cifrados. No entanto o mesmo interface poderia ser usado para
-devolver nas unidades o numero de ciclos de CPU,  se os valores de energia e de
-ciclos usados para uma cifra Skypjack fossem parametrizados. Desta forma,
-procurou-se flexibilizar o modelo de energia, primeiro dando liberdade para 
-definição dos valores de consumo com base na unidade de operação desejada, e com
-a implementação do interface afectar ao componente respectivo a acção de consumo
-de energia, no exemplo, linha 4 pode-se observar que será do CPU a
-responsabilidade de consumo de energia. Caso se tratasse de uma transmissão ou
-recepção seria um consumo a ser executado pelo componente \textit {transciever}.
+devolver o numero de ciclos de execução do CPU, isto se os valores de energia
+por ciclo usados para uma cifra Skypjack fossem parametrizados no modelo de
+energia. Desta forma, tornou-se o modelo de energia flexível, primeiro dando
+liberdade para definição dos valores de consumo com base na unidade de operação
+desejada, e com recorrendo à implementação do interface, é possível afectar ao
+componente respectivo a acção de consumo de energia executada. No exemplo,
+pode-se observar na linha 4 que será do CPU a responsabilidade de consumo de
+energia. Pois, caso se tratasse de uma transmissão ou recepção, seria um consumo
+a ser imputado ao componente \textit {transciever}.
 
 \subsubsection[]{Funcionamento do Módulo de Energia}
 Depois de identificados os eventos, definidos os valores de consumo de energia 
