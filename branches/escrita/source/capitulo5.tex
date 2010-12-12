@@ -19,19 +19,31 @@ Como já foi referido para efeito de comparação de algumas das propriedades em
 avaliação foi desenvolvido um primeiro protocolo mais simples que implementa o
 encaminhamento por inundação (\textit{flooding}). Este protocolo não tem grande
 complexidade de funcionamento, uma vez que a única restrição para a propagação
-de mensagens é a garantia de não repetição de mensagens. 
+de mensagens é a garantia de não repetição encaminhamento de mensagens. 
 
 A implementação define no total cinco classes, respeitando as duas componentes
 referidas anteriormente. As entidades representadas são: Um tipo de mensagem,
 uma fábrica de nós, um nó específico e o algoritmo de encaminhamento, para
 efeitos de teste foi criada uma aplicação simples que envia uma mensagem de
-Hello. No diagrama de classes da figura seguinte apresenta-se esta organização.
+\textit{Hello}. No diagrama de classes da figura seguinte apresenta-se esta
+organização.
+\input{pic_FloodingRoutingcd}
+Assim, no envio de mensagens entre quaisquer dois sensores A e B na rede o
+protocolo executa o seguinte algoritmo:
 
-APRESENTAR DIAGRAMA AQUI
-
-O protocolo implementado tem o seguinte funcionamento:
-
-
+\begin{algorithm}[H]
+\SetLine
+\Entrada{Lista de mensagens enviadas, mensagem recebida}
+\uSe{listaMensagensEnviadas.existe(m)}{
+  descarta( m);
+}
+\Senao{
+  listaMensagensEnviadas.insere(m);\\
+  encaminhaMensagem(m);
+}
+\caption{Protocolo de \textit{flooding} sem repetição}
+\label{alg:flooding}
+\end{algorithm}
 \section{Implementação de Protocolo de Encaminhamento Seguro em RSSF}
 O algoritmo que serviu como prova de conceito para a utilização da plataforma
 na avaliação de protocolos de encaminhamento seguro foi o INSENS. O
@@ -67,3 +79,25 @@ Do ponto de vista da implementação foram respeitadas as API's da plataforma
 para permitir a sua integração. Assim, a figura seguinte apresenta o diagrama de
 classes da implementação do protocolo INSENS.
 \input{pic_INSENS_CD}
+
+\subsubsection{Análise critica}
+Para a implementação do protocolo INSENS, procurou-se respeitar ao máximo a
+implementação. Alguns pormenores foram relaxados tendo em conta a sua
+implementação numa base de simulação. Estes pormenores em nada influem na
+execução do protocolo com                                              
+                                                                     
+                                                                     
+                                                                     
+                                                                     
+                                                                     
+                                                                     
+                                                                     
+                                                                     
+                                                                     
+                                                                     
+                                                                     
+                                                                     
+                                                                     
+                                                                     
+                                                                     
+                                        especificada

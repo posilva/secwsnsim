@@ -1,37 +1,37 @@
 \subsection{Representação da plataforma sensor} 
 
-A versão JProwler original implementa , como já foi referido uma visão mais
-monolitica da plataforma sensor sem a separação dos papeis de cada uma das
-camadas da pilha de software de um \textit{mote}. Assim sendo a melhor forma de
-estruturar um nó sensor é seguir um modelo de camadas, o que levou à separação
-de cada um dos componentes que se encontravam consolidados numa única classe 
-representativa de um nó sensor. Esta visão permitiu a separação de conceitos,
-sendo consideradas apenas três camadas: i) Camada MAC; ii) Camada de
-Encaminhamento; iii) Camada de Aplicação. Na figura \ref{fig:stack_components} é
-possível observar esta organização. 
+A versão JProwler original implementa, como já foi referido, uma plataforma
+sensor segundo uma especificação monolitica  ou seja sem que exista uma 
+separação dos papeis de cada uma das camadas da pilha de software. Ao
+contrário desta abordagem, a melhor forma de estruturar um nó sensor é
+seguindo um modelo por camadas, que originou a separação de cada um dos
+componentes que se encontravam consolidados numa única classe. Esta abordagem
+permitiu a separação de conceitos, sendo consideradas para o efeito apenas três
+de todas as camadas já indicadas na figura \ref{fig:stack_serv}:
+i) Camada MAC; ii) Camada de Encaminhamento; iii) Camada de Aplicação. 
 
-De forma tornar o nó sensor ainda mais
-modular procurou-se mapear os componentes de um sensor num conjunto de classes,
-tal como é apresentada na figura \ref{fig:stack_components}.
+Uma vez  que se pretende uma concepção o mais próxima possível da realidade
+procurou-se mapear os componentes existentes, num sensor, com um conjunto de
+classes, tal como é apresentada na figura \ref{fig:stack_components}.
 \input{pic_nodestackcomponents} 
-No que se refere à noção de nó sensor também se pretende que este tenha um 
-desenho bastante semelhante à arquitectura real. Para tal, o nó sensor é
-modelado por componentes equivalentes à realidade física. Isto é, existe um
-componente \textit{CPU}, um componente \textit{Transciever} e um componente
-\textit{Batery}. Este desenho permite que os dois primeiros componentes
-interajam entre si e em particular com o terceiro para cálculo do consumo
-energético. Assim, cada componente tem associado um conjunto de acções que são
-da sua responsabilidade em que  cada uma consome um determinado valor energético
-(definido por parametrização do modelo de energia). 
+Assim, indo, em certa medida, de encontro à realidade da composição física de
+uma plataforma sensor temos um componente \textit{CPU}, um componente
+\textit{Transciever} e um componente \textit{Batery}. Com este desenho
+permite-se que o \textit{CPU} e o \textit{transciever} interajam entre si e em
+particular com a bateria para obtenção do cálculo do consumo energético das
+acções que efectuam. Assim, cada componente tem associado um conjunto de
+acções que são da sua responsabilidade em que  cada uma consome um determinado
+valor energético (definido por parametrização do modelo de energia). 
 \input{pic_node_cd}
-Com esta organização é possível a aumentar a granularidade do controlo de cada
-um dos componentes, não somente nas interacções relacionadas com a energia mas
-também com as entidades que se separaram no novo desenho do simulador base.
-Assim, a separação das camadas derivada da implementação monolítica, permite
-implementar diferentes protocolos de MAC para avaliação em diferentes
-protocolos de encaminhamento. O mesmo se passa com a separação da camada
-Aplicação, permitindo testar desenvolver aplicações e testar o seu
-comportamento em diversos protocolos. Esta alteração na arquitectura
-do simulador possibilita o alargamento da sua utilização em diversos
-experimentos enriquecendo os dados que se podem obter da avaliação de
-protocolos de encaminhamento seguro em RSSF.
+Com esta organização é possível aumentar a granularidade do controlo de cada
+um dos componentes ou das camadas. Assim, a separação das camadas derivada da
+implementação monolítica, permite, por exemplo, implementar diferentes
+protocolos de MAC e complementar a avaliação em diferentes protocolos de
+encaminhamento. O mesmo se passa com a separação da camada aplicação, permitindo
+desenvolver aplicações específicas e testar o seu comportamento em diversos
+protocolos de encaminhamento. Esta alteração na arquitectura
+do simulador dotou a plataforma de maior abrangência na sua utilização em
+diversos experimentos, permitindo, com isso, enriquecer os dados que se podem
+obter da avaliação de protocolos de encaminhamento seguro em RSSF quando
+correlacionados com diferentes implementações de protocolos MAC e/ou
+com diferentes aplicações.
