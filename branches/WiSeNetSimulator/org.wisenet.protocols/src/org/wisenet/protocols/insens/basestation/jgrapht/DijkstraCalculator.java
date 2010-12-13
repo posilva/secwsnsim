@@ -49,8 +49,13 @@ public class DijkstraCalculator {
     }
 
     public List calculatePath(short from, short to) {
-        List<Short> path = transform(DijkstraShortestPath.findPathBetween(directedGraph, from, to), directedGraph);
-        return path;
+        try {
+            List<Short> path = transform(DijkstraShortestPath.findPathBetween(directedGraph, from, to), directedGraph);
+            return path;
+        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+        }
+        return null;
     }
 
     public Hashtable calculateAllPathsFromTo(short from, Set toSet) {

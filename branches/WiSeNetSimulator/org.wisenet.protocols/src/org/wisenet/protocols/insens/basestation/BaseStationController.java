@@ -144,7 +144,9 @@ public class BaseStationController {
         HashSet S1 = new HashSet();
         HashSet S2 = new HashSet();
         HashSet S3 = new HashSet();
-        if(firstpath.isEmpty()) return path;
+        if (firstpath.isEmpty()) {
+            return path;
+        }
         Short from = (Short) firstpath.get(0);
         Short to = (Short) firstpath.get(firstpath.size() - 1);
         ArrayList workingPath = new ArrayList(firstpath);
@@ -154,6 +156,7 @@ public class BaseStationController {
         if (workingPath.isEmpty()) {
             return path;
         }
+
 
         for (Object object : workingPath) {
             S1.add(object);
@@ -180,11 +183,11 @@ public class BaseStationController {
             }
         }
         ArrayList lst1 = new ArrayList();
-        lst1 = calculatePathWithOutFromTo(S1, from, to);
+        lst1 = calculatePathWithOutFromTo(S3, from, to);
         if (lst1 == null || lst1.isEmpty()) {
             lst1 = calculatePathWithOutFromTo(S2, from, to);
             if (lst1 == null || lst1.isEmpty()) {
-                lst1 = calculatePathWithOutFromTo(S3, from, to);
+                lst1 = calculatePathWithOutFromTo(S1, from, to);
             }
         }
 
@@ -245,6 +248,7 @@ public class BaseStationController {
     public void createNetworkGraph() {
         networkGraph.clear();
         for (Object e1 : this.networkNeighborsTable.keySet()) { // por cada nó
+
             Short edge1 = (Short) e1;
             NeighborInfo neighborInfo1 = (NeighborInfo) networkNeighborsTable.get(edge1); // ler a tabela de vizinhos
             if (neighborInfo1 != null) {
@@ -370,12 +374,15 @@ public class BaseStationController {
         }
     }
 
+    /**
+     * Calculates the first set of paths to the network
+     * @param start
+     * @return
+     */
     private Hashtable calculateFirstPaths(short start) {
         final short graphSize = (short) networkGraph.vertices.size();
         final short graphHalf = (short) (graphSize / 2);
         firstPaths.clear();
-
-
         try {
             Thread t1 = new Thread(new TaskPathCalculator(start, (short) 0, (short) (graphHalf - 1)));
             Thread t2 = new Thread(new TaskPathCalculator(start, graphHalf, (short) (graphSize - 1)));
@@ -394,7 +401,6 @@ public class BaseStationController {
         allPaths = new Vector();
         allPaths.addAll(firstPathsT.values());
         allPaths.addAll(secondPathsT.values());
-//        printPaths(allPaths);
         for (int i = 0; i < allPaths.size(); i++) {
             List path = (List) allPaths.get(i);
             Hashtable table = path2RoutingTableEntryTable((ArrayList) path);
@@ -435,7 +441,6 @@ public class BaseStationController {
         }
 
         public void run() {
-//            try {
             DijkstraCalculator c = new DijkstraCalculator();
             c.addVertexs(networkGraph.vertices);
             c.addEdges(networkGraph.edges);
@@ -443,9 +448,6 @@ public class BaseStationController {
             Set s = new HashSet(networkGraph.vertices.subList(from, to));
             h = c.calculateAllPathsFromTo(start, s);
             updatePaths(h);
-//            } catch (CalculatorException ex) {
-//                RoutingLayer.getController().log(ex);
-//            }
         }
     }
 
