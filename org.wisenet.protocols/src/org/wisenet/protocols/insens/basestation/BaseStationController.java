@@ -8,15 +8,21 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.jgrapht.alg.DijkstraShortestPath;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.util.VertexPair;
 import org.wisenet.protocols.insens.INSENSRoutingLayer;
 import org.wisenet.protocols.insens.basestation.dijkstra.engine.CalculatorException;
 import org.wisenet.protocols.insens.basestation.jgrapht.DijkstraCalculator;
+import org.wisenet.protocols.insens.basestation.jgrapht.NetworkGraph;
 import org.wisenet.protocols.insens.messages.data.FDBKPayload;
 import org.wisenet.protocols.insens.utils.NeighborInfo;
 
@@ -25,12 +31,17 @@ import org.wisenet.protocols.insens.utils.NeighborInfo;
  * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class BaseStationController {
+    //TODO: Test other implementation
 
+    NetworkGraph graph = new NetworkGraph(DefaultEdge.class);
     Hashtable firstPaths = new Hashtable();
     Hashtable secondPaths = new Hashtable();
     Hashtable feedbackMessagesTable = new Hashtable();
     Hashtable networkNeighborsTable = new Hashtable();
     Hashtable<Short, ForwardingTable> forwardingTables = new Hashtable<Short, ForwardingTable>();
+    /**
+     * 
+     */
     private GraphManager networkGraph = new GraphManager();
     private Iterator threadFirstPathsIter;
     private Vector allPaths;
@@ -101,7 +112,6 @@ public class BaseStationController {
         if (verifyFeedbackMessage(message)) {
             feedbackMessagesTable.put(message.sourceId, message);
             processFeedbackMessage(message);
-            //        System.out.println("BASE STATION ADDS FDBK MESSAGE FROM " + message.sourceId + " -> " + feedbackMessagesTable.size());
         }
     }
 
@@ -123,7 +133,7 @@ public class BaseStationController {
     }
 
     /**
-     * 
+     * Save the message for each source Node
      * @param message
      */
     public void processFeedbackMessage(FDBKPayload message) {
@@ -243,13 +253,12 @@ public class BaseStationController {
     }
 
     /**
-     * 
+     * Creates the network Graph
      */
     public void createNetworkGraph() {
         networkGraph.clear();
-        for (Object e1 : this.networkNeighborsTable.keySet()) { // por cada nó
-
-            Short edge1 = (Short) e1;
+        for (Object e1 : this.networkNeighborsTable.keySet()) { // por cada nó que enviou com sucesso feedback message
+            Short edge1 = (Short) e1; // Nó com feedback message recebida
             NeighborInfo neighborInfo1 = (NeighborInfo) networkNeighborsTable.get(edge1); // ler a tabela de vizinhos
             if (neighborInfo1 != null) {
                 for (Object e2 : neighborInfo1.keySet()) {
@@ -266,11 +275,7 @@ public class BaseStationController {
 
     }
 
-    /**
-     * Perform the calculations related with building forwarding tables
-     */
-    public void calculateForwardingTables() {
-
+    public void calculateForwardingTables2() {
         long start = System.currentTimeMillis();
         long partial = start;
         System.out.println("INITIATED FORWARDING TABLES CALCULATION");
@@ -278,7 +283,7 @@ public class BaseStationController {
 
         System.out.println("prepared base station IN " + (System.currentTimeMillis() - partial) / 1000 + " SECONDS");
         partial = System.currentTimeMillis();
-        createNetworkGraph();
+        createGraph();
         System.out.println("created network graph IN " + (System.currentTimeMillis() - partial) / 1000 + " SECONDS");
         partial = System.currentTimeMillis();
 
@@ -295,15 +300,22 @@ public class BaseStationController {
 
         System.out.println("ENDED FORWARDING TABLES CALCULATION IN " + (System.currentTimeMillis() - start) / 1000 + " SECONDS");
 
-        //printFwTables();
     }
 
-    private void printFwTables() {
+    /**
+     * Utility function to print Forwarding tables
+     */
+    protected void printFwTables() {
         for (ForwardingTable forwardingTable : forwardingTables.values()) {
             System.out.println(forwardingTable);
         }
     }
 
+    /**
+     * Creates the second paths knowing the first paths
+     * @param firstPathsTtemp
+     * @return
+     */
     private Hashtable calculateSecondPaths(Hashtable firstPathsTtemp) {
         try {
 
@@ -321,7 +333,11 @@ public class BaseStationController {
         return null;
     }
 
-    private void printPaths(Vector allPaths) {
+    /**
+     * Utility functions to print paths
+     * @param allPaths
+     */
+    protected void printPaths(Vector allPaths) {
         for (Object object : allPaths) {
             ArrayList list = (ArrayList) object;
             System.out.print("[");
@@ -332,11 +348,16 @@ public class BaseStationController {
         }
     }
 
+    private List callPathFinder(NetworkGraph graph, ArrayList list) {
+        short start = (Short) getBasestation().getUniqueId();
+        PathsFinder finder = new PathsFinder(graph,start);
+        return finder.findFirstPaths();
+    }
+
     /**
-     *
+     * Thread to calculate a second path
      */
     protected class TaskSecondPathsCalculator implements Runnable {
-
         /**
          *
          */
@@ -397,6 +418,12 @@ public class BaseStationController {
         return null;
     }
 
+    /**
+     * Function to create the Forwarding tables knowing the first and second
+     * paths
+     * @param firstPathsT
+     * @param secondPathsT
+     */
     private void buildForwardingTables(Hashtable firstPathsT, Hashtable secondPathsT) {
         allPaths = new Vector();
         allPaths.addAll(firstPathsT.values());
@@ -427,6 +454,9 @@ public class BaseStationController {
         }
     }
 
+    /**
+     * Thread to calculate the first path
+     */
     class TaskPathCalculator implements Runnable {
 
         short start;
@@ -455,12 +485,21 @@ public class BaseStationController {
         firstPaths.putAll(h);
     }
 
+    /**
+     * Prepare the base station adding the base station info 
+     * @param baseStation
+     */
     private void prepareBaseStation(INSENSRoutingLayer baseStation) {
         NeighborInfo n = new NeighborInfo();
         n.fromByteArray(baseStation.getNeighborInfo().toByteArray());
         networkNeighborsTable.put(baseStation.getNode().getId(), n);
     }
 
+    /**
+     *  Calculate the paths
+     * @param path
+     * @return
+     */
     private Hashtable path2RoutingTableEntryTable(ArrayList path) {
         Short destination;
         Short source;
@@ -484,10 +523,214 @@ public class BaseStationController {
     }
 
     /**
-     *
+     * Gets the Forwarding Tables
      * @return
      */
     public Hashtable<Short, ForwardingTable> getForwardingTables() {
         return forwardingTables;
+    }
+
+    /**
+     ******************************************************************************************
+     ******************************************************************************************
+     ******************************************************************************************
+     ******************************************************************************************
+     ******************************************************************************************
+     */
+    /**
+     * Perform the calculations related with building forwarding tables
+     */
+    public void calculateForwardingTables() {
+
+        long start = System.currentTimeMillis();
+        long partial = start;
+        System.out.println("INITIATED FORWARDING TABLES CALCULATION");
+        prepareBaseStation(basestation);
+
+        System.out.println("prepared base station IN " + (System.currentTimeMillis() - partial) / 1000 + " SECONDS");
+        partial = System.currentTimeMillis();
+        createGraph();
+        System.out.println("created network graph IN " + (System.currentTimeMillis() - partial) / 1000 + " SECONDS");
+        partial = System.currentTimeMillis();
+
+        List paths1 = calculatePaths(graph); // first paths
+
+        System.out.println("first path calculated IN " + (System.currentTimeMillis() - partial) / 1000 + " SECONDS");
+        partial = System.currentTimeMillis();
+        List paths2 = calculatePaths2(graph, paths1);
+        System.out.println("second path calculated IN " + (System.currentTimeMillis() - partial) / 1000 + " SECONDS");
+
+        partial = System.currentTimeMillis();
+        buildForwardingTables(paths1, paths2);
+        System.out.println("builded tables IN " + (System.currentTimeMillis() - partial) / 1000 + " SECONDS");
+
+        System.out.println("ENDED FORWARDING TABLES CALCULATION IN " + (System.currentTimeMillis() - start) / 1000 + " SECONDS");
+    }
+
+    public void createGraph() {
+        for (Object e1 : this.networkNeighborsTable.keySet()) { // por cada nó que enviou com sucesso feedback message
+            Short edge1 = (Short) e1; // Nó com feedback message recebida
+            NeighborInfo neighborInfo1 = (NeighborInfo) networkNeighborsTable.get(edge1); // ler a tabela de vizinhos
+            if (neighborInfo1 != null) {
+                for (Object e2 : neighborInfo1.keySet()) {
+                    Short edge2 = (Short) e2;
+                    NeighborInfo neighborInfo2 = (NeighborInfo) networkNeighborsTable.get(e2);
+                    if (neighborInfo2 != null) {
+                        if (neighborInfo2.containsKey(edge1)) {
+                            graph.addVertex(edge1);
+                            graph.addVertex(edge2);
+                            if (!graph.containsEdge(edge2, edge1) && !graph.containsEdge(edge1, edge2)) {
+                                graph.addEdge(edge1, edge2);
+                                graph.addEdge(edge2, edge1);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private List calculatePaths(NetworkGraph graph) {
+        ArrayList list = new ArrayList();
+        return callPathFinder(graph, list);
+    }
+
+    /**
+     * Extract all vertices from edge path
+     * @param graph
+     * @param path
+     * @param start
+     * @param end
+     * @return
+     */
+    private List extractVertexs(NetworkGraph graph, List<DefaultEdge> path, Short start, short end) {
+        List list = new ArrayList();
+        if (path.isEmpty()) {
+            return list;
+        }
+        Short curr = start;
+        Short next = null;
+        for (DefaultEdge defaultEdge : path) {
+            VertexPair<Short> vp = new VertexPair<Short>(graph.getEdgeSource(defaultEdge), graph.getEdgeTarget(defaultEdge));
+            next = vp.getOther(curr);
+            list.add(curr);
+            curr = next;
+        }
+
+        list.add(end);
+        return list;
+    }
+
+    private List calculatePaths2(NetworkGraph graph, List<List> paths1) {
+
+//        List<List> paths2 = new ArrayList();
+//        for (List firstPath : paths1) {
+//            List secPath = calculate2Path(graph, firstPath);
+//            if (!secPath.isEmpty()) {
+//                paths2.add(secPath);
+//            }
+//        }
+//        return paths2;
+
+        return new PathsFinder(graph, (Short)getBasestation().getUniqueId()).findOtherPaths(paths1);
+
+    }
+
+    private List calculate2Path(NetworkGraph graph, List firstPath) {
+        LinkedList<Short> list = new LinkedList<Short>(firstPath);
+        Short first = list.removeFirst();
+        Short last = list.removeLast();
+        List result = new ArrayList();
+
+        if (list.size() == 0) {
+            return result;
+        }
+        /**
+         * Todos os nos do caminho excepto 1 e ultimo
+         */
+        NetworkGraph g = (NetworkGraph) graph.clone();
+        Set S1 = new HashSet<Short>(list);
+        Set edgesS1 = getAllEdgesFromSet(graph, S1);
+        g.removeAllVertices(S1);
+        List<DefaultEdge> pathS1 = DijkstraShortestPath.findPathBetween(g, first, last);
+
+        Set S2 = getAllNeighborsOf(graph, edgesS1, first, last);
+        Set edgesS2 = getAllEdgesFromSet(graph, S2);
+        g.removeAllVertices(S2);
+        List<DefaultEdge> pathS2 = DijkstraShortestPath.findPathBetween(g, first, last);
+
+        Set S3 = getAllNeighborsOf(graph, edgesS2, first, last);
+        Set edgesS3 = getAllEdgesFromSet(graph, S3);
+        g.removeAllVertices(S3);
+        List<DefaultEdge> pathS3 = DijkstraShortestPath.findPathBetween(g, first, last);
+        if (pathS3 == null) {
+            if (pathS2 == null) {
+                if (pathS1 == null) {
+                } else {
+                    result = extractVertexs(g, pathS1, first, last);
+                }
+            } else {
+                result = extractVertexs(g, pathS2, first, last);
+            }
+        } else {
+            result = extractVertexs(g, pathS3, first, last);
+        }
+
+        return result;
+    }
+
+    private Set getAllEdgesFromSet(NetworkGraph graph, Set<Short> set) {
+        Set edgesSet = new HashSet();
+
+        for (Short s : set) {
+            Set e = new HashSet(graph.incomingEdgesOf(s));
+            e.addAll(new HashSet(graph.outgoingEdgesOf(s)));
+            edgesSet.addAll(e);
+        }
+        return edgesSet;
+    }
+
+    private Set getAllNeighborsOf(NetworkGraph graph, Set<Short> edgesSet, Short first, Short last) {
+        Set neighborsSet = new HashSet();
+
+
+        for (Object edge : edgesSet) {
+            neighborsSet.add(graph.getEdgeSource((DefaultEdge) edge));
+            neighborsSet.add(graph.getEdgeTarget((DefaultEdge) edge));
+        }
+        neighborsSet.remove(first);
+        neighborsSet.remove(last);
+
+//        // retirar das contas o primeiro e o ultimo dos nos
+//        for (DefaultEdge edge : graph.edgeSet()) {
+//            if ((edgeBelongsToSet(graph, set, edge))
+//                    && (!vertexBelongsToEdge(graph, edge, first)
+//                    && !vertexBelongsToEdge(graph, edge, last))) {
+//                edgesSet.add(edge); // SOADICIONA SE PERTTENCER
+//                neighborsSet.add(graph.getEdgeSource(edge));
+//                neighborsSet.add(graph.getEdgeTarget(edge));
+//            }
+//        }
+        return neighborsSet;
+    }
+
+//    private boolean edgeBelongsToSet(NetworkGraph graph, Set<Short> set, DefaultEdge edge) {
+//        return set.contains(graph.getEdgeSource(edge)) || set.contains(graph.getEdgeTarget(edge));
+//    }
+//
+//    private boolean vertexBelongsToEdge(NetworkGraph graph, DefaultEdge edge, Short vertex) {
+//        return graph.getEdgeTarget(edge).equals(vertex) || graph.getEdgeSource(edge).equals(vertex);
+//    }
+
+    private void buildForwardingTables(List firstPathsL, List secondPathsL) {
+        allPaths = new Vector();
+        allPaths.addAll(firstPathsL);
+        allPaths.addAll(secondPathsL);
+        for (int i = 0; i < allPaths.size(); i++) {
+            List path = (List) allPaths.get(i);
+            Hashtable table = path2RoutingTableEntryTable((ArrayList) path);
+            saveTable(table);
+        }
+
     }
 }

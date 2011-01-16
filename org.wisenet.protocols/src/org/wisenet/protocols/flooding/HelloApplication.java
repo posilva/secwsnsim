@@ -7,6 +7,7 @@ package org.wisenet.protocols.flooding;
 import javax.swing.JOptionPane;
 import org.wisenet.protocols.flooding.messages.FloodingMessage;
 import org.wisenet.simulator.core.Application;
+import org.wisenet.simulator.utilities.Utilities;
 
 /**
  *
@@ -22,24 +23,34 @@ public class HelloApplication extends Application {
 
     @Override
     public void run() {
-        byte parameter = askForParameter();
-        switch (parameter) {
-            case 0:
-                sendHelloTo((short) 2);
-                break;
-            default:
-                JOptionPane.showMessageDialog(null, "NONE");
-                break;
-        }
+        short parameter = askForParameter();
+        sendHelloTo((short) parameter);
     }
+//    public void run() {
+//        byte parameter = askForParameter();
+//        switch (parameter) {
+//            case 0:
+//                sendHelloTo((short) parameter);
+//                break;
+//            default:
+//                JOptionPane.showMessageDialog(null, "NONE");
+//                break;
+//        }
+//    }
 
     /**
      * 
      * @return
      */
-    private byte askForParameter() {
-        String result = JOptionPane.showInputDialog("Escolha as opções:\n 0 - Send HELLO Message");
-        return Byte.valueOf(result);
+    private short askForParameter() {
+        try {
+            String result = JOptionPane.showInputDialog("Choose destination node ID");
+            return Short.valueOf(result);
+
+        } catch (Exception e) {
+            Utilities.handleException(e);
+        }
+        return (short) 0;
     }
 
     void sendHelloTo(short id) {

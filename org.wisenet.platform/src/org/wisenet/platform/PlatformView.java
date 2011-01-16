@@ -37,6 +37,7 @@ import org.wisenet.platform.gui.panels.EnergyEvaluationPanel;
 import org.wisenet.platform.gui.panels.RoutingOutputPanel;
 import org.wisenet.platform.gui.panels.SimulationPropertiesPanel;
 import org.wisenet.platform.gui.panels.TestResultsPanel;
+import org.wisenet.platform.test.MACLayerStatChart;
 import org.wisenet.platform.utils.PlatformUtils;
 import org.wisenet.platform.utils.gui.ClockCounter;
 import org.wisenet.platform.utils.GUI_Utils;
@@ -194,6 +195,7 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenu5 = new javax.swing.JMenu();
         viewNodeInfo = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         statusPanel = new javax.swing.JPanel();
@@ -441,6 +443,15 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         viewNodeInfo.setName("viewNodeInfo"); // NOI18N
         jMenu5.add(viewNodeInfo);
 
+        jMenuItem1.setText(resourceMap.getString("mnuMACStats.text")); // NOI18N
+        jMenuItem1.setName("mnuMACStats"); // NOI18N
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem1);
+
         ViewMenu.add(jMenu5);
 
         menuBar.add(ViewMenu);
@@ -659,6 +670,10 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         ShowSimulationProperties();
     }//GEN-LAST:event_simPropertiesSubMenuActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        MACLayerStatChart.getInstance().setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     @Action
     public void newSimulation() {
         SimulationWizardPanel sw = new SimulationWizardPanel();
@@ -718,6 +733,7 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
     protected javax.swing.JMenu jMenu2;
     protected javax.swing.JMenu jMenu3;
     protected javax.swing.JMenu jMenu5;
+    protected javax.swing.JMenuItem jMenuItem1;
     protected javax.swing.JPanel jPanel1;
     protected javax.swing.JPanel jPanel2;
     protected javax.swing.JPanel jPanel3;
@@ -884,7 +900,6 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         return PlatformManager.getInstance().getActiveSimulation() != null;
     }
 
-
     @Action
     public void OpenSimulation() {
         PlatformUtils.openSimulation();
@@ -942,7 +957,7 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
     public void afterBuildNetwork(SimulationEvent event) {
         try {
             updateAverageNeighborsPerNode();
-            lblRadioCoverageValue.setText(PlatformManager.getInstance().getActiveSimulation().getRadioCoverageValue()+ "%");
+            lblRadioCoverageValue.setText(PlatformManager.getInstance().getActiveSimulation().getRadioCoverageValue() + "%");
         } catch (Exception e) {
             GUI_Utils.showException(e);
         }
