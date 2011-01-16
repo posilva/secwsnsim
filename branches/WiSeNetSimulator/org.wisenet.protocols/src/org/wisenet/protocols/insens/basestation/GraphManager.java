@@ -5,7 +5,6 @@
 package org.wisenet.protocols.insens.basestation;
 
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Vector;
 import org.wisenet.protocols.insens.basestation.dijkstra.model.Edge;
 

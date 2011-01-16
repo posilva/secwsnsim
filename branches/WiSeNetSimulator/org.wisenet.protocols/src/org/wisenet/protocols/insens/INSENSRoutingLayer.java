@@ -538,7 +538,17 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     private void dispatchNextMessage() {
         if (!sendingMessage) {
             if (!messagesQueue.isEmpty()) {
+                /**
+                 * Este teste permite diminuir a densidade da rede em virtude de
+                 * dimunir as colisoes na rede
+                 */
+//              if(!getNode().getMacLayer().isReceiving() &&  !getNode().getMacLayer().isTransmitting()){
+
                 broadcastMessage((Message) messagesQueue.peek());
+                
+//                System.out.println("NOISE:" + getNode().getMacLayer().getNoiseStrength());
+//                System.out.println("STRENGTH:" + getNode().getMacLayer().getSignalStrength());
+//              }
             } else {
                 queueMessageDispatchTimer.stop();
             }

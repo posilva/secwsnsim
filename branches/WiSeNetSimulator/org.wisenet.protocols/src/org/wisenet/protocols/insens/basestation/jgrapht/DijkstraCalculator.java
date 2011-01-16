@@ -12,10 +12,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
-import org.jgrapht.DirectedGraph;
+import org.jgrapht.Graph;
 import org.jgrapht.alg.DijkstraShortestPath;
-import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleGraph;
 import org.wisenet.protocols.insens.basestation.dijkstra.model.Edge;
 
 /**
@@ -25,7 +25,7 @@ import org.wisenet.protocols.insens.basestation.dijkstra.model.Edge;
 public class DijkstraCalculator {
 
     protected static DijkstraCalculator instance = null;
-    DirectedGraph<Short, DefaultEdge> directedGraph;
+    SimpleGraph<Short, DefaultEdge> directedGraph;
 
     public static DijkstraCalculator get() {
         if (instance == null) {
@@ -45,7 +45,7 @@ public class DijkstraCalculator {
     }
 
     public DijkstraCalculator() {
-        directedGraph = new DefaultDirectedGraph<Short, DefaultEdge>(DefaultEdge.class);
+        directedGraph = new SimpleGraph<Short, DefaultEdge>(DefaultEdge.class);
     }
 
     public List calculatePath(short from, short to) {
@@ -126,7 +126,7 @@ public class DijkstraCalculator {
     public void prepare() {
     }
 
-    private List<Short> transform(List<DefaultEdge> path, DirectedGraph<Short, DefaultEdge> graph) {
+    private List<Short> transform(List<DefaultEdge> path, Graph<Short, DefaultEdge> graph) {
         ArrayList<Short> newList = new ArrayList<Short>();
         if (path.isEmpty()) {
             return newList;

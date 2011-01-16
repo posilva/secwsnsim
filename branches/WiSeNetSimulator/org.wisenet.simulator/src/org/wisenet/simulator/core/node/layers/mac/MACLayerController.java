@@ -15,7 +15,7 @@ import org.wisenet.simulator.common.Persistent;
  *
  * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
-public class MACLayerController extends PersistantObject implements Parameterizable,Persistent{
+public class MACLayerController extends PersistantObject implements Parameterizable, Persistent {
 
     /**
      *
@@ -29,11 +29,22 @@ public class MACLayerController extends PersistantObject implements Parameteriza
      *
      */
     protected long totalMessagesCorrupted = 0;
-
     /**
      *
      */
     protected MACLayerParameters parameters = new MACLayerParameters();
+    /**
+     * 
+     */
+    private long totalNotReceivedMessages = 0;
+
+    /**
+     * 
+     * @return
+     */
+    public long getTotalNotReceivedMessages() {
+        return totalNotReceivedMessages;
+    }
 
     /**
      *
@@ -96,7 +107,6 @@ public class MACLayerController extends PersistantObject implements Parameteriza
         this.parameters = (MACLayerParameters) parameters;
     }
 
-
     /**
      *
      * @param configuration
@@ -113,15 +123,44 @@ public class MACLayerController extends PersistantObject implements Parameteriza
      */
     public void loadFromXML(XMLConfiguration configuration) throws PersistantException {
         parameters.loadFromXML(configuration);
-        
+
     }
+
     /**
      *
      */
-    public void reset(){
-        totalMessagesCorrupted=0;
-        totalMessagesNotSent=0;
-        totalMessagesSent=0;
+    public void reset() {
+        totalMessagesCorrupted = 0;
+        totalMessagesNotSent = 0;
+        totalMessagesSent = 0;
 
+    }
+
+    public synchronized double getMessageCorruptedRate() {
+        if (this.totalMessagesSent > 0) {
+            return this.totalMessagesCorrupted * 100 / this.totalMessagesSent;
+        } else {
+            return 0.0;
+        }
+    }
+
+    public synchronized double getMessageNotSentRate() {
+        if (this.totalMessagesSent > 0) {
+            return this.totalMessagesNotSent * 100 / this.totalMessagesSent;
+        } else {
+            return 0.0;
+        }
+    }
+
+    void incrementTotalMessagesNotReceived() {
+        totalNotReceivedMessages++;
+    }
+
+    public double getNotReceivedMessagesRate() {
+        if (this.totalMessagesSent > 0) {
+            return this.totalNotReceivedMessages * 100 / this.totalMessagesSent;
+        } else {
+            return 0.0;
+        }
     }
 }

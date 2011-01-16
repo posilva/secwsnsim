@@ -183,12 +183,14 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         if (!isValid()) {
             return;
         }
+        long start = System.currentTimeMillis();
         SimulationEvent event = new SimulationEvent(this);
         fireBeforeBuildNetwork(event);
         if (!event.isCancel()) {
             if (isNetworkDeployed()) {
                 getSimulator().init();
                 fireAfterBuildNetwork(event);
+                System.out.println("Build in "+ ((System.currentTimeMillis()-start)/1000) + " Seconds");
                 networkBuilded = true;
             }
 

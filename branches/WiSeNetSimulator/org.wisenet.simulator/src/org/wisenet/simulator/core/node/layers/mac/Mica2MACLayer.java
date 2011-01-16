@@ -343,6 +343,7 @@ public class Mica2MACLayer extends MACLayer {
                 corrupted = false;
                 signalStrength = level;
             } else {
+                getController().incrementTotalMessagesNotReceived();
                 if (isDebugEnabled()) {
                     System.out.println(getSimData() + " - Transmiting a message cannot receive");
                 }
