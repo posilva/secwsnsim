@@ -36,6 +36,7 @@ public class SimulationPropertiesPanel extends PlatformPanel {
         jPanel2 = new javax.swing.JPanel();
         tgbFastMode = new javax.swing.JToggleButton();
         tgbRealTimeMode = new javax.swing.JToggleButton();
+        logEnergyEnable = new javax.swing.JCheckBox();
 
         setName("Form"); // NOI18N
         setLayout(new java.awt.BorderLayout());
@@ -50,12 +51,12 @@ public class SimulationPropertiesPanel extends PlatformPanel {
         tgbFastMode.setAction(actionMap.get("SetFastMode")); // NOI18N
         simulationMode.add(tgbFastMode);
         tgbFastMode.setSelected(true);
-        tgbFastMode.setText("Fast Mode"); // NOI18N
+        tgbFastMode.setText("Fast"); // NOI18N
         tgbFastMode.setName("tgbFastMode"); // NOI18N
 
         tgbRealTimeMode.setAction(actionMap.get("SetRealtimeMode")); // NOI18N
         simulationMode.add(tgbRealTimeMode);
-        tgbRealTimeMode.setText("Real Time Mode"); // NOI18N
+        tgbRealTimeMode.setText("Real Time"); // NOI18N
         tgbRealTimeMode.setName("tgbRealTimeMode"); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -79,20 +80,27 @@ public class SimulationPropertiesPanel extends PlatformPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        logEnergyEnable.setText("Log Energy Enable"); // NOI18N
+        logEnergyEnable.setName("logEnergyEnable"); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(logEnergyEnable))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(logEnergyEnable)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -108,6 +116,7 @@ public class SimulationPropertiesPanel extends PlatformPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JCheckBox logEnergyEnable;
     private javax.swing.ButtonGroup simulationMode;
     private javax.swing.JToggleButton tgbFastMode;
     private javax.swing.JToggleButton tgbRealTimeMode;
@@ -117,6 +126,7 @@ public class SimulationPropertiesPanel extends PlatformPanel {
         if (PlatformManager.getInstance().haveActiveSimulation()) {
             tgbFastMode.setSelected(PlatformManager.getInstance().getActiveSimulation().getSimulator().getMode() == Simulator.FAST);
             tgbRealTimeMode.setSelected(PlatformManager.getInstance().getActiveSimulation().getSimulator().getMode() == Simulator.REAL);
+            logEnergyEnable.setSelected(PlatformManager.getInstance().getActiveSimulation().isLogEnergyEnable());
         }
     }
 
@@ -135,6 +145,7 @@ public class SimulationPropertiesPanel extends PlatformPanel {
             if (tgbRealTimeMode.isSelected()) {
                 PlatformManager.getInstance().getActiveSimulation().getSimulator().setMode(Simulator.REAL);
             }
+            PlatformManager.getInstance().getActiveSimulation().setLogEnergyEnable(logEnergyEnable.isSelected());
         }
         return true;
     }
@@ -148,6 +159,7 @@ public class SimulationPropertiesPanel extends PlatformPanel {
     protected boolean isDataValid() {
         return true;
     }
+
     @Override
     public void beforeClose() {
     }

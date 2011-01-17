@@ -169,8 +169,8 @@ public class MACLayerStatChart extends javax.swing.JFrame implements StatisticMA
         // create the chart...
         final JFreeChart chartX = ChartFactory.createXYLineChart(
                 "MAC Layer Stats Chart", // chart title
-                "Tempo", // x axis label
-                "Percentagem(%)", // y axis label
+                "Time", // x axis label
+                "Percentage(%)", // y axis label
                 dataset, // data
                 PlotOrientation.VERTICAL,
                 true, // include legend
