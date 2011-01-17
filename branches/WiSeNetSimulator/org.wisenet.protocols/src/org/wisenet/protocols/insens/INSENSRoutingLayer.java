@@ -269,12 +269,14 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         Hashtable t = new Hashtable();
         for (Object list : allpaths) {
             ArrayList lst = (ArrayList) list;
-            ArrayList lst2 = (ArrayList) t.get(lst.size());
-            if (lst2 == null) {
-                lst2 = new ArrayList();
+            if (lst.size() > 0) {
+                ArrayList lst2 = (ArrayList) t.get(lst.size());
+                if (lst2 == null) {
+                    lst2 = new ArrayList();
+                }
+                lst2.add(lst.get(lst.size() - 1));
+                t.put(lst.size(), lst2);
             }
-            lst2.add(lst.get(lst.size() - 1));
-            t.put(lst.size(), lst2);
         }
         return t;
     }
@@ -377,10 +379,16 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
      */
     private void startComputeRoutingInfo() {
         if (canStartComputeRoutingInfo()) {
-            log("Started to compute routing info");
-            baseStationController.calculateForwardingTables();
-            log("Number of Forwarding Tables:  " + baseStationController.getForwardingTables().size());
-            sendRouteUpdateMessages(baseStationController.getForwardingTables());
+            new Thread(new Runnable() {
+
+                public void run() {
+
+                    log("Started to compute routing info");
+                    baseStationController.calculateForwardingTables();
+                    log("Number of Forwarding Tables:  " + baseStationController.getForwardingTables().size());
+                    sendRouteUpdateMessages(baseStationController.getForwardingTables());
+                }
+            }).start();
         }
     }
 
@@ -543,9 +551,8 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
                  * dimunir as colisoes na rede
                  */
 //              if(!getNode().getMacLayer().isReceiving() &&  !getNode().getMacLayer().isTransmitting()){
-
                 broadcastMessage((Message) messagesQueue.peek());
-                
+
 //                System.out.println("NOISE:" + getNode().getMacLayer().getNoiseStrength());
 //                System.out.println("STRENGTH:" + getNode().getMacLayer().getSignalStrength());
 //              }

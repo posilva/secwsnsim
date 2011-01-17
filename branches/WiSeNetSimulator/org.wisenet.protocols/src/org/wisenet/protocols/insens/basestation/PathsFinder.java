@@ -198,16 +198,6 @@ public class PathsFinder {
             neighborsSet.remove(first);
             neighborsSet.remove(last);
 
-//        // retirar das contas o primeiro e o ultimo dos nos
-//        for (DefaultEdge edge : graph.edgeSet()) {
-//            if ((edgeBelongsToSet(graph, set, edge))
-//                    && (!vertexBelongsToEdge(graph, edge, first)
-//                    && !vertexBelongsToEdge(graph, edge, last))) {
-//                edgesSet.add(edge); // SOADICIONA SE PERTTENCER
-//                neighborsSet.add(graph.getEdgeSource(edge));
-//                neighborsSet.add(graph.getEdgeTarget(edge));
-//            }
-//        }
             return neighborsSet;
         }
 
@@ -226,20 +216,26 @@ public class PathsFinder {
             NetworkGraph g = (NetworkGraph) graph_thread.clone();
             Set S1 = new HashSet<Short>(list);
             Set edgesS1 = getAllEdgesFromSet(graph_thread, S1);
-            g.removeAllVertices(S1);
-            List<DefaultEdge> pathS1 = DijkstraShortestPath.findPathBetween(g, first, last);
-
+//            g.removeAllVertices(S1);
+//            List<DefaultEdge> pathS1 = (List<DefaultEdge>) findPath(g, first, last);
+//
             Set S2 = getAllNeighborsOf(graph_thread, edgesS1, first, last);
             Set edgesS2 = getAllEdgesFromSet(graph_thread, S2);
-            g.removeAllVertices(S2);
-            List<DefaultEdge> pathS2 = DijkstraShortestPath.findPathBetween(g, first, last);
+//            g.removeAllVertices(S2);
+//            List<DefaultEdge> pathS2 = (List<DefaultEdge>) findPath(g, first, last);
 
             Set S3 = getAllNeighborsOf(graph_thread, edgesS2, first, last);
             Set edgesS3 = getAllEdgesFromSet(graph_thread, S3);
             g.removeAllVertices(S3);
-            List<DefaultEdge> pathS3 = DijkstraShortestPath.findPathBetween(g, first, last);
+            List<DefaultEdge> pathS3 = (List<DefaultEdge>) findPath(g, first, last);
             if (pathS3 == null) {
+                putBack(g, edgesS3, S3);
+                g.removeAllVertices(S2);
+                List<DefaultEdge> pathS2 = (List<DefaultEdge>) findPath(g, first, last);
                 if (pathS2 == null) {
+                    putBack(g, edgesS2, S2);
+                    g.removeAllVertices(S1);
+                    List<DefaultEdge> pathS1 = (List<DefaultEdge>) findPath(g, first, last);
                     if (pathS1 == null) {
                     } else {
                         result = extractVerticesFromEdges(g, pathS1, first, last);
@@ -252,6 +248,17 @@ public class PathsFinder {
             }
 
             return result;
+        }
+
+        private void putBack(NetworkGraph g, Set edges, Set vertices) {
+            for (Object s : vertices) {
+                g.addVertex((Short)s);
+            }
+            for (Object e : edges) {
+                Short s = g.getEdgeSource((DefaultEdge) e);
+                Short t = g.getEdgeTarget((DefaultEdge) e);
+                g.addEdge(s, t);
+            }
         }
     }
 

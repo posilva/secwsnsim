@@ -29,7 +29,7 @@ public class BlackholeRoutingAttack extends AbstractRoutingAttack {
     }
 
     @Override
-    public Object attack(Object message) {
+    public Object attackOnSend(Object message) {
         if (getRoutingLayer().isStable()) {
             log("Suppress Message");
             return null; // Supress message
@@ -37,5 +37,15 @@ public class BlackholeRoutingAttack extends AbstractRoutingAttack {
 
             return message;
         }
+    }
+
+    @Override
+    public Object attackOnReceive(Object message) {
+        return message;
+    }
+
+    @Override
+    public Object attackOnDemand(Object message, Object command) {
+        return message;
     }
 }

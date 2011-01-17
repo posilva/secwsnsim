@@ -2,6 +2,7 @@ package org.wisenet.simulator.core.energy;
 
 import java.util.Hashtable;
 import org.wisenet.simulator.components.instruments.logging.EnergyLogger;
+import org.wisenet.simulator.components.instruments.logging.file.EnergyRawFileLogger;
 import org.wisenet.simulator.core.Simulator;
 import org.wisenet.simulator.core.energy.listeners.EnergyEvent;
 import org.wisenet.simulator.core.energy.listeners.EnergyListener;
@@ -23,13 +24,18 @@ public class EnergyController implements EnergyListener {
     /**
      *
      */
-    protected EnergyLogger energyLogger;
+    protected EnergyLogger energyLogger = null;
     private boolean logEnergyEnable = false;
 
     /**
      *
      */
     public EnergyController() {
+    }
+
+    private void createDefaultEnergyLogger() {
+        energyLogger = new EnergyRawFileLogger();
+        energyLogger.init();
     }
 
     /**
@@ -114,6 +120,11 @@ public class EnergyController implements EnergyListener {
      */
     public void setLogEnergyEnable(boolean logEnergyEnable) {
         this.logEnergyEnable = logEnergyEnable;
+        if (this.logEnergyEnable){
+            if (energyLogger==null){
+                createDefaultEnergyLogger();
+            }
+        }
     }
 
     /**

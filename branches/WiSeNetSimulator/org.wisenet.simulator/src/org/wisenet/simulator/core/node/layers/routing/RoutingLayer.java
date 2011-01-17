@@ -159,12 +159,17 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
      * @param message
      */
     public final void receiveMessage(Object message) {
-        if (getController().isTesting()) {
-            AbstractTest test = getController().getActiveTest();
-            test.getEvaluationManager().registerMessageArrived(message, this);
+        if (isUnderAttack()) {
+            getController().incrementAttackedMessages();
+            message = doAttackBeforeReceive(message);
         }
-
-        onReceiveMessage(message);
+        if (message != null) {
+            if (getController().isTesting()) {
+                AbstractTest test = getController().getActiveTest();
+                test.getEvaluationManager().registerMessageArrived(message, this);
+            }
+            onReceiveMessage(message);
+        }
     }
 
     /**
@@ -194,7 +199,7 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
     private Object beforeSendMessageToAir(Object message) {
         if (isUnderAttack()) {
             getController().incrementAttackedMessages();
-            return doAttack(message);
+            return doAttackBeforeSend(message);
         }
         return message;
     }
@@ -219,21 +224,46 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
     }
 
     /**
-     * Handles a attack procedure
+     * Handles a attackOnSend procedure
      * @param message
      * @return
      */
-    protected final Object doAttack(Object message) {
+    protected final Object doAttackBeforeReceive(Object message) {
         if (!isUnderAttack()) {
             return message;
         }
         Object attackedMessage = null;
-        // TODO: maybe we only considered the first enabled attack (MUST REVIEW)
+        // TODO: maybe we only considered the first enabled attackOnSend (MUST REVIEW)
         for (AttacksEntry ae : attacks.getAttacksList()) {
             attackedMessage = message;
             if (ae.isEnable()) {
                 IRoutingAttack attack = (IRoutingAttack) ae.getAttack();
-                attackedMessage = attack.attack(attackedMessage);
+                attackedMessage = attack.attackOnReceive(attackedMessage);
+                if (attackedMessage == null) // once the message was disapear
+                {
+                    break;                 // we dont keep doing attacks
+                }
+            }
+        }
+        return attackedMessage;
+    }
+
+    /**
+     * Handles a attackOnSend procedure
+     * @param message
+     * @return
+     */
+    protected final Object doAttackBeforeSend(Object message) {
+        if (!isUnderAttack()) {
+            return message;
+        }
+        Object attackedMessage = null;
+        // TODO: maybe we only considered the first enabled attackOnSend (MUST REVIEW)
+        for (AttacksEntry ae : attacks.getAttacksList()) {
+            attackedMessage = message;
+            if (ae.isEnable()) {
+                IRoutingAttack attack = (IRoutingAttack) ae.getAttack();
+                attackedMessage = attack.attackOnSend(attackedMessage);
                 if (attackedMessage == null) // once the message was disapear
                 {
                     break;                 // we dont keep doing attacks

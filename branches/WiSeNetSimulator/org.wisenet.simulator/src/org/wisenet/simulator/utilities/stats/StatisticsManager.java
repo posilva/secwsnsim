@@ -92,7 +92,6 @@ public class StatisticsManager {
         double corruptedRate = MACLayer.getController().getMessageCorruptedRate();
         double notReceivedRate= MACLayer.getController().getNotReceivedMessagesRate();
         if (macLayerListeners.size() > 0) {
-
             for (StatisticMACLayerListener listener : macLayerListeners) {
                 listener.updateStats(corruptedRate, lostMessagesRate,notReceivedRate);
             }

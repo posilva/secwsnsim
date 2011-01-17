@@ -44,7 +44,7 @@ class Mica2MACLayerParameters extends MACLayerParameters {
          */
         init("maxAllowedNoiseOnSending", (double) 5.0);
         /** The minimum signal to noise ratio required to spot a message in the air. */
-        init("receivingStartSNR", (double) 5.0);
+        init("receivingStartSNR", (double) 4.0);
         /**
          * The maximum signal to noise ratio below which a message is marked
          * corrupted.
