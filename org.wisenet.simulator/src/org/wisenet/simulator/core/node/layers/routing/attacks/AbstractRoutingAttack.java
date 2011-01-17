@@ -59,7 +59,9 @@ public abstract class AbstractRoutingAttack implements IRoutingAttack {
         return routingLayer;
     }
 
-    public abstract Object attack(Object message);
+    public abstract Object attackOnSend(Object message);
+    public abstract Object attackOnReceive(Object message);
+    public abstract Object attackOnDemand(Object message,Object command);
 
     /**
      *

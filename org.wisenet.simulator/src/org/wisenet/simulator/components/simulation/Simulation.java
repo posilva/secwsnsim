@@ -71,7 +71,7 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
     /**
      *
      */
-    protected boolean logEnergyEnable;
+//    protected boolean logEnergyEnable;
     /**
      *
      */
@@ -190,7 +190,7 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
             if (isNetworkDeployed()) {
                 getSimulator().init();
                 fireAfterBuildNetwork(event);
-                System.out.println("Build in "+ ((System.currentTimeMillis()-start)/1000) + " Seconds");
+                System.out.println("Build in " + ((System.currentTimeMillis() - start) / 1000) + " Seconds");
                 networkBuilded = true;
             }
 
@@ -530,7 +530,7 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
      * @return
      */
     public boolean isLogEnergyEnable() {
-        return logEnergyEnable;
+        return getEnergyController().isLogEnergyEnable();
     }
 
     /**
@@ -538,7 +538,7 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
      * @param logEnergyEnable
      */
     public void setLogEnergyEnable(boolean logEnergyEnable) {
-        this.logEnergyEnable = logEnergyEnable;
+        getEnergyController().setLogEnergyEnable(logEnergyEnable);
     }
 
     private void fireAfterBuildNetwork(SimulationEvent event) {

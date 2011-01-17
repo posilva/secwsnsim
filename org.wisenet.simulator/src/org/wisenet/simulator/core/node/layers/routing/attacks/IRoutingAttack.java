@@ -19,12 +19,12 @@ public interface IRoutingAttack {
     public boolean isEnable();
 
     /**
-     * Set the attack enabled
+     * Set the attackOnSend enabled
      */
     public void enable();
 
     /**
-     * Set the attack disabled
+     * Set the attackOnSend disabled
      */
     public void disable();
 
@@ -35,11 +35,26 @@ public interface IRoutingAttack {
     public RoutingLayer getRoutingLayer();
 
     /**
-     * Perform attack under the message
+     * Perform attackOnSend under the message
      * @param message
-     * @return
+     * @return the attacked message 
      */
-    public Object attack(Object message);
+    public Object attackOnSend(Object message);
+
+    /**
+     * Perform attackOnReceive under the message
+     * @param message
+     * @return the attacked message
+     */
+    public Object attackOnReceive(Object message);
+
+    /**
+     * Perform attackOnDemand under the message Based on command action
+     * @param message
+     * @param command 
+     * @return the attacked message
+     */
+    public Object attackOnDemand(Object message, Object command);
 
     /**
      * 

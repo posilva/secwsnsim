@@ -30,7 +30,7 @@ public class EnergyRawFileLogger extends EnergyFileLogger {
     public void init() {
         try {
             createLogDir();
-            this.filename = LOGS_DIR + "\\" + "Energy_" + System.currentTimeMillis() + ".dat";
+            this.filename = LOGS_DIR + File.separatorChar + "Energy_" + System.currentTimeMillis() + ".dat";
             FileOutputStream fos = new FileOutputStream(filename);
             outputStream = new DataOutputStream(new BufferedOutputStream(fos));
         } catch (FileNotFoundException ex) {
