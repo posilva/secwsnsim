@@ -8,6 +8,7 @@ import org.wisenet.simulator.core.Event;
 import org.wisenet.simulator.core.Message;
 import org.wisenet.simulator.core.Simulator;
 import org.wisenet.simulator.core.node.Node;
+import org.wisenet.simulator.core.node.layers.routing.RoutingLayer;
 
 /**
  *
@@ -143,7 +144,7 @@ public class BaseTest extends AbstractTest {
     public void prepare() {
         prepared = false;
         /* prepare test pre-conditions*/
-        int stableNodes = simulation.getRoutingLayerController().getTotalStableNodes();
+        int stableNodes = RoutingLayer.getController().getTotalStableNodes();
         int allNodes = simulation.getSimulator().getNodes().size();
         int nNodes = 0;
         int selectableNodes = 0;

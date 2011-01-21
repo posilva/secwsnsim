@@ -130,7 +130,7 @@ public class Simulator {
      * @param node
      */
     public void addNode(Node node) {
-        db.nodes().add(node);
+        db.store(node);
     }
 
     /**
@@ -138,7 +138,7 @@ public class Simulator {
      * @param node
      */
     public void removeNode(Node node) {
-        db.nodes().remove(node);
+        db.remove(node);
 
     }
 
@@ -665,5 +665,9 @@ public class Simulator {
                 ((SimulatorListener) listeners[i + 1]).onEmptyQueue(event);
             }
         }
+    }
+
+    public Node findNode(Short id) {
+        return db.findById(id);
     }
 }

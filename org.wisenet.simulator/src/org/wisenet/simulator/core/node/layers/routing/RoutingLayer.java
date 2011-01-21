@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 import org.wisenet.simulator.components.evaluation.tests.AbstractTest;
 import org.wisenet.simulator.components.instruments.IInstrumentHandler;
-import org.wisenet.simulator.components.instruments.IInstrumentMessage;
 import org.wisenet.simulator.core.Application;
 import org.wisenet.simulator.core.Message;
 import org.wisenet.simulator.core.node.layers.Layer;
@@ -128,6 +127,19 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
     private void prepareAttacks() {
         attacks = new AttacksList(this);
         initAttacks();
+        registerAttacks();
+
+    }
+
+    /**
+     * Keeps information about configurated attacks 
+     */
+    private void registerAttacks() {
+        if (attacks != null) {
+            for (AttacksEntry attacksEntry : attacks.getAttacksList()) {
+                getController().registerAttack(attacksEntry);
+            }
+        }
     }
 
     /**
@@ -277,6 +289,7 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
      * Startup routing actions
      */
     public final void startup() {
+        startupAttacks();
         onStartUp();
 
     }
@@ -343,7 +356,7 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
     /**
      * Setting up the attacks implemented
      */
-    protected abstract void setupAttacks();
+    protected abstract void startupAttacks();
 
     /**
      * Occurs when the routing protocol sends message to air
@@ -377,7 +390,20 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
      */
     protected abstract void initAttacks();
 
+    /**
+     * Enables to adapt application message to routing specific message
+     * @param m
+     * @return
+     */
     protected abstract Message encapsulateMessage(Message m);
+
+    /**
+     * Custom handling after un/setting under attack
+     * Example is if a Hello Flooding is enable then the range must increase
+     * @param underAttack
+     */
+    protected void onSettingUnderAttack(boolean underAttack) {
+    }
 
     /**
      *
@@ -395,6 +421,9 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
         throw new IllegalStateException("Derived classes must implement \"getUniqueId\" method ");
     }
 
-    public void probing(IInstrumentMessage message) {
+    @Override
+    public final void setUnderAttack(boolean underAttack) {
+        super.setUnderAttack(underAttack);
+        onSettingUnderAttack(underAttack);
     }
 }

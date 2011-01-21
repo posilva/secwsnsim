@@ -15,6 +15,7 @@ public class AttacksList {
 
     RoutingLayer routingLayer;
     LinkedList<AttacksEntry> attacksList = new LinkedList<AttacksEntry>();
+//    Set<AttacksEntry> attacksList = new HashSet<AttacksEntry>();
 
     /**
      *
@@ -75,11 +76,51 @@ public class AttacksList {
     public void updateAttack(Object newAttack) {
         for (AttacksEntry attacksEntry : attacksList) {
             if (attacksEntry.getAttack().getClass().getName().equals(newAttack.getClass().getName())) {
-                
+
                 ((IRoutingAttack) newAttack).setRoutingLayer(getRoutingLayer());
                 attacksEntry.setAttack((IRoutingAttack) newAttack);
 
             }
         }
+    }
+
+    public boolean enableAttack(Class c) {
+        boolean value = true;
+        boolean result = false;
+        if (c == null) {
+            disableAttack(c);
+        } else {
+            for (AttacksEntry attacksEntry : attacksList) {
+                if (attacksEntry.getClass().getName().equals(c.getName())) {
+                    attacksEntry.setEnable(value);
+                    result = true;
+                } else {
+                    attacksEntry.setEnable(!value);
+                }
+            }
+        }
+        return result;
+    }
+
+    public boolean disableAttack(Class c) {
+        boolean value = false;
+        boolean result = false;
+        if (c == null) {
+            for (AttacksEntry attacksEntry : attacksList) {
+                attacksEntry.setEnable(value);
+            }
+            result = true;
+
+        } else {
+            for (AttacksEntry attacksEntry : attacksList) {
+                if (attacksEntry.getClass().getName().equals(c.getName())) {
+                    attacksEntry.setEnable(value);
+                    result = true;
+                } else {
+                    attacksEntry.setEnable(!value);
+                }
+            }
+        }
+        return result;
     }
 }

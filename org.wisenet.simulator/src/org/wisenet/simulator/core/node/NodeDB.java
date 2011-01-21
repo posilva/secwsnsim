@@ -1,6 +1,7 @@
 package org.wisenet.simulator.core.node;
 
 import java.util.Collection;
+import java.util.HashMap;
 
 import org.wisenet.simulator.utilities.RandomList;
 
@@ -11,6 +12,7 @@ import org.wisenet.simulator.utilities.RandomList;
 public class NodeDB {
 
     RandomList<Node> nodes = new RandomList<Node>();
+    HashMap<Short, Node> finder = new HashMap<Short, Node>();
 
     /**
      *
@@ -18,6 +20,7 @@ public class NodeDB {
      */
     public void store(Node n) {
         nodes.add(n);
+        finder.put(n.getId(), n);
     }
 
     /**
@@ -78,4 +81,14 @@ public class NodeDB {
     // seeds.add( caller ) ;
     // return res ;
     // }
+
+    public Node findById(Short id) {
+        return finder.get(id);
+    }
+
+    public void remove(Node node) {
+        if (nodes.remove(node)) {
+            finder.remove(node.getId());
+        }
+    }
 }

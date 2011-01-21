@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import java.io.File;
 import javax.swing.event.EventListenerList;
 import org.apache.commons.configuration.XMLConfiguration;
+import org.wisenet.simulator.components.evaluation.tests.TestTopology;
 import org.wisenet.simulator.utilities.NodeSelectionCondition;
 import org.wisenet.simulator.components.output.IOutputDisplay;
 import org.wisenet.simulator.components.simulation.listeners.SimulationEvent;
@@ -22,10 +23,8 @@ import org.wisenet.simulator.core.energy.EnergyModel;
 import org.wisenet.simulator.core.listeners.SimulatorEvent;
 import org.wisenet.simulator.core.listeners.SimulatorListener;
 import org.wisenet.simulator.core.node.factories.AbstractNodeFactory;
-import org.wisenet.simulator.core.node.layers.routing.RoutingLayerController;
 import org.wisenet.simulator.core.node.Node;
 import org.wisenet.simulator.core.node.layers.mac.MACLayer;
-import org.wisenet.simulator.core.node.layers.mac.MACLayerController;
 import org.wisenet.simulator.core.node.layers.routing.RoutingLayer;
 import org.wisenet.simulator.core.radio.RadioModel;
 import org.wisenet.simulator.utilities.RandomGenerator;
@@ -207,10 +206,11 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         if (!isValid()) {
             return;
         }
-        Collection<Node> nodes;
-        nodes = getSimulator().getNodes();
-        for (Node node : nodes) {
+        Collection nodes = getSimulator().getNodes();
+        for (Object n : nodes) {
+            Node node = (Node) n;
             node.getMacLayer().setDebugEnabled(selected);
+
         }
     }
 
@@ -222,10 +222,11 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         if (!isValid()) {
             return;
         }
-        Collection<Node> nodes;
-        nodes = getSimulator().getNodes();
-        for (Node node : nodes) {
+        Collection nodes = getSimulator().getNodes();
+        for (Object n : nodes) {
+            Node node = (Node) n;
             node.getRoutingLayer().setDebugEnabled(selected);
+
         }
     }
 
@@ -800,14 +801,6 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
 
     /**
      *
-     * @return
-     */
-    public RoutingLayerController getRoutingLayerController() {
-        return RoutingLayer.getController();
-    }
-
-    /**
-     *
      * @param settings
      */
     @Override
@@ -836,21 +829,13 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
 
     /**
      *
-     * @return
-     */
-    public MACLayerController getMacLayerController() {
-        return MACLayer.getController();
-    }
-
-    /**
-     *
      * @param configuration
      * @throws PersistantException
      */
     public void saveToXML(XMLConfiguration configuration) throws PersistantException {
         settings.saveToXML(configuration);
-        getMacLayerController().saveToXML(configuration);
-        getRoutingLayerController().saveToXML(configuration);
+        MACLayer.getController().saveToXML(configuration);
+        RoutingLayer.getController().saveToXML(configuration);
     }
 
     /**
@@ -870,8 +855,8 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
         super.reset();
 
         getSimulator().reset();
-        getRoutingLayerController().reset();
-        getMacLayerController().reset();
+        MACLayer.getController().reset();
+        RoutingLayer.getController().reset();
         getEnergyController().reset();
     }
 
@@ -939,5 +924,63 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
                 ((SimulationListener) listeners[i + 1]).startTestExecution(event);
             }
         }
+    }
+
+    public void loadTestTopology(String filename) throws Exception {
+
+        TestTopology testTopology = new TestTopology();
+        testTopology.setSimulation(this);
+        testTopology.loadFromXML(filename);
+//      file.load(filename);
+//        int numberOfNodes = file.getInt("attack.topology.nodes.size");
+//
+//        for (int i = 0; i < numberOfNodes; i++) {
+//            String tag = "attack.topology.nodes.node(" + i + ")";
+//            double x = file.getDouble(tag + ".id");
+//            boolean s = file.getBoolean(tag + ".source");
+//            boolean r = file.getBoolean(tag + ".receiver");
+//            boolean a = file.getBoolean(tag + ".attacked");
+//
+//
+//
+////            getSimulator().addNode(node);
+//        }
+
+    }
+
+    public void saveTestTopology(String file) throws Exception {
+        TestTopology testTopology = new TestTopology();
+        testTopology.setSimulation(this);
+        testTopology.saveToXML(file);
+
+    }
+
+    public int[] countAdHocTestNodes() {
+
+        if (!isValid()) {
+            return null;
+        }
+
+        if (!isNetworkDeployed()) {
+            return null;
+        }
+        Collection<Node> nodes = getSimulator().getNodes();
+
+        int s = 0;
+        int r = 0;
+        int a = 0;
+        for (Node node : nodes) {
+            if (node.isSource()) {
+                s++;
+            }
+            if (node.isReceiver()) {
+                r++;
+            }
+            if (node.getRoutingLayer().isUnderAttack()) {
+                a++;
+            }
+        }
+        return new int[]{s, r, a};
+
     }
 }

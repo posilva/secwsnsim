@@ -62,14 +62,10 @@ public class Mica2MACLayer extends MACLayer {
         setMessageColor(message);
         /**
          * Deliver the message to the handler we can intercept this handler to
-         * notify controllers 
+         * notify controllers
          */
         getNode().getRoutingLayer().receivedMessageHandler(message);
         return true;
-    }
-
-    private String getSimData() {
-        return "<" + Simulator.getSimulationTime() + ">" + getNode().getId();
     }
 
     private void setMessageColor(Object message) {
@@ -184,8 +180,8 @@ public class Mica2MACLayer extends MACLayer {
      * {@link Node#receptionBegin} for more information.
      */
     public synchronized void receptionBegin(double strength, Object stream) {
-        // inicio da recepção, pode-se verificar o estado do nó e
-        // caso o TX esteja ON recebe senão aborta
+        // inicio da recepÃ§Ã£o, pode-se verificar o estado do nÃ³ e
+        // caso o TX esteja ON recebe senÃ£o aborta
         addNoise(strength, stream);
     }
 
@@ -212,9 +208,7 @@ public class Mica2MACLayer extends MACLayer {
         controller.incrementTotalMessagesSent();
         if (sending) {
             controller.incrementTotalMessagesNotSent();
-            if (isDebugEnabled()) {
-                log(" Messages not Sent: " + controller.getTotalMessagesNotSent());
-            }
+            log(" Messages not Sent: " + controller.getTotalMessagesNotSent());
             return false;
         } else {
             sending = true;
@@ -344,9 +338,7 @@ public class Mica2MACLayer extends MACLayer {
                 signalStrength = level;
             } else {
                 getController().incrementTotalMessagesNotReceived();
-                if (isDebugEnabled()) {
-                    System.out.println(getSimData() + " - Transmiting a message cannot receive");
-                }
+                log(" - Transmiting a message cannot receive");
                 noiseStrength += level;
             }
         }
@@ -364,7 +356,7 @@ public class Mica2MACLayer extends MACLayer {
      *            the level of noise
      */
     protected void removeNoise(double level, final Object stream) {
-        // guarda o ID e compara como o que recebeu no inicio da recepção
+        // guarda o ID e compara como o que recebeu no inicio da recepÃ§Ã£o
         if (parentID == ((Node) stream).getId()) {
             receiving = false;
             if (!corrupted) {
@@ -383,9 +375,7 @@ public class Mica2MACLayer extends MACLayer {
                 });
             } else {
                 controller.incrementTotalMessagesCorrupted();
-                if (isDebugEnabled()) {
-                    log("Corrupted message: " + controller.getTotalMessagesCorrupted());
-                }
+                log("Corrupted message: " + controller.getTotalMessagesCorrupted());
             }
 
             signalStrength = 0;

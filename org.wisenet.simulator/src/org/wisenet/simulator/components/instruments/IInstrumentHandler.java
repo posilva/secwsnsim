@@ -17,10 +17,4 @@ public interface IInstrumentHandler {
      * @return
      */
     public Object getUniqueId();
-
-    /**
-     * Execute a probing action (Normally is a message sent action)
-     * @param message
-     */
-    public void probing(IInstrumentMessage message);
 }
