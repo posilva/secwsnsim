@@ -90,7 +90,7 @@ public class FloodingRoutingLayer extends RoutingLayer {
     }
 
     @Override
-    protected void setupAttacks() {
+    protected void startupAttacks() {
     }
 
     @Override
