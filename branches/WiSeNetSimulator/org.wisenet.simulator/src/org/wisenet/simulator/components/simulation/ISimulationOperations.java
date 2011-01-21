@@ -8,7 +8,6 @@ import java.awt.Dimension;
 import java.util.List;
 import org.wisenet.simulator.utilities.NodeSelectionCondition;
 import org.wisenet.simulator.core.energy.EnergyController;
-import org.wisenet.simulator.core.node.layers.routing.RoutingLayerController;
 
 /**
  *
@@ -78,12 +77,6 @@ public interface ISimulationOperations {
      * @return
      */
     EnergyController getEnergyController();
-
-    /**
-     *
-     * @return
-     */
-    RoutingLayerController getRoutingLayerController();
 
     /**
      *
@@ -205,4 +198,8 @@ public interface ISimulationOperations {
      * @return
      */
     public int getNumberOfSinkNodes();
+
+    public void loadTestTopology(String file) throws Exception;
+    public void saveTestTopology(String file) throws Exception;
+    public int[] countAdHocTestNodes() ;
 }

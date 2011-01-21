@@ -554,4 +554,5 @@ public abstract class AbstractSimulation extends PersistantObject implements ISi
     public List getTestResults() {
         return testResults;
     }
+
 }

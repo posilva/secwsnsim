@@ -27,6 +27,7 @@ import org.wisenet.simulator.gui.GraphicNode;
 @SuppressWarnings("unchecked")
 public abstract class Node {
 
+    protected int oldRadius;
     /**
      * Constants
      */
@@ -125,7 +126,7 @@ public abstract class Node {
     private boolean enableFunctioningEnergyConsumption = false;
     /* is a source of messages node */
     private boolean source;
-    private boolean receiver=false;
+    private boolean receiver = false;
 
     /**
      *
@@ -140,7 +141,7 @@ public abstract class Node {
      * @param b
      */
     public void setSource(boolean b) {
-        source=b;
+        source = b;
     }
 
     /**
@@ -148,7 +149,7 @@ public abstract class Node {
      * @param b
      */
     public void setReceiver(boolean b) {
-        receiver=b;
+        receiver = b;
     }
 
     /**
@@ -296,7 +297,15 @@ public abstract class Node {
      * @param sinkNode
      */
     public void setSinkNode(boolean sinkNode) {
+
         this.sinkNode = sinkNode;
+if (oldRadius==0) oldRadius=getRadius();
+        if (sinkNode) {
+            oldRadius = getRadius();
+            setRadius((int) (getRadius() * 1.5));
+        } else {
+            setRadius((int) oldRadius);
+        }
     }
 
     /**

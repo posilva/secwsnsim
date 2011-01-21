@@ -11,7 +11,8 @@ import org.wisenet.simulator.core.node.layers.routing.RoutingLayer;
  * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public abstract class AbstractRoutingAttack implements IRoutingAttack {
-
+    protected  static int countMessagesAttacked=0;
+    
     /**
      *
      */

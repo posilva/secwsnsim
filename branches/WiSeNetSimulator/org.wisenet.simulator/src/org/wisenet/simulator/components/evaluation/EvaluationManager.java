@@ -133,7 +133,7 @@ public class EvaluationManager {
         testResult.setTestName(test.getName());
         testResult.setTotalOfMessagesAttacked(getCountAttackedMessages());
         testResult.setTotalNodes(test.getSimulation().getSimulator().getNodes().size());
-        testResult.setTotalStableNodes(test.getSimulation().getRoutingLayerController().getTotalStableNodes());
+        testResult.setTotalStableNodes(RoutingLayer.getController().getTotalStableNodes());
         testResult.setTotalSenderNodes(test.getSourceNodes().size());
         testResult.setTotalReceiverNodes(test.getReceiverNodes().size());
         testResult.setTotalAttackNodes(test.getAttackNodes().size());

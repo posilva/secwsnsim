@@ -16,6 +16,7 @@ import org.wisenet.simulator.components.evaluation.EvaluationManager;
 import org.wisenet.simulator.components.simulation.Simulation;
 import org.wisenet.simulator.core.Event;
 import org.wisenet.simulator.core.Simulator;
+import org.wisenet.simulator.core.node.layers.routing.RoutingLayer;
 
 /**
  * This class represents a test to be executed by the simulation
@@ -346,7 +347,7 @@ public abstract class AbstractTest extends PersistantObject implements Persisten
         startSimulationTime = Simulator.getSimulationTime();
         log("activating");
         setEvaluationManager(new EvaluationManager());
-        getSimulation().getRoutingLayerController().setActiveTest(this);
+        RoutingLayer.getController().setActiveTest(this);
         getEvaluationManager().startTest(this);
         getSimulation().notifyStartTest(this);
     }
