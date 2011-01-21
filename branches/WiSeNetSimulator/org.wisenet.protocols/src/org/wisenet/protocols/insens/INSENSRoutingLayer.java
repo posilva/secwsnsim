@@ -94,7 +94,6 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     private boolean reliableMode = false;
 
     public INSENSRoutingLayer() {
-        setDebugEnabled(false);
     }
 
     /**
@@ -103,7 +102,6 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
      */
     @Override
     public void onReceiveMessage(Object message) {
-        setDebugEnabled(false);
         if (message instanceof INSENSMessage) {
             try {
                 INSENSMessage m = (INSENSMessage) message;
@@ -173,8 +171,6 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     @Override
     protected void onStartUp() {
         setCurrentPhase(PHASE_SETUP);
-        getNode().getMacLayer().setDebugEnabled(false);
-        getNode().getRoutingLayer().setDebugEnabled(false);
         if (getNode().isSinkNode()) {
             baseStationController = new BaseStationController(this);
         }
@@ -513,7 +509,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
                 byte[] new_payload = modifiedParentMAC(payload);
                 getController().addMessageSentCounter(INSENSConstants.MSG_FEEDBACK);
                 send(new INSENSMessage(new_payload));
-                sendACKFeedbackMessage(payload);
+//                sendACKFeedbackMessage(payload);
                 log("Forward FDBK Message From Child " + payload.sourceId);
             }
         }// else drop it
@@ -552,7 +548,6 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
                  */
 //              if(!getNode().getMacLayer().isReceiving() &&  !getNode().getMacLayer().isTransmitting()){
                 broadcastMessage((Message) messagesQueue.peek());
-
 //                System.out.println("NOISE:" + getNode().getMacLayer().getNoiseStrength());
 //                System.out.println("STRENGTH:" + getNode().getMacLayer().getSignalStrength());
 //              }
@@ -665,6 +660,9 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
      * @param payload
      */
     private void replyToRUPDMessage(RUPDPayload payload) {
+    
+
+
         log("Replying to RUPD Message");
     }
 
@@ -748,7 +746,8 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     }
 
     @Override
-    protected void setupAttacks() {
+    protected void startupAttacks() {
+        
     }
 
     @Override
@@ -765,6 +764,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
             sendingMessage = false;
             queueMessageDispatchTimer.start();
         }
+//        broadcastMessage((Message) message);
     }
 
     /**
@@ -783,7 +783,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     protected void initAttacks() {
         AttacksEntry entry = new AttacksEntry(false, "Blackhole Attack", new BlackholeRoutingAttack(this));
         attacks.addEntry(entry);
-        getController().registerAttack(entry);
+        
     }
 
     @Override
@@ -799,7 +799,14 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         reliableMode = false;
     }
 
-    private void sendACKFeedbackMessage(FDBKPayload payload) {
-        // sending a feed back message ACK to the child
+    @Override
+    protected void onSettingUnderAttack(boolean underAttack) {
+        super.onSettingUnderAttack(underAttack);
     }
+//
+//    private void sendACKFeedbackMessage(FDBKPayload payload) {
+//        // sending a feed back message ACK to the child
+//    }
+
+    
 }
