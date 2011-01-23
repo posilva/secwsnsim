@@ -15,6 +15,9 @@ public class AttacksList {
 
     RoutingLayer routingLayer;
     LinkedList<AttacksEntry> attacksList = new LinkedList<AttacksEntry>();
+
+    public AttacksList() {
+    }
 //    Set<AttacksEntry> attacksList = new HashSet<AttacksEntry>();
 
     /**
@@ -84,14 +87,14 @@ public class AttacksList {
         }
     }
 
-    public boolean enableAttack(Class c) {
+    public boolean enableAttack(String c) {
         boolean value = true;
         boolean result = false;
         if (c == null) {
             disableAttack(c);
         } else {
             for (AttacksEntry attacksEntry : attacksList) {
-                if (attacksEntry.getClass().getName().equals(c.getName())) {
+                if (attacksEntry.getAttack().getClass().getName().toLowerCase().equals(c.toLowerCase())) {
                     attacksEntry.setEnable(value);
                     result = true;
                 } else {
@@ -102,7 +105,24 @@ public class AttacksList {
         return result;
     }
 
+    public boolean enableAttack(Class c) {
+        return enableAttack(c.getName());
+    }
+
     public boolean disableAttack(Class c) {
+        return disableAttack(c.getName());
+    }
+
+    public IRoutingAttack getEnabledAttack() {
+        for (AttacksEntry attacksEntry : attacksList) {
+            if (attacksEntry.isEnable()) {
+                return attacksEntry.attack;
+            }
+        }
+        return null;
+    }
+
+    private boolean disableAttack(String c) {
         boolean value = false;
         boolean result = false;
         if (c == null) {
@@ -113,7 +133,7 @@ public class AttacksList {
 
         } else {
             for (AttacksEntry attacksEntry : attacksList) {
-                if (attacksEntry.getClass().getName().equals(c.getName())) {
+                if (attacksEntry.getAttack().getClass().getName().toLowerCase().equals(c.toLowerCase())) {
                     attacksEntry.setEnable(value);
                     result = true;
                 } else {

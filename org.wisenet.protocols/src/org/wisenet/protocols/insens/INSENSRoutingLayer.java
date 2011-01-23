@@ -12,6 +12,7 @@ import java.util.Vector;
 import org.wisenet.protocols.common.ByteArrayDataOutputStream;
 import org.wisenet.protocols.common.events.DelayedMessageEvent;
 import org.wisenet.protocols.insens.attacks.BlackholeRoutingAttack;
+import org.wisenet.protocols.insens.attacks.HelloFloodingRountingAttack;
 import org.wisenet.protocols.insens.basestation.BaseStationController;
 import org.wisenet.protocols.insens.basestation.ForwardingTable;
 import org.wisenet.protocols.insens.messages.INSENSMessage;
@@ -23,6 +24,7 @@ import org.wisenet.protocols.insens.messages.data.RUPDPayload;
 import org.wisenet.protocols.insens.utils.NeighborInfo;
 import org.wisenet.protocols.insens.utils.NetworkKeyStore;
 import org.wisenet.protocols.insens.utils.OneWaySequenceNumbersChain;
+import org.wisenet.simulator.core.node.layers.routing.attacks.IRoutingAttack;
 import org.wisenet.simulator.utilities.CryptoFunctions;
 import org.wisenet.simulator.components.instruments.IInstrumentHandler;
 import org.wisenet.simulator.core.Application;
@@ -375,16 +377,15 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
      */
     private void startComputeRoutingInfo() {
         if (canStartComputeRoutingInfo()) {
-            new Thread(new Runnable() {
+//            new Thread(new Runnable() {
+//                public void run() {
 
-                public void run() {
-
-                    log("Started to compute routing info");
-                    baseStationController.calculateForwardingTables();
-                    log("Number of Forwarding Tables:  " + baseStationController.getForwardingTables().size());
-                    sendRouteUpdateMessages(baseStationController.getForwardingTables());
-                }
-            }).start();
+            log("Started to compute routing info");
+            baseStationController.calculateForwardingTables();
+            log("Number of Forwarding Tables:  " + baseStationController.getForwardingTables().size());
+            sendRouteUpdateMessages(baseStationController.getForwardingTables());
+//                }
+//            }).start();
         }
     }
 
@@ -660,7 +661,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
      * @param payload
      */
     private void replyToRUPDMessage(RUPDPayload payload) {
-    
+
 
 
         log("Replying to RUPD Message");
@@ -747,7 +748,6 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
 
     @Override
     protected void startupAttacks() {
-        
     }
 
     @Override
@@ -783,7 +783,9 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     protected void initAttacks() {
         AttacksEntry entry = new AttacksEntry(false, "Blackhole Attack", new BlackholeRoutingAttack(this));
         attacks.addEntry(entry);
-        
+        AttacksEntry entry2 = new AttacksEntry(false, "Hello Flooding Attack", new HelloFloodingRountingAttack(this));
+        attacks.addEntry(entry2);
+
     }
 
     @Override
@@ -801,12 +803,19 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
 
     @Override
     protected void onSettingUnderAttack(boolean underAttack) {
+        if (underAttack){
         super.onSettingUnderAttack(underAttack);
+        if (!getNode().getSimulator().getSimulation().isStarted()) {
+            IRoutingAttack enabledAttack = getAttacks().getEnabledAttack();
+            if (enabledAttack instanceof HelloFloodingRountingAttack) {
+                enabledAttack.prepare();
+            }
+        }
+        }
+
     }
 //
 //    private void sendACKFeedbackMessage(FDBKPayload payload) {
 //        // sending a feed back message ACK to the child
 //    }
-
-    
 }

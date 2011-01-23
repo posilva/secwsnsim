@@ -217,7 +217,7 @@ public class MACLayerStatChart extends javax.swing.JFrame implements StatisticMA
     public void updateStats(double corruptedRate, double lostMessagesRate, double notReceived) {
         updateCorruptedMessagesSerie(step, corruptedRate);
         updateNotSentMessagesSerie(step, lostMessagesRate);
-        updateNotReceivedMessagesSerie(step, lostMessagesRate);
+        updateNotReceivedMessagesSerie(step, notReceived);
         step++;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

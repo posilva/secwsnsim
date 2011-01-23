@@ -205,6 +205,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
 
         mnuClear.setText("Clear");
         mnuClear.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnuClearActionPerformed(evt);
             }
@@ -213,6 +214,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
 
         mnuSave.setText("Save...");
         mnuSave.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnuSaveActionPerformed(evt);
             }
@@ -221,6 +223,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
 
         mnuClearErrors.setText("Clear");
         mnuClearErrors.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnuClearErrorsActionPerformed(evt);
             }
@@ -229,6 +232,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
 
         mnuSaveErrors.setText("Save...");
         mnuSaveErrors.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnuSaveErrorsActionPerformed(evt);
             }
@@ -248,6 +252,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         btnRebuildNetwork.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnRebuildNetwork.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnRebuildNetwork.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRebuildNetworkActionPerformed(evt);
             }
@@ -261,6 +266,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         verVizinhos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         verVizinhos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         verVizinhos.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 verVizinhosActionPerformed(evt);
             }
@@ -273,6 +279,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         verOsQueConhecem.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         verOsQueConhecem.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         verOsQueConhecem.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 verOsQueConhecemActionPerformed(evt);
             }
@@ -287,6 +294,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         btnSimulationStart.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSimulationStart.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnSimulationStart.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSimulationStartActionPerformed(evt);
             }
@@ -300,6 +308,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         btnSimulationPause.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSimulationPause.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnSimulationPause.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSimulationPauseActionPerformed(evt);
             }
@@ -313,6 +322,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         btnSimulationStop.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSimulationStop.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnSimulationStop.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSimulationStopActionPerformed(evt);
             }
@@ -325,6 +335,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         btnSimulationReset.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSimulationReset.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnSimulationReset.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSimulationResetActionPerformed(evt);
             }
@@ -339,6 +350,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         selectionPointerTool.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         selectionPointerTool.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         selectionPointerTool.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 selectionPointerToolActionPerformed(evt);
             }
@@ -352,6 +364,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         btnDeployNodesMode.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnDeployNodesMode.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnDeployNodesMode.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeployNodesModeActionPerformed(evt);
             }
@@ -369,6 +382,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         btnSelectionTool.setPreferredSize(new java.awt.Dimension(20, 20));
         btnSelectionTool.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnSelectionTool.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSelectionToolActionPerformed(evt);
             }
@@ -382,6 +396,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         showMouseCoordinates.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         showMouseCoordinates.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         showMouseCoordinates.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 showMouseCoordinatesActionPerformed(evt);
             }
@@ -394,6 +409,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         viewNodesInfo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         viewNodesInfo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         viewNodesInfo.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 viewNodesInfoActionPerformed(evt);
             }
@@ -406,6 +422,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         btnRoutingInfo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnRoutingInfo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnRoutingInfo.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRoutingInfoActionPerformed(evt);
             }
@@ -419,6 +436,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         showDebugWindow.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         showDebugWindow.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         showDebugWindow.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 showDebugWindowActionPerformed(evt);
             }
@@ -437,6 +455,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         btnSnapshot.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSnapshot.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnSnapshot.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSnapshotActionPerformed(evt);
             }
@@ -449,6 +468,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         btnColorSettings.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnColorSettings.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnColorSettings.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnColorSettingsActionPerformed(evt);
             }
@@ -461,6 +481,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         gmaps.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         gmaps.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         gmaps.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 gmapsActionPerformed(evt);
             }
@@ -474,6 +495,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         selRandomNodes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         selRandomNodes.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         selRandomNodes.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 selRandomNodesActionPerformed(evt);
             }
@@ -487,6 +509,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         cmdMonitEnergy.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         cmdMonitEnergy.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         cmdMonitEnergy.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmdMonitEnergyActionPerformed(evt);
             }
@@ -500,6 +523,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         btnLoadTopology.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnLoadTopology.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnLoadTopology.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoadTopologyActionPerformed(evt);
             }
@@ -512,6 +536,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         btnSaveTopology.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSaveTopology.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnSaveTopology.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSaveTopologyActionPerformed(evt);
             }
@@ -525,6 +550,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         btnStableMark.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnStableMark.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnStableMark.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnStableMarkActionPerformed(evt);
             }
@@ -537,6 +563,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         btnStableSelect.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnStableSelect.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnStableSelect.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnStableSelectActionPerformed(evt);
             }
@@ -550,6 +577,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         cmdSelAttackedNodes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         cmdSelAttackedNodes.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         cmdSelAttackedNodes.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmdSelAttackedNodesActionPerformed(evt);
             }
@@ -559,6 +587,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         cmdSelectAttack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/Attack.png"))); // NOI18N
         cmdSelectAttack.setToolTipText("Select Active Routing Attack"); // NOI18N
         cmdSelectAttack.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmdSelectAttackActionPerformed(evt);
             }
@@ -577,6 +606,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         cmdTest.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         cmdTest.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         cmdTest.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmdTestActionPerformed(evt);
             }
@@ -599,6 +629,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         cmdResetTest.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         cmdResetTest.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         cmdResetTest.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmdResetTestActionPerformed(evt);
             }
@@ -611,6 +642,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         cmdRunTest.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         cmdRunTest.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         cmdRunTest.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmdRunTestActionPerformed(evt);
             }
@@ -623,6 +655,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         testPrepare.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         testPrepare.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         testPrepare.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 testPrepareActionPerformed(evt);
             }
@@ -636,6 +669,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/Search16.png"))); // NOI18N
         jButton1.setToolTipText("Search a node by ID");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
@@ -645,6 +679,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         txtSearchNode.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         txtSearchNode.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtSearchNode.addKeyListener(new java.awt.event.KeyAdapter() {
+
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtSearchNodeKeyPressed(evt);
             }
@@ -665,13 +700,9 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         javax.swing.GroupLayout simulationPanel1Layout = new javax.swing.GroupLayout(simulationPanel1);
         simulationPanel1.setLayout(simulationPanel1Layout);
         simulationPanel1Layout.setHorizontalGroup(
-            simulationPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1146, Short.MAX_VALUE)
-        );
+                simulationPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 1146, Short.MAX_VALUE));
         simulationPanel1Layout.setVerticalGroup(
-            simulationPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 498, Short.MAX_VALUE)
-        );
+                simulationPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 498, Short.MAX_VALUE));
 
         jScrollPane1.setViewportView(simulationPanel1);
 
@@ -735,6 +766,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         createAdhocTest.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         createAdhocTest.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         createAdhocTest.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createAdhocTestActionPerformed(evt);
             }
@@ -748,6 +780,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         loadTestTopology.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         loadTestTopology.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         loadTestTopology.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loadTestTopologyActionPerformed(evt);
             }
@@ -760,6 +793,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         saveTestTopology.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         saveTestTopology.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         saveTestTopology.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveTestTopologyActionPerformed(evt);
             }
@@ -772,6 +806,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         clearTestTopology.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         clearTestTopology.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         clearTestTopology.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 clearTestTopologyActionPerformed(evt);
             }
@@ -785,6 +820,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         testAddRemoveSender.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         testAddRemoveSender.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         testAddRemoveSender.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 testAddRemoveSenderActionPerformed(evt);
             }
@@ -797,6 +833,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         testAddRemoveReceivers.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         testAddRemoveReceivers.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         testAddRemoveReceivers.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 testAddRemoveReceiversActionPerformed(evt);
             }
@@ -809,6 +846,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         testSetAttackNode.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         testSetAttackNode.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         testSetAttackNode.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 testSetAttackNodeActionPerformed(evt);
             }
@@ -822,6 +860,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         adhocTestInfo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         adhocTestInfo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         adhocTestInfo.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 adhocTestInfoActionPerformed(evt);
             }
@@ -883,7 +922,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
             getSimulationPanel().updateImage(ivp.getImage(), ivp.strechImage());
         }
 
-}//GEN-LAST:event_gmapsActionPerformed
+    }//GEN-LAST:event_gmapsActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
@@ -1268,14 +1307,14 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         List<Node> nodes = (List) getSimulationPanel().getSimulation().getSimulator().getNodes();
         for (Node node : nodes) {
             if (!node.getRoutingLayer().getAttacks().getAttacksList().isEmpty()) {
-                for (Object object : node.getRoutingLayer().getAttacks().getAttacksList()) {
-                    AttacksEntry a = (AttacksEntry) object;
-                    if (a.getLabel().toLowerCase().equals(cboSimAttacks.getModel().getSelectedItem().toString().toLowerCase())) {
-                        node.getRoutingLayer().getAttacks().getAttacksList().getFirst().setEnable(true);
-                        break;
-                    }
-
+                AttacksEntry a = (AttacksEntry) cboSimAttacks.getModel().getSelectedItem();
+                if (a != null) {
+                    String c = a.getAttack().getClass().getName();
+                    node.getRoutingLayer().getAttacks().enableAttack(c);
                 }
+
+
+
             }
         }
     }

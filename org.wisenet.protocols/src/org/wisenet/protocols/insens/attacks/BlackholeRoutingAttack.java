@@ -48,4 +48,9 @@ public class BlackholeRoutingAttack extends AbstractRoutingAttack {
     public Object attackOnDemand(Object message, Object command) {
         return message;
     }
+
+    @Override
+    public void prepare() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

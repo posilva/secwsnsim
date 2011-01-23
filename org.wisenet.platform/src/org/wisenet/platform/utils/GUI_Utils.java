@@ -70,7 +70,7 @@ public class GUI_Utils {
      */
     public static String showSaveDialog(FileFilter[] filters, String title) throws IOException {
         JFileChooser jf = new JFileChooser();
-        if (filters != null && filters.length >0) {
+        if (filters != null && filters.length > 0) {
             jf.setAcceptAllFileFilterUsed(false);
             for (int i = 0; i < filters.length; i++) {
                 jf.addChoosableFileFilter(filters[i]);
@@ -99,7 +99,35 @@ public class GUI_Utils {
         ErrorHandler.displayThrowable(ex, "Platform Error ", null, null);
     }
 
-    public static FileFilter XML() {
+    public static FileFilter TTO_FILTER() {
+        return new FileFilter() {
+
+            String[] extensions = new String[]{"tto"};
+
+            @Override
+            public boolean accept(File f) {
+                if (f.isDirectory()) {
+                    return true;
+                }
+
+                // Ok, itвЂ™s a regular file, so check the extension
+                String name = f.getName().toLowerCase();
+                for (int i = extensions.length - 1; i >= 0; i--) {
+                    if (name.endsWith(extensions[i])) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            @Override
+            public String getDescription() {
+                return "(.tto) Test Topology file";
+            }
+        };
+    }
+
+    public static FileFilter XML_FILTER() {
         return new FileFilter() {
 
             String[] extensions = new String[]{"xml"};
@@ -170,7 +198,7 @@ public class GUI_Utils {
     }
 
     public static String showSavePersistentObjectDialog(String msg) throws IOException {
-        String file = showSaveDialog(new FileFilter[]{XML()}, msg);
+        String file = showSaveDialog(new FileFilter[]{XML_FILTER()}, msg);
         if (!file.toLowerCase().endsWith(".xml")) {
             file = file + ".xml";
         }
@@ -178,7 +206,7 @@ public class GUI_Utils {
     }
 
     public static String showOpenPersistentObjectDialog(String msg) throws IOException {
-        String file = showOpenDialog(new FileFilter[]{XML()}, msg);
+        String file = showOpenDialog(new FileFilter[]{XML_FILTER()}, msg);
         return file;
     }
 

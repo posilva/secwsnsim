@@ -11,8 +11,8 @@ import org.wisenet.simulator.core.node.layers.routing.RoutingLayer;
  * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public abstract class AbstractRoutingAttack implements IRoutingAttack {
-    protected  static int countMessagesAttacked=0;
-    
+
+    protected static int countMessagesAttacked = 0;
     /**
      *
      */
@@ -61,8 +61,12 @@ public abstract class AbstractRoutingAttack implements IRoutingAttack {
     }
 
     public abstract Object attackOnSend(Object message);
+
     public abstract Object attackOnReceive(Object message);
-    public abstract Object attackOnDemand(Object message,Object command);
+
+    public abstract Object attackOnDemand(Object message, Object command);
+
+    public abstract void prepare();
 
     /**
      *
@@ -91,7 +95,6 @@ public abstract class AbstractRoutingAttack implements IRoutingAttack {
     }
 
     public void setRoutingLayer(RoutingLayer routingLayer) {
-        this.routingLayer=routingLayer;
+        this.routingLayer = routingLayer;
     }
-
 }
