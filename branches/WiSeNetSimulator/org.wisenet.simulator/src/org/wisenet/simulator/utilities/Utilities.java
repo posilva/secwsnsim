@@ -7,7 +7,6 @@ package org.wisenet.simulator.utilities;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.event.EventListenerList;
@@ -15,8 +14,6 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.wisenet.simulator.utilities.listeners.ExceptionEvent;
 import org.wisenet.simulator.utilities.listeners.ExceptionListener;
 import org.apache.commons.configuration.XMLConfiguration;
-import org.wisenet.simulator.components.simulation.Simulation;
-import org.wisenet.simulator.core.node.Node;
 
 /**
  *

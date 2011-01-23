@@ -24,6 +24,7 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JViewport;
 import javax.swing.event.EventListenerList;
 import javax.swing.filechooser.FileFilter;
 import org.apache.commons.lang.math.NumberUtils;
@@ -139,12 +140,21 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         }
     }
 
+    private void autoResizeScrollSimulationPanel(int w, int h) {
+        if (w > getSize().getWidth() || h > getSize().getHeight()) {
+            int mx = (int) Math.max(getSize().getWidth(), w);
+            int my = (int) Math.max(getSize().getHeight(), h);
+            setPreferredSize(new Dimension(mx + 50, my + 50));
+        }
+    }
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         currentSelectedNodePopupMenu = new javax.swing.JPopupMenu();
         selNodeRunEvent = new javax.swing.JMenuItem();
         selNodeShowNeighbors = new javax.swing.JCheckBoxMenuItem();
+        selNodeSelectNeighbors = new javax.swing.JCheckBoxMenuItem();
         selNodeShowID = new javax.swing.JCheckBoxMenuItem();
         selNodeShowOthers = new javax.swing.JCheckBoxMenuItem();
         selNodeMark = new javax.swing.JCheckBoxMenuItem();
@@ -156,6 +166,9 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         selNodeRoutingAttacks = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
+        mnuTest = new javax.swing.JMenu();
+        addRemoveSource = new javax.swing.JMenuItem();
+        addRemoveReceiver = new javax.swing.JMenuItem();
         selNodeUnderAttack = new javax.swing.JCheckBoxMenuItem();
         selectionToolPopupMenu = new javax.swing.JPopupMenu();
         selNodesRunEvent = new javax.swing.JMenuItem();
@@ -168,6 +181,9 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         selNodesSetEnvironmentAttenuation = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         selNodesRemove = new javax.swing.JMenuItem();
+        mnuTest1 = new javax.swing.JMenu();
+        addRemoveSourceNodes = new javax.swing.JMenuItem();
+        addRemoveReceiverNodes = new javax.swing.JMenuItem();
         selNodesUnderAttack = new javax.swing.JCheckBoxMenuItem();
         deployNodesPopupMenu = new javax.swing.JPopupMenu();
         depNodesDeploy = new javax.swing.JMenu();
@@ -175,6 +191,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         depNodesGridTopology = new javax.swing.JMenuItem();
         deployNodePopupMenu = new javax.swing.JPopupMenu();
         depNodeDeployOneNode = new javax.swing.JMenuItem();
+        depNodeSetArea = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JSeparator();
 
         currentSelectedNodePopupMenu.setLabel("");
@@ -196,6 +213,16 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             }
         });
         currentSelectedNodePopupMenu.add(selNodeShowNeighbors);
+
+        selNodeSelectNeighbors.setSelected(true);
+        selNodeSelectNeighbors.setText("Select Neighbors");
+        selNodeSelectNeighbors.setToolTipText("");
+        selNodeSelectNeighbors.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selNodeSelectNeighborsActionPerformed(evt);
+            }
+        });
+        currentSelectedNodePopupMenu.add(selNodeSelectNeighbors);
 
         selNodeShowID.setSelected(true);
         selNodeShowID.setText("Show Node ID"); // NOI18N
@@ -278,6 +305,24 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         currentSelectedNodePopupMenu.add(selNodeRoutingAttacks);
         currentSelectedNodePopupMenu.add(jSeparator5);
 
+        mnuTest.setText("Testing");
+
+        addRemoveSource.setText("Add/Remove Source Node");
+        addRemoveSource.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addRemoveSourceActionPerformed(evt);
+            }
+        });
+        mnuTest.add(addRemoveSource);
+
+        addRemoveReceiver.setText("Add/Remove Receiver Node");
+        addRemoveReceiver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addRemoveReceiverActionPerformed(evt);
+            }
+        });
+        mnuTest.add(addRemoveReceiver);
+
         selNodeUnderAttack.setSelected(true);
         selNodeUnderAttack.setText("Under Routing Attack");
         selNodeUnderAttack.addActionListener(new java.awt.event.ActionListener() {
@@ -285,7 +330,9 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
                 selNodeUnderAttackActionPerformed(evt);
             }
         });
-        currentSelectedNodePopupMenu.add(selNodeUnderAttack);
+        mnuTest.add(selNodeUnderAttack);
+
+        currentSelectedNodePopupMenu.add(mnuTest);
 
         selNodesRunEvent.setText("Run application");
         selNodesRunEvent.addActionListener(new java.awt.event.ActionListener() {
@@ -365,13 +412,23 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         });
         selectionToolPopupMenu.add(selNodesRemove);
 
+        mnuTest1.setText("Testing");
+
+        addRemoveSourceNodes.setText("Add/Remove Source Nodes");
+        mnuTest1.add(addRemoveSourceNodes);
+
+        addRemoveReceiverNodes.setText("Add/Remove Receiver Nodes");
+        mnuTest1.add(addRemoveReceiverNodes);
+
         selNodesUnderAttack.setText("Under Routing Attack");
         selNodesUnderAttack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 selNodesUnderAttackActionPerformed(evt);
             }
         });
-        selectionToolPopupMenu.add(selNodesUnderAttack);
+        mnuTest1.add(selNodesUnderAttack);
+
+        selectionToolPopupMenu.add(mnuTest1);
 
         depNodesDeploy.setText("Deploy sensors...");
 
@@ -401,6 +458,14 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
             }
         });
         deployNodePopupMenu.add(depNodeDeployOneNode);
+
+        depNodeSetArea.setText("Set deploy area from here");
+        depNodeSetArea.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                depNodeSetAreaActionPerformed(evt);
+            }
+        });
+        deployNodePopupMenu.add(depNodeSetArea);
 
         setBackground(new java.awt.Color(254, 254, 254));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -979,12 +1044,39 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         updateLocal();
     }//GEN-LAST:event_selNodesSetEnvironmentAttenuationActionPerformed
 
+    private void addRemoveSourceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRemoveSourceActionPerformed
+        setSelectedNodesAsSources();
+    }//GEN-LAST:event_addRemoveSourceActionPerformed
+
+    private void addRemoveReceiverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRemoveReceiverActionPerformed
+        setSelectedNodesAsReceivers();
+    }//GEN-LAST:event_addRemoveReceiverActionPerformed
+
+    private void selNodeSelectNeighborsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selNodeSelectNeighborsActionPerformed
+
+
+        if (currentSelectedNode != null) {
+            selectNeighbors(currentSelectedNode.getPhysicalNode());
+        }
+
+
+    }//GEN-LAST:event_selNodeSelectNeighborsActionPerformed
+
+    private void depNodeSetAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_depNodeSetAreaActionPerformed
+        setDeployArea();
+    }//GEN-LAST:event_depNodeSetAreaActionPerformed
+
     protected boolean isMousePressed() {
         return pressedPoint_x != -1;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem addRemoveReceiver;
+    private javax.swing.JMenuItem addRemoveReceiverNodes;
+    private javax.swing.JMenuItem addRemoveSource;
+    private javax.swing.JMenuItem addRemoveSourceNodes;
     private javax.swing.JPopupMenu currentSelectedNodePopupMenu;
     private javax.swing.JMenuItem depNodeDeployOneNode;
+    private javax.swing.JMenuItem depNodeSetArea;
     private javax.swing.JMenu depNodesDeploy;
     private javax.swing.JMenuItem depNodesGridTopology;
     private javax.swing.JMenuItem depNodesRandomTopology;
@@ -994,11 +1086,14 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
+    private javax.swing.JMenu mnuTest;
+    private javax.swing.JMenu mnuTest1;
     private javax.swing.JCheckBoxMenuItem selNodeMark;
     private javax.swing.JMenuItem selNodeMonitEnergy;
     private javax.swing.JCheckBoxMenuItem selNodeOnOff;
     private javax.swing.JMenuItem selNodeRoutingAttacks;
     private javax.swing.JMenuItem selNodeRunEvent;
+    private javax.swing.JCheckBoxMenuItem selNodeSelectNeighbors;
     private javax.swing.JMenuItem selNodeSetEnvironmentAttenuation;
     private javax.swing.JMenuItem selNodeSetZ;
     private javax.swing.JCheckBoxMenuItem selNodeShowID;
@@ -1163,6 +1258,8 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
                 node = searchForNode(intValue);
                 if (node != null) {
                     node.getGraphicNode().mark();
+                    autoResizeScrollSimulationPanel((int) node.getX(), (int) node.getY());
+                    autoScrollPanel((int) node.getX(), (int) node.getY());
                 }
             }
             updateLocal();
@@ -1367,13 +1464,25 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         }
     }
 
-    void setUnderAttackModeSelectedNodes(boolean selected) {
+    void setUnderAttackModeSelectedNodes() {
+
+
+        int invalid = 0;
         if (selectedNodes.size() > 0) {
             for (GraphicNode graphicNode : selectedNodes) {
-                graphicNode.getPhysicalNode().getRoutingLayer().setUnderAttack(selected);
+                Node node = graphicNode.getPhysicalNode();
+                if (node.isSource() || node.isReceiver()) {
+                    invalid++;
+                } else {
+                    node.getRoutingLayer().setUnderAttack(!node.getRoutingLayer().isUnderAttack());
+                }
+            }
+            if (invalid > 0) {
+                GUI_Utils.showWarningMessage("Cannot apply attacked nodes to " + invalid + " nodes");
             }
             updateLocal();
         }
+
 
     }
 
@@ -1396,6 +1505,136 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         for (GraphicNode graphicNode : selectedNodes) {
             Node node = graphicNode.getPhysicalNode();
             node.setEnvironmentAttenuation(v);
+        }
+    }
+
+    private void setUnderAttackModeSelectedNodes(boolean selected) {
+
+
+        int invalid = 0;
+        if (selectedNodes.size() > 0) {
+            for (GraphicNode graphicNode : selectedNodes) {
+                Node node = graphicNode.getPhysicalNode();
+                if (node.isSource() || node.isReceiver()) {
+                    invalid++;
+                } else {
+                    node.getRoutingLayer().setUnderAttack(selected);
+                }
+            }
+            if (invalid > 0) {
+                GUI_Utils.showWarningMessage("Cannot apply attacked nodes to " + invalid + " nodes");
+            }
+            updateLocal();
+        }
+
+        if (selectedNodes.size() > 0) {
+            for (GraphicNode graphicNode : selectedNodes) {
+                graphicNode.getPhysicalNode().getRoutingLayer().setUnderAttack(selected);
+            }
+            updateLocal();
+        }
+
+    }
+
+    void setSelectedNodesAsSources() {
+        int invalid = 0;
+        if (selectedNodes.size() > 0) {
+            for (GraphicNode graphicNode : selectedNodes) {
+                Node node = graphicNode.getPhysicalNode();
+                if (node.isReceiver() || node.getRoutingLayer().isUnderAttack()) {
+                    invalid++;
+                } else {
+                    node.setSource(!node.isSource());
+                }
+            }
+            if (invalid > 0) {
+                GUI_Utils.showWarningMessage("Cannot apply source nodes to " + invalid + " nodes");
+            }
+            updateLocal();
+        }
+    }
+
+    void setSelectedNodesAsReceivers() {
+        int invalid = 0;
+        if (selectedNodes.size() > 0) {
+            for (GraphicNode graphicNode : selectedNodes) {
+                Node node = graphicNode.getPhysicalNode();
+                if (node.isSource() || node.getRoutingLayer().isUnderAttack()) {
+                    invalid++;
+                } else {
+                    node.setReceiver(!node.isReceiver());
+                }
+            }
+            if (invalid > 0) {
+                GUI_Utils.showWarningMessage("Cannot apply receiver nodes to " + invalid + " nodes");
+            }
+            updateLocal();
+        }
+    }
+
+    private void selectNeighbors(Node selected) {
+        Node node = selected;
+        selectedNodes.clear();
+        for (Node n : node.getMacLayer().getNeighborhood().neighbors) {
+            n.getGraphicNode().select(!n.getGraphicNode().isSelected());
+            selectedNodes.add(n.getGraphicNode());
+        }
+        updateLocal();
+    }
+
+    private void setDeployArea() {
+        Dimension d = inputAreaSize("Insert area size (w-h):");
+        if (d != null) {
+            int x = mouseX;
+            int y = mouseY;
+            int h = (int) (y + d.getHeight());
+            int w = (int) (x + d.getWidth());
+            selectedArea = new GeneralPath();
+            selectedArea.moveTo(x, y);
+            selectedArea.lineTo(w, y);
+            selectedArea.lineTo(w, h);
+            selectedArea.lineTo(x, h);
+            selectedArea.lineTo(x, y);
+            autoResizeScrollSimulationPanel(w, h);
+            updateAreaData();
+            updateLocal();
+        }
+    }
+
+    private Dimension inputAreaSize(String message) {
+        boolean ok = false;
+        String delimiter = "-";
+        String[] temp;
+        try {
+
+            while (!ok) {
+                String sSize = JOptionPane.showInputDialog(message, "w-h");
+                if (sSize != null) {
+                    temp = sSize.split(delimiter);
+                    if (temp != null && temp.length == 2) {
+                        if (NumberUtils.isNumber(temp[0])) {
+                            if (NumberUtils.isNumber(temp[1])) {
+                                ok = true;
+                                return new Dimension(Integer.valueOf(temp[0]).intValue(), Integer.valueOf(temp[1]).intValue());
+                            }
+                        }
+                    }
+                } else {
+                    return null;
+                }
+                if (!ok) {
+                    JOptionPane.showMessageDialog(SimulationPanel.this, "Invalid values!");
+                }
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    private void autoScrollPanel(int x, int y) {
+        if (getParent() instanceof JViewport) {
+            JViewport p = (JViewport) getParent();
+            p.scrollRectToVisible(new Rectangle(x - 25, y - 25, x + 25, y + 25));
         }
     }
 
@@ -1883,7 +2122,6 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
 
     }
 
-    @Action
     public void PlaceNodeHereAction() {
         try {
             fireBeforeNodeDeploy(new DeployEvent(SimulationPanel.this));

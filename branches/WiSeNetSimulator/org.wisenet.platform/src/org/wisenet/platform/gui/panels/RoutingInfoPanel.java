@@ -7,6 +7,7 @@ package org.wisenet.platform.gui.panels;
 import org.jdesktop.application.Action;
 import org.wisenet.platform.common.ui.PlatformPanel;
 import org.wisenet.platform.core.PlatformManager;
+import org.wisenet.simulator.core.node.layers.routing.RoutingLayer;
 import org.wisenet.simulator.core.node.layers.routing.RoutingLayerController;
 
 /**
@@ -226,7 +227,7 @@ public class RoutingInfoPanel extends PlatformPanel {
             return;
         }
 
-        RoutingLayerController routingLayerController = PlatformManager.getInstance().getActiveSimulation().getRoutingLayerController();
+        RoutingLayerController routingLayerController = RoutingLayer.getController();
 
         if (routingLayerController == null) {
             lblMessage.setText("Invalid Routing Controller");
@@ -237,7 +238,7 @@ public class RoutingInfoPanel extends PlatformPanel {
             txtNrStableNodesPercent.setText("0");
         } else {
             lblMessage.setText("");
-            txtNrStableNodesPercent.setText(""+ routingLayerController.getTotalStableNodes()*100/PlatformManager.getInstance().getActiveSimulation().getSimulator().getNodes().size());
+            txtNrStableNodesPercent.setText("" + routingLayerController.getTotalStableNodes() * 100 / PlatformManager.getInstance().getActiveSimulation().getSimulator().getNodes().size());
             txtNrSimNodes.setText("" + PlatformManager.getInstance().getActiveSimulation().getSimulator().getNodes().size());
             txtNrStableNodes.setText("" + routingLayerController.getTotalStableNodes());
             txtNrMessagesSent.setText("" + routingLayerController.getTotalSentMessages());

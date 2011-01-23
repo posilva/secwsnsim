@@ -103,7 +103,7 @@
                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                       <Component id="txtNrNeighborsPerNode" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="110" max="32767" attributes="0"/>
+                  <EmptySpace pref="124" max="32767" attributes="0"/>
                   <Component id="cmdRefresh" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -181,7 +181,6 @@
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
               <action class="org.wisenet.platform.ui.frames.RoutingInfoPanel" id="Refresh" methodName="Refresh"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Refresh" noResource="true"/>
             <Property name="name" type="java.lang.String" value="cmdRefresh" noResource="true"/>
           </Properties>
         </Component>

@@ -50,7 +50,7 @@ public abstract class AbstractSimulation extends PersistantObject implements ISi
     /**
      * 
      */
-    private String description;
+    protected String description;
     /**
      *
      */
@@ -75,8 +75,8 @@ public abstract class AbstractSimulation extends PersistantObject implements ISi
      *
      */
     protected long seed;
-    private boolean bPreInit = false;
-    private TestSet testSet = new TestSet();
+    protected boolean bPreInit = false;
+    protected TestSet testSet = new TestSet();
     /**
      *
      */
@@ -85,7 +85,8 @@ public abstract class AbstractSimulation extends PersistantObject implements ISi
      * Control flag for start state
      */
     protected boolean started;
-    private int radioCoveragethreshold = 1;
+    protected int radioCoveragethreshold = 1;
+    protected boolean needRebuildNetwork;
 
     /**
      *
@@ -555,4 +556,10 @@ public abstract class AbstractSimulation extends PersistantObject implements ISi
         return testResults;
     }
 
+    public void loadAttackTopology(String file) {
+    }
+
+    public void setNeedRebuildNetwork(boolean b) {
+        needRebuildNetwork = b;
+    }
 }

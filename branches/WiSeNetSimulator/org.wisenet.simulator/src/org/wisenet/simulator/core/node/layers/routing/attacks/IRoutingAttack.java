@@ -61,4 +61,6 @@ public interface IRoutingAttack {
      * @return
      */
     public void setRoutingLayer(RoutingLayer routingLayer);
+
+    public void prepare();
 }

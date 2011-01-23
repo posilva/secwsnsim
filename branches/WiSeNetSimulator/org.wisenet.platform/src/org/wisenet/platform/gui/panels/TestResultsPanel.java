@@ -13,7 +13,7 @@ import org.wisenet.platform.core.charts.SimulationChart;
 import org.wisenet.simulator.components.evaluation.tests.AbstractTest;
 import org.wisenet.simulator.components.evaluation.tests.TestResults;
 import org.wisenet.simulator.core.energy.GlobalEnergyDatabase;
-import org.wisenet.simulator.core.node.layers.routing.RoutingLayerController;
+import org.wisenet.simulator.core.node.layers.routing.RoutingLayer;
 
 /**
  *
@@ -856,7 +856,7 @@ public class TestResultsPanel extends PlatformPanel {
     private void addGlobalResultsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addGlobalResultsActionPerformed
 
         getTest().getSimulation().getTestResults().add(test.getEvaluationManager().getTestResult());
-        
+
     }//GEN-LAST:event_addGlobalResultsActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addGlobalResults;
@@ -1005,10 +1005,9 @@ public class TestResultsPanel extends PlatformPanel {
         txtName.setText(test.getName());
         txtDesc.setText(test.getDescription());
 
-        RoutingLayerController routingController = test.getSimulation().getRoutingLayerController();
-        stableNodes.setText("" + routingController.getTotalStableNodes());
-        messageSent.setText("" + routingController.getTotalSentMessages());
-        messageReceived.setText("" + routingController.getTotalReceivedMessages());
+        stableNodes.setText("" + RoutingLayer.getController().getTotalStableNodes());
+        messageSent.setText("" + RoutingLayer.getController().getTotalSentMessages());
+        messageReceived.setText("" + RoutingLayer.getController().getTotalReceivedMessages());
         messagesAttacked.setText("" + test.getEvaluationManager().getCountAttackedMessages());
 
         nrNodes.setText("" + test.getSimulation().getSimulator().getNodes().size());

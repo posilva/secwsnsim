@@ -62,4 +62,9 @@ public class WormHoleRoutingAttack extends AbstractRoutingAttack {
     protected Node selectNodeToSend() {
         return (Node) nodeSet.randomElement();
     }
+
+    @Override
+    public void prepare() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

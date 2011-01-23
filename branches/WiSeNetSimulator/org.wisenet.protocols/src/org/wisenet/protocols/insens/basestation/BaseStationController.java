@@ -279,15 +279,6 @@ public class BaseStationController {
         }
     }
 
-    private List calculatePaths(NetworkGraph graph) {
-        ArrayList list = new ArrayList();
-        return callPathFinder(graph, list);
-    }
-
-    private List calculatePaths2(NetworkGraph graph, List<List> paths1) {
-        return new PathsFinder(graph, (Short) getBasestation().getUniqueId()).findOtherPaths(paths1);
-    }
-
     private void buildForwardingTables(List firstPathsL, List secondPathsL) {
         allPaths = new Vector();
         allPaths.addAll(firstPathsL);

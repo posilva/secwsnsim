@@ -81,7 +81,7 @@ public class AttacksEntry {
      */
     @Override
     public String toString() {
-        return "Attack " + attack.getClass().getName() + " - " + getLabel() + "[" + (enable ? "enable" : "disable") + "]";
+        return getLabel();
     }
 
     /**

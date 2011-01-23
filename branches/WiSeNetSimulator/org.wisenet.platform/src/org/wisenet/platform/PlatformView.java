@@ -62,6 +62,7 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
     private boolean workbenchVisible;
     protected ClockCounter clockCounter;
     private java.util.Timer simulationTimer;
+    private Timer displayMessageTimer;
 
     public PlatformView(SingleFrameApplication app) {
         super(app);
@@ -158,6 +159,20 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         workbenchVisible = true;
         workbenchPanel1.setVisible(true);
         mainPanel.setVisible(true);
+    }
+
+    private void displayMessage(String msg, int messageTimeout, boolean forever) {
+
+        statusMessageLabel.setText(msg);
+        displayMessageTimer = new Timer(messageTimeout, new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                statusMessageLabel.setText("");
+            }
+        });
+        displayMessageTimer.setRepeats(forever);
+        displayMessageTimer.start();
     }
 
     @SuppressWarnings("unchecked")
@@ -408,12 +423,22 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         chkRoutingLayerDebug.setSelected(true);
         chkRoutingLayerDebug.setText(resourceMap.getString("chkRoutingLayerDebug.text")); // NOI18N
         chkRoutingLayerDebug.setName("chkRoutingLayerDebug"); // NOI18N
+        chkRoutingLayerDebug.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkRoutingLayerDebugActionPerformed(evt);
+            }
+        });
         jMenu3.add(chkRoutingLayerDebug);
 
         chkMACLayerDebug.setAction(actionMap.get("EnableMacLayerDebug")); // NOI18N
         chkMACLayerDebug.setSelected(true);
         chkMACLayerDebug.setText(resourceMap.getString("chkMACLayerDebug.text")); // NOI18N
         chkMACLayerDebug.setName("chkMACLayerDebug"); // NOI18N
+        chkMACLayerDebug.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkMACLayerDebugActionPerformed(evt);
+            }
+        });
         jMenu3.add(chkMACLayerDebug);
 
         ViewMenu.add(jMenu3);
@@ -674,6 +699,18 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         MACLayerStatChart.getInstance().setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void chkRoutingLayerDebugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkRoutingLayerDebugActionPerformed
+        if (isActiveSimulationValid()) {
+            PlatformManager.getInstance().getActiveSimulation().enableRoutingLayerDebug(chkRoutingLayerDebug.isSelected());
+        }
+    }//GEN-LAST:event_chkRoutingLayerDebugActionPerformed
+
+    private void chkMACLayerDebugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkMACLayerDebugActionPerformed
+        if (isActiveSimulationValid()) {
+            PlatformManager.getInstance().getActiveSimulation().enableMACLayerDebug(chkMACLayerDebug.isSelected());
+        }
+    }//GEN-LAST:event_chkMACLayerDebugActionPerformed
+
     @Action
     public void newSimulation() {
         SimulationWizardPanel sw = new SimulationWizardPanel();
@@ -881,20 +918,6 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         PlatformFrame.display(new RoutingOutputPanel(), "Routing Layer Output", PlatformFrame.OK_MODE);
     }
 
-    @Action
-    public void EnableRoutingLayerDebug() {
-        if (isActiveSimulationValid()) {
-            PlatformManager.getInstance().getActiveSimulation().enableRoutingLayerDebug(chkRoutingLayerDebug.isSelected());
-        }
-    }
-
-    @Action
-    public void EnableMacLayerDebug() {
-        if (isActiveSimulationValid()) {
-            PlatformManager.getInstance().getActiveSimulation().enableMACLayerDebug(chkMACLayerDebug.isSelected());
-        }
-    }
-
     private boolean isActiveSimulationValid() {
 
         return PlatformManager.getInstance().getActiveSimulation() != null;
@@ -951,6 +974,7 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
 
     @Override
     public void beforeBuildNetwork(SimulationEvent event) {
+        showMessage("Building network... ", 0);
     }
 
     @Override
@@ -958,6 +982,9 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         try {
             updateAverageNeighborsPerNode();
             lblRadioCoverageValue.setText(PlatformManager.getInstance().getActiveSimulation().getRadioCoverageValue() + "%");
+
+
+            showMessage("Building network... done!", 3000);
         } catch (Exception e) {
             GUI_Utils.showException(e);
         }
@@ -1038,20 +1065,13 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
 
     }
 
+    public void showMessage(String msg, int timeMs) {
+        displayMessage(msg, timeMs, false);
+    }
+
     public void showMessage(String msg) {
         int messageTimeout = 3000;
-        statusMessageLabel.setText(msg);
-
-        final Timer mt = new Timer(messageTimeout, new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                statusMessageLabel.setText("");
-            }
-        });
-        mt.setRepeats(false);
-        mt.start();
-
+        showMessage(msg, messageTimeout);
     }
 
     @Override

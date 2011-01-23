@@ -29,6 +29,16 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodeShowNeighborsActionPerformed"/>
           </Events>
         </MenuItem>
+        <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodeSelectNeighbors">
+          <Properties>
+            <Property name="selected" type="boolean" value="true"/>
+            <Property name="text" type="java.lang.String" value="Select Neighbors"/>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodeSelectNeighborsActionPerformed"/>
+          </Events>
+        </MenuItem>
         <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodeShowID">
           <Properties>
             <Property name="selected" type="boolean" value="true"/>
@@ -112,15 +122,38 @@
         </MenuItem>
         <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator5">
         </Component>
-        <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodeUnderAttack">
+        <Menu class="javax.swing.JMenu" name="mnuTest">
           <Properties>
-            <Property name="selected" type="boolean" value="true"/>
-            <Property name="text" type="java.lang.String" value="Under Routing Attack"/>
+            <Property name="text" type="java.lang.String" value="Testing"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodeUnderAttackActionPerformed"/>
-          </Events>
-        </MenuItem>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="addRemoveSource">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Add/Remove Source Node"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addRemoveSourceActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="addRemoveReceiver">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Add/Remove Receiver Node"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addRemoveReceiverActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodeUnderAttack">
+              <Properties>
+                <Property name="selected" type="boolean" value="true"/>
+                <Property name="text" type="java.lang.String" value="Under Routing Attack"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodeUnderAttackActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPopupMenu" name="selectionToolPopupMenu">
@@ -209,14 +242,31 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesRemoveActionPerformed"/>
           </Events>
         </MenuItem>
-        <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodesUnderAttack">
+        <Menu class="javax.swing.JMenu" name="mnuTest1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Under Routing Attack"/>
+            <Property name="text" type="java.lang.String" value="Testing"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesUnderAttackActionPerformed"/>
-          </Events>
-        </MenuItem>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="addRemoveSourceNodes">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Add/Remove Source Nodes"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="addRemoveReceiverNodes">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Add/Remove Receiver Nodes"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="selNodesUnderAttack">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Under Routing Attack"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selNodesUnderAttackActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPopupMenu" name="deployNodesPopupMenu">
@@ -263,6 +313,14 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="depNodeDeployOneNodeActionPerformed"/>
+          </Events>
+        </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="depNodeSetArea">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Set deploy area from here"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="depNodeSetAreaActionPerformed"/>
           </Events>
         </MenuItem>
       </SubComponents>

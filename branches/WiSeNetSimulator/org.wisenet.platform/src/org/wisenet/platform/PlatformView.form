@@ -308,6 +308,9 @@
                     <Property name="text" type="java.lang.String" resourceKey="chkRoutingLayerDebug.text"/>
                     <Property name="name" type="java.lang.String" value="chkRoutingLayerDebug" noResource="true"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chkRoutingLayerDebugActionPerformed"/>
+                  </Events>
                 </MenuItem>
                 <MenuItem class="javax.swing.JCheckBoxMenuItem" name="chkMACLayerDebug">
                   <Properties>
@@ -318,6 +321,9 @@
                     <Property name="text" type="java.lang.String" resourceKey="chkMACLayerDebug.text"/>
                     <Property name="name" type="java.lang.String" value="chkMACLayerDebug" noResource="true"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chkMACLayerDebugActionPerformed"/>
+                  </Events>
                 </MenuItem>
               </SubComponents>
             </Menu>

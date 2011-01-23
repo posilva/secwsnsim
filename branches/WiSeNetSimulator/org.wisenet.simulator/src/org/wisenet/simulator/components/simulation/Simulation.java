@@ -125,7 +125,7 @@ public class Simulation extends AbstractSimulation implements SimulatorListener 
      */
     @Override
     public void start() {
-        if (!networkBuilded) {
+        if (!networkBuilded || needRebuildNetwork) {
             buildNetwork();
         }
         SimulationEvent event = new SimulationEvent(this);

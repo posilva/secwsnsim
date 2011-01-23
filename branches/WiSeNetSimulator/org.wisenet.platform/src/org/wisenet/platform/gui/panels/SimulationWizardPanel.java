@@ -340,7 +340,7 @@ public class SimulationWizardPanel extends PlatformPanel {
     private void cmdLoadFromFIleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdLoadFromFIleActionPerformed
         try {
             ok = false;
-            FileFilter[] filters = new FileFilter[]{GUI_Utils.XML()};
+            FileFilter[] filters = new FileFilter[]{GUI_Utils.XML_FILTER()};
             String filename = GUI_Utils.showOpenDialog(filters, "Open Simulation Settings File");
             if (filename != null) {
                 updateSettings(filename);
