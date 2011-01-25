@@ -82,9 +82,17 @@ por forma a garantir a interacção com o RoutingLayer. O diagrama de classes
 seguinte apresenta as entidades envolvidas no modelo. 
 
 DIAGRAMA DE CLASSES COM A ROUTINGATTACK
-O funcionamento é baseado
-na intercepção do processo de envio de mensagens do sensor. Quando um sensor
-envia uma mensagem para o ar, usando a primitiva \textit{send()}, são
-executadas as seguintes acções representadas no diagrama de actividade
-seguinte. 
-DIAGRAMA DE ACTIVIDADE
+
+
+O desenho do mecanismo de injecção de ataques ao nível do encaminhamento está
+directamente associado ao RoutingLayer nas duas acções principais deste: o
+envio e a recepção de mensagens. Assim sendo, um ataque cuja acção seja no
+momento de receber a mensagem (por exemplo um \textit{Rushing Attack}) ou no
+envio da mensagem (\textit{Sybil Attack}) podem ser modelados através destes
+dois interceptores. No entanto, algures na operação da lógica de um protocolo
+podemos querer induzir um comportamento específico, para isso um ataque pode
+ainda ser executado a pedido com a passagem de um comando. Na figura seguinte
+apresenta-se a taxonomia de uma classe que implementa um ataque.
+
+CLASSE AQUI COM COMENTÁRIOS
+

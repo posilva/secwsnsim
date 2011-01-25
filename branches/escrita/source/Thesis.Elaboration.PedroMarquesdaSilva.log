@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/openSUSE) (format=pdflatex 2010.12.9)  12 DEC 2010 03:22
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/openSUSE) (format=pdflatex 2011.1.23)  25 JAN 2011 01:33
 entering extended mode
  %&-line parsing enabled.
 **Thesis.Elaboration.PedroMarquesdaSilva.tex
@@ -1245,20 +1245,19 @@ Underfull \vbox (badness 2961) has occurred while \output is active []
 <DS_TransmissionPower.png, id=1115, 697.10437pt x 351.56343pt>
 File: DS_TransmissionPower.png Graphic file (type png)
 
-<use DS_TransmissionPower.png>) [60 <./DS_TransmissionPower.png (PNG copy)>])
-(./capitulo4_medicao.tex
+<use DS_TransmissionPower.png>) [60 <./DS_TransmissionPower.png (PNG copy)>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [61]
-(./pic_cd_evaluation.tex
-<RoutingLayerDependencies.png, id=1125, 757.83125pt x 288.07625pt>
+ [61])
+(./capitulo4_medicao.tex [62] (./pic_cd_evaluation.tex
+<RoutingLayerDependencies.png, id=1130, 757.83125pt x 288.07625pt>
 File: RoutingLayerDependencies.png Graphic file (type png)
 
-<use RoutingLayerDependencies.png>) [62 <./RoutingLayerDependencies.png (PNG co
-py)>] (./pic_sd_send_receive.tex <sd_sent.png, id=1131, 481.8pt x 225.09094pt>
+<use RoutingLayerDependencies.png>) [63 <./RoutingLayerDependencies.png (PNG co
+py)>] (./pic_sd_send_receive.tex <sd_sent.png, id=1136, 481.8pt x 225.09094pt>
 File: sd_sent.png Graphic file (type png)
 
-<use sd_sent.png> <sd_receive.png, id=1132, 459.96844pt x 374.90062pt>
+<use sd_sent.png> <sd_receive.png, id=1137, 459.96844pt x 374.90062pt>
 File: sd_receive.png Graphic file (type png)
 
 <use sd_receive.png>
@@ -1266,37 +1265,34 @@ Overfull \hbox (24.00362pt too wide) in paragraph at lines 3--8
  [][] 
  []
 
-) [63 <./sd_sent.png (PNG copy)> <./sd_receive.png (PNG copy)>])
-(./capitulo4_API.tex
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [64]
-(./pic_protocol_struct.tex <flooding_dir.png, id=1145, 232.87pt x 135.50626pt>
+) [64 <./sd_sent.png (PNG copy)> <./sd_receive.png (PNG copy)>])
+(./capitulo4_API.tex [65] (./pic_protocol_struct.tex
+<flooding_dir.png, id=1151, 232.87pt x 135.50626pt>
 File: flooding_dir.png Graphic file (type png)
-
-<use flooding_dir.png>) [65] (./pic_node_factory.tex
-<node_factory_setup.png, id=1157, 482.80376pt x 218.8175pt>
+ <use flooding_dir.png>)
+[66] (./pic_node_factory.tex
+<node_factory_setup.png, id=1162, 482.80376pt x 218.8175pt>
 File: node_factory_setup.png Graphic file (type png)
 
 <use node_factory_setup.png>) (./tab_API_routing.tex)))
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [66 <./flooding_dir.png> <./node_factory_setup.png>] [67]
+ [67 <./flooding_dir.png> <./node_factory_setup.png>] [68]
 \openout2 = `capitulo5.aux'.
 
- (./capitulo5.tex [68
-
-
-
-]
+ (./capitulo5.tex
 (./pic_FloodingRoutingcd.tex
-<FloodingRoutingcd.png, id=1172, 362.35374pt x 335.2525pt>
+<FloodingRoutingcd.png, id=1173, 362.35374pt x 335.2525pt>
 File: FloodingRoutingcd.png Graphic file (type png)
 
 <use FloodingRoutingcd.png>)
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [69]
+ [69
+
+
+
+]
 Underfull \hbox (badness 10000) detected at line 46
 [][]
  []
@@ -1325,7 +1321,7 @@ Overfull \hbox (5.3251pt too wide) in paragraph at lines 4--22
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [71]
-(./pic_INSENS_CD.tex <INSENSProtocol_CD.png, id=1187, 788.9475pt x 373.395pt>
+(./pic_INSENS_CD.tex <INSENSProtocol_CD.png, id=1188, 788.9475pt x 373.395pt>
 File: INSENSProtocol_CD.png Graphic file (type png)
 
 <use INSENSProtocol_CD.png>)
@@ -1338,15 +1334,18 @@ Underfull \vbox (badness 1484) has occurred while \output is active []
 
 
 
-]) [75]
+]
+Underfull \vbox (badness 3049) has occurred while \output is active []
+
+ [75])
+[76]
 \openout2 = `capitulo7.aux'.
 
-
-(./capitulo7.tex [76
-
+ (./capitulo7.tex) [77
 
 
-]) [77] [78
+
+] [78
 
 
 ] (./Thesis.Elaboration.PedroMarquesdaSilva.bbl
@@ -1396,13 +1395,13 @@ LaTeX Warning: There were multiply-defined labels.
 (\end occurred when \if on line 131 was incomplete)
 (\end occurred when \if on line 128 was incomplete) 
 Here is how much of TeX's memory you used:
- 11963 strings out of 493848
- 160942 string characters out of 3155814
+ 11964 strings out of 493848
+ 160962 string characters out of 3155814
  276918 words of memory out of 3500000
  14412 multiletter control sequences out of 15000+200000
  113635 words of font info for 164 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 41i,18n,40p,376b,438s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 41i,18n,40p,375b,438s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texmf/fonts/enc/
 dvips/base/8r.enc}</usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr10.pfb></
 usr/share/texmf/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texm
@@ -1410,10 +1409,10 @@ f/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texmf/fonts/type1/urw/symbol/u
 syr.pfb></usr/share/texmf/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf/fo
 nts/type1/urw/times/utmbi8a.pfb></usr/share/texmf/fonts/type1/urw/times/utmr8a.
 pfb></usr/share/texmf/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Thesis.Elaboration.PedroMarquesdaSilva.pdf (105 pages, 117005
-3 bytes).
+Output written on Thesis.Elaboration.PedroMarquesdaSilva.pdf (105 pages, 117431
+5 bytes).
 PDF statistics:
- 1358 PDF objects out of 1440 (max. 8388607)
- 356 named destinations out of 1000 (max. 500000)
+ 1359 PDF objects out of 1440 (max. 8388607)
+ 357 named destinations out of 1000 (max. 500000)
  627 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,8 +1,38 @@
 \chapter{Avaliação}
-
+Neste capítulo apresentam-se os resultados das experiências realizadas para
+prova de conceito da plataforma e por conseguinte para avaliação do protocolo
+implementado. Apresenta-se em primeiro lugar a metodologia seguida para a
+execução dos testes que permitem efectuar a avaliação, seguida da apresentação
+dos resultados em forma gráfica seguidas de uma análise crítica.
+ 
 \section[Metodologia]{Metodologia} \label{sec_metod_testes}
-\subsection{Teste A}
-\paragraph{O que se quer testar}
+Para a avaliação do protocolo INSENS foram utilizadas as ferramentas
+disponibilizadas pela plataforma de simulação. Estas ferramentas assentam nos
+pressupostos já apresentados anteriormente e seguiram um modelo que permite a
+comparação dos resultados obtidos com outros protocolos que venham a ser alvo
+de estudos comparativos. Assim, foi necessário desde logo efectuar um conjunto
+de testes de aferição para permitir chegar a configurações de testes que
+permitam observar/analisar as propriedades que se pretendem ver estudadas.
+Estas propriedades são cobertura, latência, fiabilidade e consumo de energia. O
+estudo é realizado sobre o protocolo INSENS em operação normal, ou seja, sem
+atacantes, e mediante a existência de ataque à rede. Desta forma poder-se-à
+avaliar o impacte que determinado ataque tem, ao nível destas propriedades, no
+protocolo INSENS. A comparação com o protocolo de inundação serve,
+fundamentalmente para comparar a propriedade de cobertura no sentido de
+estabelecer uma métrica de comparação.
+
+\subsection{Cobertura da Rede}
+\paragraph{O que se quer testar} Pretende-se testar para o protocolo qual a
+percentagem de nós cobertos na rede. Por uma questão de flexibilidade o
+simulador introduz a noção de nó estável, considerando que este participa no
+protocolo. Esta abordagem permite que um teste seja executado tendo apenas como
+nós emissores nós que participam no protocolo. Desta forma se um protocolo não
+consegue executar por forma a abranger a totalidade da rede, sem este
+mecanismo, poderíamos estar a considerar bastantes nós emissores que nem sequer
+têm à partida possibilidade de enviar mensagens por não terem os dados para o
+encaminhamento. No entanto esta premissa pode ser retirada a menos de uma
+parametrização do teste a executar.
+Para efeitos de cobertura total podemos considerar os n
 \paragraph{Como estou a testar - descrição do setting}
 \paragraph{Porque é assim que se avalia}
 \paragraph{Quais os resultados}
