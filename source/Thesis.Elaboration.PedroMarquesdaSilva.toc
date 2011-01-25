@@ -77,24 +77,25 @@
 \contentsline {subsection}{\numberline {4.2.2}M\'odulo de energia}{55}{subsection.4.2.2}
 \contentsline {subsubsection}{\numberline {4.2.2.1}}{56}{subsubsection.4.2.2.1}
 \contentsline {subsubsection}{\numberline {4.2.2.2}}{60}{subsubsection.4.2.2.2}
-\contentsline {subsection}{\numberline {4.2.3}Mecanismo de avalia\c c\~ao e testes}{61}{subsection.4.2.3}
-\contentsline {subsubsection}{\numberline {4.2.3.1}Medi\c c\~ao das propriedades}{62}{subsubsection.4.2.3.1}
-\contentsline {subsubsection}{\numberline {4.2.3.2}Execu\c c\~ao de testes}{64}{subsubsection.4.2.3.2}
-\contentsline {subsection}{\numberline {4.2.4}Modelo de injec\c c\~ao/implementa\c c\~ao de ataques}{64}{subsection.4.2.4}
-\contentsline {subsection}{\numberline {4.2.5}API para a implementa\c c\~ao de um protocolo}{65}{subsection.4.2.5}
-\contentsline {subsubsection}{\numberline {4.2.5.1}Metodologia para a implementa\c c\~ao de um protocolo}{65}{subsubsection.4.2.5.1}
-\contentsline {paragraph}{\numberline {4.2.5.1.1}Componente L\'ogica}{65}{paragraph.4.2.5.1.1}
-\contentsline {paragraph}{\numberline {4.2.5.1.2}Componente de integra\c c\~ao}{66}{paragraph.4.2.5.1.2}
+\contentsline {subsubsection}{\numberline {4.2.2.3}}{61}{subsubsection.4.2.2.3}
+\contentsline {subsection}{\numberline {4.2.3}Mecanismo de avalia\c c\~ao e testes}{62}{subsection.4.2.3}
+\contentsline {subsubsection}{\numberline {4.2.3.1}Medi\c c\~ao das propriedades}{63}{subsubsection.4.2.3.1}
+\contentsline {subsubsection}{\numberline {4.2.3.2}Execu\c c\~ao de testes}{65}{subsubsection.4.2.3.2}
+\contentsline {subsection}{\numberline {4.2.4}Modelo de injec\c c\~ao/implementa\c c\~ao de ataques}{65}{subsection.4.2.4}
+\contentsline {subsection}{\numberline {4.2.5}API para a implementa\c c\~ao de um protocolo}{66}{subsection.4.2.5}
+\contentsline {subsubsection}{\numberline {4.2.5.1}Metodologia para a implementa\c c\~ao de um protocolo}{66}{subsubsection.4.2.5.1}
+\contentsline {paragraph}{\numberline {4.2.5.1.1}Componente L\'ogica}{66}{paragraph.4.2.5.1.1}
+\contentsline {paragraph}{\numberline {4.2.5.1.2}Componente de integra\c c\~ao}{67}{paragraph.4.2.5.1.2}
 \contentsline {chapter}{\numberline {5}Prova de Conceito da Plataforma}{69}{chapter.5}
 \contentsline {section}{\numberline {5.1}Implementa\c c\~ao de protocolo de encaminhamento por inunda\c c\~ao}{69}{section.5.1}
 \contentsline {section}{\numberline {5.2}Implementa\c c\~ao de Protocolo de Encaminhamento Seguro em RSSF}{70}{section.5.2}
 \contentsline {subsubsection}{\numberline {5.2.0.2}An\'alise critica}{73}{subsubsection.5.2.0.2}
 \contentsline {chapter}{\numberline {6}Avalia\c c\~ao}{75}{chapter.6}
 \contentsline {section}{\numberline {6.1}Metodologia}{75}{section.6.1}
-\contentsline {subsection}{\numberline {6.1.1}Teste A}{75}{subsection.6.1.1}
+\contentsline {subsection}{\numberline {6.1.1}Cobertura da Rede}{75}{subsection.6.1.1}
 \contentsline {paragraph}{\numberline {6.1.1.0.1}O que se quer testar}{75}{paragraph.6.1.1.0.1}
-\contentsline {paragraph}{\numberline {6.1.1.0.2}Como estou a testar - descri\c c\~ao do setting}{75}{paragraph.6.1.1.0.2}
-\contentsline {paragraph}{\numberline {6.1.1.0.3}Porque \'e assim que se avalia}{75}{paragraph.6.1.1.0.3}
-\contentsline {paragraph}{\numberline {6.1.1.0.4}Quais os resultados}{75}{paragraph.6.1.1.0.4}
-\contentsline {paragraph}{\numberline {6.1.1.0.5}Conclus\~oes dos testes}{75}{paragraph.6.1.1.0.5}
+\contentsline {paragraph}{\numberline {6.1.1.0.2}Como estou a testar - descri\c c\~ao do setting}{76}{paragraph.6.1.1.0.2}
+\contentsline {paragraph}{\numberline {6.1.1.0.3}Porque \'e assim que se avalia}{76}{paragraph.6.1.1.0.3}
+\contentsline {paragraph}{\numberline {6.1.1.0.4}Quais os resultados}{76}{paragraph.6.1.1.0.4}
+\contentsline {paragraph}{\numberline {6.1.1.0.5}Conclus\~oes dos testes}{76}{paragraph.6.1.1.0.5}
 \contentsline {chapter}{\numberline {7}Conclus\~oes e trabalho futuro}{77}{chapter.7}

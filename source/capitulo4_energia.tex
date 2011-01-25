@@ -63,7 +63,8 @@ protocolo de rede.
     }
 }
 
-\caption{Algoritmo do modelo de energia}
+\caption{Algoritmo do modelo de energia}
+
 \end{algorithm}
 \begin{procedure}[H]
 \eSe{transciever==ON}{
@@ -210,6 +211,51 @@ os custos referentes à activação dos componentes depois de estes entrarem em
 modos de consumo reduzido. O desenho dos sensores organizado por camadas
 possibilita a implementação de protocolos MAC para diferentes âmbitos,
 nomeadamente a implementação os protocolos S-MAC, B-MAC, Z-MAC.
+
+\subsubsection[]{Obtenção de resultados}
+
+Para a medição de energia foi criado um sistema central de
+recolha de eventos de consumo de energia, que respeitam a estrutura apresentada
+na figura seguinte.
+
+FIGURA E LEGENDA
+
+Com esta estrutura de dados é possível obter um conjunto de dados interessantes
+relacionados com a energia, reveladores de tendências e comportamentos de
+operação da rede. A existência deste componente agregador da informação de
+consumo de energia, embora não contenha um conjunto de dados exaustivo, fornece,
+por correlação de dados, vários tipos de resultados. Na tabela seguinte
+apresentam-se alguns destes resultados que se podem extrair referentes ao
+consumo de energia numa RSSF.
+\begin{description}
+ \item[Consumo por nó] Permite analisar os consumos por nós permitindo
+estabelecer malhas de consumo energia por localização dos nós na rede (por
+exemplo, observando se os sensores próximo de uma estação base, consomem mais
+energia);
+\item[Consumo por evento energético] Permite analisar/observar quais os eventos
+que consomem mais energia na operação da rede, ainda que se saiba de antemão
+que os relacionados com a comunicação são os mais dispendiosos; 
+\item[Consumo por fase de protocolo] Permite separar o consumo em cada uma das
+fases que se tenham definido na implementação do protocolo, contribuindo para a
+identificação de anomalias ou correcção na especificação de determinado
+protocolo;
+\item[Consumo temporal] Uma vez que associado a cada evento, se regista a
+selo temporal em que ocorre, pode-se extrair dados relevantes quanto à evolução
+do consumo energético durante a operação.
+\end{description}
+
+Com este modelo estão criadas as condições para obter uma análise mais rica
+referente ao consumo de energia de uma RSSF, sabendo que este é um recurso
+escasso e muitas vezes de difícil reposição. No que respeita à implementação do
+desde componente colector de informação de energia, existem três
+implementações distintas: 1) Em memória e que se encontra carregada durante
+o tempo da simulação; 2) Escrita para ficheiro raw usando as primitivas
+\textit{DataStream} do Java; 3) Escrita para base de dados (no caso MySQL). As
+duas últimas implementações permitem a análise em sede de pós-processamento.
+
+
+
+
 
 
  

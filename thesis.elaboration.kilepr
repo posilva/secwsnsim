@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.0.85
-lastDocument=source/Thesis.Elaboration.PedroMarquesdaSilva.tex
+lastDocument=source/capitulo4_API.tex
 masterDocument=source/Thesis.Elaboration.PedroMarquesdaSilva.tex
 name=Thesis.Elaboration
 pkg_extIsRegExp=false
@@ -502,13 +502,13 @@ order=-1
 
 [item:source/Thesis.Elaboration.PedroMarquesdaSilva.tex]
 archive=true
-column=0
+column=1
 encoding=ISO-8859-15
 highlight=LaTeX
-line=166
+line=175
 mode=LaTeX
-open=false
-order=5
+open=true
+order=3
 
 [item:source/capitulo1.tex]
 archive=true
@@ -577,8 +577,8 @@ encoding=ISO-8859-15
 highlight=LaTeX
 line=101
 mode=LaTeX
-open=false
-order=8
+open=true
+order=0
 
 [item:source/capitulo2_intrusao.tex]
 archive=true
@@ -647,8 +647,8 @@ encoding=ISO-8859-15
 highlight=LaTeX
 line=51
 mode=LaTeX
-open=false
-order=4
+open=true
+order=6
 
 [item:source/capitulo4_cobertura.tex]
 archive=true
@@ -662,22 +662,22 @@ order=17
 
 [item:source/capitulo4_energia.tex]
 archive=true
-column=15
+column=18
 encoding=ISO-8859-15
 highlight=LaTeX
-line=51
+line=229
 mode=LaTeX
-open=false
-order=5
+open=true
+order=1
 
 [item:source/capitulo4_fiabilidade.tex]
 archive=true
-column=3
+column=0
 encoding=ISO-8859-15
 highlight=LaTeX
-line=5
+line=7
 mode=LaTeX
-open=false
+open=true
 order=2
 
 [item:source/capitulo4_latencia.tex]
@@ -692,13 +692,13 @@ order=18
 
 [item:source/capitulo4_medicao.tex]
 archive=true
-column=0
+column=18
 encoding=ISO-8859-15
 highlight=LaTeX
-line=83
+line=13
 mode=LaTeX
-open=false
-order=9
+open=true
+order=5
 
 [item:source/capitulo4_prova_conceito.tex]
 archive=true
@@ -752,13 +752,13 @@ order=3
 
 [item:source/capitulo6.tex]
 archive=true
-column=33
+column=17
 encoding=ISO-8859-15
 highlight=LaTeX
-line=8
+line=23
 mode=LaTeX
-open=false
-order=6
+open=true
+order=4
 
 [item:source/capitulo7.tex]
 archive=true
@@ -1119,8 +1119,8 @@ CursorColumn=0
 CursorLine=0
 
 [view-settings,view=0,item:source/Thesis.Elaboration.PedroMarquesdaSilva.tex]
-CursorColumn=0
-CursorLine=166
+CursorColumn=1
+CursorLine=175
 
 [view-settings,view=0,item:source/capitulo1.tex]
 CursorColumn=50
@@ -1183,20 +1183,20 @@ CursorColumn=37
 CursorLine=0
 
 [view-settings,view=0,item:source/capitulo4_energia.tex]
-CursorColumn=15
-CursorLine=51
+CursorColumn=18
+CursorLine=229
 
 [view-settings,view=0,item:source/capitulo4_fiabilidade.tex]
-CursorColumn=3
-CursorLine=5
+CursorColumn=0
+CursorLine=7
 
 [view-settings,view=0,item:source/capitulo4_latencia.tex]
 CursorColumn=43
 CursorLine=18
 
 [view-settings,view=0,item:source/capitulo4_medicao.tex]
-CursorColumn=0
-CursorLine=83
+CursorColumn=18
+CursorLine=13
 
 [view-settings,view=0,item:source/capitulo4_prova_conceito.tex]
 CursorColumn=0
@@ -1219,8 +1219,8 @@ CursorColumn=0
 CursorLine=76
 
 [view-settings,view=0,item:source/capitulo6.tex]
-CursorColumn=33
-CursorLine=8
+CursorColumn=17
+CursorLine=23
 
 [view-settings,view=0,item:source/capitulo7.tex]
 CursorColumn=0
