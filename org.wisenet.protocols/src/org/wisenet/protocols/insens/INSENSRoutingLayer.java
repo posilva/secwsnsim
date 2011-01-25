@@ -629,14 +629,15 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
 
         List orderedByHops = new LinkedList(tableOfNodesByHops.keySet());
         Collections.sort(orderedByHops);
+        log("Number of Forwarding Tables different hops values: " + orderedByHops.size());
         byte[] payload;
         for (Object key : orderedByHops) {
             List nodes = (List) tableOfNodesByHops.get(key);
             for (Object n : nodes) {
-
                 Short id = (Short) n;
                 if (forwardingTables.containsKey(id)) {
                     payload = INSENSMessagePayloadFactory.createRUPDPayload(getNode().getId(), (Short) n, getNode().getId(), OWS, forwardingTables.get(id), privateKey, this.getNode());
+                    log("send ft for " + (Short) n + " " + forwardingTables.get(id).toString()+"\n");
                     getController().addMessageSentCounter(INSENSConstants.MSG_ROUTE_UPDATE);
                     send(new INSENSMessage(payload));
                 }
@@ -803,14 +804,14 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
 
     @Override
     protected void onSettingUnderAttack(boolean underAttack) {
-        if (underAttack){
-        super.onSettingUnderAttack(underAttack);
-        if (!getNode().getSimulator().getSimulation().isStarted()) {
-            IRoutingAttack enabledAttack = getAttacks().getEnabledAttack();
-            if (enabledAttack instanceof HelloFloodingRountingAttack) {
-                enabledAttack.prepare();
+        if (underAttack) {
+            super.onSettingUnderAttack(underAttack);
+            if (!getNode().getSimulator().getSimulation().isStarted()) {
+                IRoutingAttack enabledAttack = getAttacks().getEnabledAttack();
+                if (enabledAttack instanceof HelloFloodingRountingAttack) {
+                    enabledAttack.prepare();
+                }
             }
-        }
         }
 
     }

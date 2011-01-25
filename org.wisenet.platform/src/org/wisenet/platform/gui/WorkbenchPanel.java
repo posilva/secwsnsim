@@ -7,12 +7,15 @@ package org.wisenet.platform.gui;
 
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Collection;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileFilter;
@@ -29,6 +32,8 @@ import org.wisenet.platform.gui.panels.NodeSettingsPanel;
 import org.wisenet.platform.gui.panels.RoutingInfoPanel;
 import org.wisenet.platform.gui.panels.SimulationEnergyPanel;
 import org.wisenet.platform.gui.panels.TestBuilderPanel;
+import org.wisenet.platform.test.EnergyHeatMap;
+import org.wisenet.platform.test.EnergyHeatMapFrame;
 import org.wisenet.platform.utils.GUI_Utils;
 import org.wisenet.platform.utils.PlatformUtils;
 import org.wisenet.simulator.components.evaluation.tests.AbstractTest;
@@ -128,7 +133,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         logErrorActions = new javax.swing.JPopupMenu();
         mnuClearErrors = new javax.swing.JMenuItem();
         mnuSaveErrors = new javax.swing.JMenuItem();
-        jToolBar1 = new javax.swing.JToolBar();
+        leftToolbar = new javax.swing.JToolBar();
         btnRebuildNetwork = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JToolBar.Separator();
         verVizinhos = new javax.swing.JToggleButton();
@@ -190,7 +195,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         jLabel2 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         logOutputErrorArea = new javax.swing.JTextArea();
-        jToolBar2 = new javax.swing.JToolBar();
+        rightToolbar = new javax.swing.JToolBar();
         createAdhocTest = new javax.swing.JButton();
         jSeparator13 = new javax.swing.JToolBar.Separator();
         loadTestTopology = new javax.swing.JButton();
@@ -241,10 +246,10 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
 
         setLayout(new java.awt.BorderLayout());
 
-        jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jToolBar1.setFloatable(false);
-        jToolBar1.setOrientation(1);
-        jToolBar1.setRollover(true);
+        leftToolbar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        leftToolbar.setFloatable(false);
+        leftToolbar.setOrientation(1);
+        leftToolbar.setRollover(true);
 
         btnRebuildNetwork.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/refresh.png"))); // NOI18N
         btnRebuildNetwork.setToolTipText("Rebuild Network"); // NOI18N
@@ -257,8 +262,8 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                 btnRebuildNetworkActionPerformed(evt);
             }
         });
-        jToolBar1.add(btnRebuildNetwork);
-        jToolBar1.add(jSeparator4);
+        leftToolbar.add(btnRebuildNetwork);
+        leftToolbar.add(jSeparator4);
 
         verVizinhos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/Neighboors16.png"))); // NOI18N
         verVizinhos.setToolTipText("Show Neighborhood "); // NOI18N
@@ -271,7 +276,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                 verVizinhosActionPerformed(evt);
             }
         });
-        jToolBar1.add(verVizinhos);
+        leftToolbar.add(verVizinhos);
 
         verOsQueConhecem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/OthersNeighboor16.png"))); // NOI18N
         verOsQueConhecem.setToolTipText("Show Two Way Connecions");
@@ -284,8 +289,8 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                 verOsQueConhecemActionPerformed(evt);
             }
         });
-        jToolBar1.add(verOsQueConhecem);
-        jToolBar1.add(jSeparator1);
+        leftToolbar.add(verOsQueConhecem);
+        leftToolbar.add(jSeparator1);
 
         OperationBG.add(btnSimulationStart);
         btnSimulationStart.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/Play16.png"))); // NOI18N
@@ -299,7 +304,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                 btnSimulationStartActionPerformed(evt);
             }
         });
-        jToolBar1.add(btnSimulationStart);
+        leftToolbar.add(btnSimulationStart);
 
         OperationBG.add(btnSimulationPause);
         btnSimulationPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/Pause16.png"))); // NOI18N
@@ -313,7 +318,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                 btnSimulationPauseActionPerformed(evt);
             }
         });
-        jToolBar1.add(btnSimulationPause);
+        leftToolbar.add(btnSimulationPause);
 
         OperationBG.add(btnSimulationStop);
         btnSimulationStop.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/Stop16.png"))); // NOI18N
@@ -327,7 +332,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                 btnSimulationStopActionPerformed(evt);
             }
         });
-        jToolBar1.add(btnSimulationStop);
+        leftToolbar.add(btnSimulationStop);
 
         btnSimulationReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/Reset16.png"))); // NOI18N
         btnSimulationReset.setToolTipText("Reset Simulation");
@@ -340,8 +345,8 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                 btnSimulationResetActionPerformed(evt);
             }
         });
-        jToolBar1.add(btnSimulationReset);
-        jToolBar1.add(jSeparator2);
+        leftToolbar.add(btnSimulationReset);
+        leftToolbar.add(jSeparator2);
 
         SelectionBG.add(selectionPointerTool);
         selectionPointerTool.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/Pointer.png"))); // NOI18N
@@ -355,7 +360,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                 selectionPointerToolActionPerformed(evt);
             }
         });
-        jToolBar1.add(selectionPointerTool);
+        leftToolbar.add(selectionPointerTool);
 
         SelectionBG.add(btnDeployNodesMode);
         btnDeployNodesMode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/DEPLOY.png"))); // NOI18N
@@ -369,7 +374,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                 btnDeployNodesModeActionPerformed(evt);
             }
         });
-        jToolBar1.add(btnDeployNodesMode);
+        leftToolbar.add(btnDeployNodesMode);
 
         SelectionBG.add(btnSelectionTool);
         btnSelectionTool.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/Selection.png"))); // NOI18N
@@ -387,8 +392,8 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                 btnSelectionToolActionPerformed(evt);
             }
         });
-        jToolBar1.add(btnSelectionTool);
-        jToolBar1.add(jSeparator11);
+        leftToolbar.add(btnSelectionTool);
+        leftToolbar.add(jSeparator11);
 
         showMouseCoordinates.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/MouseXY.png"))); // NOI18N
         showMouseCoordinates.setToolTipText("Show Mouse Coordinates");
@@ -401,7 +406,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                 showMouseCoordinatesActionPerformed(evt);
             }
         });
-        jToolBar1.add(showMouseCoordinates);
+        leftToolbar.add(showMouseCoordinates);
 
         viewNodesInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/about-icon.png"))); // NOI18N
         viewNodesInfo.setToolTipText("View Nodes Info");
@@ -414,7 +419,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                 viewNodesInfoActionPerformed(evt);
             }
         });
-        jToolBar1.add(viewNodesInfo);
+        leftToolbar.add(viewNodesInfo);
 
         btnRoutingInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/routinginfo.png"))); // NOI18N
         btnRoutingInfo.setToolTipText("Show Routing Info");
@@ -427,8 +432,8 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                 btnRoutingInfoActionPerformed(evt);
             }
         });
-        jToolBar1.add(btnRoutingInfo);
-        jToolBar1.add(jSeparator6);
+        leftToolbar.add(btnRoutingInfo);
+        leftToolbar.add(jSeparator6);
 
         showDebugWindow.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/terminal-icon.png"))); // NOI18N
         showDebugWindow.setToolTipText("Debug Console");
@@ -441,9 +446,9 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                 showDebugWindowActionPerformed(evt);
             }
         });
-        jToolBar1.add(showDebugWindow);
+        leftToolbar.add(showDebugWindow);
 
-        add(jToolBar1, java.awt.BorderLayout.LINE_START);
+        add(leftToolbar, java.awt.BorderLayout.LINE_START);
 
         topToolbar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         topToolbar.setFloatable(false);
@@ -457,7 +462,27 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         btnSnapshot.addActionListener(new java.awt.event.ActionListener() {
 
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSnapshotActionPerformed(evt);
+                try {
+                    EnergyHeatMap hm = new EnergyHeatMap();
+                    BufferedImage i = getSimulationPanel().getNetworkImage();
+                    EnergyHeatMapFrame ehmf = new EnergyHeatMapFrame();
+
+
+
+
+
+                    if (i != null) {
+                        ehmf.loadImage(i);
+                        //                btnSnapshotActionPerformed(evt);
+                        ehmf.displayHeat(getSimulationPanel().getSimulator().getNodes());
+                        ehmf.setVisible(true);
+
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(WorkbenchPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+//                btnSnapshotActionPerformed(evt);
             }
         });
         topToolbar.add(btnSnapshot);
@@ -755,10 +780,10 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
 
         add(workbenchSplit, java.awt.BorderLayout.CENTER);
 
-        jToolBar2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jToolBar2.setFloatable(false);
-        jToolBar2.setOrientation(1);
-        jToolBar2.setRollover(true);
+        rightToolbar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        rightToolbar.setFloatable(false);
+        rightToolbar.setOrientation(1);
+        rightToolbar.setRollover(true);
 
         createAdhocTest.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/newTest.png"))); // NOI18N
         createAdhocTest.setToolTipText("Create Ad-Hoc Test");
@@ -771,8 +796,8 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                 createAdhocTestActionPerformed(evt);
             }
         });
-        jToolBar2.add(createAdhocTest);
-        jToolBar2.add(jSeparator13);
+        rightToolbar.add(createAdhocTest);
+        rightToolbar.add(jSeparator13);
 
         loadTestTopology.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/File-Open-icon.png"))); // NOI18N
         loadTestTopology.setToolTipText("Load Ad-Hoc Test Topology");
@@ -785,7 +810,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                 loadTestTopologyActionPerformed(evt);
             }
         });
-        jToolBar2.add(loadTestTopology);
+        rightToolbar.add(loadTestTopology);
 
         saveTestTopology.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/save-as-icon.png"))); // NOI18N
         saveTestTopology.setToolTipText("Save Ad-Hoc Test Topology");
@@ -798,7 +823,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                 saveTestTopologyActionPerformed(evt);
             }
         });
-        jToolBar2.add(saveTestTopology);
+        rightToolbar.add(saveTestTopology);
 
         clearTestTopology.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/clearTest.png"))); // NOI18N
         clearTestTopology.setToolTipText("Clear Ad-Hoc Test Topology");
@@ -811,8 +836,8 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                 clearTestTopologyActionPerformed(evt);
             }
         });
-        jToolBar2.add(clearTestTopology);
-        jToolBar2.add(jSeparator14);
+        rightToolbar.add(clearTestTopology);
+        rightToolbar.add(jSeparator14);
 
         testAddRemoveSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/SourceNode.png"))); // NOI18N
         testAddRemoveSender.setToolTipText("Add/Remove Source Sensors");
@@ -825,7 +850,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                 testAddRemoveSenderActionPerformed(evt);
             }
         });
-        jToolBar2.add(testAddRemoveSender);
+        rightToolbar.add(testAddRemoveSender);
 
         testAddRemoveReceivers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/ReceiverNode.png"))); // NOI18N
         testAddRemoveReceivers.setToolTipText("Add/Remove Receiver Sensors");
@@ -838,7 +863,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                 testAddRemoveReceiversActionPerformed(evt);
             }
         });
-        jToolBar2.add(testAddRemoveReceivers);
+        rightToolbar.add(testAddRemoveReceivers);
 
         testSetAttackNode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/powerOff.png"))); // NOI18N
         testSetAttackNode.setToolTipText("Add/Remove Attacked Sensors");
@@ -851,8 +876,8 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                 testSetAttackNodeActionPerformed(evt);
             }
         });
-        jToolBar2.add(testSetAttackNode);
-        jToolBar2.add(jSeparator15);
+        rightToolbar.add(testSetAttackNode);
+        rightToolbar.add(jSeparator15);
 
         adhocTestInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/app-info-icon.png"))); // NOI18N
         adhocTestInfo.setToolTipText("Show Ad-Hoc Test Topology Info");
@@ -865,9 +890,9 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                 adhocTestInfoActionPerformed(evt);
             }
         });
-        jToolBar2.add(adhocTestInfo);
+        rightToolbar.add(adhocTestInfo);
 
-        add(jToolBar2, java.awt.BorderLayout.EAST);
+        add(rightToolbar, java.awt.BorderLayout.EAST);
     }// </editor-fold>//GEN-END:initComponents
 
     private void selectStableNodes(boolean select) {
@@ -1128,8 +1153,8 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
     private javax.swing.JToolBar.Separator jSeparator8;
     private javax.swing.JToolBar.Separator jSeparator9;
     private javax.swing.JSplitPane jSplitPane1;
-    private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JToolBar jToolBar2;
+    private javax.swing.JToolBar leftToolbar;
+    private javax.swing.JToolBar rightToolbar;
     private javax.swing.JLabel lblActiveTest;
     private javax.swing.JButton loadTestTopology;
     private javax.swing.JPopupMenu logActions;
