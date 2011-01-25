@@ -2141,6 +2141,19 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
 
 
     }
+
+    public BufferedImage getNetworkImage() {
+        if (getSimulator().getNodes().isEmpty()) {
+            return null;
+        }
+
+        BufferedImage bImage = new BufferedImage(this.getWidth(), this.getHeight(), 1);
+        Graphics g = bImage.getGraphics();
+        g.setColor(Color.white);
+        g.fillRect(0, 0, this.getWidth(), this.getHeight());
+        mainPaintLoop(g);
+        return bImage;
+    }
     protected Hashtable<Node, Object> energyControllersTable = new Hashtable<Node, Object>();
 
     public void takeSnapshot() {

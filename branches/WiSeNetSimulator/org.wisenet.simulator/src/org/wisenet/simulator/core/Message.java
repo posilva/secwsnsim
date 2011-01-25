@@ -23,7 +23,7 @@ public class Message implements Cloneable {
     /**
      *
      */
-    protected long totalHops=1;             // number of hops (must be updated outside)
+    protected long totalHops = 1;             // number of hops (must be updated outside)
     /**
      *
      */
@@ -210,6 +210,4 @@ public class Message implements Cloneable {
     public void setUniqueId(Object uniqueId) {
         this.uniqueId = uniqueId;
     }
-
-    
 }
