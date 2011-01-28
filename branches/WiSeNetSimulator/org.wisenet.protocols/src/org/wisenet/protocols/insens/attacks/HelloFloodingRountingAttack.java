@@ -13,12 +13,15 @@ import org.wisenet.simulator.core.node.layers.routing.attacks.AbstractRoutingAtt
  */
 public class HelloFloodingRountingAttack extends AbstractRoutingAttack {
 
+    private double oldRange;
+
     public HelloFloodingRountingAttack(RoutingLayer athis) {
         super(athis);
     }
 
     @Override
     public void prepare() {
+        oldRange = getRoutingLayer().getNode().getConfig().getSetRadioRange();
         getRoutingLayer().getNode().getConfig().setSetRadioRange(230);
         getRoutingLayer().getNode().getSimulator().getSimulation().setNeedRebuildNetwork(true);
     }
@@ -36,5 +39,11 @@ public class HelloFloodingRountingAttack extends AbstractRoutingAttack {
     @Override
     public Object attackOnDemand(Object message, Object command) {
         return message;
+    }
+
+    public void reset() {
+        getRoutingLayer().getNode().getConfig().setSetRadioRange((int) oldRange);
+        getRoutingLayer().getNode().getSimulator().getSimulation().setNeedRebuildNetwork(true);
+
     }
 }

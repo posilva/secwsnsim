@@ -161,6 +161,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         selRandomNodes = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JToolBar.Separator();
         cmdMonitEnergy = new javax.swing.JButton();
+        cmdHeatMapEnergy = new javax.swing.JButton();
         jSeparator10 = new javax.swing.JToolBar.Separator();
         btnLoadTopology = new javax.swing.JButton();
         btnSaveTopology = new javax.swing.JButton();
@@ -462,27 +463,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         btnSnapshot.addActionListener(new java.awt.event.ActionListener() {
 
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                try {
-                    EnergyHeatMap hm = new EnergyHeatMap();
-                    BufferedImage i = getSimulationPanel().getNetworkImage();
-                    EnergyHeatMapFrame ehmf = new EnergyHeatMapFrame();
-
-
-
-
-
-                    if (i != null) {
-                        ehmf.loadImage(i);
-                        //                btnSnapshotActionPerformed(evt);
-                        ehmf.displayHeat(getSimulationPanel().getSimulator().getNodes());
-                        ehmf.setVisible(true);
-
-                    }
-                } catch (IOException ex) {
-                    Logger.getLogger(WorkbenchPanel.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-//                btnSnapshotActionPerformed(evt);
+                btnSnapshotActionPerformed(evt);
             }
         });
         topToolbar.add(btnSnapshot);
@@ -527,6 +508,19 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         });
         topToolbar.add(selRandomNodes);
         topToolbar.add(jSeparator3);
+
+        cmdHeatMapEnergy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/heatMap.png"))); // NOI18N
+        cmdHeatMapEnergy.setToolTipText("Show Energy Heat Map"); // NOI18N
+        cmdHeatMapEnergy.setFocusable(false);
+        cmdHeatMapEnergy.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        cmdHeatMapEnergy.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        cmdHeatMapEnergy.addActionListener(new java.awt.event.ActionListener() {
+
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showHeatMap();
+            }
+        });
+        topToolbar.add(cmdHeatMapEnergy);
 
         cmdMonitEnergy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/Battery-icon.png"))); // NOI18N
         cmdMonitEnergy.setToolTipText("Observe Simulation Energy"); // NOI18N
@@ -1123,6 +1117,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
     private javax.swing.JComboBox cboSimAttacks;
     private javax.swing.JButton clearTestTopology;
     private javax.swing.JButton cmdMonitEnergy;
+    private javax.swing.JButton cmdHeatMapEnergy;
     private javax.swing.JButton cmdResetTest;
     private javax.swing.JButton cmdRunTest;
     private javax.swing.JButton cmdSelAttackedNodes;
@@ -1834,5 +1829,27 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
 
         System.setOut(new PrintStream(out, true));
         System.setErr(new PrintStream(err, true));
+    }
+
+    void showHeatMap() {
+        try {
+            EnergyHeatMap hm = new EnergyHeatMap();
+            BufferedImage i = getSimulationPanel().getNetworkImage();
+            EnergyHeatMapFrame ehmf = new EnergyHeatMapFrame();
+
+
+
+
+
+            if (i != null) {
+                ehmf.loadImage(i);
+                //                btnSnapshotActionPerformed(evt);
+                ehmf.displayHeat(getSimulationPanel().getSimulator().getNodes());
+                ehmf.setVisible(true);
+
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(WorkbenchPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
