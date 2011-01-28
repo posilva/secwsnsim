@@ -63,4 +63,6 @@ public interface IRoutingAttack {
     public void setRoutingLayer(RoutingLayer routingLayer);
 
     public void prepare();
+
+    public void reset();
 }

@@ -13,10 +13,12 @@ import org.wisenet.protocols.common.ByteArrayDataOutputStream;
 
 /**
  *
-* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class ForwardingTable {
 
+    static int counter = 0;
+    int uniqueId = counter++;
     short nodeId;
     Set<RoutingTableEntry> entries = new HashSet<RoutingTableEntry>();
 
@@ -64,6 +66,7 @@ public class ForwardingTable {
      */
     public void read(ByteArrayDataInputStream badis) {
         try {
+            uniqueId = badis.readInt();
             int nrEntries = badis.readInt();
             for (int i = 0; i < nrEntries; i++) {
                 RoutingTableEntry entry = new RoutingTableEntry();
@@ -81,6 +84,7 @@ public class ForwardingTable {
      */
     public void write(ByteArrayDataOutputStream bados) {
         try {
+            bados.writeInt(uniqueId);
             bados.writeInt(entries.size());
             for (RoutingTableEntry routingTableEntry : entries) {
                 routingTableEntry.write(bados);
@@ -138,7 +142,7 @@ public class ForwardingTable {
     @Override
     public String toString() {
         String out = "";
-        out += "ForwardingTable: " + nodeId + "\n";
+        out += "ForwardingTable[" + uniqueId + "] : " + nodeId + "\n";
         out += "-----------------------------\n";
         for (RoutingTableEntry routingTableEntry : entries) {
             out += routingTableEntry + "\n";
@@ -154,6 +158,7 @@ public class ForwardingTable {
     public void addAll(ForwardingTable forwardingTable) {
         entries.addAll(forwardingTable.getEntries());
     }
+
     /**
      * Evaluate if a route exists in this forwing table
      * @param destination
@@ -168,5 +173,9 @@ public class ForwardingTable {
             }
         }
         return false;
+    }
+
+    public int getUniqueId() {
+        return uniqueId;
     }
 }

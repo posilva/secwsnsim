@@ -16,7 +16,7 @@ import org.wisenet.simulator.core.node.Node;
 
 /**
  *
-* @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
+ * @author Pedro Marques da Silva <MSc Student @di.fct.unl.pt>
  */
 public class INSENSMessagePayloadFactory {
 
@@ -198,5 +198,39 @@ public class INSENSMessagePayloadFactory {
             Logger.getLogger(INSENSMessagePayloadFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public static byte[] createRUPDReplyPayload(short src, short dst, short imt, long ows, byte[] mac, Node node) {
+        try {
+            ByteArrayDataOutputStream bados = new ByteArrayDataOutputStream();
+            bados.writeByte(INSENSConstants.MSG_ROUTE_UPDATE_ACK);
+            bados.writeShort(src);
+            bados.writeShort(dst);
+            bados.writeShort(imt);  // Este tem de mudar de lugar tem q ir cifrado mas se for alterado tem um problema de ataque
+            bados.writeLong(ows);
+            bados.write(mac);
+            return bados.toByteArray();
+        } catch (IOException ex) {
+            Logger.getLogger(INSENSMessagePayloadFactory.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+
+    }
+
+    public static byte[] updateRUPDAckPayload(short src, short dst, short imt, long ows, byte[] mac, Node node) {
+        try {
+            ByteArrayDataOutputStream bados = new ByteArrayDataOutputStream();
+            bados.writeByte(INSENSConstants.MSG_ROUTE_UPDATE_ACK);
+            bados.writeShort(src);
+            bados.writeShort(dst);
+            bados.writeShort(imt);  // Este tem de mudar de lugar tem q ir cifrado mas se for alterado tem um problema de ataque
+            bados.writeLong(ows);
+            bados.write(mac);
+            return bados.toByteArray();
+        } catch (IOException ex) {
+            Logger.getLogger(INSENSMessagePayloadFactory.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+
     }
 }

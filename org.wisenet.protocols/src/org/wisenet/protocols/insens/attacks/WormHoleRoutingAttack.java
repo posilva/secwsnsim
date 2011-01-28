@@ -67,4 +67,8 @@ public class WormHoleRoutingAttack extends AbstractRoutingAttack {
     public void prepare() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    public void reset() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
