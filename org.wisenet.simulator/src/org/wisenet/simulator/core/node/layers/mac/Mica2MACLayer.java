@@ -213,7 +213,9 @@ public class Mica2MACLayer extends MACLayer {
         } else {
             sending = true;
             transmitting = false;
+
             this.getNode().setMessage(message);
+
             senderRoutingLayer = (RoutingLayer) app;
 
             if (receiving) {
@@ -223,6 +225,7 @@ public class Mica2MACLayer extends MACLayer {
                 testChannelEvent.setTime(Simulator.getSimulationTime()
                         + generateWaitingTime());
                 getNode().getSimulator().addEvent(testChannelEvent);
+
             }
             return true;
         }
@@ -358,6 +361,7 @@ public class Mica2MACLayer extends MACLayer {
     protected void removeNoise(double level, final Object stream) {
         // guarda o ID e compara como o que recebeu no inicio da recepÃ§Ã£o
         if (parentID == ((Node) stream).getId()) {
+
             receiving = false;
             if (!corrupted) {
                 final Node node = Node.cast(stream);

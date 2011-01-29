@@ -34,8 +34,8 @@ import javax.swing.JPanel;
 import org.wisenet.simulator.core.node.Node;
 
 public class EnergyHeatMap extends JPanel {
-    public static final int GRADIENT_COLORS = 256;
 
+    public static final int GRADIENT_COLORS = 256;
     /** */
     private static final long serialVersionUID = -2105845119293049049L;
     private static BufferedImage backgroundImage;
@@ -71,7 +71,7 @@ public class EnergyHeatMap extends JPanel {
     private void setupImage() {
         int width = backgroundImage.getWidth();
         int height = backgroundImage.getHeight();
-        colorImage = createEvenlyDistributedGradientImage(new Dimension(GRADIENT_COLORS,1),  Color.WHITE, Color.RED, Color.YELLOW, Color.GREEN.darker(), Color.CYAN, Color.BLUE, new Color(0, 0, 0x33));
+        colorImage = createEvenlyDistributedGradientImage(new Dimension(GRADIENT_COLORS, 1), Color.WHITE, Color.RED, Color.YELLOW, Color.GREEN.darker(), Color.CYAN, Color.BLUE, new Color(0, 0, 0x33));
         colorTable = createColorLookupTable(colorImage, .5f);
         colorOp = new LookupOp(colorTable, null);
         monochromeImage = createCompatibleTranslucentImage(width, height);
@@ -185,6 +185,9 @@ public class EnergyHeatMap extends JPanel {
     }
 
     private void addDotImage(Point p, float alpha) {
+        if (alpha > 0.99999f) {
+            alpha = 1.0f;
+        }
         int circleRadius = dotImage.getWidth() / 2;
 
         Graphics2D g = (Graphics2D) monochromeImage.getGraphics();
@@ -196,7 +199,7 @@ public class EnergyHeatMap extends JPanel {
     public void paintHeat(Collection<Node> nodes) {
         for (Node node : nodes) {
             float c = (float) (node.getBateryEnergy().getInitialPower() - node.getBateryEnergy().getCurrentPower());
-            paintDot((int) node.getX(), (int) node.getY(), c * .1f);
+            paintDot((int) node.getX(), (int) node.getY(), c * .2f);
         }
     }
 }
