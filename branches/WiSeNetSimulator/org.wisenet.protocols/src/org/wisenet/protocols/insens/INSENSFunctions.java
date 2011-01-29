@@ -69,11 +69,12 @@ public class INSENSFunctions {
     public static boolean verifyMAC(byte[] payload, byte type) {
         switch (type) {
             case INSENSConstants.MSG_ROUTE_REQUEST:
-
                 break;
             case INSENSConstants.MSG_FEEDBACK:
                 break;
             case INSENSConstants.MSG_ROUTE_UPDATE:
+                break;
+            case INSENSConstants.MSG_ROUTE_UPDATE_ACK:
                 break;
             case INSENSConstants.MSG_DATA:
                 break;

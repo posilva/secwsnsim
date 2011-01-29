@@ -28,6 +28,7 @@ public class RUPDAckPayload extends INSENSMessagePayload {
      *
      */
     public short immediate;
+    public int ftUID;
     /**
      *
      */
@@ -49,6 +50,7 @@ public class RUPDAckPayload extends INSENSMessagePayload {
             source = badis.readShort();
             destination = badis.readShort();
             immediate = badis.readShort();
+            ftUID = badis.readInt();
             ows = badis.readLong();
             mac = new byte[CryptoFunctions.MAC_SIZE];
             badis.read(mac);

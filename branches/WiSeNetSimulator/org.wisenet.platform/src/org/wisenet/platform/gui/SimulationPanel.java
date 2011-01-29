@@ -1638,6 +1638,10 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         }
     }
 
+    private void paintHeatMap(Graphics g) {
+        
+    }
+
     /**
      * 
      */
@@ -1982,6 +1986,9 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         if (paintNodesInfo) {
             paintInfo(grphcs);
         }
+
+        paintHeatMap(g);
+
     }
 
     private void paintImage(Graphics g) {

@@ -77,6 +77,8 @@ public class Simulator {
      *
      */
     public final static int REAL = 1;
+    public static Event traceEvent=null;
+    public static Message traceMessage=null;
     /**
      * List of event simulatorListeners
      */
@@ -399,6 +401,7 @@ public class Simulator {
             } else {
                 lastEventTime = event.time;
             }
+
             event.execute();
             scheduleTemporizedTests();
             handlePause();
