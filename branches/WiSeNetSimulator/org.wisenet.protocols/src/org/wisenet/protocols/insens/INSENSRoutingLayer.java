@@ -483,6 +483,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         if (!getNode().isSinkNode()) {
 
             if (isFirstTime(payload)) {
+                System.out.println("Signal:\t"+getNode().getMacLayer().getSignalStrength());
                 if (getNode().getMacLayer().getSignalStrength() > INSENSConstants.SIGNAL_STRENGH_THRESHOLD && getNode().getMacLayer().getNoiseStrength() < INSENSConstants.SIGNAL_NOISE_THRESHOLD) {
                     if (owsIsValid(payload)) {
                         isParent = true;
@@ -617,7 +618,6 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     private void sendRouteUpdateMessages(Hashtable<Short, ForwardingTable> forwardingTables) {
         Vector allpaths = baseStationController.getAllPaths();
         Comparator<List> c = new Comparator<List>() {
-
             public int compare(List o1, List o2) {
                 return Integer.valueOf(o1.size()).compareTo(Integer.valueOf(o2.size()));
             }
@@ -685,6 +685,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         byte[] payload;
         ForwardingTable ft = null;
         int i = 0;
+        int o =0;
         for (Object key : orderedByHops) {
             List nodes = (List) tableOfNodesByHops.get(key);
             for (Object n : nodes) {
@@ -696,10 +697,13 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
                     i++;
                     sendUpdateRouteMessage(payload);
                 }
+
             }
+            o++;
         }
         System.out.println("Total Forwarding Tables: " + i);
-        forwardingTablesDispatchTimer.start();
+        System.out.println("Total nodes having ft: " + o);
+//        forwardingTablesDispatchTimer.start();
     }
 
     /**
@@ -719,13 +723,13 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
      * @param payload
      */
     private void replyToRUPDMessage(RUPDPayload payload) {
-        if (replyToRUPDCounter<3){
-            replyToRUPDCounter++;
-        byte[] payloadResponse = INSENSMessagePayloadFactory.createRUPDReplyPayload(getNode().getId(), (Short) payload.source, getNode().getId(), payload.forwardingTable.getUniqueId(), OWS, privateKey, this.getNode());
-        getController().addMessageSentCounter(INSENSConstants.MSG_ROUTE_UPDATE_ACK);
-        send(new INSENSMessage(payloadResponse));
-        log("Replying to RUPD Message");
-        }
+//        if (replyToRUPDCounter<3){
+//            replyToRUPDCounter++;
+//        byte[] payloadResponse = INSENSMessagePayloadFactory.createRUPDReplyPayload(getNode().getId(), (Short) payload.source, getNode().getId(), payload.forwardingTable.getUniqueId(), OWS, privateKey, this.getNode());
+//        getController().addMessageSentCounter(INSENSConstants.MSG_ROUTE_UPDATE_ACK);
+//        send(new INSENSMessage(payloadResponse));
+//        log("Replying to RUPD Message");
+//        }
     }
 
     /**
