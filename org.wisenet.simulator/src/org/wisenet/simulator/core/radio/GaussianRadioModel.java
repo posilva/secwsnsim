@@ -289,7 +289,6 @@ public class GaussianRadioModel extends RadioModel {
             this.stream = stream;
 
             int i = neighbors.size();
-//            Node node = (Node) stream;
             while (--i >= 0) {
                 if (neighbors.get(i).isTurnedOn()) {
                     double dynamicStrength = getDynamicStrength(strength, staticFadings.get(i));
@@ -297,7 +296,6 @@ public class GaussianRadioModel extends RadioModel {
                         dynamicStrengths.add(dynamicStrength);
                     }
                     dynamicStrengths.set(i, dynamicStrength);
-//                    System.out.println("Send >"+ node.getId()  + ": "+ node.getMessage() + " to  "+ neighbors.get(i).getId());
                     neighbors.get(i).getMacLayer().receptionBegin(dynamicStrength, stream);
                 }
             }
@@ -328,5 +326,4 @@ public class GaussianRadioModel extends RadioModel {
             staticFadings.clear();
         }
     }
-
 }
