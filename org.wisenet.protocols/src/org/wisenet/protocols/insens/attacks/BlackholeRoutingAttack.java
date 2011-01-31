@@ -31,7 +31,7 @@ public class BlackholeRoutingAttack extends AbstractRoutingAttack {
     @Override
     public Object attackOnSend(Object message) {
         if (getRoutingLayer().isStable()) {
-            log("Suppress Message");
+//            log("Suppress Message");
             return null; // Supress message
         } else {
 

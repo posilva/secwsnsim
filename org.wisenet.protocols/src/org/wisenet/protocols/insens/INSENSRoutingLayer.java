@@ -483,7 +483,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         if (!getNode().isSinkNode()) {
 
             if (isFirstTime(payload)) {
-                System.out.println("Signal:\t"+getNode().getMacLayer().getSignalStrength());
+//                System.out.println("Signal:\t"+getNode().getMacLayer().getSignalStrength());
                 if (getNode().getMacLayer().getSignalStrength() > INSENSConstants.SIGNAL_STRENGH_THRESHOLD && getNode().getMacLayer().getNoiseStrength() < INSENSConstants.SIGNAL_NOISE_THRESHOLD) {
                     if (owsIsValid(payload)) {
                         isParent = true;
