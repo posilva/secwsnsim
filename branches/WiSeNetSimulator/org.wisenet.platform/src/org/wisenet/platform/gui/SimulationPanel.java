@@ -1642,6 +1642,13 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         
     }
 
+    private void updateScroll() {
+        int w = (int) getSimulation().fieldSize().getWidth();
+        int h = (int) getSimulation().fieldSize().getHeight();
+        autoResizeScrollSimulationPanel(w,h);
+//        autoScrollPanel( w,h);
+    }
+
     /**
      * 
      */
@@ -1988,7 +1995,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         }
 
         paintHeatMap(g);
-
+        updateScroll();
     }
 
     private void paintImage(Graphics g) {

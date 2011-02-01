@@ -210,6 +210,7 @@ public abstract class RoutingLayer extends Layer implements IInstrumentHandler {
      */
     private Object beforeSendMessageToAir(Object message) {
         if (isUnderAttack()) {
+            getController().countAttackedMessages((Message)message);
             getController().incrementAttackedMessages();
             return doAttackBeforeSend(message);
         }

@@ -9,6 +9,7 @@ import org.wisenet.simulator.common.Parameterizable;
 import org.wisenet.simulator.common.PersistantException;
 import org.wisenet.simulator.common.PersistantObject;
 import org.wisenet.simulator.components.evaluation.tests.AbstractTest;
+import org.wisenet.simulator.core.Message;
 import org.wisenet.simulator.core.node.layers.routing.attacks.AttacksEntry;
 
 /**
@@ -204,5 +205,10 @@ public class RoutingLayerController extends PersistantObject implements Paramete
 
     public long getTotalAttackedMessages() {
         return attackedNodes;
+    }
+
+    void countAttackedMessages(Message message) {
+        if (isTesting())
+            getActiveTest().getEvaluationManager().countAttackedMessages(message) ;
     }
 }
