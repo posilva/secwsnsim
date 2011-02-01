@@ -1,7 +1,9 @@
 package org.wisenet.simulator.components.evaluation;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 
 import org.wisenet.simulator.components.evaluation.tests.AbstractTest;
@@ -23,6 +25,7 @@ public class EvaluationManager {
     private boolean started;
     private int countAttackedMessages;
     private TestResults testResult;
+    private Set attackedMessagesSet;
 
     /**
      * Notify test start 
@@ -32,6 +35,7 @@ public class EvaluationManager {
     public void startTest(AbstractTest test) {
         if (!started) {
             countAttackedMessages = 0;
+            attackedMessagesSet = new HashSet();
             this.test = test;
             energyDatabase = test.getSimulation().getEnergyController().createDatabase(test.getName(), true);
             started = true;
@@ -160,6 +164,10 @@ public class EvaluationManager {
     }
 
     public int getCountAttackedMessages() {
-        return countAttackedMessages;
+        return attackedMessagesSet.size();
+    }
+
+    public void countAttackedMessages(Message message) {
+        attackedMessagesSet.add(message.getUniqueId());
     }
 }

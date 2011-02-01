@@ -1,5 +1,6 @@
 package org.wisenet.protocols.insens;
 
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.wisenet.protocols.insens.messages.data.RUPDAckPayload;
@@ -8,9 +9,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 import org.wisenet.protocols.common.ByteArrayDataOutputStream;
 import org.wisenet.simulator.core.events.DelayedMessageEvent;
@@ -99,7 +102,14 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     private Hashtable tableOfNodesByHops;
     private boolean reliableMode = true;
     private Hashtable forwardingTablesRepository = null;
-    private int replyToRUPDCounter=0;
+    private LinkedList orderedByHops;
+    private Iterator orderedByHopsIterator;
+    private List orderedByHopsNodes;
+    private Iterator orderedByHopsNodesIterator;
+    private int replyToRUPDCounter;
+    private Iterator forwardingTablesRepositoryIter;
+    private boolean first = true;
+    private int retry = 0;
 
     public INSENSRoutingLayer() {
     }
@@ -352,11 +362,44 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
             }
         };
 
-        this.forwardingTablesDispatchTimer = new Timer(getNode().getSimulator(), INSENSConstants.MESSAGE_DISPATCH_RATE * 2) {
+        this.forwardingTablesDispatchTimer = new Timer(getNode().getSimulator(), INSENSConstants.MESSAGE_DISPATCH_RATE *2) {
+            private int maxRetries;
 
             @Override
             public void executeAction() {
-                dispatchNextForwardingTable();
+                if (forwardingTablesRepository.isEmpty()) {
+                    System.out.println("No more forwarding tables to send");
+                    forwardingTablesDispatchTimer.stop();
+                } else {
+                    if (orderedByHopsNodesIterator.hasNext()) {
+                        Short nodeId = (Short) orderedByHopsNodesIterator.next();
+                        sendForwardTable(baseStationController.getForwardingTables(), nodeId);
+                    } else {
+                        if (orderedByHopsIterator.hasNext()) {
+                            orderedByHopsNodes = (List) tableOfNodesByHops.get(orderedByHopsIterator.next());
+                            orderedByHopsNodesIterator = orderedByHopsNodes.iterator();
+                        } else {
+
+                            if (first) {
+                                forwardingTablesRepositoryIter = new HashSet(forwardingTablesRepository.values()).iterator();
+                                first = false;
+                            }
+                            if (forwardingTablesRepositoryIter.hasNext()) {
+                                sendUpdateRouteMessage((byte[]) forwardingTablesRepositoryIter.next());
+                            }
+                            if (!forwardingTablesRepositoryIter.hasNext() && !forwardingTablesRepository.isEmpty() && retry==0){
+                                maxRetries=forwardingTablesRepository.size()*300;
+                            }
+                            if (!forwardingTablesRepositoryIter.hasNext() && !forwardingTablesRepository.isEmpty() && retry < maxRetries) {
+                                forwardingTablesRepositoryIter = new HashSet(forwardingTablesRepository.values()).iterator();
+                                retry++;
+                            }else{
+                                 System.out.println("Stop sending forwarding tables: " + forwardingTablesRepository.size()+ " left");
+                                 forwardingTablesDispatchTimer.stop();
+                            }
+                        }
+                    }
+                }
             }
         };
     }
@@ -408,6 +451,14 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
             lastFeedbackMessagesReceivedCheck = feedbackMessagesReceived;
             feedbackMessageRetries = 0;
             return false;
+        }
+    }
+
+    private void sendForwardTable(Hashtable<Short, ForwardingTable> forwardingTables, Short id) {
+        if (forwardingTables.containsKey(id)) {
+            ForwardingTable ft = forwardingTables.get(id);
+            byte[] payload = INSENSMessagePayloadFactory.createRUPDPayload(getNode().getId(), (Short) id, getNode().getId(), OWS, ft, privateKey, this.getNode());
+            sendUpdateRouteMessage(payload);
         }
     }
 
@@ -483,7 +534,6 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
         if (!getNode().isSinkNode()) {
 
             if (isFirstTime(payload)) {
-//                System.out.println("Signal:\t"+getNode().getMacLayer().getSignalStrength());
                 if (getNode().getMacLayer().getSignalStrength() > INSENSConstants.SIGNAL_STRENGH_THRESHOLD && getNode().getMacLayer().getNoiseStrength() < INSENSConstants.SIGNAL_NOISE_THRESHOLD) {
                     if (owsIsValid(payload)) {
                         isParent = true;
@@ -594,8 +644,6 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
                  */
 //              if(!getNode().getMacLayer().isReceiving() &&  !getNode().getMacLayer().isTransmitting()){
                 broadcastMessage((Message) messagesQueue.peek());
-//                System.out.println("NOISE:" + getNode().getMacLayer().getNoiseStrength());
-//                System.out.println("STRENGTH:" + getNode().getMacLayer().getSignalStrength());
 //              }
             } else {
                 queueMessageDispatchTimer.stop();
@@ -618,6 +666,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
     private void sendRouteUpdateMessages(Hashtable<Short, ForwardingTable> forwardingTables) {
         Vector allpaths = baseStationController.getAllPaths();
         Comparator<List> c = new Comparator<List>() {
+
             public int compare(List o1, List o2) {
                 return Integer.valueOf(o1.size()).compareTo(Integer.valueOf(o2.size()));
             }
@@ -679,31 +728,37 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
      */
     private void sendForwardingTablesByHops(Hashtable<Short, ForwardingTable> forwardingTables, Hashtable tableOfNodesByHops) {
         forwardingTablesRepository = new Hashtable();
-        List orderedByHops = new LinkedList(tableOfNodesByHops.keySet());
+        orderedByHops = new LinkedList(tableOfNodesByHops.keySet());
         Collections.sort(orderedByHops);
-        log("Number of Forwarding Tables different hops values: " + orderedByHops.size());
         byte[] payload;
+        Set differentNodes = new HashSet();
         ForwardingTable ft = null;
         int i = 0;
-        int o =0;
         for (Object key : orderedByHops) {
             List nodes = (List) tableOfNodesByHops.get(key);
             for (Object n : nodes) {
                 Short id = (Short) n;
+                differentNodes.add(id);
                 if (forwardingTables.containsKey(id)) {
                     ft = forwardingTables.get(id);
-                    payload = INSENSMessagePayloadFactory.createRUPDPayload(getNode().getId(), (Short) n, getNode().getId(), OWS, forwardingTables.get(id), privateKey, this.getNode());
+                    payload = INSENSMessagePayloadFactory.createRUPDPayload(getNode().getId(), (Short) n, getNode().getId(), OWS, ft, privateKey, this.getNode());
                     forwardingTablesRepository.put(new Integer(ft.getUniqueId()), payload);
                     i++;
-                    sendUpdateRouteMessage(payload);
+//                    sendUpdateRouteMessage(payload);
                 }
-
             }
-            o++;
+
         }
         System.out.println("Total Forwarding Tables: " + i);
-        System.out.println("Total nodes having ft: " + o);
-//        forwardingTablesDispatchTimer.start();
+        System.out.println("Total nodes having ft: " + differentNodes.size());
+
+        orderedByHopsIterator = orderedByHops.iterator();
+        orderedByHopsNodes = (List) tableOfNodesByHops.get(orderedByHopsIterator.next());
+        orderedByHopsNodesIterator = orderedByHopsNodes.iterator();
+        forwardingTablesDispatchTimer.start();
+
+
+
     }
 
     /**
@@ -723,13 +778,13 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
      * @param payload
      */
     private void replyToRUPDMessage(RUPDPayload payload) {
-//        if (replyToRUPDCounter<3){
-//            replyToRUPDCounter++;
-//        byte[] payloadResponse = INSENSMessagePayloadFactory.createRUPDReplyPayload(getNode().getId(), (Short) payload.source, getNode().getId(), payload.forwardingTable.getUniqueId(), OWS, privateKey, this.getNode());
-//        getController().addMessageSentCounter(INSENSConstants.MSG_ROUTE_UPDATE_ACK);
-//        send(new INSENSMessage(payloadResponse));
-//        log("Replying to RUPD Message");
-//        }
+        if (replyToRUPDCounter < 3) {
+            replyToRUPDCounter++;
+            byte[] payloadResponse = INSENSMessagePayloadFactory.createRUPDReplyPayload(getNode().getId(), (Short) payload.source, getNode().getId(), payload.forwardingTable.getUniqueId(), OWS, privateKey, this.getNode());
+            getController().addMessageSentCounter(INSENSConstants.MSG_ROUTE_UPDATE_ACK);
+            send(new INSENSMessage(payloadResponse));
+            log("Replying to RUPD Message");
+        }
     }
 
     /**
