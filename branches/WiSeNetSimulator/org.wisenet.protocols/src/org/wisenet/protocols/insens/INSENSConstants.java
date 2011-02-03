@@ -41,7 +41,7 @@ public class INSENSConstants {
     /**
      *
      */
-    public static double MAX_DELAYED_MESSAGE_BOUND = Simulator.ONE_SECOND * 1;
+    public static double MAX_DELAYED_MESSAGE_BOUND = Simulator.ONE_SECOND * 2;
 
     /**
      *

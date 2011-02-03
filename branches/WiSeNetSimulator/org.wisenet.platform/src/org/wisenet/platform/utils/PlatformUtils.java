@@ -4,6 +4,7 @@
  */
 package org.wisenet.platform.utils;
 
+import com.nitido.utils.toaster.Toaster;
 import org.jdesktop.application.ResourceMap;
 import org.wisenet.platform.PlatformConstants;
 import java.io.File;
@@ -205,5 +206,10 @@ public class PlatformUtils {
                 }
             }
         }
+    }
+
+    public static void notification(String msg){
+        Toaster toasterManager = new Toaster();
+        toasterManager.showToaster(msg);
     }
 }

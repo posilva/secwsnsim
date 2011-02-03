@@ -29,8 +29,8 @@ public class EnergyModelParameters extends ObjectParameters {
         parameters.put("verifySignatureEnergy", new ObjectParameter("verifySignatureEnergy", "Verify signature energy (Joules/Byte)", 0.0000059, true));
         parameters.put("cpuTransitionToActiveEnergy", new ObjectParameter("cpuTransitionToActiveEnergy", "CPU Transition to ON energy (Joules)", 0.000000001, true));
         parameters.put("txTransitionToActiveEnergy", new ObjectParameter("txTransitionToActiveEnergy", "Transciever Transition to ON energy (Joules)", 0.000000002, true));
-        parameters.put("transmissionEnergy", new ObjectParameter("transmissionEnergy", "Transmission energy (Joules/Byte)", 0.00000592, true));
-        parameters.put("receptionEnergy", new ObjectParameter("receptionEnergy", "Reception energy (Joules/Byte)", 0.00000286, true));
+        parameters.put("transmissionEnergy", new ObjectParameter("transmissionEnergy", "Transmission energy (Joules/Byte)", 0.0000592, true));
+        parameters.put("receptionEnergy", new ObjectParameter("receptionEnergy", "Reception energy (Joules/Byte)", 0.0000286, true));
         parameters.put("idleEnergy", new ObjectParameter("idleEnergy", "Idle State energy (Joules)", 0.0000059, true));
         parameters.put("sleepEnergy", new ObjectParameter("sleepEnergy", "Sleep State energy (Joules)", 0.0000075, true));
         parameters.put("processingEnergy", new ObjectParameter("processingEnergy", "Simple processing energy (Joules)", 0.0138, true));

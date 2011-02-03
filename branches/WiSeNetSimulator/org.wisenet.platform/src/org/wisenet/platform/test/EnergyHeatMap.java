@@ -197,9 +197,18 @@ public class EnergyHeatMap extends JPanel {
     }
 
     public void paintHeat(Collection<Node> nodes) {
+        float maxEnergyConsumed = Float.MIN_VALUE;
+
         for (Node node : nodes) {
             float c = (float) (node.getBateryEnergy().getInitialPower() - node.getBateryEnergy().getCurrentPower());
-            paintDot((int) node.getX(), (int) node.getY(), c * .2f);
+            maxEnergyConsumed = Math.max(c, maxEnergyConsumed);
+        }
+
+        for (Node node : nodes) {
+            float c = (float) (node.getBateryEnergy().getInitialPower() - node.getBateryEnergy().getCurrentPower());
+            if (maxEnergyConsumed > 0) {
+                paintDot((int) node.getX(), (int) node.getY(), c / maxEnergyConsumed);
+            }
         }
     }
 }
