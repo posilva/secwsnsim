@@ -178,7 +178,7 @@ public class BaseTest extends AbstractTest {
 
             /* prepare attacked nodes */
             if (inputParameters.getNumberOfAttackNodes() > 0) {
-                selectableNodes = inputParameters.isOnlyConsiderToSenderStableNodes() ? stableNodes : allNodes;
+                selectableNodes = inputParameters.isOnlyConsiderToSenderStableNodes() && simulation.isStarted() ? stableNodes : allNodes;
                 nNodes = inputParameters.isPercentOfAttackNodes() ? (inputParameters.getNumberOfAttackNodes() * selectableNodes / 100) : (inputParameters.getNumberOfAttackNodes());
                 attackNodes = getSimulation().selectRandomNodes(nNodes, new NodeSelectionCondition() {
 

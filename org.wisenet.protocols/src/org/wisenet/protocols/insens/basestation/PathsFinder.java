@@ -16,7 +16,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.alg.DijkstraShortestPath;
-import org.jgrapht.graph.EdgeSetFactory;
 import org.jgrapht.util.VertexPair;
 import org.wisenet.protocols.insens.basestation.jgrapht.NetworkGraph;
 
@@ -253,7 +252,7 @@ public class PathsFinder {
 
         private void putBack(NetworkGraph g, Set edges, Set vertices) {
             for (Object s : vertices) {
-                g.addVertex((Short)s);
+                g.addVertex((Short) s);
             }
             for (Object e : edges) {
                 Short s = g.getEdgeSource((DefaultEdge) e);

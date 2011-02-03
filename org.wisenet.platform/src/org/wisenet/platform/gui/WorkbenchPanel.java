@@ -6,6 +6,7 @@
 package org.wisenet.platform.gui;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.FileWriter;
@@ -19,7 +20,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileFilter;
-import javax.xml.ws.Action;
 import org.jdesktop.application.Task;
 import org.wisenet.platform.common.ui.PlatformDialog;
 import org.wisenet.platform.common.ui.PlatformFrame;
@@ -40,11 +40,11 @@ import org.wisenet.simulator.components.evaluation.tests.AbstractTest;
 import org.wisenet.simulator.components.evaluation.tests.AdHocTestInfo;
 import org.wisenet.simulator.utilities.NodeSelectionCondition;
 import org.wisenet.simulator.components.simulation.Simulation;
-import org.wisenet.simulator.components.simulation.listeners.SimulationEvent;
-import org.wisenet.simulator.components.simulation.listeners.SimulationTestEvent;
-
 import org.wisenet.simulator.components.simulation.SimulationFactory;
+import org.wisenet.simulator.components.simulation.listeners.SimulationEvent;
+
 import org.wisenet.simulator.components.simulation.listeners.SimulationListener;
+import org.wisenet.simulator.components.simulation.listeners.SimulationTestEvent;
 import org.wisenet.simulator.core.node.Node;
 import org.wisenet.simulator.core.node.layers.routing.attacks.AttacksEntry;
 import org.wisenet.simulator.utilities.Utilities;
@@ -100,6 +100,10 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                 this.currentTest.setSimulation((Simulation) getSimulationPanel().getSimulation());
             }
         }
+    }
+
+    private void executeSinkNodeSearch() {
+        simulationPanel1.searchSinkNode();
     }
 
     private boolean executeNodeSearch() {
@@ -180,7 +184,8 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         testPrepare = new javax.swing.JButton();
         jSeparator12 = new javax.swing.JToolBar.Separator();
         searchPanel = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnSearchNodeById = new javax.swing.JButton();
+        btnSearchSinkNode = new javax.swing.JButton();
         txtSearchNode = new javax.swing.JFormattedTextField();
         workbenchSplit = new javax.swing.JSplitPane();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -685,15 +690,24 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         searchPanel.setPreferredSize(new java.awt.Dimension(100, 25));
         searchPanel.setLayout(new java.awt.BorderLayout());
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/Search16.png"))); // NOI18N
-        jButton1.setToolTipText("Search a node by ID");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnSearchNodeById.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/Search16.png"))); // NOI18N
+        btnSearchNodeById.setToolTipText("Search a node by ID");
+        btnSearchNodeById.addActionListener(new java.awt.event.ActionListener() {
 
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        searchPanel.add(jButton1, java.awt.BorderLayout.LINE_END);
+        btnSearchSinkNode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/wisenet/platform/resources/images/Search16.png"))); // NOI18N
+        btnSearchSinkNode.setToolTipText("Search a Sink Node");
+        btnSearchSinkNode.addActionListener(new java.awt.event.ActionListener() {
+
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        searchPanel.add(btnSearchNodeById, java.awt.BorderLayout.LINE_END);
 
         txtSearchNode.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         txtSearchNode.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
@@ -706,7 +720,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         searchPanel.add(txtSearchNode, java.awt.BorderLayout.CENTER);
 
         topToolbar.add(searchPanel);
-
+        topToolbar.add(btnSearchSinkNode);
         add(topToolbar, java.awt.BorderLayout.PAGE_START);
 
         workbenchSplit.setDividerLocation(1024);
@@ -943,57 +957,85 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
 
     }//GEN-LAST:event_gmapsActionPerformed
 
+    private void jButton2ActionPerformed(ActionEvent evt) {
+        executeSinkNodeSearch();
+
+
+    }
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         if (executeNodeSearch()) {
             return;
+
+
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnStableMarkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStableMarkActionPerformed
         markStableNodes(btnStableMark.isSelected());
+
+
     }//GEN-LAST:event_btnStableMarkActionPerformed
 
     private void btnStableSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStableSelectActionPerformed
         selectStableNodes(btnStableSelect.isSelected());
+
+
     }//GEN-LAST:event_btnStableSelectActionPerformed
 
     private void btnRoutingInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRoutingInfoActionPerformed
 
         showRoutingInfo();
+
+
     }//GEN-LAST:event_btnRoutingInfoActionPerformed
 
     private void btnLoadTopologyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadTopologyActionPerformed
         loadNetworkTopology();
+
+
     }//GEN-LAST:event_btnLoadTopologyActionPerformed
 
     private void btnSaveTopologyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveTopologyActionPerformed
         saveNetworkTopology();
+
+
     }//GEN-LAST:event_btnSaveTopologyActionPerformed
 
     private void txtSearchNodeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchNodeKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             executeNodeSearch();
+
+
         }
 
     }//GEN-LAST:event_txtSearchNodeKeyPressed
 
     private void selRandomNodesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selRandomNodesActionPerformed
         RandomNodeSelection();
+
+
     }//GEN-LAST:event_selRandomNodesActionPerformed
 
     private void btnSnapshotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSnapshotActionPerformed
         TakeSnapshot();
+
+
     }//GEN-LAST:event_btnSnapshotActionPerformed
 
     private void btnColorSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnColorSettingsActionPerformed
         ColorSettingsAction();
+
+
     }//GEN-LAST:event_btnColorSettingsActionPerformed
 
     private void btnRebuildNetworkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRebuildNetworkActionPerformed
         try {
             getSimulationPanel().getSimulation().buildNetwork();
+
+
         } catch (Exception e) {
         }
 
@@ -1001,100 +1043,148 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
 
     private void btnSimulationStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimulationStartActionPerformed
         StartSimulation();        // TODO add your handling code here:
+
+
     }//GEN-LAST:event_btnSimulationStartActionPerformed
 
     private void btnSimulationPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimulationPauseActionPerformed
         PauseSimulation();
+
+
     }//GEN-LAST:event_btnSimulationPauseActionPerformed
 
     private void btnSimulationStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimulationStopActionPerformed
         StopSimulation();
+
+
     }//GEN-LAST:event_btnSimulationStopActionPerformed
 
     private void btnSimulationResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimulationResetActionPerformed
         ResetSimulation();
+
+
     }//GEN-LAST:event_btnSimulationResetActionPerformed
 
     private void btnDeployNodesModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeployNodesModeActionPerformed
         selectedNodeDeployMode();
+
+
     }//GEN-LAST:event_btnDeployNodesModeActionPerformed
 
     private void cmdSelectAttackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdSelectAttackActionPerformed
         selectRoutingAttack();
+
+
     }//GEN-LAST:event_cmdSelectAttackActionPerformed
 
     private void cmdSelAttackedNodesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdSelAttackedNodesActionPerformed
         selectAttackedNodes();
+
+
     }//GEN-LAST:event_cmdSelAttackedNodesActionPerformed
 
     private void cmdMonitEnergyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdMonitEnergyActionPerformed
         showSimulationEnergyPanel();
+
+
     }//GEN-LAST:event_cmdMonitEnergyActionPerformed
 
     private void cmdTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdTestActionPerformed
         buildTest();
+
+
     }//GEN-LAST:event_cmdTestActionPerformed
 
     private void cmdRunTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdRunTestActionPerformed
         runCurrentTest();
+
+
     }//GEN-LAST:event_cmdRunTestActionPerformed
 
     private void cmdResetTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdResetTestActionPerformed
         resetCurrentTest();        // TODO add your handling code here:
+
+
     }//GEN-LAST:event_cmdResetTestActionPerformed
 
     private void testPrepareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testPrepareActionPerformed
         // TODO add your handling code here:
         prepareTest();
+
+
     }//GEN-LAST:event_testPrepareActionPerformed
 
     private void mnuClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuClearActionPerformed
         clearLogArea();
+
+
     }//GEN-LAST:event_mnuClearActionPerformed
 
     private void mnuSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSaveActionPerformed
         saveLogArea();
+
+
     }//GEN-LAST:event_mnuSaveActionPerformed
 
     private void mnuClearErrorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuClearErrorsActionPerformed
         clearLogErrorArea();
+
+
     }//GEN-LAST:event_mnuClearErrorsActionPerformed
 
     private void mnuSaveErrorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSaveErrorsActionPerformed
         saveLogErrorArea();
+
+
     }//GEN-LAST:event_mnuSaveErrorsActionPerformed
 
     private void testSetAttackNodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testSetAttackNodeActionPerformed
         getSimulationPanel().setUnderAttackModeSelectedNodes();
+
+
     }//GEN-LAST:event_testSetAttackNodeActionPerformed
 
     private void testAddRemoveSenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testAddRemoveSenderActionPerformed
         getSimulationPanel().setSelectedNodesAsSources();
+
+
     }//GEN-LAST:event_testAddRemoveSenderActionPerformed
 
     private void testAddRemoveReceiversActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testAddRemoveReceiversActionPerformed
         getSimulationPanel().setSelectedNodesAsReceivers();
+
+
     }//GEN-LAST:event_testAddRemoveReceiversActionPerformed
 
     private void saveTestTopologyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveTestTopologyActionPerformed
         saveTestTopologyAction();
+
+
     }//GEN-LAST:event_saveTestTopologyActionPerformed
 
     private void loadTestTopologyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadTestTopologyActionPerformed
         loadTestTopologyAction();
+
+
     }//GEN-LAST:event_loadTestTopologyActionPerformed
 
     private void clearTestTopologyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearTestTopologyActionPerformed
         clearTestTopologyAction();
 
+
+
     }//GEN-LAST:event_clearTestTopologyActionPerformed
 
     private void adhocTestInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adhocTestInfoActionPerformed
         showAdhocTestInfoAction();
+
+
     }//GEN-LAST:event_adhocTestInfoActionPerformed
 
     private void createAdhocTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createAdhocTestActionPerformed
         createAdhocTestAction();
+
+
     }//GEN-LAST:event_createAdhocTestActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup OperationBG;
@@ -1125,7 +1215,8 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
     private javax.swing.JButton cmdTest;
     private javax.swing.JButton createAdhocTest;
     private javax.swing.JButton gmaps;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnSearchNodeById;
+    private javax.swing.JButton btnSearchSinkNode;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -1187,10 +1278,14 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         simulationPanel1.selectionToolSelected(btnSelectionTool.isSelected());
         simulationPanel1.selectionPointerSelected(selectionPointerTool.isSelected());
 
+
+
     }
 
     public void createSimulation(SimulationFactory simulationFactory) {
         simulationPanel1.createSimulation(simulationFactory);
+
+
     }
 
     public void StartSimulation() {
@@ -1198,13 +1293,19 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         try {
             if (getSimulationPanel().getSimulation().getSimulator().getNodes().size() > 0) {
                 getSimulationPanel().startSimulation();
+
+
             } else {
                 GUI_Utils.showWarningMessage("Cannot start simulation without nodes deployed");
                 OperationBG.clearSelection();
 
+
+
             }
         } catch (Exception e) {
             GUI_Utils.showException(e);
+
+
         }
     }
 
@@ -1212,9 +1313,13 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         try {
             if (getSimulationPanel().getSimulation().getSimulator().getNodes().size() > 0) {
                 simulationPanel1.pauseSimulation();
+
+
             } else {
                 GUI_Utils.showMessage("Cannot pause simulation without nodes deployed", JOptionPane.WARNING_MESSAGE);
                 OperationBG.clearSelection();
+
+
             }
         } catch (Exception e) {
         }
@@ -1224,9 +1329,13 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         try {
             if (getSimulationPanel().getSimulation().getSimulator().getNodes().size() > 0) {
                 simulationPanel1.stopSimulation();
+
+
             } else {
                 GUI_Utils.showMessage("Cannot stop simulation without nodes deployed", JOptionPane.WARNING_MESSAGE);
                 OperationBG.clearSelection();
+
+
             }
         } catch (Exception e) {
         }
@@ -1237,13 +1346,16 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         try {
             if (getSimulationPanel().getSimulation().getSimulator().getNodes().size() > 0) {
                 simulationPanel1.resetSimulation();
+
+
             }
             OperationBG.clearSelection();
+
+
         } catch (Exception e) {
         }
     }
 
-    @Action
     public Task RebuildNetwork() {
         return new RebuildNetworkTask(org.jdesktop.application.Application.getInstance(org.wisenet.platform.PlatformApp.class));
     }
@@ -1251,10 +1363,14 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
     public void buildSimulationNetwork() {
         getSimulationPanel().getSimulation().buildNetwork();
         simulationPanel1.updateDisplay();
+
+
     }
 
     public SimulationPanel getSimulationPanel() {
         return simulationPanel1;
+
+
     }
 
     private void markStableNodes(boolean mark) {
@@ -1263,8 +1379,12 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
 
                 public boolean select(Node node) {
                     return node.getRoutingLayer().isStable();
+
+
                 }
             });
+
+
         }
 
     }
@@ -1272,16 +1392,24 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
     private void showRoutingInfo() {
         if (getSimulationPanel().getSimulation().isStarted()) {
             PlatformFrame.display(new RoutingInfoPanel(), "Routing Information", PlatformFrame.OK_MODE);
+
+
         }
     }
 
     private void loadNetworkTopology() {
         try {
             String file = GUI_Utils.showOpenDialog(new FileFilter[]{GUI_Utils.XML_FILTER()}, "Open Network Topology File");
+
+
             if (file != null) {
                 String valid = Utilities.networkTopologyFileIsValid(file);
+
+
                 if (valid != null) {
                     GUI_Utils.showWarningMessage(valid);
+
+
                 } else {
                     GUI_Utils.mouseWait(this);
                     PlatformManager.getInstance().getActiveSimulation().loadNetworkTopology(file);
@@ -1289,27 +1417,40 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                     GUI_Utils.mouseDefault(this);
                     PlatformManager.getInstance().getActiveSimulation().buildNetwork();
 
+
+
                 }
                 updateSimulationInfo();
+
+
             }
         } catch (Exception ex) {
             GUI_Utils.mouseDefault(this);
             GUI_Utils.showException(ex);
+
+
         }
     }
 
     private void saveNetworkTopology() {
         try {
             String file = GUI_Utils.showSaveDialog(new FileFilter[]{GUI_Utils.XML_FILTER()}, "Save Network Topology ");
+
+
             if (file != null) {
                 GUI_Utils.mouseWait(this);
                 PlatformManager.getInstance().getActiveSimulation().saveNetworkTopology(file);
-                showMessage("Network Topology saved!");
+                showMessage(
+                        "Network Topology saved!");
                 GUI_Utils.mouseDefault(this);
+
+
             }
         } catch (Exception ex) {
             GUI_Utils.mouseDefault(this);
             GUI_Utils.showException(ex);
+
+
         }
 
     }
@@ -1317,6 +1458,8 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
     @Override
     public void afterNodeDeploy(DeployEvent event) {
         updateSimulationInfo();
+
+
     }
 
     @Override
@@ -1325,12 +1468,18 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
 
     private void selectRoutingAttack() {
         List<Node> nodes = (List) getSimulationPanel().getSimulation().getSimulator().getNodes();
+
+
         for (Node node : nodes) {
             if (!node.getRoutingLayer().getAttacks().getAttacksList().isEmpty()) {
                 AttacksEntry a = (AttacksEntry) cboSimAttacks.getModel().getSelectedItem();
+
+
                 if (a != null) {
                     String c = a.getAttack().getClass().getName();
                     node.getRoutingLayer().getAttacks().enableAttack(c);
+
+
                 }
 
 
@@ -1345,9 +1494,13 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
             @Override
             public boolean select(Node node) {
                 return (node.getRoutingLayer().isUnderAttack());
+
+
             }
         });
         getSimulationPanel().updateLocal();
+
+
     }
 
     private void showSimulationEnergyPanel() {
@@ -1355,17 +1508,23 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
             SimulationEnergyPanel sep = new SimulationEnergyPanel();
             sep.setValues(getSimulationPanel().getSimulation().getEnergyController().getDatabase().getNodesEnergy());
             PlatformFrame.display(sep, "Simulation Energy", PlatformFrame.NOACTIONS_MODE);
+
+
         }
     }
 
     @Override
     public void onStartFailure(SimulationEvent event) {
         showMessage("Simulation start failed!");
+
+
     }
 
     @Override
     public void beforeStart(SimulationEvent event) {
         showMessage("Simulation starting...");
+
+
 
     }
 
@@ -1373,11 +1532,15 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
     public void afterStart(SimulationEvent event) {
         showMessage("Simulation started :)!");
 
+
+
     }
 
     @Override
     public void beforeStop(SimulationEvent event) {
         showMessage("Simulation about to stop...");
+
+
 
     }
 
@@ -1385,11 +1548,15 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
     public void onStopFailure(SimulationEvent event) {
         showMessage("Simulation stop failed!");
 
+
+
     }
 
     @Override
     public void afterStop(SimulationEvent event) {
         showMessage("Simulation stopped :)");
+
+
 
     }
 
@@ -1397,33 +1564,44 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
     public void beforeBuildNetwork(SimulationEvent event) {
         showMessage("Network building...");
 
+
+
     }
 
     @Override
     public void afterBuildNetwork(SimulationEvent event) {
         showMessage("Network building... done!");
+
+
     }
 
     @Override
     public void onBuildNetworkFailure(SimulationEvent event) {
         showMessage("Network building... failed!");
+
+
     }
 
     @Override
     public void onEmptyQueue(SimulationEvent event) {
         showMessage("No more events to handle!");
+
+
     }
 
     @Override
     public void onNewSimulatorRound(SimulationEvent event) {
         showMessage("Starting new simulation round!");
+
+
     }
 
     private void resetCurrentTest() {
         if (currentTest != null) {
             currentTest = null;
             lblActiveTest.setText("None");
-            showMessage("Reset current test done!");
+            showMessage(
+                    "Reset current test done!");
         } else {
             showMessage("No current test to reset!");
         }
@@ -1435,6 +1613,7 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
             return;
         }
         if (!getSimulationPanel().getSimulation().isStarted()) {
+
             showMessage("Simulation must have been started!");
             return;
         }
@@ -1447,6 +1626,8 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
 
     private void showFieldArea() {
         PlatformManager.getInstance().getPlatformView().updateSimulationFieldSize();
+
+
     }
 
     private void loadSimulationAttacks() {
@@ -1454,12 +1635,21 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
 
         Object selected = cboSimAttacks.getSelectedItem();
         PlatformUtils.loadSimulationAttacksIntoCombo(cboSimAttacks);
-        for (int i = 0; i < cboSimAttacks.getItemCount(); i++) {
+
+
+        for (int i = 0; i
+                < cboSimAttacks.getItemCount(); i++) {
             Object object = cboSimAttacks.getModel().getElementAt(i);
+
+
             if (object.equals(selected)) {
                 cboSimAttacks.setSelectedIndex(i);
+
+
             }
             return;
+
+
         }
 
     }
@@ -1475,57 +1665,74 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                 + "\n\nTotal Energy Spent: " + t.getEvaluationManager().getEnergyDatabase().getTotalEnergySpent();
 
         GUI_Utils.showMessage(msg);
+
+
     }
 
     @Override
     public void startTestExecution(SimulationTestEvent event) {
         System.out.println("Starting test: " + ((AbstractTest) event.getSource()).getName());
-    }
 
-//    private void addSourcesToTest() {
-//        Vector<GraphicNode> selNodes = null;
-//        if (currentTest != null && !currentTest.isBatchMode()) {
-//            if (getSimulationPanel().getSimulator().getNodes().size() > 0) {
-//                selNodes = getSimulationPanel().getSelectedNodes();
-//                if (selNodes != null) {
-//                    for (GraphicNode graphicNode : selNodes) {
-//                        Node n = graphicNode.getPhysicalNode();
-//
-//                        if (testAddSources.isSelected()) { // add
-//                            if (!n.isSinkNode() && n.getRoutingLayer().isStable()) {
-//                                if (!currentTest.getSourceNodes().contains(n)) {
-//                                    currentTest.getSourceNodes().add(n);
-//                                    n.setSource(true);
-//                                }
-//                            }
-//                        } else {//remove
-//                            n.setSource(false);
-//                            currentTest.getSourceNodes().remove(n);
-//
-//                        }
-//
-//                    }
-//                }
-//            }
-//        }
-//        getSimulationPanel().updateLocal();
-//    }
-//    private void addReceiversToTest() {
-//    }
+
+    } //    private void addSourcesToTest() {
+    //        Vector<GraphicNode> selNodes = null;
+    //        if (currentTest != null && !currentTest.isBatchMode()) {
+    //            if (getSimulationPanel().getSimulator().getNodes().size() > 0) {
+    //                selNodes = getSimulationPanel().getSelectedNodes();
+    //                if (selNodes != null) {
+    //                    for (GraphicNode graphicNode : selNodes) {
+    //                        Node n = graphicNode.getPhysicalNode();
+    //
+    //                        if (testAddSources.isSelected()) { // add
+    //                            if (!n.isSinkNode() && n.getRoutingLayer().isStable()) {
+    //                                if (!currentTest.getSourceNodes().contains(n)) {
+    //                                    currentTest.getSourceNodes().add(n);
+    //                                    n.setSource(true);
+    //                                }
+    //                            }
+    //                        } else {//remove
+    //                            n.setSource(false);
+    //                            currentTest.getSourceNodes().remove(n);
+    //
+    //                        }
+    //
+    //                    }
+    //                }
+    //            }
+    //        }
+    //        getSimulationPanel().updateLocal();
+    //    }
+    //    private void addReceiversToTest() {
+    //    }
+
     private void prepareTest() {
         if (currentTest == null) {
             showMessage("No active test to run!");
+
+
             return;
+
+
         }
-        if (!getSimulationPanel().getSimulation().isStarted()) {
-            showMessage("Simulation must have been started!");
-            return;
-        }
+//        if (!getSimulationPanel().getSimulation().isStarted()) {
+//            showMessage("Simulation must have been started!");
+//
+//
+//            return;
+//
+//
+//        }
         if (getSimulationPanel().getSimulator().getNodes().size() > 0) {
             currentTest.prepare();
+
+
         } else {
             showMessage("No nodes deployed!");
+
+
             return;
+
+
         }
 
     }
@@ -1533,24 +1740,36 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
     private void showLogPane(boolean selected) {
         if (!selected) {
             workbenchSplit.setDividerLocation(.99);
+
+
         } else {
             workbenchSplit.setDividerLocation(.8);
+
+
         }
     }
 
     private void initOutputWindow() {
         redirectSystemStreams();
+
+
     }
 
     private void clearLogArea() {
         logOutputArea.setText("");
+
+
     }
 
     private void saveLogArea() {
         String output = "";
         output = logOutputArea.getText();
+
+
         if (output.trim().length() > 0) {
             saveOutputToFile(output);
+
+
         }
 
     }
@@ -1558,14 +1777,20 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
     private void saveOutputToFile(String output) {
         try {
             String f = GUI_Utils.showSaveDialog(new FileFilter[]{}, "Save output");
+
+
             if (f != null) {
                 FileWriter fw = new FileWriter(f);
                 fw.write(output);
                 fw.flush();
                 GUI_Utils.showinfoMessage("File saved!");
+
+
             }
         } catch (IOException ex) {
             GUI_Utils.showException(ex);
+
+
         }
 
     }
@@ -1573,31 +1798,48 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
     private void saveLogErrorArea() {
         String output = "";
         output = logOutputErrorArea.getText();
+
+
         if (output.trim().length() > 0) {
             saveOutputToFile(output);
+
+
         }
     }
 
     private void clearLogErrorArea() {
         logOutputErrorArea.setText("");
+
+
     }
 
     private void saveTestTopologyAction() {
         try {
             String file = GUI_Utils.showSaveDialog(new FileFilter[]{GUI_Utils.TTO_FILTER()}, "Save Test Topology ");
+
+
             if (file != null) {
                 GUI_Utils.mouseWait(this);
+
+
                 if (!file.endsWith(".tto")) {
                     file += ".tto";
+
+
                 }
                 PlatformManager.getInstance().getActiveSimulation().saveTestTopology(file);
 
-                showMessage("Test Topology saved!");
+                showMessage(
+                        "Test Topology saved!");
                 GUI_Utils.mouseDefault(this);
+
+
             }
         } catch (Exception ex) {
             GUI_Utils.mouseDefault(this);
             GUI_Utils.showException(ex);
+
+
         }
 
     }
@@ -1607,10 +1849,16 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
             if (PlatformManager.getInstance().getActiveSimulation().isNetworkDeployed()) {
                 try {
                     String file = GUI_Utils.showOpenDialog(new FileFilter[]{GUI_Utils.TTO_FILTER()}, "Open Test Topology File");
+
+
                     if (file != null) {
                         String valid = Utilities.testTopologyFileIsValid(file);
+
+
                         if (valid != null) {
                             GUI_Utils.showWarningMessage(valid);
+
+
                         } else {
                             GUI_Utils.mouseWait(this);
                             PlatformManager.getInstance().getActiveSimulation().loadTestTopology(file);
@@ -1618,12 +1866,18 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
                             GUI_Utils.mouseDefault(this);
                             PlatformManager.getInstance().getActiveSimulation().buildNetwork();
 
+
+
                         }
                         updateSimulationInfo();
+
+
                     }
                 } catch (Exception ex) {
                     GUI_Utils.mouseDefault(this);
                     GUI_Utils.showException(ex);
+
+
                 }
 
             }
@@ -1634,24 +1888,34 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         try {
 
             Collection<Node> nodes = null;
+
+
             if (PlatformManager.getInstance().haveActiveSimulation()) {
                 if (PlatformManager.getInstance().getActiveSimulation().isNetworkDeployed()) {
                     GUI_Utils.mouseWait(this);
                     nodes = PlatformManager.getInstance().getActiveSimulation().getSimulator().getNodes();
+
+
                     for (Node node : nodes) {
                         node.setSource(false);
                         node.setReceiver(false);
                         node.getRoutingLayer().setUnderAttack(false);
+
+
                     }
                 }
             }
 
         } catch (Exception e) {
             GUI_Utils.showException(e);
+
+
         } finally {
             updateSimulationInfo();
             getSimulationPanel().updateLocal();
             GUI_Utils.mouseDefault(this);
+
+
         }
 
     }
@@ -1659,14 +1923,23 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
     private void showAdhocTestInfoAction() {
         String message = AdHocTestInfo.getInstance().retrieveInfo(getSimulationPanel().getSimulation()).toString();
         GUI_Utils.showMessage(message);
+
+
     }
 
     private void createAdhocTestAction() {
         buildAdHocTest();
 
+
+
+
+
+
+
     }
 
-    private class RebuildNetworkTask extends org.jdesktop.application.Task<Object, Void> {
+    private class RebuildNetworkTask
+            extends org.jdesktop.application.Task<Object, Void> {
 
         RebuildNetworkTask(org.jdesktop.application.Application app) {
             super(app);
@@ -1693,16 +1966,22 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
 
 
 
+
+
     }
 
     public void RandomNodeSelection() {
         simulationPanel1.selectRandomNodes(10);
 
 
+
+
     }
 
     public void TakeSnapshot() {
         simulationPanel1.takeSnapshot();
+
+
 
 
     }
@@ -1713,20 +1992,28 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
 
 
 
+
+
             if (!simulation.getSimulator().isEmpty()) {
 
                 PlatformDialog pd = PlatformDialog.display(null, new NodeSettingsPanel(), "Color Settings", PlatformDialog.OKCANCELAPPLY_MODE);
                 pd.dispose();
 
 
+
+
             } else {
                 GUI_Utils.showWarningMessage("No sensor nodes added");
+
+
 
 
             }
 
         } else {
             GUI_Utils.showWarningMessage("No active simulation");
+
+
 
 
         }
@@ -1739,10 +2026,14 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         return currentTest;
 
 
+
+
     }
 
     public void setCurrentTest(AbstractTest currentTest) {
         this.currentTest = currentTest;
+
+
 
 
     }
@@ -1751,10 +2042,15 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
         return (getSimulationPanel().getSimulation().isNetworkDeployed());
 
 
+
+
     }
 
     public void showMessage(final String message) {
-        PlatformManager.getInstance().getPlatformView().showMessage(message);
+//        PlatformManager.getInstance().getPlatformView().showMessage(message);
+        PlatformUtils.notification(message);
+
+
 
 
     }
@@ -1768,6 +2064,8 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
 
 
 
+
+
     }
 
     private void redirectSystemStreams() {
@@ -1776,16 +2074,22 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
             @Override
             public void write(int b) throws IOException {
                 updateTextArea(String.valueOf((char) b));
+
+
             }
 
             @Override
             public void write(byte[] b, int off, int len) throws IOException {
                 updateTextArea(new String(b, off, len));
+
+
             }
 
             @Override
             public void write(byte[] b) throws IOException {
                 write(b, 0, b.length);
+
+
             }
 
             private void updateTextArea(final String s) {
@@ -1793,8 +2097,12 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
 
                     public void run() {
                         logOutputArea.append(s);
+
+
                     }
                 });
+
+
 
             }
         };
@@ -1804,16 +2112,22 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
             @Override
             public void write(int b) throws IOException {
                 updateTextAreaErr(String.valueOf((char) b));
+
+
             }
 
             @Override
             public void write(byte[] b, int off, int len) throws IOException {
                 updateTextAreaErr(new String(b, off, len));
+
+
             }
 
             @Override
             public void write(byte[] b) throws IOException {
                 write(b, 0, b.length);
+
+
             }
 
             private void updateTextAreaErr(final String s) {
@@ -1821,14 +2135,20 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
 
                     public void run() {
                         logOutputErrorArea.append(s);
+
+
                     }
                 });
+
+
 
             }
         };
 
         System.setOut(new PrintStream(out, true));
         System.setErr(new PrintStream(err, true));
+
+
     }
 
     void showHeatMap() {
@@ -1841,15 +2161,22 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
 
 
 
+
+
             if (i != null) {
                 ehmf.loadImage(i);
                 //                btnSnapshotActionPerformed(evt);
                 ehmf.displayHeat(getSimulationPanel().getSimulator().getNodes());
                 ehmf.setVisible(true);
 
+
+
+
             }
+
         } catch (IOException ex) {
             Logger.getLogger(WorkbenchPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 }

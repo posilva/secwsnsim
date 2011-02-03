@@ -1639,14 +1639,40 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     }
 
     private void paintHeatMap(Graphics g) {
+
         
     }
 
     private void updateScroll() {
         int w = (int) getSimulation().fieldSize().getWidth();
         int h = (int) getSimulation().fieldSize().getHeight();
-        autoResizeScrollSimulationPanel(w,h);
-//        autoScrollPanel( w,h);
+        autoResizeScrollSimulationPanel(w, h);
+    }
+
+    void searchSinkNode() {
+        Node node = null;
+        if (isSimulationValid()) {
+            if (simulation.isNetworkDeployed()) {
+                node = searchForSinkNode();
+                if (node != null) {
+                    node.getGraphicNode().mark();
+                    autoResizeScrollSimulationPanel((int) node.getX(), (int) node.getY());
+                    autoScrollPanel((int) node.getX(), (int) node.getY());
+                }
+            }
+            updateLocal();
+        }
+
+    }
+
+    private Node searchForSinkNode() {
+        for (Node node : simulation.getSimulator().getNodes()) {
+            if (node.isSinkNode()) {
+                return node;
+            }
+        }
+        return null;
+
     }
 
     /**

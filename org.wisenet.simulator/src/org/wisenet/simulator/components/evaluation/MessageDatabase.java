@@ -3,6 +3,7 @@ package org.wisenet.simulator.components.evaluation;
 import java.util.Hashtable;
 import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 import org.wisenet.simulator.core.Message;
+import org.wisenet.simulator.core.Simulator;
 import org.wisenet.simulator.core.node.layers.routing.RoutingLayer;
 
 /**
@@ -28,13 +29,16 @@ public class MessageDatabase {
      */
     public synchronized void registerMessageSent(Message message, RoutingLayer routing) {
         totalNumberOfMessagesSent++;
+        MessageTableEntry me;
         /* if message source id is the same as the sender then process */
         if (message.getSourceId().equals(routing.getUniqueId())) {
             /* if message not allready processed */
             if (!messagesTable.keySet().contains(message.getUniqueId())) {
                 log("Message " + message.getUniqueId() + " Sent by " + message.getSourceId() + " to " + message.getDestinationId());
                 /* process message */
-                messagesTable.put(message.getUniqueId(), new MessageTableEntry(message, routing));
+                me=new MessageTableEntry(message, routing);
+                me.setSimulationTimeReceived(Simulator.getSimulationTime());
+                messagesTable.put(message.getUniqueId(), me);
                 /* if senders aren't processed then */
                 if (!senderNodesTable.keySet().contains(routing.getUniqueId())) {
 
@@ -65,6 +69,7 @@ public class MessageDatabase {
                 messageEntry.arrived();
                 log("MESSAGE " + message.getUniqueId() + " takes " + message.getTotalHops() + " HOPS");
                 messageEntry.setMessage(message);
+                messageEntry.setSimulationTimeReceived(Simulator.getSimulationTime());
                 messageEntry.incrementCounter();
                 RoutingLayer senderId = messageEntry.getSenderRouting();
                 SendersTableEntry senderEntry = (SendersTableEntry) senderNodesTable.get(senderId.getUniqueId());
@@ -188,6 +193,22 @@ public class MessageDatabase {
         long simulationTimeReceived = 0L;
         private Message message;
         private RoutingLayer senderRouting;
+
+        public long getSimulationTimeReceived() {
+            return simulationTimeReceived;
+        }
+
+        public void setSimulationTimeReceived(long simulationTimeReceived) {
+            this.simulationTimeReceived = simulationTimeReceived;
+        }
+
+        public long getSimulationTimeSent() {
+            return simulationTimeSent;
+        }
+
+        public void setSimulationTimeSent(long simulationTimeSent) {
+            this.simulationTimeSent = simulationTimeSent;
+        }
 
         private MessageTableEntry(Message message, RoutingLayer routing) {
             this.message = message;
