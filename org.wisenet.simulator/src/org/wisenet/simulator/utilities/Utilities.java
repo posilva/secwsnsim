@@ -7,6 +7,8 @@ package org.wisenet.simulator.utilities;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.text.DecimalFormat;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.event.EventListenerList;
@@ -134,4 +136,14 @@ public class Utilities {
         return null;
     }
 
+    public static String decimal(double v, int i) {
+        if (i < 1) {
+            i = 1;
+        }
+        char[] fill = new char[i];
+        Arrays.fill(fill, '#');
+        String decimalPlaces = new String(fill);
+        DecimalFormat df = new DecimalFormat("#." + decimalPlaces);
+        return df.format(v);
+    }
 }

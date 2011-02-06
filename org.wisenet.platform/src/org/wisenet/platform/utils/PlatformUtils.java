@@ -5,15 +5,24 @@
 package org.wisenet.platform.utils;
 
 import com.nitido.utils.toaster.Toaster;
+import com.sun.image.codec.jpeg.ImageFormatException;
+import com.sun.image.codec.jpeg.JPEGCodec;
+import com.sun.image.codec.jpeg.JPEGEncodeParam;
+import com.sun.image.codec.jpeg.JPEGImageEncoder;
+import java.awt.Component;
+import java.awt.HeadlessException;
+import java.awt.image.BufferedImage;
 import org.jdesktop.application.ResourceMap;
 import org.wisenet.platform.PlatformConstants;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import org.wisenet.platform.PlatformApp;
@@ -171,6 +180,50 @@ public class PlatformUtils {
         Logger.getLogger(PlatformUtils.class.getName()).log(Level.SEVERE, null, ex);
     }
 
+    public static boolean saveImageToFile(String savefile, BufferedImage bImage) throws HeadlessException {
+        FileOutputStream fout;
+        if (savefile == null) {
+            return true;
+        }
+        try {
+            fout = new FileOutputStream(savefile + ((savefile.toLowerCase().endsWith(".jpg") || savefile.toLowerCase().endsWith(".jpeg")) ? "" : ".jpg"));
+            JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(fout);
+            JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam(bImage);
+            param.setQuality(1.0f, false); // 100% high quality setting, no compression
+            encoder.setJPEGEncodeParam(param);
+            encoder.encode(bImage);
+            fout.close();
+        } catch (ImageFormatException ife) {
+            JOptionPane.showMessageDialog(null, "Image format Error.\n" + ife, "Error", 0);
+        } catch (IOException ioe) {
+            JOptionPane.showMessageDialog(null, "Saving error.\n" + ioe, "Error", 0);
+        }
+        return false;
+    }
+
+    public static String selectImageFile2save(Component c) {
+        JFileChooser fc = new JFileChooser();
+        fc.addChoosableFileFilter(new FileFilter() {
+
+            @Override
+            public boolean accept(File f) {
+                return f.getName().toLowerCase().endsWith(".jpg") || f.getName().toLowerCase().endsWith(".jpeg");
+            }
+
+            @Override
+            public String getDescription() {
+                return "Jpeg Image Files";
+            }
+        });
+        fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        int returnVal = fc.showSaveDialog(c);
+        if (returnVal == 0) {
+            return fc.getSelectedFile().getAbsolutePath();
+        } else {
+            return null;
+        }
+    }
+
     /**
      * Extension filter for simulation files
      */
@@ -208,7 +261,7 @@ public class PlatformUtils {
         }
     }
 
-    public static void notification(String msg){
+    public static void notification(String msg) {
         Toaster toasterManager = new Toaster();
         toasterManager.showToaster(msg);
     }

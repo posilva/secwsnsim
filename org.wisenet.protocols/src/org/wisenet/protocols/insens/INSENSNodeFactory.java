@@ -4,6 +4,7 @@
  */
 package org.wisenet.protocols.insens;
 
+import org.wisenet.protocols.flooding.HelloApplication;
 import org.wisenet.simulator.core.node.layers.mac.Mica2MACLayer;
 import org.wisenet.simulator.core.node.factories.AbstractNodeFactory;
 
@@ -21,7 +22,7 @@ public class INSENSNodeFactory extends AbstractNodeFactory {
 
     @Override
     public void setup() {
-        setApplicationClass(EvaluateINSENSApplication.class);
+        setApplicationClass(HelloApplication.class);
         setRoutingLayerClass(INSENSRoutingLayer.class);
         setNodeClass(INSENSNode.class);
         setMacLayer(Mica2MACLayer.class);

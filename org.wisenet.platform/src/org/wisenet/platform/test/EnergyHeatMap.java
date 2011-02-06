@@ -39,6 +39,10 @@ public class EnergyHeatMap extends JPanel {
     /** */
     private static final long serialVersionUID = -2105845119293049049L;
     private static BufferedImage backgroundImage;
+
+    public static BufferedImage getBackgroundImage() {
+        return backgroundImage;
+    }
     private final BufferedImage dotImage = createFadedCircleImage(96);
     private BufferedImage monochromeImage;
     private BufferedImage heatmapImage;
