@@ -4,11 +4,11 @@
  */
 package org.wisenet.platform.gui.panels;
 
-import org.jdesktop.application.Action;
 import org.wisenet.platform.common.ui.PlatformPanel;
 import org.wisenet.platform.core.PlatformManager;
 import org.wisenet.simulator.core.node.layers.routing.RoutingLayer;
 import org.wisenet.simulator.core.node.layers.routing.RoutingLayerController;
+import org.wisenet.simulator.utilities.Utilities;
 
 /**
  *
@@ -60,6 +60,8 @@ public class RoutingInfoPanel extends PlatformPanel {
         txtNrStableNodesPercent = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtNrSimNodes = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        txtTotalEnergy = new javax.swing.JTextField();
 
         setName("Form"); // NOI18N
         setLayout(new java.awt.BorderLayout());
@@ -110,10 +112,13 @@ public class RoutingInfoPanel extends PlatformPanel {
         lblMessage.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lblMessage.setName("lblMessage"); // NOI18N
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance().getContext().getActionMap(RoutingInfoPanel.class, this);
-        cmdRefresh.setAction(actionMap.get("Refresh")); // NOI18N
         cmdRefresh.setText("Refresh"); // NOI18N
         cmdRefresh.setName("cmdRefresh"); // NOI18N
+        cmdRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdRefreshActionPerformed(evt);
+            }
+        });
 
         txtNrNeighborsPerNode.setEditable(false);
         txtNrNeighborsPerNode.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
@@ -151,6 +156,19 @@ public class RoutingInfoPanel extends PlatformPanel {
             }
         });
 
+        jLabel7.setLabelFor(txtNrStableNodes);
+        jLabel7.setText("Total Energy (J)"); // NOI18N
+        jLabel7.setName("jLabel7"); // NOI18N
+
+        txtTotalEnergy.setEditable(false);
+        txtTotalEnergy.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtTotalEnergy.setName("txtTotalEnergy"); // NOI18N
+        txtTotalEnergy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTotalEnergyActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -165,25 +183,27 @@ public class RoutingInfoPanel extends PlatformPanel {
                         .addComponent(cmdRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(txtNrSimNodes, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel5))
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel7))
                         .addGap(28, 28, 28)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtTotalEnergy, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                             .addComponent(txtNrNeighborsPerNode, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                             .addComponent(txtNrMessagesReceived, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                             .addComponent(txtNrMessagesSent, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(txtNrStableNodes, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtNrStableNodesPercent, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(txtNrSimNodes, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)))
+                                .addComponent(txtNrStableNodesPercent, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -211,7 +231,11 @@ public class RoutingInfoPanel extends PlatformPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(txtNrNeighborsPerNode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addComponent(txtTotalEnergy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                 .addComponent(cmdRefresh)
                 .addContainerGap())
         );
@@ -244,6 +268,7 @@ public class RoutingInfoPanel extends PlatformPanel {
             txtNrMessagesSent.setText("" + routingLayerController.getTotalSentMessages());
             txtNrMessagesReceived.setText("" + routingLayerController.getTotalReceivedMessages());
         }
+        txtTotalEnergy.setText(Utilities.decimal(PlatformManager.getInstance().getActiveSimulation().getEnergyController().getDatabase().getTotalEnergySpent(), 3));
         txtNrNeighborsPerNode.setText("" + PlatformManager.getInstance().getActiveSimulation().getAverageNeighborsPerNode());
     }
 
@@ -270,6 +295,16 @@ public class RoutingInfoPanel extends PlatformPanel {
     private void txtNrSimNodesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNrSimNodesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNrSimNodesActionPerformed
+
+    private void txtTotalEnergyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalEnergyActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTotalEnergyActionPerformed
+
+    private void cmdRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdRefreshActionPerformed
+
+
+        refresh();
+    }//GEN-LAST:event_cmdRefreshActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cmdRefresh;
     private javax.swing.JLabel jLabel2;
@@ -277,6 +312,7 @@ public class RoutingInfoPanel extends PlatformPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblMessage;
     private javax.swing.JTextField txtNrMessagesReceived;
@@ -285,12 +321,8 @@ public class RoutingInfoPanel extends PlatformPanel {
     private javax.swing.JTextField txtNrSimNodes;
     private javax.swing.JTextField txtNrStableNodes;
     private javax.swing.JTextField txtNrStableNodesPercent;
+    private javax.swing.JTextField txtTotalEnergy;
     // End of variables declaration//GEN-END:variables
-
-    @Action
-    public void Refresh() {
-        refresh();
-    }
 
     @Override
     public boolean onCancel() {

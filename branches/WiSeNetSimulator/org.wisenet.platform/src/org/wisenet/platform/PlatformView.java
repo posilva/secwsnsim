@@ -37,6 +37,7 @@ import org.wisenet.platform.gui.panels.EnergyEvaluationPanel;
 import org.wisenet.platform.gui.panels.RoutingOutputPanel;
 import org.wisenet.platform.gui.panels.SimulationPropertiesPanel;
 import org.wisenet.platform.gui.panels.TestResultsPanel;
+import org.wisenet.platform.test.EnergyChartsDialog;
 import org.wisenet.platform.test.MACLayerStatChart;
 import org.wisenet.platform.utils.PlatformUtils;
 import org.wisenet.platform.utils.gui.ClockCounter;
@@ -211,6 +212,7 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         jMenu5 = new javax.swing.JMenu();
         viewNodeInfo = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
+        energyCharts = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         statusPanel = new javax.swing.JPanel();
@@ -479,6 +481,15 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
 
         ViewMenu.add(jMenu5);
 
+        energyCharts.setText(resourceMap.getString("energyCharts.text")); // NOI18N
+        energyCharts.setName("energyCharts"); // NOI18N
+        energyCharts.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                energyChartsActionPerformed(evt);
+            }
+        });
+        ViewMenu.add(energyCharts);
+
         menuBar.add(ViewMenu);
 
         helpMenu.setText(resourceMap.getString("helpMenu.text")); // NOI18N
@@ -711,6 +722,10 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         }
     }//GEN-LAST:event_chkMACLayerDebugActionPerformed
 
+    private void energyChartsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_energyChartsActionPerformed
+        EnergyChartsDialog.getInstance().display();
+    }//GEN-LAST:event_energyChartsActionPerformed
+
     @Action
     public void newSimulation() {
         SimulationWizardPanel sw = new SimulationWizardPanel();
@@ -764,6 +779,7 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
     protected javax.swing.JCheckBoxMenuItem chkMACLayerDebug;
     protected javax.swing.JCheckBoxMenuItem chkRoutingLayerDebug;
     protected javax.swing.JPanel clocksPanel;
+    protected javax.swing.JMenuItem energyCharts;
     protected javax.swing.JPanel infoPanel;
     protected javax.swing.JLabel jLabel1;
     protected javax.swing.JMenu jMenu1;

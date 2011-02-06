@@ -44,14 +44,22 @@
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jLabel6" min="-2" pref="167" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                          <Component id="txtNrSimNodes" pref="120" max="32767" attributes="1"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel3" alignment="0" min="-2" pref="167" max="-2" attributes="0"/>
                               <Component id="jLabel2" alignment="0" min="-2" pref="167" max="-2" attributes="0"/>
                               <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="txtTotalEnergy" alignment="0" pref="120" max="32767" attributes="1"/>
                               <Component id="txtNrNeighborsPerNode" alignment="0" pref="120" max="32767" attributes="1"/>
                               <Component id="txtNrMessagesReceived" alignment="1" pref="120" max="32767" attributes="1"/>
                               <Component id="txtNrMessagesSent" alignment="0" pref="120" max="32767" attributes="1"/>
@@ -61,12 +69,6 @@
                                   <Component id="txtNrStableNodesPercent" pref="56" max="32767" attributes="1"/>
                               </Group>
                           </Group>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel6" min="-2" pref="167" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                          <Component id="txtNrSimNodes" pref="120" max="32767" attributes="1"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -103,7 +105,12 @@
                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                       <Component id="txtNrNeighborsPerNode" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="124" max="32767" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtTotalEnergy" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="68" max="32767" attributes="0"/>
                   <Component id="cmdRefresh" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -178,11 +185,12 @@
         </Component>
         <Component class="javax.swing.JButton" name="cmdRefresh">
           <Properties>
-            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="org.wisenet.platform.ui.frames.RoutingInfoPanel" id="Refresh" methodName="Refresh"/>
-            </Property>
+            <Property name="text" type="java.lang.String" value="Refresh" noResource="true"/>
             <Property name="name" type="java.lang.String" value="cmdRefresh" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdRefreshActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtNrNeighborsPerNode">
           <Properties>
@@ -231,6 +239,25 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNrSimNodesActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel7">
+          <Properties>
+            <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="txtNrStableNodes"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Total Energy (J)" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="jLabel7" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="txtTotalEnergy">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+            <Property name="horizontalAlignment" type="int" value="4"/>
+            <Property name="name" type="java.lang.String" value="txtTotalEnergy" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTotalEnergyActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

@@ -7,6 +7,7 @@ package org.wisenet.protocols.flooding;
 import javax.swing.JOptionPane;
 import org.wisenet.protocols.flooding.messages.FloodingMessage;
 import org.wisenet.simulator.core.Application;
+import org.wisenet.simulator.core.Message;
 import org.wisenet.simulator.utilities.Utilities;
 
 /**
@@ -17,7 +18,9 @@ public class HelloApplication extends Application {
 
     @Override
     protected void onMessageReceived(Object message) {
-        FloodingMessage m = (FloodingMessage) message;
+        Message m = (Message) message;
+        System.out.println("Node: " + getNode().getId() + "\n" + "Data: " + new String(m.getPayload()));
+//        FloodingMessage m = (FloodingMessage) message;
         //JOptionPane.showMessageDialog(null, "Node: " + getNode().getId() +"\n" + "Data: "+ m.getMessageData() + "\nFrom: " + m.getSource());
     }
 

@@ -1,8 +1,6 @@
 package org.wisenet.platform.gui;
 
 import org.wisenet.platform.gui.frames.ChartFrame;
-import com.sun.image.codec.jpeg.*;
-import java.io.File;
 import java.io.IOException;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -14,19 +12,16 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.DataOutputStream;
-import java.io.FileOutputStream;
 import java.io.PipedOutputStream;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
-import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JViewport;
 import javax.swing.event.EventListenerList;
-import javax.swing.filechooser.FileFilter;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.math.stat.descriptive.SummaryStatistics;
 import org.wisenet.platform.common.ui.PlatformDialog;
@@ -37,6 +32,7 @@ import org.wisenet.platform.gui.listeners.DeployEvent;
 import org.wisenet.platform.gui.listeners.SimulationPanelEventListener;
 import org.wisenet.platform.gui.panels.RoutingAttacksPanel;
 import org.wisenet.platform.utils.GUI_Utils;
+import org.wisenet.platform.utils.PlatformUtils;
 import org.wisenet.simulator.components.simulation.AbstractSimulation;
 import org.wisenet.simulator.components.simulation.Simulation;
 import org.wisenet.simulator.components.simulation.SimulationFactory;
@@ -1639,14 +1635,14 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     }
 
     private void paintHeatMap(Graphics g) {
-
-        
     }
 
     private void updateScroll() {
-        int w = (int) getSimulation().fieldSize().getWidth();
-        int h = (int) getSimulation().fieldSize().getHeight();
-        autoResizeScrollSimulationPanel(w, h);
+        if (getSimulation() != null) {
+            int w = (int) getSimulation().fieldSize().getWidth();
+            int h = (int) getSimulation().fieldSize().getHeight();
+            autoResizeScrollSimulationPanel(w, h);
+        }
     }
 
     void searchSinkNode() {
@@ -2206,50 +2202,12 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         g.setColor(Color.white);
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
         mainPaintLoop(g);
-        String savefile = "";
-        JFileChooser fc = new JFileChooser();
-        fc.addChoosableFileFilter(new FileFilter() {
 
-            @Override
-            public boolean accept(File f) {
-                return f.getName().toLowerCase().endsWith(".jpg") || f.getName().toLowerCase().endsWith(".jpeg");
-            }
-
-            @Override
-            public String getDescription() {
-                return "Jpeg Image Files";
-            }
-        });
-        int returnVal = fc.showSaveDialog(this);
-        FileOutputStream fout;
-        if (returnVal == 0) {
-            savefile = fc.getSelectedFile().getPath();
-            if (savefile == null) {
+        String returnVal = PlatformUtils.selectImageFile2save(this);
+        if (returnVal != null) {
+            if (PlatformUtils.saveImageToFile(returnVal, bImage)) {
                 return;
             }
-            setCursor(new Cursor(3));
-            try {
-
-                fout = new FileOutputStream(savefile
-                        + ((savefile.toLowerCase().endsWith(".jpg") || savefile.toLowerCase().endsWith(".jpeg")) ? "" : ".jpg"));
-                JPEGImageEncoder encoder =
-                        JPEGCodec.createJPEGEncoder(fout);
-
-                JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam(bImage);
-                param.setQuality(1.0f, false);   // 100% high quality setting, no compression
-                encoder.setJPEGEncodeParam(param);
-
-                encoder.encode(bImage);
-                setCursor(new Cursor(0));
-                fout.close();
-            } catch (ImageFormatException ife) {
-                JOptionPane.showMessageDialog(null,
-                        "Image format Error.\n" + ife, "Error", 0);
-            } catch (IOException ioe) {
-                JOptionPane.showMessageDialog(null,
-                        "Saving error.\n" + ioe, "Error", 0);
-            }
-
         }
     }
 

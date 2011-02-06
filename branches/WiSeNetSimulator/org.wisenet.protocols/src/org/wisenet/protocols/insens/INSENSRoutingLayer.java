@@ -388,7 +388,7 @@ public class INSENSRoutingLayer extends RoutingLayer implements IInstrumentHandl
                                 sendUpdateRouteMessage((byte[]) forwardingTablesRepositoryIter.next());
                             }
                             if (!forwardingTablesRepositoryIter.hasNext() && !forwardingTablesRepository.isEmpty() && retry==0){
-                                maxRetries=forwardingTablesRepository.size()*300;
+                                maxRetries=forwardingTablesRepository.size()*3;
                             }
                             if (!forwardingTablesRepositoryIter.hasNext() && !forwardingTablesRepository.isEmpty() && retry < maxRetries) {
                                 forwardingTablesRepositoryIter = new HashSet(forwardingTablesRepository.values()).iterator();
