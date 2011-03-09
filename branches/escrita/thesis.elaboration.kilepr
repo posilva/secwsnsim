@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.0.85
-lastDocument=source/capitulo4_API.tex
+lastDocument=source/tab_simuladores_criterios.tex
 masterDocument=source/Thesis.Elaboration.PedroMarquesdaSilva.tex
 name=Thesis.Elaboration
 pkg_extIsRegExp=false
@@ -41,6 +41,14 @@ Mode=LaTeX
 ReadWrite=true
 
 [document-settings,item:source/capitulo1.tex]
+Bookmarks=
+Encoding=ISO-8859-15
+Highlighting=LaTeX
+Indentation Mode=
+Mode=LaTeX
+ReadWrite=true
+
+[document-settings,item:source/capitulo1_estrutura.tex]
 Bookmarks=
 Encoding=ISO-8859-15
 Highlighting=LaTeX
@@ -256,6 +264,14 @@ Indentation Mode=
 Mode=LaTeX
 ReadWrite=true
 
+[document-settings,item:source/mybib.bib]
+Bookmarks=
+Encoding=ISO-8859-15
+Highlighting=BibTeX
+Indentation Mode=
+Mode=BibTeX
+ReadWrite=true
+
 [document-settings,item:source/pic_FloodingRoutingcd.tex]
 Bookmarks=
 Encoding=ISO-8859-15
@@ -440,6 +456,14 @@ Indentation Mode=
 Mode=LaTeX
 ReadWrite=true
 
+[document-settings,item:source/tab_RSSF_Energia.tex]
+Bookmarks=
+Encoding=ISO-8859-15
+Highlighting=LaTeX
+Indentation Mode=
+Mode=LaTeX
+ReadWrite=true
+
 [document-settings,item:source/tab_ataques_contramedidas.tex]
 Bookmarks=
 Encoding=ISO-8859-15
@@ -482,23 +506,23 @@ ReadWrite=true
 
 [item:../v1/latex/source/Notas_e_ideias.tex]
 archive=true
-column=0
+column=29
 encoding=ISO-8859-15
 highlight=LaTeX
-line=5
+line=3
 mode=LaTeX
-open=false
-order=-1
+open=true
+order=3
 
 [item:source/Contracapa.tex]
 archive=true
-column=0
+column=25
 encoding=ISO-8859-15
 highlight=LaTeX
-line=0
+line=36
 mode=LaTeX
-open=false
-order=-1
+open=true
+order=4
 
 [item:source/Thesis.Elaboration.PedroMarquesdaSilva.tex]
 archive=true
@@ -507,18 +531,38 @@ encoding=ISO-8859-15
 highlight=LaTeX
 line=175
 mode=LaTeX
-open=true
+open=false
 order=3
+
+[item:source/cap1.rtf]
+archive=true
+column=1
+encoding=
+highlight=
+line=0
+mode=
+open=false
+order=-1
 
 [item:source/capitulo1.tex]
 archive=true
-column=50
+column=17
 encoding=ISO-8859-15
 highlight=LaTeX
-line=78
+line=195
 mode=LaTeX
-open=false
-order=4
+open=true
+order=5
+
+[item:source/capitulo1_estrutura.tex]
+archive=true
+column=13
+encoding=ISO-8859-15
+highlight=LaTeX
+line=5
+mode=LaTeX
+open=true
+order=6
 
 [item:source/capitulo2.tex]
 archive=true
@@ -532,50 +576,50 @@ order=6
 
 [item:source/capitulo2_RSSF.tex]
 archive=true
-column=66
+column=39
 encoding=ISO-8859-15
 highlight=LaTeX
-line=143
+line=99
 mode=LaTeX
-open=false
-order=-1
+open=true
+order=7
 
 [item:source/capitulo2_ambientes_de_simulacao.tex]
 archive=true
-column=37
+column=60
 encoding=ISO-8859-15
 highlight=LaTeX
-line=121
+line=82
 mode=LaTeX
-open=false
-order=-1
+open=true
+order=12
 
 [item:source/capitulo2_arq_servicos_seguranca.tex]
 archive=true
-column=0
+column=17
 encoding=ISO-8859-15
 highlight=LaTeX
-line=29
+line=58
 mode=LaTeX
-open=false
-order=-1
+open=true
+order=8
 
 [item:source/capitulo2_ataques_encaminhamento.tex]
 archive=true
-column=3
+column=17
 encoding=ISO-8859-15
 highlight=LaTeX
-line=150
+line=147
 mode=LaTeX
-open=false
-order=-1
+open=true
+order=9
 
 [item:source/capitulo2_discussao.tex]
 archive=true
-column=33
+column=42
 encoding=ISO-8859-15
 highlight=LaTeX
-line=101
+line=116
 mode=LaTeX
 open=true
 order=0
@@ -597,18 +641,18 @@ encoding=ISO-8859-15
 highlight=LaTeX
 line=1
 mode=LaTeX
-open=false
-order=-1
+open=true
+order=10
 
 [item:source/capitulo2_modelo_de_adversario.tex]
 archive=true
-column=17
+column=73
 encoding=ISO-8859-15
 highlight=LaTeX
-line=39
+line=42
 mode=LaTeX
-open=false
-order=-1
+open=true
+order=11
 
 [item:source/capitulo2_protocolos.tex]
 archive=true
@@ -622,53 +666,53 @@ order=-1
 
 [item:source/capitulo3.tex]
 archive=true
-column=1
+column=0
 encoding=ISO-8859-15
 highlight=LaTeX
-line=364
+line=0
 mode=LaTeX
-open=false
-order=0
+open=true
+order=14
 
 [item:source/capitulo4.tex]
 archive=true
-column=21
+column=9
 encoding=ISO-8859-15
 highlight=LaTeX
-line=82
+line=72
 mode=LaTeX
 open=false
-order=7
+order=10
 
 [item:source/capitulo4_API.tex]
 archive=true
 column=0
 encoding=ISO-8859-15
 highlight=LaTeX
-line=51
+line=0
 mode=LaTeX
-open=true
+open=false
 order=6
 
 [item:source/capitulo4_cobertura.tex]
 archive=true
-column=37
+column=17
 encoding=ISO-8859-15
 highlight=LaTeX
-line=0
+line=14
 mode=LaTeX
 open=false
 order=17
 
 [item:source/capitulo4_energia.tex]
 archive=true
-column=18
+column=46
 encoding=ISO-8859-15
 highlight=LaTeX
-line=229
+line=109
 mode=LaTeX
 open=true
-order=1
+order=13
 
 [item:source/capitulo4_fiabilidade.tex]
 archive=true
@@ -677,27 +721,27 @@ encoding=ISO-8859-15
 highlight=LaTeX
 line=7
 mode=LaTeX
-open=true
+open=false
 order=2
 
 [item:source/capitulo4_latencia.tex]
 archive=true
-column=43
+column=0
 encoding=ISO-8859-15
 highlight=LaTeX
-line=18
+line=0
 mode=LaTeX
 open=false
 order=18
 
 [item:source/capitulo4_medicao.tex]
 archive=true
-column=18
+column=27
 encoding=ISO-8859-15
 highlight=LaTeX
-line=13
+line=45
 mode=LaTeX
-open=true
+open=false
 order=5
 
 [item:source/capitulo4_prova_conceito.tex]
@@ -708,14 +752,14 @@ highlight=LaTeX
 line=0
 mode=LaTeX
 open=false
-order=3
+order=7
 
 [item:source/capitulo4_sensores.tex]
 archive=true
-column=26
+column=59
 encoding=ISO-8859-15
 highlight=LaTeX
-line=36
+line=23
 mode=LaTeX
 open=false
 order=1
@@ -732,40 +776,40 @@ order=4
 
 [item:source/capitulo4old.tex]
 archive=true
-column=0
+column=17
 encoding=ISO-8859-15
 highlight=LaTeX
-line=86
+line=103
 mode=LaTeX
 open=false
 order=0
 
 [item:source/capitulo5.tex]
 archive=true
-column=0
+column=15
 encoding=ISO-8859-15
 highlight=LaTeX
-line=76
+line=37
 mode=LaTeX
-open=false
-order=3
+open=true
+order=2
 
 [item:source/capitulo6.tex]
 archive=true
-column=17
+column=18
 encoding=ISO-8859-15
 highlight=LaTeX
-line=23
+line=108
 mode=LaTeX
 open=true
-order=4
+order=1
 
 [item:source/capitulo7.tex]
 archive=true
-column=0
+column=75
 encoding=ISO-8859-15
 highlight=LaTeX
-line=0
+line=3
 mode=LaTeX
 open=false
 order=9
@@ -782,11 +826,11 @@ order=7
 
 [item:source/mybib.bib]
 archive=true
-column=1
-encoding=
-highlight=
-line=0
-mode=
+column=21
+encoding=ISO-8859-15
+highlight=BibTeX
+line=597
+mode=BibTeX
 open=false
 order=-1
 
@@ -802,13 +846,13 @@ order=-1
 
 [item:source/pic_INSENS_CD.tex]
 archive=true
-column=12
+column=48
 encoding=ISO-8859-15
 highlight=LaTeX
-line=5
+line=3
 mode=LaTeX
 open=false
-order=4
+order=10
 
 [item:source/pic_ataques.tex]
 archive=true
@@ -1050,6 +1094,16 @@ mode=LaTeX
 open=false
 order=15
 
+[item:source/tab_RSSF_Energia.tex]
+archive=true
+column=61
+encoding=ISO-8859-15
+highlight=LaTeX
+line=35
+mode=LaTeX
+open=false
+order=-1
+
 [item:source/tab_ataques_contramedidas.tex]
 archive=true
 column=21
@@ -1092,13 +1146,13 @@ order=-1
 
 [item:source/tab_simuladores_criterios.tex]
 archive=true
-column=0
+column=20
 encoding=ISO-8859-15
 highlight=LaTeX
-line=37
+line=11
 mode=LaTeX
-open=false
-order=12
+open=true
+order=15
 
 [item:thesis.elaboration.kilepr]
 archive=true
@@ -1111,44 +1165,48 @@ open=false
 order=-1
 
 [view-settings,view=0,item:../v1/latex/source/Notas_e_ideias.tex]
-CursorColumn=0
-CursorLine=5
+CursorColumn=29
+CursorLine=3
 
 [view-settings,view=0,item:source/Contracapa.tex]
-CursorColumn=0
-CursorLine=0
+CursorColumn=25
+CursorLine=36
 
 [view-settings,view=0,item:source/Thesis.Elaboration.PedroMarquesdaSilva.tex]
 CursorColumn=1
 CursorLine=175
 
 [view-settings,view=0,item:source/capitulo1.tex]
-CursorColumn=50
-CursorLine=78
+CursorColumn=17
+CursorLine=195
+
+[view-settings,view=0,item:source/capitulo1_estrutura.tex]
+CursorColumn=13
+CursorLine=5
 
 [view-settings,view=0,item:source/capitulo2.tex]
 CursorColumn=76
 CursorLine=8
 
 [view-settings,view=0,item:source/capitulo2_RSSF.tex]
-CursorColumn=66
-CursorLine=143
+CursorColumn=39
+CursorLine=99
 
 [view-settings,view=0,item:source/capitulo2_ambientes_de_simulacao.tex]
-CursorColumn=37
-CursorLine=121
+CursorColumn=60
+CursorLine=82
 
 [view-settings,view=0,item:source/capitulo2_arq_servicos_seguranca.tex]
-CursorColumn=0
-CursorLine=29
+CursorColumn=17
+CursorLine=58
 
 [view-settings,view=0,item:source/capitulo2_ataques_encaminhamento.tex]
-CursorColumn=3
-CursorLine=150
+CursorColumn=17
+CursorLine=147
 
 [view-settings,view=0,item:source/capitulo2_discussao.tex]
-CursorColumn=33
-CursorLine=101
+CursorColumn=42
+CursorLine=116
 
 [view-settings,view=0,item:source/capitulo2_intrusao.tex]
 CursorColumn=17
@@ -1159,84 +1217,88 @@ CursorColumn=65
 CursorLine=1
 
 [view-settings,view=0,item:source/capitulo2_modelo_de_adversario.tex]
-CursorColumn=17
-CursorLine=39
+CursorColumn=73
+CursorLine=42
 
 [view-settings,view=0,item:source/capitulo2_protocolos.tex]
 CursorColumn=9
 CursorLine=53
 
 [view-settings,view=0,item:source/capitulo3.tex]
-CursorColumn=1
-CursorLine=364
+CursorColumn=0
+CursorLine=0
 
 [view-settings,view=0,item:source/capitulo4.tex]
-CursorColumn=21
-CursorLine=82
+CursorColumn=9
+CursorLine=72
 
 [view-settings,view=0,item:source/capitulo4_API.tex]
 CursorColumn=0
-CursorLine=51
-
-[view-settings,view=0,item:source/capitulo4_cobertura.tex]
-CursorColumn=37
 CursorLine=0
 
+[view-settings,view=0,item:source/capitulo4_cobertura.tex]
+CursorColumn=17
+CursorLine=14
+
 [view-settings,view=0,item:source/capitulo4_energia.tex]
-CursorColumn=18
-CursorLine=229
+CursorColumn=46
+CursorLine=109
 
 [view-settings,view=0,item:source/capitulo4_fiabilidade.tex]
 CursorColumn=0
 CursorLine=7
 
 [view-settings,view=0,item:source/capitulo4_latencia.tex]
-CursorColumn=43
-CursorLine=18
+CursorColumn=0
+CursorLine=0
 
 [view-settings,view=0,item:source/capitulo4_medicao.tex]
-CursorColumn=18
-CursorLine=13
+CursorColumn=27
+CursorLine=45
 
 [view-settings,view=0,item:source/capitulo4_prova_conceito.tex]
 CursorColumn=0
 CursorLine=0
 
 [view-settings,view=0,item:source/capitulo4_sensores.tex]
-CursorColumn=26
-CursorLine=36
+CursorColumn=59
+CursorLine=23
 
 [view-settings,view=0,item:source/capitulo4_visualizacao_controlo.tex]
 CursorColumn=0
 CursorLine=15
 
 [view-settings,view=0,item:source/capitulo4old.tex]
-CursorColumn=0
-CursorLine=86
+CursorColumn=17
+CursorLine=103
 
 [view-settings,view=0,item:source/capitulo5.tex]
-CursorColumn=0
-CursorLine=76
+CursorColumn=15
+CursorLine=37
 
 [view-settings,view=0,item:source/capitulo6.tex]
-CursorColumn=17
-CursorLine=23
+CursorColumn=18
+CursorLine=108
 
 [view-settings,view=0,item:source/capitulo7.tex]
-CursorColumn=0
-CursorLine=0
+CursorColumn=75
+CursorLine=3
 
 [view-settings,view=0,item:source/logounl.tex]
 CursorColumn=0
 CursorLine=0
+
+[view-settings,view=0,item:source/mybib.bib]
+CursorColumn=21
+CursorLine=597
 
 [view-settings,view=0,item:source/pic_FloodingRoutingcd.tex]
 CursorColumn=61
 CursorLine=3
 
 [view-settings,view=0,item:source/pic_INSENS_CD.tex]
-CursorColumn=12
-CursorLine=5
+CursorColumn=48
+CursorLine=3
 
 [view-settings,view=0,item:source/pic_ataques.tex]
 CursorColumn=0
@@ -1322,6 +1384,10 @@ CursorLine=2
 CursorColumn=55
 CursorLine=32
 
+[view-settings,view=0,item:source/tab_RSSF_Energia.tex]
+CursorColumn=61
+CursorLine=35
+
 [view-settings,view=0,item:source/tab_ataques_contramedidas.tex]
 CursorColumn=21
 CursorLine=4
@@ -1339,5 +1405,5 @@ CursorColumn=0
 CursorLine=4
 
 [view-settings,view=0,item:source/tab_simuladores_criterios.tex]
-CursorColumn=0
-CursorLine=37
+CursorColumn=20
+CursorLine=11

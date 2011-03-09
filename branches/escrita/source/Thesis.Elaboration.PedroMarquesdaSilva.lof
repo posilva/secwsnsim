@@ -2,28 +2,28 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {1.1}{\ignorespaces Pilha de servi\c cos e pilha de protocolos \cite {Akyildiz2002} de uma RSSF}}{4}{figure.1.1}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Modelo de um Sensor de uma RSSF (baseado em \cite {livro_wsn_arch})}}{8}{figure.2.1}
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Modelo de um Sensor de uma RSSF (baseado em \cite {livro_wsn_arch})}}{10}{figure.2.1}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Diagrama de classes do simulador JProwler}}{38}{figure.3.1}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Vista do simulador JProwler}}{39}{figure.3.2}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Arquitectura de Simula\c c\~ao}}{40}{figure.3.3}
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Exemplo de dois modos de gera\c c\~ao de topologias}}{42}{figure.3.4}
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Modos de visualiza\c c\~ao em \textit {runtime} do consumo de energia}}{43}{figure.3.5}
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Representa\c c\~ao de um n\'o atacante com um tri\^angulo vermelho}}{44}{figure.3.6}
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Vista do simulador em execu\c c\~ao}}{47}{figure.3.7}
-\contentsline {figure}{\numberline {3.8}{\ignorespaces Janela resultados da execu\c c\~ao de um testes}}{50}{figure.3.8}
-\contentsline {figure}{\numberline {3.9}{\ignorespaces Janela para a constru\c c\~ao/selec\c c\~ao de testes}}{50}{figure.3.9}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Diagrama de classes do simulador JProwler}}{42}{figure.3.1}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Vista do simulador JProwler}}{43}{figure.3.2}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Arquitectura de Simula\c c\~ao}}{44}{figure.3.3}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Exemplo de dois modos de gera\c c\~ao de topologias}}{46}{figure.3.4}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Modos de visualiza\c c\~ao em \textit {runtime} do consumo de energia}}{47}{figure.3.5}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Representa\c c\~ao de um n\'o atacante com um tri\^angulo vermelho}}{48}{figure.3.6}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Vista do simulador em execu\c c\~ao}}{51}{figure.3.7}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Janela resultados da execu\c c\~ao de um testes}}{54}{figure.3.8}
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Janela para a constru\c c\~ao/selec\c c\~ao de testes}}{54}{figure.3.9}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Pilha de servi\c cos do sensor e organiza\c c\~ao por componentes}}{54}{figure.4.1}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Diagrama de classes das depend\^encias da entidade sensor na plataforma}}{54}{figure.4.2}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Tabela resumo com os eventos para medi\c c\~ao de custos energ\'eticos}}{56}{figure.4.3}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Diagrama de sequ\^encia para o consumo de energia numa transmiss\~ao}}{60}{figure.4.4}
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Diagrama de classes do processo de avalia\c c\~ao/medi\c c\~ao }}{63}{figure.4.5}
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Sequ\^encia de ac\c c\~oes envolvidas na medi\c c\~ao das propriedades}}{64}{figure.4.6}
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Estrutura l\'ogica de um protocolo}}{67}{figure.4.7}
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Defini\c c\~ao de uma NodeFactory espec\IeC {\'\i }fica}}{67}{figure.4.8}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Pilha de servi\c cos do sensor e organiza\c c\~ao por componentes}}{60}{figure.4.1}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Diagrama de classes das depend\^encias da entidade sensor na plataforma}}{60}{figure.4.2}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Tabela resumo com os eventos para medi\c c\~ao de custos energ\'eticos}}{62}{figure.4.3}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Diagrama de sequ\^encia para o consumo de energia numa transmiss\~ao}}{66}{figure.4.4}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Diagrama de classes do processo de avalia\c c\~ao/medi\c c\~ao }}{69}{figure.4.5}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Sequ\^encia de ac\c c\~oes envolvidas na medi\c c\~ao das propriedades}}{70}{figure.4.6}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Estrutura l\'ogica de um protocolo}}{73}{figure.4.7}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Defini\c c\~ao de uma NodeFactory espec\IeC {\'\i }fica}}{73}{figure.4.8}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Diagrama de classes do protocolo por \textit {Flooding}}}{70}{figure.5.1}
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Representa\c c\~ao de um n\'o atacante com um tri\^angulo vermelho}}{72}{figure.5.2}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Diagrama de classes do protocolo por \textit {Flooding}}}{76}{figure.5.1}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Diagrama de classes do protocolo INSENS}}{78}{figure.5.2}
 \addvspace {10\p@ }
 \addvspace {10\p@ }

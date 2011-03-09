@@ -1,8 +1,19 @@
 \section{Caracterização de uma RSSF}\label{sect:subsec_arq_sofware_wsn}
+As RSSF apresentam características que as distinguem em grande medida das redes
+convencionais com ou sem fios. O facto de serem constituídas por
+pequenos dispositivos computorizados com limitações de operação (energia,
+comunicação e processamento), de poderem estar distribuídas em zonas remotas ou
+de difícil acesso, de serem dotadas de capacidade de auto-organização definem
+alguns desafios para o seu estudo, principalmente se se associar a problemática
+da segurança. Interessa portanto conhecer algumas características dos
+dispositivos que as compõe permitindo desde logo partir para o estudo destas
+redes.
+
 Nas RSSF podem-se considerar vários tipos de nós de computação, estando estes 
 interligados por uma infraestrutura de comunicação \textit{multi-hop}, em que
 cada nó da rede (\textit{mote}) pode desempenhar pelo
-menos três papeis\cite{REFERENCIA} : 1) Nó gerador de dados, pela captação da
+menos três papeis\cite{al-karaki_routing_2004} : 1) Nó gerador de dados, pela
+captação da
 eventos associados às especificidades dos sensores possuídos; 2) Nó
 encaminhador que, recebendo dados de uns nós, os encaminha  para outros, por
 forma a que alcancem o destino; 3) Nó de sincronização ou nó de agregação,
@@ -10,7 +21,7 @@ embora estas duas caracterizações não correspondam à mesma tarefa, por si só, a
 um nível mais macro, corresponde igualmente a colecção de dados da rede e a um
 pré-processamento, por forma a fazê-los seguir agregados para outro destino
 (interno ou externo à rede ).
-\subsection{Modelo da plataforma genérica de uma RSSF - \textit{Mote}} 
+\subsection{Características de um sensor de uma RSSF - \textit{Mote}} 
 Interessa perceber qual a arquitectura inerente a estas plataformas de rede, 
 onde é possível executar uma multiplicidade de aplicações, apesar das limitações
 impostas pela arquitectura. Na figura seguinte apresenta-se um modelo
@@ -85,7 +96,8 @@ de diversos tipos, por exemplo: baterias (tipo AA) ou baterias fotovoltaícas .
 Encontram-se nas especificações das plataformas mais recentes os valores que
 indicam o consumo energético nos diversos estados de operação de um
 \textit{mote}. A título de exemplo observe-se a plataforma
-\textit{Mica2}\cite{mica2} da \textit{Crossbows}\cite{crossbow}:
+\textit{Mica2}\cite{mica2_datasheet} da
+\textit{Crossbows}\footnote{http://www.xbows.com}:
 \input{tab_RSSF_Energia}
 \subsection[Modelo de energia de uma RSSF]{Modelo de energia de uma RSSF} 
 Nas diversas aplicações das RSSF
@@ -119,11 +131,7 @@ Considera-se que existem três estados principais na operação de um sensor:
 activo, inactivo e adormecido.  No primeiro estado, poder-se-ão considerar,
 ainda,  diferentes modos de funcionamento, devido aos componentes de um nó
 sensor estarem ligados ou desligados em determinado momento e com isso 
-consumirem mais ou menos energia. Na tabela seguinte apresenta-se alguns dos
-estados considerados numa plataforma do tipo Mica2 \cite{mica2}.
-
-FALTA TABELA AQUI
-
+consumirem mais ou menos energia. 
 A energia nas RSSF é tida em consideração desde a implementação do \textit
 {hardware} até ao desenho e implementação de qualquer dos serviços existentes na
 pilha de software dos nós sensores. Tem-se observado que a maioria dos estudos

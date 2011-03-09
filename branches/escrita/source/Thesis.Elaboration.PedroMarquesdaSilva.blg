@@ -5,30 +5,14 @@ A level-1 auxiliary file: resumopt.aux
 A level-1 auxiliary file: resumoen.aux
 A level-1 auxiliary file: capitulo1.aux
 A level-1 auxiliary file: capitulo2.aux
-Case mismatch error between cite keys OMNET++ and omnet++
----line 227 of file capitulo2.aux
- : \citation{OMNET++
- :                  }
-I'm skipping whatever remains of this command
 A level-1 auxiliary file: capitulo3.aux
 A level-1 auxiliary file: capitulo4.aux
-Case mismatch error between cite keys POWERTOSSIM and powertossim
----line 17 of file capitulo4.aux
- : \citation{POWERTOSSIM
- :                      }
-I'm skipping whatever remains of this command
-Case mismatch error between cite keys ENERGIA and energia
----line 29 of file capitulo4.aux
- : \citation{ENERGIA
- :                  }
-I'm skipping whatever remains of this command
 A level-1 auxiliary file: capitulo5.aux
 A level-1 auxiliary file: capitulo6.aux
 A level-1 auxiliary file: capitulo7.aux
 The style file: plain.bst
 Database file #1: mybib.bib
 Warning--I didn't find a database entry for "SNMuseum"
-Warning--I didn't find a database entry for "REFERENCIA"
 Warning--I didn't find a database entry for "Holger_Karl_protocols_andarchs_wsn"
 Warning--I didn't find a database entry for "mica2"
 Warning--I didn't find a database entry for "crossbow"
@@ -45,7 +29,7 @@ Warning--I didn't find a database entry for "VERCITACAODAPILHA"
 Warning--I didn't find a database entry for "ESTUDOCRIPTO"
 Warning--I didn't find a database entry for "ESTUDOCOMM"
 Warning--I didn't find a database entry for "MAC"
-Warning--I didn't find a database entry for "ENERGIA2"
+Warning--I didn't find a database entry for "energia2"
 Warning--to sort, need author or key in ietf_802154
 Warning--to sort, need author or key in mica2_datasheet
 Warning--to sort, need author or key in btnodes
@@ -78,7 +62,7 @@ Warning--empty publisher in Attaks_defenses_sec_in_wsn
 Warning--empty year in Attaks_defenses_sec_in_wsn
 You've used 75 entries,
             2118 wiz_defined-function locations,
-            949 strings with 16180 characters,
+            946 strings with 16152 characters,
 and the built_in function-call counts, 24680 in all, are:
 = -- 2469
 > -- 992
@@ -117,4 +101,4 @@ warning$ -- 30
 while$ -- 216
 width$ -- 77
 write$ -- 759
-(There were 3 error messages)
+(There were 48 warnings)

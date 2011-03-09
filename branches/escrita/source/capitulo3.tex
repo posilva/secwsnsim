@@ -244,7 +244,8 @@ propriedades
 de cobertura, fiabilidade e latência da rede seguindo as seguintes as
 definições:
 \begin{description}
-\item[Cobertura:] É entendida como a capacidade de um qualquer sensor da rede
+\item[Cobertura (Conectividade):] É entendida como a capacidade de um qualquer
+sensor da rede
 conseguir comunicar com um qualquer outro sensor, utilizando o protocolo
 de encaminhamento implementado. A análise resultante da observação
 desta propriedade pode ser comparada com a cobertura física estabelecida pela
@@ -292,7 +293,13 @@ resultados permite sistematizar a sua re-utilização face a
 diversas distribuições de RSSF e protocolos implementados. Este componente do
 simulador é importante, uma vez que permite agilizar o estudo e concentrar nas
 experiências o foco da avaliação de um protocolo de encaminhamento de dados.
-Assim sendo, compreende-se, como experiência, uma simulação com as seguintes
+O modelo de testes preconizado permite dois tipos de experiências. Aleatório ou
+seja todos os sensores envolvidos na experiência foram seleccionados de forma
+aleatória. Estruturada permitindo desenhar um teste específico em que cada
+interveniente é seleccionado e por conseguinte permitirá executar o teste com
+esta configuração. As topologias dos testes desenhadas de forma estruturada
+podem ser tornadas persistente para que se possa reutilizar.
+De um modo geral,compreende-se como experiência, uma simulação com as seguintes
 propriedades:
 \begin{enumerate}
 \item Topologia bem definida (aleatória, em grelha ou estruturada);
@@ -314,6 +321,7 @@ diferentes, permitindo afinar as conclusões no que concerne ao seu
 comportamento. Esta abordagem transforma-se assim num contributo de inovação
 para o estudo de protocolos de encaminhamento em RSSF, observando também as
 características de segurança.
+
 
 \subsection{Consola de Visualização e Controlo de Simulação}
 \label{sec:impl_visual}
@@ -428,4 +436,23 @@ dados.
 %protocolos referidos,
 %que serão alvo de uma análise comparativa com recurso às funcionalidades da
 %plataforma. 
+
+\subsection{Utilização e exploração da plataforma
+}\label{sec:ss_utilizacao_exploracao}
+
+A plataforma apresentada encontra-se disponível, desde o inicio da sua
+concepção, para a comunidade, sobre a forma de um projecto de código aberto,
+acessível em \textbf{http://code.google.com/p/secwsnsim/}. Uma das vantagens
+desta opção foi, sem dúvida a possibilidade de medir algum nível de aceitação
+da plataforma junto da comunidade académica, nomeadamente alguns alunos no
+estrangeiro ligados a esta área de investigação.
+
+Apresenta-se seguidamente,a título de curiosidade, a taxa de acessos à página
+por distribuição geográfica.\footnote{Dados extraídos da ferramenta 
+Analytics da Google, na data referente no mapa}Com esta visibilidade foi
+possível incorporar mais algumas funcionalidades que resultam de algumas
+questões postas por utilizadores da plataforma. Ainda que se apresente como um
+protótipo, o \textit{feedback} tem vindo a ser positivo face à riqueza de
+funcionalidades e à simplicidade da API de programação para a implementação de
+protocolos de encaminhamento de dados em RSSF.
 

@@ -360,8 +360,9 @@ interfaces requeridos para a instrumentação do simulador representam as únicas
 obrigatoriedades na implementação. Uma vez feito isto, algumas funcionalidades
 apresentam-se disponíveis sem que se tenha feito qualquer esforço
 adicional, como é o caso, por exemplo, dos consumos energéticos de transmissão,
-recepção e mudança de estados dos sensores. No \chaptername{
-\ref{cap:implementacao}} serão apresentados mais detalhes quanto a esta fase.
+recepção e mudança de estados dos sensores. 
+%No \chaptername{
+%\ref{cap:implementacao}} serão apresentados mais detalhes quanto a esta fase.
 \subsection{Caracterização do ambiente de simulação}
 A caracterização do ambiente de simulação refere-se, essencialmente, ao ambiente
 de operação que se pretende estudar. A definição de características de operação(
@@ -376,8 +377,8 @@ resultados}\label{sec:ss_exec_tests_results}
 A realização de testes, através do envio de mensagens em nós distintos da rede,
 foi a abordagem metodológica estabelecida para a avaliação de um protocolo de
 encaminhamento em RSSF. Seguindo o princípio de comparação entre diversos
-protocolos a persistência destes testes permitem a criação de baterias
-específicas de testes quem concorrem para o melhoramento das análise e a
+protocolos a persistência destes testes permite  a criação de baterias
+específicas de testes, que concorrem para o melhoramento da análise e para a
 construção de uma base de comparação para futuras implementações.
 Os parâmetros existentes num teste são os seguintes:
 \begin{itemize}
@@ -387,23 +388,27 @@ Os parâmetros existentes num teste são os seguintes:
  \item Número de mensagens enviadas;
  \item Intervalo de tempo entre cada envio;
  \item Número de retransmissões;
- \item Ataque activo;  
+ \item Ataque activo.
 \end{itemize}
-A figura seguinte apresenta a janela que possibilita a especificação de testes
-tendo por base os parâmetros enunciados podendo-se observar a facilidade
+A figura seguinte apresenta a janela que possibilita a especificação de testes,
+tendo por base os parâmetros enunciados, podendo-se observar a facilidade
 existente para tornar estes testes persistentes. Uma vez executado o teste
-importa observar os resultados por forma a coligi-los para análise gráfica dos
+importa observar os resultados, por forma a coligi-los para análise gráfica dos
 dados.
 \input{pic_results}
 \input{pic_tests}
-Com este modelo de testes entende-se ser possível sujeitar os protocolos a
-condições que permitem levar a cabo a medição em cada topologia e ataque por
-forma a facilitar o seu estudo e a sistematizar as experiências. Uma vez que a
-implementação de toda a plataforma foi realizada em Java será sempre possível
-estender as funcionalidades por forma a incorporar novos modelos de avaliação e
+Com este modelo de testes, representados na
+\figurename{\ref{fig:simulador_view}} e na \figurename{\ref{fig:results_view}}
+entende-se ser possível sujeitar os protocolos a
+condições que permitem levar a cabo a medição em cada topologia e em cada
+ataque, por forma a facilitar o seu estudo e a sistematizar as experiências. Uma
+vez que a implementação de toda a plataforma foi realizada em Java será sempre
+possível
+estender as funcionalidades de maneira a incorporar novos modelos de
+avaliação e
 novas abordagens ou metodologias que enriqueçam o estudo das RSSF, nomeadamente
 no que concerne à problemática da segurança de protocolos de encaminhamento de
-dados, funcionalidade representada pela figura X. 
+dados. 
 
 %\subsubsection{Avaliação da Solução}\label{sec:aval_solucao}
 %Uma vez que a contribuição efectiva para a componente de investigação de
@@ -423,4 +428,20 @@ dados, funcionalidade representada pela figura X.
 %protocolos referidos,
 %que serão alvo de uma análise comparativa com recurso às funcionalidades da
 %plataforma. 
+
+\subsection{Utilização e exploração da plataforma
+}\label{sec:ss_utilizacao_exploracao}
+
+A plataforma apresentada encontra-se disponível, desde o inicio da sua
+concepção, para a comunidade, sobre a forma de um projecto de código aberto,
+acessível em \textbf{http://code.google.com/p/secwsnsim/}. Uma das vantagens
+desta opção foi, sem dúvida a possibilidade de medir algum nível de aceitação
+da plataforma junto da comunidade académica, nomeadamente alguns alunos no
+estrangeiro ligados a esta área de investigação.
+
+Apresenta-se seguidamente,a título de curiosidade, a taxa de acessos à página
+por distribuição geográfica.\footnote{Dados extraídos da ferramenta 
+Analytics da Google, na data referente no mapa}Com esta visibilidade foi
+possível incorporar mais algumas funcionalidades que resultam de algumas
+questões postas por utilizadores da plataforma.
 
