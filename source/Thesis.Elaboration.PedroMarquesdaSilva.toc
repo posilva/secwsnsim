@@ -5,97 +5,117 @@
 \contentsline {subsection}{\numberline {1.1.2}Aplica\c c\~oes}{2}{subsection.1.1.2}
 \contentsline {section}{\numberline {1.2}Seguran\c ca em RSSF}{3}{section.1.2}
 \contentsline {section}{\numberline {1.3}Objectivos e contribui\c c\~oes}{5}{section.1.3}
-\contentsline {chapter}{\numberline {2}Trabalho relacionado}{7}{chapter.2}
-\contentsline {section}{\numberline {2.1}Caracteriza\c c\~ao de uma RSSF}{7}{section.2.1}
-\contentsline {subsection}{\numberline {2.1.1}Modelo da plataforma gen\'erica de uma RSSF - \textit {Mote}}{7}{subsection.2.1.1}
-\contentsline {paragraph}{\numberline {2.1.1.0.1}Sistema de processamento}{8}{paragraph.2.1.1.0.1}
-\contentsline {paragraph}{\numberline {2.1.1.0.2}Sistema de comunica\c c\~ao}{8}{paragraph.2.1.1.0.2}
-\contentsline {paragraph}{\numberline {2.1.1.0.3}Sistema Operativo}{9}{paragraph.2.1.1.0.3}
-\contentsline {paragraph}{\numberline {2.1.1.0.4}Sistema de energia}{9}{paragraph.2.1.1.0.4}
-\contentsline {subsection}{\numberline {2.1.2}Modelo de energia de uma RSSF}{10}{subsection.2.1.2}
-\contentsline {section}{\numberline {2.2}Modelo de Advers\'ario, Ataques ao Encaminhamento e Contra-medidas}{11}{section.2.2}
-\contentsline {subsection}{\numberline {2.2.1}Arquitectura de Servi\c cos de Seguran\c ca em RSSF}{11}{subsection.2.2.1}
-\contentsline {subsubsection}{\numberline {2.2.1.1}Requisitos de seguran\c ca de uma RSSF}{12}{subsubsection.2.2.1.1}
-\contentsline {subsubsection}{\numberline {2.2.1.2}Servi\c cos B\'asicos de Seguran\c ca}{13}{subsubsection.2.2.1.2}
-\contentsline {subsection}{\numberline {2.2.2}Modelo de Advers\'ario}{15}{subsection.2.2.2}
-\contentsline {subsubsection}{\numberline {2.2.2.1}Modelo de Dolev-Yao}{15}{subsubsection.2.2.2.1}
-\contentsline {subsubsection}{\numberline {2.2.2.2}Modelo de Intrus\~ao em RSSF}{16}{subsubsection.2.2.2.2}
-\contentsline {paragraph}{\numberline {2.2.2.2.1}Modelo bizantino: advers\'arios bizantinos}{16}{paragraph.2.2.2.2.1}
-\contentsline {subsection}{\numberline {2.2.3}Ataques ao Encaminhamento}{17}{subsection.2.2.3}
-\contentsline {subsection}{\numberline {2.2.4}Ataques \`a organiza\c c\~ao da rede e descoberta de n\'os}{17}{subsection.2.2.4}
-\contentsline {subsubsection}{\numberline {2.2.4.1}Contra-medidas}{18}{subsubsection.2.2.4.1}
-\contentsline {subsection}{\numberline {2.2.5}Ataques ao estabelecimento de rotas}{18}{subsection.2.2.5}
-\contentsline {subsubsection}{\numberline {2.2.5.1}Contra-medidas}{19}{subsubsection.2.2.5.1}
-\contentsline {subsection}{\numberline {2.2.6}Ataques \`a manuten\c c\~ao de rotas}{21}{subsection.2.2.6}
-\contentsline {subsubsection}{\numberline {2.2.6.1}Contra-medidas}{21}{subsubsection.2.2.6.1}
-\contentsline {subsection}{\numberline {2.2.7}Ataques por Intrus\~ao/Replica\c c\~ao}{21}{subsection.2.2.7}
-\contentsline {subsubsection}{\numberline {2.2.7.1}Contra-medidas}{22}{subsubsection.2.2.7.1}
-\contentsline {section}{\numberline {2.3}Estudo de Protocolos de Encaminhamento Seguro para RSSF}{23}{section.2.3}
-\contentsline {subsection}{\numberline {2.3.1}Caracteriza\c c\~ao dos protocolos de encaminhamento em RSSF}{23}{subsection.2.3.1}
-\contentsline {subsection}{\numberline {2.3.2}Protocolos de encaminhamento seguro em RSSF}{23}{subsection.2.3.2}
-\contentsline {subsubsection}{\numberline {2.3.2.1}\textit {Secure Implicit Geographic Forwarding }(SIGF)}{24}{subsubsection.2.3.2.1}
-\contentsline {paragraph}{\textbf {Funcionamento do protocolo IGF}}{24}{section*.8}
-\contentsline {paragraph}{\textbf {Funcionamento do protocolo SIGF \cite {SIGF}}}{25}{section*.9}
-\contentsline {subsubsection}{\numberline {2.3.2.2}\textit { INtrusion-tolerant routing protocol for wireless SEnsor NetworkS }(INSENS)}{25}{subsubsection.2.3.2.2}
-\contentsline {subsubsection}{\numberline {2.3.2.3}\textit {Secure Sensor Network Routing: Clean-Slate approach}}{26}{subsubsection.2.3.2.3}
-\contentsline {paragraph}{\textbf {Funcionamento do Protocolo}}{26}{section*.10}
-\contentsline {section}{\numberline {2.4}Ambientes de Simula\c c\~ao}{28}{section.2.4}
-\contentsline {subsection}{\numberline {2.4.1}Crit\'erios Relacionados com Engenharia de Software}{28}{subsection.2.4.1}
-\contentsline {subsection}{\numberline {2.4.2}Crit\'erios Relacionados com as RSSF}{29}{subsection.2.4.2}
-\contentsline {subsection}{\numberline {2.4.3}Prowler/JProwler}{29}{subsection.2.4.3}
-\contentsline {subsection}{\numberline {2.4.4}J-Sim}{30}{subsection.2.4.4}
-\contentsline {subsection}{\numberline {2.4.5}Freemote}{30}{subsection.2.4.5}
-\contentsline {subsection}{\numberline {2.4.6}ShoX}{31}{subsection.2.4.6}
-\contentsline {section}{\numberline {2.5} Discuss\~ao e Resumo do Trabalho Relacionado}{32}{section.2.5}
-\contentsline {chapter}{\numberline {3}Plataforma para avalia\c c\~ao de protocolos de encaminhamento de dados em RSSF}{37}{chapter.3}
-\contentsline {section}{\numberline {3.1}Consolida\c c\~ao da avalia\c c\~ao do simulador JProwler e a sua integra\c c\~ao}{37}{section.3.1}
-\contentsline {subsection}{\numberline {3.1.1}Arquitectura do simulador JProwler}{38}{subsection.3.1.1}
-\contentsline {subsection}{\numberline {3.1.2}Funcionamento do simulador JProwler}{39}{subsection.3.1.2}
-\contentsline {section}{\numberline {3.2}Arquitectura da plataforma de simula\c c\~ao}{40}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}Simulador base ou motor de simula\c c\~ao}{41}{subsection.3.2.1}
-\contentsline {subsection}{\numberline {3.2.2}Mecanismo de Configura\c c\~ao}{41}{subsection.3.2.2}
-\contentsline {subsection}{\numberline {3.2.3}Camada de instrumenta\c c\~ao}{41}{subsection.3.2.3}
-\contentsline {subsubsection}{\numberline {3.2.3.1}Mecanismo de Gera\c c\~ao de Topologias}{41}{subsubsection.3.2.3.1}
-\contentsline {subsubsection}{\numberline {3.2.3.2}Mecanismo de Gest\~ao de Consumo de Energia}{42}{subsubsection.3.2.3.2}
-\contentsline {subsubsection}{\numberline {3.2.3.3}Mecanismo de Injec\c c\~ao de Falhas /Ataques}{43}{subsubsection.3.2.3.3}
-\contentsline {subsubsection}{\numberline {3.2.3.4}Mecanismo de Avalia\c c\~ao e Execu\c c\~ao de Testes}{44}{subsubsection.3.2.3.4}
-\contentsline {paragraph}{\numberline {3.2.3.4.1}}{44}{paragraph.3.2.3.4.1}
-\contentsline {subsection}{\numberline {3.2.4}Consola de Visualiza\c c\~ao e Controlo de Simula\c c\~ao}{47}{subsection.3.2.4}
-\contentsline {subsection}{\numberline {3.2.5}API para implementa\c c\~ao de protocolos de encaminhamento}{48}{subsection.3.2.5}
-\contentsline {section}{\numberline {3.3}Metodologia de utiliza\c c\~ao da plataforma}{48}{section.3.3}
-\contentsline {subsection}{\numberline {3.3.1}Implementa\c c\~ao de protocolo}{48}{subsection.3.3.1}
-\contentsline {subsection}{\numberline {3.3.2}Caracteriza\c c\~ao do ambiente de simula\c c\~ao}{49}{subsection.3.3.2}
-\contentsline {subsection}{\numberline {3.3.3}Execu\c c\~ao/an\'alise de testes e resultados}{49}{subsection.3.3.3}
-\contentsline {chapter}{\numberline {4}Implementa\c c\~ao da plataforma de simula\c c\~ao}{51}{chapter.4}
-\contentsline {section}{\numberline {4.1}Principais funcionalidades}{51}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Portabilidade}{51}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}Extensibilidade}{51}{subsection.4.1.2}
-\contentsline {subsection}{\numberline {4.1.3}Usabilidade}{52}{subsection.4.1.3}
-\contentsline {subsection}{\numberline {4.1.4}Facilidades}{52}{subsection.4.1.4}
-\contentsline {section}{\numberline {4.2}Implementa\c c\~ao dos componentes da plataforma}{53}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Representa\c c\~ao da plataforma sensor}{53}{subsection.4.2.1}
-\contentsline {subsection}{\numberline {4.2.2}M\'odulo de energia}{55}{subsection.4.2.2}
-\contentsline {subsubsection}{\numberline {4.2.2.1}}{56}{subsubsection.4.2.2.1}
-\contentsline {subsubsection}{\numberline {4.2.2.2}}{60}{subsubsection.4.2.2.2}
-\contentsline {subsubsection}{\numberline {4.2.2.3}}{61}{subsubsection.4.2.2.3}
-\contentsline {subsection}{\numberline {4.2.3}Mecanismo de avalia\c c\~ao e testes}{62}{subsection.4.2.3}
-\contentsline {subsubsection}{\numberline {4.2.3.1}Medi\c c\~ao das propriedades}{63}{subsubsection.4.2.3.1}
-\contentsline {subsubsection}{\numberline {4.2.3.2}Execu\c c\~ao de testes}{65}{subsubsection.4.2.3.2}
-\contentsline {subsection}{\numberline {4.2.4}Modelo de injec\c c\~ao/implementa\c c\~ao de ataques}{65}{subsection.4.2.4}
-\contentsline {subsection}{\numberline {4.2.5}API para a implementa\c c\~ao de um protocolo}{66}{subsection.4.2.5}
-\contentsline {subsubsection}{\numberline {4.2.5.1}Metodologia para a implementa\c c\~ao de um protocolo}{66}{subsubsection.4.2.5.1}
-\contentsline {paragraph}{\numberline {4.2.5.1.1}Componente L\'ogica}{66}{paragraph.4.2.5.1.1}
-\contentsline {paragraph}{\numberline {4.2.5.1.2}Componente de integra\c c\~ao}{67}{paragraph.4.2.5.1.2}
-\contentsline {chapter}{\numberline {5}Prova de Conceito da Plataforma}{69}{chapter.5}
-\contentsline {section}{\numberline {5.1}Implementa\c c\~ao de protocolo de encaminhamento por inunda\c c\~ao}{69}{section.5.1}
-\contentsline {section}{\numberline {5.2}Implementa\c c\~ao de Protocolo de Encaminhamento Seguro em RSSF}{70}{section.5.2}
-\contentsline {subsubsection}{\numberline {5.2.0.2}An\'alise critica}{73}{subsubsection.5.2.0.2}
-\contentsline {chapter}{\numberline {6}Avalia\c c\~ao}{75}{chapter.6}
-\contentsline {section}{\numberline {6.1}Metodologia}{75}{section.6.1}
-\contentsline {subsection}{\numberline {6.1.1}Cobertura da Rede}{75}{subsection.6.1.1}
-\contentsline {paragraph}{\numberline {6.1.1.0.1}O que se quer testar}{75}{paragraph.6.1.1.0.1}
-\contentsline {paragraph}{\numberline {6.1.1.0.2}Como estou a testar - descri\c c\~ao do setting}{76}{paragraph.6.1.1.0.2}
-\contentsline {paragraph}{\numberline {6.1.1.0.3}Porque \'e assim que se avalia}{76}{paragraph.6.1.1.0.3}
-\contentsline {paragraph}{\numberline {6.1.1.0.4}Quais os resultados}{76}{paragraph.6.1.1.0.4}
-\contentsline {paragraph}{\numberline {6.1.1.0.5}Conclus\~oes dos testes}{76}{paragraph.6.1.1.0.5}
-\contentsline {chapter}{\numberline {7}Conclus\~oes e trabalho futuro}{77}{chapter.7}
+\contentsline {section}{\numberline {1.4}Estrutura do Documento}{7}{section.1.4}
+\contentsline {chapter}{\numberline {2}Trabalho relacionado}{9}{chapter.2}
+\contentsline {section}{\numberline {2.1}Caracteriza\c c\~ao de uma RSSF}{9}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Caracter\IeC {\'\i }sticas de um sensor de uma RSSF - \textit {Mote}}{10}{subsection.2.1.1}
+\contentsline {paragraph}{\numberline {2.1.1.0.1}Sistema de processamento}{10}{paragraph.2.1.1.0.1}
+\contentsline {paragraph}{\numberline {2.1.1.0.2}Sistema de comunica\c c\~ao}{10}{paragraph.2.1.1.0.2}
+\contentsline {paragraph}{\numberline {2.1.1.0.3}Sistema Operativo}{11}{paragraph.2.1.1.0.3}
+\contentsline {paragraph}{\numberline {2.1.1.0.4}Sistema de energia}{11}{paragraph.2.1.1.0.4}
+\contentsline {subsection}{\numberline {2.1.2}Modelo de energia de uma RSSF}{12}{subsection.2.1.2}
+\contentsline {section}{\numberline {2.2}Modelo de Advers\'ario, Ataques ao Encaminhamento e Contra-medidas}{13}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Arquitectura de Servi\c cos de Seguran\c ca em RSSF}{13}{subsection.2.2.1}
+\contentsline {subsubsection}{\numberline {2.2.1.1}Requisitos de seguran\c ca de uma RSSF}{14}{subsubsection.2.2.1.1}
+\contentsline {subsubsection}{\numberline {2.2.1.2}Servi\c cos B\'asicos de Seguran\c ca}{15}{subsubsection.2.2.1.2}
+\contentsline {subsection}{\numberline {2.2.2}Modelo de Advers\'ario}{17}{subsection.2.2.2}
+\contentsline {subsubsection}{\numberline {2.2.2.1}Modelo de Dolev-Yao}{17}{subsubsection.2.2.2.1}
+\contentsline {subsubsection}{\numberline {2.2.2.2}Modelo de Intrus\~ao em RSSF}{18}{subsubsection.2.2.2.2}
+\contentsline {paragraph}{\numberline {2.2.2.2.1}Modelo bizantino: advers\'arios bizantinos}{18}{paragraph.2.2.2.2.1}
+\contentsline {subsection}{\numberline {2.2.3}Ataques ao Encaminhamento}{19}{subsection.2.2.3}
+\contentsline {subsection}{\numberline {2.2.4}Ataques \`a organiza\c c\~ao da rede e descoberta de n\'os}{19}{subsection.2.2.4}
+\contentsline {subsubsection}{\numberline {2.2.4.1}Contra-medidas}{20}{subsubsection.2.2.4.1}
+\contentsline {subsection}{\numberline {2.2.5}Ataques ao estabelecimento de rotas}{20}{subsection.2.2.5}
+\contentsline {subsubsection}{\numberline {2.2.5.1}Contra-medidas}{21}{subsubsection.2.2.5.1}
+\contentsline {subsection}{\numberline {2.2.6}Ataques \`a manuten\c c\~ao de rotas}{23}{subsection.2.2.6}
+\contentsline {subsubsection}{\numberline {2.2.6.1}Contra-medidas}{23}{subsubsection.2.2.6.1}
+\contentsline {subsection}{\numberline {2.2.7}Ataques por Intrus\~ao/Replica\c c\~ao}{23}{subsection.2.2.7}
+\contentsline {subsubsection}{\numberline {2.2.7.1}Contra-medidas}{24}{subsubsection.2.2.7.1}
+\contentsline {section}{\numberline {2.3}Estudo de Protocolos de Encaminhamento Seguro para RSSF}{25}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Caracteriza\c c\~ao dos protocolos de encaminhamento em RSSF}{25}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}Protocolos de encaminhamento seguro em RSSF}{25}{subsection.2.3.2}
+\contentsline {subsubsection}{\numberline {2.3.2.1}\textit {Secure Implicit Geographic Forwarding }(SIGF)}{26}{subsubsection.2.3.2.1}
+\contentsline {paragraph}{\textbf {Funcionamento do protocolo IGF}}{26}{section*.8}
+\contentsline {paragraph}{\textbf {Funcionamento do protocolo SIGF \cite {SIGF}}}{27}{section*.9}
+\contentsline {subsubsection}{\numberline {2.3.2.2}\textit { INtrusion-tolerant routing protocol for wireless SEnsor NetworkS }(INSENS)}{27}{subsubsection.2.3.2.2}
+\contentsline {subsubsection}{\numberline {2.3.2.3}\textit {Secure Sensor Network Routing: Clean-Slate approach}}{28}{subsubsection.2.3.2.3}
+\contentsline {paragraph}{\textbf {Funcionamento do Protocolo}}{28}{section*.10}
+\contentsline {section}{\numberline {2.4}Ambientes de Simula\c c\~ao}{30}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}Crit\'erios Relacionados com Engenharia de Software}{30}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.2}Crit\'erios Relacionados com as RSSF}{31}{subsection.2.4.2}
+\contentsline {subsection}{\numberline {2.4.3}Prowler/JProwler}{32}{subsection.2.4.3}
+\contentsline {subsection}{\numberline {2.4.4}J-Sim}{32}{subsection.2.4.4}
+\contentsline {subsection}{\numberline {2.4.5}Freemote}{33}{subsection.2.4.5}
+\contentsline {subsection}{\numberline {2.4.6}ShoX}{33}{subsection.2.4.6}
+\contentsline {section}{\numberline {2.5} Discuss\~ao e Resumo do Trabalho Relacionado}{35}{section.2.5}
+\contentsline {chapter}{\numberline {3}Plataforma para avalia\c c\~ao de protocolos de encaminhamento de dados em RSSF}{41}{chapter.3}
+\contentsline {section}{\numberline {3.1}Consolida\c c\~ao da avalia\c c\~ao do simulador JProwler e a sua integra\c c\~ao}{41}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Arquitectura do simulador JProwler}{42}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}Funcionamento do simulador JProwler}{43}{subsection.3.1.2}
+\contentsline {section}{\numberline {3.2}Arquitectura da plataforma de simula\c c\~ao}{44}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Simulador base ou motor de simula\c c\~ao}{45}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Mecanismo de Configura\c c\~ao}{45}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}Camada de instrumenta\c c\~ao}{45}{subsection.3.2.3}
+\contentsline {subsubsection}{\numberline {3.2.3.1}Mecanismo de Gera\c c\~ao de Topologias}{45}{subsubsection.3.2.3.1}
+\contentsline {subsubsection}{\numberline {3.2.3.2}Mecanismo de Gest\~ao de Consumo de Energia}{46}{subsubsection.3.2.3.2}
+\contentsline {subsubsection}{\numberline {3.2.3.3}Mecanismo de Injec\c c\~ao de Falhas /Ataques}{47}{subsubsection.3.2.3.3}
+\contentsline {subsubsection}{\numberline {3.2.3.4}Mecanismo de Avalia\c c\~ao e Execu\c c\~ao de Testes}{48}{subsubsection.3.2.3.4}
+\contentsline {paragraph}{\numberline {3.2.3.4.1}}{48}{paragraph.3.2.3.4.1}
+\contentsline {subsection}{\numberline {3.2.4}Consola de Visualiza\c c\~ao e Controlo de Simula\c c\~ao}{51}{subsection.3.2.4}
+\contentsline {subsection}{\numberline {3.2.5}API para implementa\c c\~ao de protocolos de encaminhamento}{52}{subsection.3.2.5}
+\contentsline {section}{\numberline {3.3}Metodologia de utiliza\c c\~ao da plataforma}{52}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Implementa\c c\~ao de protocolo}{52}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}Caracteriza\c c\~ao do ambiente de simula\c c\~ao}{53}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}Execu\c c\~ao/an\'alise de testes e resultados}{53}{subsection.3.3.3}
+\contentsline {subsection}{\numberline {3.3.4}Utiliza\c c\~ao e explora\c c\~ao da plataforma }{55}{subsection.3.3.4}
+\contentsline {chapter}{\numberline {4}Implementa\c c\~ao da plataforma de simula\c c\~ao}{57}{chapter.4}
+\contentsline {section}{\numberline {4.1}Principais funcionalidades}{57}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Portabilidade}{57}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Extensibilidade}{57}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}Usabilidade}{58}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}Facilidades}{58}{subsection.4.1.4}
+\contentsline {section}{\numberline {4.2}Implementa\c c\~ao dos componentes da plataforma}{59}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Representa\c c\~ao da plataforma sensor}{59}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}M\'odulo de energia}{61}{subsection.4.2.2}
+\contentsline {subsubsection}{\numberline {4.2.2.1}}{62}{subsubsection.4.2.2.1}
+\contentsline {subsubsection}{\numberline {4.2.2.2}}{66}{subsubsection.4.2.2.2}
+\contentsline {subsubsection}{\numberline {4.2.2.3}}{67}{subsubsection.4.2.2.3}
+\contentsline {subsection}{\numberline {4.2.3}Mecanismo de avalia\c c\~ao e testes}{68}{subsection.4.2.3}
+\contentsline {subsubsection}{\numberline {4.2.3.1}Medi\c c\~ao das propriedades}{69}{subsubsection.4.2.3.1}
+\contentsline {subsubsection}{\numberline {4.2.3.2}Execu\c c\~ao de testes}{71}{subsubsection.4.2.3.2}
+\contentsline {subsection}{\numberline {4.2.4}Modelo de injec\c c\~ao/implementa\c c\~ao de ataques}{71}{subsection.4.2.4}
+\contentsline {subsection}{\numberline {4.2.5}API para a implementa\c c\~ao de um protocolo}{72}{subsection.4.2.5}
+\contentsline {subsubsection}{\numberline {4.2.5.1}Metodologia para a implementa\c c\~ao de um protocolo}{72}{subsubsection.4.2.5.1}
+\contentsline {paragraph}{\numberline {4.2.5.1.1}Componente L\'ogica}{72}{paragraph.4.2.5.1.1}
+\contentsline {paragraph}{\numberline {4.2.5.1.2}Componente de integra\c c\~ao}{73}{paragraph.4.2.5.1.2}
+\contentsline {chapter}{\numberline {5}Prova de Conceito da Plataforma}{75}{chapter.5}
+\contentsline {section}{\numberline {5.1}Implementa\c c\~ao de protocolo de encaminhamento por inunda\c c\~ao}{75}{section.5.1}
+\contentsline {section}{\numberline {5.2}Implementa\c c\~ao de Protocolo de Encaminhamento Seguro em RSSF}{76}{section.5.2}
+\contentsline {subsubsection}{\numberline {5.2.0.2}An\'alise critica}{79}{subsubsection.5.2.0.2}
+\contentsline {chapter}{\numberline {6}Avalia\c c\~ao}{81}{chapter.6}
+\contentsline {section}{\numberline {6.1}Metodologia}{81}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}Cobertura da Rede}{82}{subsection.6.1.1}
+\contentsline {paragraph}{\numberline {6.1.1.0.1}}{82}{paragraph.6.1.1.0.1}
+\contentsline {paragraph}{\numberline {6.1.1.0.2}}{83}{paragraph.6.1.1.0.2}
+\contentsline {paragraph}{\numberline {6.1.1.0.3}Porque \'e assim que se avalia}{83}{paragraph.6.1.1.0.3}
+\contentsline {paragraph}{\numberline {6.1.1.0.4}Quais os resultados}{83}{paragraph.6.1.1.0.4}
+\contentsline {paragraph}{\numberline {6.1.1.0.5}Conclus\~oes dos testes}{83}{paragraph.6.1.1.0.5}
+\contentsline {subsection}{\numberline {6.1.2}Fiabilidade da Rede}{83}{subsection.6.1.2}
+\contentsline {paragraph}{\numberline {6.1.2.0.6}}{83}{paragraph.6.1.2.0.6}
+\contentsline {paragraph}{\numberline {6.1.2.0.7}}{83}{paragraph.6.1.2.0.7}
+\contentsline {paragraph}{\numberline {6.1.2.0.8}Porque \'e assim que se avalia}{83}{paragraph.6.1.2.0.8}
+\contentsline {paragraph}{\numberline {6.1.2.0.9}Quais os resultados}{83}{paragraph.6.1.2.0.9}
+\contentsline {paragraph}{\numberline {6.1.2.0.10}Conclus\~oes dos testes}{83}{paragraph.6.1.2.0.10}
+\contentsline {subsection}{\numberline {6.1.3}Lat\^encia da Rede}{83}{subsection.6.1.3}
+\contentsline {paragraph}{\numberline {6.1.3.0.11}}{83}{paragraph.6.1.3.0.11}
+\contentsline {paragraph}{\numberline {6.1.3.0.12}}{84}{paragraph.6.1.3.0.12}
+\contentsline {paragraph}{\numberline {6.1.3.0.13}Porque \'e assim que se avalia}{84}{paragraph.6.1.3.0.13}
+\contentsline {paragraph}{\numberline {6.1.3.0.14}Quais os resultados}{84}{paragraph.6.1.3.0.14}
+\contentsline {paragraph}{\numberline {6.1.3.0.15}Conclus\~oes dos testes}{84}{paragraph.6.1.3.0.15}
+\contentsline {subsection}{\numberline {6.1.4}Consumo de energia}{84}{subsection.6.1.4}
+\contentsline {paragraph}{\numberline {6.1.4.0.16}}{84}{paragraph.6.1.4.0.16}
+\contentsline {paragraph}{\numberline {6.1.4.0.17}}{84}{paragraph.6.1.4.0.17}
+\contentsline {paragraph}{\numberline {6.1.4.0.18}Porque \'e assim que se avalia}{84}{paragraph.6.1.4.0.18}
+\contentsline {paragraph}{\numberline {6.1.4.0.19}Quais os resultados}{84}{paragraph.6.1.4.0.19}
+\contentsline {paragraph}{\numberline {6.1.4.0.20}Conclus\~oes dos testes}{84}{paragraph.6.1.4.0.20}
+\contentsline {chapter}{\numberline {7}Conclus\~oes e trabalho futuro}{85}{chapter.7}

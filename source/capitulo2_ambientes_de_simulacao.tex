@@ -11,10 +11,12 @@ experiências, perante as mesmas condições, facilitando, assim, uma análise siste
 estudo.
 
 Nesta secção, apresentam-se diversos ambientes de simulação, mais comuns, e que
-permitem simular um sistema de RSSF. Foram seleccionados, em primeiro lugar,
- critérios relacionados com engenharia de \textit{software}, por se
-pretender a concepção de uma plataforma de simulação. Em segundo lugar,
-critérios relacionados com as RSSF, considerados no âmbito deste trabalho.
+permitem simular um sistema de RSSF. Para este estudo foram seleccionados, em
+primeiro lugar, critérios relacionados com engenharia de \textit{software}, por
+se pretender a concepção de uma plataforma de simulação. Em segundo lugar,
+critérios relacionados com as RSSF, considerados no âmbito deste trabalho e que
+julgam de grande pertinência para um estudo sistemático de avaliação de
+condições de fiabilidade e segurança em protocolos de encaminhamento.
 
 \subsection{Critérios Relacionados com Engenharia de Software}
 \begin{description}\descvspace	
@@ -46,8 +48,8 @@ propriedades observadas neste trabalho;
 encontre presente no
 sistema de simulação, por ser um componente base das RSSF, relacionado com a camada de
 acesso ao meio e de ligação de dados (ex: B-MAC, S-MAC) \cite{BMAC,SMAC};
-\item[Modelo de Gestão de Energia] A existência de um modelo de energia permitirá adaptar esta
-funcionalidade e incluí-la na plataforma final, visto tratar-se de uma das propriedades
+\item[Módulo de Gestão de Energia] A existência de um modelo de energia é
+fundamental visto tratar-se de uma das propriedades
 que se deseja estudar.
 \item[Capacidade de Emulação] Alguns simuladores possuem a capacidade de emular 
 um sensor real, permitindo efectuar o carregamento de código directamente para o \textit{mote}, sem
@@ -59,9 +61,27 @@ a avaliação dos comportamentos dos protocolos, mediante esta propriedade;
 visualização, permitindo uma percepção mais fácil dos comportamentos dos protocolos (ex:
 topologia, cobertura), bem como o controlo da simulação e extracção de
 resultados;
-\item[Modelo de Gestão de Topologia] Um factor que pode influenciar o comportamento de
+\item[Módulo de Geração de Topologia] Um factor que pode influenciar o
+comportamento de 
 um protocolo de encaminhamento é a topologia. Como tal, é relevante a existência deste modelo por
 forma a avaliar os protocolos desenhados, perante diferentes topologias.
+\item[Módulo de injecção de ataques/falhas] Se se trata de segurança a é
+relevante a existência de um módulo que permita numa mesma simulação
+injectar/seleccionar ataques ou induzir falhas, com vista a avaliar o seu
+impacte no protocolo em estudo;
+\item[Módulo de Medição e Teste] Se se deseja avaliar um protocolo é necessário
+sujeitá-lo a um conjunto de acções de teste que permitam aferir as propriedades
+que se deseja estudar, este módulo deverá conter propriedades de reutilização e
+de afinação rápida de parâmetros de teste;
+\item[Módulo de obtenção/correlação de resultados] A existência de um módulo
+desta natureza apresenta-se como uma facilidade bastante preciosa dada a
+necessidade de iterar pelo espaço de soluções possíveis com vista a
+observar/avaliar as propriedades relevantes para o estudo;
+\item[Módulo de gestão de configurações de simulação] Tratando-se de um
+ambiente de simulação é relevante a existência de um módulo que permita aplicar
+as mesmas configurações a protocolos diferentes sem que com isto seja
+necessário a reconfiguração \textit{ab-initio} da simulação; 
+
 \end{description}
 \subsection{Prowler/JProwler}
  Esta ferramenta resulta da conversão de um simulador de eventos

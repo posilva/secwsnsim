@@ -14,26 +14,124 @@ de estudos comparativos. Assim, foi necessário desde logo efectuar um conjunto
 de testes de aferição para permitir chegar a configurações de testes que
 permitam observar/analisar as propriedades que se pretendem ver estudadas.
 Estas propriedades são cobertura, latência, fiabilidade e consumo de energia. O
-estudo é realizado sobre o protocolo INSENS em operação normal, ou seja, sem
-atacantes, e mediante a existência de ataque à rede. Desta forma poder-se-à
-avaliar o impacte que determinado ataque tem, ao nível destas propriedades, no
-protocolo INSENS. A comparação com o protocolo de inundação serve,
-fundamentalmente para comparar a propriedade de cobertura no sentido de
-estabelecer uma métrica de comparação.
+estudo é realizado sobre o protocolo INSENS com e sem ataques ao encaminhamento.
+Desta forma poder-se-à avaliar o impacte que determinado ataque tem, ao nível
+destas propriedades, no protocolo INSENS. O protocolo de inundação é um exemplo
+de protocolo com alta resiliência à falha e com características de alta
+cobertura e fiabilidade. Isto motivado pelo elevado número de replicas de
+mensagens circulam na rede. O que parece ser uma vantagem, apresenta-se como uma
+vulnerabilidade uma vez que os consumos de energia representam valores muito
+altos que deduzem em muito o tempo de operação de uma rede. No que respeita a
+segurança caso seja implementados os mecanismos de protecção garante-se um
+aumento na confidencialidade, integridade e autenticidade das mensagens,
+representando no entanto mais um custo energético adicional. 
+
+Tendo como ponto de partida algumas características documentadas do protocolo
+INSENS numa fase inicial realizaram-se algumas experiências para se verificar o
+comportamento do protocolo e com isso permitir aferir melhores condições para a
+realização dos testes. Por exemplo, o protocolo INSENS evidenciou a necessidade
+da existência de uma grande densidade de sensores por forma a permitir obter um
+grau de estabilidade do protocolo adequado aos testes. Com isto foi necessário
+encontrar dimensões adequadas para os campos de distribuição de sensores por
+forma a garantir estes valores determinados.
+
+Estes valores de densidade carecem também de uma análise com vista a explicar
+alguns dos fenómenos que ocorrem ao longo das experiências.
+Para a parametrização de cada experiência foram tidas em consideração as
+seguintes propriedades:
+
+\begin{enumerate}
+ \item Dimensão do campo: determinou-se para cada experiência a dimensão
+adequada para garantir um número específco de vizinhos que permitisse comparar
+executar os testes em condições semelhantes.
+ \item Quantidades de sensores distribuídos: foram executados testes com
+500,750,1000,1500,2000,2500,3000 sensores. Estes valores já permitem ter uma
+boa indicação em condições de escalabilidade, sem que as experiências demorem
+um tempo exagerado.
+ \item Número de sensores atacantes: Foi seleccionado um ataque ao
+encaminhamento que se sabe que, à partida, terá um efeito efectivo nas
+propriedades. O número de sensores comprometidos é calculado em percentagem de
+5\%,10\%,15\% e 20\% face ao número de sensores estáveis.
+ \item Número de sensores emissores: Representando os sensores geradores de
+eventos, após diversas execuções sistemáticas que foram dos 5\% até ao 80\%
+optou-se por um valor de 60\% de sensores estáveis como sensores emissores de
+mensagens.
+ \item Estação base receptora: a estação base apresenta-se como a receptora dos
+eventos ocorridos na rede.
+ 
+\end{enumerate}
+
 
 \subsection{Cobertura da Rede}
-\paragraph{O que se quer testar} Pretende-se testar para o protocolo qual a
-percentagem de nós cobertos na rede. Por uma questão de flexibilidade o
-simulador introduz a noção de nó estável, considerando que este participa no
-protocolo. Esta abordagem permite que um teste seja executado tendo apenas como
-nós emissores nós que participam no protocolo. Desta forma se um protocolo não
-consegue executar por forma a abranger a totalidade da rede, sem este
-mecanismo, poderíamos estar a considerar bastantes nós emissores que nem sequer
-têm à partida possibilidade de enviar mensagens por não terem os dados para o
-encaminhamento. No entanto esta premissa pode ser retirada a menos de uma
-parametrização do teste a executar.
-Para efeitos de cobertura total podemos considerar os n
-\paragraph{Como estou a testar - descrição do setting}
+\paragraph{} Pretende-se testar para o protocolo qual a
+percentagem de nós cobertos na rede. Uma vez que o
+simulador introduz a noção de nó estável este valor é directamente determinado
+após a fase de \textit{setup} do protocolo de encaminhamento. Será possível
+extrair o grau de conectividade do protocolo, ou seja, num determinado campo de
+distribuição de sensores qual a percentagem de sensores que após a sua execução
+conseguem participar no encaminhamento de mensagens. Para além desta noção de
+cobertura considera-se também como métrica a observar a percentagem de nós que
+no envio de mensagens para a estação base conseguem efectivamente fazer chegar
+pelo menos uma das mensagens.
+\paragraph{} A primeira noção de conectividade é obtida pelo próprio
+RoutingLayer que se encarrega de contabilizar os nós que estão estáveis. A
+segunda noção é obtida pelo envio intervalado de mensagens para a estação base
+por cada um de nós emissores.
 \paragraph{Porque é assim que se avalia}
 \paragraph{Quais os resultados}
+INSERIR O GRAFICO
+
 \paragraph{Conclusões dos testes}
+Comentário ao grafico
+
+\subsection{Fiabilidade da Rede}
+\paragraph{} Pretende-se avaliar qual o grau de fiabilidade de um protocolo no
+encaminhamento de dados, ou seja, uma vez enviadas as mensagens pelos sensores
+emissores ou geradores de eventos, quantas destas mensagens chegam à estação
+base, extraindo-se desta acção um indicador da taxa de fiabilidade de
+um protocolo esteja este ou não sujeito a um ataque.
+\paragraph{} Cada nó emissor enviará um número de mensagens intervaladas para a
+estação base, findo o teste são contabilizadas as mensagens que foram recebidas
+face às enviadas, obtendo-se assim a taxa de fiabilidade de operação do
+protocolo.
+\paragraph{Porque é assim que se avalia}
+\paragraph{Quais os resultados}
+INSERIR O GRAFICO
+
+\paragraph{Conclusões dos testes}
+Comentário ao grafico
+
+\subsection{Latência da Rede}
+\paragraph{} Pretende-se avaliar o indicador de latência das mensagens enviadas
+pelos sensores emissores para a estação base. Este indicador baseia-se na
+contagem do nº de \textit{hops} que uma mensagem efectua entre origem e
+destino. 
+\paragraph{} Cada nó emissor enviará um número de mensagens intervaladas para a
+estação base, findo o teste são contabilizados os valores mínimo, máximo e
+médio de latência de uma mensagem na rede.
+\paragraph{Porque é assim que se avalia}
+\paragraph{Quais os resultados}
+INSERIR O GRAFICO
+
+\paragraph{Conclusões dos testes}
+Comentário ao grafico
+
+
+\subsection{Consumo de energia}
+\paragraph{} No que se refere a energia a análise efectuada de diversos
+ângulos. Primeiro observam-se os resultados decorrentes da execução de um
+teste, como os anteriores pontos. Segundo Observa-se o perfil de consumo de um
+protocolo na rede pela observação de ``um mapa de calor'' para determinar as
+áreas de maior consumo. Por fim observa-se, num protocolo, os consumos
+realizados nos diversos eventos de consumo de energia e observa-se a
+distribuição do consumo de energia pelas diferentes fases de um protocolo. 
+\paragraph{} A energia consumida em cada teste executado será apresentada com
+um valor global do teste e o valor médio por sensor. O ``mapa de calor'' de
+energia mostra que face ao consumo existente quais as áreas identificadas como
+críticas.
+\paragraph{Porque é assim que se avalia}
+\paragraph{Quais os resultados}
+INSERIR O GRAFICO
+
+\paragraph{Conclusões dos testes}
+Comentário ao grafico
