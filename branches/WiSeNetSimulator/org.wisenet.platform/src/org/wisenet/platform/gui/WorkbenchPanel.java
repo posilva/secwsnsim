@@ -1506,7 +1506,11 @@ public class WorkbenchPanel extends javax.swing.JPanel implements SimulationPane
     private void showSimulationEnergyPanel() {
         if (getSimulationPanel().getSimulation().isStarted()) {
             SimulationEnergyPanel sep = new SimulationEnergyPanel();
-            sep.setValues(getSimulationPanel().getSimulation().getEnergyController().getDatabase().getNodesEnergy());
+            if (getSimulationPanel().getSelectedNodes().size()>0) {
+                sep.setValues(getSimulationPanel().getSimulation().getEnergyController().getDatabase().getNodesEnergy());
+            }else{
+                sep.setValues(getSimulationPanel().getSimulation().getEnergyController().getDatabase().getNodesEnergy(),  getSimulationPanel().getSelectedNodes()   );
+            }
             PlatformFrame.display(sep, "Simulation Energy", PlatformFrame.NOACTIONS_MODE);
 
 

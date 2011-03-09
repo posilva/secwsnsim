@@ -15,6 +15,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.Hashtable;
 import java.util.Random;
+import java.util.Vector;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -24,6 +25,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.wisenet.platform.common.ui.PlatformFrame;
 import org.wisenet.platform.common.ui.PlatformPanel;
+import org.wisenet.simulator.gui.GraphicNode;
 
 /**
  *
@@ -39,6 +41,7 @@ public class SimulationEnergyPanel extends PlatformPanel {
     private JFreeChart chart;
     private Random r = new Random();
     final Font tickFont = new Font("Dialog.plain", Font.PLAIN, 8);
+    private Vector<GraphicNode> nodes;
 
     /** Creates new form SimulationEnergyPanel */
     public SimulationEnergyPanel() {
@@ -55,14 +58,26 @@ public class SimulationEnergyPanel extends PlatformPanel {
             return;
         }
         int i = 0;
-        for (Short object : values.keySet()) {
-            if (i > 50) {
-                break;
-            }
-            dataset.setValue(100 - values.get(object), "Nodes", "" + object.shortValue());
+        Double value;
+        short id;
+        if (nodes != null && nodes.size() > 0) {
+            for (int k = 0 ;k< nodes.size();k++) {
+                id=nodes.get(k).getPhysicalNode().getId();
+                value=values.get(id);
+                dataset.setValue(100 - value, "Nodes", "" + id);
             i++;
+            }
+        } else {
+            
+            for (Short object : values.keySet()) {
+                if (i > 15) {
+                    break;
+                }
+                dataset.setValue(100 - values.get(object), "Nodes", "" + object.shortValue());
+                i++;
 
 
+            }
         }
     }
 
@@ -115,6 +130,11 @@ public class SimulationEnergyPanel extends PlatformPanel {
     @Override
     protected boolean isDataValid() {
         return true;
+    }
+
+    public void setValues(Hashtable<Short, Double> nodesEnergy, Vector<GraphicNode> selectedNodes) {
+        values = nodesEnergy;
+        nodes = selectedNodes;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
