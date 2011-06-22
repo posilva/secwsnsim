@@ -54,6 +54,7 @@ public class ClockCounter {
         private int elapsed = Integer.MAX_VALUE;
         String time = "0";
 
+        @Override
         public void run() {
             elapsed = (int) (((System.currentTimeMillis()) - getStart()));// / (1000L));
 

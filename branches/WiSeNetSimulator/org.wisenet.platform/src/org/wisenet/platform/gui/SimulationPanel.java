@@ -103,6 +103,7 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
     private boolean stretch;
     private double currentSelectedArea_w = 0;
     private double currentSelectedArea_h = 0;
+    private boolean painting = false;
 
     /**
      * CONSTRUCTORS
@@ -665,17 +666,25 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
 
     @Override
     public void paintComponent(Graphics grphcs) {
-        super.paintComponent(grphcs);
-        //        dim = getSize();
-        //        Image offscreen = createImage(dim.width, dim.height);
-        //        Graphics b = offscreen.getGraphics();
-        //
-        //        currentGraphics = b;
-        // paint background
-        //        b.setColor(Color.white);
-        //        b.fillRect(0, 0, dim.width, dim.height);
-        Graphics b = grphcs;
-        mainPaintLoop(b);
+        try {
+
+
+            painting = true;
+            super.paintComponent(grphcs);
+            //        dim = getSize();
+            //        Image offscreen = createImage(dim.width, dim.height);
+            //        Graphics b = offscreen.getGraphics();
+            //
+            //        currentGraphics = b;
+            // paint background
+            //        b.setColor(Color.white);
+            //        b.fillRect(0, 0, dim.width, dim.height);
+            Graphics b = grphcs;
+            mainPaintLoop(b);
+        } catch (Exception e) {
+        } finally {
+            painting = false;
+        }
 //        grphcs.drawImage(offscreen, 0, 0, this);
     }//GEN-LAST:event_formMouseMoved
 
@@ -1139,7 +1148,10 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         return OFFSET_NETWORK + (int) ((getSize().getHeight() - (OFFSET_NETWORK * 2)) * y / getSize().getHeight());
     }
 
-    protected synchronized void updateLocal() {
+    protected void updateLocal() {
+        if (painting) {
+            return;
+        }
         JComponent parent = (JComponent) getParent();
         if (parent != null) {
             ((JComponent) getParent()).revalidate();
@@ -1150,11 +1162,14 @@ public class SimulationPanel extends javax.swing.JPanel implements ISimulationDi
         }
     }
 
-    public void updateDisplay() {
+    @Override
+    public synchronized void updateDisplay() {
 
         updateLocal();
+      
     }
 
+    @Override
     public Simulator getSimulator() {
         return simulation.getSimulator();
     }

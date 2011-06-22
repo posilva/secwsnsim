@@ -94,6 +94,7 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         }
         busyIconTimer = new Timer(busyAnimationRate, new ActionListener() {
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 busyIconIndex = (busyIconIndex + 1) % busyIcons.length;
                 statusAnimationLabel.setIcon(busyIcons[busyIconIndex]);
@@ -1017,19 +1018,23 @@ public class PlatformView extends FrameView implements ExitListener, IClockDispl
         GUI_Utils.showWarningMessage("Simulation stop failed: " + event.getReason());
     }
 
+    @Override
     public void onBuildNetworkFailure(SimulationEvent event) {
     }
 
+    @Override
     public void onEmptyQueue(SimulationEvent event) {
         System.out.println("Queue is empty");
     }
 
+    @Override
     public void afterNodeDeploy(DeployEvent event) {
         if (isActiveSimulationValid()) {
             updateSimulationNrNodes(PlatformManager.getInstance().getActiveSimulation().getSimulator().getNodes().size());
         }
     }
 
+    @Override
     public void beforeNodeDeploy(DeployEvent event) {
     }
 

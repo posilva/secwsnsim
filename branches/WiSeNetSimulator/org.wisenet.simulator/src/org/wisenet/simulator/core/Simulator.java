@@ -27,6 +27,7 @@ import java.util.Collection;
 import java.util.List;
 
 import java.util.TreeSet;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.event.EventListenerList;
 import org.wisenet.simulator.components.evaluation.tests.AbstractTest;
@@ -118,6 +119,7 @@ public class Simulator {
     private boolean queueWasEmpty = false;
     private boolean start = false;
     private boolean running;
+    private final Object queueMonitor=new Object();
 
     /**
      *
@@ -321,7 +323,8 @@ public class Simulator {
         /** Adds an item to the queue, item must be Comparable
          * @param item The item to be added to the queue
          */
-        public void add(Comparable item) {
+        public synchronized  void add(Comparable item) {
+            resumeQueue();
             try {
                 queue.add(item);
             } catch (Exception e) {
@@ -338,7 +341,7 @@ public class Simulator {
         /**
          * @return Returns the first element and removes it form the queue
          */
-        public Object getAndRemoveFirst() {
+        public synchronized Object getAndRemoveFirst() {
             if (queue.size() > 0) {
                 Object first = queue.first();
                 queue.remove(first);
@@ -391,7 +394,7 @@ public class Simulator {
     /**
      * Processes and executes the next event.
      */
-    public synchronized void step() {
+    public synchronized  void step() {
 
         Event event = (Event) eventQueue.getAndRemoveFirst();
         if (event != null) {
@@ -413,6 +416,8 @@ public class Simulator {
 
                 fireOnEmptyQueue(new SimulatorEvent(this));
                 scheduleOnEmptyQueueTests();
+                waitQueue();
+               
             }
             queueWasEmpty = true;
         }
@@ -423,7 +428,7 @@ public class Simulator {
      *
      * @param n the number of events to be processed
      */
-    public void step(int n) {
+    public synchronized  void step(int n) {
         fireOnNewStepRound(new SimulatorEvent(this));
         for (int i = 0; i < n; ++i) {
             step();
@@ -491,9 +496,11 @@ public class Simulator {
                 running = true;
                 long initDiff = System.currentTimeMillis() - getSimulationTimeInMillisec();
                 while (canRun()) {
+                    if(eventQueue.size()>0){
                     step(RUNTIME_NUM_STEPS);
-                    display.updateDisplay();
 
+                    display.updateDisplay();
+               //     System.out.println("Running");
                     if (getMode() == REAL) {
                         if (lastMode != REAL) {
                             initDiff = System.currentTimeMillis() - getSimulationTimeInMillisec();
@@ -511,6 +518,7 @@ public class Simulator {
                     } else {
                         lastMode = FAST;
                     }
+                    }
                 }
                 notifyReset();
             }
@@ -518,7 +526,7 @@ public class Simulator {
         runningThread.start();
     }
 
-    private boolean canRun() {
+    private synchronized  boolean canRun() {
         return !reset && !stop;
     }
 
@@ -572,7 +580,22 @@ public class Simulator {
     public ISimulationDisplay getDisplay() {
         return display;
     }
-
+    private void waitQueue(){
+//         synchronized (queueMonitor) {
+//                try {
+//                    queueMonitor.wait();
+//                } catch (InterruptedException ex) {
+//                    Utilities.handleException(ex);
+//                }
+//        }
+    }
+    private void resumeQueue(){
+//        synchronized (queueMonitor) {
+//
+//                queueMonitor.notifyAll();
+//
+//        }
+    }
     private void handlePause() {
         synchronized (monitor) {
             if (paused) {
