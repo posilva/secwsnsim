@@ -44,7 +44,7 @@ public interface ISimulationDisplay {
         /**
          *
          */
-        public abstract void updateDisplay();
+        public  abstract void updateDisplay();
 
 
         /**
